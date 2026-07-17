@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log check-in · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+</head>
+<body data-role="mentor" data-active="check-ins" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Check-ins</div>
+          <h1 class="wu-page__title">Log a check-in</h1>
+          <p class="wu-page__sub">Capture how a youth is doing so their journey stays on track.</p>
+        </div>
+        <div class="wu-page__actions">
+          <a class="wu-btn wu-btn--ghost" href="check-in-history.html"><svg class="wu-icon"><use href="#i-clock"></use></svg>History</a>
+        </div>
+      </div>
+
+      <form class="wu-grid wu-grid--3" onsubmit="return false">
+        <!-- Main column -->
+        <div style="grid-column:span 2">
+          <div class="wu-card">
+            <div class="wu-card__header"><h3 class="wu-card__title">Details</h3></div>
+            <div class="wu-card__body">
+              <div class="wu-grid wu-grid--2">
+                <div class="wu-field">
+                  <label class="wu-label" for="ci-youth">Youth <span class="wu-label__req">*</span></label>
+                  <select class="wu-select" id="ci-youth">
+                    <option>Jayden Alcantara</option>
+                    <option>Amara Okafor</option>
+                    <option>Devon Grant</option>
+                    <option>Priya Sharma</option>
+                    <option>Malik Johnson</option>
+                    <option>Sofia Nguyen</option>
+                  </select>
+                  <div class="wu-help">Rexdale Fall '25 · mentored by Marcus Bello</div>
+                </div>
+                <div class="wu-field">
+                  <label class="wu-label" for="ci-date">Date <span class="wu-label__req">*</span></label>
+                  <input class="wu-input" type="date" id="ci-date" value="2026-07-17">
+                </div>
+              </div>
+
+              <div class="wu-field">
+                <label class="wu-label">Type <span class="wu-label__req">*</span></label>
+                <div class="wu-segment">
+                  <label class="wu-segment__item"><input type="radio" name="ci-type" checked><span>1:1</span></label>
+                  <label class="wu-segment__item"><input type="radio" name="ci-type"><span>Call</span></label>
+                  <label class="wu-segment__item"><input type="radio" name="ci-type"><span>Session</span></label>
+                </div>
+              </div>
+
+              <div class="wu-field">
+                <label class="wu-label">Engagement &amp; mood</label>
+                <div class="wu-segment" style="flex-wrap:wrap">
+                  <label class="wu-segment__item"><input type="radio" name="ci-mood"><span>Struggling</span></label>
+                  <label class="wu-segment__item"><input type="radio" name="ci-mood"><span>Low</span></label>
+                  <label class="wu-segment__item"><input type="radio" name="ci-mood" checked><span>Steady</span></label>
+                  <label class="wu-segment__item"><input type="radio" name="ci-mood"><span>Engaged</span></label>
+                  <label class="wu-segment__item"><input type="radio" name="ci-mood"><span>Thriving</span></label>
+                </div>
+                <div class="wu-help">Shown as a dot + label so it never relies on color alone.</div>
+              </div>
+
+              <div class="wu-field">
+                <label class="wu-label" for="ci-goals">Goals discussed</label>
+                <textarea class="wu-textarea" id="ci-goals" placeholder="What did you work on together?">Reviewed “Servant Leadership” module. Jayden is leading a small group icebreaker next session and wanted to prep questions on Mark 10.</textarea>
+              </div>
+
+              <div class="wu-field">
+                <label class="wu-label" for="ci-prayer">Prayer requests</label>
+                <textarea class="wu-textarea" id="ci-prayer" placeholder="Anything to pray for this week?">Praying for confidence speaking in front of the group, and for his younger sister’s health.</textarea>
+              </div>
+
+              <div class="wu-field">
+                <label class="wu-label" for="ci-actions">Action items</label>
+                <textarea class="wu-textarea" id="ci-actions" placeholder="What happens before the next check-in?">Finish “Leading Like Jesus” lesson · draft 3 discussion questions · text Marcus by Friday.</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side column -->
+        <div>
+          <div class="wu-card">
+            <div class="wu-card__header"><h3 class="wu-card__title">Visibility &amp; follow-up</h3></div>
+            <div class="wu-card__body">
+              <div class="wu-field">
+                <label class="wu-label">Sharing</label>
+                <label class="wu-switch"><input type="checkbox"><span class="wu-switch__track"></span><span>Shareable with youth &amp; guardian</span></label>
+                <div class="wu-help">Off = private mentor note. On = visible on their progress page.</div>
+              </div>
+
+              <div class="wu-divider"></div>
+
+              <div class="wu-field">
+                <label class="wu-label" for="ci-next">Next follow-up date</label>
+                <input class="wu-input" type="date" id="ci-next" value="2026-07-24">
+              </div>
+
+              <div class="wu-alert wu-alert--info">
+                <svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg>
+                <div><div class="wu-alert__title">Private by default</div>Prayer requests stay mentor-only unless you toggle sharing on.</div>
+              </div>
+            </div>
+            <div class="wu-card__footer wu-cluster wu-justify-between">
+              <a class="wu-btn wu-btn--ghost" href="check-in-history.html">Cancel</a>
+              <button class="wu-btn wu-btn--primary" data-toast="Check-in saved" data-toast-type="success" data-toast-title="Logged" data-then="check-in-history.html">
+                <svg class="wu-icon"><use href="#i-check"></use></svg>Save check-in
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </main>
+</body>
+</html>

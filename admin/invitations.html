@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invitations · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+</head>
+<body data-role="admin" data-active="invitations" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">People</div>
+          <h1 class="wu-page__title">Invitations</h1>
+          <p class="wu-page__sub">Invite mentors, youth, guardians and volunteers by email. Track what's pending, accepted or expired.</p>
+        </div>
+        <div class="wu-page__actions">
+          <button class="wu-btn wu-btn--ghost"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
+          <button class="wu-btn wu-btn--primary" data-open-modal="m-bulk-invite"><svg class="wu-icon"><use href="#i-user-plus"></use></svg>Bulk invite</button>
+        </div>
+      </div>
+
+      <!-- ===== DEFAULT ===== -->
+      <div data-when-state="default">
+
+        <div class="wu-grid wu-grid--4 wu-mb-4">
+          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Pending</div><div class="wu-statcard__value">4</div></div>
+          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Accepted</div><div class="wu-statcard__value">12</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>75% accept rate</div></div>
+          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Expired</div><div class="wu-statcard__value">2</div></div>
+          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Sent this term</div><div class="wu-statcard__value">18</div></div>
+        </div>
+
+        <div data-tabs-root>
+          <div class="wu-tabs">
+            <button class="wu-tab is-active" data-tab="pending">Pending <span class="wu-badge wu-badge--lime">4</span></button>
+            <button class="wu-tab" data-tab="accepted">Accepted <span class="wu-badge">12</span></button>
+            <button class="wu-tab" data-tab="expired">Expired <span class="wu-badge">2</span></button>
+          </div>
+
+          <!-- PENDING -->
+          <div data-tabpanel="pending" class="wu-tabpanel is-active">
+            <div class="wu-card">
+              <div class="wu-table-wrap">
+                <table class="wu-table wu-table--cards">
+                  <thead><tr><th>Email</th><th>Role</th><th>Sent</th><th>Status</th><th>Actions</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td data-label="Email">grace.adeyemi@wordup.to</td>
+                      <td data-label="Role"><span class="wu-badge wu-badge--ink">Mentor</span></td>
+                      <td data-label="Sent">Jul 15, 2026</td>
+                      <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Pending</span></td>
+                      <td data-label="Actions">
+                        <div class="wu-cluster wu-gap-2">
+                          <button class="wu-btn wu-btn--ghost wu-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
+                          <button class="wu-btn wu-btn--danger wu-btn--sm" data-open-modal="m-revoke">Revoke</button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td data-label="Email">j.alcantara.guardian@gmail.com</td>
+                      <td data-label="Role"><span class="wu-badge wu-badge--ink">Guardian</span></td>
+                      <td data-label="Sent">Jul 14, 2026</td>
+                      <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Pending</span></td>
+                      <td data-label="Actions">
+                        <div class="wu-cluster wu-gap-2">
+                          <button class="wu-btn wu-btn--ghost wu-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
+                          <button class="wu-btn wu-btn--danger wu-btn--sm" data-open-modal="m-revoke">Revoke</button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td data-label="Email">tyrone.clarke@student.tdsb.on.ca</td>
+                      <td data-label="Role"><span class="wu-badge wu-badge--ink">Youth</span></td>
+                      <td data-label="Sent">Jul 12, 2026</td>
+                      <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Pending</span></td>
+                      <td data-label="Actions">
+                        <div class="wu-cluster wu-gap-2">
+                          <button class="wu-btn wu-btn--ghost wu-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
+                          <button class="wu-btn wu-btn--danger wu-btn--sm" data-open-modal="m-revoke">Revoke</button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td data-label="Email">volunteer.help@wordup.to</td>
+                      <td data-label="Role"><span class="wu-badge wu-badge--ink">Volunteer</span></td>
+                      <td data-label="Sent">Jul 11, 2026</td>
+                      <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Pending</span></td>
+                      <td data-label="Actions">
+                        <div class="wu-cluster wu-gap-2">
+                          <button class="wu-btn wu-btn--ghost wu-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
+                          <button class="wu-btn wu-btn--danger wu-btn--sm" data-open-modal="m-revoke">Revoke</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ACCEPTED -->
+          <div data-tabpanel="accepted" class="wu-tabpanel">
+            <div class="wu-card">
+              <div class="wu-table-wrap">
+                <table class="wu-table wu-table--cards">
+                  <thead><tr><th>Email</th><th>Role</th><th>Sent</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td data-label="Email">marcus.bello@wordup.to</td>
+                      <td data-label="Role"><span class="wu-badge wu-badge--ink">Mentor</span></td>
+                      <td data-label="Sent">Jun 2, 2026</td>
+                      <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Accepted</span></td>
+                    </tr>
+                    <tr>
+                      <td data-label="Email">danielle.osei@wordup.to</td>
+                      <td data-label="Role"><span class="wu-badge wu-badge--ink">Mentor</span></td>
+                      <td data-label="Sent">Jun 2, 2026</td>
+                      <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Accepted</span></td>
+                    </tr>
+                    <tr>
+                      <td data-label="Email">jayden.alcantara@student.tdsb.on.ca</td>
+                      <td data-label="Role"><span class="wu-badge wu-badge--ink">Youth</span></td>
+                      <td data-label="Sent">Jun 5, 2026</td>
+                      <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Accepted</span></td>
+                    </tr>
+                    <tr>
+                      <td data-label="Email">priya.sharma@student.tdsb.on.ca</td>
+                      <td data-label="Role"><span class="wu-badge wu-badge--ink">Youth</span></td>
+                      <td data-label="Sent">Jun 5, 2026</td>
+                      <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Accepted</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- EXPIRED -->
+          <div data-tabpanel="expired" class="wu-tabpanel">
+            <div class="wu-card">
+              <div class="wu-table-wrap">
+                <table class="wu-table wu-table--cards">
+                  <thead><tr><th>Email</th><th>Role</th><th>Sent</th><th>Status</th><th>Actions</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td data-label="Email">devon.grant@student.tdsb.on.ca</td>
+                      <td data-label="Role"><span class="wu-badge wu-badge--ink">Youth</span></td>
+                      <td data-label="Sent">May 18, 2026</td>
+                      <td data-label="Status"><span class="wu-badge wu-badge--error wu-badge--dot">Expired</span></td>
+                      <td data-label="Actions"><button class="wu-btn wu-btn--secondary wu-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button></td>
+                    </tr>
+                    <tr>
+                      <td data-label="Email">old.volunteer@example.org</td>
+                      <td data-label="Role"><span class="wu-badge wu-badge--ink">Volunteer</span></td>
+                      <td data-label="Sent">May 3, 2026</td>
+                      <td data-label="Status"><span class="wu-badge wu-badge--error wu-badge--dot">Expired</span></td>
+                      <td data-label="Actions"><button class="wu-btn wu-btn--secondary wu-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== LOADING ===== -->
+      <div data-when-state="loading" class="wu-hide">
+        <div class="wu-grid wu-grid--4 wu-mb-4">
+          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
+          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
+          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
+          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
+        </div>
+        <div class="wu-card"><div class="wu-card__body">
+          <span class="wu-skeleton wu-skeleton--title"></span>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+          <div class="wu-mt-4"></div>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+        </div></div>
+      </div>
+
+      <!-- ===== EMPTY ===== -->
+      <div data-when-state="empty" class="wu-hide">
+        <div class="wu-card"><div class="wu-empty">
+          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-mail"></use></svg></div>
+          <h3 class="wu-empty__title">No invitations yet</h3>
+          <p class="wu-empty__text">Invite mentors, youth, guardians and volunteers to join Word Up. You can send them one at a time or in bulk.</p>
+          <button class="wu-btn wu-btn--primary" data-open-modal="m-bulk-invite"><svg class="wu-icon"><use href="#i-user-plus"></use></svg>Bulk invite</button>
+        </div></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== BULK INVITE MODAL ===== -->
+  <div class="wu-modal" id="m-bulk-invite" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Bulk invite</h2><p class="wu-modal__sub">Paste one email per line. Everyone gets the same role.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label">Role <span class="wu-label__req">*</span></label>
+          <select class="wu-select"><option>Youth</option><option>Mentor</option><option>Guardian</option><option>Volunteer</option></select>
+        </div>
+        <div class="wu-field">
+          <label class="wu-label">Assign to cohort</label>
+          <select class="wu-select"><option>Rexdale Fall '25</option><option>Warden Winter '26</option><option>St. Clair Spring '26</option><option>No cohort</option></select>
+        </div>
+        <div class="wu-field">
+          <label class="wu-label">Email addresses <span class="wu-label__req">*</span></label>
+          <textarea class="wu-textarea" rows="5" placeholder="malik.johnson@student.tdsb.on.ca&#10;amara.okafor@student.tdsb.on.ca&#10;zara.mensah@student.tdsb.on.ca"></textarea>
+          <div class="wu-help">3 addresses detected · invites expire after 14 days.</div>
+        </div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="3 invitations sent" data-toast-type="success" data-toast-title="Bulk invite"><svg class="wu-icon"><use href="#i-send"></use></svg>Send invites</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== REVOKE MODAL ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-revoke" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div class="wu-cluster wu-gap-2">
+          <span class="wu-modal__icon wu-modal__icon--danger"><svg class="wu-icon"><use href="#i-alert-triangle"></use></svg></span>
+          <div><h2 class="wu-modal__title">Revoke invitation?</h2><p class="wu-modal__sub">grace.adeyemi@wordup.to</p></div>
+        </div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <p class="wu-muted">The invite link will stop working immediately. You can always send a fresh invitation later.</p>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--danger" data-close-modal data-toast="Invitation revoked" data-toast-type="warning"><svg class="wu-icon"><use href="#i-trash"></use></svg>Revoke</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

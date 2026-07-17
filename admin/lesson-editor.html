@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson editor · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+</head>
+<body data-role="admin" data-active="tracks" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <a class="wu-btn wu-btn--ghost wu-btn--sm wu-mb-4" href="module-editor.html"><svg class="wu-icon"><use href="#i-arrow-left"></use></svg>Back to Servant Leadership</a>
+          <div class="wu-eyebrow">Servant Leadership · Lesson 1</div>
+          <h1 class="wu-page__title">The Towel and the Basin</h1>
+          <p class="wu-page__sub">Edit the teaching content, media and reflection prompts youth will see.</p>
+        </div>
+        <div class="wu-page__actions">
+          <span class="wu-badge wu-badge--success wu-badge--dot">Published</span>
+          <a class="wu-btn wu-btn--ghost" href="../youth/lesson.html"><svg class="wu-icon"><use href="#i-eye"></use></svg>Preview</a>
+          <button class="wu-btn wu-btn--primary" data-toast="Lesson saved" data-toast-type="success" data-toast-title="Saved"><svg class="wu-icon"><use href="#i-check"></use></svg>Save</button>
+        </div>
+      </div>
+
+      <div class="wu-grid wu-grid--3">
+        <!-- ===== Main ===== -->
+        <div style="grid-column:span 2;min-width:0">
+
+          <div class="wu-card wu-mb-6">
+            <div class="wu-card__body">
+              <div class="wu-field">
+                <label class="wu-label">Lesson title <span class="wu-label__req">*</span></label>
+                <input class="wu-input" value="The Towel and the Basin">
+              </div>
+              <div class="wu-grid wu-grid--2">
+                <div class="wu-field">
+                  <label class="wu-label">Scripture reference <span class="wu-label__req">*</span></label>
+                  <input class="wu-input" value="John 13:1–17">
+                  <div class="wu-help">Anchor passage for this lesson.</div>
+                </div>
+                <div class="wu-field">
+                  <label class="wu-label">Estimated time</label>
+                  <input class="wu-input" value="12 min">
+                </div>
+              </div>
+              <div class="wu-scripture">“Now that I, your Lord and Teacher, have washed your feet, you also should wash one another's feet.”<span class="wu-scripture__ref">John 13:14</span></div>
+            </div>
+          </div>
+
+          <!-- Rich-text teaching area -->
+          <div class="wu-card wu-mb-6">
+            <div class="wu-card__header"><h3 class="wu-card__title">Teaching content</h3></div>
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-gap-1 wu-mb-4" role="toolbar" aria-label="Formatting">
+                <button class="wu-iconbtn" aria-label="Bold"><strong>B</strong></button>
+                <button class="wu-iconbtn" aria-label="Italic"><em>I</em></button>
+                <button class="wu-iconbtn" aria-label="Heading"><svg class="wu-icon"><use href="#i-book-open"></use></svg></button>
+                <button class="wu-iconbtn" aria-label="Bulleted list"><svg class="wu-icon"><use href="#i-list"></use></svg></button>
+                <button class="wu-iconbtn" aria-label="Insert scripture"><svg class="wu-icon"><use href="#i-church"></use></svg></button>
+                <button class="wu-iconbtn" aria-label="Insert link"><svg class="wu-icon"><use href="#i-link"></use></svg></button>
+                <button class="wu-iconbtn" aria-label="Insert image"><svg class="wu-icon"><use href="#i-camera"></use></svg></button>
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="teach">Body</label>
+                <textarea class="wu-textarea" id="teach" style="min-height:220px">On the night before he died, Jesus did something a servant would do — he knelt and washed his disciples' feet. Peter was uncomfortable. The teacher shouldn't be doing the servant's job.
+
+But that was the point. Real leadership in God's kingdom looks like a towel and a basin, not a title.
+
+Talk it through: Where in your week could you "pick up the towel" for someone — at home, at school, in your cohort?</textarea>
+                <div class="wu-help">Plain formatting. Youth see this as the main lesson reading.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Media attach -->
+          <div class="wu-card wu-mb-6">
+            <div class="wu-card__header">
+              <h3 class="wu-card__title">Media</h3>
+              <button class="wu-btn wu-btn--subtle wu-btn--sm"><svg class="wu-icon"><use href="#i-upload"></use></svg>Attach media</button>
+            </div>
+            <div class="wu-card__body">
+              <div class="wu-lessonstep">
+                <span class="wu-lessonstep__num"><svg class="wu-icon"><use href="#i-play-circle"></use></svg></span>
+                <div class="wu-listitem__body">
+                  <div class="wu-listitem__title">Foot-washing — short teaching clip</div>
+                  <div class="wu-listitem__meta">Video · 4:12</div>
+                </div>
+                <button class="wu-iconbtn" aria-label="Remove media"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+              </div>
+              <div class="wu-lessonstep">
+                <span class="wu-lessonstep__num"><svg class="wu-icon"><use href="#i-file-text"></use></svg></span>
+                <div class="wu-listitem__body">
+                  <div class="wu-listitem__title">Servant Leadership — handout.pdf</div>
+                  <div class="wu-listitem__meta">Document · 320 KB</div>
+                </div>
+                <button class="wu-iconbtn" aria-label="Remove media"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reflection prompts -->
+          <div class="wu-card wu-mb-6">
+            <div class="wu-card__header">
+              <h3 class="wu-card__title">Reflection prompts</h3>
+              <button class="wu-btn wu-btn--subtle wu-btn--sm" data-toast="Prompt row added" data-toast-type="info"><svg class="wu-icon"><use href="#i-plus"></use></svg>Add prompt</button>
+            </div>
+            <div class="wu-card__body">
+              <div class="wu-stack wu-stack--sm">
+                <div class="wu-cluster wu-gap-2">
+                  <input class="wu-input" value="Who has served you recently in a way you noticed?">
+                  <button class="wu-iconbtn" aria-label="Remove prompt"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+                </div>
+                <div class="wu-cluster wu-gap-2">
+                  <input class="wu-input" value="What makes it hard to serve when no one is watching?">
+                  <button class="wu-iconbtn" aria-label="Remove prompt"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+                </div>
+                <div class="wu-cluster wu-gap-2">
+                  <input class="wu-input" value="Name one person you'll serve this week and how.">
+                  <button class="wu-iconbtn" aria-label="Remove prompt"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leader guide -->
+          <div class="wu-card">
+            <div class="wu-card__header"><h3 class="wu-card__title">Leader guide notes</h3></div>
+            <div class="wu-card__body">
+              <div class="wu-field">
+                <label class="wu-label" for="guide">Notes for mentors (not shown to youth)</label>
+                <textarea class="wu-textarea" id="guide" style="min-height:120px">Open with the video, then read John 13 together. Watch for youth who struggle to receive help (Peter's reaction). Close by having each person commit to one act of service before next week — Marcus follows up in check-ins.</textarea>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ===== Sidebar ===== -->
+        <div style="min-width:0">
+          <div class="wu-card wu-mb-6">
+            <div class="wu-card__header"><h3 class="wu-card__title">Status</h3></div>
+            <div class="wu-card__body">
+              <div class="wu-field">
+                <label class="wu-label">Visibility</label>
+                <div class="wu-segment">
+                  <button class="wu-segment__item is-active">Published</button>
+                  <button class="wu-segment__item">Draft</button>
+                </div>
+              </div>
+              <div class="wu-help">Publishing makes this lesson live for assigned cohorts.</div>
+              <div class="wu-divider"></div>
+              <button class="wu-btn wu-btn--primary wu-btn--block" data-open-modal="m-publish"><svg class="wu-icon"><use href="#i-upload"></use></svg>Publish changes</button>
+            </div>
+          </div>
+
+          <div class="wu-card">
+            <div class="wu-card__body">
+              <div class="wu-eyebrow wu-mb-4">Belongs to</div>
+              <div class="wu-person">
+                <span class="wu-avatar" data-name="Servant Leadership"></span>
+                <div><div class="wu-person__name">Servant Leadership</div><div class="wu-person__meta">Bible &amp; Leadership · Lesson 1 of 3</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===================== MODALS ===================== -->
+  <div class="wu-modal wu-modal--sm" id="m-publish" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div class="wu-cluster wu-gap-2">
+          <span class="wu-modal__icon wu-modal__icon--success"><svg class="wu-icon"><use href="#i-upload"></use></svg></span>
+          <div><h2 class="wu-modal__title">Publish this lesson?</h2><p class="wu-modal__sub">It will become visible to all youth in assigned cohorts.</p></div>
+        </div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-alert wu-alert--info"><svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg><div>Rexdale Fall '25 and Warden Winter '26 are assigned to this module.</div></div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Lesson published" data-toast-type="success" data-toast-title="Live">Publish</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

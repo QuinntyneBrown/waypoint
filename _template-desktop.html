@@ -1,0 +1,51 @@
+<!doctype html>
+<!-- COPY into a role folder (mentor/, admin/). Desktop shell = sidenav + dense tables. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page title · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+</head>
+<!-- data-role: mentor | admin   data-active: nav item key (see NAV in wordup.js) -->
+<body data-role="admin" data-active="dashboard" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Section</div>
+          <h1 class="wu-page__title">Page title</h1>
+          <p class="wu-page__sub">Short description of this page.</p>
+        </div>
+        <div class="wu-page__actions">
+          <button class="wu-btn wu-btn--ghost"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
+          <button class="wu-btn wu-btn--primary" data-open-modal="m-example"><svg class="wu-icon"><use href="#i-plus"></use></svg>Primary action</button>
+        </div>
+      </div>
+
+      <!-- ===== page content ===== -->
+      <div class="wu-grid wu-grid--3">
+        <div class="wu-card"><div class="wu-card__body">Card content</div></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== page-scoped modals (hidden until opened) ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-example" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Modal title</h2></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body"><p class="wu-muted">Modal body content.</p></div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Done" data-toast-type="success">Confirm</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

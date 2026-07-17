@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz builder · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+</head>
+<body data-role="admin" data-active="tracks" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <a class="wu-btn wu-btn--ghost wu-btn--sm wu-mb-4" href="module-editor.html"><svg class="wu-icon"><use href="#i-arrow-left"></use></svg>Back to Servant Leadership</a>
+          <div class="wu-eyebrow">Servant Leadership · Assessment</div>
+          <h1 class="wu-page__title">Module quiz</h1>
+          <p class="wu-page__sub">Set the rules and build the questions youth answer to complete this module.</p>
+        </div>
+        <div class="wu-page__actions">
+          <span class="wu-badge wu-badge--success wu-badge--dot">Published</span>
+          <button class="wu-btn wu-btn--primary" data-toast="Quiz saved" data-toast-type="success" data-toast-title="Saved"><svg class="wu-icon"><use href="#i-check"></use></svg>Save</button>
+        </div>
+      </div>
+
+      <div class="wu-grid wu-grid--3">
+        <!-- ===== Main ===== -->
+        <div style="grid-column:span 2;min-width:0">
+
+          <div class="wu-card">
+            <div class="wu-card__header">
+              <h3 class="wu-card__title">Questions <span class="wu-badge wu-badge--lime">2</span></h3>
+              <button class="wu-btn wu-btn--primary wu-btn--sm" data-open-modal="m-question"><svg class="wu-icon"><use href="#i-plus"></use></svg>Add question</button>
+            </div>
+            <div class="wu-card__body">
+              <div class="wu-eyebrow wu-mb-4">Drag to reorder</div>
+
+              <!-- Question 1 -->
+              <div class="wu-card wu-card--greige wu-mb-4">
+                <div class="wu-card__body">
+                  <div class="wu-cluster wu-cluster--between wu-mb-4">
+                    <div class="wu-cluster wu-gap-2">
+                      <button class="wu-iconbtn" aria-label="Drag to reorder" title="Drag to reorder"><svg class="wu-icon"><use href="#i-menu"></use></svg></button>
+                      <span class="wu-badge">Q1 · Multiple choice</span>
+                    </div>
+                    <div class="wu-cluster wu-gap-1">
+                      <button class="wu-iconbtn" aria-label="Edit question" data-open-modal="m-question"><svg class="wu-icon"><use href="#i-edit"></use></svg></button>
+                      <button class="wu-iconbtn" aria-label="Delete question"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+                    </div>
+                  </div>
+                  <div class="wu-listitem__title wu-mb-4">In Mark 10:45, Jesus says the Son of Man came to do what?</div>
+                  <div class="wu-quiz__opt is-correct"><span class="wu-quiz__key">A</span>To serve and give his life as a ransom<svg class="wu-icon" style="margin-left:auto"><use href="#i-check-circle"></use></svg></div>
+                  <div class="wu-quiz__opt"><span class="wu-quiz__key">B</span>To be served by many</div>
+                  <div class="wu-quiz__opt"><span class="wu-quiz__key">C</span>To rule over the nations</div>
+                  <div class="wu-quiz__opt"><span class="wu-quiz__key">D</span>To gather great wealth</div>
+                </div>
+              </div>
+
+              <!-- Question 2 -->
+              <div class="wu-card wu-card--greige">
+                <div class="wu-card__body">
+                  <div class="wu-cluster wu-cluster--between wu-mb-4">
+                    <div class="wu-cluster wu-gap-2">
+                      <button class="wu-iconbtn" aria-label="Drag to reorder" title="Drag to reorder"><svg class="wu-icon"><use href="#i-menu"></use></svg></button>
+                      <span class="wu-badge">Q2 · True / false</span>
+                    </div>
+                    <div class="wu-cluster wu-gap-1">
+                      <button class="wu-iconbtn" aria-label="Edit question" data-open-modal="m-question"><svg class="wu-icon"><use href="#i-edit"></use></svg></button>
+                      <button class="wu-iconbtn" aria-label="Delete question"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+                    </div>
+                  </div>
+                  <div class="wu-listitem__title wu-mb-4">In John 13, Jesus washed the disciples' feet as an example of servant leadership.</div>
+                  <div class="wu-quiz__opt is-correct"><span class="wu-quiz__key">A</span>True<svg class="wu-icon" style="margin-left:auto"><use href="#i-check-circle"></use></svg></div>
+                  <div class="wu-quiz__opt"><span class="wu-quiz__key">B</span>False</div>
+                </div>
+              </div>
+
+              <div class="wu-empty wu-mt-6" style="padding:24px 0">
+                <button class="wu-btn wu-btn--subtle" data-open-modal="m-question"><svg class="wu-icon"><use href="#i-plus"></use></svg>Add another question</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ===== Settings sidebar ===== -->
+        <div style="min-width:0">
+          <div class="wu-card">
+            <div class="wu-card__header"><h3 class="wu-card__title">Settings</h3></div>
+            <div class="wu-card__body">
+              <div class="wu-field">
+                <label class="wu-label">Pass mark</label>
+                <select class="wu-select"><option>70%</option><option>60%</option><option>80%</option><option>100%</option></select>
+              </div>
+              <div class="wu-field">
+                <label class="wu-label">Attempts allowed</label>
+                <select class="wu-select"><option>Unlimited</option><option>3</option><option>2</option><option>1</option></select>
+              </div>
+              <div class="wu-field">
+                <label class="wu-label">Feedback</label>
+                <select class="wu-select"><option>Show correct answers after submit</option><option>Show score only</option><option>Show after all attempts</option></select>
+              </div>
+              <label class="wu-switch"><input type="checkbox" checked><span class="wu-switch__track"></span><span>Shuffle question order</span></label>
+              <div class="wu-mt-4"></div>
+              <label class="wu-switch"><input type="checkbox"><span class="wu-switch__track"></span><span>Required to complete module</span></label>
+              <div class="wu-divider"></div>
+              <div class="wu-progress__row"><div class="wu-progress"><div class="wu-progress__fill" style="--val:78%"></div></div><span class="wu-progress__num">78%</span></div>
+              <div class="wu-help">Average score across Rexdale Fall '25.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===================== MODALS ===================== -->
+  <div class="wu-modal" id="m-question" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Add question</h2><p class="wu-modal__sub">Write the question, pick a type, and mark the correct answer.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label">Question text <span class="wu-label__req">*</span></label>
+          <textarea class="wu-textarea" placeholder="e.g. What did Jesus use to model servant leadership?"></textarea>
+        </div>
+        <div class="wu-field">
+          <label class="wu-label">Question type</label>
+          <select class="wu-select">
+            <option>Multiple choice</option>
+            <option>True / false</option>
+            <option>Multiple answer</option>
+            <option>Short answer</option>
+          </select>
+        </div>
+        <div class="wu-field">
+          <label class="wu-label">Options — toggle the correct one</label>
+          <div class="wu-stack wu-stack--sm">
+            <div class="wu-cluster wu-gap-2">
+              <label class="wu-radio"><input type="radio" name="correct" checked><span class="wu-radio__box"></span><span class="wu-muted">Correct</span></label>
+              <input class="wu-input" placeholder="Option A">
+              <button class="wu-iconbtn" aria-label="Remove option"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+            </div>
+            <div class="wu-cluster wu-gap-2">
+              <label class="wu-radio"><input type="radio" name="correct"><span class="wu-radio__box"></span><span class="wu-muted">Correct</span></label>
+              <input class="wu-input" placeholder="Option B">
+              <button class="wu-iconbtn" aria-label="Remove option"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+            </div>
+            <div class="wu-cluster wu-gap-2">
+              <label class="wu-radio"><input type="radio" name="correct"><span class="wu-radio__box"></span><span class="wu-muted">Correct</span></label>
+              <input class="wu-input" placeholder="Option C">
+              <button class="wu-iconbtn" aria-label="Remove option"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+            </div>
+          </div>
+          <button class="wu-btn wu-btn--subtle wu-btn--sm wu-mt-4"><svg class="wu-icon"><use href="#i-plus"></use></svg>Add option</button>
+        </div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Question added" data-toast-type="success">Add question</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

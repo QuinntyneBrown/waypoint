@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+  <style>
+    .qz-topbar{display:flex;align-items:center;gap:12px;margin-bottom:var(--wu-s5)}
+    .qz-topbar .wu-progress{flex:1}
+    .qz-actions{position:sticky;bottom:0;background:var(--wu-white);border-top:var(--wu-bw) solid var(--wu-border);padding:var(--wu-s4) 0;margin-top:var(--wu-s6);display:flex;gap:12px;justify-content:space-between}
+  </style>
+</head>
+<body data-role="youth" data-active="curriculum" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-container--narrow wu-page">
+
+      <div class="qz-topbar">
+        <a class="wu-btn wu-btn--ghost wu-btn--icon" href="quiz-intro.html" aria-label="Exit quiz"><svg class="wu-icon"><use href="#i-x"></use></svg></a>
+        <div class="wu-progress" aria-label="Quiz progress: question 2 of 5"><div class="wu-progress__fill" style="--val:40%"></div></div>
+        <span class="wu-progress__num">2 / 5</span>
+      </div>
+
+      <div class="wu-eyebrow">Servant Leadership Check · Question 2</div>
+      <h1 class="wu-page__title">In Mark 10:45, what does Jesus say the Son of Man came to do?</h1>
+
+      <div class="wu-stack wu-stack--sm wu-mt-4" role="radiogroup" aria-label="Answer options">
+        <button type="button" class="wu-quiz__opt" role="radio" aria-checked="false" onclick="document.querySelectorAll('.wu-quiz__opt').forEach(function(o){o.classList.remove('is-selected');o.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><span class="wu-quiz__key">A</span>To be served by many</button>
+        <button type="button" class="wu-quiz__opt is-selected" role="radio" aria-checked="true" onclick="document.querySelectorAll('.wu-quiz__opt').forEach(function(o){o.classList.remove('is-selected');o.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><span class="wu-quiz__key">B</span>To serve, and to give his life as a ransom for many</button>
+        <button type="button" class="wu-quiz__opt" role="radio" aria-checked="false" onclick="document.querySelectorAll('.wu-quiz__opt').forEach(function(o){o.classList.remove('is-selected');o.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><span class="wu-quiz__key">C</span>To rule over the disciples</button>
+        <button type="button" class="wu-quiz__opt" role="radio" aria-checked="false" onclick="document.querySelectorAll('.wu-quiz__opt').forEach(function(o){o.classList.remove('is-selected');o.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><span class="wu-quiz__key">D</span>To sit at the right hand of power</button>
+      </div>
+
+      <div class="wu-alert wu-alert--info wu-mt-6">
+        <svg class="wu-alert__icon wu-icon"><use href="#i-refresh"></use></svg>
+        <div>Your answers save automatically. Close the app and resume this quiz right where you left off.</div>
+      </div>
+    </div>
+
+    <div class="wu-container wu-container--narrow">
+      <div class="qz-actions">
+        <a class="wu-btn wu-btn--ghost" href="quiz.html"><svg class="wu-icon"><use href="#i-chevron-left"></use></svg>Prev</a>
+        <a class="wu-btn wu-btn--primary" href="quiz.html">Next<svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== page-scoped modals ===== -->
+  <!-- Shown on the final question when Next becomes Submit -->
+  <div class="wu-modal wu-modal--sm" id="m-submit-quiz" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Submit your quiz?</h2><p class="wu-modal__sub">Servant Leadership Check · Attempt 1 of 2</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-alert wu-alert--warning"><svg class="wu-alert__icon wu-icon"><use href="#i-alert-triangle"></use></svg><div>You’ve answered all 5 questions. Once you submit, you can’t change your answers for this attempt.</div></div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Keep reviewing</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Quiz submitted — scoring…" data-toast-type="success" data-then="quiz-result.html">Submit answers</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
