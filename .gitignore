@@ -1,0 +1,9 @@
+# Dependencies (none required — this is a static, buildless prototype)
+node_modules/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
