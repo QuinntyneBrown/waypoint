@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- COPY into auth/. No app shell — centered card. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+</head>
+<body>
+  <div class="wu-authpage">
+    <div class="wu-authcard">
+      <div class="wu-authcard__brand">
+        <span class="wu-brand__mark" style="width:38px;height:38px;font-size:1.1rem">W</span>
+        <span style="font-family:var(--wu-font-head);font-weight:700;font-size:1.2rem">Word Up</span>
+      </div>
+      <h1 style="font-size:1.5rem;text-align:center">Welcome back</h1>
+      <p class="wu-muted wu-text-c wu-mb-6">Sign in to continue your journey.</p>
+
+      <form onsubmit="event.preventDefault();WordUp.toast('Signed in','');window.location.href=WordUp.href('youth/home.html')">
+        <div class="wu-field">
+          <label class="wu-label" for="email">Email</label>
+          <input class="wu-input" id="email" type="email" placeholder="you@example.com">
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="pw">Password</label>
+          <input class="wu-input" id="pw" type="password" placeholder="••••••••">
+          <div class="wu-error-text">Incorrect password.</div>
+        </div>
+        <button class="wu-btn wu-btn--primary wu-btn--block wu-btn--lg" type="submit">Sign in</button>
+      </form>
+
+      <p class="wu-text-c wu-mt-6 wu-text-sm"><a href="./forgot-password.html">Forgot password?</a></p>
+    </div>
+  </div>
+</body>
+</html>

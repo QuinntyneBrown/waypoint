@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Style Guide · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="assets/css/wordup.css">
+  <script defer src="assets/js/wordup.js"></script>
+  <style>
+    .sg-head{position:sticky;top:0;z-index:30;background:var(--wu-white);border-bottom:var(--wu-bw) solid var(--wu-border);padding:14px 0}
+    .sg-sec{padding:var(--wu-s8) 0;border-bottom:var(--wu-bw) solid var(--wu-border)}
+    .sg-sec__label{font-family:var(--wu-font-head);text-transform:uppercase;letter-spacing:.1em;font-size:.72rem;color:var(--wu-muted);font-weight:600;margin-bottom:var(--wu-s5)}
+    .sg-swatch{border-radius:var(--wu-r-card);height:72px;border:var(--wu-bw) solid var(--wu-border);display:flex;align-items:flex-end;padding:8px;font-size:.7rem;font-weight:600}
+    .sg-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+    .sg-iconcell{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px;border:var(--wu-bw) solid var(--wu-border);border-radius:8px;font-size:.62rem;color:var(--wu-muted)}
+    .sg-iconcell .wu-icon{width:22px;height:22px;color:var(--wu-ink)}
+  </style>
+</head>
+<body>
+  <header class="sg-head">
+    <div class="wu-container wu-cluster wu-justify-between">
+      <div class="wu-brand"><span class="wu-brand__mark">W</span><span>Word Up — Style Guide</span></div>
+      <div class="wu-cluster wu-gap-2">
+        <span class="wu-badge wu-badge--lime">FaithTech design system</span>
+        <a class="wu-btn wu-btn--ghost wu-btn--sm" href="index.html">All screens</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wu-container">
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Colors</div>
+      <div class="wu-grid wu-grid--4">
+        <div class="sg-swatch" style="background:#c6fb50">brand · #c6fb50</div>
+        <div class="sg-swatch" style="background:#16160c;color:#fff">ink · #16160c</div>
+        <div class="sg-swatch" style="background:#f5f0f0">g100 · #f5f0f0</div>
+        <div class="sg-swatch" style="background:#e4e0d8">g300 · #e4e0d8</div>
+        <div class="sg-swatch" style="background:#2e8f2e;color:#fff">success</div>
+        <div class="sg-swatch" style="background:#c77f00;color:#fff">warning</div>
+        <div class="sg-swatch" style="background:#d5421b;color:#fff">error</div>
+        <div class="sg-swatch" style="background:#1d8fb9;color:#fff">info</div>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Typography — Space Grotesk (headings) · Inter (body) · Fraunces (scripture)</div>
+      <div class="wu-eyebrow">Eyebrow label</div>
+      <h1>Heading 1 — Leaders who love Jesus</h1>
+      <h2>Heading 2 — Track your journey</h2>
+      <h3>Heading 3 — This week’s lesson</h3>
+      <p>Body text in Inter. Youth from across Toronto grow in the Word and in leadership, one lesson at a time.</p>
+      <div class="wu-scripture">“For even the Son of Man did not come to be served, but to serve.”<span class="wu-scripture__ref">Mark 10:45</span></div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Buttons</div>
+      <div class="sg-row">
+        <button class="wu-btn wu-btn--primary">Primary</button>
+        <button class="wu-btn wu-btn--secondary">Secondary</button>
+        <button class="wu-btn wu-btn--ghost">Ghost</button>
+        <button class="wu-btn wu-btn--subtle">Subtle</button>
+        <button class="wu-btn wu-btn--danger">Danger</button>
+        <button class="wu-btn wu-btn--primary"><svg class="wu-icon"><use href="#i-plus"></use></svg>With icon</button>
+        <button class="wu-btn wu-btn--primary is-loading">Loading</button>
+        <button class="wu-btn wu-btn--primary" disabled>Disabled</button>
+        <button class="wu-btn wu-btn--primary wu-btn--sm">Small</button>
+        <button class="wu-btn wu-btn--primary wu-btn--lg">Large</button>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Badges &amp; pills</div>
+      <div class="sg-row">
+        <span class="wu-badge">Neutral</span>
+        <span class="wu-badge wu-badge--success wu-badge--dot">On track</span>
+        <span class="wu-badge wu-badge--warning wu-badge--dot">In progress</span>
+        <span class="wu-badge wu-badge--error wu-badge--dot">At risk</span>
+        <span class="wu-badge wu-badge--info">New</span>
+        <span class="wu-badge wu-badge--lime">Lime</span>
+        <span class="wu-badge wu-badge--ink">Ink</span>
+      </div>
+      <div class="wu-pillrow wu-mt-4">
+        <span class="wu-pill is-active">All</span><span class="wu-pill">Bible</span><span class="wu-pill">Coding</span>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Form controls</div>
+      <div class="wu-grid wu-grid--2">
+        <div>
+          <div class="wu-field">
+            <label class="wu-label">Full name <span class="wu-label__req">*</span></label>
+            <input class="wu-input" placeholder="Jayden Alcantara">
+          </div>
+          <div class="wu-field is-error">
+            <label class="wu-label">Email</label>
+            <input class="wu-input" value="not-an-email">
+            <div class="wu-error-text">Enter a valid email address.</div>
+          </div>
+          <div class="wu-field">
+            <label class="wu-label">Cohort</label>
+            <select class="wu-select"><option>Rexdale Fall '25</option><option>Warden Winter '26</option></select>
+          </div>
+          <div class="wu-field">
+            <label class="wu-label">Reflection</label>
+            <textarea class="wu-textarea" placeholder="What stood out to you?"></textarea>
+          </div>
+        </div>
+        <div>
+          <label class="wu-check"><input type="checkbox" checked><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>I finished the reading</span></label>
+          <label class="wu-check"><input type="checkbox"><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Prayer request submitted</span></label>
+          <div class="wu-mt-4"></div>
+          <label class="wu-radio"><input type="radio" name="r" checked><span class="wu-radio__box"></span><span>Present</span></label>
+          <label class="wu-radio"><input type="radio" name="r"><span class="wu-radio__box"></span><span>Absent</span></label>
+          <div class="wu-mt-6"></div>
+          <label class="wu-switch"><input type="checkbox" checked><span class="wu-switch__track"></span><span>Email notifications</span></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Cards &amp; stat cards</div>
+      <div class="wu-grid wu-grid--4">
+        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Active youth</div><div class="wu-statcard__value">42</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+6 this term</div></div>
+        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Avg progress</div><div class="wu-statcard__value">64%</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+4%</div></div>
+        <div class="wu-card wu-statcard"><div class="wu-statcard__label">At risk</div><div class="wu-statcard__value">3</div><div class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-trending-down"></use></svg>needs follow-up</div></div>
+        <div class="wu-card wu-card--lime"><div class="wu-card__body"><div class="wu-statcard__label" style="color:var(--wu-ink)">Attendance</div><div class="wu-statcard__value">89%</div></div></div>
+      </div>
+      <div class="wu-grid wu-grid--3 wu-mt-4">
+        <div class="wu-card"><div class="wu-card__header"><h3 class="wu-card__title">Standard card</h3><button class="wu-iconbtn"><svg class="wu-icon"><use href="#i-more-vertical"></use></svg></button></div><div class="wu-card__body"><p class="wu-muted wu-mb-0">Card body with a footer action.</p></div><div class="wu-card__footer"><button class="wu-btn wu-btn--ghost wu-btn--sm">Action</button></div></div>
+        <div class="wu-card wu-card--greige"><div class="wu-card__body">Greige surface card</div></div>
+        <div class="wu-card wu-card--ink"><div class="wu-card__body">Ink surface card</div></div>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Progress — rings &amp; bars</div>
+      <div class="sg-row">
+        <div class="wu-ring wu-ring--sm" style="--val:38"><span class="wu-ring__label">38%</span></div>
+        <div class="wu-ring" style="--val:64"><span class="wu-ring__label">64%</span></div>
+        <div class="wu-ring wu-ring--lg" style="--val:91"><span class="wu-ring__label">91%</span></div>
+        <div style="flex:1;min-width:220px">
+          <div class="wu-progress__row wu-mb-4"><div class="wu-progress"><div class="wu-progress__fill" style="--val:64%"></div></div><span class="wu-progress__num">64%</span></div>
+          <div class="wu-progress__row"><div class="wu-progress wu-progress--ink wu-progress--thin"><div class="wu-progress__fill" style="--val:38%"></div></div><span class="wu-progress__num">38%</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Avatars &amp; people</div>
+      <div class="sg-row">
+        <span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>
+        <span class="wu-avatar" data-name="Amara Okafor"></span>
+        <span class="wu-avatar wu-avatar--lg" data-name="Priya Sharma"></span>
+        <div class="wu-avatarstack"><span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span><span class="wu-avatar wu-avatar--sm" data-name="Malik Johnson"></span><span class="wu-avatar wu-avatar--sm" data-name="Sofia Nguyen"></span></div>
+        <div class="wu-person"><span class="wu-avatar" data-name="Marcus Bello"></span><div><div class="wu-person__name">Marcus Bello</div><div class="wu-person__meta">Lead Mentor · 4 youth</div></div></div>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Tabs</div>
+      <div data-tabs-root>
+        <div class="wu-tabs">
+          <button class="wu-tab is-active" data-tab="a">Overview</button>
+          <button class="wu-tab" data-tab="b">Progress</button>
+          <button class="wu-tab" data-tab="c">Check-ins <span class="wu-badge wu-badge--lime">3</span></button>
+        </div>
+        <div data-tabpanel="a" class="wu-tabpanel is-active"><p>Overview panel content.</p></div>
+        <div data-tabpanel="b" class="wu-tabpanel"><p>Progress panel content.</p></div>
+        <div data-tabpanel="c" class="wu-tabpanel"><p>Check-ins panel content.</p></div>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Table (reflows to cards on mobile)</div>
+      <div class="wu-table-wrap">
+        <table class="wu-table wu-table--cards">
+          <thead><tr><th>Youth</th><th>Cohort</th><th>Progress</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td><td data-label="Cohort">Rexdale Fall '25</td><td data-label="Progress">82%</td><td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">On track</span></td></tr>
+            <tr><td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td><td data-label="Cohort">Rexdale Fall '25</td><td data-label="Progress">38%</td><td data-label="Status"><span class="wu-badge wu-badge--error wu-badge--dot">At risk</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Alerts</div>
+      <div class="wu-stack wu-stack--sm">
+        <div class="wu-alert wu-alert--success"><svg class="wu-alert__icon wu-icon"><use href="#i-check-circle"></use></svg><div><div class="wu-alert__title">Saved</div>Your reflection was submitted to your mentor.</div></div>
+        <div class="wu-alert wu-alert--warning"><svg class="wu-alert__icon wu-icon"><use href="#i-alert-triangle"></use></svg><div>You have unsaved attendance changes.</div></div>
+        <div class="wu-alert wu-alert--error"><svg class="wu-alert__icon wu-icon"><use href="#i-alert-circle"></use></svg><div>We couldn’t submit your quiz. It’s queued and will retry.</div></div>
+        <div class="wu-alert wu-alert--info"><svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg><div>Guardian consent is required before this youth can start.</div></div>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Empty state &amp; skeleton</div>
+      <div class="wu-grid wu-grid--2">
+        <div class="wu-card"><div class="wu-empty"><div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-message-square"></use></svg></div><h3 class="wu-empty__title">No messages yet</h3><p class="wu-empty__text">Say hi to your mentor to get started.</p><button class="wu-btn wu-btn--primary">New message</button></div></div>
+        <div class="wu-card"><div class="wu-card__body">
+          <span class="wu-skeleton wu-skeleton--title"></span>
+          <span class="wu-skeleton wu-skeleton--text"></span>
+          <span class="wu-skeleton wu-skeleton--text" style="width:80%"></span>
+          <div class="wu-mt-4"></div><span class="wu-skeleton wu-skeleton--block"></span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Modals &amp; toasts (interactive)</div>
+      <div class="sg-row">
+        <button class="wu-btn wu-btn--secondary" data-open-modal="m-demo">Open modal</button>
+        <button class="wu-btn wu-btn--ghost" data-toast="Progress saved" data-toast-type="success" data-toast-title="Nice work">Success toast</button>
+        <button class="wu-btn wu-btn--ghost" data-toast="Could not connect" data-toast-type="error">Error toast</button>
+        <button class="wu-btn wu-btn--ghost" onclick="WordUp.setOffline(!document.body.classList.contains('is-offline'))">Toggle offline</button>
+      </div>
+    </section>
+
+    <section class="sg-sec">
+      <div class="sg-sec__label">Icons</div>
+      <div class="wu-grid wu-grid--auto" id="sg-icons"></div>
+    </section>
+
+    <div style="height:80px"></div>
+  </div>
+
+  <div class="wu-modal wu-modal--sm" id="m-demo" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header"><div><h2 class="wu-modal__title">Publish this lesson?</h2><p class="wu-modal__sub">It will become visible to all youth in the cohort.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal><svg class="wu-icon"><use href="#i-x"></use></svg></button></div>
+      <div class="wu-modal__body"><div class="wu-alert wu-alert--info"><svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg><div>3 cohorts are assigned to this module.</div></div></div>
+      <div class="wu-modal__footer"><button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button><button class="wu-btn wu-btn--primary" data-close-modal data-toast="Lesson published" data-toast-type="success">Publish</button></div>
+    </div>
+  </div>
+
+  <script>
+    // render icon grid from the sprite
+    document.addEventListener("DOMContentLoaded", function () {
+      var names = ["home","compass","book-open","users","user","user-check","calendar","bell","search","settings","check","check-circle","x","plus","edit","trash","upload","download","filter","menu","log-out","award","bar-chart","pie-chart","trending-up","clipboard-check","message-square","send","chevron-right","arrow-right","wifi-off","refresh","alert-triangle","info","help-circle","lock","mail","eye","star","flag","clock","map-pin","play-circle","file-text","folder","grid","target","heart","shield","code","zap","camera","paperclip","thumbs-up","sparkles","graduation-cap","church","mic","layers","table","activity"];
+      var host = document.getElementById("sg-icons");
+      host.innerHTML = names.map(function (n) { return '<div class="sg-iconcell"><svg class="wu-icon"><use href="#i-' + n + '"></use></svg>' + n + '</div>'; }).join("");
+    });
+  </script>
+</body>
+</html>

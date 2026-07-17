@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cohort detail · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+</head>
+<body data-role="admin" data-active="cohorts" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+      <a class="wu-btn wu-btn--ghost wu-btn--sm wu-mb-4" href="cohorts.html"><svg class="wu-icon"><use href="#i-arrow-left"></use></svg>All cohorts</a>
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Cohort · Bible &amp; Leadership</div>
+          <h1 class="wu-page__title">Rexdale Fall '25</h1>
+          <p class="wu-page__sub">Sep–Dec 2025 · Rexdale Community Hub · Lead Mentor Marcus Bello</p>
+        </div>
+        <div class="wu-page__actions">
+          <button class="wu-btn wu-btn--ghost" data-open-modal="m-edit-cohort"><svg class="wu-icon"><use href="#i-edit"></use></svg>Edit</button>
+          <button class="wu-btn wu-btn--primary" data-open-modal="m-add-youth"><svg class="wu-icon"><use href="#i-user-plus"></use></svg>Add youth</button>
+        </div>
+      </div>
+
+      <!-- Summary strip -->
+      <div class="wu-grid wu-grid--4 wu-mb-6">
+        <div class="wu-card"><div class="wu-card__body wu-cluster wu-gap-4">
+          <div class="wu-ring" style="--val:68"><span class="wu-ring__label">68%</span></div>
+          <div><div class="wu-statcard__label">Aggregate progress</div><div class="wu-muted">Across 5 youth</div></div>
+        </div></div>
+        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Attendance rate</div><div class="wu-statcard__value">86%</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+3% vs last month</div></div>
+        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Members</div><div class="wu-statcard__value">5</div><div class="wu-statcard__delta"><svg class="wu-icon"><use href="#i-users"></use></svg>1 at risk</div></div>
+        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Modules complete</div><div class="wu-statcard__value">3 / 5</div><div class="wu-statcard__delta"><svg class="wu-icon"><use href="#i-book-open"></use></svg>Servant Leadership active</div></div>
+      </div>
+
+      <div data-tabs-root>
+        <div class="wu-tabs">
+          <button class="wu-tab is-active" data-tab="overview">Overview</button>
+          <button class="wu-tab" data-tab="members">Members <span class="wu-badge wu-badge--lime">5</span></button>
+          <button class="wu-tab" data-tab="curriculum">Curriculum</button>
+          <button class="wu-tab" data-tab="attendance">Attendance</button>
+        </div>
+
+        <!-- ===== OVERVIEW ===== -->
+        <div data-tabpanel="overview" class="wu-tabpanel is-active">
+          <div class="wu-grid wu-grid--3">
+            <div class="wu-card" style="grid-column:span 2">
+              <div class="wu-card__header"><h3 class="wu-card__title">Assigned track &amp; curriculum</h3></div>
+              <div class="wu-card__body">
+                <div class="wu-cluster wu-justify-between wu-mb-4">
+                  <div><div class="wu-eyebrow">Track</div><strong>Bible &amp; Leadership</strong></div>
+                  <a class="wu-btn wu-btn--ghost wu-btn--sm" href="tracks.html">View track</a>
+                </div>
+                <div class="wu-divider"></div>
+                <div class="wu-timeline">
+                  <div class="wu-timeline__item is-done"><strong>Who Is Jesus?</strong><div class="wu-muted">Completed · Sep 2025</div></div>
+                  <div class="wu-timeline__item is-done"><strong>Identity in Christ</strong><div class="wu-muted">Completed · Oct 2025</div></div>
+                  <div class="wu-timeline__item is-current"><strong>Servant Leadership</strong><div class="wu-muted">In progress · anchor Mark 10:45</div></div>
+                  <div class="wu-timeline__item"><strong>Leading a Small Group</strong><div class="wu-muted">Upcoming</div></div>
+                  <div class="wu-timeline__item"><strong>Sharing Your Story</strong><div class="wu-muted">Upcoming</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="wu-stack">
+              <div class="wu-card">
+                <div class="wu-card__header"><h3 class="wu-card__title">Mentors</h3></div>
+                <div class="wu-card__body wu-stack wu-stack--sm">
+                  <div class="wu-person"><span class="wu-avatar" data-name="Marcus Bello"></span><div><div class="wu-person__name">Marcus Bello</div><div class="wu-person__meta">Lead Mentor</div></div></div>
+                  <div class="wu-person"><span class="wu-avatar" data-name="Grace Adeyemi"></span><div><div class="wu-person__name">Grace Adeyemi</div><div class="wu-person__meta">Support Mentor</div></div></div>
+                </div>
+              </div>
+              <div class="wu-card">
+                <div class="wu-card__header"><h3 class="wu-card__title">Schedule</h3></div>
+                <div class="wu-card__body wu-stack wu-stack--sm">
+                  <div class="wu-cluster wu-gap-2"><svg class="wu-icon"><use href="#i-calendar"></use></svg><span>Wednesdays · 6:30–8:00 PM</span></div>
+                  <div class="wu-cluster wu-gap-2"><svg class="wu-icon"><use href="#i-map-pin"></use></svg><span>Rexdale Community Hub</span></div>
+                  <div class="wu-cluster wu-gap-2"><svg class="wu-icon"><use href="#i-clock"></use></svg><span>12 sessions · Sep 3 – Dec 10</span></div>
+                  <a class="wu-btn wu-btn--ghost wu-btn--sm wu-mt-2" href="calendar.html">Open calendar</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== MEMBERS ===== -->
+        <div data-tabpanel="members" class="wu-tabpanel">
+          <div class="wu-cluster wu-justify-between wu-mb-4">
+            <h3 class="wu-mb-0">Members</h3>
+            <button class="wu-btn wu-btn--secondary wu-btn--sm" data-open-modal="m-add-youth"><svg class="wu-icon"><use href="#i-user-plus"></use></svg>Add youth</button>
+          </div>
+          <div class="wu-table-wrap">
+            <table class="wu-table wu-table--cards">
+              <thead><tr><th>Youth</th><th>Current module</th><th>Progress</th><th>Attendance</th><th>Status</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
+                  <td data-label="Current module">Servant Leadership</td>
+                  <td data-label="Progress"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:82%"></div></div><span class="wu-progress__num">82%</span></div></td>
+                  <td data-label="Attendance">11 / 12</td>
+                  <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">On track</span></td>
+                  <td data-label=""><a class="wu-btn wu-btn--ghost wu-btn--sm" href="../mentor/my-youth.html">View</a></td>
+                </tr>
+                <tr>
+                  <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
+                  <td data-label="Current module">Servant Leadership</td>
+                  <td data-label="Progress"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:74%"></div></div><span class="wu-progress__num">74%</span></div></td>
+                  <td data-label="Attendance">10 / 12</td>
+                  <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">On track</span></td>
+                  <td data-label=""><a class="wu-btn wu-btn--ghost wu-btn--sm" href="../mentor/my-youth.html">View</a></td>
+                </tr>
+                <tr>
+                  <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td>
+                  <td data-label="Current module">Identity in Christ</td>
+                  <td data-label="Progress"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:38%"></div></div><span class="wu-progress__num">38%</span></div></td>
+                  <td data-label="Attendance">6 / 12</td>
+                  <td data-label="Status"><span class="wu-badge wu-badge--error wu-badge--dot">At risk</span></td>
+                  <td data-label=""><a class="wu-btn wu-btn--ghost wu-btn--sm" href="../mentor/my-youth.html">View</a></td>
+                </tr>
+                <tr>
+                  <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
+                  <td data-label="Current module">Leading a Small Group</td>
+                  <td data-label="Progress"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:91%"></div></div><span class="wu-progress__num">91%</span></div></td>
+                  <td data-label="Attendance">12 / 12</td>
+                  <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">On track</span></td>
+                  <td data-label=""><a class="wu-btn wu-btn--ghost wu-btn--sm" href="../mentor/my-youth.html">View</a></td>
+                </tr>
+                <tr>
+                  <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
+                  <td data-label="Current module">Servant Leadership</td>
+                  <td data-label="Progress"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:55%"></div></div><span class="wu-progress__num">55%</span></div></td>
+                  <td data-label="Attendance">9 / 12</td>
+                  <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">In progress</span></td>
+                  <td data-label=""><a class="wu-btn wu-btn--ghost wu-btn--sm" href="../mentor/my-youth.html">View</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== CURRICULUM ===== -->
+        <div data-tabpanel="curriculum" class="wu-tabpanel">
+          <div class="wu-cluster wu-justify-between wu-mb-4">
+            <div><div class="wu-eyebrow">Track</div><h3 class="wu-mb-0">Bible &amp; Leadership</h3></div>
+            <a class="wu-btn wu-btn--ghost wu-btn--sm" href="tracks.html">Edit track</a>
+          </div>
+          <div class="wu-stack wu-stack--sm">
+            <div class="wu-card"><div class="wu-card__body wu-cluster wu-justify-between">
+              <div><strong>Who Is Jesus?</strong><div class="wu-muted">3 lessons · Introduction to the Gospels</div></div>
+              <span class="wu-badge wu-badge--success wu-badge--dot">Complete</span>
+            </div></div>
+            <div class="wu-card"><div class="wu-card__body wu-cluster wu-justify-between">
+              <div><strong>Identity in Christ</strong><div class="wu-muted">3 lessons · Who God says you are</div></div>
+              <span class="wu-badge wu-badge--success wu-badge--dot">Complete</span>
+            </div></div>
+            <div class="wu-card wu-card--lime"><div class="wu-card__body wu-cluster wu-justify-between">
+              <div><strong>Servant Leadership</strong><div class="wu-muted">3 lessons · The Towel and the Basin · Last Shall Be First · Leading Like Jesus</div></div>
+              <span class="wu-badge wu-badge--warning wu-badge--dot">In progress</span>
+            </div></div>
+            <div class="wu-card"><div class="wu-card__body wu-cluster wu-justify-between">
+              <div><strong>Leading a Small Group</strong><div class="wu-muted">3 lessons · Facilitation basics</div></div>
+              <span class="wu-badge">Upcoming</span>
+            </div></div>
+            <div class="wu-card"><div class="wu-card__body wu-cluster wu-justify-between">
+              <div><strong>Sharing Your Story</strong><div class="wu-muted">3 lessons · Testimony &amp; evangelism</div></div>
+              <span class="wu-badge">Upcoming</span>
+            </div></div>
+          </div>
+        </div>
+
+        <!-- ===== ATTENDANCE ===== -->
+        <div data-tabpanel="attendance" class="wu-tabpanel">
+          <div class="wu-cluster wu-justify-between wu-mb-4">
+            <h3 class="wu-mb-0">Attendance</h3>
+            <a class="wu-btn wu-btn--ghost wu-btn--sm" href="attendance-admin.html">Full register</a>
+          </div>
+          <div class="wu-alert wu-alert--info wu-mb-4">
+            <svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg>
+            <div>Cohort attendance rate is <strong>86%</strong> across 12 sessions. Devon Grant has missed 6 sessions.</div>
+          </div>
+          <div class="wu-table-wrap">
+            <table class="wu-table wu-table--cards">
+              <thead><tr><th>Youth</th><th>Present</th><th>Absent</th><th>Rate</th></tr></thead>
+              <tbody>
+                <tr><td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td><td data-label="Present">11</td><td data-label="Absent">1</td><td data-label="Rate">92%</td></tr>
+                <tr><td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td><td data-label="Present">10</td><td data-label="Absent">2</td><td data-label="Rate">83%</td></tr>
+                <tr><td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td><td data-label="Present">6</td><td data-label="Absent">6</td><td data-label="Rate">50%</td></tr>
+                <tr><td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td><td data-label="Present">12</td><td data-label="Absent">0</td><td data-label="Rate">100%</td></tr>
+                <tr><td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td><td data-label="Present">9</td><td data-label="Absent">3</td><td data-label="Rate">75%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== Add youth modal ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-add-youth" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Add youth to Rexdale Fall '25</h2><p class="wu-modal__sub">Enroll an existing youth or invite a new one.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label">Find youth</label>
+          <input class="wu-input" type="search" placeholder="Search by name">
+        </div>
+        <div class="wu-stack wu-stack--sm">
+          <label class="wu-check"><input type="checkbox"><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Sofia Nguyen · New</span></label>
+          <label class="wu-check"><input type="checkbox"><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Elijah Brown · 47%</span></label>
+          <label class="wu-check"><input type="checkbox"><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Fatima Ali · 63%</span></label>
+        </div>
+        <div class="wu-divider"></div>
+        <a class="wu-btn wu-btn--ghost wu-btn--sm" href="../admin/invitations.html"><svg class="wu-icon"><use href="#i-mail"></use></svg>Invite a new youth by email</a>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Youth added to cohort" data-toast-type="success">Add selected</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Edit cohort modal ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-edit-cohort" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Edit cohort</h2></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label">Cohort name</label>
+          <input class="wu-input" value="Rexdale Fall '25">
+        </div>
+        <div class="wu-field">
+          <label class="wu-label">Lead mentor</label>
+          <select class="wu-select"><option>Marcus Bello</option><option>Grace Adeyemi</option><option>Danielle Osei</option></select>
+        </div>
+        <div class="wu-field wu-mb-0">
+          <label class="wu-label">Meeting location</label>
+          <input class="wu-input" value="Rexdale Community Hub">
+        </div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Cohort updated" data-toast-type="success">Save changes</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

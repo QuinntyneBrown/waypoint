@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>At-risk · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+</head>
+<body data-role="mentor" data-active="flags" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Care</div>
+          <h1 class="wu-page__title">At-risk <span class="wu-badge wu-badge--error">2</span></h1>
+          <p class="wu-page__sub">Youth who’ve gone quiet or fallen behind. A quick check-in goes a long way.</p>
+        </div>
+        <div class="wu-page__actions">
+          <a class="wu-btn wu-btn--ghost" href="my-youth.html"><svg class="wu-icon"><use href="#i-users"></use></svg>All my youth</a>
+          <button class="wu-btn wu-btn--secondary"><svg class="wu-icon"><use href="#i-sliders"></use></svg>Flag rules</button>
+        </div>
+      </div>
+
+      <!-- Filter -->
+      <div class="wu-cluster wu-justify-between wu-mb-4">
+        <div class="wu-pillrow">
+          <span class="wu-pill is-active">All flags</span>
+          <span class="wu-pill">Inactive</span>
+          <span class="wu-pill">Low progress</span>
+          <span class="wu-pill">Missed sessions</span>
+        </div>
+        <div class="wu-cluster wu-gap-2">
+          <label class="wu-label wu-mb-0" for="f-cohort">Cohort</label>
+          <select class="wu-select" id="f-cohort" style="max-width:220px">
+            <option selected>All cohorts</option>
+            <option>Rexdale Fall '25</option>
+            <option>Warden Winter '26</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ===== DEFAULT ===== -->
+      <div data-when-state="default">
+        <div class="wu-stack">
+
+          <!-- Devon Grant -->
+          <div class="wu-card">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-justify-between">
+                <div class="wu-person">
+                  <span class="wu-avatar wu-avatar--lg" data-name="Devon Grant"></span>
+                  <div>
+                    <div class="wu-person__name">Devon Grant <span class="wu-badge wu-badge--error wu-badge--dot">At risk</span></div>
+                    <div class="wu-person__meta">Rexdale Fall '25 · Servant Leadership · Mentor Marcus Bello</div>
+                  </div>
+                </div>
+                <div class="wu-ring wu-ring--sm" style="--val:38"><span class="wu-ring__label">38%</span></div>
+              </div>
+
+              <div class="wu-grid wu-grid--3 wu-mt-4">
+                <div class="wu-alert wu-alert--warning wu-mb-0">
+                  <svg class="wu-alert__icon wu-icon"><use href="#i-clock"></use></svg>
+                  <div><div class="wu-alert__title">6 days inactive</div>No lesson activity since Jul 11</div>
+                </div>
+                <div class="wu-alert wu-alert--error wu-mb-0">
+                  <svg class="wu-alert__icon wu-icon"><use href="#i-trending-down"></use></svg>
+                  <div><div class="wu-alert__title">38% progress</div>Behind cohort avg of 64%</div>
+                </div>
+                <div class="wu-alert wu-alert--info wu-mb-0">
+                  <svg class="wu-alert__icon wu-icon"><use href="#i-calendar"></use></svg>
+                  <div><div class="wu-alert__title">Missed 2 sessions</div>Absent Jul 3 &amp; Jul 17</div>
+                </div>
+              </div>
+            </div>
+            <div class="wu-card__footer">
+              <span class="wu-muted"><svg class="wu-icon"><use href="#i-message-square"></use></svg> Last contact: Jul 8 (message, no reply)</span>
+              <div class="wu-cluster wu-gap-2">
+                <button class="wu-btn wu-btn--ghost wu-btn--sm" data-open-modal="m-unflag" data-name="Devon Grant"><svg class="wu-icon"><use href="#i-flag"></use></svg>Unflag</button>
+                <a class="wu-btn wu-btn--secondary wu-btn--sm" href="messages.html"><svg class="wu-icon"><use href="#i-send"></use></svg>Message</a>
+                <button class="wu-btn wu-btn--primary wu-btn--sm" data-open-modal="m-checkin" data-name="Devon Grant"><svg class="wu-icon"><use href="#i-clipboard-check"></use></svg>Log check-in</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Noah Williams -->
+          <div class="wu-card">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-justify-between">
+                <div class="wu-person">
+                  <span class="wu-avatar wu-avatar--lg" data-name="Noah Williams"></span>
+                  <div>
+                    <div class="wu-person__name">Noah Williams <span class="wu-badge wu-badge--error wu-badge--dot">At risk</span></div>
+                    <div class="wu-person__meta">Rexdale Fall '25 · Servant Leadership · Mentor Marcus Bello</div>
+                  </div>
+                </div>
+                <div class="wu-ring wu-ring--sm" style="--val:29"><span class="wu-ring__label">29%</span></div>
+              </div>
+
+              <div class="wu-grid wu-grid--3 wu-mt-4">
+                <div class="wu-alert wu-alert--error wu-mb-0">
+                  <svg class="wu-alert__icon wu-icon"><use href="#i-clock"></use></svg>
+                  <div><div class="wu-alert__title">8 days inactive</div>No lesson activity since Jul 9</div>
+                </div>
+                <div class="wu-alert wu-alert--error wu-mb-0">
+                  <svg class="wu-alert__icon wu-icon"><use href="#i-trending-down"></use></svg>
+                  <div><div class="wu-alert__title">29% progress</div>Stalled on “Identity in Christ”</div>
+                </div>
+                <div class="wu-alert wu-alert--warning wu-mb-0">
+                  <svg class="wu-alert__icon wu-icon"><use href="#i-calendar"></use></svg>
+                  <div><div class="wu-alert__title">33% attendance</div>4 of 12 sessions this term</div>
+                </div>
+              </div>
+            </div>
+            <div class="wu-card__footer">
+              <span class="wu-muted"><svg class="wu-icon"><use href="#i-phone"></use></svg> Last contact: Jul 2 (call, left voicemail)</span>
+              <div class="wu-cluster wu-gap-2">
+                <button class="wu-btn wu-btn--ghost wu-btn--sm" data-open-modal="m-unflag" data-name="Noah Williams"><svg class="wu-icon"><use href="#i-flag"></use></svg>Unflag</button>
+                <a class="wu-btn wu-btn--secondary wu-btn--sm" href="messages.html"><svg class="wu-icon"><use href="#i-send"></use></svg>Message</a>
+                <button class="wu-btn wu-btn--primary wu-btn--sm" data-open-modal="m-checkin" data-name="Noah Williams"><svg class="wu-icon"><use href="#i-clipboard-check"></use></svg>Log check-in</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== LOADING ===== -->
+      <div data-when-state="loading" class="wu-hide">
+        <div class="wu-stack">
+          <div class="wu-card"><div class="wu-card__body">
+            <div class="wu-cluster wu-gap-2"><span class="wu-skeleton wu-skeleton--circle"></span><span class="wu-skeleton wu-skeleton--title" style="width:200px"></span></div>
+            <div class="wu-mt-4"></div><span class="wu-skeleton wu-skeleton--block"></span>
+          </div></div>
+          <div class="wu-card"><div class="wu-card__body">
+            <div class="wu-cluster wu-gap-2"><span class="wu-skeleton wu-skeleton--circle"></span><span class="wu-skeleton wu-skeleton--title" style="width:200px"></span></div>
+            <div class="wu-mt-4"></div><span class="wu-skeleton wu-skeleton--block"></span>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- ===== EMPTY ===== -->
+      <div data-when-state="empty" class="wu-hide">
+        <div class="wu-card"><div class="wu-empty">
+          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-thumbs-up"></use></svg></div>
+          <h3 class="wu-empty__title">No youth flagged — nice work</h3>
+          <p class="wu-empty__text">Everyone in your cohorts is active and on track. We’ll flag anyone who goes quiet or falls behind.</p>
+          <a class="wu-btn wu-btn--primary" href="my-youth.html"><svg class="wu-icon"><use href="#i-users"></use></svg>View my group</a>
+        </div></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== modal: log check-in ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-checkin" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Log a check-in</h2><p class="wu-modal__sub">Record how the conversation went.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label">How did you connect?</label>
+          <div class="wu-segment" role="radiogroup" aria-label="Contact method">
+            <button class="wu-segment__item is-active" role="radio" aria-checked="true">In person</button>
+            <button class="wu-segment__item" role="radio" aria-checked="false">Call</button>
+            <button class="wu-segment__item" role="radio" aria-checked="false">Message</button>
+          </div>
+        </div>
+        <div class="wu-field wu-mb-0">
+          <label class="wu-label" for="f-checkin-note">Notes</label>
+          <textarea class="wu-textarea" id="f-checkin-note" placeholder="Talked with Devon about missing sessions. He’s had a busy month — planning to return Thursday."></textarea>
+          <div class="wu-help">Saved to this youth’s care log. Visible to the director.</div>
+        </div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Check-in logged" data-toast-type="success">Save check-in</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== modal: unflag ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-unflag" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div class="wu-cluster wu-gap-2">
+          <div class="wu-modal__icon wu-modal__icon--danger"><svg class="wu-icon"><use href="#i-flag"></use></svg></div>
+          <div><h2 class="wu-modal__title">Remove flag?</h2><p class="wu-modal__sub">This youth will no longer appear in the at-risk list.</p></div>
+        </div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field wu-mb-0">
+          <label class="wu-label" for="f-unflag-reason">Reason (optional)</label>
+          <select class="wu-select" id="f-unflag-reason">
+            <option>Reconnected — back on track</option>
+            <option>Handed off to director</option>
+            <option>Left the program</option>
+            <option>Flagged in error</option>
+          </select>
+          <div class="wu-help">You can re-flag anytime if activity drops again.</div>
+        </div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--danger" data-close-modal data-toast="Flag removed" data-toast-type="success">Remove flag</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

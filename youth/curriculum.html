@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Curriculum · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+</head>
+<body data-role="youth" data-active="curriculum" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-container--narrow wu-page">
+
+      <div class="wu-eyebrow">Learn</div>
+      <h1 class="wu-page__title">Curriculum</h1>
+      <p class="wu-page__sub">Browse every module in your tracks.</p>
+
+      <!-- Track switch -->
+      <div class="wu-segment wu-mt-4" role="tablist" aria-label="Track">
+        <button class="wu-segment__item is-active" data-track-switch="bible">Bible &amp; Leadership</button>
+        <button class="wu-segment__item" data-track-switch="coding">Coding</button>
+      </div>
+
+      <!-- ===== default ===== -->
+      <div data-when-state="default">
+        <div class="wu-grid wu-grid--2 wu-mt-6">
+
+          <a class="wu-card wu-card--link" href="module.html">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-cluster--between">
+                <div class="wu-badgeitem__medal" style="width:44px;height:44px;margin:0"><svg class="wu-icon"><use href="#i-church"></use></svg></div>
+                <span class="wu-badge wu-badge--success wu-badge--dot">Done</span>
+              </div>
+              <h3 class="wu-card__title wu-mt-4">Who Is Jesus?</h3>
+              <p class="wu-muted wu-text-sm">4 lessons</p>
+              <div class="wu-progress__row wu-mt-2">
+                <div class="wu-progress"><div class="wu-progress__fill" style="--val:100%"></div></div>
+                <span class="wu-progress__num">100%</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="wu-card wu-card--link" href="module.html">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-cluster--between">
+                <div class="wu-badgeitem__medal" style="width:44px;height:44px;margin:0"><svg class="wu-icon"><use href="#i-user-check"></use></svg></div>
+                <span class="wu-badge wu-badge--success wu-badge--dot">Done</span>
+              </div>
+              <h3 class="wu-card__title wu-mt-4">Identity in Christ</h3>
+              <p class="wu-muted wu-text-sm">5 lessons</p>
+              <div class="wu-progress__row wu-mt-2">
+                <div class="wu-progress"><div class="wu-progress__fill" style="--val:100%"></div></div>
+                <span class="wu-progress__num">100%</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="wu-card wu-card--link" href="module.html">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-cluster--between">
+                <div class="wu-badgeitem__medal" style="width:44px;height:44px;margin:0"><svg class="wu-icon"><use href="#i-heart"></use></svg></div>
+                <span class="wu-badge wu-badge--warning wu-badge--dot">In progress</span>
+              </div>
+              <h3 class="wu-card__title wu-mt-4">Servant Leadership</h3>
+              <p class="wu-muted wu-text-sm">3 lessons · Mark 10:45</p>
+              <div class="wu-progress__row wu-mt-2">
+                <div class="wu-progress"><div class="wu-progress__fill" style="--val:45%"></div></div>
+                <span class="wu-progress__num">45%</span>
+              </div>
+            </div>
+          </a>
+
+          <div class="wu-card">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-cluster--between">
+                <div class="wu-badgeitem__medal" style="width:44px;height:44px;margin:0"><svg class="wu-icon"><use href="#i-users"></use></svg></div>
+                <span class="wu-badge wu-badge--dot">Locked</span>
+              </div>
+              <h3 class="wu-card__title wu-mt-4">Leading a Small Group</h3>
+              <p class="wu-muted wu-text-sm">4 lessons</p>
+              <p class="wu-muted wu-text-sm wu-mb-0"><svg class="wu-icon"><use href="#i-lock"></use></svg> Unlocks after Servant Leadership</p>
+            </div>
+          </div>
+
+          <div class="wu-card">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-cluster--between">
+                <div class="wu-badgeitem__medal" style="width:44px;height:44px;margin:0"><svg class="wu-icon"><use href="#i-message-square"></use></svg></div>
+                <span class="wu-badge wu-badge--dot">Locked</span>
+              </div>
+              <h3 class="wu-card__title wu-mt-4">Sharing Your Story</h3>
+              <p class="wu-muted wu-text-sm">3 lessons</p>
+              <p class="wu-muted wu-text-sm wu-mb-0"><svg class="wu-icon"><use href="#i-lock"></use></svg> The final module</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== loading ===== -->
+      <div data-when-state="loading" class="wu-hide">
+        <div class="wu-grid wu-grid--2 wu-mt-6">
+          <div class="wu-card"><div class="wu-card__body">
+            <span class="wu-skeleton wu-skeleton--circle"></span>
+            <span class="wu-skeleton wu-skeleton--title wu-mt-4"></span>
+            <span class="wu-skeleton wu-skeleton--text" style="width:60%"></span>
+            <div class="wu-mt-4"></div><span class="wu-skeleton wu-skeleton--block"></span>
+          </div></div>
+          <div class="wu-card"><div class="wu-card__body">
+            <span class="wu-skeleton wu-skeleton--circle"></span>
+            <span class="wu-skeleton wu-skeleton--title wu-mt-4"></span>
+            <span class="wu-skeleton wu-skeleton--text" style="width:60%"></span>
+            <div class="wu-mt-4"></div><span class="wu-skeleton wu-skeleton--block"></span>
+          </div></div>
+          <div class="wu-card"><div class="wu-card__body">
+            <span class="wu-skeleton wu-skeleton--circle"></span>
+            <span class="wu-skeleton wu-skeleton--title wu-mt-4"></span>
+            <span class="wu-skeleton wu-skeleton--text" style="width:60%"></span>
+            <div class="wu-mt-4"></div><span class="wu-skeleton wu-skeleton--block"></span>
+          </div></div>
+          <div class="wu-card"><div class="wu-card__body">
+            <span class="wu-skeleton wu-skeleton--circle"></span>
+            <span class="wu-skeleton wu-skeleton--title wu-mt-4"></span>
+            <span class="wu-skeleton wu-skeleton--text" style="width:60%"></span>
+            <div class="wu-mt-4"></div><span class="wu-skeleton wu-skeleton--block"></span>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- ===== empty ===== -->
+      <div data-when-state="empty" class="wu-hide">
+        <div class="wu-card wu-mt-6">
+          <div class="wu-empty">
+            <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-folder"></use></svg></div>
+            <h3 class="wu-empty__title">No modules published yet</h3>
+            <p class="wu-empty__text">Your mentor is still setting up this track. Check back soon.</p>
+            <a class="wu-btn wu-btn--primary" href="home.html">Back to Today</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Progress board · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../assets/css/wordup.css">
+  <script defer src="../assets/js/wordup.js"></script>
+</head>
+<body data-role="admin" data-active="cohort-progress" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Programs</div>
+          <h1 class="wu-page__title">Progress board</h1>
+          <p class="wu-page__sub">Every youth, every module, at a glance — the spreadsheet, replaced.</p>
+        </div>
+        <div class="wu-page__actions">
+          <a class="wu-btn wu-btn--ghost" href="cohorts.html"><svg class="wu-icon"><use href="#i-users"></use></svg>Cohorts</a>
+          <button class="wu-btn wu-btn--primary" data-open-modal="m-export"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="wu-cluster wu-justify-between wu-mb-4">
+        <div class="wu-cluster wu-gap-3">
+          <div class="wu-field wu-mb-0" style="min-width:220px">
+            <label class="wu-label">Cohort</label>
+            <select class="wu-select" aria-label="Select cohort">
+              <option>Rexdale Fall '25</option>
+              <option>Warden Winter '26</option>
+              <option>St. Clair Spring '26</option>
+            </select>
+          </div>
+          <div class="wu-field wu-mb-0" style="min-width:200px">
+            <label class="wu-label">Track</label>
+            <select class="wu-select" aria-label="Select track">
+              <option>Bible &amp; Leadership</option>
+              <option>Coding for Kingdom</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div class="wu-cluster wu-gap-4 wu-mb-4">
+        <span class="wu-cluster wu-gap-2"><span class="wu-cell wu-cell--done">✓</span><span class="wu-muted">Done</span></span>
+        <span class="wu-cluster wu-gap-2"><span class="wu-cell wu-cell--prog">•</span><span class="wu-muted">In progress</span></span>
+        <span class="wu-cluster wu-gap-2"><span class="wu-cell wu-cell--none">—</span><span class="wu-muted">Not started</span></span>
+        <span class="wu-cluster wu-gap-2"><span class="wu-cell wu-cell--na">n/a</span><span class="wu-muted">Not assigned</span></span>
+      </div>
+
+      <!-- ===== DEFAULT ===== -->
+      <div data-when-state="default">
+        <div class="wu-card">
+          <div class="wu-progressmatrix">
+            <table class="wu-matrix">
+              <thead>
+                <tr>
+                  <th>Youth</th>
+                  <th>Who Is Jesus?</th>
+                  <th>Identity in Christ</th>
+                  <th>Servant Leadership</th>
+                  <th>Leading a Small Group</th>
+                  <th>Sharing Your Story</th>
+                  <th>Quiz avg</th>
+                  <th>Overall</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Jayden Alcantara</td>
+                  <td><span class="wu-cell wu-cell--done">✓</span></td>
+                  <td><span class="wu-cell wu-cell--done">✓</span></td>
+                  <td><span class="wu-cell wu-cell--prog">•</span></td>
+                  <td><span class="wu-cell wu-cell--none">—</span></td>
+                  <td><span class="wu-cell wu-cell--none">—</span></td>
+                  <td>88%</td>
+                  <td><strong>82%</strong></td>
+                </tr>
+                <tr>
+                  <td>Amara Okafor</td>
+                  <td><span class="wu-cell wu-cell--done">✓</span></td>
+                  <td><span class="wu-cell wu-cell--done">✓</span></td>
+                  <td><span class="wu-cell wu-cell--prog">•</span></td>
+                  <td><span class="wu-cell wu-cell--none">—</span></td>
+                  <td><span class="wu-cell wu-cell--none">—</span></td>
+                  <td>79%</td>
+                  <td><strong>74%</strong></td>
+                </tr>
+                <tr>
+                  <td>Devon Grant</td>
+                  <td><span class="wu-cell wu-cell--done">✓</span></td>
+                  <td><span class="wu-cell wu-cell--prog">•</span></td>
+                  <td><span class="wu-cell wu-cell--none">—</span></td>
+                  <td><span class="wu-cell wu-cell--none">—</span></td>
+                  <td><span class="wu-cell wu-cell--none">—</span></td>
+                  <td>61%</td>
+                  <td><strong>38%</strong></td>
+                </tr>
+                <tr>
+                  <td>Priya Sharma</td>
+                  <td><span class="wu-cell wu-cell--done">✓</span></td>
+                  <td><span class="wu-cell wu-cell--done">✓</span></td>
+                  <td><span class="wu-cell wu-cell--done">✓</span></td>
+                  <td><span class="wu-cell wu-cell--prog">•</span></td>
+                  <td><span class="wu-cell wu-cell--none">—</span></td>
+                  <td>94%</td>
+                  <td><strong>91%</strong></td>
+                </tr>
+                <tr>
+                  <td>Malik Johnson</td>
+                  <td><span class="wu-cell wu-cell--done">✓</span></td>
+                  <td><span class="wu-cell wu-cell--done">✓</span></td>
+                  <td><span class="wu-cell wu-cell--prog">•</span></td>
+                  <td><span class="wu-cell wu-cell--none">—</span></td>
+                  <td><span class="wu-cell wu-cell--none">—</span></td>
+                  <td>70%</td>
+                  <td><strong>55%</strong></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Cohort avg</td>
+                  <td>100%</td>
+                  <td>90%</td>
+                  <td>40%</td>
+                  <td>5%</td>
+                  <td>0%</td>
+                  <td>78%</td>
+                  <td><strong>68%</strong></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="wu-grid wu-grid--3 wu-mt-4">
+          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Cohort progress</div><div class="wu-statcard__value">68%</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>3 of 5 modules underway</div></div>
+          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Quiz average</div><div class="wu-statcard__value">78%</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+4% this month</div></div>
+          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Needs attention</div><div class="wu-statcard__value">1</div><div class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-alert-triangle"></use></svg>Devon Grant behind</div></div>
+        </div>
+      </div>
+
+      <!-- ===== LOADING ===== -->
+      <div data-when-state="loading" class="wu-hide">
+        <div class="wu-card"><div class="wu-card__body wu-stack wu-stack--sm">
+          <span class="wu-skeleton wu-skeleton--block"></span>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+        </div></div>
+      </div>
+
+      <!-- ===== EMPTY ===== -->
+      <div data-when-state="empty" class="wu-hide">
+        <div class="wu-card"><div class="wu-empty">
+          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-table"></use></svg></div>
+          <h3 class="wu-empty__title">No youth in this cohort yet</h3>
+          <p class="wu-empty__text">Add youth to the cohort to start tracking module progress here.</p>
+          <a class="wu-btn wu-btn--primary" href="cohort-detail.html"><svg class="wu-icon"><use href="#i-user-plus"></use></svg>Add youth</a>
+        </div></div>
+      </div>
+
+      <!-- ===== ERROR ===== -->
+      <div data-when-state="error" class="wu-hide">
+        <div class="wu-alert wu-alert--error">
+          <svg class="wu-alert__icon wu-icon"><use href="#i-alert-circle"></use></svg>
+          <div><div class="wu-alert__title">Couldn't load the progress board</div>Something went wrong on our end. <a href="cohort-progress.html">Retry</a>.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== Export modal ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-export" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Export progress board</h2><p class="wu-modal__sub">Rexdale Fall '25 · Bible &amp; Leadership</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label">Format</label>
+          <label class="wu-radio"><input type="radio" name="fmt" checked><span class="wu-radio__box"></span><span>CSV (spreadsheet)</span></label>
+          <label class="wu-radio"><input type="radio" name="fmt"><span class="wu-radio__box"></span><span>PDF report</span></label>
+        </div>
+        <div class="wu-field wu-mb-0">
+          <label class="wu-label">Include</label>
+          <label class="wu-check"><input type="checkbox" checked><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Module completion</span></label>
+          <label class="wu-check"><input type="checkbox" checked><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Quiz averages</span></label>
+          <label class="wu-check"><input type="checkbox"><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Attendance rate</span></label>
+        </div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Export ready — download started" data-toast-type="success" data-toast-title="Exported">Export</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Word Up — Prototype Map</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="assets/css/wordup.css">
+  <script defer src="assets/js/wordup.js"></script>
+  <style>
+    .hub-hero{background:var(--wu-ink);color:#fff;padding:var(--wu-s9) 0 var(--wu-s8)}
+    .hub-hero h1{color:#fff;font-size:clamp(2rem,1.4rem + 3vw,3.2rem);max-width:18ch}
+    .hub-hero .wu-brand__mark{width:44px;height:44px;font-size:1.3rem}
+    .hub-controls{position:sticky;top:0;z-index:20;background:var(--wu-white);border-bottom:var(--wu-bw) solid var(--wu-border);padding:14px 0}
+    .hub-sec{padding:var(--wu-s7) 0;border-bottom:var(--wu-bw) solid var(--wu-border)}
+    .hub-sec__head{display:flex;align-items:center;gap:12px;margin-bottom:var(--wu-s5)}
+    .hub-sec__icon{width:40px;height:40px;border-radius:10px;background:var(--wu-lime);display:grid;place-items:center;flex:none}
+    .hub-card{display:block;border:var(--wu-bw) solid var(--wu-border);border-radius:var(--wu-r-card);padding:14px 16px;background:var(--wu-white);transition:border-color .15s,transform .12s}
+    .hub-card:hover{border-color:var(--wu-ink);text-decoration:none;transform:translateY(-1px)}
+    .hub-card__name{font-family:var(--wu-font-head);font-weight:500;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .hub-card__name .wu-icon{opacity:.4}
+    .hub-card__path{font-size:.72rem;color:var(--wu-muted);font-family:'JetBrains Mono',monospace;margin-top:2px}
+    .hub-variants{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .hub-chip{font-size:.68rem;font-weight:600;font-family:var(--wu-font-head);padding:3px 8px;border-radius:var(--wu-r-pill);background:var(--wu-g200);color:var(--wu-ink-80)}
+    .hub-chip:hover{background:var(--wu-ink);color:#fff;text-decoration:none}
+  </style>
+</head>
+<body>
+  <section class="hub-hero">
+    <div class="wu-container">
+      <div class="wu-cluster wu-gap-3 wu-mb-6"><span class="wu-brand__mark">W</span><span style="font-family:var(--wu-font-head);font-weight:700;font-size:1.2rem">Word Up</span><span class="wu-badge wu-badge--lime">Prototype</span></div>
+      <h1>Every screen in the Word Up app.</h1>
+      <p class="wu-text-lg" style="opacity:.8;max-width:60ch">A clickable prototype for raising up young leaders who love Jesus — styled with FaithTech's design system. Open any screen below. Works offline on any device.</p>
+      <div class="wu-cluster wu-gap-3 wu-mt-6">
+        <a class="wu-btn wu-btn--primary" href="youth/home.html">Enter as a Youth Leader</a>
+        <a class="wu-btn wu-btn--ghost" style="border-color:rgba(255,255,255,.4);color:#fff" href="admin/dashboard.html">Enter as Director (Shawn)</a>
+        <a class="wu-btn wu-btn--ghost" style="border-color:rgba(255,255,255,.4);color:#fff" href="styleguide.html">Design system</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="hub-controls">
+    <div class="wu-container">
+      <div class="wu-cluster wu-gap-2" id="hub-filters"></div>
+      <input class="wu-input wu-mt-4" id="hub-search" placeholder="Search screens…" style="max-width:360px">
+    </div>
+  </div>
+
+  <div class="wu-container" id="hub-body"></div>
+  <div style="height:60px"></div>
+
+  <script>
+    var MAP = [
+      { group: "Public / Marketing", key: "public", icon: "church", pages: [
+        { n: "Landing", p: "public/landing.html" },
+        { n: "About", p: "public/about.html" },
+        { n: "Programs", p: "public/programs.html" },
+        { n: "Get involved / Donate", p: "public/get-involved.html" },
+        { n: "Apply / Refer a youth", p: "public/apply.html" },
+        { n: "Application submitted", p: "public/application-submitted.html" },
+        { n: "Contact", p: "public/contact.html" },
+        { n: "Privacy & consent", p: "public/privacy.html" }
+      ]},
+      { group: "Authentication & Onboarding", key: "auth", icon: "lock", pages: [
+        { n: "Sign in", p: "auth/login.html" },
+        { n: "Forgot password", p: "auth/forgot-password.html" },
+        { n: "Reset link sent", p: "auth/reset-link-sent.html" },
+        { n: "Reset password", p: "auth/reset-password.html" },
+        { n: "Password updated", p: "auth/reset-success.html" },
+        { n: "PIN sign-in", p: "auth/pin-login.html" },
+        { n: "Accept invite", p: "auth/invite-accept.html" },
+        { n: "Welcome setup", p: "auth/welcome-setup.html" },
+        { n: "Guardian consent", p: "auth/consent.html" },
+        { n: "Account locked", p: "auth/account-locked.html" },
+        { n: "Signed out (shared device)", p: "auth/signed-out.html" },
+        { n: "Switch user", p: "auth/switch-user.html" }
+      ]},
+      { group: "Youth Leader", key: "youth", icon: "compass", pages: [
+        { n: "Home (Today)", p: "youth/home.html" },
+        { n: "My Journey", p: "youth/journey.html" },
+        { n: "Curriculum", p: "youth/curriculum.html", v: [["empty","state=empty"]] },
+        { n: "Module", p: "youth/module.html" },
+        { n: "Lesson overview", p: "youth/lesson.html" },
+        { n: "Bible lesson (reader)", p: "youth/lesson-bible.html", v: [["loading","state=loading"]] },
+        { n: "Reflection", p: "youth/reflection.html" },
+        { n: "Quiz intro", p: "youth/quiz-intro.html" },
+        { n: "Quiz (taking)", p: "youth/quiz.html", v: [["submit dialog","open=m-submit-quiz"]] },
+        { n: "Quiz result", p: "youth/quiz-result.html" },
+        { n: "Assignment", p: "youth/assignment.html" },
+        { n: "Submit work", p: "youth/submit-work.html", v: [["submit dialog","open=m-submit"]] },
+        { n: "Submission status", p: "youth/submission-status.html" },
+        { n: "Coding lesson", p: "youth/coding-lesson.html" },
+        { n: "Coding project", p: "youth/coding-project.html" },
+        { n: "Badges", p: "youth/badges.html" },
+        { n: "Schedule", p: "youth/schedule.html", v: [["empty","state=empty"],["RSVP","open=m-rsvp"]] },
+        { n: "Messages", p: "youth/messages.html", v: [["empty","state=empty"]] },
+        { n: "Announcements", p: "youth/announcements.html" },
+        { n: "Notifications", p: "youth/notifications.html" },
+        { n: "Profile", p: "youth/profile.html" },
+        { n: "Help", p: "youth/help.html" }
+      ]},
+      { group: "Mentor / Coach", key: "mentor", icon: "user-check", pages: [
+        { n: "Dashboard", p: "mentor/dashboard.html" },
+        { n: "My Youth", p: "mentor/my-youth.html", v: [["loading","state=loading"],["empty","state=empty"]] },
+        { n: "Youth detail", p: "mentor/youth-detail.html", v: [["check-in","open=m-checkin"]] },
+        { n: "Competency tracker", p: "mentor/competency.html" },
+        { n: "Log check-in", p: "mentor/check-in.html" },
+        { n: "Check-in history", p: "mentor/check-in-history.html", v: [["empty","state=empty"]] },
+        { n: "Reviews queue", p: "mentor/reviews.html", v: [["empty","state=empty"]] },
+        { n: "Grade submission", p: "mentor/grade-submission.html", v: [["revision","open=m-revision"]] },
+        { n: "Assessment approvals", p: "mentor/assessment-approvals.html" },
+        { n: "Take attendance", p: "mentor/attendance.html" },
+        { n: "Attendance history", p: "mentor/attendance-history.html" },
+        { n: "At-risk / flags", p: "mentor/flags.html", v: [["empty","state=empty"]] },
+        { n: "My group", p: "mentor/group.html" },
+        { n: "Curriculum (staff)", p: "mentor/curriculum.html" },
+        { n: "Assign work", p: "mentor/assign-work.html" },
+        { n: "Calendar", p: "mentor/calendar.html", v: [["new session","open=m-session"]] },
+        { n: "Messages", p: "mentor/messages.html", v: [["empty","state=empty"]] },
+        { n: "Notifications", p: "mentor/notifications.html" },
+        { n: "Profile & settings", p: "mentor/profile.html" }
+      ]},
+      { group: "Director / Admin (Shawn)", key: "admin", icon: "grid", pages: [
+        { n: "Dashboard", p: "admin/dashboard.html" },
+        { n: "People", p: "admin/people.html", v: [["loading","state=loading"],["empty","state=empty"],["invite","open=m-invite"],["delete","open=m-delete"]] },
+        { n: "Person detail", p: "admin/person-detail.html", v: [["deactivate","open=m-deactivate"]] },
+        { n: "Cohorts", p: "admin/cohorts.html", v: [["new cohort","open=m-cohort"]] },
+        { n: "Cohort detail", p: "admin/cohort-detail.html" },
+        { n: "Progress board ★", p: "admin/cohort-progress.html", v: [["export","open=m-export"]] },
+        { n: "Applications", p: "admin/applications.html", v: [["empty","state=empty"],["review","open=m-review"]] },
+        { n: "Invitations", p: "admin/invitations.html", v: [["bulk invite","open=m-bulk-invite"]] },
+        { n: "Users & roles", p: "admin/users-roles.html", v: [["change role","open=m-role"]] },
+        { n: "Import from Sheets", p: "admin/data-import.html" },
+        { n: "Curriculum builder", p: "admin/tracks.html", v: [["new module","open=m-module"]] },
+        { n: "Module editor", p: "admin/module-editor.html" },
+        { n: "Lesson editor", p: "admin/lesson-editor.html", v: [["publish","open=m-publish"]] },
+        { n: "Quiz builder", p: "admin/quiz-builder.html", v: [["add question","open=m-question"]] },
+        { n: "Assignment builder", p: "admin/assignment-builder.html" },
+        { n: "Badge builder", p: "admin/badge-builder.html", v: [["new badge","open=m-badge"]] },
+        { n: "Progression framework", p: "admin/progression-editor.html" },
+        { n: "Reports", p: "admin/reports.html", v: [["export","open=m-export"]] },
+        { n: "Youth report", p: "admin/report-youth.html" },
+        { n: "Cohort report", p: "admin/report-cohort.html" },
+        { n: "Attendance report", p: "admin/report-attendance.html" },
+        { n: "Staff report", p: "admin/report-staff.html" },
+        { n: "Report builder", p: "admin/report-builder.html" },
+        { n: "Attendance admin", p: "admin/attendance-admin.html" },
+        { n: "Calendar", p: "admin/calendar.html", v: [["new session","open=m-session"]] },
+        { n: "Announcements", p: "admin/announcements.html", v: [["compose","open=m-announce"]] },
+        { n: "Org settings", p: "admin/settings-org.html" },
+        { n: "Audit log", p: "admin/audit-log.html" },
+        { n: "Profile & settings", p: "admin/profile.html" }
+      ]},
+      { group: "Guardian", key: "guardian", icon: "heart", pages: [
+        { n: "Home", p: "guardian/home.html" },
+        { n: "My youth (progress)", p: "guardian/child-progress.html" },
+        { n: "News", p: "guardian/announcements.html" },
+        { n: "Consent & profile", p: "guardian/consent.html" }
+      ]},
+      { group: "Volunteer", key: "volunteer", icon: "user", pages: [
+        { n: "Today", p: "volunteer/home.html" },
+        { n: "Take attendance", p: "volunteer/attendance.html" },
+        { n: "Schedule & profile", p: "volunteer/schedule.html" }
+      ]},
+      { group: "Shared / Settings", key: "shared", icon: "settings", pages: [
+        { n: "Profile settings", p: "shared/settings-profile.html" },
+        { n: "Notification settings", p: "shared/settings-notifications.html" },
+        { n: "Display & accessibility", p: "shared/settings-display.html" },
+        { n: "Global search", p: "shared/search.html", v: [["no results","state=empty"]] },
+        { n: "Help center", p: "shared/help.html" },
+        { n: "Contact support", p: "shared/support.html" },
+        { n: "About Word Up", p: "shared/about.html" }
+      ]},
+      { group: "Error & System States", key: "states", icon: "alert-triangle", pages: [
+        { n: "404 Not found", p: "states/404.html" },
+        { n: "403 No access", p: "states/403.html" },
+        { n: "500 Error", p: "states/500.html" },
+        { n: "503 Maintenance", p: "states/503-maintenance.html" },
+        { n: "Offline", p: "states/offline.html" },
+        { n: "Session expired", p: "states/session-expired.html" },
+        { n: "Account deactivated", p: "states/account-deactivated.html" },
+        { n: "Invite expired", p: "states/invite-expired.html" },
+        { n: "Not in a cohort", p: "states/no-cohort.html" },
+        { n: "Consent required", p: "states/consent-required.html" }
+      ]}
+    ];
+
+    function render(filterKey, q) {
+      var body = document.getElementById("hub-body");
+      q = (q || "").trim().toLowerCase();
+      body.innerHTML = MAP.filter(function (g) { return filterKey === "all" || g.key === filterKey; }).map(function (g) {
+        var pages = g.pages.filter(function (pg) { return !q || pg.n.toLowerCase().indexOf(q) >= 0 || pg.p.toLowerCase().indexOf(q) >= 0; });
+        if (!pages.length) return "";
+        var cards = pages.map(function (pg) {
+          var variants = (pg.v || []).map(function (v) {
+            return '<a class="hub-chip" href="' + pg.p + '?' + v[1] + '">' + v[0] + '</a>';
+          }).join("");
+          return '<a class="hub-card" href="' + pg.p + '"><div class="hub-card__name">' + pg.n + WordUp.icon("chevron-right") + '</div><div class="hub-card__path">' + pg.p + '</div>' +
+            (variants ? '<div class="hub-variants" onclick="event.stopPropagation()">' + variants + '</div>' : "") + '</a>';
+        }).join("");
+        return '<section class="hub-sec"><div class="hub-sec__head"><span class="hub-sec__icon">' + WordUp.icon("" + g.icon) + '</span><div><h2 style="margin:0">' + g.group + '</h2><div class="wu-muted wu-text-sm">' + g.pages.length + ' screens</div></div></div>' +
+          '<div class="wu-grid wu-grid--3">' + cards + '</div></section>';
+      }).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var filters = [["all","All"]].concat(MAP.map(function (g) { return [g.key, g.group.split(" ")[0]]; }));
+      var host = document.getElementById("hub-filters");
+      host.innerHTML = filters.map(function (f, i) { return '<button class="wu-pill' + (i === 0 ? ' is-active' : '') + '" data-f="' + f[0] + '">' + f[1] + '</button>'; }).join("");
+      var current = "all";
+      host.addEventListener("click", function (e) {
+        var b = e.target.closest("[data-f]"); if (!b) return;
+        current = b.getAttribute("data-f");
+        host.querySelectorAll(".wu-pill").forEach(function (x) { x.classList.toggle("is-active", x === b); });
+        render(current, document.getElementById("hub-search").value);
+      });
+      document.getElementById("hub-search").addEventListener("input", function (e) { render(current, e.target.value); });
+      render("all", "");
+    });
+  </script>
+</body>
+</html>
