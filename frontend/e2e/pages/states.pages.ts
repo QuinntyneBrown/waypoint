@@ -33,3 +33,53 @@ export class ServerErrorPage extends BasePage {
     return this.page.getByRole('button', { name: /try again/i });
   }
 }
+
+/** `/consent-required` — youth recovery from the participation gate. */
+export class ConsentRequiredPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: /guardian needs to sign off/i });
+  }
+  get notifyGuardianButton() {
+    return this.page.getByRole('button', { name: /notify my guardian/i });
+  }
+  get guardianSignNowButton() {
+    return this.page.getByRole('button', { name: /guardian can sign now/i });
+  }
+  get deliveryConfirmation() {
+    return this.page.getByRole('status');
+  }
+}
+
+/** Anonymous one-time guardian consent form. */
+export class RequestedGuardianConsentPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: /guardian consent/i });
+  }
+  get guardianName() {
+    return this.page.getByLabel(/guardian full name/i);
+  }
+  get relationship() {
+    return this.page.getByLabel(/relationship to youth/i);
+  }
+  get participationConsent() {
+    return this.page.getByLabel(/i give permission.*participate/i);
+  }
+  get participationOption() {
+    return this.page.getByText(/i give permission.*participate/i);
+  }
+  get mediaConsentOption() {
+    return this.page.getByText(/allow word up to use photos or video/i);
+  }
+  get groupOnlyOption() {
+    return this.page.getByText(/group photos only/i);
+  }
+  get signature() {
+    return this.page.getByLabel(/type your full name as your signature/i);
+  }
+  get submitButton() {
+    return this.page.getByRole('button', { name: /sign and submit consent/i });
+  }
+  get reference() {
+    return this.page.getByTestId('public-consent-reference');
+  }
+}

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -23,6 +24,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+if (builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.RemoveAll<IEmailSender>();
+    builder.Services.AddSingleton<WordUp.Api.TestSupport.TestingEmailSender>();
+    builder.Services.AddSingleton<IEmailSender>(serviceProvider =>
+        serviceProvider.GetRequiredService<WordUp.Api.TestSupport.TestingEmailSender>());
+}
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IExceptionAlertSink, LoggingExceptionAlertSink>();
@@ -339,6 +348,231 @@ if (app.Environment.IsEnvironment("Testing"))
             sessionId = session.Id,
             youth = youth.Select(user => new { youthUserId = user.Id, name = user.DisplayName }),
         });
+    });
+
+    // Guardian E2E requires a linked child with aggregate-only progress inputs. Keep this rich fixture
+    // behind Testing so production relationships still come only from validated intake/enrolment flows.
+    app.MapPost("/api/_test/guardian-families", async (
+        WordUp.Api.Contracts.TestSupport.SeedGuardianFamilyBody body,
+        IAppDbContext db,
+        IClock clock,
+        IPasswordHasher hasher,
+        CancellationToken cancellationToken) =>
+    {
+        var guardian = await db.Users.FirstOrDefaultAsync(
+            user => user.Id == body.GuardianUserId && user.Role == Roles.Guardian,
+            cancellationToken);
+        if (guardian is null)
+        {
+            return Results.NotFound(new { title = "Guardian not found." });
+        }
+
+        var suffix = Guid.NewGuid().ToString("N")[..8];
+        var now = clock.UtcNow;
+        var moduleName = $"Foundations {suffix}";
+        var earnedBadgeName = $"First Steps {suffix}";
+        var lockedBadgeName = $"Community Builder {suffix}";
+        var upcomingTitle = $"Family Showcase {suffix}";
+        var sharedActionItems = $"Prepare the welcome reflection {suffix}";
+        var privateSecret = $"PRIVATE CHECK-IN {suffix}";
+        const string childPassword = "Password123";
+
+        var track = new Track
+        {
+            Name = $"Guardian E2E Track {suffix}",
+            Key = $"guardian-e2e-{suffix}",
+            Status = PublishStatus.Published,
+        };
+        var module = new Module
+        {
+            TrackId = track.Id,
+            Name = moduleName,
+            Order = 1,
+            Status = PublishStatus.Published,
+        };
+        var firstLesson = new Lesson
+        {
+            ModuleId = module.Id,
+            Title = $"Servant Leadership {suffix}",
+            Order = 1,
+            Status = PublishStatus.Published,
+        };
+        var secondLesson = new Lesson
+        {
+            ModuleId = module.Id,
+            Title = $"Community Practice {suffix}",
+            Order = 2,
+            Status = PublishStatus.Published,
+        };
+        var cohort = new Cohort
+        {
+            Name = $"Guardian E2E Cohort {suffix}",
+            TrackId = track.Id,
+            TermStart = now.Date.AddDays(-30),
+            TermEnd = now.Date.AddDays(90),
+        };
+        var child = new User
+        {
+            Email = $"guardian-child-{suffix}@wordup.test",
+            DisplayName = $"Jordan {suffix}",
+            Role = Roles.Youth,
+            Status = UserStatus.Active,
+            GuardianUserId = guardian.Id,
+            CohortId = cohort.Id,
+            OnboardingCompleted = true,
+            PasswordHash = hasher.Hash(childPassword),
+        };
+        var presentSession = new Session
+        {
+            CohortId = cohort.Id,
+            Title = $"Leadership Lab {suffix}",
+            StartsAt = now.AddDays(-14),
+            Location = "Studio A",
+            CreatedByUserId = guardian.Id,
+        };
+        var absentSession = new Session
+        {
+            CohortId = cohort.Id,
+            Title = $"Community Lab {suffix}",
+            StartsAt = now.AddDays(-7),
+            Location = "Studio B",
+            CreatedByUserId = guardian.Id,
+        };
+        var upcomingSession = new Session
+        {
+            CohortId = cohort.Id,
+            Title = upcomingTitle,
+            StartsAt = now.AddDays(7),
+            Location = "Main Hall",
+            CreatedByUserId = guardian.Id,
+        };
+        var earnedBadge = new Badge
+        {
+            Name = earnedBadgeName,
+            Icon = "star",
+            Description = "Started the journey.",
+        };
+        var lockedBadge = new Badge
+        {
+            Name = lockedBadgeName,
+            Icon = "award",
+            Description = "Complete the community module.",
+        };
+
+        db.Tracks.Add(track);
+        db.Modules.Add(module);
+        db.Lessons.AddRange(firstLesson, secondLesson);
+        db.Cohorts.Add(cohort);
+        db.Users.Add(child);
+        db.Sessions.AddRange(presentSession, absentSession, upcomingSession);
+        db.LessonProgress.Add(new LessonProgress
+        {
+            YouthUserId = child.Id,
+            LessonId = firstLesson.Id,
+            Status = ProgressStatus.Completed,
+            CompletedAt = now.AddDays(-10),
+            UpdatedAt = now.AddDays(-10),
+        });
+        db.AttendanceRecords.AddRange(
+            new AttendanceRecord
+            {
+                SessionId = presentSession.Id,
+                YouthUserId = child.Id,
+                Status = AttendanceStatus.Present,
+                RecordedByUserId = guardian.Id,
+                RecordedAt = presentSession.StartsAt,
+            },
+            new AttendanceRecord
+            {
+                SessionId = absentSession.Id,
+                YouthUserId = child.Id,
+                Status = AttendanceStatus.Absent,
+                RecordedByUserId = guardian.Id,
+                RecordedAt = absentSession.StartsAt,
+            });
+        db.Badges.AddRange(earnedBadge, lockedBadge);
+        db.BadgeAwards.Add(new BadgeAward
+        {
+            BadgeId = earnedBadge.Id,
+            YouthUserId = child.Id,
+            AwardedAt = now.AddDays(-9),
+        });
+        db.CheckIns.AddRange(
+            new CheckIn
+            {
+                YouthUserId = child.Id,
+                MentorUserId = guardian.Id,
+                Date = now.AddDays(-3),
+                Type = "1:1",
+                Engagement = "Engaged and contributing",
+                GoalsDiscussed = "Welcome new participants",
+                PrayerRequests = "Confidence for the showcase",
+                ActionItems = sharedActionItems,
+                NextFollowUp = now.AddDays(4),
+                Visibility = Visibility.SharedWithMentor,
+            },
+            new CheckIn
+            {
+                YouthUserId = child.Id,
+                MentorUserId = guardian.Id,
+                Date = now.AddDays(-2),
+                Type = "call",
+                Engagement = privateSecret,
+                PrayerRequests = privateSecret,
+                Visibility = Visibility.Private,
+            });
+        db.GuardianProfiles.Add(new GuardianProfile
+        {
+            GuardianUserId = guardian.Id,
+            Relationship = "Parent",
+            Phone = "+14165550100",
+            EmergencyContactName = "Taylor Family",
+            EmergencyContactPhone = "+14165550111",
+            UpdatedAt = now,
+        });
+        if (body.IncludeConsent)
+        {
+            db.GuardianConsents.Add(new GuardianConsent
+            {
+                YouthUserId = child.Id,
+                GuardianUserId = guardian.Id,
+                GuardianName = guardian.DisplayName,
+                Relationship = "Parent",
+                ParticipationConsent = true,
+                Signature = guardian.DisplayName,
+                ReferenceId = $"CONSENT-{suffix.ToUpperInvariant()}",
+                Term = "Current term",
+                SignedAt = now.AddDays(-20),
+                ValidFrom = now.AddDays(-20),
+                ValidUntil = now.AddDays(90),
+            });
+        }
+        await db.SaveChangesAsync(cancellationToken);
+
+        return Results.Created($"/api/guardian/children/{child.Id}", new
+        {
+            childId = child.Id,
+            cohortId = cohort.Id,
+            childName = child.DisplayName,
+            childEmail = child.Email,
+            childPassword,
+            moduleName,
+            earnedBadgeName,
+            lockedBadgeName,
+            upcomingTitle,
+            sharedActionItems,
+            privateSecret,
+        });
+    });
+
+    app.MapGet("/api/_test/emails/latest", (
+        string to,
+        WordUp.Api.TestSupport.TestingEmailSender emails) =>
+    {
+        var email = emails.LastTo(to);
+        return email is null
+            ? Results.NotFound(new { title = "No matching email has been captured." })
+            : Results.Ok(new { email.To, email.Subject, email.Body });
     });
 
     // Public-content E2E needs published curriculum and a privacy-safe cohort, but those records

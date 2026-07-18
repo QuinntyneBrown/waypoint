@@ -1,0 +1,61 @@
+<wu-shell
+  role="guardian"
+  active="home"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    @if (context.loading()) {
+      <p class="wu-muted">Loading your family view…</p>
+    } @else if (context.progress(); as progress) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Guardian home</div>
+          <h1 class="wu-page__title">Your youth at a glance</h1>
+          <p class="wu-page__sub" data-testid="guardian-child-name">{{ progress.childName }}</p>
+        </div>
+      </div>
+
+      <div class="wu-grid wu-grid--3">
+        <div class="wu-card wu-statcard" data-testid="guardian-overall-progress">
+          <div class="wu-statcard__value">{{ progress.overallPercent.toFixed(0) }}%</div>
+          <div class="wu-statcard__label">Overall progress</div>
+        </div>
+        <div class="wu-card wu-statcard">
+          <div class="wu-statcard__value">{{ (progress.attendance.rate * 100).toFixed(0) }}%</div>
+          <div class="wu-statcard__label">Attendance rate</div>
+        </div>
+        <div class="wu-card wu-statcard">
+          <div class="wu-statcard__value">{{ progress.earnedBadges.length }}</div>
+          <div class="wu-statcard__label">Badges earned</div>
+        </div>
+      </div>
+
+      <div class="wu-card">
+        <div class="wu-card__body wu-stack">
+          <h2 class="wu-card__title">What’s next</h2>
+          @if (progress.upcomingSessions[0]; as session) {
+            <p>{{ session.title }}</p>
+          } @else {
+            <p class="wu-muted">No upcoming sessions.</p>
+          }
+          <a class="wu-btn wu-btn--primary" routerLink="/guardian/progress">View full progress</a>
+        </div>
+      </div>
+    } @else {
+      <div class="wu-empty">
+        <div class="wu-empty__icon">
+          <svg class="wu-icon"><use href="#i-users"></use></svg>
+        </div>
+        <h1 class="wu-empty__title">No linked youth yet</h1>
+        <p class="wu-empty__text">
+          Your youth’s read-only progress will appear here once the program links your accounts.
+        </p>
+      </div>
+    }
+
+    @if (context.error(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+  </div>
+</wu-shell>

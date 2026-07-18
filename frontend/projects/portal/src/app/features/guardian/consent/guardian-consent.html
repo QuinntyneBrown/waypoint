@@ -1,0 +1,167 @@
+<wu-shell
+  role="guardian"
+  active="consent"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Guardian settings</div>
+        <h1 class="wu-page__title">Consent and contact</h1>
+        <p class="wu-page__sub">Manage your own details and your youth’s consent record.</p>
+      </div>
+    </div>
+
+    <div class="wu-grid wu-grid--2">
+      <section class="wu-card">
+        <form class="wu-card__body wu-stack" [formGroup]="contactForm" (ngSubmit)="saveContact()">
+          <h2 class="wu-card__title">Contact details</h2>
+          <div class="wu-field">
+            <label class="wu-label" for="guardian-name">Name</label>
+            <input class="wu-input" id="guardian-name" formControlName="displayName" />
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="guardian-email">Email</label>
+            <input class="wu-input" id="guardian-email" type="email" formControlName="email" />
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="guardian-relationship">Relationship</label>
+            <input class="wu-input" id="guardian-relationship" formControlName="relationship" />
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="guardian-phone">Phone</label>
+            <input class="wu-input" id="guardian-phone" type="tel" formControlName="phone" />
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="guardian-emergency-name">Emergency contact name</label>
+            <input
+              class="wu-input"
+              id="guardian-emergency-name"
+              formControlName="emergencyContactName"
+            />
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="guardian-emergency-phone">Emergency contact phone</label>
+            <input
+              class="wu-input"
+              id="guardian-emergency-phone"
+              type="tel"
+              formControlName="emergencyContactPhone"
+            />
+          </div>
+          <button class="wu-btn wu-btn--primary" type="submit" [disabled]="saving()">
+            Save contact details
+          </button>
+        </form>
+      </section>
+
+      <div class="wu-stack">
+        @if (records() === undefined) {
+          <p class="wu-muted">Loading consent record…</p>
+        } @else if (records()![0]; as record) {
+          <section class="wu-card">
+            <div class="wu-card__body wu-stack">
+              <div class="wu-cluster wu-cluster--between">
+                <h2 class="wu-card__title">Participation consent</h2>
+                <span
+                  class="wu-badge"
+                  [class.wu-badge--success]="record.withdrawnAt === null"
+                  [class.wu-badge--error]="record.withdrawnAt !== null"
+                  data-testid="participation-status"
+                >
+                  {{ record.withdrawnAt ? 'Withdrawn' : 'Active' }}
+                </span>
+              </div>
+              <dl>
+                <dt>Signed by</dt>
+                <dd>{{ record.guardianName }} · {{ record.relationship }}</dd>
+                <dt>Signed</dt>
+                <dd>{{ record.signedAt | date: 'medium' }}</dd>
+                <dt>Method</dt>
+                <dd>{{ record.method }}</dd>
+                <dt>Valid until</dt>
+                <dd>{{ record.validUntil | date: 'mediumDate' }}</dd>
+                <dt>Reference</dt>
+                <dd data-testid="consent-reference">{{ record.referenceId }}</dd>
+              </dl>
+              <div class="wu-cluster">
+                <button
+                  class="wu-btn wu-btn--secondary"
+                  type="button"
+                  [disabled]="saving()"
+                  (click)="emailCopy(record.consentId)"
+                >
+                  Email me a copy
+                </button>
+                @if (!record.withdrawnAt) {
+                  <button
+                    class="wu-btn wu-btn--danger"
+                    type="button"
+                    [disabled]="saving()"
+                    (click)="withdraw(record.consentId)"
+                  >
+                    Withdraw consent
+                  </button>
+                }
+              </div>
+            </div>
+          </section>
+
+          <section class="wu-card">
+            <form class="wu-card__body wu-stack" [formGroup]="mediaForm" (ngSubmit)="saveMedia()">
+              <h2 class="wu-card__title">Media consent</h2>
+              <label class="wu-check">
+                <input type="checkbox" formControlName="mediaConsent" />
+                <span class="wu-check__box">
+                  <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                </span>
+                <span>Allow media use</span>
+              </label>
+              <label class="wu-check">
+                <input type="checkbox" formControlName="mediaAllPhotosVideo" />
+                <span class="wu-check__box">
+                  <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                </span>
+                <span>All photos and video</span>
+              </label>
+              <label class="wu-check">
+                <input type="checkbox" formControlName="mediaGroupOnly" />
+                <span class="wu-check__box">
+                  <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                </span>
+                <span>Group photos only</span>
+              </label>
+              <label class="wu-check">
+                <input type="checkbox" formControlName="mediaFirstNameCaptions" />
+                <span class="wu-check__box">
+                  <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                </span>
+                <span>First-name captions</span>
+              </label>
+              <button class="wu-btn wu-btn--primary" type="submit" [disabled]="saving()">
+                Save media consent
+              </button>
+            </form>
+          </section>
+        } @else {
+          <div class="wu-empty">
+            <h2 class="wu-empty__title">No consent record yet</h2>
+            <p class="wu-empty__text">
+              A participation and media consent record will appear once a youth is linked.
+            </p>
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (statusMessage(); as message) {
+      <p class="wu-alert wu-alert--success" role="status" aria-live="polite">{{ message }}</p>
+    } @else {
+      <p role="status" aria-live="polite"></p>
+    }
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+  </div>
+</wu-shell>

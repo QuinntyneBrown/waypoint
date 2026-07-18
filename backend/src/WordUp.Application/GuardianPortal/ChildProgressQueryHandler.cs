@@ -47,6 +47,28 @@ public class ChildProgressQueryHandler : IRequestHandler<ChildProgressQuery, Chi
         var attended = present + late;
         var rate = total > 0 ? (double)attended / total : 0d;
         var attendance = new ChildAttendanceSummary(present, late, excused, absent, total, rate);
+        var attendanceRows = await (
+                from record in _db.AttendanceRecords
+                join session in _db.Sessions on record.SessionId equals session.Id
+                where record.YouthUserId == child.Id
+                orderby session.StartsAt descending
+                select new
+                {
+                    SessionId = session.Id,
+                    session.Title,
+                    session.StartsAt,
+                    session.Location,
+                    record.Status,
+                })
+            .ToListAsync(cancellationToken);
+        var attendanceHistory = attendanceRows
+            .Select(row => new ChildAttendanceItem(
+                row.SessionId,
+                row.Title,
+                row.StartsAt,
+                row.Location,
+                row.Status.ToString()))
+            .ToList();
 
         // Earned vs locked badges: the active badge catalogue split by what the child already holds.
         var earnedSet = (await _db.BadgeAwards
@@ -82,7 +104,33 @@ public class ChildProgressQueryHandler : IRequestHandler<ChildProgressQuery, Chi
             upcoming = new List<ChildUpcomingSession>();
         }
 
+        // Only explicitly shared check-ins are returned. The selected fields are the guardian-safe
+        // shared content; private entries are excluded at the query boundary (GUARDIAN-001 AC4).
+        var sharedCheckIns = await _db.CheckIns
+            .Where(checkIn => checkIn.YouthUserId == child.Id
+                && checkIn.Visibility == Visibility.SharedWithMentor)
+            .OrderByDescending(checkIn => checkIn.Date)
+            .Select(checkIn => new GuardianSharedCheckIn(
+                checkIn.Id,
+                checkIn.Date,
+                checkIn.Type,
+                checkIn.Engagement,
+                checkIn.GoalsDiscussed,
+                checkIn.PrayerRequests,
+                checkIn.ActionItems,
+                checkIn.NextFollowUp))
+            .ToListAsync(cancellationToken);
+
         return new ChildProgressView(
-            child.Id, child.DisplayName, overall, modules, attendance, earned, locked, upcoming);
+            child.Id,
+            child.DisplayName,
+            overall,
+            modules,
+            attendance,
+            attendanceHistory,
+            earned,
+            locked,
+            upcoming,
+            sharedCheckIns);
     }
 }

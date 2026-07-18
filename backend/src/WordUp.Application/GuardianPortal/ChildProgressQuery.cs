@@ -14,9 +14,11 @@ public record ChildProgressView(
     double OverallPercent,
     IReadOnlyList<ModuleStatus> Modules,
     ChildAttendanceSummary Attendance,
+    IReadOnlyList<ChildAttendanceItem> AttendanceHistory,
     IReadOnlyList<ChildBadge> EarnedBadges,
     IReadOnlyList<ChildBadge> LockedBadges,
-    IReadOnlyList<ChildUpcomingSession> UpcomingSessions);
+    IReadOnlyList<ChildUpcomingSession> UpcomingSessions,
+    IReadOnlyList<GuardianSharedCheckIn> SharedCheckIns);
 
 public record ChildAttendanceSummary(
     int Present,
@@ -29,3 +31,20 @@ public record ChildAttendanceSummary(
 public record ChildBadge(Guid BadgeId, string Name, string Icon, string? Description);
 
 public record ChildUpcomingSession(Guid SessionId, string Title, DateTime StartsAt, string? Location);
+
+public record ChildAttendanceItem(
+    Guid SessionId,
+    string Title,
+    DateTime StartsAt,
+    string? Location,
+    string Status);
+
+public record GuardianSharedCheckIn(
+    Guid CheckInId,
+    DateTime Date,
+    string Type,
+    string? Engagement,
+    string? GoalsDiscussed,
+    string? PrayerRequests,
+    string? ActionItems,
+    DateTime? NextFollowUp);

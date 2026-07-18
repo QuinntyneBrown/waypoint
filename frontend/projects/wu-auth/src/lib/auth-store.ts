@@ -53,14 +53,14 @@ export class AuthStore {
   }
 
   /** Explicit sign-out: best-effort revoke, purge ALL wu.* (drafts too), hard reload. */
-  signOut(): void {
+  signOut(destination = '/auth/sign-in'): void {
     if (this.store.accessToken()) {
       this.api.signOut().subscribe({ next: () => {}, error: () => {} });
     }
     this.clearTimer();
     this.store.clear();
     this.persistence.purgeAll();
-    this.doc.defaultView?.location.assign('/auth/sign-in');
+    this.doc.defaultView?.location.assign(destination);
   }
 
   /** Forced expiry (refresh failed / family revoked): purge session but keep drafts. */

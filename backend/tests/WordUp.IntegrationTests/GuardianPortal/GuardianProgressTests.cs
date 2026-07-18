@@ -20,18 +20,35 @@ public sealed class GuardianProgressTests : IntegrationTestBase
         double OverallPercent,
         List<ModuleStatusDto> Modules,
         AttendanceDto Attendance,
+        List<AttendanceHistoryDto> AttendanceHistory,
         List<BadgeDto> EarnedBadges,
         List<BadgeDto> LockedBadges,
-        List<UpcomingSessionDto> UpcomingSessions);
+        List<UpcomingSessionDto> UpcomingSessions,
+        List<SharedCheckInDto> SharedCheckIns);
 
     private sealed record ModuleStatusDto(
         Guid ModuleId, string Name, int Order, string Status, double CompletionPercent, bool Locked, string? UnlockCondition);
 
     private sealed record AttendanceDto(int Present, int Late, int Excused, int Absent, int Total, double Rate);
 
+    private sealed record AttendanceHistoryDto(
+        Guid SessionId, string Title, DateTime StartsAt, string? Location, string Status);
+
     private sealed record BadgeDto(Guid BadgeId, string Name, string Icon, string? Description);
 
     private sealed record UpcomingSessionDto(Guid SessionId, string Title, DateTime StartsAt, string? Location);
+
+    private sealed record SharedCheckInDto(
+        Guid CheckInId,
+        DateTime Date,
+        string Type,
+        string? Engagement,
+        string? GoalsDiscussed,
+        string? PrayerRequests,
+        string? ActionItems,
+        DateTime? NextFollowUp);
+
+    private sealed record ChildSummaryDto(Guid ChildId, string ChildName);
 
     private async Task<HttpResponseMessage> SendAsync(HttpMethod method, string url, object? body = null, string? token = null)
     {
@@ -94,7 +111,8 @@ public sealed class GuardianProgressTests : IntegrationTestBase
         return (id, auth!.AccessToken);
     }
 
-    private async Task<(Guid CohortId, Guid SessionId, Guid BadgeId)> SeedCohortSessionAttendanceBadgeAsync(Guid childId)
+    private async Task<(Guid CohortId, Guid SessionId, Guid BadgeId, Guid SharedCheckInId)>
+        SeedCohortSessionAttendanceBadgeAsync(Guid childId)
     {
         using var scope = Factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -122,10 +140,20 @@ public sealed class GuardianProgressTests : IntegrationTestBase
         };
         db.Sessions.Add(session);
 
+        var attendedSession = new Session
+        {
+            CohortId = cohort.Id,
+            Title = "Leadership Workshop",
+            StartsAt = DateTime.UtcNow.AddDays(-7),
+            Location = "Studio A",
+            CreatedByUserId = Guid.NewGuid(),
+        };
+        db.Sessions.Add(attendedSession);
+
         // One present attendance mark for the child.
         db.AttendanceRecords.Add(new AttendanceRecord
         {
-            SessionId = Guid.NewGuid(),
+            SessionId = attendedSession.Id,
             YouthUserId = childId,
             Status = AttendanceStatus.Present,
             RecordedByUserId = Guid.NewGuid(),
@@ -136,8 +164,33 @@ public sealed class GuardianProgressTests : IntegrationTestBase
         db.Badges.Add(badge);
         db.BadgeAwards.Add(new BadgeAward { BadgeId = badge.Id, YouthUserId = childId });
 
+        var sharedCheckIn = new CheckIn
+        {
+            YouthUserId = childId,
+            MentorUserId = Guid.NewGuid(),
+            Date = DateTime.UtcNow.AddDays(-2),
+            Type = "1:1",
+            Engagement = "Engaged and asking thoughtful questions",
+            GoalsDiscussed = "Lead the opening activity",
+            PrayerRequests = "Confidence for the presentation",
+            ActionItems = "Prepare a five-minute welcome",
+            NextFollowUp = DateTime.UtcNow.AddDays(5),
+            Visibility = Visibility.SharedWithMentor,
+        };
+        db.CheckIns.Add(sharedCheckIn);
+        db.CheckIns.Add(new CheckIn
+        {
+            YouthUserId = childId,
+            MentorUserId = Guid.NewGuid(),
+            Date = DateTime.UtcNow.AddDays(-1),
+            Type = "call",
+            Engagement = "PRIVATE GUARDIAN SECRET",
+            PrayerRequests = "PRIVATE PRAYER SECRET",
+            Visibility = Visibility.Private,
+        });
+
         await db.SaveChangesAsync();
-        return (cohort.Id, session.Id, badge.Id);
+        return (cohort.Id, session.Id, badge.Id, sharedCheckIn.Id);
     }
 
     [Test]
@@ -147,7 +200,7 @@ public sealed class GuardianProgressTests : IntegrationTestBase
         // Traces to: L2-GUARDIAN-001
         var guardian = await SeedGuardianAsync();
         var childId = await SeedUserAsync(Roles.Youth, guardianUserId: guardian.Id);
-        var (_, sessionId, badgeId) = await SeedCohortSessionAttendanceBadgeAsync(childId);
+        var (_, sessionId, badgeId, sharedCheckInId) = await SeedCohortSessionAttendanceBadgeAsync(childId);
 
         var response = await SendAsync(HttpMethod.Get, $"/api/guardian/children/{childId}/progress", token: guardian.Token);
 
@@ -157,9 +210,37 @@ public sealed class GuardianProgressTests : IntegrationTestBase
         Assert.That(view!.ChildId, Is.EqualTo(childId));
         Assert.That(view.Attendance.Present, Is.EqualTo(1));
         Assert.That(view.Attendance.Total, Is.EqualTo(1));
+        Assert.That(view.AttendanceHistory, Has.Count.EqualTo(1));
+        Assert.That(view.AttendanceHistory[0].Title, Is.EqualTo("Leadership Workshop"));
+        Assert.That(view.AttendanceHistory[0].Status, Is.EqualTo("Present"));
         Assert.That(view.UpcomingSessions.Any(s => s.SessionId == sessionId), Is.True);
         Assert.That(view.EarnedBadges.Any(b => b.BadgeId == badgeId), Is.True);
         Assert.That(view.LockedBadges.Any(b => b.BadgeId == badgeId), Is.False);
+        Assert.That(view.SharedCheckIns.Single().CheckInId, Is.EqualTo(sharedCheckInId));
+        Assert.That(view.SharedCheckIns.Single().ActionItems, Is.EqualTo("Prepare a five-minute welcome"));
+        Assert.That(view.SharedCheckIns.Single().PrayerRequests, Is.EqualTo("Confidence for the presentation"));
+
+        var raw = await response.Content.ReadAsStringAsync();
+        Assert.That(raw, Does.Not.Contain("PRIVATE GUARDIAN SECRET"));
+        Assert.That(raw, Does.Not.Contain("PRIVATE PRAYER SECRET"));
+    }
+
+    [Test]
+    [Property("Req", "L2-GUARDIAN-001")]
+    public async Task Guardian_lists_only_their_linked_children_for_portal_navigation()
+    {
+        // Traces to: L2-GUARDIAN-001, L2-AUTH-010
+        var guardian = await SeedGuardianAsync();
+        var childId = await SeedUserAsync(Roles.Youth, guardianUserId: guardian.Id);
+        var otherGuardian = await SeedGuardianAsync();
+        await SeedUserAsync(Roles.Youth, guardianUserId: otherGuardian.Id);
+
+        var response = await SendAsync(HttpMethod.Get, "/api/guardian/children", token: guardian.Token);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var children = await response.Content.ReadFromJsonAsync<List<ChildSummaryDto>>();
+        Assert.That(children, Has.Count.EqualTo(1));
+        Assert.That(children![0].ChildId, Is.EqualTo(childId));
     }
 
     [Test]

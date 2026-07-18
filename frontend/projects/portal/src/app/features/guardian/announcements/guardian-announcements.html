@@ -1,0 +1,61 @@
+<wu-shell
+  role="guardian"
+  active="announcements"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Guardian news</div>
+        <h1 class="wu-page__title">News and announcements</h1>
+        <p class="wu-page__sub">Program and cohort updates relevant to your family.</p>
+      </div>
+      @if (unreadCount() > 0) {
+        <button
+          class="wu-btn wu-btn--secondary"
+          type="button"
+          [disabled]="saving()"
+          (click)="markAllRead()"
+        >
+          {{ saving() ? 'Marking…' : 'Mark all read' }}
+        </button>
+      }
+    </div>
+
+    @if (announcements() === undefined) {
+      <p class="wu-muted">Loading announcements…</p>
+    } @else if (announcements()!.length > 0) {
+      <div class="wu-stack">
+        @for (announcement of announcements(); track announcement.id) {
+          <article class="wu-card" data-testid="guardian-announcement">
+            <div class="wu-card__body wu-stack wu-stack--sm">
+              <div class="wu-cluster wu-cluster--between">
+                <h2 class="wu-card__title">{{ announcement.title }}</h2>
+                @if (!announcement.read) {
+                  <span class="wu-badge wu-badge--lime">Unread</span>
+                }
+              </div>
+              @if (announcement.sentAt) {
+                <p class="wu-muted">{{ announcement.sentAt | date: 'MMM d, y' }}</p>
+              }
+              <p>{{ announcement.message }}</p>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="wu-empty">
+        <div class="wu-empty__icon">
+          <svg class="wu-icon"><use href="#i-bell"></use></svg>
+        </div>
+        <h2 class="wu-empty__title">No announcements yet</h2>
+        <p class="wu-empty__text">Program and cohort news will appear here.</p>
+      </div>
+    }
+
+    @if (error(); as message) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ message }}</p>
+    }
+  </div>
+</wu-shell>

@@ -394,8 +394,8 @@ pre {
   margin-left: auto;
 }
 .wu-iconbtn {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--wu-r-pill);
   border: 0;
   background: transparent;
@@ -436,6 +436,7 @@ pre {
   font-family: var(--wu-font-head);
   font-weight: 500;
   color: var(--wu-ink);
+  min-height: 44px;
 }
 .wu-trackswitch:hover {
   background: var(--wu-g100);
@@ -486,6 +487,7 @@ pre {
   font-weight: 500;
   cursor: pointer;
   line-height: 1.2;
+  min-height: 44px;
 }
 .wu-sidenav__item:hover {
   background: var(--wu-g100);
@@ -619,6 +621,7 @@ pre {
   text-decoration: none;
   -webkit-appearance: none;
   appearance: none;
+  min-height: 44px;
 }
 .wu-btn:hover {
   text-decoration: none;
@@ -801,11 +804,12 @@ pre {
 .wu-check,
 .wu-radio {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   cursor: pointer;
   font-size: 0.95rem;
   margin-bottom: 10px;
+  min-height: 44px;
 }
 .wu-check input,
 .wu-radio input {
@@ -823,7 +827,7 @@ pre {
   background: var(--wu-white);
   display: grid;
   place-items: center;
-  margin-top: 1px;
+  margin-top: 0;
   transition:
     background 0.15s,
     border-color 0.15s;

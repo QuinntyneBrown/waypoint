@@ -57,9 +57,9 @@ requirement conflicts early (they gate "done").
 ## Phase C — Non-youth portal shell + Volunteer portal
 
 - [~] **C0 · Role portal routing** — real feature routes + shell for admin/mentor/guardian/
-      volunteer (today they fall through to 404 despite `roleHome()`). *Volunteer `/volunteer/home`
-      route added; the shell already renders every role via nav-config. Admin/Mentor/Guardian
-      routes still to build as those portals land.*
+      volunteer (today they fall through to 404 despite `roleHome()`). *Volunteer and Guardian
+      routes are live; the shell already renders every role via nav-config. Admin/Mentor routes
+      still land as their portals are built.*
 - [x] **C1 · Volunteer Today** — today's assigned session/logistics/count, no youth record data.
       `L2-VOLUNTEER-001`. Empty and populated states are E2E-verified.
 - [x] **C2 · Volunteer schedule** — upcoming assigned sessions/status + empty state.
@@ -74,12 +74,12 @@ requirement conflicts early (they gate "done").
 
 ## Phase D — Guardian portal
 
-- [ ] **D1 · Guardian home / child progress** — read-only aggregate progress, per-module
+- [x] **D1 · Guardian home / child progress** — read-only aggregate progress, per-module
       completion, attendance history, badges, upcoming schedule, shared check-ins. `L2-GUARDIAN-001`.
-- [ ] **D2 · Guardian announcements** — targeted feed, unread, mark-all-read, states. `L2-GUARDIAN-002`.
-- [ ] **D3 · Guardian consent/contact** — view e-sign record, edit contact/emergency, granular
+- [x] **D2 · Guardian announcements** — targeted feed, unread, mark-all-read, states. `L2-GUARDIAN-002`.
+- [x] **D3 · Guardian consent/contact** — view e-sign record, edit contact/emergency, granular
       media consent, withdraw, email a record copy. `L2-GUARDIAN-003`, `L2-CONSENT-001`.
-- [ ] **D4 · Guardian participation-consent form + consent-request delivery** — public/tokenised
+- [x] **D4 · Guardian participation-consent form + consent-request delivery** — public/tokenised
       guardian consent capture; blocked youth sends secure consent link; auto-unblock.
       `L2-CONSENT-001/002`, `L2-PLATFORM-011`.
 
@@ -186,6 +186,9 @@ requirement conflicts early (they gate "done").
 - [x] **Volunteer assignment fixture** — `POST /api/_test/volunteer-sessions` creates a populated,
       assigned session in Testing only so Today, schedule, attendance, offline, and conflict paths
       execute through real HTTP and product APIs.
+- [x] **Guardian family + email fixtures** — Testing-only family seeding covers aggregate, empty,
+      consented, and consent-required states; the Testing-only email sink lets Playwright follow the
+      delivered one-time link without exposing capability tokens in product responses.
 
 ## Progress log
 
@@ -206,3 +209,7 @@ requirement conflicts early (they gate "done").
   attendance is names-only with Present/Absent bulk capture, scoped saves, durable idempotency,
   owner-bound offline replay, visible pending state, deterministic conflict choice, and unsaved
   navigation protection. The two governing requirement conflicts (X1/X2) are also reconciled.
+- 2026-07-18 — D1/D2/D3/D4 done: the Guardian portal now provides scoped aggregate progress,
+  targeted news, contact/media management, consent receipts/copies/withdrawal, and responsive mobile
+  paths. Blocked youth can deliver a hashed, expiring, one-time consent link; public typed e-signature
+  capture emails a receipt and unblocks participation on the next server-authoritative access check.

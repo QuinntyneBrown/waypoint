@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Authentication.Auth;
 using WordUp.Infrastructure;
@@ -15,8 +16,15 @@ namespace WordUp.IntegrationTests.Consent;
 public sealed class ConsentTests : IntegrationTestBase
 {
     private sealed record StatusDto(bool ParticipationAllowed);
+    private sealed record AccessDto(bool HasCohort, bool ConsentRequired, bool ParticipationAllowed);
+    private sealed record ConsentRequestDto(string Channel, string Destination);
+    private sealed record PublicConsentDto(string YouthName, string GuardianDestination, DateTime ExpiresAt);
+    private sealed record ConsentResultDto(Guid ConsentId, string ReferenceId);
 
-    private async Task<(Guid Id, string Token)> SeedUserAsync(string role, Guid? guardianUserId = null)
+    private async Task<(Guid Id, string Email, string Token)> SeedUserAsync(
+        string role,
+        Guid? guardianUserId = null,
+        Guid? cohortId = null)
     {
         var email = $"{role.ToLowerInvariant()}.{Guid.NewGuid():N}@example.com";
         const string password = "Passw0rd!";
@@ -33,6 +41,7 @@ public sealed class ConsentTests : IntegrationTestBase
                 Role = role,
                 Status = UserStatus.Active,
                 GuardianUserId = guardianUserId,
+                CohortId = cohortId,
                 PasswordHash = hasher.Hash(password),
             };
             db.Users.Add(user);
@@ -43,7 +52,7 @@ public sealed class ConsentTests : IntegrationTestBase
         var response = await Client.PostAsJsonAsync("/api/auth/sign-in", new { email, password });
         response.EnsureSuccessStatusCode();
         var auth = await response.Content.ReadFromJsonAsync<AuthResult>();
-        return (id, auth!.AccessToken);
+        return (id, email, auth!.AccessToken);
     }
 
     private async Task<HttpResponseMessage> GetAsync(string url, string token)
@@ -58,6 +67,13 @@ public sealed class ConsentTests : IntegrationTestBase
         var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = JsonContent.Create(body) };
         Authorize(request, token);
         return await Client.SendAsync(request);
+    }
+
+    private static string ConsentRequestToken(string body)
+    {
+        var match = Regex.Match(body, @"token=([A-Za-z0-9_-]+)");
+        Assert.That(match.Success, Is.True, "The guardian email must contain the secure one-time token.");
+        return match.Groups[1].Value;
     }
 
     private static object ConsentBody(Guid youthUserId, bool participation = true) => new
@@ -120,5 +136,109 @@ public sealed class ConsentTests : IntegrationTestBase
 
         var capture = await PostAsync("/api/consent", ConsentBody(youth.Id, participation: false), guardian.Token);
         Assert.That(capture.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
+    [Test]
+    [Property("Req", "L2-CONSENT-002")]
+    [Property("Req", "L2-PLATFORM-011")]
+    public async Task Blocked_youth_sends_one_time_guardian_link_and_valid_public_consent_unblocks_access()
+    {
+        // Traces to: L2-CONSENT-001 AC1-AC3, L2-CONSENT-002 AC2-AC4, L2-PLATFORM-011 AC1
+        var guardian = await SeedUserAsync(Roles.Guardian);
+        Guid cohortId;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var cohort = new Cohort
+            {
+                Name = $"Consent cohort {Guid.NewGuid():N}",
+                TermStart = DateTime.UtcNow.AddMonths(-1),
+                TermEnd = DateTime.UtcNow.AddMonths(5),
+            };
+            db.Cohorts.Add(cohort);
+            await db.SaveChangesAsync();
+            cohortId = cohort.Id;
+        }
+        var youth = await SeedUserAsync(Roles.Youth, guardianUserId: guardian.Id, cohortId: cohortId);
+
+        var before = await GetAsync("/api/me/access", youth.Token);
+        var beforeAccess = await before.Content.ReadFromJsonAsync<AccessDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(beforeAccess!.HasCohort, Is.True);
+            Assert.That(beforeAccess.ConsentRequired, Is.True);
+            Assert.That(beforeAccess.ParticipationAllowed, Is.False);
+        });
+
+        var request = await PostAsync("/api/consent/request", new { }, youth.Token);
+        Assert.That(request.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var delivery = await request.Content.ReadFromJsonAsync<ConsentRequestDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(delivery!.Channel, Is.EqualTo("email"));
+            Assert.That(delivery.Destination, Does.Contain("***"));
+            Assert.That(delivery.Destination, Does.Not.Contain(guardian.Email));
+        });
+
+        var email = Factory.Emails.LastTo(guardian.Email);
+        Assert.That(email, Is.Not.Null);
+        Assert.That(email!.Subject, Does.Contain("consent").IgnoreCase);
+        var rawToken = ConsentRequestToken(email.Body);
+        Assert.That(await request.Content.ReadAsStringAsync(), Does.Not.Contain(rawToken),
+            "The youth-facing response must not disclose the guardian capability token.");
+
+        var detailsResponse = await Client.GetAsync($"/api/public/guardian-consent/{rawToken}");
+        Assert.That(detailsResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var details = await detailsResponse.Content.ReadFromJsonAsync<PublicConsentDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(details!.YouthName, Is.EqualTo(Roles.Youth));
+            Assert.That(details.GuardianDestination, Does.Contain("***"));
+            Assert.That(details.ExpiresAt, Is.GreaterThan(DateTime.UtcNow));
+        });
+
+        var completion = await Client.PostAsJsonAsync($"/api/public/guardian-consent/{rawToken}", new
+        {
+            guardianName = "Amara Okafor",
+            relationship = "Mother",
+            participationConsent = true,
+            mediaConsent = true,
+            mediaAllPhotosVideo = false,
+            mediaGroupOnly = true,
+            mediaFirstNameCaptions = true,
+            signature = "Amara Okafor",
+        });
+        Assert.That(completion.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var receipt = await completion.Content.ReadFromJsonAsync<ConsentResultDto>();
+        Assert.That(receipt!.ReferenceId, Does.StartWith("GC-"));
+
+        var after = await GetAsync("/api/me/access", youth.Token);
+        var afterAccess = await after.Content.ReadFromJsonAsync<AccessDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(afterAccess!.ConsentRequired, Is.False);
+            Assert.That(afterAccess.ParticipationAllowed, Is.True);
+        });
+
+        var reuse = await Client.PostAsJsonAsync($"/api/public/guardian-consent/{rawToken}", new
+        {
+            guardianName = "Attacker",
+            relationship = "Other",
+            participationConsent = true,
+            signature = "Attacker",
+        });
+        Assert.That(reuse.StatusCode, Is.EqualTo(HttpStatusCode.Gone));
+    }
+
+    [Test]
+    [Property("Req", "L2-CONSENT-002")]
+    public async Task Consent_request_requires_a_linked_guardian_contact()
+    {
+        // Traces to: L2-CONSENT-002 AC2
+        var youth = await SeedUserAsync(Roles.Youth);
+
+        var request = await PostAsync("/api/consent/request", new { }, youth.Token);
+
+        Assert.That(request.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 }

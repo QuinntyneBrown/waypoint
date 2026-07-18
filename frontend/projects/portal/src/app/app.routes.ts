@@ -12,6 +12,14 @@ const confirmAttendanceNavigation: CanDeactivateFn<UnsavedChangesAware> = (compo
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'auth/sign-in' },
   {
+    path: 'consent/respond',
+    title: 'Guardian consent · Word Up',
+    loadComponent: () =>
+      import('./states/requested-guardian-consent/requested-guardian-consent').then(
+        (module) => module.RequestedGuardianConsentPage,
+      ),
+  },
+  {
     path: 'auth',
     canActivate: [guestGuard],
     children: [
@@ -142,6 +150,42 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/volunteer/attendance/volunteer-attendance').then(
             (module) => module.VolunteerAttendance,
+          ),
+      },
+    ],
+  },
+  {
+    path: 'guardian',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'home',
+        title: 'Guardian home · Word Up',
+        loadComponent: () =>
+          import('./features/guardian/home/guardian-home').then((module) => module.GuardianHome),
+      },
+      {
+        path: 'progress',
+        title: 'Child progress · Word Up',
+        loadComponent: () =>
+          import('./features/guardian/progress/guardian-progress').then(
+            (module) => module.GuardianProgress,
+          ),
+      },
+      {
+        path: 'announcements',
+        title: 'Guardian news · Word Up',
+        loadComponent: () =>
+          import('./features/guardian/announcements/guardian-announcements').then(
+            (module) => module.GuardianAnnouncements,
+          ),
+      },
+      {
+        path: 'consent',
+        title: 'Consent and contact · Word Up',
+        loadComponent: () =>
+          import('./features/guardian/consent/guardian-consent').then(
+            (module) => module.GuardianConsent,
           ),
       },
     ],

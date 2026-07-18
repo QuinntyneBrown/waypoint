@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ApiError, ConsentApi } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { ToastService, WuStatePage } from '@wu/ui';
+import { WuStatePage } from '@wu/ui';
 
 // Traces to: L2-CONSENT-002
 @Component({
   selector: 'wu-consent-required',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuStatePage, RouterLink],
+  imports: [WuStatePage],
   template: `<wu-state-page
     icon="shield"
     tone="warning"
@@ -20,24 +20,50 @@ import { ToastService, WuStatePage } from '@wu/ui';
       type="button"
       [class.is-loading]="notifying()"
       (click)="notifyGuardian()"
+      [disabled]="notifying()"
     >
       Notify my guardian
     </button>
-    <a class="wu-btn wu-btn--ghost" routerLink="/guardian/consent">My guardian can sign now</a>
+    <button class="wu-btn wu-btn--ghost" type="button" (click)="guardianSignNow()">
+      My guardian can sign now
+    </button>
     <button class="wu-btn wu-btn--subtle" type="button" (click)="signOut()">Sign out</button>
+    @if (deliveryMessage(); as message) {
+      <p class="wu-alert wu-alert--success" role="status" aria-live="polite">{{ message }}</p>
+    }
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
   </wu-state-page>`,
 })
 export class ConsentRequired {
-  private readonly toasts = inject(ToastService);
+  private readonly api = inject(ConsentApi);
   private readonly auth = inject(AuthStore);
   protected readonly notifying = signal(false);
+  protected readonly deliveryMessage = signal<string | null>(null);
+  protected readonly errorMessage = signal<string | null>(null);
 
   protected notifyGuardian(): void {
-    // The guardian-notification endpoint is guardian/admin-gated (Tier B); the
-    // affordance ships now with a confirmation so the flow is complete client-side.
+    if (this.notifying()) return;
     this.notifying.set(true);
-    this.toasts.success('We’ll send your guardian a secure consent link.');
-    this.notifying.set(false);
+    this.deliveryMessage.set(null);
+    this.errorMessage.set(null);
+    this.api.requestGuardian().subscribe({
+      next: (delivery) => {
+        this.notifying.set(false);
+        this.deliveryMessage.set(
+          `A secure consent link was sent by ${delivery.channel} to ${delivery.destination}.`,
+        );
+      },
+      error: (error: unknown) => {
+        this.notifying.set(false);
+        this.errorMessage.set(ApiError.from(error).title);
+      },
+    });
+  }
+
+  protected guardianSignNow(): void {
+    this.auth.signOut('/auth/sign-in?returnUrl=%2Fguardian%2Fconsent');
   }
 
   protected signOut(): void {

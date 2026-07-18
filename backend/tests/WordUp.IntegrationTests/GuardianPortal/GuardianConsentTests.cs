@@ -33,6 +33,14 @@ public sealed class GuardianConsentTests : IntegrationTestBase
         DateTime ValidUntil,
         DateTime? WithdrawnAt);
 
+    private sealed record GuardianContactDto(
+        string DisplayName,
+        string Email,
+        string? Relationship,
+        string? Phone,
+        string? EmergencyContactName,
+        string? EmergencyContactPhone);
+
     private async Task<HttpResponseMessage> SendAsync(HttpMethod method, string url, object? body = null, string? token = null)
     {
         var request = new HttpRequestMessage(method, url);
@@ -47,7 +55,7 @@ public sealed class GuardianConsentTests : IntegrationTestBase
         return await Client.SendAsync(request);
     }
 
-    private async Task<(Guid Id, string Token)> SeedGuardianAsync()
+    private async Task<(Guid Id, string Email, string Token)> SeedGuardianAsync()
     {
         var email = $"guardian.{Guid.NewGuid():N}@example.com";
         Guid id;
@@ -71,7 +79,7 @@ public sealed class GuardianConsentTests : IntegrationTestBase
         var response = await Client.PostAsJsonAsync("/api/auth/sign-in", new { email, password = "Passw0rd!" });
         response.EnsureSuccessStatusCode();
         var auth = await response.Content.ReadFromJsonAsync<AuthResult>();
-        return (id, auth!.AccessToken);
+        return (id, email, auth!.AccessToken);
     }
 
     private async Task<Guid> SeedChildAsync(Guid guardianId)
@@ -193,6 +201,38 @@ public sealed class GuardianConsentTests : IntegrationTestBase
         Assert.That(profile.Phone, Is.EqualTo("+14165550100"));
         Assert.That(profile.EmergencyContactName, Is.EqualTo("John Okafor"));
         Assert.That(profile.EmergencyContactPhone, Is.EqualTo("+14165550111"));
+
+        var get = await SendAsync(HttpMethod.Get, "/api/guardian/contact", token: guardian.Token);
+        Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var contact = await get.Content.ReadFromJsonAsync<GuardianContactDto>();
+        Assert.That(contact!.DisplayName, Is.EqualTo("Amara Okafor"));
+        Assert.That(contact.Email, Is.EqualTo("amara.okafor@example.com"));
+        Assert.That(contact.Relationship, Is.EqualTo("Mother"));
+        Assert.That(contact.Phone, Is.EqualTo("+14165550100"));
+        Assert.That(contact.EmergencyContactName, Is.EqualTo("John Okafor"));
+        Assert.That(contact.EmergencyContactPhone, Is.EqualTo("+14165550111"));
+    }
+
+    [Test]
+    [Property("Req", "L2-GUARDIAN-003")]
+    public async Task Guardian_can_request_an_emailed_copy_of_their_own_e_sign_record()
+    {
+        // Traces to: L2-GUARDIAN-003 AC3
+        var guardian = await SeedGuardianAsync();
+        var childId = await SeedChildAsync(guardian.Id);
+        var capture = await SendAsync(HttpMethod.Post, "/api/consent", CaptureBody(childId), guardian.Token);
+        var consent = await capture.Content.ReadFromJsonAsync<ConsentResultDto>();
+
+        var email = await SendAsync(
+            HttpMethod.Post,
+            $"/api/guardian/consents/{consent!.ConsentId}/email-copy",
+            token: guardian.Token);
+
+        Assert.That(email.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+        var sent = Factory.Emails.LastTo(guardian.Email);
+        Assert.That(sent, Is.Not.Null);
+        Assert.That(sent!.Subject, Does.Contain("consent record copy"));
+        Assert.That(sent.Body, Does.Contain(consent.ReferenceId));
     }
 
     [Test]
@@ -218,4 +258,6 @@ public sealed class GuardianConsentTests : IntegrationTestBase
         }, token: stranger.Token);
         Assert.That(update.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
     }
+
+    private sealed record ConsentResultDto(Guid ConsentId, string ReferenceId);
 }

@@ -1,6 +1,12 @@
 // Page Object Model surface for the Word Up E2E suite. Import page objects from
 // this barrel; API/data fixtures live in `../support`.
 export { BasePage } from './base.page';
+export {
+  GuardianAnnouncementsPage,
+  GuardianConsentPage,
+  GuardianHomePage,
+  GuardianProgressPage,
+} from './guardian.pages';
 export { AppShell } from './shell';
 export { PortalAppPage } from './app.page';
 export {
@@ -21,7 +27,13 @@ export {
   SupportPage,
 } from './settings.pages';
 export { YouthHomePage, YouthAnnouncementsPage, YouthNotificationsPage } from './youth.pages';
-export { ForbiddenPage, NotFoundPage, ServerErrorPage } from './states.pages';
+export {
+  ConsentRequiredPage,
+  ForbiddenPage,
+  NotFoundPage,
+  RequestedGuardianConsentPage,
+  ServerErrorPage,
+} from './states.pages';
 export {
   VolunteerAttendancePage,
   VolunteerTodayPage,

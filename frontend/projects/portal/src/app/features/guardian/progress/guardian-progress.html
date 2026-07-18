@@ -1,0 +1,127 @@
+<wu-shell
+  role="guardian"
+  active="progress"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Read-only family view</div>
+        <h1 class="wu-page__title">Child progress</h1>
+        @if (context.progress(); as progress) {
+          <p class="wu-page__sub">{{ progress.childName }}</p>
+        }
+      </div>
+    </div>
+
+    @if (context.loading()) {
+      <p class="wu-muted">Loading progress…</p>
+    } @else if (context.progress(); as progress) {
+      <div class="wu-stack wu-stack--lg">
+        <section class="wu-card">
+          <div class="wu-card__body wu-stack">
+            <h2 class="wu-card__title">Modules</h2>
+            @for (module of progress.modules; track module.moduleId) {
+              <div class="wu-listitem" data-testid="guardian-module">
+                <div class="wu-listitem__body">
+                  <div class="wu-listitem__title">{{ module.name }}</div>
+                  <div class="wu-listitem__meta">
+                    {{ module.status }} · {{ module.completionPercent.toFixed(0) }}%
+                  </div>
+                </div>
+              </div>
+            } @empty {
+              <p class="wu-muted">No modules assigned yet.</p>
+            }
+          </div>
+        </section>
+
+        <section class="wu-card">
+          <div class="wu-card__body wu-stack">
+            <h2 class="wu-card__title">Attendance history</h2>
+            @for (item of progress.attendanceHistory; track item.sessionId) {
+              <div class="wu-listitem" data-testid="guardian-attendance">
+                <div class="wu-listitem__body">
+                  <div class="wu-listitem__title">{{ item.title }}</div>
+                  <div class="wu-listitem__meta">
+                    {{ item.startsAt | date: 'MMM d, y' }} · {{ item.status }}
+                  </div>
+                </div>
+              </div>
+            } @empty {
+              <p class="wu-muted">No attendance recorded yet.</p>
+            }
+          </div>
+        </section>
+
+        <div class="wu-grid wu-grid--2">
+          <section class="wu-card" data-testid="guardian-earned-badges">
+            <div class="wu-card__body wu-stack">
+              <h2 class="wu-card__title">Earned badges</h2>
+              @for (badge of progress.earnedBadges; track badge.badgeId) {
+                <p><span aria-hidden="true">★</span> {{ badge.name }}</p>
+              } @empty {
+                <p class="wu-muted">No badges earned yet.</p>
+              }
+            </div>
+          </section>
+          <section class="wu-card" data-testid="guardian-locked-badges">
+            <div class="wu-card__body wu-stack">
+              <h2 class="wu-card__title">Still to unlock</h2>
+              @for (badge of progress.lockedBadges; track badge.badgeId) {
+                <p><span aria-hidden="true">○</span> {{ badge.name }}</p>
+              } @empty {
+                <p class="wu-muted">Everything is unlocked.</p>
+              }
+            </div>
+          </section>
+        </div>
+
+        <section class="wu-card" data-testid="guardian-upcoming-sessions">
+          <div class="wu-card__body wu-stack">
+            <h2 class="wu-card__title">Upcoming schedule</h2>
+            @for (session of progress.upcomingSessions; track session.sessionId) {
+              <p>
+                <strong>{{ session.title }}</strong> ·
+                {{ session.startsAt | date: 'MMM d, h:mm a' }}
+              </p>
+            } @empty {
+              <p class="wu-muted">No upcoming sessions.</p>
+            }
+          </div>
+        </section>
+
+        <section class="wu-card" data-testid="guardian-shared-checkins">
+          <div class="wu-card__body wu-stack">
+            <h2 class="wu-card__title">Shared mentor updates</h2>
+            @for (checkIn of progress.sharedCheckIns; track checkIn.checkInId) {
+              <article class="wu-stack wu-stack--sm">
+                <strong>{{ checkIn.date | date: 'MMM d, y' }} · {{ checkIn.type }}</strong>
+                @if (checkIn.engagement) {
+                  <p>{{ checkIn.engagement }}</p>
+                }
+                @if (checkIn.goalsDiscussed) {
+                  <p>Goals: {{ checkIn.goalsDiscussed }}</p>
+                }
+                @if (checkIn.prayerRequests) {
+                  <p>Prayer: {{ checkIn.prayerRequests }}</p>
+                }
+                @if (checkIn.actionItems) {
+                  <p>Next steps: {{ checkIn.actionItems }}</p>
+                }
+              </article>
+            } @empty {
+              <p class="wu-muted">No mentor updates have been shared.</p>
+            }
+          </div>
+        </section>
+      </div>
+    } @else {
+      <div class="wu-empty">
+        <h2 class="wu-empty__title">No progress to show yet</h2>
+        <p class="wu-empty__text">A linked youth’s aggregate progress will appear here.</p>
+      </div>
+    }
+  </div>
+</wu-shell>

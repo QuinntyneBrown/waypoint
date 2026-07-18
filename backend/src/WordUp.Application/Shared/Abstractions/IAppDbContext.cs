@@ -11,6 +11,7 @@ public interface IAppDbContext
     DbSet<AuditEntry> AuditEntries { get; }
     DbSet<YouthApplication> Applications { get; }
     DbSet<GuardianConsent> GuardianConsents { get; }
+    DbSet<GuardianConsentRequest> GuardianConsentRequests { get; }
     DbSet<Cohort> Cohorts { get; }
     DbSet<CohortMentor> CohortMentors { get; }
 

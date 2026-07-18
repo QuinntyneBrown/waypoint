@@ -14,6 +14,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<AuditEntry> AuditEntries => Set<AuditEntry>();
     public DbSet<YouthApplication> Applications => Set<YouthApplication>();
     public DbSet<GuardianConsent> GuardianConsents => Set<GuardianConsent>();
+    public DbSet<GuardianConsentRequest> GuardianConsentRequests => Set<GuardianConsentRequest>();
     public DbSet<Cohort> Cohorts => Set<Cohort>();
     public DbSet<CohortMentor> CohortMentors => Set<CohortMentor>();
     public DbSet<Track> Tracks => Set<Track>();
@@ -240,6 +241,16 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Note).HasMaxLength(1000);
             b.Property(x => x.Status).HasConversion<int>();
             b.Property(x => x.RowVersion).IsRowVersion();
+        });
+
+        modelBuilder.Entity<GuardianConsentRequest>(b =>
+        {
+            b.HasKey(x => x.Id);
+            b.HasIndex(x => x.TokenHash).IsUnique();
+            b.HasIndex(x => new { x.YouthUserId, x.UsedAt });
+            b.Property(x => x.Channel).HasMaxLength(16).IsRequired();
+            b.Property(x => x.Destination).HasMaxLength(256).IsRequired();
+            b.Property(x => x.TokenHash).HasMaxLength(512).IsRequired();
         });
         modelBuilder.Entity<AttendanceWriteReceipt>(b =>
         {

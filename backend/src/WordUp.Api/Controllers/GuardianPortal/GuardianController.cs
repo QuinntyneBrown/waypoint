@@ -15,6 +15,14 @@ public class GuardianController : ControllerBase
 
     public GuardianController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("api/guardian/children")]
+    public async Task<ActionResult<IReadOnlyList<GuardianChildSummary>>> Children(
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GuardianChildrenQuery(), cancellationToken);
+        return Ok(result);
+    }
+
     [HttpGet("api/guardian/children/{childId:guid}/progress")]
     public async Task<ActionResult<ChildProgressView>> Progress(Guid childId, CancellationToken cancellationToken)
     {
@@ -43,6 +51,22 @@ public class GuardianController : ControllerBase
     {
         var result = await _mediator.Send(new GuardianConsentRecordQuery(childId), cancellationToken);
         return Ok(result);
+    }
+
+    [HttpGet("api/guardian/contact")]
+    public async Task<ActionResult<GuardianContactView>> Contact(CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GuardianContactQuery(), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPost("api/guardian/consents/{consentId:guid}/email-copy")]
+    public async Task<IActionResult> EmailConsentCopy(
+        Guid consentId,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new EmailConsentRecordCommand(consentId), cancellationToken);
+        return NoContent();
     }
 
     [HttpPut("api/guardian/children/{childId:guid}/media-consent")]

@@ -30,6 +30,20 @@ export interface SeededVolunteerSession {
   youth: { youthUserId: string; name: string }[];
 }
 
+export interface SeededGuardianFamily {
+  childId: string;
+  cohortId: string;
+  childName: string;
+  childEmail: string;
+  childPassword: string;
+  moduleName: string;
+  earnedBadgeName: string;
+  lockedBadgeName: string;
+  upcomingTitle: string;
+  sharedActionItems: string;
+  privateSecret: string;
+}
+
 /**
  * Provision an active user with an arbitrary role via the Testing-only seed
  * endpoint (`POST /api/_test/users`). Non-Youth roles have no self-service
@@ -67,6 +81,29 @@ export async function seedVolunteerSession(
     `seed volunteer session failed: ${res.status()} ${await res.text()}`,
   ).toBeTruthy();
   return (await res.json()) as SeededVolunteerSession;
+}
+
+/** Seed a linked child with aggregate progress data for an existing Guardian (Testing only). */
+export async function seedGuardianFamily(
+  request: APIRequestContext,
+  guardianUserId: string,
+  options: { includeConsent?: boolean } = {},
+): Promise<SeededGuardianFamily> {
+  const res = await request.post('/api/_test/guardian-families', {
+    data: { guardianUserId, includeConsent: options.includeConsent ?? true },
+  });
+  expect(res.ok(), `seed guardian family failed: ${res.status()} ${await res.text()}`).toBeTruthy();
+  return (await res.json()) as SeededGuardianFamily;
+}
+
+/** Read the latest captured transactional email in the Testing host. */
+export async function latestTestEmail(
+  request: APIRequestContext,
+  to: string,
+): Promise<{ to: string; subject: string; body: string }> {
+  const res = await request.get(`/api/_test/emails/latest?to=${encodeURIComponent(to)}`);
+  expect(res.ok(), `latest test email failed: ${res.status()} ${await res.text()}`).toBeTruthy();
+  return (await res.json()) as { to: string; subject: string; body: string };
 }
 
 export interface SeededApplication {
