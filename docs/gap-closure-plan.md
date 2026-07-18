@@ -125,7 +125,10 @@ requirement conflicts early (they gate "done").
 - [x] **E13** Youth home placed-state content + `/youth/messages` link fix `L2-LEARN-*`, `L2-PLATFORM-011` —
       authoritative current-learning action, shared curriculum progress, next cohort session/RSVP,
       mentor-assigned work with due/status links, mentor support, and preserved no-cohort guidance.
-- [ ] **E14** Youth notifications deep links + live events `L2-ENGAGE-008`, `L2-NFR-005`
+- [x] **E14** Youth notifications deep links + live events `L2-ENGAGE-008`, `L2-NFR-005` —
+      actionable unread cards route to their target screens, recipient-scoped events appear live,
+      feed/reconnect reconciliation preserves authoritative read state without duplicates, and the
+      responsive notification target is keyboard operable.
 
 ## Phase F — Mentor portal (`L2-MENTOR-001..008`, `L2-ENGAGE-001..004/007/008`)
 
@@ -182,10 +185,11 @@ requirement conflicts early (they gate "done").
       session RSVP reminders now schedule, cancel, dispatch once, deep-link to the schedule, and obey
       the canonical `session-reminders` in-app preference; direct-message notifications now use the
       matching `mentor-messages` key. Other required event generators and email delivery remain.
-- [~] **H14** Frontend realtime client (`/hubs/realtime`) `L2-NFR-005`, `L2-ENGAGE-007/008` —
+- [x] **H14** Frontend realtime client (`/hubs/realtime`) `L2-NFR-005`, `L2-ENGAGE-007/008` —
       one token-authenticated app-level connection starts after sign-in, reconnects with the current
       token, reconciles threads without duplicates, updates youth messages, and tears down with the
-      session; live notification-feed reconciliation remains in E14.
+      session. Recipient-scoped notifications merge into the live feed, reconcile from the server on
+      reconnect without duplicates, and preserve server-authoritative read state.
 - [ ] **H15** Security audit coverage (denied actions, tamper-evidence) `L2-AUTH-009`, `L2-CONSENT-003`
 - [ ] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002`
 - [ ] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004`
@@ -281,3 +285,8 @@ requirement conflicts early (they gate "done").
   calculator-backed progress, same-cohort next session and RSVP, and youth-scoped assigned work with
   resolved due/status destinations. The no-cohort mentor path now reaches the delivered thread;
   desktop, mobile reflow/keyboard, and no-cohort regression paths pass.
+- 2026-07-18 — E14 and H14 done: the youth notification feed now consumes recipient-scoped live
+  events, merges in-flight feed and reconnect responses by durable ID, retains authoritative unread
+  state, and renders actionable cards as accessible deep links. Desktop acceptance proves live
+  arrival, reload deduplication, and target-thread routing; mobile acceptance proves containment,
+  touch size, and keyboard activation.

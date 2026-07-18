@@ -62,6 +62,15 @@ export class YouthNotificationsPage extends BasePage {
   get emptyStateHeading() {
     return this.page.getByRole('heading', { name: /all caught up/i });
   }
+  get realtimeStatus() {
+    return this.page.getByTestId('notification-realtime-status');
+  }
+  get items() {
+    return this.page.getByTestId('notification-item');
+  }
+  notification(title: string) {
+    return this.items.filter({ has: this.page.getByRole('heading', { name: title, exact: true }) });
+  }
 
   async goto(): Promise<void> {
     await this.page.goto(YouthNotificationsPage.path);
