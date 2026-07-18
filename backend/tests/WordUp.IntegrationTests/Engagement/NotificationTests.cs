@@ -8,7 +8,7 @@ using WordUp.Infrastructure;
 namespace WordUp.IntegrationTests.Engagement;
 
 // Acceptance Test
-// Traces to: L2-ENGAGE-008 (in-app notification feed: new-message notifications, mark-all-read, preference opt-out)
+// Traces to: L2-ENGAGE-008 (in-app notification feed: mentor-message notifications, mark-all-read, preference opt-out)
 [TestFixture]
 [Property("Req", "L2-ENGAGE-008")]
 public sealed class NotificationTests : IntegrationTestBase
@@ -85,8 +85,8 @@ public sealed class NotificationTests : IntegrationTestBase
         var feed = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
         Assert.That(feed.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var notifications = await feed.Content.ReadFromJsonAsync<List<NotificationDto>>();
-        var newMessage = notifications!.SingleOrDefault(n => n.EventKey == "new-message");
-        Assert.That(newMessage, Is.Not.Null, "recipient should have a new-message notification");
+        var newMessage = notifications!.SingleOrDefault(n => n.EventKey == "mentor-messages");
+        Assert.That(newMessage, Is.Not.Null, "recipient should have a mentor-message notification");
         Assert.That(newMessage!.Read, Is.False);
         Assert.That(newMessage.LinkPath, Is.Not.Null.And.Not.Empty);
 
@@ -95,7 +95,7 @@ public sealed class NotificationTests : IntegrationTestBase
 
         var feed2 = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
         var notifications2 = await feed2.Content.ReadFromJsonAsync<List<NotificationDto>>();
-        Assert.That(notifications2!.Single(n => n.EventKey == "new-message").Read, Is.True);
+        Assert.That(notifications2!.Single(n => n.EventKey == "mentor-messages").Read, Is.True);
     }
 
     [Test]
@@ -105,7 +105,7 @@ public sealed class NotificationTests : IntegrationTestBase
         // Traces to: L2-ENGAGE-008 (AC4)
         var mentor = await SeedUserAsync(Roles.Mentor);
         var youth = await SeedUserAsync(Roles.Youth, mentorId: mentor.Id);
-        await SeedNotificationPreferenceAsync(youth.Id, "new-message", inApp: false);
+        await SeedNotificationPreferenceAsync(youth.Id, "mentor-messages", inApp: false);
         var mentorToken = await SignInAsync(mentor.Email);
         var youthToken = await SignInAsync(youth.Email);
 
@@ -114,7 +114,7 @@ public sealed class NotificationTests : IntegrationTestBase
 
         var feed = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
         var notifications = await feed.Content.ReadFromJsonAsync<List<NotificationDto>>();
-        Assert.That(notifications!.Any(n => n.EventKey == "new-message"), Is.False, "opting out of in-app new-message suppresses the notification");
+        Assert.That(notifications!.Any(n => n.EventKey == "mentor-messages"), Is.False, "opting out of in-app mentor messages suppresses the notification");
     }
 
     private sealed record NotificationDto(

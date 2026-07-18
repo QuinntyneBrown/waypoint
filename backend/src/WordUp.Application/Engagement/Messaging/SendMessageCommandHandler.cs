@@ -64,19 +64,33 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Mes
         _db.Messages.Add(message);
         await _db.SaveChangesAsync(cancellationToken);
 
-        // In-app notification for the recipient, unless they have opted out of in-app "new-message" (ENGAGE-008 AC4).
+        await _publisher.PublishToUserAsync(
+            request.ToUserId,
+            "message",
+            new
+            {
+                id = message.Id,
+                senderId = message.SenderId,
+                recipientId = message.RecipientId,
+                body = request.Body,
+                sentAt = message.SentAt,
+                readAt = message.ReadAt,
+            },
+            cancellationToken);
+
+        // In-app notification for the recipient, unless they have opted out of mentor messages.
         var preference = await _db.NotificationPreferences
-            .FirstOrDefaultAsync(p => p.UserId == request.ToUserId && p.EventKey == "new-message", cancellationToken);
+            .FirstOrDefaultAsync(p => p.UserId == request.ToUserId && p.EventKey == "mentor-messages", cancellationToken);
 
         if (preference is null || preference.InApp)
         {
             var notification = new Notification
             {
                 UserId = request.ToUserId,
-                EventKey = "new-message",
+                EventKey = "mentor-messages",
                 Title = "New message",
                 Body = "You have a new message.",
-                LinkPath = $"/messages/{senderId}",
+                LinkPath = target.Role == Roles.Youth ? "/youth/messages" : "/mentor/messages",
                 CreatedAt = _clock.UtcNow,
             };
             _db.Notifications.Add(notification);

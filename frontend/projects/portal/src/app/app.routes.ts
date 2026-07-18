@@ -122,6 +122,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'messages',
+        title: 'Messages · Word Up',
+        loadComponent: () =>
+          import('./features/youth/messages/youth-messages').then(
+            (module) => module.YouthMessagesPage,
+          ),
+      },
+      {
         path: 'coding/:id',
         title: 'Coding lesson · Word Up',
         loadComponent: () =>

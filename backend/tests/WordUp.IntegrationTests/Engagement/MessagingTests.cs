@@ -81,9 +81,23 @@ public sealed class MessagingTests : IntegrationTestBase
         Assert.That(mentorMessages.Any(m => m.SenderId == mentor.Id && m.Body == "Hi, how did the reading go?"), Is.True);
         Assert.That(mentorMessages.Any(m => m.SenderId == youth.Id && m.Body == "Finished it, loved chapter 3."), Is.True);
 
+        var mine = await SendAsync(HttpMethod.Get, "/api/me/messages", token: youthToken);
+        var ownThread = await mine.Content.ReadFromJsonAsync<YouthThreadDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(ownThread!.MentorId, Is.EqualTo(mentor.Id));
+            Assert.That(ownThread.MentorName, Is.EqualTo("Seed Mentor"));
+            Assert.That(ownThread.UnreadCount, Is.EqualTo(1));
+            Assert.That(ownThread.Messages, Has.Count.EqualTo(2));
+            Assert.That(ownThread.Messages.Single(item => item.SenderId == mentor.Id).ReadAt, Is.Not.Null);
+        });
+
         var youthThread = await SendAsync(HttpMethod.Get, $"/api/messages/{mentor.Id}", token: youthToken);
         var youthMessages = await youthThread.Content.ReadFromJsonAsync<List<MessageDto>>();
         Assert.That(youthMessages!.Count, Is.EqualTo(2), "the reply lands in the same thread, not a new one");
+        var reread = await SendAsync(HttpMethod.Get, "/api/me/messages", token: youthToken);
+        var rereadThread = await reread.Content.ReadFromJsonAsync<YouthThreadDto>();
+        Assert.That(rereadThread!.UnreadCount, Is.EqualTo(0), "opening the thread clears unread state");
     }
 
     [Test]
@@ -145,4 +159,10 @@ public sealed class MessagingTests : IntegrationTestBase
     private sealed record MessageResultDto(Guid Id);
 
     private sealed record MessageDto(Guid Id, Guid SenderId, Guid RecipientId, string Body, DateTime SentAt, DateTime? ReadAt);
+
+    private sealed record YouthThreadDto(
+        Guid? MentorId,
+        string? MentorName,
+        int UnreadCount,
+        List<MessageDto> Messages);
 }

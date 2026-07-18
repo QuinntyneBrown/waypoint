@@ -18,6 +18,7 @@ export * from './lib/models/learning/coding';
 export * from './lib/models/learning/journey';
 export * from './lib/models/learning/progress';
 export * from './lib/models/engagement/schedule';
+export * from './lib/models/engagement/messages';
 export * from './lib/models/public/public';
 export * from './lib/models/volunteer/volunteer';
 export * from './lib/models/people/people';

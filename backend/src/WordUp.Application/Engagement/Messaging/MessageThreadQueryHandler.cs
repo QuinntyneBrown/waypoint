@@ -1,3 +1,4 @@
+using System.Net;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
@@ -9,11 +10,13 @@ public class MessageThreadQueryHandler : IRequestHandler<MessageThreadQuery, IRe
 {
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
+    private readonly IClock _clock;
 
-    public MessageThreadQueryHandler(IAppDbContext db, ICurrentUser currentUser)
+    public MessageThreadQueryHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock)
     {
         _db = db;
         _currentUser = currentUser;
+        _clock = clock;
     }
 
     public async Task<IReadOnlyList<MessageView>> Handle(MessageThreadQuery request, CancellationToken cancellationToken)
@@ -48,10 +51,23 @@ public class MessageThreadQueryHandler : IRequestHandler<MessageThreadQuery, IRe
         }
 
         var threadKey = Message.KeyFor(userId, request.OtherUserId);
-        return await _db.Messages
+        var messages = await _db.Messages
             .Where(m => m.ThreadKey == threadKey)
             .OrderBy(m => m.SentAt)
-            .Select(m => new MessageView(m.Id, m.SenderId, m.RecipientId, m.Body, m.SentAt, m.ReadAt))
             .ToListAsync(cancellationToken);
+        var now = _clock.UtcNow;
+        foreach (var message in messages.Where(item => item.RecipientId == userId && item.ReadAt == null))
+            message.ReadAt = now;
+        await _db.SaveChangesAsync(cancellationToken);
+
+        return messages
+            .Select(m => new MessageView(
+                m.Id,
+                m.SenderId,
+                m.RecipientId,
+                WebUtility.HtmlDecode(m.Body),
+                m.SentAt,
+                m.ReadAt))
+            .ToList();
     }
 }

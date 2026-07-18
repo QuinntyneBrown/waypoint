@@ -177,6 +177,25 @@ export class YouthSchedulePage extends BasePage {
   }
 }
 
+/** `/youth/messages` — the assigned mentor thread with live message delivery. */
+export class YouthMessagesPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Messages', exact: true });
+  }
+  get thread() {
+    return this.page.getByTestId('message-thread');
+  }
+  get composer() {
+    return this.page.getByLabel(/message your mentor/i);
+  }
+  get sendButton() {
+    return this.page.getByRole('button', { name: /send message/i });
+  }
+  get realtimeStatus() {
+    return this.page.getByTestId('realtime-status');
+  }
+}
+
 /** `/youth/lessons/:id` — safe lesson reader with persisted reading controls. */
 export class YouthLessonPage extends BasePage {
   get heading() {

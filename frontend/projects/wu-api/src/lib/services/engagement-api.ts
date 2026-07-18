@@ -8,6 +8,28 @@ import {
   SupportRequest,
   SupportResult,
 } from '../models/platform/platform';
+import { MessageResult, MessageView, YouthMessageThread } from '../models/engagement/messages';
+
+/** Assigned-mentor messaging (`/api/me/messages`, Youth). */
+@Injectable({ providedIn: 'root' })
+export class MessagingApi {
+  private readonly http = inject(HttpClient);
+  private readonly base = inject(API_BASE_URL);
+
+  mine(): Observable<YouthMessageThread> {
+    return this.http.get<YouthMessageThread>(`${this.base}/api/me/messages`);
+  }
+
+  thread(otherUserId: string): Observable<MessageView[]> {
+    return this.http.get<MessageView[]>(
+      `${this.base}/api/messages/${encodeURIComponent(otherUserId)}`,
+    );
+  }
+
+  send(toUserId: string, body: string): Observable<MessageResult> {
+    return this.http.post<MessageResult>(`${this.base}/api/messages`, { toUserId, body });
+  }
+}
 
 /** Own notification feed (`/api/notifications`, any authenticated user). */
 @Injectable({ providedIn: 'root' })

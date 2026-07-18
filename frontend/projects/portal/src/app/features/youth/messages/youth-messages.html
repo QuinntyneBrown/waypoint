@@ -1,0 +1,107 @@
+<wu-shell
+  role="youth"
+  active="messages"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Your support</div>
+        <h1 class="wu-page__title">Messages</h1>
+        @if (thread()?.mentorName; as mentorName) {
+          <p class="wu-page__sub">Your private conversation with {{ mentorName }}.</p>
+        }
+      </div>
+      <span class="wu-badge" data-testid="realtime-status">
+        {{ realtime.state() === 'connected' ? 'Live updates on' : 'Reconnecting live updates' }}
+      </span>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    <p class="wu-sr-only" role="status">{{ liveStatus() }}</p>
+
+    @if (thread(); as view) {
+      @if (!view.mentorId) {
+        <section class="wu-card wu-empty">
+          <div class="wu-card__body">
+            <h2 class="wu-empty__title">Your mentor hasn’t been assigned yet</h2>
+            <p class="wu-empty__text">This conversation will open when your placement is ready.</p>
+          </div>
+        </section>
+      } @else {
+        @if (view.unreadCount > 0) {
+          <p class="wu-alert wu-alert--info" role="status">
+            {{ view.unreadCount }} new {{ view.unreadCount === 1 ? 'message' : 'messages' }} from
+            your mentor.
+          </p>
+        }
+        <section
+          class="wu-card thread-card"
+          [attr.aria-label]="'Conversation with ' + view.mentorName"
+        >
+          <ol
+            class="thread-log"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions text"
+            data-testid="message-thread"
+          >
+            @if (view.messages.length === 0) {
+              <li class="wu-empty">
+                <h2 class="wu-empty__title">Start the conversation</h2>
+                <p class="wu-empty__text">Ask a question or share how your week is going.</p>
+              </li>
+            }
+            @for (message of view.messages; track message.id) {
+              <li
+                class="message-row"
+                [class.message-row--mine]="message.senderId === auth.user()?.userId"
+                [attr.data-message-id]="message.id"
+              >
+                <article class="message-bubble">
+                  <strong>{{
+                    message.senderId === auth.user()?.userId ? 'You' : view.mentorName
+                  }}</strong>
+                  <p class="message-body">{{ message.body }}</p>
+                  <time class="wu-muted wu-text-sm" [attr.datetime]="message.sentAt">
+                    {{ message.sentAt | date: 'medium' }}
+                  </time>
+                </article>
+              </li>
+            }
+          </ol>
+
+          <form class="composer wu-stack" [formGroup]="form" (ngSubmit)="send()">
+            <div class="wu-field">
+              <label class="wu-label" for="message-body">Message your mentor</label>
+              <textarea
+                id="message-body"
+                class="wu-textarea"
+                formControlName="body"
+                maxlength="4000"
+                rows="4"
+                aria-describedby="message-help"
+                (keydown.control.enter)="send()"
+              ></textarea>
+              <p id="message-help" class="wu-help">Ctrl + Enter also sends your message.</p>
+              @if (form.controls.body.touched && form.controls.body.invalid) {
+                <p class="wu-field__error">Write a message before sending.</p>
+              }
+            </div>
+            <div class="wu-actions wu-actions--between">
+              <span class="wu-muted">{{ form.controls.body.value.length }}/4000</span>
+              <button class="wu-btn wu-btn--primary" type="submit" [disabled]="sending()">
+                {{ sending() ? 'Sending…' : 'Send message' }}
+              </button>
+            </div>
+          </form>
+        </section>
+      }
+    } @else {
+      <p class="wu-muted" role="status">Loading messages…</p>
+    }
+  </div>
+</wu-shell>

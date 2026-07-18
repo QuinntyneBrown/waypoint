@@ -14,6 +14,12 @@ public class MessagesController : ControllerBase
 
     public MessagesController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("api/me/messages")]
+    [Authorize(Roles = Roles.Youth)]
+    public async Task<ActionResult<YouthMessageThreadView>> Mine(
+        CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new YouthMessageThreadQuery(), cancellationToken));
+
     [HttpPost("api/messages")]
     public async Task<ActionResult<MessageResult>> Send(
         [FromBody] SendMessageRequest request,

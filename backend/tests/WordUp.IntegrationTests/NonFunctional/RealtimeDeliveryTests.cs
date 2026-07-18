@@ -67,8 +67,10 @@ public sealed class RealtimeDeliveryTests : IntegrationTestBase
 
         var youthGot = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
         var bystanderGot = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var youthGotMessage = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
         youthConn.On<JsonElement>("notification", p => youthGot.TrySetResult(p.ToString()));
         bystanderConn.On<JsonElement>("notification", p => bystanderGot.TrySetResult(p.ToString()));
+        youthConn.On<JsonElement>("message", p => youthGotMessage.TrySetResult(p.ToString()));
 
         try
         {
@@ -83,6 +85,9 @@ public sealed class RealtimeDeliveryTests : IntegrationTestBase
             var completed = await Task.WhenAny(youthGot.Task, Task.Delay(TimeSpan.FromSeconds(10)));
             Assert.That(completed, Is.EqualTo(youthGot.Task), "expected a real-time notification within 10s");
             Assert.That(youthGot.Task.Result, Does.Contain("New message"));
+            var messageCompleted = await Task.WhenAny(youthGotMessage.Task, Task.Delay(TimeSpan.FromSeconds(10)));
+            Assert.That(messageCompleted, Is.EqualTo(youthGotMessage.Task), "expected the new thread message in real time");
+            Assert.That(youthGotMessage.Task.Result, Does.Contain("Great work this week"));
 
             // Scoping: the notification was targeted at the recipient's own group, so the bystander,
             // who is connected on the same hub, must not receive it (L2-NFR-005 AC1/AC4).

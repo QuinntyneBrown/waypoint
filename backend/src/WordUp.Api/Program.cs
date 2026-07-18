@@ -906,6 +906,14 @@ if (app.Environment.IsEnvironment("Testing"))
             ApprovedAt = now.AddDays(-2),
         });
         db.Sessions.AddRange(presentSession, absentSession, upcomingSession);
+        db.Messages.Add(new Message
+        {
+            ThreadKey = Message.KeyFor(mentor.Id, youth.Id),
+            SenderId = mentor.Id,
+            RecipientId = youth.Id,
+            Body = "Welcome! Message me whenever you need support.",
+            SentAt = now.AddMinutes(-30),
+        });
         db.AttendanceRecords.AddRange(
             new AttendanceRecord
             {
@@ -977,6 +985,7 @@ if (app.Environment.IsEnvironment("Testing"))
             quizBadgeName = quizBadge.Name,
             mentorEmail = mentor.Email,
             mentorPassword = youthPassword,
+            mentorName = mentor.DisplayName,
             assignmentId = assignment.Id,
             assignmentTitle = assignment.Title,
             assignmentCriterionId = assignmentCriterion.Id,

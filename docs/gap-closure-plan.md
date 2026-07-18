@@ -119,7 +119,9 @@ requirement conflicts early (they gate "done").
 - [x] **E11** Youth schedule & RSVP (youth-visible calendar, reminders) `L2-ENGAGE-005/008` —
       future same-cohort sessions with logistics/current response, one-record RSVP updates, optional
       mentor note, durable preference-aware reminders, and responsive keyboard/touch acceptance.
-- [ ] **E12** Youth messaging (mentor thread + realtime) `L2-ENGAGE-007`, `L2-NFR-005`
+- [x] **E12** Youth messaging (mentor thread + realtime) `L2-ENGAGE-007`, `L2-NFR-005` —
+      assigned-mentor identity and one private thread, unread clearing, safe text rendering, send/receive,
+      recipient-scoped live delivery, reconnect reconciliation, and responsive keyboard composer.
 - [ ] **E13** Youth home placed-state content + `/youth/messages` link fix `L2-LEARN-*`, `L2-PLATFORM-011`
 - [ ] **E14** Youth notifications deep links + live events `L2-ENGAGE-008`, `L2-NFR-005`
 
@@ -176,9 +178,12 @@ requirement conflicts early (they gate "done").
 - [ ] **H12** Submission concurrency (version tokens) `L2-NFR-006`
 - [~] **H13** Event/reminder generation + preference keys `L2-ENGAGE-005/008`, `L2-PLATFORM-003` —
       session RSVP reminders now schedule, cancel, dispatch once, deep-link to the schedule, and obey
-      the canonical `session-reminders` in-app preference; other required event generators and email
-      delivery remain.
-- [ ] **H14** Frontend realtime client (`/hubs/realtime`) `L2-NFR-005`, `L2-ENGAGE-007/008`
+      the canonical `session-reminders` in-app preference; direct-message notifications now use the
+      matching `mentor-messages` key. Other required event generators and email delivery remain.
+- [~] **H14** Frontend realtime client (`/hubs/realtime`) `L2-NFR-005`, `L2-ENGAGE-007/008` —
+      one token-authenticated app-level connection starts after sign-in, reconnects with the current
+      token, reconciles threads without duplicates, updates youth messages, and tears down with the
+      session; live notification-feed reconciliation remains in E14.
 - [ ] **H15** Security audit coverage (denied actions, tamper-evidence) `L2-AUTH-009`, `L2-CONSENT-003`
 - [ ] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002`
 - [ ] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004`
@@ -217,7 +222,8 @@ requirement conflicts early (they gate "done").
       delivered one-time link without exposing capability tokens in product responses.
 - [x] **Youth curriculum fixture** — Testing-only multi-track enrollment data covers published/draft
       filtering, ordered lesson/quiz gates, prerequisite locking, progress, safe lesson content,
-      failed optional media, reflection hand-off, upcoming cohort logistics, and an empty enrolled track.
+      failed optional media, reflection hand-off, upcoming cohort logistics, an assigned-mentor thread,
+      and an empty enrolled track.
 
 ## Progress log
 
@@ -265,3 +271,7 @@ requirement conflicts early (they gate "done").
   one RSVP with an optional mentor-visible note, and schedule or cancel a 24-hour reminder. Due
   reminders are consumed once into the preference-aware notification feed, and desktop/mobile
   acceptance verifies persistence, touch containment, and keyboard operation.
+- 2026-07-18 — E12 done: youth messaging resolves only the assigned mentor, marks inbound messages
+  read when the thread opens, safely renders and sends text, and receives recipient-scoped SignalR
+  events through an app-level token-aware reconnecting client. Reconnects reconcile from the server
+  without duplicates; desktop live-reply and mobile keyboard paths pass.
