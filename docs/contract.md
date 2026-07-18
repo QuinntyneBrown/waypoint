@@ -1,5 +1,7 @@
 # Word Up — Page Builder Contract (READ FIRST, FOLLOW EXACTLY)
 
+> The mock pages this contract governs live in **`docs/mocks/`**. All relative paths below (`styleguide.html`, `../assets/…`, `_template-*.html`, the role folders) are relative to that folder.
+
 You are building **static HTML mockup pages** for the "Word Up" youth-leadership app. They must all look like one product. Follow this contract verbatim. Do **not** invent CSS classes, do **not** add colors, do **not** add external resources. Look at `styleguide.html` for the rendered look and copy its markup patterns.
 
 ## Golden rules (breaking any of these breaks the prototype)

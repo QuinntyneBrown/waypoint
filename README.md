@@ -8,10 +8,10 @@ Styled with **FaithTech's design system**.
 
 ## Open it
 
-Just **double-click `index.html`** — it's the prototype map that links to every screen. No server, no install, no internet required. Runs directly from the file system on any device (built to work on the org's shared Chromebooks, offline).
+The mockups live in **`docs/mocks/`**. Just **double-click `docs/mocks/index.html`** — it's the prototype map that links to every screen. No server, no install, no internet required. Runs directly from the file system on any device (built to work on the org's shared Chromebooks, offline).
 
-- `index.html` — clickable sitemap of every screen (filter by role, search, open dialog/empty/loading variants)
-- `styleguide.html` — the living FaithTech design system
+- `docs/mocks/index.html` — clickable sitemap of every screen (filter by role, search, open dialog/empty/loading variants)
+- `docs/mocks/styleguide.html` — the living FaithTech design system
 
 ## What's inside (~115 screens)
 
@@ -37,13 +37,16 @@ The organization has only a handful of shared Chromebooks, so the prototype is d
 
 ### Project layout
 ```
-index.html            # prototype map / sitemap
-styleguide.html       # design system reference
-assets/css/wordup.css # design tokens + components (built from _core.css + _fonts.css)
-assets/js/wordup.js   # shared shell, dialogs, toasts, icons, mock data (window.WordUp)
-docs/contract.md      # the component/class + JS API spec every page follows
-_template-*.html      # copy-me page starters
-public/ auth/ youth/ mentor/ admin/ guardian/ volunteer/ shared/ states/
+docs/
+  mocks/                    # the prototype (all mock screens + assets)
+    index.html              # prototype map / sitemap
+    styleguide.html         # design system reference
+    assets/css/wordup.css   # design tokens + components (built from _core.css + _fonts.css)
+    assets/js/wordup.js     # shared shell, dialogs, toasts, icons, mock data (window.WordUp)
+    _template-*.html        # copy-me page starters
+    public/ auth/ youth/ mentor/ admin/ guardian/ volunteer/ shared/ states/
+  contract.md               # the component/class + JS API spec every page follows
+  backend-implementation-plan.md
 ```
 
 All sample data (youth, mentors, cohorts, lessons) is **fictional** and kept consistent across pages for the demo.

@@ -1,5 +1,15 @@
-# Dependencies (none required — this is a static, buildless prototype)
+# Node
 node_modules/
+
+# .NET build output
+bin/
+obj/
+*.user
+[Tt]est[Rr]esults/
+
+# Angular build output
+frontend/dist/
+.angular/
 
 # OS / editor cruft
 .DS_Store
