@@ -214,7 +214,8 @@ public class AppDbContext : DbContext, IAppDbContext
         // Program administration (M2)
         modelBuilder.Entity<OrgSettings>(b => b.Property(x => x.Name).HasMaxLength(128).IsRequired());
         modelBuilder.Entity<Term>(b => b.Property(x => x.Name).HasMaxLength(128).IsRequired());
-        modelBuilder.Entity<CohortMentor>(b => b.HasIndex(x => new { x.CohortId, x.MentorId }));
+        modelBuilder.Entity<CohortMentor>(b =>
+            b.HasIndex(x => new { x.CohortId, x.MentorId }).IsUnique());
 
         // Learning & mentoring (M3)
         modelBuilder.Entity<LessonProgress>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());

@@ -184,6 +184,43 @@ export class ProgressBoardPage extends BasePage {
   }
 }
 
+/** `/admin/mentor-assignments` — youth pairing, cohort teams, and mentor load. */
+export class MentorAssignmentsPage extends BasePage {
+  static readonly path = '/admin/mentor-assignments';
+
+  get youthSelect() {
+    return this.page.getByLabel('Youth', { exact: true });
+  }
+  get mentorSelect() {
+    return this.page.getByLabel('Assigned mentor');
+  }
+  get assignMentor() {
+    return this.page.getByRole('button', { name: 'Assign mentor' });
+  }
+  get cohortSelect() {
+    return this.page.getByLabel('Cohort team');
+  }
+  get leadMentorSelect() {
+    return this.page.getByLabel('Lead mentor');
+  }
+  supportingMentor(id: string) {
+    return this.page.locator(`input[type="checkbox"][value="${id}"]`);
+  }
+  get saveCohortTeam() {
+    return this.page.getByRole('button', { name: 'Save cohort team' });
+  }
+  get outcome() {
+    return this.page.getByRole('status');
+  }
+  mentorLoad(id: string) {
+    return this.page.locator(`[data-testid="mentor-load-card"][data-mentor-id="${id}"]`);
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(MentorAssignmentsPage.path);
+  }
+}
+
 /** `/admin/applications` — the Program Administrator application review queue. */
 export class ApplicationsListPage extends BasePage {
   static readonly path = '/admin/applications';

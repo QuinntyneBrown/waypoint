@@ -42,6 +42,17 @@ public class EditCohortCommandHandler : IRequestHandler<EditCohortCommand>
             cohort.MentorId = leadMentorId;
 
             // Keep the lead CohortMentor row in step with the cohort's lead mentor (L2-ADMIN-003 AC3).
+            // A supporting mentor promoted through this edit path must not leave a duplicate row.
+            var promotedSupportingMentor = await _db.CohortMentors
+                .FirstOrDefaultAsync(
+                    mentor => mentor.CohortId == cohort.Id
+                        && mentor.MentorId == leadMentorId
+                        && !mentor.IsLead,
+                    cancellationToken);
+            if (promotedSupportingMentor is not null)
+            {
+                _db.CohortMentors.Remove(promotedSupportingMentor);
+            }
             var existingLead = await _db.CohortMentors
                 .FirstOrDefaultAsync(m => m.CohortId == cohort.Id && m.IsLead, cancellationToken);
 

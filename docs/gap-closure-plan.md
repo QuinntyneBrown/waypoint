@@ -192,7 +192,10 @@ requirement conflicts early (they gate "done").
       cohort/track matrices derive authoritative assignment, lesson completion, quiz and aggregate
       states; role-scoped progress events refresh the current board live, while filtered CSV/PDF
       exports and contained sticky-column mobile scrolling cover reporting and narrow screens.
-- [ ] **G6** Mentor assignment / caseload `L2-ADMIN-005`
+- [x] **G6** Mentor assignment / caseload `L2-ADMIN-005` — a responsive admin workspace pairs
+      active youth with active mentors, replaces audited cohort lead/supporting teams independently,
+      and shows named caseload/check-in/review metrics against a shared 4–8 target band with explicit
+      under-target, balanced, and overloaded states.
 - [ ] **G7** Organization settings + term lifecycle `L2-ADMIN-006`
 - [ ] **G8** Curriculum builder `L2-CURRIC-001..006`
 - [ ] **G9** Calendar/session management `L2-ENGAGE-001`
@@ -241,7 +244,8 @@ requirement conflicts early (they gate "done").
 - [ ] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002`
 - [~] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004` —
       scoped attendance reporting now supports cohort/date filters, session status/rates, youth
-      counts/trends/thresholds, and exact-filter CSV/PDF exports; org reporting, cross-report
+      counts/trends/thresholds, and exact-filter CSV/PDF exports; staff activity now includes named
+      caseload, check-in, review, target-band, and overload metrics. Org reporting, cross-report
       comparisons, and the remaining export targets still remain.
 - [ ] **H18** Data-subject fulfillment + retention/anonymization `L2-NFR-003`
 - [ ] **H19** Unsaved-change framework `L2-NFR-007`
@@ -439,3 +443,10 @@ requirement conflicts early (they gate "done").
   filters, and the sticky matrix scrolls within its container on narrow screens. Seven cohort and ten
   learning integrations, six portal units, the production build, and three live/export/mobile browser
   scenarios pass. G13 is partial because other export targets remain.
+- 2026-07-18 — G6 done: admins can pair active youth with validated active mentors and see the youth
+  on the new mentor's roster immediately. Each cohort now has an integrity-checked, audited team with
+  one lead and independent supporting mentors, including safe promotion from supporting to lead and
+  different roles for the same mentor across cohorts. The workspace shows active-youth caseload,
+  check-ins, reviews, the shared 4–8 target band, and overload warnings with empty/error recovery and
+  mobile reflow. Twenty-four adjacent backend integrations, six portal units, the production build,
+  and three pairing/cohort-role/mobile browser scenarios pass.

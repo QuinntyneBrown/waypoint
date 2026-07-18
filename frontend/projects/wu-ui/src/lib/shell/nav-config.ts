@@ -72,6 +72,12 @@ export const WU_NAV: Record<WuRole, WuRoleNav> = {
       { key: 'dashboard', label: 'Dashboard', icon: 'grid', path: '/admin/dashboard' },
       { group: 'People' },
       { key: 'people', label: 'People', icon: 'users', path: '/admin/people' },
+      {
+        key: 'mentor-assignments',
+        label: 'Mentor Assignments',
+        icon: 'user-check',
+        path: '/admin/mentor-assignments',
+      },
       { key: 'cohorts', label: 'Cohorts', icon: 'layers', path: '/admin/cohorts' },
       {
         key: 'applications',

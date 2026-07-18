@@ -385,6 +385,14 @@ export const routes: Routes = [
             (module) => module.ProgressBoardPage,
           ),
       },
+      {
+        path: 'mentor-assignments',
+        title: 'Mentor assignments · Word Up',
+        loadComponent: () =>
+          import('./features/admin/mentors/mentor-assignments').then(
+            (module) => module.MentorAssignmentsPage,
+          ),
+      },
     ],
   },
   {
