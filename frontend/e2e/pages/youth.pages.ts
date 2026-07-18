@@ -126,3 +126,39 @@ export class YouthReflectionPage extends BasePage {
     return this.page.getByRole('link', { name: /back to lesson/i });
   }
 }
+
+export class YouthQuizIntroPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get startButton() {
+    return this.page.getByRole('button', { name: /start attempt|resume attempt/i });
+  }
+}
+
+export class YouthQuizAttemptPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get questionHeading() {
+    return this.page.getByRole('heading', { level: 2 });
+  }
+  get progress() {
+    return this.page.getByTestId('quiz-progress');
+  }
+  get nextButton() {
+    return this.page.getByRole('button', { name: /next question/i });
+  }
+  get submitButton() {
+    return this.page.getByRole('button', { name: /submit quiz/i });
+  }
+}
+
+export class YouthQuizResultPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get retakeButton() {
+    return this.page.getByRole('button', { name: /retake quiz/i });
+  }
+}

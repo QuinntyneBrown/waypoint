@@ -59,6 +59,15 @@ export interface SeededYouthCurriculum {
   secondLessonTitle: string;
   secondLessonId: string;
   leaderSecret: string;
+  quizId: string;
+  quizTitle: string;
+  firstQuizQuestion: string;
+  secondQuizQuestion: string;
+  firstCorrectAnswer: string;
+  secondCorrectAnswer: string;
+  quizBadgeName: string;
+  mentorEmail: string;
+  mentorPassword: string;
 }
 
 /**

@@ -13,6 +13,18 @@ namespace WordUp.IntegrationTests.Learning;
 [Property("Req", "L2-LEARN-005")]
 public sealed class QuizTakingTests : IntegrationTestBase
 {
+    private async Task<HttpResponseMessage> SendAsync(
+        HttpMethod method,
+        string url,
+        object? body,
+        string token)
+    {
+        var request = new HttpRequestMessage(method, url);
+        if (body is not null) request.Content = JsonContent.Create(body);
+        Authorize(request, token);
+        return await Client.SendAsync(request);
+    }
+
     private async Task<HttpResponseMessage> PostAsync(string url, object? body, string token)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, url);
@@ -26,13 +38,24 @@ public sealed class QuizTakingTests : IntegrationTestBase
 
     /// <summary>Seeds a quiz (PassMark 50, AttemptsAllowed 2) with two MultipleChoice questions whose
     /// correct options are index 0 and index 1 respectively.</summary>
-    private (Guid QuizId, Guid Q1, Guid Q2) SeedQuiz()
+    private sealed record SeededQuiz(Guid QuizId, Guid Q1, Guid Q2, Guid BadgeId, string BadgeName);
+
+    private SeededQuiz SeedQuiz(string feedbackMode = "show-correct")
     {
         using var scope = Factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        var quiz = new Quiz { PassMark = 50, AttemptsAllowed = 2 };
+        var quiz = new Quiz { PassMark = 50, AttemptsAllowed = 2, FeedbackMode = feedbackMode };
         db.Quizzes.Add(quiz);
+        var badge = new Badge
+        {
+            Name = $"Quiz badge {Guid.NewGuid():N}",
+            Icon = "spark",
+            CriteriaKind = BadgeCriteriaKind.Auto,
+            AutoRule = "quiz-passed",
+            TargetRefId = quiz.Id,
+        };
+        db.Badges.Add(badge);
 
         var q1 = new QuizQuestion
         {
@@ -55,14 +78,62 @@ public sealed class QuizTakingTests : IntegrationTestBase
         db.QuizQuestions.AddRange(q1, q2);
         db.SaveChanges();
 
-        return (quiz.Id, q1.Id, q2.Id);
+        return new SeededQuiz(quiz.Id, q1.Id, q2.Id, badge.Id, badge.Name);
     }
 
-    private sealed record AttemptViewDto(Guid AttemptId, int AttemptNumber, int QuestionCount, int AttemptsAllowed, int PassMark, List<QuestionDtoModel> Questions);
+    private sealed record BadgeDto(Guid Id, string Name, string Icon, string? Description);
+
+    private sealed record IntroDto(
+        Guid QuizId,
+        string Title,
+        int QuestionCount,
+        int EstimatedMinutes,
+        int AttemptsAllowed,
+        int PassMark,
+        BadgeDto? BadgeReward,
+        int CurrentAttemptNumber,
+        int AttemptsRemaining,
+        bool HasInProgressAttempt,
+        bool AttemptsExhausted);
+
+    private sealed record AttemptViewDto(
+        Guid AttemptId,
+        Guid QuizId,
+        string Title,
+        int AttemptNumber,
+        int QuestionCount,
+        int EstimatedMinutes,
+        int AttemptsAllowed,
+        int PassMark,
+        BadgeDto? BadgeReward,
+        int CurrentQuestionIndex,
+        string? AnswersJson,
+        List<QuestionDtoModel> Questions);
 
     private sealed record QuestionDtoModel(Guid Id, string Text, string Type, List<string> Options);
 
-    private sealed record ResultDto(int? Score, bool? Passed, string Status);
+    private sealed record ReviewDto(
+        Guid QuestionId,
+        string Text,
+        List<string> Options,
+        List<int> SelectedIndexes,
+        List<int> CorrectIndexes,
+        bool Correct);
+
+    private sealed record ResultDto(
+        Guid AttemptId,
+        Guid QuizId,
+        int AttemptNumber,
+        int? Score,
+        int PassMark,
+        bool? Passed,
+        string Status,
+        string FeedbackMode,
+        List<ReviewDto> Review,
+        BadgeDto? EarnedBadge,
+        int AttemptsRemaining,
+        bool CanRetake,
+        int? BestPassingScore);
 
     private async Task<AttemptViewDto> StartAsync(Guid quizId, string token)
     {
@@ -73,13 +144,59 @@ public sealed class QuizTakingTests : IntegrationTestBase
 
     [Test]
     [Property("Req", "L2-LEARN-004")]
+    public async Task Quiz_intro_and_in_progress_attempt_restore_saved_answers_and_position()
+    {
+        var seed = SeedQuiz();
+        var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
+
+        var introResponse = await SendAsync(
+            HttpMethod.Get,
+            $"/api/me/quizzes/{seed.QuizId}",
+            null,
+            youthToken);
+        Assert.That(introResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var intro = await introResponse.Content.ReadFromJsonAsync<IntroDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(intro!.QuestionCount, Is.EqualTo(2));
+            Assert.That(intro.EstimatedMinutes, Is.GreaterThan(0));
+            Assert.That(intro.AttemptsAllowed, Is.EqualTo(2));
+            Assert.That(intro.PassMark, Is.EqualTo(50));
+            Assert.That(intro.BadgeReward!.Name, Is.EqualTo(seed.BadgeName));
+            Assert.That(intro.CurrentAttemptNumber, Is.EqualTo(1));
+            Assert.That(intro.HasInProgressAttempt, Is.False);
+        });
+
+        var attempt = await StartAsync(seed.QuizId, youthToken);
+        var answers = JsonSerializer.Serialize(new Dictionary<string, int[]>
+        {
+            [seed.Q1.ToString()] = new[] { 0 },
+        });
+        var saved = await SendAsync(
+            HttpMethod.Put,
+            $"/api/me/attempts/{attempt.AttemptId}/answers",
+            new { answersJson = answers, currentQuestionIndex = 1 },
+            youthToken);
+        Assert.That(saved.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var resumed = await StartAsync(seed.QuizId, youthToken);
+        Assert.Multiple(() =>
+        {
+            Assert.That(resumed.AttemptId, Is.EqualTo(attempt.AttemptId));
+            Assert.That(resumed.CurrentQuestionIndex, Is.EqualTo(1));
+            Assert.That(resumed.AnswersJson, Is.EqualTo(answers));
+        });
+    }
+
+    [Test]
+    [Property("Req", "L2-LEARN-004")]
     public async Task Starting_an_attempt_returns_questions_without_correct_answers_as_attempt_one()
     {
         // Traces to: L2-LEARN-004
-        var (quizId, _, _) = SeedQuiz();
+        var seed = SeedQuiz();
         var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
 
-        var response = await PostAsync($"/api/me/quizzes/{quizId}/attempts", null, youthToken);
+        var response = await PostAsync($"/api/me/quizzes/{seed.QuizId}/attempts", null, youthToken);
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var raw = await response.Content.ReadAsStringAsync();
@@ -98,14 +215,14 @@ public sealed class QuizTakingTests : IntegrationTestBase
     public async Task Submitting_correct_answers_is_pending_approval_and_hides_the_score()
     {
         // Traces to: L2-LEARN-004, L2-LEARN-005
-        var (quizId, q1, q2) = SeedQuiz();
+        var seed = SeedQuiz();
         var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
 
-        var attempt = await StartAsync(quizId, youthToken);
+        var attempt = await StartAsync(seed.QuizId, youthToken);
         var answers = JsonSerializer.Serialize(new Dictionary<string, int[]>
         {
-            [q1.ToString()] = new[] { 0 },
-            [q2.ToString()] = new[] { 1 },
+            [seed.Q1.ToString()] = new[] { 0 },
+            [seed.Q2.ToString()] = new[] { 1 },
         });
 
         var submit = await PostAsync($"/api/me/attempts/{attempt.AttemptId}/submit", new { answersJson = answers }, youthToken);
@@ -114,6 +231,91 @@ public sealed class QuizTakingTests : IntegrationTestBase
         var result = await submit.Content.ReadFromJsonAsync<ResultDto>();
         Assert.That(result!.Status, Is.EqualTo("PendingApproval"));
         Assert.That(result.Score, Is.Null, "youth cannot see the score before mentor approval");
+        Assert.That(result.Review, Is.Empty, "feedback is also withheld before approval");
+    }
+
+    [Test]
+    [Property("Req", "L2-LEARN-005")]
+    public async Task Approved_result_shows_feedback_wrong_selection_and_the_earned_badge()
+    {
+        var seed = SeedQuiz();
+        var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
+        var attempt = await StartAsync(seed.QuizId, youthToken);
+        var answers = JsonSerializer.Serialize(new Dictionary<string, int[]>
+        {
+            [seed.Q1.ToString()] = new[] { 1 },
+            [seed.Q2.ToString()] = new[] { 1 },
+        });
+        var submit = await PostAsync(
+            $"/api/me/attempts/{attempt.AttemptId}/submit",
+            new { answersJson = answers },
+            youthToken);
+        Assert.That(submit.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var stored = await db.QuizAttempts.FindAsync(attempt.AttemptId);
+            stored!.ApprovedScore = 50;
+            stored.ApprovedAt = DateTime.UtcNow;
+            db.BadgeAwards.Add(new BadgeAward
+            {
+                BadgeId = seed.BadgeId,
+                YouthUserId = stored.YouthUserId,
+            });
+            await db.SaveChangesAsync();
+        }
+
+        var resultResponse = await SendAsync(
+            HttpMethod.Get,
+            $"/api/me/attempts/{attempt.AttemptId}",
+            null,
+            youthToken);
+        var result = await resultResponse.Content.ReadFromJsonAsync<ResultDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(result!.Status, Is.EqualTo("Approved"));
+            Assert.That(result.Score, Is.EqualTo(50));
+            Assert.That(result.Passed, Is.True);
+            Assert.That(result.Review, Has.Count.EqualTo(2));
+            Assert.That(result.Review[0].Correct, Is.False);
+            Assert.That(result.Review[0].SelectedIndexes, Is.EqualTo(new[] { 1 }));
+            Assert.That(result.Review[0].CorrectIndexes, Is.EqualTo(new[] { 0 }));
+            Assert.That(result.EarnedBadge!.Name, Is.EqualTo(seed.BadgeName));
+            Assert.That(result.AttemptsRemaining, Is.EqualTo(1));
+            Assert.That(result.CanRetake, Is.True);
+            Assert.That(result.BestPassingScore, Is.EqualTo(50));
+        });
+    }
+
+    [Test]
+    [Property("Req", "L2-LEARN-005")]
+    public async Task Score_only_feedback_mode_never_returns_question_review()
+    {
+        var seed = SeedQuiz("score-only");
+        var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
+        var attempt = await StartAsync(seed.QuizId, youthToken);
+        var answers = JsonSerializer.Serialize(new Dictionary<string, int[]>
+        {
+            [seed.Q1.ToString()] = new[] { 0 },
+            [seed.Q2.ToString()] = new[] { 1 },
+        });
+        await PostAsync($"/api/me/attempts/{attempt.AttemptId}/submit", new { answersJson = answers }, youthToken);
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var stored = await db.QuizAttempts.FindAsync(attempt.AttemptId);
+            stored!.ApprovedScore = 100;
+            await db.SaveChangesAsync();
+        }
+
+        var resultResponse = await SendAsync(
+            HttpMethod.Get,
+            $"/api/me/attempts/{attempt.AttemptId}",
+            null,
+            youthToken);
+        var result = await resultResponse.Content.ReadFromJsonAsync<ResultDto>();
+        Assert.That(result!.Review, Is.Empty);
     }
 
     [Test]
@@ -121,14 +323,14 @@ public sealed class QuizTakingTests : IntegrationTestBase
     public async Task Re_submitting_the_same_attempt_conflicts_because_it_is_immutable()
     {
         // Traces to: L2-LEARN-004
-        var (quizId, q1, q2) = SeedQuiz();
+        var seed = SeedQuiz();
         var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
 
-        var attempt = await StartAsync(quizId, youthToken);
+        var attempt = await StartAsync(seed.QuizId, youthToken);
         var answers = JsonSerializer.Serialize(new Dictionary<string, int[]>
         {
-            [q1.ToString()] = new[] { 0 },
-            [q2.ToString()] = new[] { 1 },
+            [seed.Q1.ToString()] = new[] { 0 },
+            [seed.Q2.ToString()] = new[] { 1 },
         });
 
         var first = await PostAsync($"/api/me/attempts/{attempt.AttemptId}/submit", new { answersJson = answers }, youthToken);
@@ -143,23 +345,23 @@ public sealed class QuizTakingTests : IntegrationTestBase
     public async Task Starting_after_exhausting_the_attempt_limit_conflicts()
     {
         // Traces to: L2-LEARN-004
-        var (quizId, q1, q2) = SeedQuiz();
+        var seed = SeedQuiz();
         var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
         var answers = JsonSerializer.Serialize(new Dictionary<string, int[]>
         {
-            [q1.ToString()] = new[] { 0 },
-            [q2.ToString()] = new[] { 1 },
+            [seed.Q1.ToString()] = new[] { 0 },
+            [seed.Q2.ToString()] = new[] { 1 },
         });
 
         // Consume both allowed attempts.
         for (var i = 0; i < 2; i++)
         {
-            var attempt = await StartAsync(quizId, youthToken);
+            var attempt = await StartAsync(seed.QuizId, youthToken);
             var submit = await PostAsync($"/api/me/attempts/{attempt.AttemptId}/submit", new { answersJson = answers }, youthToken);
             Assert.That(submit.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
-        var third = await PostAsync($"/api/me/quizzes/{quizId}/attempts", null, youthToken);
+        var third = await PostAsync($"/api/me/quizzes/{seed.QuizId}/attempts", null, youthToken);
         Assert.That(third.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
     }
 }

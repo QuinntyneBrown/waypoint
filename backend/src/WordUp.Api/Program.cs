@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using System.Threading.RateLimiting;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -670,12 +671,57 @@ if (app.Environment.IsEnvironment("Testing"))
             AttemptsAllowed = 2,
             RequiredToCompleteModule = true,
         };
+        var firstQuizQuestion = new QuizQuestion
+        {
+            QuizId = quiz.Id,
+            Text = "What does Jesus say is the greatest commandment?",
+            Type = QuestionType.MultipleChoice,
+            Order = 1,
+            OptionsJson = JsonSerializer.Serialize(new[]
+            {
+                "Love God with your whole life",
+                "Look after only yourself",
+            }),
+            CorrectAnswersJson = JsonSerializer.Serialize(new[] { 0 }),
+        };
+        var secondQuizQuestion = new QuizQuestion
+        {
+            QuizId = quiz.Id,
+            Text = "Who are we called to love as ourselves?",
+            Type = QuestionType.MultipleChoice,
+            Order = 2,
+            OptionsJson = JsonSerializer.Serialize(new[]
+            {
+                "Only people we already know",
+                "Our neighbour",
+            }),
+            CorrectAnswersJson = JsonSerializer.Serialize(new[] { 1 }),
+        };
+        var quizBadge = new Badge
+        {
+            Name = $"Neighbour Love Badge {suffix}",
+            Icon = "heart",
+            Description = "Pass the foundations module quiz.",
+            CriteriaKind = BadgeCriteriaKind.Auto,
+            AutoRule = "quiz-passed",
+            TargetRefId = quiz.Id,
+        };
+        var mentor = new User
+        {
+            Email = $"curriculum-mentor-{suffix}@wordup.test",
+            DisplayName = $"Curriculum Mentor {suffix}",
+            Role = Roles.Mentor,
+            Status = UserStatus.Active,
+            PasswordHash = hasher.Hash(youthPassword),
+            OnboardingCompleted = true,
+        };
         var cohort = new Cohort
         {
             Name = $"Curriculum Cohort {suffix}",
             TrackId = primaryTrack.Id,
             TermStart = now.Date.AddDays(-30),
             TermEnd = now.Date.AddDays(120),
+            MentorId = mentor.Id,
         };
         var youth = new User
         {
@@ -687,9 +733,10 @@ if (app.Environment.IsEnvironment("Testing"))
             OnboardingCompleted = true,
             CohortId = cohort.Id,
             GuardianUserId = guardian.Id,
+            MentorId = mentor.Id,
         };
 
-        db.Users.AddRange(guardian, youth);
+        db.Users.AddRange(guardian, mentor, youth);
         db.Tracks.AddRange(primaryTrack, secondTrack);
         db.Modules.AddRange(firstModule, lockedModule, draftModule);
         db.Lessons.AddRange(firstLesson, secondLesson);
@@ -701,6 +748,8 @@ if (app.Environment.IsEnvironment("Testing"))
             CreatedAt = now,
         });
         db.Quizzes.Add(quiz);
+        db.QuizQuestions.AddRange(firstQuizQuestion, secondQuizQuestion);
+        db.Badges.Add(quizBadge);
         db.Cohorts.Add(cohort);
         db.YouthTrackEnrollments.Add(new YouthTrackEnrollment
         {
@@ -747,6 +796,15 @@ if (app.Environment.IsEnvironment("Testing"))
             secondLessonTitle,
             secondLessonId = secondLesson.Id,
             leaderSecret,
+            quizId = quiz.Id,
+            quizTitle = $"{firstModuleName} quiz",
+            firstQuizQuestion = firstQuizQuestion.Text,
+            secondQuizQuestion = secondQuizQuestion.Text,
+            firstCorrectAnswer = "Love God with your whole life",
+            secondCorrectAnswer = "Our neighbour",
+            quizBadgeName = quizBadge.Name,
+            mentorEmail = mentor.Email,
+            mentorPassword = youthPassword,
         });
     });
 

@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
-using WordUp.Application.LearningExperience.YouthCurriculum;
 
 namespace WordUp.Application.LearningExperience.QuizTaking;
 
@@ -23,35 +22,9 @@ public class StartQuizAttemptQueryHandler : IRequestHandler<StartQuizAttemptQuer
     {
         var youthId = _currentUser.UserId ?? throw new ForbiddenException("Not signed in.");
 
-        var quiz = await _db.Quizzes.FirstOrDefaultAsync(q => q.Id == request.QuizId, cancellationToken)
-            ?? throw new NotFoundException("Quiz not found.");
-
-        if (quiz.ModuleId is { } moduleId)
-        {
-            var module = await _db.Modules.FirstOrDefaultAsync(item => item.Id == moduleId, cancellationToken)
-                ?? throw new NotFoundException("Module not found.");
-            var enrolledTrackIds = await CurriculumProgressCalculator.ResolveYouthTrackIdsAsync(
-                _db,
-                youthId,
-                cancellationToken);
-            if (module.Status != PublishStatus.Published || !enrolledTrackIds.Contains(module.TrackId))
-            {
-                throw new ForbiddenException("This quiz is locked.");
-            }
-
-            var moduleStatus = (await CurriculumProgressCalculator.BuildModuleStatusesAsync(
-                    _db,
-                    module.TrackId,
-                    youthId,
-                    cancellationToken))
-                .FirstOrDefault(item => item.ModuleId == module.Id);
-            var quizItem = moduleStatus?.Items.FirstOrDefault(item =>
-                item.Type == "quiz" && item.ItemId == quiz.Id);
-            if (moduleStatus is null || moduleStatus.Locked || quizItem is null || quizItem.Locked)
-            {
-                throw new ForbiddenException("This quiz is locked.");
-            }
-        }
+        var accessible = await QuizAccessGuard.EnsureAccessibleAsync(
+            _db, request.QuizId, youthId, cancellationToken);
+        var quiz = accessible.Quiz;
 
         var attempts = await _db.QuizAttempts
             .Where(a => a.QuizId == quiz.Id && a.YouthUserId == youthId)
@@ -92,13 +65,28 @@ public class StartQuizAttemptQueryHandler : IRequestHandler<StartQuizAttemptQuer
         var questionDtos = questions
             .Select(q => new QuestionDto(q.Id, q.Text, q.Type.ToString(), QuizAnswerScoring.ParseOptions(q.OptionsJson)))
             .ToList();
+        var badge = await _db.Badges.AsNoTracking()
+            .Where(item => item.AutoRule == "quiz-passed"
+                && item.TargetRefId == quiz.Id
+                && item.ArchivedAt == null)
+            .Select(item => new QuizBadgeView(item.Id, item.Name, item.Icon, item.Description))
+            .FirstOrDefaultAsync(cancellationToken);
+        var currentQuestionIndex = questions.Count == 0
+            ? 0
+            : Math.Clamp(attempt.CurrentQuestionIndex, 0, questions.Count - 1);
 
         return new QuizAttemptView(
             attempt.Id,
+            quiz.Id,
+            accessible.Title,
             attempt.AttemptNumber,
             questions.Count,
+            Math.Max(1, questions.Count * 2),
             quiz.AttemptsAllowed,
             quiz.PassMark,
+            badge,
+            currentQuestionIndex,
+            attempt.AnswersJson,
             questionDtos);
     }
 }

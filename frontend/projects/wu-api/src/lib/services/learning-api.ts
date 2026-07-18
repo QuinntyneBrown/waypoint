@@ -10,6 +10,7 @@ import {
   YouthCurriculum,
   YouthLesson,
 } from '../models/learning/curriculum';
+import { QuizIntro, YouthQuizAttempt, YouthQuizResult } from '../models/learning/quiz';
 
 @Injectable({ providedIn: 'root' })
 export class LearningApi {
@@ -49,5 +50,42 @@ export class LearningApi {
 
   saveReflection(input: SaveReflectionInput): Observable<SaveReflectionResult> {
     return this.http.post<SaveReflectionResult>(`${this.base}/api/me/reflections`, input);
+  }
+
+  quizIntro(quizId: string): Observable<QuizIntro> {
+    return this.http.get<QuizIntro>(
+      `${this.base}/api/me/quizzes/${encodeURIComponent(quizId)}`,
+    );
+  }
+
+  startQuiz(quizId: string): Observable<YouthQuizAttempt> {
+    return this.http.post<YouthQuizAttempt>(
+      `${this.base}/api/me/quizzes/${encodeURIComponent(quizId)}/attempts`,
+      {},
+    );
+  }
+
+  saveQuizAnswers(
+    attemptId: string,
+    answersJson: string,
+    currentQuestionIndex: number,
+  ): Observable<void> {
+    return this.http.put<void>(
+      `${this.base}/api/me/attempts/${encodeURIComponent(attemptId)}/answers`,
+      { answersJson, currentQuestionIndex },
+    );
+  }
+
+  submitQuiz(attemptId: string, answersJson: string): Observable<YouthQuizResult> {
+    return this.http.post<YouthQuizResult>(
+      `${this.base}/api/me/attempts/${encodeURIComponent(attemptId)}/submit`,
+      { answersJson },
+    );
+  }
+
+  quizResult(attemptId: string): Observable<YouthQuizResult> {
+    return this.http.get<YouthQuizResult>(
+      `${this.base}/api/me/attempts/${encodeURIComponent(attemptId)}`,
+    );
   }
 }

@@ -32,6 +32,11 @@ public class SaveAnswersCommandHandler : IRequestHandler<SaveAnswersCommand>
         }
 
         attempt.AnswersJson = request.AnswersJson;
+        var questionCount = await _db.QuizQuestions
+            .CountAsync(question => question.QuizId == attempt.QuizId, cancellationToken);
+        attempt.CurrentQuestionIndex = questionCount == 0
+            ? 0
+            : Math.Clamp(request.CurrentQuestionIndex, 0, questionCount - 1);
         await _db.SaveChangesAsync(cancellationToken);
     }
 }

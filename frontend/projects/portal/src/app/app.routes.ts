@@ -107,6 +107,30 @@ export const routes: Routes = [
           import('./features/youth/lesson/youth-lesson').then((module) => module.YouthLessonPage),
       },
       {
+        path: 'quizzes/:id/attempt',
+        title: 'Quiz attempt · Word Up',
+        loadComponent: () =>
+          import('./features/youth/quiz-attempt/youth-quiz-attempt').then(
+            (module) => module.YouthQuizAttemptPage,
+          ),
+      },
+      {
+        path: 'quizzes/:id',
+        title: 'Quiz · Word Up',
+        loadComponent: () =>
+          import('./features/youth/quiz-intro/youth-quiz-intro').then(
+            (module) => module.YouthQuizIntroPage,
+          ),
+      },
+      {
+        path: 'quiz-attempts/:id/result',
+        title: 'Quiz result · Word Up',
+        loadComponent: () =>
+          import('./features/youth/quiz-result/youth-quiz-result').then(
+            (module) => module.YouthQuizResultPage,
+          ),
+      },
+      {
         path: 'announcements',
         title: 'Announcements · Word Up',
         loadComponent: () =>

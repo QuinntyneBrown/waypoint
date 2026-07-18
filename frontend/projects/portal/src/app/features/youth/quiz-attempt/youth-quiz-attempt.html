@@ -1,0 +1,85 @@
+<wu-shell
+  role="youth"
+  active="curriculum"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (saveStatus(); as status) {
+      <p class="wu-muted" role="status">{{ status }}</p>
+    }
+
+    @if (attempt(); as view) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Attempt {{ view.attemptNumber }} of {{ view.attemptsAllowed }}</div>
+          <h1 class="wu-page__title">{{ view.title }}</h1>
+          <p class="wu-page__sub" data-testid="quiz-progress">
+            Question {{ currentIndex() + 1 }} of {{ view.questionCount }}
+          </p>
+        </div>
+      </div>
+
+      @if (currentQuestion(); as question) {
+        <section class="wu-card">
+          <div class="wu-card__body wu-stack">
+            <h2 class="wu-card__title">{{ question.text }}</h2>
+            <div class="wu-stack">
+              @for (option of question.options; track $index) {
+                <label class="quiz-option">
+                  @if (question.type === 'MultipleAnswer') {
+                    <input
+                      type="checkbox"
+                      [checked]="isSelected(question.id, $index)"
+                      (change)="choose(question, $index, $any($event.target).checked)"
+                    />
+                  } @else {
+                    <input
+                      type="radio"
+                      [name]="question.id"
+                      [checked]="isSelected(question.id, $index)"
+                      (change)="choose(question, $index, true)"
+                    />
+                  }
+                  <span>{{ option }}</span>
+                </label>
+              }
+            </div>
+          </div>
+        </section>
+
+        <div class="wu-actions wu-actions--between">
+          @if (currentIndex() > 0) {
+            <button class="wu-btn wu-btn--ghost" type="button" (click)="move(-1)">
+              Previous question
+            </button>
+          }
+          @if (currentIndex() < view.questionCount - 1) {
+            <button
+              class="wu-btn wu-btn--primary"
+              type="button"
+              [disabled]="!answered(question.id) || saveStatus() === 'Saving answer…'"
+              (click)="move(1)"
+            >
+              Next question
+            </button>
+          } @else {
+            <button
+              class="wu-btn wu-btn--primary"
+              type="button"
+              [disabled]="!answered(question.id) || submitting() || saveStatus() === 'Saving answer…'"
+              (click)="submit()"
+            >
+              Submit quiz
+            </button>
+          }
+        </div>
+      }
+    } @else {
+      <p class="wu-muted">Preparing your attempt…</p>
+    }
+  </div>
+</wu-shell>

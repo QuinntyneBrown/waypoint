@@ -1,0 +1,87 @@
+<wu-shell
+  role="youth"
+  active="curriculum"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <a class="wu-btn wu-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+
+    @if (result(); as view) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Attempt {{ view.attemptNumber }}</div>
+          <h1 class="wu-page__title">Quiz result</h1>
+        </div>
+      </div>
+
+      @if (view.status === 'PendingApproval') {
+        <section class="wu-card wu-card--greige">
+          <div class="wu-card__body wu-stack">
+            <h2 class="wu-card__title">Waiting for mentor approval</h2>
+            <p>Your answers are submitted and locked. Your score will appear after review.</p>
+          </div>
+        </section>
+      } @else if (view.status === 'Approved') {
+        <section class="wu-card" [class.wu-card--greige]="!view.passed">
+          <div class="wu-card__body wu-stack">
+            <div class="wu-eyebrow">Approved score</div>
+            <p class="wu-page__title">{{ view.score }}%</p>
+            <p><strong>{{ view.passed ? 'Passed' : 'Not passed yet' }}</strong></p>
+            <p class="wu-muted">Pass mark: {{ view.passMark }}%</p>
+          </div>
+        </section>
+
+        @if (view.earnedBadge; as badge) {
+          <section class="wu-card wu-card--greige">
+            <div class="wu-card__body wu-stack">
+              <div class="wu-eyebrow">Badge earned</div>
+              <h2 class="wu-card__title">{{ badge.name }}</h2>
+              @if (badge.description) { <p>{{ badge.description }}</p> }
+            </div>
+          </section>
+        }
+
+        @if (view.review.length > 0) {
+          <section class="wu-stack">
+            <h2>Question review</h2>
+            @for (question of view.review; track question.questionId) {
+              <article class="wu-card">
+                <div class="wu-card__body wu-stack">
+                  <h3 class="wu-card__title">{{ question.text }}</h3>
+                  <p class="wu-badge" [class.wu-badge--success]="question.correct">
+                    {{ question.correct ? 'Correct' : 'Needs review' }}
+                  </p>
+                  <ul class="wu-stack">
+                    @for (option of question.options; track $index) {
+                      @if (selected(question.selectedIndexes, $index) || correct(question.correctIndexes, $index)) {
+                        <li>
+                          {{ option }}
+                          @if (selected(question.selectedIndexes, $index)) { <span>— your answer</span> }
+                          @if (correct(question.correctIndexes, $index)) { <span>— correct answer</span> }
+                        </li>
+                      }
+                    }
+                  </ul>
+                </div>
+              </article>
+            }
+          </section>
+        } @else {
+          <p class="wu-muted">Question-level feedback is not available for this quiz.</p>
+        }
+
+        @if (view.canRetake) {
+          <button class="wu-btn wu-btn--primary wu-btn--block" type="button" (click)="retake(view.quizId)">
+            Retake quiz
+          </button>
+        }
+      }
+    } @else {
+      <p class="wu-muted">Loading result…</p>
+    }
+  </div>
+</wu-shell>

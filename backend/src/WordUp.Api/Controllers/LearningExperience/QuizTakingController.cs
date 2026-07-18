@@ -15,6 +15,12 @@ public class QuizTakingController : ControllerBase
 
     public QuizTakingController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("quizzes/{quizId:guid}")]
+    public async Task<ActionResult<QuizIntroView>> Intro(
+        Guid quizId,
+        CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new QuizIntroQuery(quizId), cancellationToken));
+
     [HttpPost("quizzes/{quizId:guid}/attempts")]
     public async Task<ActionResult<QuizAttemptView>> Start(Guid quizId, CancellationToken cancellationToken) =>
         Ok(await _mediator.Send(new StartQuizAttemptQuery(quizId), cancellationToken));
@@ -22,7 +28,9 @@ public class QuizTakingController : ControllerBase
     [HttpPut("attempts/{attemptId:guid}/answers")]
     public async Task<IActionResult> SaveAnswers(Guid attemptId, [FromBody] SaveAnswersRequest request, CancellationToken cancellationToken)
     {
-        await _mediator.Send(new SaveAnswersCommand(attemptId, request.AnswersJson), cancellationToken);
+        await _mediator.Send(
+            new SaveAnswersCommand(attemptId, request.AnswersJson, request.CurrentQuestionIndex),
+            cancellationToken);
         return NoContent();
     }
 

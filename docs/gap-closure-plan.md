@@ -93,8 +93,12 @@ requirement conflicts early (they gate "done").
 - [x] **E3** Reflection editor (+ read/restore API, draft) `L2-LEARN-003`, `L2-NFR-007` —
       mood and optional responses, private-by-default sharing, assigned-mentor-only reads, explicit
       draft saves, save-before-leave guard, browser-close warning, and server draft restoration.
-- [ ] **E4** Quiz intro & attempt (one-question, autosave/resume) `L2-LEARN-004`
-- [ ] **E5** Quiz result/review (+ review/badge result data) `L2-LEARN-005`
+- [x] **E4** Quiz intro & attempt (one-question, autosave/resume) `L2-LEARN-004` —
+      question/time/attempt/pass-mark/badge metadata, one-question keyboard flow, authoritative
+      answer and position autosave/resume, immutable confirmation, scoring, and attempt limits.
+- [x] **E5** Quiz result/review (+ review/badge result data) `L2-LEARN-005` —
+      approval-withheld score, approved pass/fail, feedback-mode-aware selections/correct answers,
+      once-only earned badge, best passing score, attempts remaining, and retake.
 - [ ] **E6** Assignment brief & submission (+ brief/read API, file upload) `L2-LEARN-006`
 - [ ] **E7** Submission status/resubmission (+ enriched status data) `L2-LEARN-007`
 - [ ] **E8** Coding lesson/project (missing central outcome — no covering test yet) `L2-LEARN-008`
@@ -230,3 +234,8 @@ requirement conflicts early (they gate "done").
   private by default, restore server drafts, save before guarded navigation, and expose submitted
   shared entries only to the youth's assigned mentor. Both surfaces pass desktop and mobile keyboard
   acceptance paths.
+- 2026-07-18 — E4/E5 done: youth quizzes now provide complete intro rules and rewards, resume the
+  same one-question position with serialized server autosaves, confirm immutable submission, enforce
+  configured limits, and remain score-hidden until mentor approval. Approved results apply feedback
+  mode, identify selected/correct answers, display the once-only badge and best passing score, and
+  start a permitted retake. Desktop and mobile keyboard journeys exercise the real approval path.

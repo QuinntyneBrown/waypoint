@@ -68,6 +68,24 @@ public class SubmitQuizAttemptCommandHandler : IRequestHandler<SubmitQuizAttempt
         await _audit.LogAsync("QuizAttemptSubmitted", _currentUser.UserId, "QuizAttempt", attempt.Id);
 
         // The youth does not see the score until approved (L2-LEARN-005 AC3).
-        return new QuizResultView(null, null, "PendingApproval");
+        var submittedCount = await _db.QuizAttempts.CountAsync(
+            item => item.QuizId == quiz.Id
+                && item.YouthUserId == attempt.YouthUserId
+                && item.IsSubmitted,
+            cancellationToken);
+        return new QuizResultView(
+            attempt.Id,
+            quiz.Id,
+            attempt.AttemptNumber,
+            null,
+            quiz.PassMark,
+            null,
+            "PendingApproval",
+            quiz.FeedbackMode,
+            Array.Empty<QuizQuestionReview>(),
+            null,
+            Math.Max(0, quiz.AttemptsAllowed - submittedCount),
+            false,
+            null);
     }
 }

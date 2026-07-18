@@ -1,0 +1,50 @@
+<wu-shell
+  role="youth"
+  active="curriculum"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <a class="wu-btn wu-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+
+    @if (intro(); as view) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Knowledge check</div>
+          <h1 class="wu-page__title">{{ view.title }}</h1>
+          <p class="wu-page__sub">Attempt {{ view.currentAttemptNumber }} of {{ view.attemptsAllowed }}</p>
+        </div>
+      </div>
+
+      <div class="quiz-facts">
+        <div class="wu-card"><div class="wu-card__body"><strong>{{ view.questionCount }} questions</strong></div></div>
+        <div class="wu-card"><div class="wu-card__body"><strong>{{ view.estimatedMinutes }} minutes</strong></div></div>
+        <div class="wu-card"><div class="wu-card__body"><strong>{{ view.passMark }}% pass mark</strong></div></div>
+        <div class="wu-card"><div class="wu-card__body"><strong>{{ view.attemptsRemaining }} attempts remaining</strong></div></div>
+      </div>
+
+      @if (view.badgeReward; as badge) {
+        <section class="wu-card wu-card--greige">
+          <div class="wu-card__body wu-stack">
+            <div class="wu-eyebrow">Badge reward</div>
+            <h2 class="wu-card__title">{{ badge.name }}</h2>
+            @if (badge.description) { <p>{{ badge.description }}</p> }
+          </div>
+        </section>
+      }
+
+      @if (view.attemptsExhausted) {
+        <p class="wu-alert wu-alert--warning">You have used all attempts for this quiz.</p>
+      } @else {
+        <button class="wu-btn wu-btn--primary wu-btn--block" type="button" (click)="begin()">
+          {{ view.hasInProgressAttempt ? 'Resume attempt' : 'Start attempt' }}
+        </button>
+      }
+    } @else {
+      <p class="wu-muted">Loading quiz…</p>
+    }
+  </div>
+</wu-shell>

@@ -9,6 +9,7 @@ public class QuizAttempt
     public Guid QuizId { get; set; }
     public int AttemptNumber { get; set; }
     public string? AnswersJson { get; set; }
+    public int CurrentQuestionIndex { get; set; }
     public int AutoScore { get; set; }
     public bool Passed { get; set; }
     public bool IsSubmitted { get; set; }
