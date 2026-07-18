@@ -33,7 +33,9 @@ public class MessageThreadQueryHandler : IRequestHandler<MessageThreadQuery, IRe
         }
         else if (_currentUser.Role == Roles.Mentor)
         {
-            isParticipant = other.MentorId == userId;
+            isParticipant = other.Role == Roles.Youth
+                && other.Status == UserStatus.Active
+                && other.MentorId == userId;
         }
         else if (_currentUser.Role == Roles.Youth)
         {

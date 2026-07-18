@@ -8,7 +8,13 @@ import {
   SupportRequest,
   SupportResult,
 } from '../models/platform/platform';
-import { MessageResult, MessageView, YouthMessageThread } from '../models/engagement/messages';
+import {
+  BroadcastResult,
+  MentorMessageInbox,
+  MessageResult,
+  MessageView,
+  YouthMessageThread,
+} from '../models/engagement/messages';
 import {
   AttendanceHistoryFilter,
   AttendanceTally,
@@ -97,6 +103,10 @@ export class MessagingApi {
     return this.http.get<YouthMessageThread>(`${this.base}/api/me/messages`);
   }
 
+  mentorInbox(): Observable<MentorMessageInbox> {
+    return this.http.get<MentorMessageInbox>(`${this.base}/api/mentor/messages`);
+  }
+
   thread(otherUserId: string): Observable<MessageView[]> {
     return this.http.get<MessageView[]>(
       `${this.base}/api/messages/${encodeURIComponent(otherUserId)}`,
@@ -105,6 +115,13 @@ export class MessagingApi {
 
   send(toUserId: string, body: string): Observable<MessageResult> {
     return this.http.post<MessageResult>(`${this.base}/api/messages`, { toUserId, body });
+  }
+
+  broadcast(cohortId: string, body: string): Observable<BroadcastResult> {
+    return this.http.post<BroadcastResult>(`${this.base}/api/messages/broadcast`, {
+      cohortId,
+      body,
+    });
   }
 }
 

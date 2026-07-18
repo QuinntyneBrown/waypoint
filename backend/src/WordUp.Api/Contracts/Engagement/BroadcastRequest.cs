@@ -1,3 +1,3 @@
 namespace WordUp.Api.Contracts.Engagement;
 
-public record BroadcastRequest(string Body);
+public record BroadcastRequest(Guid CohortId, string Body);

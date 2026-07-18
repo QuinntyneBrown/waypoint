@@ -1,4 +1,4 @@
-<wu-shell role="youth" active="" [userName]="userName()" (signOut)="signOut()">
+<wu-shell [role]="role()" active="" [userName]="userName()" (signOut)="signOut()">
   <div class="wu-container wu-container--narrow wu-page">
     <div class="wu-page__head">
       <div class="wu-page__titles">
@@ -29,7 +29,7 @@
         <div class="wu-empty__icon"><wu-icon name="bell" /></div>
         <h3 class="wu-empty__title">You’re all caught up</h3>
         <p class="wu-empty__text">
-          Notifications about your lessons, mentor, and badges will appear here.
+          Messages, reminders, and other activity that needs your attention will appear here.
         </p>
       </div>
     } @else {

@@ -72,6 +72,46 @@ export class MentorRosterPage extends BasePage {
   }
 }
 
+/** `/mentor/messages` — scoped youth inbox, private threads, and cohort broadcast. */
+export class MentorMessagesPage extends BasePage {
+  static readonly path = '/mentor/messages';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Messages', exact: true });
+  }
+  get realtimeStatus() {
+    return this.page.getByTestId('mentor-realtime-status');
+  }
+  get thread() {
+    return this.page.getByTestId('mentor-message-thread');
+  }
+  get composer() {
+    return this.page.locator('#mentor-message-body');
+  }
+  get sendButton() {
+    return this.page.getByRole('button', { name: 'Send message', exact: true });
+  }
+  get broadcastButton() {
+    return this.page.getByTestId('open-broadcast');
+  }
+  get broadcastBody() {
+    return this.page.getByLabel('Message', { exact: true });
+  }
+  get reviewBroadcast() {
+    return this.page.getByRole('button', { name: /review broadcast/i });
+  }
+  get confirmBroadcast() {
+    return this.page.getByTestId('confirm-broadcast');
+  }
+  conversation(youthName: string) {
+    return this.page.getByRole('button').filter({ hasText: youthName });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(MentorMessagesPage.path);
+  }
+}
+
 /** `/mentor/youth/:id` — assigned-youth record with privacy-scoped detail tabs. */
 export class MentorYouthDetailPage extends BasePage {
   get heading() {

@@ -14,6 +14,12 @@ public class MessagesController : ControllerBase
 
     public MessagesController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("api/mentor/messages")]
+    [Authorize(Roles = Roles.Mentor)]
+    public async Task<ActionResult<MentorMessageInboxView>> MentorInbox(
+        CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new MentorMessageInboxQuery(), cancellationToken));
+
     [HttpGet("api/me/messages")]
     [Authorize(Roles = Roles.Youth)]
     public async Task<ActionResult<YouthMessageThreadView>> Mine(
@@ -35,7 +41,9 @@ public class MessagesController : ControllerBase
         [FromBody] BroadcastRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new BroadcastToGroupCommand(request.Body), cancellationToken);
+        var result = await _mediator.Send(
+            new BroadcastToGroupCommand(request.CohortId, request.Body),
+            cancellationToken);
         return Ok(result);
     }
 

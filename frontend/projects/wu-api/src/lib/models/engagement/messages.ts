@@ -18,3 +18,28 @@ export interface YouthMessageThread {
 export interface MessageResult {
   id: string;
 }
+
+export interface MentorMessageConversation {
+  youthId: string;
+  youthName: string;
+  cohortId: string | null;
+  cohortName: string | null;
+  unreadCount: number;
+  lastMessagePreview: string | null;
+  lastMessageAt: string | null;
+}
+
+export interface MentorBroadcastGroup {
+  cohortId: string;
+  cohortName: string;
+  recipientCount: number;
+}
+
+export interface MentorMessageInbox {
+  conversations: MentorMessageConversation[];
+  groups: MentorBroadcastGroup[];
+}
+
+export interface BroadcastResult {
+  sent: number;
+}

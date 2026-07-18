@@ -66,6 +66,7 @@ export {
   MentorAttendanceHistoryPage,
   MentorCalendarPage,
   MentorFlagsPage,
+  MentorMessagesPage,
   MentorCompetencyPage,
   MentorDashboardPage,
   MentorRosterPage,

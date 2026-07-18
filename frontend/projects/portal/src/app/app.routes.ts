@@ -323,6 +323,22 @@ export const routes: Routes = [
             (module) => module.MentorQuizReviewPage,
           ),
       },
+      {
+        path: 'messages',
+        title: 'Messages · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/messages/mentor-messages').then(
+            (module) => module.MentorMessagesPage,
+          ),
+      },
+      {
+        path: 'notifications',
+        title: 'Notifications · Word Up',
+        loadComponent: () =>
+          import('./features/youth/notifications/youth-notifications').then(
+            (module) => module.YouthNotifications,
+          ),
+      },
     ],
   },
   {

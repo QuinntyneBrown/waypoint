@@ -16,7 +16,7 @@ import { shellRole } from '../../../shell-role';
 
 // Traces to: L2-ENGAGE-008, L2-NFR-005
 @Component({
-  selector: 'wu-youth-notifications',
+  selector: 'wu-notifications',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [WuShell, WuIcon, RouterLink],
   templateUrl: './youth-notifications.html',

@@ -165,7 +165,10 @@ requirement conflicts early (they gate "done").
       views, cohort filtering, mentor-owned weekly recurrence through term end, attendance links,
       four-state roster capture with notes/bulk tallies, shared offline/concurrency recovery, filtered
       session/youth rates and trends, and filter-honouring CSV/PDF exports.
-- [ ] **F10** Mentor messaging/notifications `L2-ENGAGE-007/008`, `L2-NFR-005`
+- [x] **F10** Mentor messaging/notifications `L2-ENGAGE-007/008`, `L2-NFR-005` — active
+      assigned-youth inbox with cohort names, previews and unread counts, participant-scoped private
+      threads, per-cohort personal-message broadcast with confirmation count, preference-aware live
+      delivery, reconnect reconciliation, and a role-correct mentor notification feed/read state.
 
 ## Phase G — Program Administrator portal
 
@@ -215,13 +218,13 @@ requirement conflicts early (they gate "done").
 - [~] **H13** Event/reminder generation + preference keys `L2-ENGAGE-005/008`, `L2-PLATFORM-003` —
       session RSVP reminders now schedule, cancel, dispatch once, deep-link to the schedule, and obey
       the canonical `session-reminders` in-app preference; assigned-work reminders now use
-      `lesson-reminders`, while direct and assignment-message notifications use the matching
-      `mentor-messages` key. Other required event generators and email delivery remain.
+      `lesson-reminders`, while direct, broadcast, and assignment-message notifications use the
+      matching `mentor-messages` key. Other required event generators and email delivery remain.
 - [x] **H14** Frontend realtime client (`/hubs/realtime`) `L2-NFR-005`, `L2-ENGAGE-007/008` —
       one token-authenticated app-level connection starts after sign-in, reconnects with the current
-      token, reconciles threads without duplicates, updates youth messages, and tears down with the
-      session. Recipient-scoped notifications merge into the live feed, reconcile from the server on
-      reconnect without duplicates, and preserve server-authoritative read state.
+      token, reconciles youth and mentor threads/inboxes without duplicates, and tears down with the
+      session. Recipient-scoped notifications merge into each role's live feed, reconcile from the
+      server on reconnect without duplicates, and preserve server-authoritative read state.
 - [ ] **H15** Security audit coverage (denied actions, tamper-evidence) `L2-AUTH-009`, `L2-CONSENT-003`
 - [ ] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002`
 - [~] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004` —
@@ -379,3 +382,11 @@ requirement conflicts early (they gate "done").
   saved/review/low-turnout states, rates, trends, and below-threshold flags; CSV and valid PDF exports
   honour the active filters. Cross-mentor denials, desktop/mobile keyboard flows, offline replay, shared
   volunteer regression, 30 engagement integrations, portal units, and the production build pass.
+- 2026-07-18 — F10 done: mentors now have a named active-roster inbox with previews and unread
+  counts, scoped personal threads, and cohort broadcasts that confirm the exact recipient count and
+  fan out into private messages. Direct and broadcast messages safely persist, respect in-app
+  preferences, publish recipient-only live message/notification events, and use role-correct deep
+  links; broadcasts also leave a content-free audit record. The mentor bell opens the shared live feed
+  with authoritative mark-all-read state. Two HTTP acceptances, all 22 engagement integrations, six
+  portal units, the production build, a two-session desktop realtime journey, and mobile keyboard/
+  touch/reflow acceptance pass.

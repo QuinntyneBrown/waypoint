@@ -35,7 +35,9 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Mes
         }
         else if (_currentUser.Role == Roles.Mentor)
         {
-            allowed = target.MentorId == senderId;
+            allowed = target.Role == Roles.Youth
+                && target.Status == UserStatus.Active
+                && target.MentorId == senderId;
         }
         else if (_currentUser.Role == Roles.Youth)
         {
