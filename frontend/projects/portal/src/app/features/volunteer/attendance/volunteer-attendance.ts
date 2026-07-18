@@ -62,6 +62,10 @@ interface AttendanceRow extends VolunteerRosterEntry {
         outline: 3px solid var(--wu-color-ink);
         outline-offset: 2px;
       }
+      .attendance-actions .wu-btn {
+        min-height: 44px;
+        min-width: 44px;
+      }
       @media (max-width: 575px) {
         .attendance-row {
           align-items: stretch;
