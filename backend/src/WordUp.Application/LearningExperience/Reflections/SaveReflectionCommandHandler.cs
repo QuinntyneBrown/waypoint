@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
+using WordUp.Application.LearningExperience.YouthCurriculum;
 
 namespace WordUp.Application.LearningExperience.Reflections;
 
@@ -24,6 +25,8 @@ public class SaveReflectionCommandHandler : IRequestHandler<SaveReflectionComman
     {
         var youthId = _currentUser.UserId ?? throw new ForbiddenException("Not signed in.");
         var now = _clock.UtcNow;
+        await CurriculumProgressCalculator.EnsureLessonAccessibleAsync(
+            _db, request.LessonId, youthId, cancellationToken);
 
         // Upsert: one reflection per youth+lesson (an existing draft is updated in place).
         var reflection = await _db.Reflections
@@ -42,6 +45,7 @@ public class SaveReflectionCommandHandler : IRequestHandler<SaveReflectionComman
 
         reflection.Text = request.Text;
         reflection.Mood = request.Mood;
+        reflection.SecondaryJson = ReflectionSecondaryResponseSerializer.Serialize(request.SecondaryResponses);
         reflection.Visibility = request.ShareWithMentor ? Visibility.SharedWithMentor : Visibility.Private;
         reflection.IsDraft = request.IsDraft;
         reflection.UpdatedAt = now;

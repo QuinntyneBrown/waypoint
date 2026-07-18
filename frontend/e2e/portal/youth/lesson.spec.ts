@@ -22,7 +22,7 @@ test('youth reads a safe lesson, persists controls, retries media, and completes
   await expect(lesson.heading).toHaveText(seeded.secondLessonTitle);
   await expect(lesson.stepProgress).toContainText('Step 2 of 3');
   await expect(page.getByText('Luke 10:27', { exact: true })).toBeVisible();
-  await expect(page.getByText(/put love into practice/i)).toBeVisible();
+  await expect(page.getByText(/put love into practice/i).first()).toBeVisible();
   await expect(page.getByText(seeded.leaderSecret)).toHaveCount(0);
   await expect(lesson.retryMediaButton).toBeVisible();
 
@@ -30,11 +30,12 @@ test('youth reads a safe lesson, persists controls, retries media, and completes
   await lesson.bookmarkButton.click();
   await expect(lesson.largeTextButton).toHaveAttribute('aria-pressed', 'true');
   await expect(lesson.bookmarkButton).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('status')).toHaveText('Reading preferences saved.');
 
   await page.reload();
   await expect(lesson.largeTextButton).toHaveAttribute('aria-pressed', 'true');
   await expect(lesson.bookmarkButton).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.getByText(/put love into practice/i)).toBeVisible();
+  await expect(page.getByText(/put love into practice/i).first()).toBeVisible();
 
   page.once('dialog', async (dialog) => {
     expect(dialog.message()).toMatch(/mark.*complete/i);

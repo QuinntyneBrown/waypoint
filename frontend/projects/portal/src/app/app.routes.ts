@@ -1,13 +1,7 @@
-import { CanDeactivateFn, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { authGuard, guestGuard } from '@wu/auth';
 import { consentGuard } from './guards/consent.guard';
-
-interface UnsavedChangesAware {
-  canDeactivate(): boolean;
-}
-
-const confirmAttendanceNavigation: CanDeactivateFn<UnsavedChangesAware> = (component) =>
-  component.canDeactivate();
+import { unsavedChangesGuard } from './guards/unsaved-changes.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'auth/sign-in' },
@@ -98,6 +92,21 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'lessons/:id/reflection',
+        title: 'Reflection · Word Up',
+        canDeactivate: [unsavedChangesGuard],
+        loadComponent: () =>
+          import('./features/youth/reflection/youth-reflection').then(
+            (module) => module.YouthReflectionPage,
+          ),
+      },
+      {
+        path: 'lessons/:id',
+        title: 'Lesson · Word Up',
+        loadComponent: () =>
+          import('./features/youth/lesson/youth-lesson').then((module) => module.YouthLessonPage),
+      },
+      {
         path: 'announcements',
         title: 'Announcements · Word Up',
         loadComponent: () =>
@@ -154,7 +163,7 @@ export const routes: Routes = [
       {
         path: 'attendance/:sessionId',
         title: 'Take attendance · Word Up',
-        canDeactivate: [confirmAttendanceNavigation],
+        canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/volunteer/attendance/volunteer-attendance').then(
             (module) => module.VolunteerAttendance,

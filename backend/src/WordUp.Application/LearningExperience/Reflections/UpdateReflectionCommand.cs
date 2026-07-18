@@ -8,5 +8,6 @@ public record UpdateReflectionCommand(
     Guid Id,
     string? Text,
     string? Mood,
+    IReadOnlyDictionary<string, string>? SecondaryResponses,
     bool ShareWithMentor,
     bool IsDraft) : IRequest;

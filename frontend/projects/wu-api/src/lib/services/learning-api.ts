@@ -2,7 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api-base-url';
-import { YouthCurriculum } from '../models/learning/curriculum';
+import {
+  LessonReadingState,
+  ReflectionEditor,
+  SaveReflectionInput,
+  SaveReflectionResult,
+  YouthCurriculum,
+  YouthLesson,
+} from '../models/learning/curriculum';
 
 @Injectable({ providedIn: 'root' })
 export class LearningApi {
@@ -12,5 +19,35 @@ export class LearningApi {
   curriculum(trackId?: string): Observable<YouthCurriculum> {
     const suffix = trackId ? `/${encodeURIComponent(trackId)}` : '';
     return this.http.get<YouthCurriculum>(`${this.base}/api/me/curriculum${suffix}`);
+  }
+
+  lesson(lessonId: string): Observable<YouthLesson> {
+    return this.http.get<YouthLesson>(
+      `${this.base}/api/me/lessons/${encodeURIComponent(lessonId)}`,
+    );
+  }
+
+  saveReadingState(lessonId: string, state: LessonReadingState): Observable<void> {
+    return this.http.put<void>(
+      `${this.base}/api/me/lessons/${encodeURIComponent(lessonId)}/reading-state`,
+      state,
+    );
+  }
+
+  completeLesson(lessonId: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}/api/me/lessons/${encodeURIComponent(lessonId)}/complete`,
+      {},
+    );
+  }
+
+  reflectionEditor(lessonId: string): Observable<ReflectionEditor> {
+    return this.http.get<ReflectionEditor>(
+      `${this.base}/api/me/reflections/lesson/${encodeURIComponent(lessonId)}`,
+    );
+  }
+
+  saveReflection(input: SaveReflectionInput): Observable<SaveReflectionResult> {
+    return this.http.post<SaveReflectionResult>(`${this.base}/api/me/reflections`, input);
   }
 }

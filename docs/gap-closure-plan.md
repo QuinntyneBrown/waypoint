@@ -87,8 +87,12 @@ requirement conflicts early (they gate "done").
 
 - [x] **E1** Curriculum/track browser `L2-LEARN-001` — enrolled-only track switching,
       published module map, ordered lesson/quiz gates, prerequisite explanations, and empty state.
-- [ ] **E2** Module & lesson reader (+ youth lesson-content read API) `L2-LEARN-002`
-- [ ] **E3** Reflection editor (+ read/restore API, draft) `L2-LEARN-003`, `L2-NFR-007`
+- [x] **E2** Module & lesson reader (+ youth lesson-content read API) `L2-LEARN-002` —
+      safe scripture/teaching/objective delivery, persisted text size/bookmark/position, optional
+      media retry, server-enforced gates, confirmed completion, and reflection hand-off.
+- [x] **E3** Reflection editor (+ read/restore API, draft) `L2-LEARN-003`, `L2-NFR-007` —
+      mood and optional responses, private-by-default sharing, assigned-mentor-only reads, explicit
+      draft saves, save-before-leave guard, browser-close warning, and server draft restoration.
 - [ ] **E4** Quiz intro & attempt (one-question, autosave/resume) `L2-LEARN-004`
 - [ ] **E5** Quiz result/review (+ review/badge result data) `L2-LEARN-005`
 - [ ] **E6** Assignment brief & submission (+ brief/read API, file upload) `L2-LEARN-006`
@@ -191,7 +195,8 @@ requirement conflicts early (they gate "done").
       consented, and consent-required states; the Testing-only email sink lets Playwright follow the
       delivered one-time link without exposing capability tokens in product responses.
 - [x] **Youth curriculum fixture** — Testing-only multi-track enrollment data covers published/draft
-      filtering, ordered lesson/quiz gates, prerequisite locking, progress, and an empty enrolled track.
+      filtering, ordered lesson/quiz gates, prerequisite locking, progress, safe lesson content,
+      failed optional media, reflection hand-off, and an empty enrolled track.
 
 ## Progress log
 
@@ -219,3 +224,9 @@ requirement conflicts early (they gate "done").
 - 2026-07-18 — E1 done: youth curriculum now discovers only enrolled published tracks, switches
   tracks, shows ordered per-item and per-module progress/gates with explanations, denies cross-track
   and locked direct requests server-side, and is verified at desktop and mobile keyboard seams.
+- 2026-07-18 — E2/E3 done: the youth lesson reader now delivers safe published content with
+  persisted reading controls and resilient optional media, confirms completion, and opens a real
+  reflection editor. Reflections validate text/mood on submission, retain optional responses, remain
+  private by default, restore server drafts, save before guarded navigation, and expose submitted
+  shared entries only to the youth's assigned mentor. Both surfaces pass desktop and mobile keyboard
+  acceptance paths.

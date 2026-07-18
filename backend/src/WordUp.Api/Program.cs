@@ -592,6 +592,7 @@ if (app.Environment.IsEnvironment("Testing"))
         var lockedModuleName = $"Deeper Practice {suffix}";
         var firstLessonTitle = $"Welcome to the Word {suffix}";
         var secondLessonTitle = $"Living the Word {suffix}";
+        var leaderSecret = $"MENTOR-ONLY GUIDE {suffix}";
 
         var guardian = new User
         {
@@ -653,6 +654,11 @@ if (app.Environment.IsEnvironment("Testing"))
         {
             ModuleId = firstModule.Id,
             Title = secondLessonTitle,
+            ScriptureReference = "Luke 10:27",
+            LearningObjectives = "Put love into practice in everyday relationships.",
+            TeachingBody = "Jesus calls us to put love into practice with our whole lives.",
+            ReflectionPrompts = "Where can you practise neighbour-love this week?",
+            LeaderGuideNotes = leaderSecret,
             EstimatedMinutes = 15,
             Order = 2,
             Status = PublishStatus.Published,
@@ -687,6 +693,13 @@ if (app.Environment.IsEnvironment("Testing"))
         db.Tracks.AddRange(primaryTrack, secondTrack);
         db.Modules.AddRange(firstModule, lockedModule, draftModule);
         db.Lessons.AddRange(firstLesson, secondLesson);
+        db.LessonMedia.Add(new LessonMedia
+        {
+            LessonId = secondLesson.Id,
+            MediaType = "video",
+            Url = "https://media.example.test/lesson-video.mp4",
+            CreatedAt = now,
+        });
         db.Quizzes.Add(quiz);
         db.Cohorts.Add(cohort);
         db.YouthTrackEnrollments.Add(new YouthTrackEnrollment
@@ -730,7 +743,10 @@ if (app.Environment.IsEnvironment("Testing"))
             firstModuleName,
             lockedModuleName,
             firstLessonTitle,
+            firstLessonId = firstLesson.Id,
             secondLessonTitle,
+            secondLessonId = secondLesson.Id,
+            leaderSecret,
         });
     });
 

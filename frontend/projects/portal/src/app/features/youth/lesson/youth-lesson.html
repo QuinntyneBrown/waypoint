@@ -1,0 +1,167 @@
+<wu-shell
+  role="youth"
+  active="curriculum"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <a class="wu-btn wu-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+
+    @if (lesson(); as view) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">{{ view.moduleName }}</div>
+          <h1 class="wu-page__title">{{ view.title }}</h1>
+          <p class="wu-page__sub" data-testid="lesson-step-progress">
+            Step {{ view.stepNumber }} of {{ view.totalSteps }}
+            @if (view.estimatedMinutes) {
+              · {{ view.estimatedMinutes }} minutes
+            }
+          </p>
+        </div>
+      </div>
+
+      <div class="wu-card">
+        <div class="wu-card__body wu-cluster wu-cluster--between">
+          <div class="wu-cluster" aria-label="Reading text size">
+            <button
+              class="wu-btn wu-btn--sm reading-size-button"
+              type="button"
+              aria-label="Small text"
+              [attr.aria-pressed]="textSize() === 'small'"
+              (click)="setTextSize('small')"
+            >
+              A
+            </button>
+            <button
+              class="wu-btn wu-btn--sm reading-size-button"
+              type="button"
+              aria-label="Medium text"
+              [attr.aria-pressed]="textSize() === 'medium'"
+              (click)="setTextSize('medium')"
+            >
+              A
+            </button>
+            <button
+              class="wu-btn wu-btn--sm reading-size-button"
+              type="button"
+              aria-label="Large text"
+              [attr.aria-pressed]="textSize() === 'large'"
+              (click)="setTextSize('large')"
+            >
+              A
+            </button>
+          </div>
+          <button
+            class="wu-btn wu-btn--ghost"
+            type="button"
+            aria-label="Bookmark lesson"
+            [attr.aria-pressed]="bookmarked()"
+            (click)="toggleBookmark()"
+          >
+            {{ bookmarked() ? 'Bookmarked' : 'Bookmark' }}
+          </button>
+        </div>
+        @if (readingStateStatus(); as status) {
+          <p class="wu-muted" role="status">{{ status }}</p>
+        }
+      </div>
+
+      <article
+        class="wu-stack lesson-copy"
+        [class.lesson-copy--small]="textSize() === 'small'"
+        [class.lesson-copy--medium]="textSize() === 'medium'"
+        [class.lesson-copy--large]="textSize() === 'large'"
+      >
+        @if (view.scriptureReference) {
+          <section class="wu-card wu-card--greige">
+            <div class="wu-card__body">
+              <div class="wu-eyebrow">Scripture</div>
+              <p class="wu-scripture">{{ view.scriptureReference }}</p>
+            </div>
+          </section>
+        }
+        @if (view.learningObjectives) {
+          <section>
+            <h2>What you’ll learn</h2>
+            <p>{{ view.learningObjectives }}</p>
+          </section>
+        }
+        @if (view.teachingBody) {
+          <section>
+            <h2>Teaching</h2>
+            <p>{{ view.teachingBody }}</p>
+          </section>
+        }
+
+        @for (media of view.media; track media.mediaId) {
+          <section class="wu-card">
+            <div class="wu-card__body wu-stack">
+              <h2>Optional media</h2>
+              @if (mediaFailures().has(media.mediaId)) {
+                <div class="wu-alert wu-alert--warning">
+                  <p>The media could not be loaded. The full lesson text remains available.</p>
+                  <button
+                    class="wu-btn wu-btn--ghost"
+                    type="button"
+                    (click)="retryMedia(media.mediaId)"
+                  >
+                    Retry media
+                  </button>
+                </div>
+              } @else if (media.mediaType === 'video') {
+                <video
+                  class="lesson-media"
+                  controls
+                  preload="metadata"
+                  [src]="media.url"
+                  aria-label="Optional lesson video"
+                  (error)="mediaFailed(media.mediaId)"
+                ></video>
+              } @else {
+                <a
+                  class="wu-btn wu-btn--secondary"
+                  [href]="media.url"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Open optional resource
+                </a>
+              }
+            </div>
+          </section>
+        }
+
+        @if (view.reflectionPrompts) {
+          <section class="wu-card wu-card--greige">
+            <div class="wu-card__body">
+              <h2>Think about it</h2>
+              <p>{{ view.reflectionPrompts }}</p>
+            </div>
+          </section>
+        }
+      </article>
+
+      @if (view.status !== 'done') {
+        <button
+          class="wu-btn wu-btn--primary wu-btn--block"
+          type="button"
+          [disabled]="saving()"
+          (click)="markComplete()"
+        >
+          Mark lesson complete
+        </button>
+      } @else {
+        <a class="wu-btn wu-btn--primary wu-btn--block" [routerLink]="['reflection']">
+          Continue to reflection
+        </a>
+      }
+    } @else {
+      <p class="wu-muted">Loading lesson…</p>
+    }
+  </div>
+</wu-shell>

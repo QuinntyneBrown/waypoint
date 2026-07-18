@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
+using WordUp.Application.LearningExperience.YouthCurriculum;
 
 namespace WordUp.Application.LearningExperience.Reflections;
 
@@ -30,8 +31,12 @@ public class UpdateReflectionCommandHandler : IRequestHandler<UpdateReflectionCo
             throw new ForbiddenException("This reflection does not belong to you.");
         }
 
+        await CurriculumProgressCalculator.EnsureLessonAccessibleAsync(
+            _db, reflection.LessonId, reflection.YouthUserId, cancellationToken);
+
         reflection.Text = request.Text;
         reflection.Mood = request.Mood;
+        reflection.SecondaryJson = ReflectionSecondaryResponseSerializer.Serialize(request.SecondaryResponses);
         reflection.Visibility = request.ShareWithMentor ? Visibility.SharedWithMentor : Visibility.Private;
         reflection.IsDraft = request.IsDraft;
         reflection.UpdatedAt = _clock.UtcNow;

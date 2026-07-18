@@ -102,3 +102,27 @@ export class YouthLessonPage extends BasePage {
     return this.page.getByRole('button', { name: /mark lesson complete/i });
   }
 }
+
+export class YouthReflectionPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get reflectionText() {
+    return this.page.getByLabel(/your reflection/i);
+  }
+  get optionalResponse() {
+    return this.page.getByLabel(/one action i will take/i);
+  }
+  get shareWithMentor() {
+    return this.page.getByRole('checkbox', { name: /share with my mentor/i });
+  }
+  get saveDraftButton() {
+    return this.page.getByRole('button', { name: /save draft/i });
+  }
+  get submitButton() {
+    return this.page.getByRole('button', { name: /submit reflection/i });
+  }
+  get backToLessonLink() {
+    return this.page.getByRole('link', { name: /back to lesson/i });
+  }
+}

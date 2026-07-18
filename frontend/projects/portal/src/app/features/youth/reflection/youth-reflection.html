@@ -1,0 +1,112 @@
+<wu-shell
+  role="youth"
+  active="curriculum"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <a class="wu-btn wu-btn--ghost" [routerLink]="['/youth/lessons', editor()?.lessonId]">
+      Back to lesson
+    </a>
+
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (statusMessage(); as status) {
+      <p class="wu-alert wu-alert--success" role="status">{{ status }}</p>
+    }
+
+    @if (editor(); as view) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Lesson reflection</div>
+          <h1 class="wu-page__title">Reflect on {{ view.lessonTitle }}</h1>
+          <p class="wu-page__sub">Take your time. You can save this as a private draft.</p>
+        </div>
+      </div>
+
+      @if (view.prompt) {
+        <section class="wu-card wu-card--greige">
+          <div class="wu-card__body">
+            <div class="wu-eyebrow">Think about it</div>
+            <p class="wu-scripture">{{ view.prompt }}</p>
+          </div>
+        </section>
+      }
+
+      <form class="wu-stack" [formGroup]="form" (ngSubmit)="submit()">
+        <fieldset class="wu-card">
+          <div class="wu-card__body wu-stack">
+            <legend><strong>How are you feeling?</strong></legend>
+            <div class="mood-options">
+              @for (mood of ['Hopeful', 'Thoughtful', 'Unsure', 'Challenged']; track mood) {
+                <label class="mood-option">
+                  <input type="radio" formControlName="mood" [value]="mood.toLowerCase()" />
+                  <span>{{ mood }}</span>
+                </label>
+              }
+            </div>
+            @if (form.controls.mood.touched && form.controls.mood.hasError('required')) {
+              <p class="wu-field__error">Choose how you are feeling.</p>
+            }
+          </div>
+        </fieldset>
+
+        <div class="wu-field">
+          <label class="wu-field__label" for="reflection-text">Your reflection</label>
+          <textarea
+            id="reflection-text"
+            class="wu-input"
+            formControlName="text"
+            maxlength="8000"
+            aria-describedby="reflection-help reflection-error"
+          ></textarea>
+          <p id="reflection-help" class="wu-field__hint">Required when you submit. Drafts can be unfinished.</p>
+          @if (form.controls.text.touched && form.controls.text.hasError('required')) {
+            <p id="reflection-error" class="wu-field__error">Reflection text is required.</p>
+          }
+        </div>
+
+        <div class="wu-field">
+          <label class="wu-field__label" for="secondary-response">One action I will take</label>
+          <textarea
+            id="secondary-response"
+            class="wu-input"
+            formControlName="secondaryResponse"
+            maxlength="4000"
+          ></textarea>
+          <p class="wu-field__hint">Optional</p>
+        </div>
+
+        <section class="wu-card wu-card--greige">
+          <div class="wu-card__body wu-stack">
+            <label class="share-option">
+              <input type="checkbox" formControlName="shareWithMentor" />
+              <strong>Share with my mentor</strong>
+            </label>
+            <p class="wu-muted">
+              Off by default. When it is off, this reflection is private to you. Turn it on only
+              if you want your assigned mentor to read it and respond during check-ins.
+            </p>
+          </div>
+        </section>
+
+        <div class="wu-actions">
+          <button
+            class="wu-btn wu-btn--secondary"
+            type="button"
+            [disabled]="saving()"
+            (click)="saveDraft()"
+          >
+            Save draft
+          </button>
+          <button class="wu-btn wu-btn--primary" type="submit" [disabled]="saving()">
+            Submit reflection
+          </button>
+        </div>
+      </form>
+    } @else {
+      <p class="wu-muted">Loading reflection…</p>
+    }
+  </div>
+</wu-shell>
