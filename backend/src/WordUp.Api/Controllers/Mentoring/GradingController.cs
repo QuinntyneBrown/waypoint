@@ -15,6 +15,12 @@ public class GradingController : ControllerBase
 
     public GradingController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("submissions/{id:guid}")]
+    public async Task<ActionResult<SubmissionReviewView>> Review(Guid id, CancellationToken cancellationToken)
+    {
+        return Ok(await _mediator.Send(new SubmissionReviewQuery(id), cancellationToken));
+    }
+
     // Grade a youth submission (L2-MENTOR-003).
     [HttpPost("submissions/{id:guid}/grade")]
     public async Task<IActionResult> Grade(

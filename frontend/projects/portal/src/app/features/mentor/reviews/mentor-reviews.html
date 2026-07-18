@@ -1,0 +1,56 @@
+<wu-shell
+  role="mentor"
+  active="reviews"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Assessment</div>
+        <h1 class="wu-page__title">Reviews</h1>
+        <p class="wu-page__sub">Review pending assignments, coding projects, and quizzes.</p>
+      </div>
+    </div>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (items(); as reviews) {
+      @if (reviews.length === 0) {
+        <div class="wu-card wu-empty">
+          <div class="wu-empty__icon"><wu-icon name="file-text" /></div>
+          <h2 class="wu-empty__title">No reviews waiting</h2>
+          <p class="wu-empty__text">You are caught up with your assigned youth.</p>
+        </div>
+      } @else {
+        <div class="wu-card">
+          <div class="wu-card__body">
+            @for (review of reviews; track review.reviewId) {
+              <article class="queue-row" data-testid="mentor-review-queue-item">
+                <div>
+                  <h2 class="wu-card__title">{{ review.youthName }}</h2>
+                  <p>{{ review.itemType }} · {{ review.itemTitle }}</p>
+                  <p class="wu-muted">Submitted {{ review.submittedAt | date: 'medium' }}</p>
+                </div>
+                <div class="wu-cluster">
+                  @if (review.overdue) {
+                    <span class="wu-badge wu-badge--error">Overdue</span>
+                  } @else if (review.dueDate) {
+                    <span class="wu-badge">Due {{ review.dueDate | date: 'mediumDate' }}</span>
+                  } @else {
+                    <span class="wu-badge">No due date</span>
+                  }
+                  <a class="wu-btn wu-btn--primary queue-link" [routerLink]="review.reviewPath">
+                    Review
+                  </a>
+                </div>
+              </article>
+            }
+          </div>
+        </div>
+      }
+    } @else if (!errorMessage()) {
+      <p class="wu-muted" role="status">Loading reviews…</p>
+    }
+  </div>
+</wu-shell>

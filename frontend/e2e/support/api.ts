@@ -92,6 +92,8 @@ export interface SeededYouthCurriculum {
   scheduleSessionLocation: string;
   mentorReviewSubmissionId: string;
   mentorReviewTitle: string;
+  mentorReviewCriterionId: string;
+  mentorReviewCriterion: string;
 }
 
 /**

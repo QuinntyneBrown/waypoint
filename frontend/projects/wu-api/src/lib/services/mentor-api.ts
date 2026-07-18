@@ -7,6 +7,8 @@ import {
   MentorReviewPreview,
   MentorRosterYouth,
   MentorYouthDetail,
+  GradeSubmissionRequest,
+  SubmissionReviewView,
 } from '../models/mentoring/mentor';
 
 @Injectable({ providedIn: 'root' })
@@ -33,6 +35,19 @@ export class MentorApi {
   youth(id: string): Observable<MentorYouthDetail> {
     return this.http.get<MentorYouthDetail>(
       `${this.base}/api/mentor/youth/${encodeURIComponent(id)}`,
+    );
+  }
+
+  submission(id: string): Observable<SubmissionReviewView> {
+    return this.http.get<SubmissionReviewView>(
+      `${this.base}/api/mentor/submissions/${encodeURIComponent(id)}`,
+    );
+  }
+
+  gradeSubmission(id: string, request: GradeSubmissionRequest): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}/api/mentor/submissions/${encodeURIComponent(id)}/grade`,
+      request,
     );
   }
 }

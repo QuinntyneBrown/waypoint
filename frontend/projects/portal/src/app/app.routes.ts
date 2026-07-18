@@ -244,6 +244,22 @@ export const routes: Routes = [
             (module) => module.MentorYouthDetailPage,
           ),
       },
+      {
+        path: 'reviews',
+        title: 'Reviews · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/reviews/mentor-reviews').then(
+            (module) => module.MentorReviewsPage,
+          ),
+      },
+      {
+        path: 'reviews/submissions/:id',
+        title: 'Review submission · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/submission-review/mentor-submission-review').then(
+            (module) => module.MentorSubmissionReviewPage,
+          ),
+      },
     ],
   },
   {

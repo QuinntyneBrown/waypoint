@@ -1,3 +1,6 @@
+using System.Text.Json;
+using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
@@ -44,14 +47,39 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
             throw new ForbiddenException("This youth is not assigned to you.");
         }
 
+        var criteria = await _db.RubricCriteria
+            .Where(item => item.AssignmentId == submission.AssignmentId)
+            .ToListAsync(cancellationToken);
+        var scores = ParseScores(request.RubricScoresJson);
+        var criteriaById = criteria.ToDictionary(item => item.Id);
+        var failures = scores
+            .Where(score => !criteriaById.TryGetValue(score.Key, out var criterion)
+                || score.Value < 0
+                || score.Value > criterion.Points)
+            .Select(score => new ValidationFailure(
+                nameof(request.RubricScoresJson),
+                $"Score for criterion {score.Key} is outside its allowed range."))
+            .ToList();
+        if (request.Decision == "approve")
+        {
+            failures.AddRange(criteria
+                .Where(criterion => !scores.ContainsKey(criterion.Id))
+                .Select(criterion => new ValidationFailure(
+                    nameof(request.RubricScoresJson),
+                    $"A score is required for criterion {criterion.Id} before approval.")));
+        }
+
+        if (failures.Count > 0) throw new ValidationException(failures);
+        var normalizedScores = scores.Count == 0 ? null : JsonSerializer.Serialize(scores);
+        int? computedTotal = scores.Count == 0 ? null : scores.Values.Sum();
         var now = _clock.UtcNow;
 
         switch (request.Decision)
         {
             case "approve":
                 submission.Status = SubmissionStatus.Approved;
-                submission.RubricScoresJson = request.RubricScoresJson;
-                submission.TotalAwarded = request.TotalAwarded;
+                submission.RubricScoresJson = normalizedScores;
+                submission.TotalAwarded = computedTotal;
                 submission.MentorComment = request.Comment;
                 submission.GuardianNotified = request.GuardianNotified;
                 submission.ReviewedByUserId = _currentUser.UserId;
@@ -86,8 +114,8 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
 
             case "request-revision":
                 submission.Status = SubmissionStatus.NeedsRevision;
-                submission.RubricScoresJson = request.RubricScoresJson;
-                submission.TotalAwarded = request.TotalAwarded;
+                submission.RubricScoresJson = normalizedScores;
+                submission.TotalAwarded = computedTotal;
                 submission.MentorComment = request.Comment;
                 submission.GuardianNotified = request.GuardianNotified;
                 submission.ReviewedByUserId = _currentUser.UserId;
@@ -103,8 +131,8 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
             case "save-draft":
                 // Store the in-progress grade but do NOT change the youth-visible status
                 // (L2-MENTOR-003 AC4).
-                submission.RubricScoresJson = request.RubricScoresJson;
-                submission.TotalAwarded = request.TotalAwarded;
+                submission.RubricScoresJson = normalizedScores;
+                submission.TotalAwarded = computedTotal;
                 submission.MentorComment = request.Comment;
                 break;
 
@@ -116,7 +144,7 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
 
         if (request.Decision is "approve" or "request-revision")
         {
-            var notification = new Notification
+            var youthNotification = new Notification
             {
                 UserId = youth.Id,
                 EventKey = "submission-status",
@@ -127,21 +155,42 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
                 LinkPath = $"/youth/submissions/{submission.Id}",
                 CreatedAt = now,
             };
-            _db.Notifications.Add(notification);
-            await _db.SaveChangesAsync(cancellationToken);
-            await _publisher.PublishToUserAsync(
-                youth.Id,
-                "notification",
-                new
+            var notifications = new List<Notification> { youthNotification };
+            if (request.GuardianNotified && youth.GuardianUserId is Guid guardianUserId)
+            {
+                notifications.Add(new Notification
                 {
-                    id = notification.Id,
-                    eventKey = notification.EventKey,
-                    title = notification.Title,
-                    body = notification.Body,
-                    linkPath = notification.LinkPath,
-                    createdAt = notification.CreatedAt,
-                },
-                cancellationToken);
+                    UserId = guardianUserId,
+                    EventKey = "submission-status",
+                    Title = request.Decision == "approve"
+                        ? $"{youth.DisplayName}'s assignment was approved"
+                        : $"{youth.DisplayName}'s assignment needs revision",
+                    Body = request.Decision == "approve"
+                        ? "Their mentor approved the submitted work."
+                        : "Their mentor requested a revision and shared feedback.",
+                    LinkPath = "/guardian/progress",
+                    CreatedAt = now,
+                });
+            }
+
+            _db.Notifications.AddRange(notifications);
+            await _db.SaveChangesAsync(cancellationToken);
+            foreach (var notification in notifications)
+            {
+                await _publisher.PublishToUserAsync(
+                    notification.UserId,
+                    "notification",
+                    new
+                    {
+                        id = notification.Id,
+                        eventKey = notification.EventKey,
+                        title = notification.Title,
+                        body = notification.Body,
+                        linkPath = notification.LinkPath,
+                        createdAt = notification.CreatedAt,
+                    },
+                    cancellationToken);
+            }
         }
 
         await _audit.LogAsync(
@@ -150,5 +199,21 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
             "Submission",
             submission.Id,
             details: request.Decision);
+    }
+
+    private static IReadOnlyDictionary<Guid, int> ParseScores(string? json)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return new Dictionary<Guid, int>();
+        try
+        {
+            return JsonSerializer.Deserialize<Dictionary<Guid, int>>(json)
+                ?? new Dictionary<Guid, int>();
+        }
+        catch (JsonException)
+        {
+            throw new ValidationException([
+                new ValidationFailure(nameof(GradeSubmissionCommand.RubricScoresJson), "Rubric scores are invalid.")
+            ]);
+        }
     }
 }

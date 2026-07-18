@@ -783,6 +783,13 @@ if (app.Environment.IsEnvironment("Testing"))
             RequireMentorApproval = true,
             TotalPoints = 10,
         };
+        var mentorReviewCriterion = new RubricCriterion
+        {
+            AssignmentId = mentorReviewAssignment.Id,
+            Description = "Connects service to leadership practice",
+            Points = 10,
+            Order = 1,
+        };
         var assignmentCriterion = new RubricCriterion
         {
             AssignmentId = assignment.Id,
@@ -899,7 +906,7 @@ if (app.Environment.IsEnvironment("Testing"))
             AwardedAt = now.AddDays(-1),
         });
         db.Assignments.AddRange(assignment, codingAssignment, mentorReviewAssignment);
-        db.RubricCriteria.Add(assignmentCriterion);
+        db.RubricCriteria.AddRange(assignmentCriterion, mentorReviewCriterion);
         db.Badges.Add(assignmentBadge);
         db.Cohorts.Add(cohort);
         db.ProgressionStages.Add(progressStage);
@@ -1068,6 +1075,8 @@ if (app.Environment.IsEnvironment("Testing"))
             scheduleSessionLocation = upcomingSession.Location,
             mentorReviewSubmissionId = mentorReviewSubmission.Id,
             mentorReviewTitle = mentorReviewAssignment.Title,
+            mentorReviewCriterionId = mentorReviewCriterion.Id,
+            mentorReviewCriterion = mentorReviewCriterion.Description,
         });
     });
 

@@ -87,3 +87,48 @@ export class MentorYouthDetailPage extends BasePage {
     return this.page.getByRole('tabpanel', { name });
   }
 }
+
+export class MentorReviewsPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Reviews', exact: true });
+  }
+  get items() {
+    return this.page.getByTestId('mentor-review-queue-item');
+  }
+  get emptyState() {
+    return this.page.getByRole('heading', { name: /no reviews waiting/i });
+  }
+}
+
+export class MentorSubmissionReviewPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get submittedCopy() {
+    return this.page.getByTestId('submitted-copy');
+  }
+  get total() {
+    return this.page.getByTestId('rubric-total');
+  }
+  score(criterion: string) {
+    return this.page.getByLabel(new RegExp(criterion, 'i'));
+  }
+  get comment() {
+    return this.page.getByLabel(/feedback for the youth/i);
+  }
+  get guardianNotify() {
+    return this.page.getByRole('checkbox', { name: /notify guardian/i });
+  }
+  get saveDraft() {
+    return this.page.getByRole('button', { name: /save draft/i });
+  }
+  get approve() {
+    return this.page.getByRole('button', { name: /^approve$/i });
+  }
+  get requestRevision() {
+    return this.page.getByRole('button', { name: /request revision/i });
+  }
+  get status() {
+    return this.page.getByRole('status');
+  }
+}

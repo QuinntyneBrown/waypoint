@@ -95,3 +95,38 @@ export interface MentorYouthCompetency {
   notes: string | null;
   assessedAt: string;
 }
+
+export interface SubmissionReviewView {
+  id: string;
+  youthId: string;
+  youthName: string;
+  assignmentTitle: string;
+  taskDescription: string;
+  status: string;
+  isCodingProject: boolean;
+  bodyText: string | null;
+  photoUrl: string | null;
+  linkUrl: string | null;
+  youthNote: string | null;
+  submittedAt: string;
+  mentorComment: string | null;
+  totalAwarded: number | null;
+  totalPossible: number;
+  guardianNotified: boolean;
+  rubric: SubmissionReviewCriterion[];
+}
+
+export interface SubmissionReviewCriterion {
+  criterionId: string;
+  description: string;
+  possiblePoints: number;
+  awardedPoints: number | null;
+}
+
+export interface GradeSubmissionRequest {
+  decision: 'approve' | 'request-revision' | 'save-draft';
+  rubricScoresJson: string | null;
+  totalAwarded: number | null;
+  comment: string | null;
+  guardianNotified: boolean;
+}

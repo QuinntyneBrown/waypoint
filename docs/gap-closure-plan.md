@@ -139,7 +139,10 @@ requirement conflicts early (they gate "done").
 - [x] **F2** Youth detail (scoped tabs) `L2-MENTOR-002` — assigned-youth-only profile and
       guardian contact, authoritative progress, attendance, privacy-trimmed check-in history,
       submission and competency tabs, plus named/timestamped at-risk attribution.
-- [ ] **F3** Submission review/grading (+ queue/detail API, outcomes) `L2-MENTOR-003`, `L2-LEARN-007`
+- [x] **F3** Submission review/grading (+ queue/detail API, outcomes) `L2-MENTOR-003`, `L2-LEARN-007` —
+      scoped pending queue and submitted-copy detail, persisted criterion drafts, server-validated
+      rubric bounds/computed totals, confirmed approval or mandatory-feedback revision, default-on
+      guardian choice, badges, audit, and recipient-scoped youth/guardian notifications.
 - [ ] **F4** Quiz assessment approvals (+ pending/review queries) `L2-MENTOR-004`
 - [ ] **F5** Competency tracker `L2-MENTOR-005`
 - [ ] **F6** Check-ins & history (+ shared read surfaces) `L2-MENTOR-006`
@@ -179,7 +182,9 @@ requirement conflicts early (they gate "done").
 - [~] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`, `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence now uses private DB-backed JPG/PNG storage with MIME/extension/signature/size checks and authenticated no-sniff serving; curriculum media lifecycle/removal remains.
 - [ ] **H6** Curriculum mutation lifecycle completion `L2-CURRIC-002..006`
 - [~] **H7** Shared progress model/views `L2-ADMIN-004`, `L2-LEARN-009/010`, `L2-GUARDIAN-001`, `L2-REPORT-001` — curriculum and journey share one module completion/current-state snapshot, badge counts derive from authoritative progress records, and self-analytics now includes approved quiz, attendance, and latest competency histories; cross-role histories and report unification remain.
-- [~] **H8** Grading outcomes (rubric validation, badges, notifications, live) `L2-MENTOR-003`, `L2-LEARN-007`, `L2-ENGAGE-008` — youth-visible rubric/badge results plus notification and user-scoped realtime publishing are in place; mentor review UI and stricter rubric-total reconciliation remain.
+- [x] **H8** Grading outcomes (rubric validation, badges, notifications, live) `L2-MENTOR-003`, `L2-LEARN-007`, `L2-ENGAGE-008` — rubric IDs/ranges and complete final scores are server-validated,
+      totals are server-computed, configured badges and youth-visible results are applied, and final
+      outcomes publish durable user-scoped youth plus opt-in guardian notifications in real time.
 - [ ] **H9** Automated at-risk evaluation `L2-MENTOR-007`
 - [ ] **H10** Assignment side effects (journey, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008`
 - [x] **H11** Attendance offline integrity protocol `L2-ENGAGE-003`, `L2-NFR-004/007` —
@@ -234,8 +239,8 @@ requirement conflicts early (they gate "done").
 - [x] **Youth curriculum fixture** — Testing-only multi-track enrollment data covers published/draft
       filtering, ordered lesson/quiz gates, prerequisite locking, progress, safe lesson content,
       failed optional media, reflection hand-off, upcoming cohort logistics, an assigned-mentor thread,
-      mentor-assigned work, an overdue mentor review/active flag, guardian contact, a private check-in,
-      the placed dashboard, and an empty enrolled track.
+      mentor-assigned work, an overdue rubric-backed mentor review/active flag, guardian contact, a
+      private check-in, the placed dashboard, and an empty enrolled track.
 
 ## Progress log
 
@@ -306,3 +311,8 @@ requirement conflicts early (they gate "done").
   submissions, and latest named competencies. Active risk banners identify the reason, flagger, and
   date; HTTP tests preserve the cross-mentor 403 and prove private prayer text is excluded, while
   desktop/mobile acceptance covers every populated tab and keyboard reflow.
+- 2026-07-18 — F3 and H8 done: mentors now work a scoped review queue, inspect the immutable submitted
+  copy, score the authored rubric, retain drafts without changing youth status, and confirm approval or
+  feedback-required revision. The API rejects unknown, out-of-range, or incomplete final scores and
+  computes totals itself; badge, audit, youth result/revision, durable youth/optional-guardian
+  notification, and user-scoped live outcomes are exercised by HTTP plus desktop/mobile acceptance.

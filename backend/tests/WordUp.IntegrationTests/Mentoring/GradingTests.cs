@@ -57,7 +57,15 @@ public sealed class GradingTests : IntegrationTestBase
                 Status = UserStatus.Active,
                 PasswordHash = hasher.Hash("Passw0rd!"),
             };
-            db.Users.Add(mentor);
+            var guardian = new User
+            {
+                Email = $"guardian.{Guid.NewGuid():N}@example.com",
+                DisplayName = "Guardian",
+                Role = Roles.Guardian,
+                Status = UserStatus.Active,
+                PasswordHash = hasher.Hash("Passw0rd!"),
+            };
+            db.Users.AddRange(mentor, guardian);
             await db.SaveChangesAsync();
             mentorId = mentor.Id;
 
@@ -68,6 +76,7 @@ public sealed class GradingTests : IntegrationTestBase
                 Role = Roles.Youth,
                 Status = UserStatus.Active,
                 MentorId = mentorId,
+                GuardianUserId = guardian.Id,
                 PasswordHash = hasher.Hash("Passw0rd!"),
             };
             db.Users.Add(youth);
@@ -79,6 +88,25 @@ public sealed class GradingTests : IntegrationTestBase
     }
 
     private sealed record SeededSubmission(Guid Id, Guid CriterionId, string BadgeName);
+    private sealed record MentorSubmissionDetailDto(
+        Guid Id,
+        Guid YouthId,
+        string YouthName,
+        string AssignmentTitle,
+        string Status,
+        string? BodyText,
+        string? PhotoUrl,
+        string? LinkUrl,
+        DateTime SubmittedAt,
+        string? MentorComment,
+        int? TotalAwarded,
+        int TotalPossible,
+        IReadOnlyList<MentorRubricCriterionDto> Rubric);
+    private sealed record MentorRubricCriterionDto(
+        Guid CriterionId,
+        string Description,
+        int PossiblePoints,
+        int? AwardedPoints);
 
     private async Task<SeededSubmission> SeedSubmissionAsync(Guid youthId)
     {
@@ -119,6 +147,79 @@ public sealed class GradingTests : IntegrationTestBase
         db.Submissions.Add(submission);
         await db.SaveChangesAsync();
         return new SeededSubmission(submission.Id, criterion.Id, badge.Name);
+    }
+
+    [Test]
+    [Property("Req", "L2-MENTOR-003")]
+    public async Task Review_detail_enforces_rubric_bounds_computes_total_and_retains_a_draft()
+    {
+        // Traces to: L2-MENTOR-003 AC1/AC4/AC5
+        var (_, mentorToken, youthId, _) = await SeedMentorAndYouthAsync();
+        var submission = await SeedSubmissionAsync(youthId);
+
+        var detailResponse = await GetAsync($"/api/mentor/submissions/{submission.Id}", mentorToken);
+        Assert.That(detailResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var detail = await detailResponse.Content.ReadFromJsonAsync<MentorSubmissionDetailDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(detail!.YouthName, Is.EqualTo("Youth"));
+            Assert.That(detail.AssignmentTitle, Is.EqualTo("Reflection"));
+            Assert.That(detail.BodyText, Is.EqualTo("My work"));
+            Assert.That(detail.Rubric.Single().PossiblePoints, Is.EqualTo(10));
+        });
+
+        var outsideRange = await PostAsync(
+            $"/api/mentor/submissions/{submission.Id}/grade",
+            new
+            {
+                decision = "save-draft",
+                rubricScoresJson = JsonSerializer.Serialize(new Dictionary<string, int>
+                {
+                    [submission.CriterionId.ToString()] = 11,
+                }),
+                totalAwarded = 11,
+                guardianNotified = true,
+            },
+            mentorToken);
+        Assert.That(outsideRange.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+
+        var incompleteApproval = await PostAsync(
+            $"/api/mentor/submissions/{submission.Id}/grade",
+            new
+            {
+                decision = "approve",
+                rubricScoresJson = JsonSerializer.Serialize(new Dictionary<string, int>()),
+                totalAwarded = 999,
+                guardianNotified = true,
+            },
+            mentorToken);
+        Assert.That(incompleteApproval.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+
+        var draft = await PostAsync(
+            $"/api/mentor/submissions/{submission.Id}/grade",
+            new
+            {
+                decision = "save-draft",
+                rubricScoresJson = JsonSerializer.Serialize(new Dictionary<string, int>
+                {
+                    [submission.CriterionId.ToString()] = 7,
+                }),
+                totalAwarded = 999,
+                comment = "Draft feedback",
+                guardianNotified = true,
+            },
+            mentorToken);
+        Assert.That(draft.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var afterDraft = await GetAsync($"/api/mentor/submissions/{submission.Id}", mentorToken);
+        var saved = await afterDraft.Content.ReadFromJsonAsync<MentorSubmissionDetailDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(saved!.Status, Is.EqualTo(SubmissionStatus.Submitted.ToString()));
+            Assert.That(saved.TotalAwarded, Is.EqualTo(7), "the server computes the rubric total");
+            Assert.That(saved.MentorComment, Is.EqualTo("Draft feedback"));
+            Assert.That(saved.Rubric.Single().AwardedPoints, Is.EqualTo(7));
+        });
     }
 
     [Test]
@@ -164,6 +265,14 @@ public sealed class GradingTests : IntegrationTestBase
                 item.UserId == youthId
                 && item.EventKey == "submission-status"
                 && item.LinkPath == $"/youth/submissions/{submission.Id}"), Is.True);
+            var guardianId = await db.Users
+                .Where(item => item.Id == youthId)
+                .Select(item => item.GuardianUserId)
+                .SingleAsync();
+            Assert.That(await db.Notifications.AnyAsync(item =>
+                item.UserId == guardianId
+                && item.EventKey == "submission-status"), Is.False,
+                "the guardian opted out of this outcome notification");
             Assert.That(await db.BadgeAwards.CountAsync(item =>
                 item.YouthUserId == youthId), Is.EqualTo(1));
         }
@@ -198,6 +307,19 @@ public sealed class GradingTests : IntegrationTestBase
             new { decision = "request-revision", comment = "Please add scripture.", guardianNotified = true },
             mentorToken);
         Assert.That(withComment.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var guardianId = await db.Users
+                .Where(item => item.Id == youthId)
+                .Select(item => item.GuardianUserId)
+                .SingleAsync();
+            Assert.That(await db.Notifications.AnyAsync(item =>
+                item.UserId == guardianId
+                && item.EventKey == "submission-status"
+                && item.LinkPath == "/guardian/progress"), Is.True);
+        }
 
         var afterRevision = await GetAsync($"/api/me/submissions/{submission.Id}", youthToken);
         var revView = await afterRevision.Content.ReadFromJsonAsync<SubmissionStatusDto>();

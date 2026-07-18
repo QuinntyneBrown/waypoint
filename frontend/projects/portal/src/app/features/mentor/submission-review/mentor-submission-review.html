@@ -1,0 +1,125 @@
+<wu-shell
+  role="mentor"
+  active="reviews"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <a class="wu-link" routerLink="/mentor/reviews">Back to reviews</a>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    <p class="wu-sr-only" role="status">{{ statusMessage() }}</p>
+    @if (review(); as item) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">
+            {{ item.isCodingProject ? 'Coding project' : 'Assignment' }} · {{ item.youthName }}
+          </div>
+          <h1 class="wu-page__title">{{ item.assignmentTitle }}</h1>
+          <p class="wu-page__sub">Submitted {{ item.submittedAt | date: 'medium' }}</p>
+        </div>
+      </div>
+
+      <div class="review-layout">
+        <section class="wu-card" data-testid="submitted-copy">
+          <div class="wu-card__header"><h2 class="wu-card__title">Submitted work</h2></div>
+          <div class="wu-card__body wu-stack">
+            <p>{{ item.taskDescription }}</p>
+            @if (item.bodyText) {
+              <div class="submitted-body">{{ item.bodyText }}</div>
+            }
+            @if (item.photoUrl) {
+              <img
+                class="evidence-image"
+                [src]="item.photoUrl"
+                alt="Evidence submitted by the youth"
+              />
+            }
+            @if (item.linkUrl) {
+              <a class="wu-link" [href]="item.linkUrl" target="_blank" rel="noopener noreferrer"
+                >Open submitted link</a
+              >
+            }
+            @if (item.youthNote) {
+              <p><strong>Youth note:</strong> {{ item.youthNote }}</p>
+            }
+          </div>
+        </section>
+
+        <section class="wu-card">
+          <div class="wu-card__header"><h2 class="wu-card__title">Rubric and outcome</h2></div>
+          <div class="wu-card__body wu-stack">
+            @for (criterion of item.rubric; track criterion.criterionId) {
+              <div class="rubric-row">
+                <label class="wu-label" [for]="'score-' + criterion.criterionId">
+                  {{ criterion.description }} (0–{{ criterion.possiblePoints }})
+                </label>
+                <input
+                  class="wu-input"
+                  type="number"
+                  [id]="'score-' + criterion.criterionId"
+                  min="0"
+                  [max]="criterion.possiblePoints"
+                  step="1"
+                  [value]="scores()[criterion.criterionId] ?? ''"
+                  (input)="setScore(criterion.criterionId, $any($event.target).value)"
+                />
+              </div>
+            }
+            <p class="wu-card__title" data-testid="rubric-total">
+              {{ total() }} / {{ item.totalPossible }}
+            </p>
+            <div class="wu-field">
+              <label class="wu-label" for="mentor-feedback">Feedback for the youth</label>
+              <textarea
+                id="mentor-feedback"
+                class="wu-textarea"
+                rows="5"
+                maxlength="4000"
+                [value]="comment()"
+                (input)="setComment($any($event.target).value)"
+              ></textarea>
+            </div>
+            <label class="wu-check">
+              <input
+                type="checkbox"
+                [checked]="guardianNotified()"
+                (change)="guardianNotified.set($any($event.target).checked)"
+              />
+              <span>Notify guardian about the outcome</span>
+            </label>
+            <div class="wu-actions review-actions">
+              <button
+                class="wu-btn wu-btn--ghost"
+                type="button"
+                [disabled]="saving()"
+                (click)="submit('save-draft')"
+              >
+                Save draft
+              </button>
+              <button
+                class="wu-btn wu-btn--secondary"
+                type="button"
+                [disabled]="saving()"
+                (click)="submit('request-revision')"
+              >
+                Request revision
+              </button>
+              <button
+                class="wu-btn wu-btn--primary"
+                type="button"
+                [disabled]="saving()"
+                (click)="submit('approve')"
+              >
+                Approve
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    } @else if (!errorMessage()) {
+      <p class="wu-muted" role="status">Loading submission…</p>
+    }
+  </div>
+</wu-shell>
