@@ -40,6 +40,16 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<CheckIn> CheckIns => Set<CheckIn>();
     public DbSet<Flag> Flags => Set<Flag>();
     public DbSet<AssignedWork> AssignedWork => Set<AssignedWork>();
+    public DbSet<Session> Sessions => Set<Session>();
+    public DbSet<AttendanceRecord> AttendanceRecords => Set<AttendanceRecord>();
+    public DbSet<SessionRsvp> SessionRsvps => Set<SessionRsvp>();
+    public DbSet<Announcement> Announcements => Set<Announcement>();
+    public DbSet<AnnouncementRead> AnnouncementReads => Set<AnnouncementRead>();
+    public DbSet<Message> Messages => Set<Message>();
+    public DbSet<Notification> Notifications => Set<Notification>();
+    public DbSet<NotificationPreference> NotificationPreferences => Set<NotificationPreference>();
+    public DbSet<DisplayPreference> DisplayPreferences => Set<DisplayPreference>();
+    public DbSet<SupportRequest> SupportRequests => Set<SupportRequest>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -207,6 +217,74 @@ public class AppDbContext : DbContext, IAppDbContext
         {
             b.HasIndex(x => x.YouthUserId);
             b.Property(x => x.ItemType).HasMaxLength(32).IsRequired();
+        });
+
+        // Engagement & operations (M4)
+        modelBuilder.Entity<Session>(b =>
+        {
+            b.Property(x => x.Title).HasMaxLength(200).IsRequired();
+            b.Property(x => x.Location).HasMaxLength(256);
+            b.HasIndex(x => x.CohortId);
+            b.HasIndex(x => x.StartsAt);
+            b.HasIndex(x => x.RecurrenceGroupId);
+        });
+        modelBuilder.Entity<AttendanceRecord>(b =>
+        {
+            b.HasIndex(x => new { x.SessionId, x.YouthUserId }).IsUnique();
+            b.Property(x => x.Note).HasMaxLength(1000);
+            b.Property(x => x.Status).HasConversion<int>();
+            b.Property(x => x.RowVersion).IsRowVersion();
+        });
+        modelBuilder.Entity<SessionRsvp>(b =>
+        {
+            b.HasIndex(x => new { x.SessionId, x.YouthUserId }).IsUnique();
+            b.Property(x => x.Response).HasConversion<int>();
+            b.Property(x => x.Note).HasMaxLength(1000);
+        });
+        modelBuilder.Entity<Announcement>(b =>
+        {
+            b.Property(x => x.Title).HasMaxLength(200).IsRequired();
+            b.Property(x => x.Message).HasMaxLength(4000).IsRequired();
+            b.Property(x => x.AudienceScope).HasMaxLength(32).IsRequired();
+            b.Property(x => x.RoleTargeting).HasMaxLength(32).IsRequired();
+            b.HasIndex(x => x.CohortId);
+        });
+        modelBuilder.Entity<AnnouncementRead>(b =>
+            b.HasIndex(x => new { x.AnnouncementId, x.UserId }).IsUnique());
+        modelBuilder.Entity<Message>(b =>
+        {
+            b.Property(x => x.ThreadKey).HasMaxLength(80).IsRequired();
+            b.Property(x => x.Body).HasMaxLength(4000).IsRequired();
+            b.HasIndex(x => x.ThreadKey);
+            b.HasIndex(x => x.RecipientId);
+        });
+        modelBuilder.Entity<Notification>(b =>
+        {
+            b.Property(x => x.EventKey).HasMaxLength(64).IsRequired();
+            b.Property(x => x.Title).HasMaxLength(200).IsRequired();
+            b.Property(x => x.Body).HasMaxLength(2000).IsRequired();
+            b.Property(x => x.LinkPath).HasMaxLength(512);
+            b.HasIndex(x => new { x.UserId, x.ReadAt });
+        });
+
+        // Platform services (M4)
+        modelBuilder.Entity<NotificationPreference>(b =>
+        {
+            b.Property(x => x.EventKey).HasMaxLength(64).IsRequired();
+            b.HasIndex(x => new { x.UserId, x.EventKey }).IsUnique();
+        });
+        modelBuilder.Entity<DisplayPreference>(b =>
+        {
+            b.Property(x => x.ReadingFont).HasMaxLength(64);
+            b.HasIndex(x => x.UserId).IsUnique();
+        });
+        modelBuilder.Entity<SupportRequest>(b =>
+        {
+            b.Property(x => x.Category).HasMaxLength(64).IsRequired();
+            b.Property(x => x.Description).HasMaxLength(4000).IsRequired();
+            b.Property(x => x.ReplyToEmail).HasMaxLength(256).IsRequired();
+            b.Property(x => x.ScreenshotUrl).HasMaxLength(512);
+            b.HasIndex(x => x.CreatedAt);
         });
     }
 }

@@ -44,5 +44,19 @@ public interface IAppDbContext
     DbSet<Flag> Flags { get; }
     DbSet<AssignedWork> AssignedWork { get; }
 
+    // Engagement & operations (M4)
+    DbSet<Session> Sessions { get; }
+    DbSet<AttendanceRecord> AttendanceRecords { get; }
+    DbSet<SessionRsvp> SessionRsvps { get; }
+    DbSet<Announcement> Announcements { get; }
+    DbSet<AnnouncementRead> AnnouncementReads { get; }
+    DbSet<Message> Messages { get; }
+    DbSet<Notification> Notifications { get; }
+
+    // Platform services (M4)
+    DbSet<NotificationPreference> NotificationPreferences { get; }
+    DbSet<DisplayPreference> DisplayPreferences { get; }
+    DbSet<SupportRequest> SupportRequests { get; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WordUp.Api.Authorization;
+using WordUp.Api.Middleware;
 using WordUp.Application;
 using WordUp.Application.Auth;
 using WordUp.Application.Common;
@@ -146,6 +147,9 @@ app.UseExceptionHandler(handler =>
     });
 });
 
+// Short-circuit to a 503 state while maintenance mode is on (L2-PLATFORM-009).
+app.UseMiddleware<MaintenanceMiddleware>();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -160,6 +164,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
+
+// Diagnostics hook (never mapped in Production) used to verify the global 500 contract
+// (friendly body, no stack trace) — L2-PLATFORM-008.
+if (!app.Environment.IsProduction())
+{
+    app.MapGet("/api/_diag/throw", () =>
+    {
+        throw new InvalidOperationException("Intentional diagnostic failure.");
+    });
+}
 
 app.Run();
 
