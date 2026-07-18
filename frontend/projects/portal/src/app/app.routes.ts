@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard, guestGuard } from '@wu/auth';
+import { consentGuard } from './guards/consent.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'auth/sign-in' },
@@ -66,7 +67,7 @@ export const routes: Routes = [
   },
   {
     path: 'youth',
-    canActivate: [authGuard],
+    canActivate: [authGuard, consentGuard],
     children: [
       {
         path: 'home',
@@ -74,6 +75,13 @@ export const routes: Routes = [
         loadComponent: () => import('./features/youth/home/youth-home').then((m) => m.YouthHome),
       },
     ],
+  },
+  {
+    path: 'consent-required',
+    title: 'Consent needed · Word Up',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./states/consent-required/consent-required').then((m) => m.ConsentRequired),
   },
   {
     path: 'session-expired',
