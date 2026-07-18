@@ -772,6 +772,17 @@ if (app.Environment.IsEnvironment("Testing"))
             RequireMentorApproval = true,
             TotalPoints = 10,
         };
+        var mentorReviewAssignment = new Assignment
+        {
+            ModuleId = firstModule.Id,
+            Title = $"Service Reflection Review {suffix}",
+            TaskDescription = "Review one way you served someone this week.",
+            SubmissionTypes = "text",
+            DueDate = now.AddDays(-2),
+            AllowLate = true,
+            RequireMentorApproval = true,
+            TotalPoints = 10,
+        };
         var assignmentCriterion = new RubricCriterion
         {
             AssignmentId = assignment.Id,
@@ -878,7 +889,7 @@ if (app.Environment.IsEnvironment("Testing"))
             YouthUserId = youth.Id,
             AwardedAt = now.AddDays(-1),
         });
-        db.Assignments.AddRange(assignment, codingAssignment);
+        db.Assignments.AddRange(assignment, codingAssignment, mentorReviewAssignment);
         db.RubricCriteria.Add(assignmentCriterion);
         db.Badges.Add(assignmentBadge);
         db.Cohorts.Add(cohort);
@@ -923,6 +934,23 @@ if (app.Environment.IsEnvironment("Testing"))
             Message = "Bring your leadership ideas to this project.",
             AssignedByUserId = mentor.Id,
             CreatedAt = now.AddDays(-1),
+        });
+        var mentorReviewSubmission = new Submission
+        {
+            YouthUserId = youth.Id,
+            AssignmentId = mentorReviewAssignment.Id,
+            BodyText = "I helped welcome a new person and made sure they had someone to talk to.",
+            Status = SubmissionStatus.Submitted,
+            SubmittedAt = now.AddDays(-1),
+            CreatedAt = now.AddDays(-1),
+        };
+        db.Submissions.Add(mentorReviewSubmission);
+        db.Flags.Add(new Flag
+        {
+            YouthUserId = youth.Id,
+            Reason = "Follow up after two missed sessions.",
+            FlaggedByUserId = mentor.Id,
+            FlaggedAt = now.AddHours(-4),
         });
         db.AttendanceRecords.AddRange(
             new AttendanceRecord
@@ -973,6 +1001,7 @@ if (app.Environment.IsEnvironment("Testing"))
         return Results.Created($"/api/me/curriculum/{primaryTrack.Id}", new
         {
             youthId = youth.Id,
+            youthName = youth.DisplayName,
             youthEmail = youth.Email,
             youthPassword,
             primaryTrackId = primaryTrack.Id,
@@ -1014,6 +1043,8 @@ if (app.Environment.IsEnvironment("Testing"))
             scheduleSessionId = upcomingSession.Id,
             scheduleSessionTitle = upcomingSession.Title,
             scheduleSessionLocation = upcomingSession.Location,
+            mentorReviewSubmissionId = mentorReviewSubmission.Id,
+            mentorReviewTitle = mentorReviewAssignment.Title,
         });
     });
 

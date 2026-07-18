@@ -46,6 +46,7 @@ export interface SeededGuardianFamily {
 
 export interface SeededYouthCurriculum {
   youthId: string;
+  youthName: string;
   youthEmail: string;
   youthPassword: string;
   primaryTrackId: string;
@@ -87,6 +88,8 @@ export interface SeededYouthCurriculum {
   scheduleSessionId: string;
   scheduleSessionTitle: string;
   scheduleSessionLocation: string;
+  mentorReviewSubmissionId: string;
+  mentorReviewTitle: string;
 }
 
 /**

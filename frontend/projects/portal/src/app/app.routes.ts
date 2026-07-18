@@ -217,6 +217,28 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'mentor',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'dashboard',
+        title: 'Mentor dashboard · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/dashboard/mentor-dashboard').then(
+            (module) => module.MentorDashboardPage,
+          ),
+      },
+      {
+        path: 'my-youth',
+        title: 'My youth · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/roster/mentor-roster').then(
+            (module) => module.MentorRosterPage,
+          ),
+      },
+    ],
+  },
+  {
     path: 'admin',
     canActivate: [authGuard],
     children: [

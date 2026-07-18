@@ -9,11 +9,13 @@ public class MentorDashboardQueryHandler : IRequestHandler<MentorDashboardQuery,
 {
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
+    private readonly IClock _clock;
 
-    public MentorDashboardQueryHandler(IAppDbContext db, ICurrentUser currentUser)
+    public MentorDashboardQueryHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock)
     {
         _db = db;
         _currentUser = currentUser;
+        _clock = clock;
     }
 
     public async Task<MentorDashboard> Handle(MentorDashboardQuery request, CancellationToken cancellationToken)
@@ -30,15 +32,25 @@ public class MentorDashboardQueryHandler : IRequestHandler<MentorDashboardQuery,
 
         // Pending reviews = submissions awaiting review + quiz attempts submitted-but-not-approved.
         var pendingSubmissions = await _db.Submissions
-            .CountAsync(s => youthIds.Contains(s.YouthUserId)
-                && (s.Status == SubmissionStatus.Submitted || s.Status == SubmissionStatus.UnderReview),
-                cancellationToken);
+            .Where(s => youthIds.Contains(s.YouthUserId)
+                && (s.Status == SubmissionStatus.Submitted || s.Status == SubmissionStatus.UnderReview))
+            .Select(s => s.AssignmentId)
+            .ToListAsync(cancellationToken);
 
         var pendingAttempts = await _db.QuizAttempts
             .CountAsync(a => youthIds.Contains(a.YouthUserId) && a.IsSubmitted && a.ApprovedScore == null,
                 cancellationToken);
 
-        var pendingReviews = pendingSubmissions + pendingAttempts;
+        var pendingReviews = pendingSubmissions.Count + pendingAttempts;
+        var pendingAssignmentIds = pendingSubmissions.Distinct().ToList();
+        var overdueAssignmentIds = await _db.Assignments
+            .Where(assignment => pendingAssignmentIds.Contains(assignment.Id)
+                && assignment.DueDate != null
+                && assignment.DueDate < _clock.UtcNow)
+            .Select(assignment => assignment.Id)
+            .ToListAsync(cancellationToken);
+        var overdueAssignmentIdSet = overdueAssignmentIds.ToHashSet();
+        var overdueReviews = pendingSubmissions.Count(overdueAssignmentIdSet.Contains);
 
         // At-risk = distinct youth with an active flag.
         var atRiskCount = await _db.Flags
@@ -67,6 +79,6 @@ public class MentorDashboardQueryHandler : IRequestHandler<MentorDashboardQuery,
                 .Average();
         }
 
-        return new MentorDashboard(youthCount, pendingReviews, averageProgress, atRiskCount);
+        return new MentorDashboard(youthCount, pendingReviews, overdueReviews, averageProgress, atRiskCount);
     }
 }

@@ -1,0 +1,127 @@
+<wu-shell
+  role="mentor"
+  active="my-youth"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Your caseload</div>
+        <h1 class="wu-page__title">My youth</h1>
+        <p class="wu-page__sub">Search and filter youth assigned to you.</p>
+      </div>
+    </div>
+
+    <div class="roster-controls wu-mb-4">
+      <div class="wu-field wu-mb-0 roster-search">
+        <label class="wu-label" for="mentor-youth-search">Search youth</label>
+        <input
+          id="mentor-youth-search"
+          class="wu-input"
+          type="search"
+          placeholder="Search by name…"
+          [value]="search()"
+          (input)="onSearch($any($event.target).value)"
+        />
+      </div>
+      <div class="wu-pillrow" aria-label="Roster status filter">
+        <button
+          class="wu-pill filter-button"
+          type="button"
+          [class.is-active]="filter() === 'all'"
+          [attr.aria-pressed]="filter() === 'all'"
+          (click)="setFilter('all')"
+        >
+          All
+        </button>
+        <button
+          class="wu-pill filter-button"
+          type="button"
+          [class.is-active]="filter() === 'on-track'"
+          [attr.aria-pressed]="filter() === 'on-track'"
+          (click)="setFilter('on-track')"
+        >
+          On track
+        </button>
+        <button
+          class="wu-pill filter-button"
+          type="button"
+          [class.is-active]="filter() === 'at-risk'"
+          [attr.aria-pressed]="filter() === 'at-risk'"
+          (click)="setFilter('at-risk')"
+        >
+          At risk
+        </button>
+        <button
+          class="wu-pill filter-button"
+          type="button"
+          [class.is-active]="filter() === 'new'"
+          [attr.aria-pressed]="filter() === 'new'"
+          (click)="setFilter('new')"
+        >
+          New
+        </button>
+      </div>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (loading()) {
+      <p class="wu-muted" role="status">Loading your roster…</p>
+    } @else if (youth().length === 0) {
+      <div class="wu-card wu-empty">
+        <div class="wu-empty__icon"><wu-icon name="users" /></div>
+        <h2 class="wu-empty__title">No youth match that filter</h2>
+        <p class="wu-empty__text">Try another status or clear your search to see your roster.</p>
+        <button class="wu-btn wu-btn--primary" type="button" (click)="clearFilters()">
+          Clear filters
+        </button>
+      </div>
+    } @else {
+      <div class="wu-table-wrap">
+        <table class="wu-table wu-table--cards">
+          <thead>
+            <tr>
+              <th>Youth</th>
+              <th>Cohort</th>
+              <th>Progress</th>
+              <th>Last active</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (person of youth(); track person.id) {
+              <tr data-testid="mentor-roster-row">
+                <td data-label="Youth">
+                  <a [routerLink]="['/mentor/youth', person.id]">{{ person.displayName }}</a>
+                  @if (person.new) {
+                    <span class="wu-badge wu-badge--info">New</span>
+                  }
+                </td>
+                <td data-label="Cohort">{{ person.cohortName ?? 'Not assigned' }}</td>
+                <td data-label="Progress">
+                  <div class="wu-cluster">
+                    <progress
+                      max="100"
+                      [value]="percent(person.progress)"
+                      [attr.aria-label]="percent(person.progress) + '% progress'"
+                    ></progress>
+                    <span>{{ percent(person.progress) }}%</span>
+                  </div>
+                </td>
+                <td data-label="Last active">{{ person.lastActiveAt | date: 'mediumDate' }}</td>
+                <td data-label="Status">
+                  <span class="wu-badge" [class.wu-badge--error]="person.atRisk">
+                    {{ person.status }}
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</wu-shell>

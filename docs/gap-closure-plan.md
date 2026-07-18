@@ -58,8 +58,9 @@ requirement conflicts early (they gate "done").
 
 - [~] **C0 · Role portal routing** — real feature routes + shell for admin/mentor/guardian/
       volunteer (today they fall through to 404 despite `roleHome()`). *Volunteer and Guardian
-      routes are live; the shell already renders every role via nav-config. Admin/Mentor routes
-      still land as their portals are built.*
+      routes are live; Mentor dashboard/roster and the first Admin routes now land, and the shell
+      already renders every role via nav-config. Remaining Admin/Mentor destinations land as their
+      portal slices are built.*
 - [x] **C1 · Volunteer Today** — today's assigned session/logistics/count, no youth record data.
       `L2-VOLUNTEER-001`. Empty and populated states are E2E-verified.
 - [x] **C2 · Volunteer schedule** — upcoming assigned sessions/status + empty state.
@@ -132,7 +133,9 @@ requirement conflicts early (they gate "done").
 
 ## Phase F — Mentor portal (`L2-MENTOR-001..008`, `L2-ENGAGE-001..004/007/008`)
 
-- [ ] **F1** Dashboard/roster/reviews preview `L2-MENTOR-001`
+- [x] **F1** Dashboard/roster/reviews preview `L2-MENTOR-001` — assigned-youth-only summary
+      counts, overdue review totals, progress and at-risk status, server-side roster search/status
+      filters, labelled populated/empty states, and assignment/quiz review previews with grading links.
 - [ ] **F2** Youth detail (scoped tabs) `L2-MENTOR-002`
 - [ ] **F3** Submission review/grading (+ queue/detail API, outcomes) `L2-MENTOR-003`, `L2-LEARN-007`
 - [ ] **F4** Quiz assessment approvals (+ pending/review queries) `L2-MENTOR-004`
@@ -229,7 +232,8 @@ requirement conflicts early (they gate "done").
 - [x] **Youth curriculum fixture** — Testing-only multi-track enrollment data covers published/draft
       filtering, ordered lesson/quiz gates, prerequisite locking, progress, safe lesson content,
       failed optional media, reflection hand-off, upcoming cohort logistics, an assigned-mentor thread,
-      mentor-assigned work, the placed dashboard, and an empty enrolled track.
+      mentor-assigned work, an overdue mentor review/active flag, the placed dashboard, and an empty
+      enrolled track.
 
 ## Progress log
 
@@ -290,3 +294,8 @@ requirement conflicts early (they gate "done").
   state, and renders actionable cards as accessible deep links. Desktop acceptance proves live
   arrival, reload deduplication, and target-thread routing; mobile acceptance proves containment,
   touch size, and keyboard activation.
+- 2026-07-18 — F1 done: mentor sign-in now lands on a scoped production dashboard with caseload,
+  pending/overdue review, average-progress, and at-risk metrics. The dashboard previews assigned youth
+  and assignment/quiz reviews; My Youth provides debounced server search and all/on-track/at-risk/new
+  filters with labelled empty states. Integration acceptance excludes another mentor's youth, flags,
+  and overdue work; desktop and mobile keyboard/reflow paths pass.

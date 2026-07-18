@@ -1,0 +1,131 @@
+<wu-shell
+  role="mentor"
+  active="dashboard"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Mentor dashboard</div>
+        <h1 class="wu-page__title">Welcome back, {{ auth.user()?.displayName }}.</h1>
+        <p class="wu-page__sub">See how your assigned youth are doing and what needs review.</p>
+      </div>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (loading()) {
+      <p class="wu-muted" role="status">Loading your dashboard…</p>
+    } @else if (summary(); as view) {
+      <div class="wu-grid wu-grid--4" aria-label="Mentor summary">
+        <div class="wu-card wu-statcard">
+          <div class="wu-statcard__label">My youth</div>
+          <div class="wu-statcard__value" data-testid="mentor-youth-count">
+            {{ view.youthCount }}
+          </div>
+        </div>
+        <div class="wu-card wu-statcard" data-testid="mentor-pending-reviews">
+          <div class="wu-statcard__label">Pending reviews</div>
+          <div class="wu-statcard__value">{{ view.pendingReviews }}</div>
+          <div class="wu-statcard__delta" [class.is-down]="view.overdueReviews > 0">
+            {{ view.overdueReviews }} overdue
+          </div>
+        </div>
+        <div class="wu-card wu-statcard">
+          <div class="wu-statcard__label">Average progress</div>
+          <div class="wu-statcard__value" data-testid="mentor-average-progress">
+            {{ percent(view.averageProgress) }}%
+          </div>
+        </div>
+        <div class="wu-card wu-statcard">
+          <div class="wu-statcard__label">At risk</div>
+          <div class="wu-statcard__value" data-testid="mentor-at-risk-count">
+            {{ view.atRiskCount }}
+          </div>
+        </div>
+      </div>
+
+      <section class="wu-mt-6" data-testid="mentor-roster-preview">
+        <div class="wu-cluster wu-cluster--between wu-mb-4">
+          <h2 class="wu-mb-0">My youth</h2>
+          <a class="wu-btn wu-btn--ghost" routerLink="/mentor/my-youth">View all youth</a>
+        </div>
+        @if (youth().length === 0) {
+          <div class="wu-card wu-empty">
+            <div class="wu-empty__icon"><wu-icon name="users" /></div>
+            <h3 class="wu-empty__title">No youth assigned yet</h3>
+            <p class="wu-empty__text">
+              Assigned youth will appear here when your caseload is ready.
+            </p>
+          </div>
+        } @else {
+          <div class="mentor-preview-grid">
+            @for (person of youth().slice(0, 4); track person.id) {
+              <article class="wu-card">
+                <div class="wu-card__body youth-preview">
+                  <div
+                    class="progress-number"
+                    role="img"
+                    [attr.aria-label]="percent(person.progress) + '% progress'"
+                  >
+                    {{ percent(person.progress) }}%
+                  </div>
+                  <div>
+                    <a class="wu-card__title" [routerLink]="['/mentor/youth', person.id]">
+                      {{ person.displayName }}
+                    </a>
+                    <p class="wu-muted">{{ person.cohortName ?? 'Cohort not assigned' }}</p>
+                    <span class="wu-badge" [class.wu-badge--error]="person.atRisk">
+                      {{ person.status }}
+                    </span>
+                  </div>
+                </div>
+              </article>
+            }
+          </div>
+        }
+      </section>
+
+      <section class="wu-mt-6">
+        <div class="wu-cluster wu-cluster--between wu-mb-4">
+          <h2 class="wu-mb-0">Reviews queue</h2>
+          <a class="wu-btn wu-btn--ghost" routerLink="/mentor/reviews">Open queue</a>
+        </div>
+        @if (reviews().length === 0) {
+          <div class="wu-card wu-empty">
+            <div class="wu-empty__icon"><wu-icon name="file-text" /></div>
+            <h3 class="wu-empty__title">No reviews waiting</h3>
+            <p class="wu-empty__text">New submissions and quiz assessments will appear here.</p>
+          </div>
+        } @else {
+          <div class="wu-card">
+            <div class="wu-card__body">
+              @for (review of reviews(); track review.reviewId) {
+                <article class="review-row" data-testid="mentor-review-item">
+                  <div>
+                    <h3 class="wu-card__title">{{ review.youthName }}</h3>
+                    <p>{{ review.itemType }} · {{ review.itemTitle }}</p>
+                  </div>
+                  <div class="wu-cluster">
+                    @if (review.overdue) {
+                      <span class="wu-badge wu-badge--error">Overdue</span>
+                    } @else if (review.dueDate) {
+                      <span class="wu-badge">Due {{ review.dueDate | date: 'mediumDate' }}</span>
+                    } @else {
+                      <span class="wu-badge">No due date</span>
+                    }
+                    <a class="wu-btn wu-btn--primary review-link" [routerLink]="review.reviewPath">
+                      Review
+                    </a>
+                  </div>
+                </article>
+              }
+            </div>
+          </div>
+        }
+      </section>
+    }
+  </div>
+</wu-shell>

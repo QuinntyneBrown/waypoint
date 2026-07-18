@@ -40,6 +40,15 @@ public class MentorController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("reviews")]
+    public async Task<ActionResult<IReadOnlyList<MentorReviewPreview>>> Reviews(
+        [FromQuery] int take = 20,
+        CancellationToken cancellationToken = default)
+    {
+        var result = await _mediator.Send(new ReviewQueueQuery(take), cancellationToken);
+        return Ok(result);
+    }
+
     [HttpPost("youth/{id:guid}/flag")]
     public async Task<IActionResult> RaiseFlag(Guid id, [FromBody] RaiseFlagRequest request, CancellationToken cancellationToken)
     {
