@@ -2,7 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using WordUp.Application.Abstractions;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Api.Realtime;
 

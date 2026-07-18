@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Http;
-using WordUp.Application.Abstractions;
-using WordUp.Domain;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Infrastructure;
 

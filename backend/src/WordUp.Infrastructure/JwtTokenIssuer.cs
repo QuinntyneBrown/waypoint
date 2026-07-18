@@ -3,8 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using WordUp.Application.Abstractions;
-using WordUp.Domain;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Infrastructure;
 

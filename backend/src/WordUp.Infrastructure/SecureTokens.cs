@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
-using WordUp.Application.Abstractions;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Infrastructure;
 

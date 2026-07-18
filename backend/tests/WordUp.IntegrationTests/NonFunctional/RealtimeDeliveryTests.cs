@@ -5,8 +5,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
-using WordUp.Application.Abstractions;
-using WordUp.Domain;
+using WordUp.Application.Shared.Abstractions;
 using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests.NonFunctional;

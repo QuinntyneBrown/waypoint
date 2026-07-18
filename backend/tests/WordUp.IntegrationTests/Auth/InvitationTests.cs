@@ -1,8 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.RegularExpressions;
-using WordUp.Application.Auth;
-using WordUp.Domain;
+using WordUp.Application.Authentication.Auth;
 
 namespace WordUp.IntegrationTests.Auth;
 

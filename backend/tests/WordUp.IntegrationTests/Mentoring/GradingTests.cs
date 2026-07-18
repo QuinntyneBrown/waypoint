@@ -2,8 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using WordUp.Application.Abstractions;
-using WordUp.Domain;
+using WordUp.Application.Shared.Abstractions;
 using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests.Mentoring;
@@ -33,7 +32,7 @@ public sealed class GradingTests : IntegrationTestBase
     {
         var signIn = await Client.PostAsJsonAsync("/api/auth/sign-in", new { email, password = "Passw0rd!" });
         signIn.EnsureSuccessStatusCode();
-        var auth = await signIn.Content.ReadFromJsonAsync<WordUp.Application.Auth.AuthResult>();
+        var auth = await signIn.Content.ReadFromJsonAsync<WordUp.Application.Authentication.Auth.AuthResult>();
         return auth!.AccessToken;
     }
 

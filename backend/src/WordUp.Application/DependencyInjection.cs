@@ -1,8 +1,8 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using WordUp.Application.Auth;
-using WordUp.Application.Behaviors;
+using WordUp.Application.Authentication.Auth;
+using WordUp.Application.Shared.Behaviors;
 
 namespace WordUp.Application;
 

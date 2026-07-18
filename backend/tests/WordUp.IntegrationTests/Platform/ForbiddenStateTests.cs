@@ -1,7 +1,6 @@
 // Acceptance Test
 // Traces to: L2-PLATFORM-006
 using System.Net;
-using WordUp.Domain;
 
 namespace WordUp.IntegrationTests.Platform;
 

@@ -1,7 +1,6 @@
 // Acceptance Test
 // Traces to: L2-PLATFORM-003
 using System.Net.Http.Json;
-using WordUp.Domain;
 
 namespace WordUp.IntegrationTests.Platform;
 

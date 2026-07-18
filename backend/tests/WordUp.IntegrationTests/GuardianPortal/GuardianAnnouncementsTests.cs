@@ -4,9 +4,8 @@
 using System.Net;
 using System.Net.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
-using WordUp.Application.Abstractions;
-using WordUp.Application.Auth;
-using WordUp.Domain;
+using WordUp.Application.Shared.Abstractions;
+using WordUp.Application.Authentication.Auth;
 using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests.GuardianPortal;

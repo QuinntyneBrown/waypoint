@@ -1,4 +1,4 @@
-using WordUp.Application.Abstractions;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Infrastructure;
 

@@ -42,22 +42,15 @@ The backend follows Clean Architecture. Domain and Application code remain indep
 
 ### Domain (`WordUp.Domain`)
 
-The core data model currently includes users and roles, refresh tokens, invitations, password-reset tokens, youth applications, guardian consents, audit entries, and cohorts. Enums model user, invitation, and application lifecycle state.
+Domain types are grouped by their owning requirements subsystem. Their folders and namespaces match—for example, authentication types live in `Authentication/` under `WordUp.Domain.Authentication`, while curriculum entities live in `CurriculumAuthoring/` under `WordUp.Domain.CurriculumAuthoring`.
 
 Domain types contain persistent state and invariants that do not depend on ASP.NET Core or EF Core configuration.
 
 ### Application (`WordUp.Application`)
 
-Use cases are expressed as MediatR commands and queries with dedicated handlers and FluentValidation validators. Feature folders currently cover:
+Use cases are expressed as MediatR commands and queries with dedicated handlers and FluentValidation validators. The first folder and namespace tier follows the functional subsystems in `docs/specs`: Application Intake, Authentication, Consent and Safeguarding, Curriculum Authoring, Engagement, Guardian Portal, Learning Experience, Mentoring, Platform Services, Program Administration, Public Site, Reporting and Data, and Volunteer Portal. Subsystems with several use-case areas retain feature folders beneath that tier.
 
-- **Auth** — register, sign in, token refresh, sign out, password policy, and account lockout
-- **Invitations** — individual and bulk invitations, acceptance, resend, and revoke
-- **Password reset** — uniform reset requests and one-time reset confirmation
-- **Onboarding** — status, completion, and resumable skip
-- **Application intake** — public submission and administrator approval or decline
-- **Consent** — guardian capture, withdrawal, youth gating, status, and audit-log queries
-
-The layer depends on abstractions such as `IAppDbContext`, `IClock`, `ICurrentUser`, `IEmailSender`, `IJwtTokenIssuer`, `IPasswordHasher`, `ISecureTokens`, and `IAuditLogger`.
+Cross-cutting ports, pipeline behaviors, and application exceptions live under `Shared/`. The layer depends on shared abstractions such as `IAppDbContext`, `IClock`, `ICurrentUser`, `IEmailSender`, `IJwtTokenIssuer`, `IPasswordHasher`, `ISecureTokens`, and `IAuditLogger`.
 
 ### Infrastructure (`WordUp.Infrastructure`)
 
@@ -72,7 +65,7 @@ The in-memory provider is convenient but non-durable and is not a production per
 
 ### Api (`WordUp.Api`)
 
-Thin controllers translate HTTP requests into MediatR messages. `Program.cs` composes the layers and configures:
+Thin controllers under `Controllers/<Subsystem>/` translate HTTP requests into MediatR messages. That tree contains controllers only; transport-specific request records live in the matching `Contracts/<Subsystem>/` namespace. `Program.cs` composes the layers and configures:
 
 - JWT bearer authentication and role-based authorization policies
 - CORS for the local Angular origin

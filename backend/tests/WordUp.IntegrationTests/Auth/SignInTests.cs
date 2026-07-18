@@ -1,6 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
-using WordUp.Application.Auth;
+using WordUp.Application.Authentication.Auth;
 
 namespace WordUp.IntegrationTests.Auth;
 

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WordUp.Application.Abstractions;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Infrastructure;
 

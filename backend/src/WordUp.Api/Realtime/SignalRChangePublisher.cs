@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.SignalR;
-using WordUp.Application.Abstractions;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Api.Realtime;
 

@@ -1,5 +1,5 @@
 using MediatR;
-using WordUp.Application.YouthCurriculum;
+using WordUp.Application.LearningExperience.YouthCurriculum;
 
 namespace WordUp.Application.GuardianPortal;
 

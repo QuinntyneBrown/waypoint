@@ -1,5 +1,5 @@
 using System.Collections.Concurrent;
-using WordUp.Application.Abstractions;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.IntegrationTests;
 

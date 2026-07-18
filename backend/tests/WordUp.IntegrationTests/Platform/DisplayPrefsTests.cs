@@ -2,7 +2,6 @@
 // Traces to: L2-PLATFORM-004
 using System.Net;
 using System.Net.Http.Json;
-using WordUp.Domain;
 
 namespace WordUp.IntegrationTests.Platform;
 

@@ -1,4 +1,4 @@
-using WordUp.Application.Auth;
+using WordUp.Application.Authentication.Auth;
 
 namespace WordUp.UnitTests.Auth;
 

@@ -93,10 +93,15 @@ Integration tests provision a disposable SQL Server database. They default to `(
 
 ```text
 backend/
-  src/WordUp.Domain/               Core entities, roles, and lifecycle state
-  src/WordUp.Application/          Commands, handlers, validators, and abstractions
+  src/WordUp.Domain/               Entities and lifecycle state grouped by subsystem
+    <Subsystem>/                    Subsystem-owned domain types and namespaces
+  src/WordUp.Application/          Use cases grouped by subsystem, then feature
+    <Subsystem>/<Feature>/         Commands, queries, handlers, and validators
+    Shared/                         Cross-cutting ports, behaviors, and exceptions
   src/WordUp.Infrastructure/       EF Core, tokens, hashing, email, and audit services
-  src/WordUp.Api/                  Controllers, policies, middleware, and composition root
+  src/WordUp.Api/                  Policies, middleware, and composition root
+    Controllers/<Subsystem>/       HTTP controllers only
+    Contracts/<Subsystem>/         HTTP request contracts
   tests/WordUp.UnitTests/          Isolated validation and domain-level tests
   tests/WordUp.IntegrationTests/   Full HTTP tests over disposable SQL Server databases
 frontend/                          Angular 21 workspace; application implementation pending

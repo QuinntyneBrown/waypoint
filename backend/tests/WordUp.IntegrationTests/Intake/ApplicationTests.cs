@@ -2,7 +2,6 @@ using System.Net;
 using System.Net.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using WordUp.Domain;
 using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests.Intake;

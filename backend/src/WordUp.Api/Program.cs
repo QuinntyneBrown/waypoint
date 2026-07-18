@@ -11,10 +11,9 @@ using WordUp.Api.Authorization;
 using WordUp.Api.Middleware;
 using WordUp.Api.Realtime;
 using WordUp.Application;
-using WordUp.Application.Abstractions;
-using WordUp.Application.Auth;
-using WordUp.Application.Common;
-using WordUp.Domain;
+using WordUp.Application.Shared.Abstractions;
+using WordUp.Application.Authentication.Auth;
+using WordUp.Application.Shared.Common;
 using WordUp.Infrastructure;
 using WordUp.Infrastructure.Health;
 

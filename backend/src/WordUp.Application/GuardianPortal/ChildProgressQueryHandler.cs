@@ -1,8 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using WordUp.Application.Abstractions;
-using WordUp.Application.YouthCurriculum;
-using WordUp.Domain;
+using WordUp.Application.Shared.Abstractions;
+using WordUp.Application.LearningExperience.YouthCurriculum;
 
 namespace WordUp.Application.GuardianPortal;
 

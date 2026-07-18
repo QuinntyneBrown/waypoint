@@ -2,11 +2,10 @@ using System.Net;
 using System.Net.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using WordUp.Application.Abstractions;
-using WordUp.Application.AssignWork;
-using WordUp.Application.Auth;
-using WordUp.Application.Flags;
-using WordUp.Domain;
+using WordUp.Application.Shared.Abstractions;
+using WordUp.Application.Mentoring.AssignWork;
+using WordUp.Application.Authentication.Auth;
+using WordUp.Application.Mentoring.Flags;
 using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests.Mentoring;
