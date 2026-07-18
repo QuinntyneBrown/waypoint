@@ -93,6 +93,18 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'admin',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'people',
+        title: 'People · Word Up',
+        loadComponent: () =>
+          import('./features/admin/people/people-directory').then((m) => m.PeopleDirectory),
+      },
+    ],
+  },
+  {
     path: 'volunteer',
     canActivate: [authGuard],
     children: [

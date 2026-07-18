@@ -1,0 +1,70 @@
+<wu-shell
+  role="admin"
+  active="people"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">People</div>
+        <h1 class="wu-page__title">People directory</h1>
+        <p class="wu-page__sub">Everyone in the program — search and filter.</p>
+      </div>
+      <a class="wu-btn wu-btn--primary" routerLink="/admin/invitations">Invite people</a>
+    </div>
+
+    <div class="wu-field">
+      <label class="wu-label" for="peopleSearch">Search people</label>
+      <input
+        #searchBox
+        class="wu-input"
+        id="peopleSearch"
+        type="search"
+        placeholder="Name or email"
+        [value]="search()"
+        (input)="onSearch(searchBox.value)"
+      />
+    </div>
+
+    @if (loading()) {
+      <p class="wu-muted">Loading…</p>
+    } @else if (people().length > 0) {
+      <div class="wu-table-wrap" style="overflow-x: auto">
+        <table class="wu-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Last active</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (person of people(); track person.id) {
+              <tr>
+                <td>{{ person.displayName }}</td>
+                <td>{{ person.email }}</td>
+                <td>{{ person.role }}</td>
+                <td>{{ person.status }}</td>
+                <td>{{ person.lastActive ? (person.lastActive | date: 'MMM d, y') : '—' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="wu-empty">
+        <div class="wu-empty__icon">
+          <svg class="wu-icon"><use href="#i-users"></use></svg>
+        </div>
+        <h3 class="wu-empty__title">No people found</h3>
+        <p class="wu-empty__text">
+          No one matches your search. Try a different term, or invite someone new.
+        </p>
+        <a class="wu-btn wu-btn--primary" routerLink="/admin/invitations">Invite people</a>
+      </div>
+    }
+  </div>
+</wu-shell>

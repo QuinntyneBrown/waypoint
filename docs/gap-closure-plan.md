@@ -121,7 +121,8 @@ requirement conflicts early (they gate "done").
 ## Phase G — Program Administrator portal
 
 - [ ] **G1** Application review `L2-INTAKE-002`
-- [ ] **G2** People directory `L2-ADMIN-001`
+- [x] **G2** People directory `L2-ADMIN-001` — list + server-side search + empty-state/invite CTA,
+      E2E-verified (admin routing + `/admin/people`). Role/cohort filter chips still to add.
 - [ ] **G3** Person detail / account lifecycle `L2-ADMIN-002`
 - [ ] **G4** Cohorts & cohort detail `L2-ADMIN-003`
 - [ ] **G5** Progress board (+ live, export) `L2-ADMIN-004`, `L2-REPORT-003`
