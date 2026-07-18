@@ -11,25 +11,57 @@ public class ApproveApplicationCommandHandler : IRequestHandler<ApproveApplicati
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IEmailSender _email;
 
     public ApproveApplicationCommandHandler(
         IAppDbContext db,
         IClock clock,
         IAuditLogger audit,
-        ICurrentUser currentUser)
+        ICurrentUser currentUser,
+        IEmailSender email)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
+        _email = email;
     }
 
     public async Task<ApproveApplicationResult> Handle(ApproveApplicationCommand request, CancellationToken cancellationToken)
     {
         var application = await _db.Applications.FirstOrDefaultAsync(a => a.Id == request.ApplicationId, cancellationToken)
             ?? throw new NotFoundException("Application not found.");
-
         var now = _clock.UtcNow;
+        if (application.Status is ApplicationStatus.Approved or ApplicationStatus.Declined)
+            throw new ConflictException("This application already has a final decision.");
+
+        var cohort = await _db.Cohorts.AsNoTracking()
+            .FirstOrDefaultAsync(item => item.Id == request.CohortId, cancellationToken)
+            ?? throw new ConflictException("Choose an available cohort.");
+        var mentor = await _db.Users.AsNoTracking()
+            .FirstOrDefaultAsync(item => item.Id == request.MentorId
+                && item.Role == Roles.Mentor
+                && item.Status == UserStatus.Active,
+                cancellationToken)
+            ?? throw new ConflictException("Choose an active mentor.");
+        var mentorBelongsToCohort = cohort.MentorId == mentor.Id
+            || await _db.CohortMentors.AsNoTracking().AnyAsync(
+                item => item.CohortId == cohort.Id && item.MentorId == mentor.Id,
+                cancellationToken);
+        if (!mentorBelongsToCohort)
+            throw new ConflictException("The selected mentor is not assigned to this cohort.");
+
+        var hasValidConsent = application.CreatedYouthUserId is { } consentYouthId
+            && await _db.GuardianConsents.AsNoTracking().AnyAsync(
+                consent => consent.YouthUserId == consentYouthId
+                    && consent.ParticipationConsent
+                    && consent.WithdrawnAt == null
+                    && consent.ValidFrom <= now
+                    && consent.ValidUntil >= now,
+                cancellationToken);
+        if (application.IsMinor && !hasValidConsent)
+            throw new ConflictException(
+                "Guardian participation consent must be recorded before approval.");
 
         // Provision the Youth account and enroll into the chosen cohort + mentor (L2-INTAKE-002 AC3).
         // No account existed prior to approval; there is no password yet — invite/onboarding sets it.
@@ -43,21 +75,41 @@ public class ApproveApplicationCommandHandler : IRequestHandler<ApproveApplicati
             email = $"youth.{application.Id:N}@applicants.wordup.local";
         }
 
-        var youth = new User
+        var youth = application.CreatedYouthUserId is { } youthId
+            ? await _db.Users.FirstOrDefaultAsync(
+                item => item.Id == youthId && item.Role == Roles.Youth,
+                cancellationToken)
+                ?? throw new ConflictException("The linked youth account is unavailable.")
+            : new User
+            {
+                Email = email,
+                PasswordHash = string.Empty,
+                Role = Roles.Youth,
+                CreatedAt = now,
+            };
+        youth.DisplayName = $"{application.FirstName} {application.LastName}".Trim();
+        youth.Status = UserStatus.Active;
+        youth.CohortId = request.CohortId;
+        youth.MentorId = request.MentorId;
+        youth.OnboardingCompleted = false;
+        if (application.CreatedYouthUserId is null)
         {
-            Email = email,
-            PasswordHash = string.Empty,
-            DisplayName = $"{application.FirstName} {application.LastName}".Trim(),
-            Role = Roles.Youth,
-            Status = UserStatus.Active,
-            CohortId = request.CohortId,
-            MentorId = request.MentorId,
-            OnboardingCompleted = false,
-            CreatedAt = now,
-        };
-        _db.Users.Add(youth);
+            _db.Users.Add(youth);
+        }
 
-        // A minor is still consent-gated downstream by the CONSENT subsystem; approval is not blocked here.
+        if (cohort.TrackId is { } trackId
+            && !await _db.YouthTrackEnrollments.AnyAsync(
+                item => item.YouthUserId == youth.Id && item.TrackId == trackId,
+                cancellationToken))
+        {
+            _db.YouthTrackEnrollments.Add(new YouthTrackEnrollment
+            {
+                YouthUserId = youth.Id,
+                TrackId = trackId,
+                EnrolledAt = now,
+            });
+        }
+
         application.Status = ApplicationStatus.Approved;
         application.CohortId = request.CohortId;
         application.MentorId = request.MentorId;
@@ -67,8 +119,22 @@ public class ApproveApplicationCommandHandler : IRequestHandler<ApproveApplicati
         application.ReviewedAt = now;
 
         await _db.SaveChangesAsync(cancellationToken);
-        await _audit.LogAsync("ApplicationApproved", _currentUser.UserId, "YouthApplication", application.Id);
+        await _audit.LogAsync(
+            "ApplicationApproved",
+            _currentUser.UserId,
+            "YouthApplication",
+            application.Id,
+            cancellationToken: cancellationToken);
+        if (!string.IsNullOrWhiteSpace(application.GuardianEmail))
+        {
+            await _email.SendAsync(
+                application.GuardianEmail,
+                "Your Word Up application was approved",
+                $"{youth.DisplayName} has been approved for {cohort.Name} with {mentor.DisplayName}. " +
+                "Word Up staff will follow up with account access details.",
+                cancellationToken);
+        }
 
-        return new ApproveApplicationResult(youth.Id);
+        return new ApproveApplicationResult(youth.Id, "Approved");
     }
 }

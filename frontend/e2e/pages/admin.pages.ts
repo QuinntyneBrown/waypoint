@@ -46,7 +46,34 @@ export class ApplicationsListPage extends BasePage {
    * name); substring match because the applicant cell combines first + last name.
    */
   rowFor(text: string) {
-    return this.page.getByText(text);
+    return this.page.getByTestId('application-row').filter({ hasText: text });
+  }
+  get statusFilter() {
+    return this.page.getByLabel('Application status');
+  }
+  review(text: string) {
+    return this.rowFor(text).getByRole('button', { name: /review/i });
+  }
+  get reviewDialog() {
+    return this.page.getByRole('dialog', { name: /review application/i });
+  }
+  get trackInterest() {
+    return this.page.getByLabel('Interest track');
+  }
+  get cohort() {
+    return this.page.getByLabel('Assign cohort');
+  }
+  get mentor() {
+    return this.page.getByLabel('Assign mentor');
+  }
+  get decisionNote() {
+    return this.page.getByLabel('Decision note');
+  }
+  get approve() {
+    return this.reviewDialog.getByRole('button', { name: /^approve$/i });
+  }
+  get decline() {
+    return this.reviewDialog.getByRole('button', { name: /^decline$/i });
   }
 
   async goto(): Promise<void> {

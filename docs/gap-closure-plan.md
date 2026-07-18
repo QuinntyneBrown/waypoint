@@ -172,11 +172,11 @@ requirement conflicts early (they gate "done").
 
 ## Phase G — Program Administrator portal
 
-- [~] **G1** Application review `L2-INTAKE-002` — server list query (`GET /api/applications`,
-      admin-only) + admin review-queue UI (`/admin/applications`), E2E-verified end to end
-      (anonymous submit → queue). Detail view + approve/decline UI + "Needs consent" gating still
-      to add (approve/decline commands already exist server-side).
-- [x] **G2** People directory `L2-ADMIN-001` — list + server-side search + empty-state/invite CTA,
+- [x] **G1** Application review `L2-INTAKE-002` — admin-only effective-status filtering and full
+      applicant/guardian detail, track/cohort/eligible-mentor placement, server-enforced guardian
+      consent gate, confirmed approve/decline outcomes, cohort-track enrollment, contact email, and
+      content-free decision audits, with desktop/mobile review acceptance.
+- [~] **G2** People directory `L2-ADMIN-001` — list + server-side search + empty-state/invite CTA,
       E2E-verified (admin routing + `/admin/people`). Role/cohort filter chips still to add.
 - [ ] **G3** Person detail / account lifecycle `L2-ADMIN-002`
 - [ ] **G4** Cohorts & cohort detail `L2-ADMIN-003`
@@ -390,3 +390,11 @@ requirement conflicts early (they gate "done").
   with authoritative mark-all-read state. Two HTTP acceptances, all 22 engagement integrations, six
   portal units, the production build, a two-session desktop realtime journey, and mobile keyboard/
   touch/reflow acceptance pass.
+- 2026-07-18 — G1 done: the application queue now filters on effective New/In review/Needs consent/
+  Approved/Declined state and opens complete applicant, motivation, acknowledgement, guardian, and
+  placement detail. Minor applications without a current participation-consent record are visibly
+  gated and cannot provision an active account. Eligible approval requires a real cohort and one of
+  its active mentors, creates or links the youth, enrolls the cohort track, stores the decision, sends
+  an outcome email, and audits the action; confirmed decline keeps its optional note, emails the
+  contact, and creates no account. Nine intake integrations plus desktop and mobile keyboard/touch/
+  reflow journeys pass.

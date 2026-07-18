@@ -48,6 +48,19 @@ public class ApplicationsController : ControllerBase
     }
 
     [Authorize(Policy = Policies.ApproveApplications)]
+    [HttpGet("options")]
+    public async Task<ActionResult<ApplicationReviewOptions>> Options(
+        CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new ApplicationReviewOptionsQuery(), cancellationToken));
+
+    [Authorize(Policy = Policies.ApproveApplications)]
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<ApplicationDetailView>> Detail(
+        Guid id,
+        CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new ApplicationDetailQuery(id), cancellationToken));
+
+    [Authorize(Policy = Policies.ApproveApplications)]
     [HttpPost("{id:guid}/approve")]
     public async Task<ActionResult<ApproveApplicationResult>> Approve(
         Guid id, [FromBody] ApproveApplicationRequest request, CancellationToken cancellationToken)

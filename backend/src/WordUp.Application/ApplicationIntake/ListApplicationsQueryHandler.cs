@@ -8,57 +8,60 @@ public class ListApplicationsQueryHandler
     : IRequestHandler<ListApplicationsQuery, IReadOnlyList<ApplicationSummary>>
 {
     private readonly IAppDbContext _db;
+    private readonly IClock _clock;
 
-    public ListApplicationsQueryHandler(IAppDbContext db) => _db = db;
+    public ListApplicationsQueryHandler(IAppDbContext db, IClock clock)
+    {
+        _db = db;
+        _clock = clock;
+    }
 
     public async Task<IReadOnlyList<ApplicationSummary>> Handle(
         ListApplicationsQuery request, CancellationToken cancellationToken)
     {
-        IQueryable<YouthApplication> query = _db.Applications;
+        var applications = await _db.Applications.AsNoTracking()
+            .OrderByDescending(a => a.CreatedAt)
+            .ToListAsync(cancellationToken);
+        var youthIds = applications
+            .Where(item => item.CreatedYouthUserId != null)
+            .Select(item => item.CreatedYouthUserId!.Value)
+            .ToList();
+        var consentedYouthIds = await _db.GuardianConsents.AsNoTracking()
+            .Where(consent => youthIds.Contains(consent.YouthUserId)
+                && consent.ParticipationConsent
+                && consent.WithdrawnAt == null
+                && consent.ValidFrom <= _clock.UtcNow
+                && consent.ValidUntil >= _clock.UtcNow)
+            .Select(consent => consent.YouthUserId)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+        var consented = consentedYouthIds.ToHashSet();
 
-        if (!string.IsNullOrWhiteSpace(request.Status)
-            && Enum.TryParse<ApplicationStatus>(request.Status, ignoreCase: true, out var status))
+        var rows = applications
+            .Select(application => new
+            {
+                Application = application,
+                Status = ApplicationReviewState.EffectiveStatus(
+                    application,
+                    application.CreatedYouthUserId is { } youthId && consented.Contains(youthId)),
+            });
+        if (!string.IsNullOrWhiteSpace(request.Status))
         {
-            query = query.Where(a => a.Status == status);
+            var filter = request.Status.Trim().Replace("_", " ", StringComparison.Ordinal);
+            rows = rows.Where(item =>
+                string.Equals(item.Status, filter, StringComparison.OrdinalIgnoreCase));
         }
 
-        var rows = await query
-            .OrderByDescending(a => a.CreatedAt)
-            .Select(a => new
-            {
-                a.Id,
-                a.FirstName,
-                a.LastName,
-                a.Age,
-                a.Neighbourhood,
-                a.TrackInterest,
-                a.Status,
-                a.CreatedAt,
-            })
-            .ToListAsync(cancellationToken);
-
-        // IsMinor + display status are computed in memory (not EF-translatable).
-        return rows
-            .Select(a => new ApplicationSummary(
-                a.Id,
-                a.FirstName,
-                a.LastName,
-                a.Age,
-                a.Age < 18,
-                a.Neighbourhood,
-                a.TrackInterest,
-                DisplayStatus(a.Status),
-                a.CreatedAt))
+        return rows.Select(row => new ApplicationSummary(
+                row.Application.Id,
+                row.Application.FirstName,
+                row.Application.LastName,
+                row.Application.Age,
+                row.Application.IsMinor,
+                row.Application.Neighbourhood,
+                row.Application.TrackInterest,
+                row.Status,
+                row.Application.CreatedAt))
             .ToList();
     }
-
-    private static string DisplayStatus(ApplicationStatus status) => status switch
-    {
-        ApplicationStatus.New => "New",
-        ApplicationStatus.InReview => "In review",
-        ApplicationStatus.NeedsConsent => "Needs consent",
-        ApplicationStatus.Approved => "Approved",
-        ApplicationStatus.Declined => "Declined",
-        _ => status.ToString(),
-    };
 }

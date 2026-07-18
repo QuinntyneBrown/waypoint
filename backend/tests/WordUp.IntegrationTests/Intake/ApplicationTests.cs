@@ -144,7 +144,7 @@ public sealed class ApplicationTests : IntegrationTestBase
             mentorId = mentor.Id;
         }
 
-        var submit = await PostAsync("/api/applications", ValidMinorSubmission());
+        var submit = await PostAsync("/api/applications", ValidMinorSubmission(age: 18));
         var applicationId = (await submit.Content.ReadFromJsonAsync<SubmitResultDto>())!.ApplicationId;
 
         var approveBody = new { cohortId, mentorId, trackInterest = "Spoken Word", decisionNote = "Great fit." };

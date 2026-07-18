@@ -60,7 +60,7 @@ public sealed class ApplicationReviewTests : IntegrationTestBase
         var item = items!.FirstOrDefault(a => a.Id == applicationId);
         Assert.That(item, Is.Not.Null, "the submitted application should appear in the admin list");
         Assert.That(item!.FirstName, Is.EqualTo("Ada"));
-        Assert.That(item.Status, Is.EqualTo("New"));
+        Assert.That(item.Status, Is.EqualTo("Needs consent"));
         Assert.That(item.IsMinor, Is.True);
     }
 

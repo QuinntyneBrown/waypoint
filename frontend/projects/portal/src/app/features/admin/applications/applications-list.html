@@ -9,14 +9,39 @@
       <div class="wu-page__titles">
         <div class="wu-eyebrow">Intake</div>
         <h1 class="wu-page__title">Applications</h1>
-        <p class="wu-page__sub">Review submitted applications and enrol new youth.</p>
+        <p class="wu-page__sub">
+          Review consent, place applicants, and keep every decision traceable.
+        </p>
+      </div>
+      <div class="wu-page__actions">
+        <div class="wu-field">
+          <label class="wu-label" for="application-status">Application status</label>
+          <select id="application-status" class="wu-select" [formControl]="statusFilter">
+            <option value="">All statuses</option>
+            <option value="New">New</option>
+            <option value="In review">In review</option>
+            <option value="Needs consent">Needs consent</option>
+            <option value="Approved">Approved</option>
+            <option value="Declined">Declined</option>
+          </select>
+        </div>
       </div>
     </div>
 
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (outcome(); as message) {
+      <p class="wu-alert wu-alert--success" role="status">{{ message }}</p>
+    }
+    @if (loadingReview()) {
+      <p class="wu-muted" role="status">Loading application…</p>
+    }
+
     @if (loading()) {
-      <p class="wu-muted">Loading…</p>
+      <p class="wu-muted" role="status">Loading applications…</p>
     } @else if (applications()!.length > 0) {
-      <div class="wu-table-wrap" style="overflow-x: auto">
+      <div class="wu-table-wrap">
         <table class="wu-table">
           <thead>
             <tr>
@@ -26,24 +51,43 @@
               <th>Track</th>
               <th>Status</th>
               <th>Submitted</th>
+              <th><span class="wu-sr-only">Action</span></th>
             </tr>
           </thead>
           <tbody>
             @for (application of applications(); track application.id) {
-              <tr>
-                <td>{{ application.firstName }} {{ application.lastName }}</td>
-                <td>
+              <tr data-testid="application-row">
+                <td data-label="Applicant" class="application-name">
+                  <strong>{{ application.firstName }} {{ application.lastName }}</strong>
+                </td>
+                <td data-label="Age">
                   {{ application.age }}
                   @if (application.isMinor) {
                     <span class="wu-badge wu-badge--muted">Minor</span>
                   }
                 </td>
-                <td>{{ application.neighbourhood }}</td>
-                <td>{{ application.trackInterest ?? '—' }}</td>
-                <td>
-                  <span class="wu-badge">{{ application.status }}</span>
+                <td data-label="Neighbourhood">{{ application.neighbourhood }}</td>
+                <td data-label="Track">{{ application.trackInterest ?? '—' }}</td>
+                <td data-label="Status">
+                  <span
+                    class="wu-badge"
+                    [class.wu-badge--warning]="application.status === 'Needs consent'"
+                    [class.wu-badge--success]="application.status === 'Approved'"
+                    [class.wu-badge--muted]="application.status === 'Declined'"
+                  >
+                    {{ application.status }}
+                  </span>
                 </td>
-                <td>{{ application.createdAt | date: 'MMM d, y' }}</td>
+                <td data-label="Submitted">{{ application.createdAt | date: 'MMM d, y' }}</td>
+                <td data-label="Action">
+                  <button
+                    class="wu-btn wu-btn--secondary wu-btn--sm"
+                    type="button"
+                    (click)="openReview(application)"
+                  >
+                    Review
+                  </button>
+                </td>
               </tr>
             }
           </tbody>
@@ -51,14 +95,246 @@
       </div>
     } @else {
       <div class="wu-empty">
-        <div class="wu-empty__icon">
-          <svg class="wu-icon"><use href="#i-user-plus"></use></svg>
-        </div>
-        <h3 class="wu-empty__title">No applications yet</h3>
-        <p class="wu-empty__text">
-          New applications submitted from the public site will appear here for review.
-        </p>
+        <div class="wu-empty__icon"><wu-icon name="clipboard-check" /></div>
+        <h3 class="wu-empty__title">No matching applications</h3>
+        <p class="wu-empty__text">New applications and referrals will appear here for review.</p>
       </div>
     }
   </div>
+
+  @if (reviewing(); as application) {
+    <div
+      class="wu-modal wu-modal--lg is-open"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="review-application-heading"
+      (keydown.escape)="closeReview()"
+    >
+      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__panel">
+        <div class="wu-modal__header">
+          <div>
+            <h2 class="wu-modal__title" id="review-application-heading">Review application</h2>
+            <p class="wu-modal__sub">
+              {{ application.firstName }} {{ application.lastName }} · age {{ application.age }} ·
+              applied {{ application.createdAt | date: 'mediumDate' }}
+            </p>
+          </div>
+          <button
+            class="wu-iconbtn wu-modal__close"
+            type="button"
+            aria-label="Close"
+            (click)="closeReview()"
+          >
+            <wu-icon name="x" />
+          </button>
+        </div>
+        <div class="wu-modal__body wu-stack">
+          @if (application.consentState === 'Needs consent') {
+            <div class="wu-alert wu-alert--warning">
+              <div>
+                <div class="wu-alert__title">Guardian participation consent required</div>
+                This minor cannot be approved into active participation until a valid consent record
+                is linked.
+              </div>
+            </div>
+          } @else if (application.consentState === 'Recorded') {
+            <div class="wu-alert wu-alert--success">
+              <div>
+                <div class="wu-alert__title">Guardian participation consent recorded</div>
+                This application is eligible for a placement decision.
+              </div>
+            </div>
+          }
+
+          <section class="review-detail" aria-label="Submitted application">
+            <div>
+              <div class="wu-eyebrow">Submitted by</div>
+              <p>{{ application.whoIsFilling }}</p>
+            </div>
+            <div>
+              <div class="wu-eyebrow">Neighbourhood</div>
+              <p>{{ application.neighbourhood }}</p>
+            </div>
+            <div>
+              <div class="wu-eyebrow">Cohort interest</div>
+              <p>{{ application.cohortInterest }}</p>
+            </div>
+            <div>
+              <div class="wu-eyebrow">Acknowledgements</div>
+              <p>
+                Participation
+                {{ application.participationConsentAck ? 'acknowledged' : 'missing' }} · privacy
+                {{ application.privacyAck ? 'acknowledged' : 'missing' }}
+              </p>
+            </div>
+            <div class="review-detail__wide">
+              <div class="wu-eyebrow">Why interested</div>
+              <p class="detail-copy">{{ application.whyInterested }}</p>
+            </div>
+            @if (
+              application.guardianName || application.guardianEmail || application.guardianPhone
+            ) {
+              <div class="review-detail__wide">
+                <div class="wu-eyebrow">Guardian / applicant contact</div>
+                <p>
+                  {{ application.guardianName ?? 'Name not provided' }} ·
+                  {{ application.guardianEmail ?? 'Email not provided' }} ·
+                  {{ application.guardianPhone ?? 'Phone not provided' }}
+                </p>
+              </div>
+            }
+          </section>
+
+          <form class="wu-stack" [formGroup]="form">
+            <div class="wu-field">
+              <label class="wu-label" for="application-track">Interest track</label>
+              <input
+                id="application-track"
+                class="wu-input"
+                formControlName="trackInterest"
+                maxlength="200"
+                list="application-track-options"
+              />
+              <datalist id="application-track-options">
+                @for (track of options()?.tracks ?? []; track track.id) {
+                  <option [value]="track.name"></option>
+                }
+              </datalist>
+            </div>
+            <div class="wu-grid wu-grid--2">
+              <div class="wu-field">
+                <label class="wu-label" for="application-cohort">
+                  Assign cohort <span class="wu-label__req">*</span>
+                </label>
+                <select id="application-cohort" class="wu-select" formControlName="cohortId">
+                  <option value="">Choose a cohort</option>
+                  @for (cohort of options()?.cohorts ?? []; track cohort.id) {
+                    <option [value]="cohort.id">{{ cohort.name }}</option>
+                  }
+                </select>
+                @if (form.controls.cohortId.touched && form.controls.cohortId.invalid) {
+                  <p class="wu-field__error">Choose a cohort before approval.</p>
+                }
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="application-mentor">
+                  Assign mentor <span class="wu-label__req">*</span>
+                </label>
+                <select id="application-mentor" class="wu-select" formControlName="mentorId">
+                  <option value="">Choose a mentor</option>
+                  @for (mentor of eligibleMentors(); track mentor.id) {
+                    <option [value]="mentor.id">{{ mentor.name }}</option>
+                  }
+                </select>
+                @if (form.controls.mentorId.touched && form.controls.mentorId.invalid) {
+                  <p class="wu-field__error">Choose a mentor assigned to the cohort.</p>
+                }
+              </div>
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="application-decision-note">Decision note</label>
+              <textarea
+                id="application-decision-note"
+                class="wu-textarea"
+                formControlName="decisionNote"
+                maxlength="2000"
+                rows="4"
+                placeholder="Optional note kept on the applicant record."
+              ></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="wu-modal__footer">
+          @if (application.status !== 'Approved' && application.status !== 'Declined') {
+            <button class="wu-btn wu-btn--danger" type="button" (click)="reviewDecline()">
+              Decline
+            </button>
+            <button
+              class="wu-btn wu-btn--primary"
+              type="button"
+              [disabled]="!application.canApprove"
+              (click)="reviewApproval()"
+            >
+              Approve
+            </button>
+          } @else {
+            <span class="wu-badge">{{ application.status }}</span>
+            <button class="wu-btn wu-btn--primary" type="button" (click)="closeReview()">
+              Done
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (decision(); as pendingDecision) {
+    <div
+      class="wu-modal wu-modal--sm is-open"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="pendingDecision + '-application-heading'"
+      (keydown.escape)="cancelDecision()"
+    >
+      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__panel">
+        <div class="wu-modal__header">
+          <div>
+            <h2 class="wu-modal__title" [id]="pendingDecision + '-application-heading'">
+              {{ pendingDecision === 'approve' ? 'Approve application?' : 'Decline application?' }}
+            </h2>
+            <p class="wu-modal__sub">{{ reviewing()?.firstName }} {{ reviewing()?.lastName }}</p>
+          </div>
+          <button
+            class="wu-iconbtn wu-modal__close"
+            type="button"
+            aria-label="Close confirmation"
+            (click)="cancelDecision()"
+          >
+            <wu-icon name="x" />
+          </button>
+        </div>
+        <div class="wu-modal__body wu-stack">
+          @if (pendingDecision === 'approve') {
+            <p>
+              Enrol this applicant in <strong>{{ selectedCohortName() }}</strong> with
+              <strong>{{ selectedMentorName() }}</strong
+              >?
+            </p>
+            <p class="wu-muted">The applicant contact will receive an approval email.</p>
+          } @else {
+            <p>
+              Decline {{ reviewing()?.firstName }} {{ reviewing()?.lastName }} without creating an
+              account?
+            </p>
+            <p class="wu-muted">The optional decision note remains on the application record.</p>
+          }
+        </div>
+        <div class="wu-modal__footer">
+          <button class="wu-btn wu-btn--ghost" type="button" (click)="cancelDecision()">
+            Cancel
+          </button>
+          <button
+            class="wu-btn"
+            [class.wu-btn--primary]="pendingDecision === 'approve'"
+            [class.wu-btn--danger]="pendingDecision === 'decline'"
+            type="button"
+            [disabled]="saving()"
+            (click)="confirmDecision()"
+          >
+            {{
+              pendingDecision === 'approve'
+                ? saving()
+                  ? 'Approving…'
+                  : 'Confirm approval'
+                : saving()
+                  ? 'Declining…'
+                  : 'Confirm decline'
+            }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </wu-shell>
