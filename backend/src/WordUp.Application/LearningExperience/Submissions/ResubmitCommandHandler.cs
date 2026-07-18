@@ -54,6 +54,12 @@ public class ResubmitCommandHandler : IRequestHandler<ResubmitCommand>
 
         submission.Status = SubmissionStatus.UnderReview;
         submission.SubmittedAt = _clock.UtcNow;
+        _db.SubmissionTimelineEvents.Add(new SubmissionTimelineEvent
+        {
+            SubmissionId = submission.Id,
+            Type = "Resubmitted",
+            OccurredAt = submission.SubmittedAt,
+        });
         await _db.SaveChangesAsync(cancellationToken);
 
         await _audit.LogAsync("SubmissionResubmitted", _currentUser.UserId, "Submission", submission.Id);

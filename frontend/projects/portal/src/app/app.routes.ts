@@ -131,6 +131,30 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'assignments/:id',
+        title: 'Assignment · Word Up',
+        loadComponent: () =>
+          import('./features/youth/assignment/youth-assignment').then(
+            (module) => module.YouthAssignmentPage,
+          ),
+      },
+      {
+        path: 'submissions/:id/resubmit',
+        title: 'Revise assignment · Word Up',
+        loadComponent: () =>
+          import('./features/youth/resubmit/youth-resubmit').then(
+            (module) => module.YouthResubmitPage,
+          ),
+      },
+      {
+        path: 'submissions/:id',
+        title: 'Submission status · Word Up',
+        loadComponent: () =>
+          import('./features/youth/submission-status/youth-submission-status').then(
+            (module) => module.YouthSubmissionStatusPage,
+          ),
+      },
+      {
         path: 'announcements',
         title: 'Announcements · Word Up',
         loadComponent: () =>

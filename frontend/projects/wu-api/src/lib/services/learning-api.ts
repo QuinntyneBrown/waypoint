@@ -11,6 +11,13 @@ import {
   YouthLesson,
 } from '../models/learning/curriculum';
 import { QuizIntro, YouthQuizAttempt, YouthQuizResult } from '../models/learning/quiz';
+import {
+  AssignmentBrief,
+  AssignmentUpload,
+  SubmissionResult,
+  SubmitAssignmentInput,
+  YouthSubmissionStatus,
+} from '../models/learning/assignment';
 
 @Injectable({ providedIn: 'root' })
 export class LearningApi {
@@ -86,6 +93,51 @@ export class LearningApi {
   quizResult(attemptId: string): Observable<YouthQuizResult> {
     return this.http.get<YouthQuizResult>(
       `${this.base}/api/me/attempts/${encodeURIComponent(attemptId)}`,
+    );
+  }
+
+  assignmentBrief(assignmentId: string): Observable<AssignmentBrief> {
+    return this.http.get<AssignmentBrief>(
+      `${this.base}/api/me/assignments/${encodeURIComponent(assignmentId)}`,
+    );
+  }
+
+  uploadAssignmentPhoto(assignmentId: string, file: File): Observable<AssignmentUpload> {
+    const data = new FormData();
+    data.append('file', file, file.name);
+    return this.http.post<AssignmentUpload>(
+      `${this.base}/api/me/assignments/${encodeURIComponent(assignmentId)}/uploads`,
+      data,
+    );
+  }
+
+  submitAssignment(
+    assignmentId: string,
+    input: SubmitAssignmentInput,
+  ): Observable<SubmissionResult> {
+    return this.http.post<SubmissionResult>(
+      `${this.base}/api/me/assignments/${encodeURIComponent(assignmentId)}/submissions`,
+      input,
+    );
+  }
+
+  submissionStatus(submissionId: string): Observable<YouthSubmissionStatus> {
+    return this.http.get<YouthSubmissionStatus>(
+      `${this.base}/api/me/submissions/${encodeURIComponent(submissionId)}`,
+    );
+  }
+
+  submissionFile(path: string): Observable<Blob> {
+    return this.http.get(`${this.base}${path}`, { responseType: 'blob' });
+  }
+
+  resubmitAssignment(
+    submissionId: string,
+    input: { bodyText: string | null; photoUrl: string | null; linkUrl: string | null },
+  ): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}/api/me/submissions/${encodeURIComponent(submissionId)}/resubmit`,
+      input,
     );
   }
 }

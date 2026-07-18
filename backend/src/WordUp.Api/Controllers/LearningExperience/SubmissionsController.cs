@@ -15,6 +15,41 @@ public class SubmissionsController : ControllerBase
 
     public SubmissionsController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("assignments/{assignmentId:guid}")]
+    public async Task<ActionResult<AssignmentBriefView>> Brief(
+        Guid assignmentId,
+        CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new AssignmentBriefQuery(assignmentId), cancellationToken));
+
+    [HttpPost("assignments/{assignmentId:guid}/uploads")]
+    [RequestSizeLimit(AssignmentUploadPolicy.MaxBytes + 65536)]
+    public async Task<ActionResult<AssignmentUploadResult>> Upload(
+        Guid assignmentId,
+        IFormFile file,
+        CancellationToken cancellationToken)
+    {
+        await using var stream = new MemoryStream();
+        await file.CopyToAsync(stream, cancellationToken);
+        return Ok(await _mediator.Send(
+            new StoreAssignmentUploadCommand(
+                assignmentId,
+                file.FileName,
+                file.ContentType.ToLowerInvariant(),
+                stream.ToArray()),
+            cancellationToken));
+    }
+
+    [HttpGet("files/{fileId:guid}")]
+    public async Task<IActionResult> File(Guid fileId, CancellationToken cancellationToken)
+    {
+        var file = await _mediator.Send(new SubmissionFileQuery(fileId), cancellationToken);
+        Response.Headers.XContentTypeOptions = "nosniff";
+        return new FileContentResult(file.Content, file.ContentType)
+        {
+            FileDownloadName = file.FileName,
+        };
+    }
+
     // Submit assignment work (L2-LEARN-006); coding projects use IsCodingProject=true (L2-LEARN-008 AC2).
     [HttpPost("assignments/{assignmentId:guid}/submissions")]
     public async Task<ActionResult<SubmissionResult>> Submit(
@@ -24,6 +59,7 @@ public class SubmissionsController : ControllerBase
             new SubmitAssignmentCommand(
                 assignmentId,
                 request.BodyText,
+                request.PhotoUploadId,
                 request.PhotoUrl,
                 request.LinkUrl,
                 request.IsCodingProject,

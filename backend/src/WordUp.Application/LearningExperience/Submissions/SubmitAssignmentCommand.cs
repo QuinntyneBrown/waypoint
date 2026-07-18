@@ -7,6 +7,7 @@ namespace WordUp.Application.LearningExperience.Submissions;
 public record SubmitAssignmentCommand(
     Guid AssignmentId,
     string? BodyText,
+    Guid? PhotoUploadId,
     string? PhotoUrl,
     string? LinkUrl,
     bool IsCodingProject,

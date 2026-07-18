@@ -39,6 +39,8 @@ public interface IAppDbContext
     DbSet<LessonReadingState> LessonReadingStates { get; }
     DbSet<QuizAttempt> QuizAttempts { get; }
     DbSet<Submission> Submissions { get; }
+    DbSet<StoredSubmissionFile> StoredSubmissionFiles { get; }
+    DbSet<SubmissionTimelineEvent> SubmissionTimelineEvents { get; }
     DbSet<ReflectionEntry> Reflections { get; }
     DbSet<CompetencyAssessment> CompetencyAssessments { get; }
     DbSet<CheckIn> CheckIns { get; }

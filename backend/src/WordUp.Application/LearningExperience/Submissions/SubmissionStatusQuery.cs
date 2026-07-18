@@ -8,8 +8,25 @@ public record SubmissionStatusQuery(Guid Id) : IRequest<SubmissionStatusView>;
 
 public record SubmissionStatusView(
     Guid Id,
+    Guid AssignmentId,
+    string AssignmentTitle,
     string Status,
+    string? BodyText,
+    string? PhotoUrl,
+    string? LinkUrl,
     string? MentorComment,
     int? TotalAwarded,
+    int TotalPossible,
     DateTime SubmittedAt,
-    DateTime? ReviewedAt);
+    DateTime? ReviewedAt,
+    IReadOnlyList<SubmissionTimelineItem> Timeline,
+    IReadOnlyList<SubmissionRubricScore> Rubric,
+    SubmissionBadgeView? EarnedBadge);
+
+public record SubmissionTimelineItem(string Type, string Label, DateTime? At, bool Current);
+public record SubmissionRubricScore(
+    Guid CriterionId,
+    string Description,
+    int PossiblePoints,
+    int? AwardedPoints);
+public record SubmissionBadgeView(Guid Id, string Name, string Icon, string? Description, DateTime AwardedAt);

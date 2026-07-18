@@ -35,6 +35,9 @@ export {
   YouthQuizIntroPage,
   YouthQuizAttemptPage,
   YouthQuizResultPage,
+  YouthAssignmentPage,
+  YouthSubmissionStatusPage,
+  YouthResubmitPage,
   YouthNotificationsPage,
 } from './youth.pages';
 export {

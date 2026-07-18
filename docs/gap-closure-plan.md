@@ -99,8 +99,12 @@ requirement conflicts early (they gate "done").
 - [x] **E5** Quiz result/review (+ review/badge result data) `L2-LEARN-005` —
       approval-withheld score, approved pass/fail, feedback-mode-aware selections/correct answers,
       once-only earned badge, best passing score, attempts remaining, and retake.
-- [ ] **E6** Assignment brief & submission (+ brief/read API, file upload) `L2-LEARN-006`
-- [ ] **E7** Submission status/resubmission (+ enriched status data) `L2-LEARN-007`
+- [x] **E6** Assignment brief & submission (+ brief/read API, file upload) `L2-LEARN-006` —
+      due/type/rubric brief, dynamic allowed-type and attestation validation, 10 MB JPG/PNG
+      MIME/extension/magic-byte validation, private authenticated storage, confirmation, and copy lock.
+- [x] **E7** Submission status/resubmission (+ enriched status data) `L2-LEARN-007` —
+      submitted copy, durable lifecycle timeline, mentor feedback, rubric points, assignment badge,
+      status notification/realtime publish, revision editor, and return to review on resubmission.
 - [ ] **E8** Coding lesson/project (missing central outcome — no covering test yet) `L2-LEARN-008`
 - [ ] **E9** Journey & badges (counted criteria, milestones) `L2-LEARN-009`
 - [ ] **E10** Personal progress (quiz history, attendance tabs, competencies) `L2-LEARN-010`
@@ -150,10 +154,10 @@ requirement conflicts early (they gate "done").
 - [ ] **H2** Per-action consent enforcement in protected youth handlers `L2-CONSENT-002/004`
 - [ ] **H3** Correct consent validity (flag/withdrawal/window/term/re-consent) `L2-CONSENT-001/002`, `L2-ADMIN-006`
 - [ ] **H4** Media-consent enforcement on youth media `L2-CONSENT-001/004`
-- [ ] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`, `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005`
+- [~] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`, `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence now uses private DB-backed JPG/PNG storage with MIME/extension/signature/size checks and authenticated no-sniff serving; curriculum media lifecycle/removal remains.
 - [ ] **H6** Curriculum mutation lifecycle completion `L2-CURRIC-002..006`
 - [ ] **H7** Shared progress model/views `L2-ADMIN-004`, `L2-LEARN-009/010`, `L2-GUARDIAN-001`, `L2-REPORT-001`
-- [ ] **H8** Grading outcomes (rubric validation, badges, notifications, live) `L2-MENTOR-003`, `L2-LEARN-007`, `L2-ENGAGE-008`
+- [~] **H8** Grading outcomes (rubric validation, badges, notifications, live) `L2-MENTOR-003`, `L2-LEARN-007`, `L2-ENGAGE-008` — youth-visible rubric/badge results plus notification and user-scoped realtime publishing are in place; mentor review UI and stricter rubric-total reconciliation remain.
 - [ ] **H9** Automated at-risk evaluation `L2-MENTOR-007`
 - [ ] **H10** Assignment side effects (journey, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008`
 - [x] **H11** Attendance offline integrity protocol `L2-ENGAGE-003`, `L2-NFR-004/007` —
@@ -239,3 +243,8 @@ requirement conflicts early (they gate "done").
   configured limits, and remain score-hidden until mentor approval. Approved results apply feedback
   mode, identify selected/correct answers, display the once-only badge and best passing score, and
   start a permitted retake. Desktop and mobile keyboard journeys exercise the real approval path.
+- 2026-07-18 — E6/E7 done: assignments now expose task/due/type/rubric briefs, validate attested
+  allowed content, store signature-checked JPG/PNG evidence privately, and lock the submitted copy.
+  Youth status shows the durable review/revision timeline, submitted content, mentor comment, rubric
+  points, and earned badge; grading produces a notification and scoped realtime event, and the
+  revision editor returns resubmitted work to review. Desktop and mobile acceptance paths pass.

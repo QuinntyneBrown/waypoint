@@ -36,6 +36,8 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<LessonReadingState> LessonReadingStates => Set<LessonReadingState>();
     public DbSet<QuizAttempt> QuizAttempts => Set<QuizAttempt>();
     public DbSet<Submission> Submissions => Set<Submission>();
+    public DbSet<StoredSubmissionFile> StoredSubmissionFiles => Set<StoredSubmissionFile>();
+    public DbSet<SubmissionTimelineEvent> SubmissionTimelineEvents => Set<SubmissionTimelineEvent>();
     public DbSet<ReflectionEntry> Reflections => Set<ReflectionEntry>();
     public DbSet<CompetencyAssessment> CompetencyAssessments => Set<CompetencyAssessment>();
     public DbSet<CheckIn> CheckIns => Set<CheckIn>();
@@ -210,6 +212,18 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<LessonReadingState>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());
         modelBuilder.Entity<QuizAttempt>(b => b.HasIndex(x => new { x.YouthUserId, x.QuizId }));
         modelBuilder.Entity<Submission>(b => b.HasIndex(x => new { x.YouthUserId, x.AssignmentId }));
+        modelBuilder.Entity<StoredSubmissionFile>(b =>
+        {
+            b.Property(x => x.OriginalFileName).HasMaxLength(255).IsRequired();
+            b.Property(x => x.ContentType).HasMaxLength(64).IsRequired();
+            b.Property(x => x.Sha256).HasMaxLength(64).IsRequired();
+            b.HasIndex(x => new { x.OwnerUserId, x.AssignmentId });
+        });
+        modelBuilder.Entity<SubmissionTimelineEvent>(b =>
+        {
+            b.Property(x => x.Type).HasMaxLength(32).IsRequired();
+            b.HasIndex(x => new { x.SubmissionId, x.OccurredAt });
+        });
         modelBuilder.Entity<ReflectionEntry>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }));
         modelBuilder.Entity<CompetencyAssessment>(b => b.HasIndex(x => new { x.YouthUserId, x.CompetencyId }));
         modelBuilder.Entity<CheckIn>(b =>

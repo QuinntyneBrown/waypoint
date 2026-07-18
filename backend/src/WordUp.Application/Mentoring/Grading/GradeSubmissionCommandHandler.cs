@@ -11,14 +11,20 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IChangePublisher _publisher;
 
     public GradeSubmissionCommandHandler(
-        IAppDbContext db, IClock clock, IAuditLogger audit, ICurrentUser currentUser)
+        IAppDbContext db,
+        IClock clock,
+        IAuditLogger audit,
+        ICurrentUser currentUser,
+        IChangePublisher publisher)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
+        _publisher = publisher;
     }
 
     public async Task Handle(GradeSubmissionCommand request, CancellationToken cancellationToken)
@@ -50,6 +56,32 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
                 submission.GuardianNotified = request.GuardianNotified;
                 submission.ReviewedByUserId = _currentUser.UserId;
                 submission.ReviewedAt = now;
+                _db.SubmissionTimelineEvents.Add(new SubmissionTimelineEvent
+                {
+                    SubmissionId = submission.Id,
+                    Type = "Approved",
+                    OccurredAt = now,
+                });
+                var badges = await _db.Badges
+                    .Where(item => item.AutoRule == "assignment-approved"
+                        && item.TargetRefId == submission.AssignmentId
+                        && item.ArchivedAt == null)
+                    .ToListAsync(cancellationToken);
+                foreach (var badge in badges)
+                {
+                    if (!await _db.BadgeAwards.AnyAsync(item =>
+                            item.BadgeId == badge.Id && item.YouthUserId == youth.Id,
+                            cancellationToken))
+                    {
+                        _db.BadgeAwards.Add(new BadgeAward
+                        {
+                            BadgeId = badge.Id,
+                            YouthUserId = youth.Id,
+                            AwardedByUserId = _currentUser.UserId,
+                            AwardedAt = now,
+                        });
+                    }
+                }
                 break;
 
             case "request-revision":
@@ -60,6 +92,12 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
                 submission.GuardianNotified = request.GuardianNotified;
                 submission.ReviewedByUserId = _currentUser.UserId;
                 submission.ReviewedAt = now;
+                _db.SubmissionTimelineEvents.Add(new SubmissionTimelineEvent
+                {
+                    SubmissionId = submission.Id,
+                    Type = "NeedsRevision",
+                    OccurredAt = now,
+                });
                 break;
 
             case "save-draft":
@@ -75,6 +113,36 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
         }
 
         await _db.SaveChangesAsync(cancellationToken);
+
+        if (request.Decision is "approve" or "request-revision")
+        {
+            var notification = new Notification
+            {
+                UserId = youth.Id,
+                EventKey = "submission-status",
+                Title = request.Decision == "approve" ? "Assignment approved" : "Assignment needs revision",
+                Body = request.Decision == "approve"
+                    ? "Your mentor approved your assignment."
+                    : "Your mentor left revision feedback.",
+                LinkPath = $"/youth/submissions/{submission.Id}",
+                CreatedAt = now,
+            };
+            _db.Notifications.Add(notification);
+            await _db.SaveChangesAsync(cancellationToken);
+            await _publisher.PublishToUserAsync(
+                youth.Id,
+                "notification",
+                new
+                {
+                    id = notification.Id,
+                    eventKey = notification.EventKey,
+                    title = notification.Title,
+                    body = notification.Body,
+                    linkPath = notification.LinkPath,
+                    createdAt = notification.CreatedAt,
+                },
+                cancellationToken);
+        }
 
         await _audit.LogAsync(
             "SubmissionGraded",

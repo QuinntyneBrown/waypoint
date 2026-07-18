@@ -15,6 +15,7 @@ public class SubmitAssignmentCommandValidator : AbstractValidator<SubmitAssignme
         RuleFor(x => x)
             .Must(x =>
                 !string.IsNullOrWhiteSpace(x.BodyText) ||
+                x.PhotoUploadId is not null ||
                 !string.IsNullOrWhiteSpace(x.PhotoUrl) ||
                 !string.IsNullOrWhiteSpace(x.LinkUrl))
             .WithMessage("Provide at least one of a written response, a photo, or a link.");

@@ -8,6 +8,7 @@ public class Submission
     public Guid YouthUserId { get; set; }
     public Guid AssignmentId { get; set; }
     public string? BodyText { get; set; }
+    public Guid? PhotoUploadId { get; set; }
     public string? PhotoUrl { get; set; }
     public string? LinkUrl { get; set; }
     public bool IsCodingProject { get; set; }

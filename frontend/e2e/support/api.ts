@@ -68,6 +68,11 @@ export interface SeededYouthCurriculum {
   quizBadgeName: string;
   mentorEmail: string;
   mentorPassword: string;
+  assignmentId: string;
+  assignmentTitle: string;
+  assignmentCriterionId: string;
+  assignmentCriterion: string;
+  assignmentBadgeName: string;
 }
 
 /**

@@ -706,6 +706,33 @@ if (app.Environment.IsEnvironment("Testing"))
             AutoRule = "quiz-passed",
             TargetRefId = quiz.Id,
         };
+        var assignment = new Assignment
+        {
+            ModuleId = firstModule.Id,
+            Title = $"Neighbour Love Project {suffix}",
+            TaskDescription = "Describe one practical act of neighbour-love and include evidence if you can.",
+            SubmissionTypes = "text,photo,link",
+            DueDate = now.AddDays(7),
+            AllowLate = true,
+            RequireMentorApproval = true,
+            TotalPoints = 10,
+        };
+        var assignmentCriterion = new RubricCriterion
+        {
+            AssignmentId = assignment.Id,
+            Description = "Connects scripture to a practical action",
+            Points = 10,
+            Order = 1,
+        };
+        var assignmentBadge = new Badge
+        {
+            Name = $"Practical Love Badge {suffix}",
+            Icon = "hands-heart",
+            Description = "Earned when the neighbour-love project is approved.",
+            CriteriaKind = BadgeCriteriaKind.Auto,
+            AutoRule = "assignment-approved",
+            TargetRefId = assignment.Id,
+        };
         var mentor = new User
         {
             Email = $"curriculum-mentor-{suffix}@wordup.test",
@@ -750,6 +777,9 @@ if (app.Environment.IsEnvironment("Testing"))
         db.Quizzes.Add(quiz);
         db.QuizQuestions.AddRange(firstQuizQuestion, secondQuizQuestion);
         db.Badges.Add(quizBadge);
+        db.Assignments.Add(assignment);
+        db.RubricCriteria.Add(assignmentCriterion);
+        db.Badges.Add(assignmentBadge);
         db.Cohorts.Add(cohort);
         db.YouthTrackEnrollments.Add(new YouthTrackEnrollment
         {
@@ -805,6 +835,11 @@ if (app.Environment.IsEnvironment("Testing"))
             quizBadgeName = quizBadge.Name,
             mentorEmail = mentor.Email,
             mentorPassword = youthPassword,
+            assignmentId = assignment.Id,
+            assignmentTitle = assignment.Title,
+            assignmentCriterionId = assignmentCriterion.Id,
+            assignmentCriterion = assignmentCriterion.Description,
+            assignmentBadgeName = assignmentBadge.Name,
         });
     });
 

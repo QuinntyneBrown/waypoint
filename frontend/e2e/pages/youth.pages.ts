@@ -162,3 +162,48 @@ export class YouthQuizResultPage extends BasePage {
     return this.page.getByRole('button', { name: /retake quiz/i });
   }
 }
+
+export class YouthAssignmentPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get responseText() {
+    return this.page.getByLabel(/written response/i);
+  }
+  get evidenceLink() {
+    return this.page.getByLabel(/evidence link/i);
+  }
+  get photoInput() {
+    return this.page.getByLabel(/evidence photo/i);
+  }
+  get attestation() {
+    return this.page.getByRole('checkbox', { name: /this is my own work/i });
+  }
+  get submitButton() {
+    return this.page.getByRole('button', { name: /submit assignment/i });
+  }
+}
+
+export class YouthSubmissionStatusPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get status() {
+    return this.page.getByTestId('submission-status');
+  }
+  get reviseLink() {
+    return this.page.getByRole('link', { name: /revise and resubmit/i });
+  }
+}
+
+export class YouthResubmitPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get responseText() {
+    return this.page.getByLabel(/revised response/i);
+  }
+  get submitButton() {
+    return this.page.getByRole('button', { name: /resubmit assignment/i });
+  }
+}
