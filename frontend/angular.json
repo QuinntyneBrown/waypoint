@@ -24,7 +24,11 @@
                 "input": "projects/portal/public"
               }
             ],
-            "styles": ["projects/portal/src/styles.css"]
+            "styles": [
+              "projects/wu-ui/src/styles/fonts.css",
+              "projects/wu-ui/src/styles/core.css",
+              "projects/portal/src/styles.css"
+            ]
           },
           "configurations": {
             "production": {
