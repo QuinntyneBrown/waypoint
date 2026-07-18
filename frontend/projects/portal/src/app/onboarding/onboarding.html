@@ -1,0 +1,131 @@
+<div class="wu-authpage">
+  <div class="wu-authcard" style="max-width: 560px">
+    <div class="wu-authcard__brand">
+      <span class="wu-brand__mark" style="width: 38px; height: 38px; font-size: 1.1rem">W</span>
+      <span style="font-family: var(--wu-font-head); font-weight: 700; font-size: 1.2rem"
+        >Word Up</span
+      >
+    </div>
+
+    <div class="wu-cluster wu-cluster--between wu-mb-4">
+      <div class="wu-eyebrow">Set up your profile</div>
+      <div class="wu-muted wu-text-sm">Step {{ step() }} of 3</div>
+    </div>
+
+    @if (step() === 1) {
+      <h1 style="font-size: 1.5rem">Tell us about you</h1>
+      <p class="wu-muted wu-mb-6">This is how you’ll show up across Word Up.</p>
+      <form [formGroup]="profile">
+        <div
+          class="wu-field"
+          [class.is-error]="
+            profile.controls.displayName.touched && profile.controls.displayName.invalid
+          "
+        >
+          <label class="wu-label" for="displayName"
+            >Display name <span class="wu-label__req">*</span></label
+          >
+          <input
+            class="wu-input"
+            id="displayName"
+            formControlName="displayName"
+            autocomplete="name"
+          />
+          @if (profile.controls.displayName.touched && profile.controls.displayName.invalid) {
+            <div class="wu-error-text">Please enter a display name.</div>
+          }
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="pronouns">Pronouns</label>
+          <input
+            class="wu-input"
+            id="pronouns"
+            formControlName="pronouns"
+            placeholder="e.g. she/her, he/him, they/them"
+          />
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="photoUrl">Photo URL</label>
+          <input class="wu-input" id="photoUrl" formControlName="photoUrl" placeholder="Optional" />
+          <div class="wu-help">Add a link to a profile photo, or skip for now.</div>
+        </div>
+      </form>
+    }
+
+    @if (step() === 2) {
+      <h1 style="font-size: 1.5rem">Your cohort</h1>
+      @if (placed()) {
+        <p class="wu-muted wu-mb-6">
+          You’re placed in a cohort. Your mentor will guide your journey.
+        </p>
+        <div class="wu-alert wu-alert--lime">
+          <svg class="wu-alert__icon wu-icon"><use href="#i-users"></use></svg>
+          <div>You’re all set with a cohort and mentor.</div>
+        </div>
+      } @else {
+        <p class="wu-muted wu-mb-6">
+          Cohorts are assigned by your program team — you don’t pick one.
+        </p>
+        <div class="wu-alert wu-alert--info">
+          <svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg>
+          <div>
+            You’re not placed in a cohort yet. Your mentor will add you soon — program content
+            unlocks once you’re placed.
+          </div>
+        </div>
+      }
+    }
+
+    @if (step() === 3) {
+      <h1 style="font-size: 1.5rem">Notifications</h1>
+      <p class="wu-muted wu-mb-6">You can change these anytime in settings.</p>
+      @for (cat of categories; track cat.eventKey) {
+        <div class="wu-cluster wu-cluster--between wu-mb-4">
+          <div>
+            <div>{{ cat.label }}</div>
+            <div class="wu-muted wu-text-sm">{{ cat.description }}</div>
+          </div>
+          <label class="wu-switch">
+            <input
+              type="checkbox"
+              [attr.aria-label]="cat.label"
+              [checked]="prefs()[cat.eventKey]"
+              (change)="toggle(cat.eventKey)"
+            />
+            <span class="wu-switch__track"></span>
+          </label>
+        </div>
+      }
+    }
+
+    <div class="wu-cluster wu-cluster--between wu-mt-6">
+      @if (step() > 1) {
+        <button class="wu-btn wu-btn--ghost" type="button" (click)="back()">
+          <wu-icon name="chevron-left" />Back
+        </button>
+      } @else {
+        <span></span>
+      }
+
+      @if (step() < 3) {
+        <button class="wu-btn wu-btn--primary" type="button" (click)="next()">
+          Next<wu-icon name="chevron-right" />
+        </button>
+      } @else {
+        <button
+          class="wu-btn wu-btn--primary"
+          type="button"
+          [class.is-loading]="saving()"
+          [disabled]="saving()"
+          (click)="finish()"
+        >
+          Finish
+        </button>
+      }
+    </div>
+
+    <p class="wu-text-c wu-mt-6 wu-text-sm">
+      <button class="wu-btn wu-btn--link" type="button" (click)="skip()">Skip for now</button>
+    </p>
+  </div>
+</div>

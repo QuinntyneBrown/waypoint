@@ -1,0 +1,41 @@
+<wu-shell
+  role="youth"
+  active="home"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Home</div>
+        <h1 class="wu-page__title">Welcome, {{ firstName() }}</h1>
+        <p class="wu-page__sub">You’re signed in. Your journey picks up here.</p>
+      </div>
+    </div>
+
+    @if (placed() === false) {
+      <div class="wu-empty">
+        <div class="wu-empty__icon">
+          <svg class="wu-icon"><use href="#i-users"></use></svg>
+        </div>
+        <h3 class="wu-empty__title">You’re not in a cohort yet</h3>
+        <p class="wu-empty__text">
+          Your mentor will place you in a cohort soon. Once you’re placed, your lessons and journey
+          unlock here. Reach out if you have questions.
+        </p>
+        <a class="wu-btn wu-btn--primary" routerLink="/youth/messages">
+          <svg class="wu-icon"><use href="#i-message-square"></use></svg>Message your mentor
+        </a>
+      </div>
+    } @else {
+      <div class="wu-card wu-card--greige">
+        <div class="wu-card__body">
+          <div class="wu-scripture">
+            “For even the Son of Man did not come to be served, but to serve.”
+            <span class="wu-scripture__ref">Mark 10:45</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</wu-shell>

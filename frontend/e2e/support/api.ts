@@ -26,6 +26,7 @@ export interface YouthCredentials {
 export async function registerYouth(
   request: APIRequestContext,
   tag: string,
+  opts: { onboarded?: boolean } = {},
 ): Promise<YouthCredentials> {
   const email = `e2e-${tag}-${crypto.randomUUID()}@wordup.test`;
   const password = 'Password123';
@@ -35,5 +36,16 @@ export async function registerYouth(
   });
   expect(res.ok(), `register failed: ${res.status()} ${await res.text()}`).toBeTruthy();
   const auth = (await res.json()) as AuthResult;
+
+  // Default: mark onboarding complete via the API so the youth lands on their
+  // home surface. Pass { onboarded: false } to drive the onboarding wizard.
+  if (opts.onboarded !== false) {
+    const done = await request.post('/api/onboarding', {
+      headers: { Authorization: `Bearer ${auth.accessToken}` },
+      data: { displayName },
+    });
+    expect(done.ok(), `onboarding failed: ${done.status()} ${await done.text()}`).toBeTruthy();
+  }
+
   return { email, password, displayName, auth };
 }

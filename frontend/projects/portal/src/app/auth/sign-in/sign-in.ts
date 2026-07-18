@@ -2,8 +2,10 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError } from '@wu/api';
-import { AuthStore, roleHome } from '@wu/auth';
+import { AuthStore } from '@wu/auth';
 import { WuIcon } from '@wu/ui';
+import { switchMap } from 'rxjs';
+import { EntryResolver } from '../entry';
 
 @Component({
   selector: 'wu-sign-in',
@@ -14,6 +16,7 @@ import { WuIcon } from '@wu/ui';
 export class SignIn {
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthStore);
+  private readonly entry = inject(EntryResolver);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
@@ -39,16 +42,17 @@ export class SignIn {
     }
     const { email, password, remember } = this.form.getRawValue();
     this.submitting.set(true);
-    this.auth.signIn(email, password, remember).subscribe({
-      next: (result) => {
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-        void this.router.navigateByUrl(returnUrl || roleHome(result.role));
-      },
-      error: (err: unknown) => {
-        this.submitting.set(false);
-        this.handleError(ApiError.from(err));
-      },
-    });
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+    this.auth
+      .signIn(email, password, remember)
+      .pipe(switchMap((result) => this.entry.resolve(result.role)))
+      .subscribe({
+        next: (entryPath) => void this.router.navigateByUrl(returnUrl || entryPath),
+        error: (err: unknown) => {
+          this.submitting.set(false);
+          this.handleError(ApiError.from(err));
+        },
+      });
   }
 
   private handleError(err: ApiError): void {

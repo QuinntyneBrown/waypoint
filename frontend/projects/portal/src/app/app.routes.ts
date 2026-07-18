@@ -59,6 +59,12 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'onboarding',
+    title: 'Set up your profile · Word Up',
+    canActivate: [authGuard],
+    loadComponent: () => import('./onboarding/onboarding').then((m) => m.Onboarding),
+  },
+  {
     path: 'youth',
     canActivate: [authGuard],
     children: [
