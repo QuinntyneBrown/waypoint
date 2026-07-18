@@ -1,0 +1,436 @@
+<wu-shell
+  role="admin"
+  active="people"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <a class="wu-link" routerLink="/admin/people">Back to people</a>
+
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (outcome(); as message) {
+      <p class="wu-alert wu-alert--success" role="status">{{ message }}</p>
+    }
+
+    @if (detail(); as person) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">{{ person.cohortName ?? 'No cohort' }} · {{ person.role }}</div>
+          <h1 class="wu-page__title">{{ person.displayName }}</h1>
+          <p class="wu-page__sub">Program record and account lifecycle</p>
+        </div>
+        <span
+          class="wu-badge"
+          [class.wu-badge--success]="person.status === 'Active'"
+          [class.wu-badge--warning]="person.status === 'Pending'"
+          [class.wu-badge--error]="person.status === 'Deactivated' || person.status === 'Removed'"
+        >
+          {{ person.status }}
+        </span>
+      </div>
+
+      @if (person.status === 'Removed') {
+        <aside class="wu-alert wu-alert--warning">
+          <div>
+            <div class="wu-alert__title">Historical record</div>
+            This person was permanently removed from active use. Their progress and attendance
+            remain available for reporting, but account access cannot be restored.
+          </div>
+        </aside>
+      }
+
+      <div class="record-tabs" role="tablist" aria-label="Person record sections">
+        @for (tab of tabs; track tab.key) {
+          <button
+            class="wu-tab record-tab"
+            type="button"
+            role="tab"
+            [id]="'person-tab-' + tab.key"
+            [attr.aria-controls]="'person-panel-' + tab.key"
+            [attr.aria-selected]="activeTab() === tab.key"
+            [attr.tabindex]="activeTab() === tab.key ? 0 : -1"
+            [class.is-active]="activeTab() === tab.key"
+            (click)="selectTab(tab.key)"
+          >
+            {{ tab.label }}
+          </button>
+        }
+      </div>
+
+      @for (tab of tabs; track tab.key) {
+        @if (activeTab() === tab.key) {
+          <section
+            class="wu-card wu-mt-4"
+            role="tabpanel"
+            [id]="'person-panel-' + tab.key"
+            [attr.aria-labelledby]="'person-tab-' + tab.key"
+          >
+            <div class="wu-card__body">
+              @switch (tab.key) {
+                @case ('profile') {
+                  <h2>Profile</h2>
+                  <div class="record-grid">
+                    <div>
+                      <p><strong>Email:</strong> {{ person.email }}</p>
+                      <p><strong>Pronouns:</strong> {{ person.pronouns ?? 'Not provided' }}</p>
+                      <p><strong>Cohort:</strong> {{ person.cohortName ?? 'Not assigned' }}</p>
+                    </div>
+                    <div>
+                      <p><strong>Mentor:</strong> {{ person.mentorName ?? 'Not assigned' }}</p>
+                      <p>
+                        <strong>Onboarding:</strong>
+                        {{ person.onboardingCompleted ? 'Complete' : 'Not complete' }}
+                      </p>
+                      <p><strong>Joined:</strong> {{ person.createdAt | date: 'mediumDate' }}</p>
+                    </div>
+                  </div>
+                }
+                @case ('guardian') {
+                  <div class="record-grid">
+                    <div>
+                      <h2>Guardian contact</h2>
+                      @if (person.guardian; as guardian) {
+                        <p><strong>Name:</strong> {{ guardian.name }}</p>
+                        <p>
+                          <strong>Relationship:</strong>
+                          {{ guardian.relationship ?? 'Not provided' }}
+                        </p>
+                        <p><strong>Email:</strong> {{ guardian.email }}</p>
+                        <p><strong>Phone:</strong> {{ guardian.phone ?? 'Not provided' }}</p>
+                        <p>
+                          <strong>Emergency contact:</strong>
+                          {{ guardian.emergencyContactName ?? 'Not provided' }}
+                          @if (guardian.emergencyContactPhone) {
+                            · {{ guardian.emergencyContactPhone }}
+                          }
+                        </p>
+                      } @else {
+                        <p class="wu-muted">No guardian contact is linked.</p>
+                      }
+                    </div>
+                    <div>
+                      <h2>Consent</h2>
+                      <p>
+                        <span
+                          class="wu-badge"
+                          [class.wu-badge--success]="person.consent.hasValidParticipationConsent"
+                          [class.wu-badge--error]="!person.consent.hasValidParticipationConsent"
+                        >
+                          {{ person.consent.hasValidParticipationConsent ? 'Valid' : 'Not valid' }}
+                        </span>
+                      </p>
+                      <p>
+                        <strong>Participation:</strong>
+                        {{ person.consent.participationConsent ? 'Recorded' : 'Not recorded' }}
+                      </p>
+                      <p>
+                        <strong>Media:</strong>
+                        {{ person.consent.mediaConsent ? 'Granted' : 'Not granted' }}
+                      </p>
+                      <p>
+                        <strong>Signed:</strong>
+                        {{
+                          person.consent.signedAt
+                            ? (person.consent.signedAt | date: 'mediumDate')
+                            : 'Not recorded'
+                        }}
+                      </p>
+                      <p>
+                        <strong>Valid until:</strong>
+                        {{
+                          person.consent.validUntil
+                            ? (person.consent.validUntil | date: 'mediumDate')
+                            : 'Not recorded'
+                        }}
+                      </p>
+                    </div>
+                  </div>
+                }
+                @case ('progress') {
+                  <h2>Progress</h2>
+                  <p>
+                    {{ person.progress.completedLessons }} of {{ person.progress.totalLessons }}
+                    lessons complete
+                  </p>
+                  <progress max="100" [value]="percent(person.progress.percent)">
+                    {{ percent(person.progress.percent) }}%
+                  </progress>
+                  <p class="wu-muted">{{ percent(person.progress.percent) }}% complete</p>
+                }
+                @case ('attendance') {
+                  <h2>Attendance</h2>
+                  <p>
+                    {{ person.attendance.attended }} of {{ person.attendance.total }} attended ·
+                    {{ percent(person.attendance.rate) }}%
+                  </p>
+                  <ul class="record-list">
+                    @for (item of person.attendance.items; track item.sessionId) {
+                      <li class="record-row">
+                        <strong>{{ item.sessionTitle }}</strong> · {{ item.status }}
+                        <span class="wu-muted">{{ item.startsAt | date: 'mediumDate' }}</span>
+                        @if (item.note) {
+                          <p>{{ item.note }}</p>
+                        }
+                      </li>
+                    } @empty {
+                      <li class="wu-muted">No attendance recorded.</li>
+                    }
+                  </ul>
+                }
+                @case ('notes') {
+                  <h2>Notes</h2>
+                  <p class="wu-muted">
+                    Operational check-in summaries are shown here. Private prayer requests are never
+                    included.
+                  </p>
+                  <ul class="record-list">
+                    @for (note of person.notes; track note.id) {
+                      <li class="record-row">
+                        <strong>{{ note.type }}</strong> · {{ note.date | date: 'mediumDate' }} ·
+                        {{ note.mentorName }}
+                        <p>{{ note.summary }}</p>
+                        @if (note.nextFollowUp) {
+                          <p class="wu-muted">
+                            Follow up {{ note.nextFollowUp | date: 'mediumDate' }}
+                          </p>
+                        }
+                      </li>
+                    } @empty {
+                      <li class="wu-muted">No operational notes recorded.</li>
+                    }
+                  </ul>
+                }
+                @case ('account') {
+                  <h2>Account</h2>
+                  <div class="record-grid wu-mb-5">
+                    <div>
+                      <p><strong>Status:</strong> {{ person.status }}</p>
+                      <p><strong>Role:</strong> {{ person.role }}</p>
+                    </div>
+                    <div>
+                      <p>
+                        <strong>Last active:</strong>
+                        {{
+                          person.lastActive
+                            ? (person.lastActive | date: 'medium')
+                            : 'Never signed in'
+                        }}
+                      </p>
+                      <p><strong>Created:</strong> {{ person.createdAt | date: 'mediumDate' }}</p>
+                    </div>
+                  </div>
+
+                  @if (person.status !== 'Removed') {
+                    <section class="wu-card wu-mb-5" aria-labelledby="account-access-heading">
+                      <div class="wu-card__body wu-stack">
+                        <h3 id="account-access-heading">Access and role</h3>
+                        <div class="wu-field">
+                          <label class="wu-label" for="person-role">Account role</label>
+                          <select
+                            #roleSelect
+                            class="wu-select"
+                            id="person-role"
+                            [value]="roleSelection()"
+                            [disabled]="saving()"
+                            (change)="selectRole(roleSelect.value)"
+                          >
+                            @for (role of roles; track role.value) {
+                              <option [value]="role.value">{{ role.label }}</option>
+                            }
+                          </select>
+                        </div>
+                        <div class="account-actions">
+                          <button
+                            class="wu-btn wu-btn--secondary"
+                            type="button"
+                            [disabled]="saving() || roleSelection() === person.role"
+                            (click)="openRoleChange()"
+                          >
+                            Change role
+                          </button>
+                          <button
+                            class="wu-btn wu-btn--secondary"
+                            type="button"
+                            [disabled]="saving()"
+                            (click)="sendPasswordReset()"
+                          >
+                            Send password reset
+                          </button>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="wu-card danger-zone" aria-labelledby="lifecycle-heading">
+                      <div class="wu-card__body wu-stack">
+                        <h3 id="lifecycle-heading">Account lifecycle</h3>
+                        @if (person.status === 'Deactivated') {
+                          <p>
+                            Reactivation restores sign-in eligibility, but previously revoked
+                            sessions stay revoked.
+                          </p>
+                          <button
+                            class="wu-btn wu-btn--primary"
+                            type="button"
+                            [disabled]="saving()"
+                            (click)="openAction('reactivate')"
+                          >
+                            Reactivate account
+                          </button>
+                        } @else {
+                          <p>
+                            Deactivation signs the person out and blocks sign-in while retaining all
+                            records. It can be reversed.
+                          </p>
+                          <button
+                            class="wu-btn wu-btn--secondary"
+                            type="button"
+                            [disabled]="saving()"
+                            (click)="openAction('deactivate')"
+                          >
+                            Deactivate account
+                          </button>
+                        }
+
+                        @if (!isOwnRecord()) {
+                          <p>
+                            Permanent removal revokes access and removes the person from active use.
+                            Progress and reporting records are retained, but removal cannot be
+                            reversed.
+                          </p>
+                          <button
+                            class="wu-btn wu-btn--danger"
+                            type="button"
+                            [disabled]="saving()"
+                            (click)="openAction('remove')"
+                          >
+                            Remove person
+                          </button>
+                        }
+                      </div>
+                    </section>
+                  } @else {
+                    <p class="wu-muted">
+                      No account actions are available because permanent removal cannot be reversed.
+                    </p>
+                  }
+                }
+              }
+            </div>
+          </section>
+        }
+      }
+    } @else if (!errorMessage()) {
+      <p class="wu-muted" role="status">Loading person record…</p>
+    }
+  </div>
+
+  @if (pendingAction(); as action) {
+    <div
+      class="wu-modal wu-modal--sm is-open"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="'person-action-' + action.kind"
+      (keydown.escape)="cancelAction()"
+    >
+      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__panel">
+        <div class="wu-modal__header">
+          <div>
+            <h2 class="wu-modal__title" [id]="'person-action-' + action.kind">
+              {{ actionTitle(action) }}
+            </h2>
+            <p class="wu-modal__sub">{{ detail()?.displayName }}</p>
+          </div>
+          <button
+            class="wu-iconbtn wu-modal__close"
+            type="button"
+            aria-label="Close confirmation"
+            [disabled]="saving()"
+            (click)="cancelAction()"
+          >
+            <wu-icon name="x" />
+          </button>
+        </div>
+        <div class="wu-modal__body wu-stack confirmation-copy">
+          @switch (action.kind) {
+            @case ('role') {
+              <p>
+                Change this account from <strong>{{ detail()?.role }}</strong> to
+                <strong>{{ action.role }}</strong
+                >?
+              </p>
+              @if (isStaffRole(action.role)) {
+                <div class="wu-alert wu-alert--warning">
+                  This staff role grants access to young people's records and protected program
+                  data. The change takes effect immediately and all current sessions will be
+                  revoked.
+                </div>
+              } @else {
+                <p class="wu-muted">
+                  The change takes effect immediately and all current sessions will be revoked.
+                </p>
+              }
+            }
+            @case ('deactivate') {
+              <p>
+                This person will be signed out and unable to sign in. Progress, attendance, notes,
+                and reporting records will be retained. You can reactivate the account later.
+              </p>
+            }
+            @case ('reactivate') {
+              <p>
+                This person will be able to sign in again. Previously revoked sessions remain
+                invalid, so they must start a new session.
+              </p>
+            }
+            @case ('remove') {
+              <div class="wu-alert wu-alert--error">
+                Permanent removal cannot be undone. Access will be revoked and the person will be
+                removed from active use; progress and reporting records will be retained.
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="remove-person-confirmation">
+                  Type {{ detail()?.displayName }} to confirm
+                </label>
+                <input
+                  #removeInput
+                  class="wu-input"
+                  id="remove-person-confirmation"
+                  type="text"
+                  autocomplete="off"
+                  [value]="removeConfirmation()"
+                  (input)="removeConfirmation.set(removeInput.value)"
+                />
+              </div>
+            }
+          }
+        </div>
+        <div class="wu-modal__footer">
+          <button
+            class="wu-btn wu-btn--ghost"
+            type="button"
+            [disabled]="saving()"
+            (click)="cancelAction()"
+          >
+            Cancel
+          </button>
+          <button
+            class="wu-btn"
+            [class.wu-btn--danger]="action.kind === 'remove' || action.kind === 'deactivate'"
+            [class.wu-btn--primary]="action.kind === 'role' || action.kind === 'reactivate'"
+            type="button"
+            [disabled]="
+              saving() ||
+              (action.kind === 'remove' && removeConfirmation() !== detail()?.displayName)
+            "
+            (click)="confirmAction()"
+          >
+            {{ saving() ? 'Saving…' : confirmLabel(action) }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</wu-shell>

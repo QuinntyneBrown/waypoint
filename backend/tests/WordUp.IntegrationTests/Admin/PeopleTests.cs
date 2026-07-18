@@ -105,15 +105,33 @@ public sealed class PeopleTests : IntegrationTestBase
         // Traces to: L2-ADMIN-002
         var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
         var user = await SeedUserAsync(Roles.Mentor);
+        var signedInResponse = await Client.PostAsJsonAsync(
+            "/api/auth/sign-in",
+            new { email = user.Email, password = user.Password });
+        var signedIn = await signedInResponse.Content.ReadFromJsonAsync<AuthSessionDto>();
 
         var deactivate = await SendAsync(HttpMethod.Post, $"/api/people/{user.Id}/deactivate", body: new { }, token: adminToken);
         Assert.That(deactivate.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var oldSession = await SendAsync(
+            HttpMethod.Put,
+            "/api/me/profile",
+            new { displayName = "Should not save", email = user.Email, pronouns = (string?)null, photoUrl = (string?)null },
+            signedIn!.AccessToken);
+        Assert.That(oldSession.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
 
         var blocked = await Client.PostAsJsonAsync("/api/auth/sign-in", new { email = user.Email, password = user.Password });
         Assert.That(blocked.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
 
         var reactivate = await SendAsync(HttpMethod.Post, $"/api/people/{user.Id}/reactivate", body: new { }, token: adminToken);
         Assert.That(reactivate.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var revokedSessionAfterReactivation = await SendAsync(
+            HttpMethod.Put,
+            "/api/me/profile",
+            new { displayName = "Still should not save", email = user.Email, pronouns = (string?)null, photoUrl = (string?)null },
+            signedIn.AccessToken);
+        Assert.That(revokedSessionAfterReactivation.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
 
         var allowed = await Client.PostAsJsonAsync("/api/auth/sign-in", new { email = user.Email, password = user.Password });
         Assert.That(allowed.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -126,6 +144,10 @@ public sealed class PeopleTests : IntegrationTestBase
         // Traces to: L2-ADMIN-002
         var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
         var user = await SeedUserAsync(Roles.Volunteer);
+        var signedInResponse = await Client.PostAsJsonAsync(
+            "/api/auth/sign-in",
+            new { email = user.Email, password = user.Password });
+        var signedIn = await signedInResponse.Content.ReadFromJsonAsync<AuthSessionDto>();
 
         var change = await SendAsync(HttpMethod.Post, $"/api/people/{user.Id}/role", body: new { role = Roles.Mentor }, token: adminToken);
         Assert.That(change.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
@@ -133,6 +155,18 @@ public sealed class PeopleTests : IntegrationTestBase
         var detailResponse = await SendAsync(HttpMethod.Get, $"/api/people/{user.Id}", token: adminToken);
         var detail = await detailResponse.Content.ReadFromJsonAsync<PersonDetailDto>();
         Assert.That(detail!.Role, Is.EqualTo(Roles.Mentor));
+
+        var staleRoleSession = await SendAsync(
+            HttpMethod.Put,
+            "/api/me/profile",
+            new { displayName = "Should not save", email = user.Email, pronouns = (string?)null, photoUrl = (string?)null },
+            signedIn!.AccessToken);
+        Assert.That(staleRoleSession.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+
+        using var scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.That(await db.AuditEntries.AnyAsync(entry =>
+            entry.Action == "RoleChanged" && entry.TargetId == user.Id), Is.True);
     }
 
     [Test]
@@ -165,6 +199,90 @@ public sealed class PeopleTests : IntegrationTestBase
         Assert.That(reset.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
         Assert.That(Factory.Emails.LastTo(user.Email), Is.Not.Null);
+
+        using var scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.That(await db.AuditEntries.AnyAsync(entry =>
+            entry.Action == "PasswordResetSent" && entry.TargetId == user.Id), Is.True);
+    }
+
+    [Test]
+    [Property("Req", "L2-ADMIN-002")]
+    public async Task Youth_detail_contains_the_required_record_sections_without_private_prayer_text()
+    {
+        // Traces to: L2-ADMIN-002 AC1
+        var fixtureResponse = await Client.PostAsync("/api/_test/youth-curriculum", content: null);
+        fixtureResponse.EnsureSuccessStatusCode();
+        var fixture = await fixtureResponse.Content.ReadFromJsonAsync<SeededYouthFixtureDto>();
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+
+        var response = await SendAsync(HttpMethod.Get, $"/api/people/{fixture!.YouthId}", token: adminToken);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var detail = await response.Content.ReadFromJsonAsync<PersonDetailDto>();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(detail!.DisplayName, Is.EqualTo(fixture.YouthName));
+            Assert.That(detail.Email, Is.EqualTo(fixture.YouthEmail));
+            Assert.That(detail.CohortName, Is.EqualTo(fixture.CohortName));
+            Assert.That(detail.Guardian?.Name, Is.EqualTo(fixture.GuardianName));
+            Assert.That(detail.Guardian?.Email, Is.EqualTo(fixture.GuardianEmail));
+            Assert.That(detail.Consent.HasValidParticipationConsent, Is.True);
+            Assert.That(detail.Progress.CompletedLessons, Is.EqualTo(1));
+            Assert.That(detail.Progress.TotalLessons, Is.EqualTo(2));
+            Assert.That(detail.Attendance.Items.Any(item =>
+                item.SessionTitle == fixture.ProgressPresentSessionTitle && item.Status == "Present"), Is.True);
+            Assert.That(detail.Notes.Any(item => item.Type == "1:1"), Is.True);
+            Assert.That(detail.Notes.All(item => !item.Summary.Contains("PRIVATE PRAYER DETAIL", StringComparison.Ordinal)), Is.True);
+        });
+    }
+
+    [Test]
+    [Property("Req", "L2-ADMIN-002")]
+    public async Task Removal_is_irreversible_excludes_active_use_and_retains_progress_records()
+    {
+        // Traces to: L2-ADMIN-002 AC3
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var user = await SeedUserAsync(Roles.Youth);
+        var progressId = Guid.NewGuid();
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            db.LessonProgress.Add(new LessonProgress
+            {
+                Id = progressId,
+                YouthUserId = user.Id,
+                LessonId = Guid.NewGuid(),
+                Status = ProgressStatus.Completed,
+            });
+            await db.SaveChangesAsync();
+        }
+
+        var remove = await SendAsync(HttpMethod.Post, $"/api/people/{user.Id}/remove", body: new { }, token: adminToken);
+        Assert.That(remove.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var blocked = await Client.PostAsJsonAsync("/api/auth/sign-in", new { email = user.Email, password = user.Password });
+        Assert.That(blocked.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+
+        var reactivate = await SendAsync(HttpMethod.Post, $"/api/people/{user.Id}/reactivate", body: new { }, token: adminToken);
+        Assert.That(reactivate.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+
+        var list = await SendAsync(
+            HttpMethod.Get,
+            $"/api/people?search={Uri.EscapeDataString(user.Email)}",
+            token: adminToken);
+        var people = await list.Content.ReadFromJsonAsync<PagedPeopleDto>();
+        Assert.That(people!.Items.Any(item => item.Id == user.Id), Is.False);
+
+        var detailResponse = await SendAsync(HttpMethod.Get, $"/api/people/{user.Id}", token: adminToken);
+        var detail = await detailResponse.Content.ReadFromJsonAsync<PersonDetailDto>();
+        Assert.That(detail!.Status, Is.EqualTo("Removed"));
+
+        using var verifyScope = Factory.Services.CreateScope();
+        var verifyDb = verifyScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.That(await verifyDb.LessonProgress.AnyAsync(item => item.Id == progressId), Is.True);
+        Assert.That(await verifyDb.AuditEntries.AnyAsync(entry =>
+            entry.Action == "AccountRemoved" && entry.TargetId == user.Id), Is.True);
     }
 
     private sealed record PagedPeopleDto(List<PersonSummaryDto> Items, int Total, int Page, int PageSize);
@@ -174,6 +292,77 @@ public sealed class PeopleTests : IntegrationTestBase
         Guid? CohortId, Guid? MentorId, DateTime? LastActive);
 
     private sealed record PersonDetailDto(
-        Guid Id, string DisplayName, string Email, string Role, string Status,
-        Guid? CohortId, Guid? MentorId, Guid? GuardianUserId, bool HasValidConsent);
+        Guid Id,
+        string DisplayName,
+        string Email,
+        string Role,
+        string Status,
+        string? Pronouns,
+        string? PhotoUrl,
+        bool OnboardingCompleted,
+        DateTime CreatedAt,
+        DateTime? LastActive,
+        Guid? CohortId,
+        string? CohortName,
+        Guid? MentorId,
+        string? MentorName,
+        Guid? GuardianUserId,
+        PersonGuardianDto? Guardian,
+        bool HasValidConsent,
+        PersonConsentDto Consent,
+        PersonProgressDto Progress,
+        PersonAttendanceDto Attendance,
+        IReadOnlyList<PersonNoteDto> Notes);
+
+    private sealed record PersonGuardianDto(
+        string Name,
+        string Email,
+        string? Relationship,
+        string? Phone,
+        string? EmergencyContactName,
+        string? EmergencyContactPhone);
+
+    private sealed record PersonConsentDto(
+        bool HasValidParticipationConsent,
+        bool ParticipationConsent,
+        bool MediaConsent,
+        DateTime? SignedAt,
+        DateTime? ValidUntil,
+        DateTime? WithdrawnAt,
+        string? GuardianName,
+        string? Relationship);
+
+    private sealed record PersonProgressDto(int CompletedLessons, int TotalLessons, double Percent);
+
+    private sealed record PersonAttendanceDto(
+        int Attended,
+        int Total,
+        double Rate,
+        IReadOnlyList<PersonAttendanceItemDto> Items);
+
+    private sealed record PersonAttendanceItemDto(
+        Guid SessionId,
+        string SessionTitle,
+        DateTime StartsAt,
+        string Status,
+        string? Note);
+
+    private sealed record PersonNoteDto(
+        Guid Id,
+        DateTime Date,
+        string Type,
+        string MentorName,
+        string Summary,
+        DateTime? NextFollowUp);
+
+    private sealed record SeededYouthFixtureDto(
+        Guid YouthId,
+        string YouthName,
+        string YouthEmail,
+        string GuardianName,
+        string GuardianEmail,
+        string CohortName,
+        string ProgressPresentSessionTitle);
+
+    private sealed record AuthSessionDto(string AccessToken);
 }

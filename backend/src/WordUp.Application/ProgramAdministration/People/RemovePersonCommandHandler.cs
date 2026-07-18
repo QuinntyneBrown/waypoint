@@ -33,8 +33,16 @@ public class RemovePersonCommandHandler : IRequestHandler<RemovePersonCommand>
     {
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException("Person not found.");
+        if (_currentUser.UserId == user.Id)
+        {
+            throw new ForbiddenException("You cannot remove your own account.");
+        }
+        if (user.Status == UserStatus.Removed)
+        {
+            throw new ConflictException("This person has already been removed.");
+        }
 
-        user.Status = UserStatus.Deactivated;
+        user.Status = UserStatus.Removed;
         await _db.SaveChangesAsync(cancellationToken);
 
         await _sessions.RevokeAllAsync(user.Id, cancellationToken);

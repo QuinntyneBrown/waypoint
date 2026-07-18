@@ -61,6 +61,10 @@ public sealed class SessionIssuer : ISessionIssuer
 
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == token.UserId, cancellationToken)
             ?? throw new InvalidRefreshTokenException();
+        if (user.Status != UserStatus.Active)
+        {
+            throw new InvalidRefreshTokenException();
+        }
 
         var (raw, newHash) = _tokens.Create();
         token.RevokedAt = now;
@@ -80,6 +84,11 @@ public sealed class SessionIssuer : ISessionIssuer
     public async Task RevokeAllAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var now = _clock.UtcNow;
+        var user = await _db.Users.FirstOrDefaultAsync(item => item.Id == userId, cancellationToken);
+        if (user is not null)
+        {
+            user.SessionVersion++;
+        }
         var active = await _db.RefreshTokens
             .Where(t => t.UserId == userId && t.RevokedAt == null)
             .ToListAsync(cancellationToken);

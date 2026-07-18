@@ -35,7 +35,7 @@ public class SignInCommandHandler : IRequestHandler<SignInCommand, AuthResult>
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken)
             ?? throw new InvalidCredentialsException();
 
-        if (user.Status == UserStatus.Deactivated)
+        if (user.Status != UserStatus.Active)
         {
             throw new AccountDeactivatedException();
         }

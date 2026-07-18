@@ -29,6 +29,14 @@ public class DeactivatePersonCommandHandler : IRequestHandler<DeactivatePersonCo
     {
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException("Person not found.");
+        if (user.Status == UserStatus.Removed)
+        {
+            throw new ConflictException("A removed person cannot be deactivated.");
+        }
+        if (user.Status == UserStatus.Deactivated)
+        {
+            return;
+        }
 
         user.Status = UserStatus.Deactivated;
         await _db.SaveChangesAsync(cancellationToken);

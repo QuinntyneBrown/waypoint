@@ -38,6 +38,10 @@ public class SendPasswordResetForPersonCommandHandler : IRequestHandler<SendPass
     {
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException("Person not found.");
+        if (user.Status == UserStatus.Removed)
+        {
+            throw new ConflictException("A removed person cannot receive a password reset.");
+        }
 
         var (raw, hash) = _tokens.Create();
         var now = _clock.UtcNow;

@@ -45,6 +45,51 @@ export class PeopleDirectoryPage extends BasePage {
   }
 }
 
+/** `/admin/people/:id` — a person record and its account lifecycle controls. */
+export class PersonDetailPage extends BasePage {
+  static path(id: string): string {
+    return `/admin/people/${id}`;
+  }
+
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  tab(name: string) {
+    return this.page.getByRole('tab', { name, exact: true });
+  }
+  panel(name: string) {
+    return this.page.getByRole('tabpanel', { name, exact: true });
+  }
+  get outcome() {
+    return this.page.getByRole('status');
+  }
+  get roleSelect() {
+    return this.page.getByLabel('Account role');
+  }
+  get changeRole() {
+    return this.page.getByRole('button', { name: 'Change role' });
+  }
+  get sendPasswordReset() {
+    return this.page.getByRole('button', { name: 'Send password reset' });
+  }
+  get deactivate() {
+    return this.page.getByRole('button', { name: 'Deactivate account' });
+  }
+  get reactivate() {
+    return this.page.getByRole('button', { name: 'Reactivate account' });
+  }
+  get remove() {
+    return this.page.getByRole('button', { name: 'Remove person' });
+  }
+  dialog(name: string | RegExp) {
+    return this.page.getByRole('dialog', { name });
+  }
+
+  async goto(id: string): Promise<void> {
+    await this.page.goto(PersonDetailPage.path(id));
+  }
+}
+
 /** `/admin/applications` — the Program Administrator application review queue. */
 export class ApplicationsListPage extends BasePage {
   static readonly path = '/admin/applications';

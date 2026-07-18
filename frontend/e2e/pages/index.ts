@@ -58,7 +58,7 @@ export {
   VolunteerTodayPage,
   VolunteerSchedulePage,
 } from './volunteer.pages';
-export { PeopleDirectoryPage, ApplicationsListPage } from './admin.pages';
+export { PeopleDirectoryPage, PersonDetailPage, ApplicationsListPage } from './admin.pages';
 export {
   MentorCheckInsPage,
   MentorAssignWorkPage,

@@ -15,7 +15,7 @@ public class ListPeopleQueryHandler : IRequestHandler<ListPeopleQuery, PagedPeop
         var page = request.Page < 1 ? 1 : request.Page;
         var pageSize = request.PageSize < 1 ? 50 : request.PageSize;
 
-        var query = _db.Users.AsQueryable();
+        var query = _db.Users.Where(user => user.Status != UserStatus.Removed);
 
         if (!string.IsNullOrWhiteSpace(request.Role))
         {

@@ -2,7 +2,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api-base-url';
-import { DirectoryCohort, ListPeopleParams, PagedPeople } from '../models/people/people';
+import {
+  DirectoryCohort,
+  ListPeopleParams,
+  PagedPeople,
+  PersonDetail,
+} from '../models/people/people';
 
 /** Program-administration people directory (`/api/people`, admin only). */
 @Injectable({ providedIn: 'root' })
@@ -23,5 +28,29 @@ export class PeopleApi {
 
   cohorts(): Observable<DirectoryCohort[]> {
     return this.http.get<DirectoryCohort[]>(`${this.base}/api/cohorts`);
+  }
+
+  detail(id: string): Observable<PersonDetail> {
+    return this.http.get<PersonDetail>(`${this.base}/api/people/${id}`);
+  }
+
+  changeRole(id: string, role: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/api/people/${id}/role`, { role });
+  }
+
+  sendPasswordReset(id: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/api/people/${id}/send-password-reset`, {});
+  }
+
+  deactivate(id: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/api/people/${id}/deactivate`, {});
+  }
+
+  reactivate(id: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/api/people/${id}/reactivate`, {});
+  }
+
+  remove(id: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/api/people/${id}/remove`, {});
   }
 }

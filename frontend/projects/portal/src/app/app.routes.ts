@@ -352,6 +352,12 @@ export const routes: Routes = [
           import('./features/admin/people/people-directory').then((m) => m.PeopleDirectory),
       },
       {
+        path: 'people/:id',
+        title: 'Person record · Word Up',
+        loadComponent: () =>
+          import('./features/admin/people/person-detail').then((module) => module.PersonDetailPage),
+      },
+      {
         path: 'applications',
         title: 'Applications · Word Up',
         loadComponent: () =>

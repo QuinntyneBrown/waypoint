@@ -179,7 +179,11 @@ requirement conflicts early (they gate "done").
 - [x] **G2** People directory `L2-ADMIN-001` — debounced server search, composable role chips and
       named cohort filter, reset-safe ten-row paging, total/page state, responsive table-to-cards,
       labelled empty/error recovery, and invite CTA.
-- [ ] **G3** Person detail / account lifecycle `L2-ADMIN-002`
+- [x] **G3** Person detail / account lifecycle `L2-ADMIN-002` — linked responsive person records
+      provide profile, guardian/consent, authoritative curriculum progress, attendance, privacy-safe
+      operational notes, and account tabs; audited reset/role/lifecycle actions use explicit warnings
+      and confirmations, revoke current sessions immediately, preserve reporting records, and enforce
+      irreversible removal as a distinct historical state excluded from active directory use.
 - [ ] **G4** Cohorts & cohort detail `L2-ADMIN-003`
 - [ ] **G5** Progress board (+ live, export) `L2-ADMIN-004`, `L2-REPORT-003`
 - [ ] **G6** Mentor assignment / caseload `L2-ADMIN-005`
@@ -405,3 +409,12 @@ requirement conflicts early (they gate "done").
   from a table into labelled cards; empty/error states retain filter recovery and the invite action.
   HTTP role/cohort coverage, populated desktop paging/filter acceptance, mobile touch/reflow, portal
   units, and the production build pass.
+- 2026-07-18 — G3 done: every directory row now opens a responsive record with profile, named
+  guardian/contact and current consent, shared curriculum progress, attendance rate/history,
+  privacy-safe operational notes, and account state. Password reset and role changes are audited;
+  staff-role warnings and deactivate/reactivate/remove confirmations state their consequences, while
+  a session-version claim makes deactivation, password/session revocation, and role changes effective
+  on the next protected request. Permanent removal is a distinct, non-reactivatable historical state
+  excluded from the active directory while retaining progress for reports. All 177 backend
+  integrations, four backend units, six portal units, the production build, and desktop/mobile
+  acceptance pass.

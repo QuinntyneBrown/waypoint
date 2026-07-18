@@ -22,6 +22,14 @@ public class ReactivatePersonCommandHandler : IRequestHandler<ReactivatePersonCo
     {
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException("Person not found.");
+        if (user.Status == UserStatus.Removed)
+        {
+            throw new ConflictException("Removal is irreversible; this person cannot be reactivated.");
+        }
+        if (user.Status == UserStatus.Active)
+        {
+            return;
+        }
 
         user.Status = UserStatus.Active;
         await _db.SaveChangesAsync(cancellationToken);

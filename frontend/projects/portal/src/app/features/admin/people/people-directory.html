@@ -96,7 +96,9 @@
             @for (person of people(); track person.id) {
               <tr data-testid="person-row">
                 <td data-label="Name">
-                  <strong>{{ person.displayName }}</strong>
+                  <strong
+                    ><a [routerLink]="[person.id]">{{ person.displayName }}</a></strong
+                  >
                 </td>
                 <td data-label="Email">{{ person.email }}</td>
                 <td data-label="Role">{{ person.role }}</td>

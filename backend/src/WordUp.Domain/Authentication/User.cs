@@ -8,6 +8,7 @@ public class User
     public string DisplayName { get; set; } = string.Empty;
     public string Role { get; set; } = Roles.Youth;
     public UserStatus Status { get; set; } = UserStatus.Active;
+    public int SessionVersion { get; set; } = 1;
 
     // Onboarding (L2-AUTH-011)
     public string? Pronouns { get; set; }

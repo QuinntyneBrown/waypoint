@@ -31,6 +31,7 @@ public class JwtTokenIssuer : IJwtTokenIssuer
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim("display_name", user.DisplayName),
             new Claim(ClaimTypes.Role, user.Role),
+            new Claim("session_version", user.SessionVersion.ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 

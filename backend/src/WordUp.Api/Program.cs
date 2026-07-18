@@ -1,5 +1,7 @@
 using System.Text;
 using System.Text.Json;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Threading.RateLimiting;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -107,6 +109,33 @@ builder.Services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationSc
                     context.Token = accessToken;
                 }
                 return Task.CompletedTask;
+            },
+            OnTokenValidated = async context =>
+            {
+                var subject = context.Principal?.FindFirst(JwtRegisteredClaimNames.Sub)?.Value
+                    ?? context.Principal?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var role = context.Principal?.FindFirst(ClaimTypes.Role)?.Value;
+                var sessionVersion = context.Principal?.FindFirst("session_version")?.Value;
+                if (!Guid.TryParse(subject, out var userId)
+                    || !int.TryParse(sessionVersion, out var tokenSessionVersion))
+                {
+                    context.Fail("The session is no longer valid.");
+                    return;
+                }
+
+                var db = context.HttpContext.RequestServices.GetRequiredService<IAppDbContext>();
+                var user = await db.Users
+                    .AsNoTracking()
+                    .Where(item => item.Id == userId)
+                    .Select(item => new { item.Role, item.Status, item.SessionVersion })
+                    .FirstOrDefaultAsync(context.HttpContext.RequestAborted);
+                if (user is null
+                    || user.Status != UserStatus.Active
+                    || user.Role != role
+                    || user.SessionVersion != tokenSessionVersion)
+                {
+                    context.Fail("The session is no longer valid.");
+                }
             },
         };
     });
