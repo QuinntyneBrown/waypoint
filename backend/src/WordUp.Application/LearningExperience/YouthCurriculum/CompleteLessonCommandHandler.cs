@@ -11,17 +11,20 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IChangePublisher _publisher;
 
     public CompleteLessonCommandHandler(
         IAppDbContext db,
         IClock clock,
         IAuditLogger audit,
-        ICurrentUser currentUser)
+        ICurrentUser currentUser,
+        IChangePublisher publisher)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
+        _publisher = publisher;
     }
 
     public async Task Handle(CompleteLessonCommand request, CancellationToken cancellationToken)
@@ -107,6 +110,18 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
         await AwardLessonCompletedBadgesAsync(lesson.Id, youthId, now, cancellationToken);
 
         await _audit.LogAsync("LessonCompleted", youthId, "Lesson", lesson.Id, cancellationToken: cancellationToken);
+        var cohortId = await _db.Users
+            .Where(user => user.Id == youthId)
+            .Select(user => user.CohortId)
+            .FirstOrDefaultAsync(cancellationToken);
+        if (cohortId is { } progressCohortId)
+        {
+            await _publisher.PublishToRoleAsync(
+                Roles.ProgramAdministrator,
+                "progressChanged",
+                new { cohortId = progressCohortId, youthId },
+                cancellationToken);
+        }
     }
 
     private async Task<bool> ModuleCompleteAsync(Guid moduleId, Guid youthId, CancellationToken ct)

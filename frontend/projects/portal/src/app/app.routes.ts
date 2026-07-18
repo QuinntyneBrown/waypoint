@@ -377,6 +377,14 @@ export const routes: Routes = [
             (module) => module.CohortDetailPage,
           ),
       },
+      {
+        path: 'cohort-progress',
+        title: 'Progress board · Word Up',
+        loadComponent: () =>
+          import('./features/admin/progress/progress-board').then(
+            (module) => module.ProgressBoardPage,
+          ),
+      },
     ],
   },
   {

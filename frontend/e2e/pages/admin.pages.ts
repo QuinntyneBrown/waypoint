@@ -150,6 +150,40 @@ export class CohortDetailPage extends BasePage {
   }
 }
 
+/** `/admin/cohort-progress` — selected cohort/track progress matrix and exports. */
+export class ProgressBoardPage extends BasePage {
+  static readonly path = '/admin/cohort-progress';
+
+  get cohortSelect() {
+    return this.page.getByLabel('Cohort');
+  }
+  get trackSelect() {
+    return this.page.getByLabel('Track');
+  }
+  get matrix() {
+    return this.page.getByTestId('progress-matrix');
+  }
+  get liveStatus() {
+    return this.page.getByTestId('progress-live-status');
+  }
+  get emptyState() {
+    return this.page.getByRole('heading', { name: 'No published modules' });
+  }
+  get exportCsv() {
+    return this.page.getByRole('button', { name: 'Export CSV' });
+  }
+  get exportPdf() {
+    return this.page.getByRole('button', { name: 'Export PDF' });
+  }
+  row(name: string) {
+    return this.page.getByTestId('progress-row').filter({ hasText: name });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(ProgressBoardPage.path);
+  }
+}
+
 /** `/admin/applications` — the Program Administrator application review queue. */
 export class ApplicationsListPage extends BasePage {
   static readonly path = '/admin/applications';

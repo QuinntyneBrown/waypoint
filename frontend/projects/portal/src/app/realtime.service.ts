@@ -10,6 +10,10 @@ import {
 import { Subject } from 'rxjs';
 
 export type RealtimeState = 'disconnected' | 'connecting' | 'connected' | 'reconnecting';
+export interface ProgressChangedEvent {
+  cohortId: string;
+  youthId: string;
+}
 
 // Traces to: L2-NFR-005, L2-ENGAGE-007, L2-ENGAGE-008
 @Injectable({ providedIn: 'root' })
@@ -19,6 +23,7 @@ export class RealtimeService {
   private readonly messageEvents = new Subject<MessageView>();
   private readonly notificationEvents = new Subject<NotificationView>();
   private readonly reconnectedEvents = new Subject<void>();
+  private readonly progressChangedEvents = new Subject<ProgressChangedEvent>();
   private connection: HubConnection | null = null;
   private connectionFor: string | null = null;
   private retryTimer: ReturnType<typeof setTimeout> | null = null;
@@ -27,6 +32,7 @@ export class RealtimeService {
   readonly messages$ = this.messageEvents.asObservable();
   readonly notifications$ = this.notificationEvents.asObservable();
   readonly reconnected$ = this.reconnectedEvents.asObservable();
+  readonly progressChanged$ = this.progressChangedEvents.asObservable();
 
   constructor() {
     effect(() => {
@@ -51,6 +57,9 @@ export class RealtimeService {
       this.connection.on('message', (message: MessageView) => this.messageEvents.next(message));
       this.connection.on('notification', (notification: NotificationView) =>
         this.notificationEvents.next({ ...notification, read: false }),
+      );
+      this.connection.on('progressChanged', (event: ProgressChangedEvent) =>
+        this.progressChangedEvents.next(event),
       );
       this.connection.onreconnecting(() => this.state.set('reconnecting'));
       this.connection.onreconnected(() => {

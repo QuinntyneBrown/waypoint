@@ -26,11 +26,11 @@ public sealed class CohortTests : IntegrationTestBase
         return await Client.SendAsync(request);
     }
 
-    private Guid SeedTrack(PublishStatus status = PublishStatus.Published)
+    private Guid SeedTrack(PublishStatus status = PublishStatus.Published, string name = "Bible")
     {
         using var scope = Factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var track = new Track { Name = "Bible", Key = $"bible-{Guid.NewGuid():N}", Status = status, Enabled = true };
+        var track = new Track { Name = name, Key = $"track-{Guid.NewGuid():N}", Status = status, Enabled = true };
         db.Add(track);
         db.SaveChanges();
         return track.Id;
@@ -303,6 +303,143 @@ public sealed class CohortTests : IntegrationTestBase
         Assert.That(row.Cells.Single(c => c.ModuleId == moduleId).State, Is.EqualTo("NotStarted"));
     }
 
+    [Test]
+    [Property("Req", "L2-ADMIN-004")]
+    public async Task Progress_board_computes_selected_track_states_averages_and_filtered_exports()
+    {
+        // Traces to: L2-ADMIN-004 AC1/AC3, L2-REPORT-003
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var primaryTrackId = SeedTrack(name: "Primary track");
+        var selectedTrackId = SeedTrack(name: "Leadership track");
+        var mentorId = SeedUser(Roles.Mentor);
+        var assignedYouthId = SeedUser(Roles.Youth);
+        var unassignedYouthId = SeedUser(Roles.Youth);
+        Guid primaryModuleId;
+        Guid selectedModuleId;
+
+        var create = await SendAsync(HttpMethod.Post, "/api/cohorts", new
+        {
+            name = "Multi-track progress",
+            trackId = primaryTrackId,
+            leadMentorId = mentorId,
+        }, adminToken);
+        var cohortId = (await create.Content.ReadFromJsonAsync<CohortResultDto>())!.Id;
+        await SendAsync(HttpMethod.Post, $"/api/cohorts/{cohortId}/youth", new { youthId = assignedYouthId }, adminToken);
+        await SendAsync(HttpMethod.Post, $"/api/cohorts/{cohortId}/youth", new { youthId = unassignedYouthId }, adminToken);
+
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var primaryModule = new Module
+            {
+                TrackId = primaryTrackId,
+                Name = "Primary module",
+                Order = 1,
+                Status = PublishStatus.Published,
+            };
+            var selectedModule = new Module
+            {
+                TrackId = selectedTrackId,
+                Name = "Leadership module",
+                Order = 1,
+                Status = PublishStatus.Published,
+            };
+            var lessonOne = new Lesson
+            {
+                ModuleId = selectedModule.Id,
+                Title = "Lead with care",
+                Order = 1,
+                Status = PublishStatus.Published,
+            };
+            var lessonTwo = new Lesson
+            {
+                ModuleId = selectedModule.Id,
+                Title = "Serve the community",
+                Order = 2,
+                Status = PublishStatus.Published,
+            };
+            var quiz = new Quiz { ModuleId = selectedModule.Id };
+            db.Modules.AddRange(primaryModule, selectedModule);
+            db.Lessons.AddRange(lessonOne, lessonTwo);
+            db.Quizzes.Add(quiz);
+            db.YouthTrackEnrollments.Add(new YouthTrackEnrollment
+            {
+                YouthUserId = assignedYouthId,
+                TrackId = selectedTrackId,
+            });
+            db.LessonProgress.AddRange(
+                new LessonProgress
+                {
+                    YouthUserId = assignedYouthId,
+                    LessonId = lessonOne.Id,
+                    Status = ProgressStatus.Completed,
+                },
+                new LessonProgress
+                {
+                    YouthUserId = assignedYouthId,
+                    LessonId = lessonTwo.Id,
+                    Status = ProgressStatus.Completed,
+                });
+            db.QuizAttempts.Add(new QuizAttempt
+            {
+                YouthUserId = assignedYouthId,
+                QuizId = quiz.Id,
+                AttemptNumber = 1,
+                AutoScore = 80,
+                ApprovedScore = 88,
+                ApprovedAt = DateTime.UtcNow,
+                IsSubmitted = true,
+            });
+            await db.SaveChangesAsync();
+            primaryModuleId = primaryModule.Id;
+            selectedModuleId = selectedModule.Id;
+        }
+
+        var progress = await SendAsync(
+            HttpMethod.Get,
+            $"/api/cohorts/{cohortId}/progress?trackId={selectedTrackId}",
+            null,
+            adminToken);
+        Assert.That(progress.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var board = await progress.Content.ReadFromJsonAsync<ProgressBoardDto>();
+        var assigned = board!.Rows.Single(row => row.YouthId == assignedYouthId);
+        var unassigned = board.Rows.Single(row => row.YouthId == unassignedYouthId);
+        Assert.Multiple(() =>
+        {
+            Assert.That(board.TrackId, Is.EqualTo(selectedTrackId));
+            Assert.That(board.TrackName, Is.EqualTo("Leadership track"));
+            Assert.That(board.Modules.Select(module => module.ModuleId),
+                Is.EqualTo(new[] { selectedModuleId }));
+            Assert.That(board.Modules.Select(module => module.ModuleId), Does.Not.Contain(primaryModuleId));
+            Assert.That(assigned.Cells.Single().State, Is.EqualTo("Done"));
+            Assert.That(assigned.QuizAverage, Is.EqualTo(88));
+            Assert.That(assigned.OverallPercent, Is.EqualTo(1));
+            Assert.That(unassigned.Cells.Single().State, Is.EqualTo("NotAssigned"));
+            Assert.That(board.Modules.Single().AveragePercent, Is.EqualTo(1));
+            Assert.That(board.CohortAveragePercent, Is.EqualTo(1));
+        });
+
+        var csv = await SendAsync(
+            HttpMethod.Get,
+            $"/api/cohorts/{cohortId}/progress/export?format=csv&trackId={selectedTrackId}",
+            null,
+            adminToken);
+        Assert.That(csv.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var csvContent = await csv.Content.ReadAsStringAsync();
+        Assert.That(csvContent, Does.Contain("Leadership module"));
+        Assert.That(csvContent, Does.Contain("Done"));
+        Assert.That(csvContent, Does.Not.Contain("Primary module"));
+
+        var pdf = await SendAsync(
+            HttpMethod.Get,
+            $"/api/cohorts/{cohortId}/progress/export?format=pdf&trackId={selectedTrackId}",
+            null,
+            adminToken);
+        Assert.That(pdf.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var pdfBytes = await pdf.Content.ReadAsByteArrayAsync();
+        Assert.That(System.Text.Encoding.ASCII.GetString(pdfBytes, 0, 8), Does.StartWith("%PDF-1.4"));
+    }
+
     private sealed record CohortResultDto(Guid Id);
     private sealed record CohortSummaryDto(
         Guid Id,
@@ -334,10 +471,14 @@ public sealed class CohortTests : IntegrationTestBase
         IReadOnlyList<CohortOptionDto> Mentors);
     private sealed record CohortOptionDto(Guid Id, string Name);
     private sealed record ProgressBoardDto(
+        Guid CohortId,
+        string CohortName,
+        Guid TrackId,
+        string TrackName,
         List<ModuleColumnDto> Modules,
         List<YouthRowDto> Rows,
         double CohortAveragePercent);
-    private sealed record ModuleColumnDto(Guid ModuleId, string Name);
+    private sealed record ModuleColumnDto(Guid ModuleId, string Name, double AveragePercent);
     private sealed record YouthRowDto(
         Guid YouthId,
         string YouthName,

@@ -62,3 +62,33 @@ export interface EditCohortRequest {
 export interface CohortResult {
   id: string;
 }
+
+export interface ProgressBoard {
+  cohortId: string;
+  cohortName: string;
+  trackId: string;
+  trackName: string;
+  modules: ProgressModule[];
+  rows: ProgressYouthRow[];
+  cohortAveragePercent: number;
+}
+
+export interface ProgressModule {
+  moduleId: string;
+  name: string;
+  averagePercent: number;
+}
+
+export interface ProgressYouthRow {
+  youthId: string;
+  youthName: string;
+  cells: ProgressCell[];
+  quizAverage: number;
+  overallPercent: number;
+}
+
+export interface ProgressCell {
+  moduleId: string;
+  state: 'Done' | 'InProgress' | 'NotStarted' | 'NotAssigned';
+  percent: number;
+}

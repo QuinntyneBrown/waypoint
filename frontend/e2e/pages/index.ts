@@ -63,6 +63,7 @@ export {
   PersonDetailPage,
   CohortsPage,
   CohortDetailPage,
+  ProgressBoardPage,
   ApplicationsListPage,
 } from './admin.pages';
 export {

@@ -188,7 +188,10 @@ requirement conflicts early (they gate "done").
       authoritative enabled-track/active-mentor creation options, dates/location capture, named
       detail, audited lead/name/location edits, and integrity-checked existing-youth membership with
       track enrollment, live counts, person-record links, and an invitation hand-off.
-- [ ] **G5** Progress board (+ live, export) `L2-ADMIN-004`, `L2-REPORT-003`
+- [x] **G5** Progress board (+ live, export) `L2-ADMIN-004`, `L2-REPORT-003` — selected
+      cohort/track matrices derive authoritative assignment, lesson completion, quiz and aggregate
+      states; role-scoped progress events refresh the current board live, while filtered CSV/PDF
+      exports and contained sticky-column mobile scrolling cover reporting and narrow screens.
 - [ ] **G6** Mentor assignment / caseload `L2-ADMIN-005`
 - [ ] **G7** Organization settings + term lifecycle `L2-ADMIN-006`
 - [ ] **G8** Curriculum builder `L2-CURRIC-001..006`
@@ -196,7 +199,8 @@ requirement conflicts early (they gate "done").
 - [ ] **G10** Attendance administration/history `L2-ENGAGE-002..004`
 - [ ] **G11** Announcement administration `L2-ENGAGE-006`
 - [ ] **G12** Reports hub + standard reports `L2-REPORT-001`
-- [ ] **G13** Data export (PDF + targets) `L2-REPORT-003`
+- [~] **G13** Data export (PDF + targets) `L2-REPORT-003` — progress-board CSV/PDF exports use the
+      selected cohort and track and are audited; the remaining export targets still need delivery.
 - [ ] **G14** Roster import UI `L2-REPORT-004`
 - [ ] **G15** Audit log UI `L2-CONSENT-003`
 
@@ -428,3 +432,10 @@ requirement conflicts early (they gate "done").
   unassigned active youth rejects wrong roles and cross-cohort moves, enrolls the cohort track, and
   updates membership immediately. Six cohort integrations, the production build, and desktop/mobile
   creation, detail, edit, membership, empty, retry, keyboard, touch, and reflow acceptance pass.
+- 2026-07-18 — G5 done: admins can select a cohort and any enabled published track to see
+  authoritative done, in-progress, not-started, and not-assigned states with per-youth, per-module,
+  quiz, and cohort aggregates. Lesson and coding mutations publish role-scoped progress events that
+  refresh the selected matrix without navigation; audited CSV and PDF downloads preserve the active
+  filters, and the sticky matrix scrolls within its container on narrow screens. Seven cohort and ten
+  learning integrations, six portal units, the production build, and three live/export/mobile browser
+  scenarios pass. G13 is partial because other export targets remain.

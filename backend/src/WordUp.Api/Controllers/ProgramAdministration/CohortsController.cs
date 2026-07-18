@@ -66,9 +66,25 @@ public class CohortsController : ControllerBase
     }
 
     [HttpGet("{id:guid}/progress")]
-    public async Task<ActionResult<ProgressBoardResult>> Progress(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<ProgressBoardResult>> Progress(
+        Guid id,
+        [FromQuery] Guid? trackId,
+        CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProgressBoardQuery(id), cancellationToken);
+        var result = await _mediator.Send(new ProgressBoardQuery(id, trackId), cancellationToken);
         return Ok(result);
+    }
+
+    [HttpGet("{id:guid}/progress/export")]
+    public async Task<IActionResult> ExportProgress(
+        Guid id,
+        [FromQuery] string format,
+        [FromQuery] Guid? trackId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new ProgressBoardExportQuery(format, id, trackId),
+            cancellationToken);
+        return File(result.Content, result.ContentType, result.FileName);
     }
 }

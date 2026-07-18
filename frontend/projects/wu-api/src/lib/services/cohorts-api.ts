@@ -9,6 +9,7 @@ import {
   CohortSummary,
   CreateCohortRequest,
   EditCohortRequest,
+  ProgressBoard,
 } from '../models/cohorts/cohorts';
 
 @Injectable({ providedIn: 'root' })
@@ -38,5 +39,18 @@ export class CohortsApi {
 
   addYouth(id: string, youthId: string): Observable<void> {
     return this.http.post<void>(`${this.base}/api/cohorts/${id}/youth`, { youthId });
+  }
+
+  progress(cohortId: string, trackId: string): Observable<ProgressBoard> {
+    return this.http.get<ProgressBoard>(`${this.base}/api/cohorts/${cohortId}/progress`, {
+      params: { trackId },
+    });
+  }
+
+  exportProgress(cohortId: string, trackId: string, format: 'csv' | 'pdf'): Observable<Blob> {
+    return this.http.get(`${this.base}/api/cohorts/${cohortId}/progress/export`, {
+      params: { trackId, format },
+      responseType: 'blob',
+    });
   }
 }

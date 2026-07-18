@@ -15,13 +15,20 @@ public sealed class SaveCodingProgressCommandHandler : IRequestHandler<SaveCodin
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IChangePublisher _publisher;
 
-    public SaveCodingProgressCommandHandler(IAppDbContext db, IClock clock, IAuditLogger audit, ICurrentUser currentUser)
+    public SaveCodingProgressCommandHandler(
+        IAppDbContext db,
+        IClock clock,
+        IAuditLogger audit,
+        ICurrentUser currentUser,
+        IChangePublisher publisher)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
+        _publisher = publisher;
     }
 
     public async Task<CodingProgressResult> Handle(SaveCodingProgressCommand request, CancellationToken cancellationToken)
@@ -81,6 +88,18 @@ public sealed class SaveCodingProgressCommandHandler : IRequestHandler<SaveCodin
             "Lesson",
             access.Lesson.Id,
             cancellationToken: cancellationToken);
+        var cohortId = await _db.Users
+            .Where(user => user.Id == youthId)
+            .Select(user => user.CohortId)
+            .FirstOrDefaultAsync(cancellationToken);
+        if (cohortId is { } progressCohortId)
+        {
+            await _publisher.PublishToRoleAsync(
+                Roles.ProgramAdministrator,
+                "progressChanged",
+                new { cohortId = progressCohortId, youthId },
+                cancellationToken);
+        }
 
         var percent = stepIds.Count == 0 ? 0 : checkedIds.Count * 100 / stepIds.Count;
         return new CodingProgressResult(checkedIds.Count, stepIds.Count, percent, workspace.CompletedAt is not null, badgeEarned);

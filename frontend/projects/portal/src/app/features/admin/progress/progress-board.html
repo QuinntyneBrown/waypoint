@@ -1,0 +1,164 @@
+<wu-shell
+  role="admin"
+  active="cohort-progress"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Learning outcomes</div>
+        <h1 class="wu-page__title">Progress board</h1>
+        <p class="wu-page__sub">Every youth across every published module in the selected track.</p>
+      </div>
+      <span
+        class="wu-badge"
+        data-testid="progress-live-status"
+        [class.wu-badge--success]="realtime.state() === 'connected'"
+      >
+        {{ realtime.state() === 'connected' ? 'Live updates on' : 'Connecting live updates…' }}
+      </span>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <div class="wu-alert wu-alert--error" role="alert">
+        <div>{{ error }}</div>
+        <button class="wu-btn wu-btn--secondary" type="button" (click)="refresh()">Retry</button>
+      </div>
+    }
+
+    <section class="wu-card wu-mb-5" aria-label="Progress board filters">
+      <div class="wu-card__body wu-stack">
+        <div class="board-filters">
+          <div class="wu-field">
+            <label class="wu-label" for="progress-cohort">Cohort</label>
+            <select
+              #cohortSelect
+              class="wu-select"
+              id="progress-cohort"
+              [value]="cohortId()"
+              [disabled]="loadingOptions()"
+              (change)="selectCohort(cohortSelect.value)"
+            >
+              @for (cohort of cohorts(); track cohort.id) {
+                <option [value]="cohort.id">{{ cohort.name }}</option>
+              }
+            </select>
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="progress-track">Track</label>
+            <select
+              #trackSelect
+              class="wu-select"
+              id="progress-track"
+              [value]="trackId()"
+              [disabled]="loadingOptions()"
+              (change)="selectTrack(trackSelect.value)"
+            >
+              @for (track of options().tracks; track track.id) {
+                <option [value]="track.id">{{ track.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <div class="board-actions">
+          <button class="wu-btn wu-btn--secondary" type="button" (click)="refresh()">
+            Refresh
+          </button>
+          <button
+            class="wu-btn wu-btn--secondary"
+            type="button"
+            [disabled]="!board()?.modules?.length || exporting() !== null"
+            (click)="download('csv')"
+          >
+            {{ exporting() === 'csv' ? 'Exporting…' : 'Export CSV' }}
+          </button>
+          <button
+            class="wu-btn wu-btn--secondary"
+            type="button"
+            [disabled]="!board()?.modules?.length || exporting() !== null"
+            (click)="download('pdf')"
+          >
+            {{ exporting() === 'pdf' ? 'Exporting…' : 'Export PDF' }}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    @if (loadingOptions() || (!board() && !errorMessage())) {
+      <p class="wu-muted" role="status">Loading progress board…</p>
+    } @else if (board(); as result) {
+      @if (result.modules.length === 0) {
+        <div class="wu-empty">
+          <div class="wu-empty__icon"><wu-icon name="bar-chart" /></div>
+          <h2 class="wu-empty__title">No published modules</h2>
+          <p class="wu-empty__text">
+            {{ result.trackName }} has no published modules to show yet. Choose another track or
+            publish curriculum content.
+          </p>
+        </div>
+      } @else {
+        <div class="matrix-wrap" data-testid="progress-matrix">
+          <table class="matrix" aria-label="Progress board" [style.min-width.px]="matrixWidth()">
+            <thead>
+              <tr>
+                <th scope="col">Youth</th>
+                @for (module of result.modules; track module.moduleId) {
+                  <th scope="col">{{ module.name }}</th>
+                }
+                <th scope="col">Quiz average</th>
+                <th scope="col">Overall</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of result.rows; track row.youthId) {
+                <tr data-testid="progress-row">
+                  <th scope="row">{{ row.youthName }}</th>
+                  @for (cell of row.cells; track cell.moduleId; let index = $index) {
+                    <td class="module-cell">
+                      <span class="module-cell__name">{{ result.modules[index].name }}</span>
+                      <span
+                        class="state"
+                        [class.state--done]="cell.state === 'Done'"
+                        [class.state--progress]="cell.state === 'InProgress'"
+                        [class.state--unassigned]="cell.state === 'NotAssigned'"
+                      >
+                        {{ stateLabel(cell.state) }}
+                      </span>
+                    </td>
+                  }
+                  <td>{{ whole(row.quizAverage) }}%</td>
+                  <td>
+                    <strong>{{ percent(row.overallPercent) }}%</strong>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td [attr.colspan]="result.modules.length + 3" class="wu-muted">
+                    No youth are assigned to this cohort.
+                  </td>
+                </tr>
+              }
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">Cohort average</th>
+                @for (module of result.modules; track module.moduleId) {
+                  <td>{{ percent(module.averagePercent) }}%</td>
+                }
+                <td>—</td>
+                <td>{{ percent(result.cohortAveragePercent) }}%</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      }
+    } @else if (!errorMessage() && cohorts().length === 0) {
+      <div class="wu-empty">
+        <div class="wu-empty__icon"><wu-icon name="layers" /></div>
+        <h2 class="wu-empty__title">No cohorts available</h2>
+        <p class="wu-empty__text">Create a cohort before opening the progress board.</p>
+      </div>
+    }
+  </div>
+</wu-shell>
