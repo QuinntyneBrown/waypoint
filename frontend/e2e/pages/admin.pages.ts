@@ -90,6 +90,66 @@ export class PersonDetailPage extends BasePage {
   }
 }
 
+/** `/admin/cohorts` — cohort list and creation flow. */
+export class CohortsPage extends BasePage {
+  static readonly path = '/admin/cohorts';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Cohorts', exact: true });
+  }
+  get createButton() {
+    return this.page.getByRole('button', { name: 'New cohort' });
+  }
+  get createDialog() {
+    return this.page.getByRole('dialog', { name: 'Create cohort' });
+  }
+  get emptyState() {
+    return this.page.getByRole('heading', { name: 'No cohorts yet' });
+  }
+  get retry() {
+    return this.page.getByRole('button', { name: 'Retry' });
+  }
+  card(name: string) {
+    return this.page.getByTestId('cohort-card').filter({ hasText: name });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(CohortsPage.path);
+  }
+}
+
+/** `/admin/cohorts/:id` — cohort details, editing, and membership. */
+export class CohortDetailPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get memberCount() {
+    return this.page.getByTestId('cohort-member-count');
+  }
+  get editButton() {
+    return this.page.getByRole('button', { name: 'Edit cohort' });
+  }
+  get editDialog() {
+    return this.page.getByRole('dialog', { name: 'Edit cohort' });
+  }
+  get youthSelect() {
+    return this.page.getByLabel('Add existing youth');
+  }
+  get addYouth() {
+    return this.page.getByRole('button', { name: 'Add youth' });
+  }
+  get inviteYouth() {
+    return this.page.getByRole('link', { name: 'Invite a youth' });
+  }
+  member(name: string) {
+    return this.page.getByTestId('cohort-member').filter({ hasText: name });
+  }
+
+  async goto(id: string): Promise<void> {
+    await this.page.goto(`/admin/cohorts/${id}`);
+  }
+}
+
 /** `/admin/applications` — the Program Administrator application review queue. */
 export class ApplicationsListPage extends BasePage {
   static readonly path = '/admin/applications';

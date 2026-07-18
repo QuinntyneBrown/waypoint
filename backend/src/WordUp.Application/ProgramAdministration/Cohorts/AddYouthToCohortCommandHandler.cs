@@ -10,12 +10,18 @@ public class AddYouthToCohortCommandHandler : IRequestHandler<AddYouthToCohortCo
     private readonly IAppDbContext _db;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IClock _clock;
 
-    public AddYouthToCohortCommandHandler(IAppDbContext db, IAuditLogger audit, ICurrentUser currentUser)
+    public AddYouthToCohortCommandHandler(
+        IAppDbContext db,
+        IAuditLogger audit,
+        ICurrentUser currentUser,
+        IClock clock)
     {
         _db = db;
         _audit = audit;
         _currentUser = currentUser;
+        _clock = clock;
     }
 
     public async Task Handle(AddYouthToCohortCommand request, CancellationToken cancellationToken)
@@ -25,8 +31,28 @@ public class AddYouthToCohortCommandHandler : IRequestHandler<AddYouthToCohortCo
 
         var youth = await _db.Users.FirstOrDefaultAsync(u => u.Id == request.YouthId, cancellationToken)
             ?? throw new NotFoundException("User not found.");
+        if (youth.Role != Roles.Youth || youth.Status != UserStatus.Active)
+        {
+            throw new ConflictException("Choose an active youth account.");
+        }
+        if (youth.CohortId is { } existingCohortId && existingCohortId != cohort.Id)
+        {
+            throw new ConflictException("This youth already belongs to another cohort.");
+        }
 
         youth.CohortId = cohort.Id;
+        if (cohort.TrackId is { } trackId
+            && !await _db.YouthTrackEnrollments.AnyAsync(
+                item => item.YouthUserId == youth.Id && item.TrackId == trackId,
+                cancellationToken))
+        {
+            _db.YouthTrackEnrollments.Add(new YouthTrackEnrollment
+            {
+                YouthUserId = youth.Id,
+                TrackId = trackId,
+                EnrolledAt = _clock.UtcNow,
+            });
+        }
         await _db.SaveChangesAsync(cancellationToken);
 
         await _audit.LogAsync("CohortYouthAdded", _currentUser.UserId, "Cohort", cohort.Id);

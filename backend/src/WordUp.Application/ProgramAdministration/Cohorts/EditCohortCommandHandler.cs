@@ -25,13 +25,20 @@ public class EditCohortCommandHandler : IRequestHandler<EditCohortCommand>
 
         cohort.Name = request.Name.Trim();
 
-        if (request.Location is not null)
-        {
-            cohort.Location = request.Location;
-        }
+        cohort.Location = string.IsNullOrWhiteSpace(request.Location) ? null : request.Location.Trim();
 
         if (request.LeadMentorId is { } leadMentorId)
         {
+            var mentorExists = await _db.Users.AnyAsync(
+                user => user.Id == leadMentorId
+                    && user.Role == Roles.Mentor
+                    && user.Status == UserStatus.Active,
+                cancellationToken);
+            if (!mentorExists)
+            {
+                throw new ConflictException("Choose an active mentor as cohort lead.");
+            }
+
             cohort.MentorId = leadMentorId;
 
             // Keep the lead CohortMentor row in step with the cohort's lead mentor (L2-ADMIN-003 AC3).

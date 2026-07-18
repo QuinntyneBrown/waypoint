@@ -1,5 +1,7 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
+using WordUp.Application.Shared.Common;
 
 namespace WordUp.Application.ProgramAdministration.Cohorts;
 
@@ -18,6 +20,26 @@ public class CreateCohortCommandHandler : IRequestHandler<CreateCohortCommand, C
 
     public async Task<CohortResult> Handle(CreateCohortCommand request, CancellationToken cancellationToken)
     {
+        var trackExists = await _db.Tracks.AnyAsync(
+            track => track.Id == request.TrackId
+                && track.Enabled
+                && track.Status == PublishStatus.Published,
+            cancellationToken);
+        if (!trackExists)
+        {
+            throw new ConflictException("Choose an enabled, published curriculum track.");
+        }
+
+        var leadMentorExists = await _db.Users.AnyAsync(
+            user => user.Id == request.LeadMentorId
+                && user.Role == Roles.Mentor
+                && user.Status == UserStatus.Active,
+            cancellationToken);
+        if (!leadMentorExists)
+        {
+            throw new ConflictException("Choose an active mentor as cohort lead.");
+        }
+
         var cohort = new Cohort
         {
             Name = request.Name.Trim(),
@@ -25,7 +47,7 @@ public class CreateCohortCommandHandler : IRequestHandler<CreateCohortCommand, C
             MentorId = request.LeadMentorId,
             TermStart = request.StartDate ?? default,
             TermEnd = request.EndDate ?? default,
-            Location = request.Location,
+            Location = string.IsNullOrWhiteSpace(request.Location) ? null : request.Location.Trim(),
         };
 
         _db.Cohorts.Add(cohort);

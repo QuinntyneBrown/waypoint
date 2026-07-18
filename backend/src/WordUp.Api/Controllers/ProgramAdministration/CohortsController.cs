@@ -38,6 +38,18 @@ public class CohortsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("options")]
+    public async Task<ActionResult<CohortOptions>> Options(CancellationToken cancellationToken)
+    {
+        return Ok(await _mediator.Send(new CohortOptionsQuery(), cancellationToken));
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<CohortDetail>> Detail(Guid id, CancellationToken cancellationToken)
+    {
+        return Ok(await _mediator.Send(new GetCohortQuery(id), cancellationToken));
+    }
+
     [HttpPost("{id:guid}/youth")]
     public async Task<IActionResult> AddYouth(Guid id, [FromBody] AddYouthRequest request, CancellationToken cancellationToken)
     {

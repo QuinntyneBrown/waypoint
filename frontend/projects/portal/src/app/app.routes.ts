@@ -363,6 +363,20 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/admin/applications/applications-list').then((m) => m.ApplicationsList),
       },
+      {
+        path: 'cohorts',
+        title: 'Cohorts · Word Up',
+        loadComponent: () =>
+          import('./features/admin/cohorts/cohorts-list').then((module) => module.CohortsListPage),
+      },
+      {
+        path: 'cohorts/:id',
+        title: 'Cohort detail · Word Up',
+        loadComponent: () =>
+          import('./features/admin/cohorts/cohort-detail').then(
+            (module) => module.CohortDetailPage,
+          ),
+      },
     ],
   },
   {

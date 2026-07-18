@@ -1,0 +1,189 @@
+<wu-shell
+  role="admin"
+  active="cohorts"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Program</div>
+        <h1 class="wu-page__title">Cohorts</h1>
+        <p class="wu-page__sub">Create cohorts and manage their membership and lead mentor.</p>
+      </div>
+      <button class="wu-btn wu-btn--primary" type="button" (click)="openCreate()">
+        New cohort
+      </button>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <div class="wu-alert wu-alert--error" role="alert">
+        <div>
+          <div class="wu-alert__title">{{ error }}</div>
+          Cohort data could not be loaded or saved.
+        </div>
+        <button class="wu-btn wu-btn--secondary" type="button" (click)="retry()">Retry</button>
+      </div>
+    }
+    @if (outcome(); as message) {
+      <p class="wu-alert wu-alert--success" role="status">{{ message }}</p>
+    }
+
+    @if (loading()) {
+      <p class="wu-muted" role="status">Loading cohorts…</p>
+    } @else if (cohorts()!.length > 0) {
+      <div class="cohort-grid">
+        @for (cohort of cohorts(); track cohort.id) {
+          <article class="wu-card cohort-card" data-testid="cohort-card">
+            <div class="wu-card__body wu-stack">
+              <div>
+                <div class="wu-eyebrow">{{ cohort.trackName ?? 'Track not assigned' }}</div>
+                <h2>
+                  <a [routerLink]="[cohort.id]">{{ cohort.name }}</a>
+                </h2>
+              </div>
+              <div class="cohort-card__meta">
+                <span><strong>Lead:</strong> {{ cohort.mentorName ?? 'Not assigned' }}</span>
+                <span><strong>Members:</strong> {{ cohort.memberCount }}</span>
+                <span><strong>Location:</strong> {{ cohort.location ?? 'Not set' }}</span>
+                <span>
+                  <strong>Dates:</strong>
+                  @if (hasDate(cohort.startDate) && hasDate(cohort.endDate)) {
+                    {{ cohort.startDate | date: 'mediumDate' }}–{{
+                      cohort.endDate | date: 'mediumDate'
+                    }}
+                  } @else {
+                    Not scheduled
+                  }
+                </span>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    } @else if (!errorMessage()) {
+      <div class="wu-empty">
+        <div class="wu-empty__icon"><wu-icon name="layers" /></div>
+        <h2 class="wu-empty__title">No cohorts yet</h2>
+        <p class="wu-empty__text">Create the first cohort to begin placing young people.</p>
+        <button class="wu-btn wu-btn--primary" type="button" (click)="openCreate()">
+          New cohort
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (createOpen()) {
+    <div
+      class="wu-modal wu-modal--lg is-open"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="create-cohort-heading"
+      (keydown.escape)="closeCreate()"
+    >
+      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__panel">
+        <div class="wu-modal__header">
+          <div>
+            <h2 class="wu-modal__title" id="create-cohort-heading">Create cohort</h2>
+            <p class="wu-modal__sub">Choose the learning track and accountable lead mentor.</p>
+          </div>
+          <button
+            class="wu-iconbtn wu-modal__close"
+            type="button"
+            aria-label="Close"
+            [disabled]="saving()"
+            (click)="closeCreate()"
+          >
+            <wu-icon name="x" />
+          </button>
+        </div>
+        <div class="wu-modal__body">
+          @if ((options()?.tracks?.length ?? 0) === 0 || (options()?.mentors?.length ?? 0) === 0) {
+            <div class="wu-alert wu-alert--warning">
+              An enabled published track and an active mentor are required before a cohort can be
+              created.
+            </div>
+          }
+          <form class="form-grid" [formGroup]="form" (ngSubmit)="create()">
+            <div class="wu-field form-grid__wide">
+              <label class="wu-label" for="cohort-name">
+                Cohort name <span class="wu-label__req">*</span>
+              </label>
+              <input class="wu-input" id="cohort-name" formControlName="name" maxlength="128" />
+              @if (form.controls.name.touched && form.controls.name.invalid) {
+                <p class="wu-field__error">Enter a cohort name.</p>
+              }
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="cohort-track">
+                Curriculum track <span class="wu-label__req">*</span>
+              </label>
+              <select class="wu-select" id="cohort-track" formControlName="trackId">
+                <option value="">Choose a track</option>
+                @for (track of options()?.tracks ?? []; track track.id) {
+                  <option [value]="track.id">{{ track.name }}</option>
+                }
+              </select>
+              @if (form.controls.trackId.touched && form.controls.trackId.invalid) {
+                <p class="wu-field__error">Choose a curriculum track.</p>
+              }
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="cohort-mentor">
+                Lead mentor <span class="wu-label__req">*</span>
+              </label>
+              <select class="wu-select" id="cohort-mentor" formControlName="leadMentorId">
+                <option value="">Choose a mentor</option>
+                @for (mentor of options()?.mentors ?? []; track mentor.id) {
+                  <option [value]="mentor.id">{{ mentor.name }}</option>
+                }
+              </select>
+              @if (form.controls.leadMentorId.touched && form.controls.leadMentorId.invalid) {
+                <p class="wu-field__error">Choose an active lead mentor.</p>
+              }
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="cohort-start">Start date</label>
+              <input class="wu-input" id="cohort-start" type="date" formControlName="startDate" />
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="cohort-end">End date</label>
+              <input class="wu-input" id="cohort-end" type="date" formControlName="endDate" />
+              @if (dateError()) {
+                <p class="wu-field__error">End date must be after start date.</p>
+              }
+            </div>
+            <div class="wu-field form-grid__wide">
+              <label class="wu-label" for="cohort-location">Meeting location</label>
+              <input
+                class="wu-input"
+                id="cohort-location"
+                formControlName="location"
+                maxlength="256"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="wu-modal__footer">
+          <button
+            class="wu-btn wu-btn--ghost"
+            type="button"
+            [disabled]="saving()"
+            (click)="closeCreate()"
+          >
+            Cancel
+          </button>
+          <button
+            class="wu-btn wu-btn--primary"
+            type="button"
+            [disabled]="saving()"
+            (click)="create()"
+          >
+            {{ saving() ? 'Creating…' : 'Create cohort' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</wu-shell>

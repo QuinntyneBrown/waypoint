@@ -184,7 +184,10 @@ requirement conflicts early (they gate "done").
       operational notes, and account tabs; audited reset/role/lifecycle actions use explicit warnings
       and confirmations, revoke current sessions immediately, preserve reporting records, and enforce
       irreversible removal as a distinct historical state excluded from active directory use.
-- [ ] **G4** Cohorts & cohort detail `L2-ADMIN-003`
+- [x] **G4** Cohorts & cohort detail `L2-ADMIN-003` — responsive populated/empty/retry list,
+      authoritative enabled-track/active-mentor creation options, dates/location capture, named
+      detail, audited lead/name/location edits, and integrity-checked existing-youth membership with
+      track enrollment, live counts, person-record links, and an invitation hand-off.
 - [ ] **G5** Progress board (+ live, export) `L2-ADMIN-004`, `L2-REPORT-003`
 - [ ] **G6** Mentor assignment / caseload `L2-ADMIN-005`
 - [ ] **G7** Organization settings + term lifecycle `L2-ADMIN-006`
@@ -418,3 +421,10 @@ requirement conflicts early (they gate "done").
   excluded from the active directory while retaining progress for reports. All 177 backend
   integrations, four backend units, six portal units, the production build, and desktop/mobile
   acceptance pass.
+- 2026-07-18 — G4 done: admins can create cohorts only from enabled published tracks and active
+  mentors, capture term dates/location, browse named cohort cards, and recover list loads or start
+  from a labelled empty state. Detail pages show the track, lead, term, location, member count, and
+  status-aware roster; audited edits keep the cohort lead association synchronized, while adding an
+  unassigned active youth rejects wrong roles and cross-cohort moves, enrolls the cohort track, and
+  updates membership immediately. Six cohort integrations, the production build, and desktop/mobile
+  creation, detail, edit, membership, empty, retry, keyboard, touch, and reflow acceptance pass.

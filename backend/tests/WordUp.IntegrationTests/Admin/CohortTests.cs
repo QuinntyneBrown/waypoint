@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Infrastructure;
 
@@ -67,10 +68,63 @@ public sealed class CohortTests : IntegrationTestBase
         var result = await create.Content.ReadFromJsonAsync<CohortResultDto>();
         Assert.That(result!.Id, Is.Not.EqualTo(Guid.Empty));
 
+        var detailResponse = await SendAsync(HttpMethod.Get, $"/api/cohorts/{result.Id}", null, adminToken);
+        var detail = await detailResponse.Content.ReadFromJsonAsync<CohortDetailDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(detail!.Name, Is.EqualTo("Fall 2026"));
+            Assert.That(detail.TrackName, Is.EqualTo("Bible"));
+            Assert.That(detail.LeadMentorId, Is.EqualTo(mentorId));
+            Assert.That(detail.Location, Is.EqualTo("Lagos"));
+        });
+
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            Assert.That(await db.AuditEntries.AnyAsync(entry =>
+                entry.Action == "CohortCreated" && entry.TargetId == result.Id), Is.True);
+        }
+
         var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
         var forbidden = await SendAsync(HttpMethod.Post, "/api/cohorts",
             new { name = "Nope", trackId, leadMentorId = mentorId }, youthToken);
         Assert.That(forbidden.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+    }
+
+    [Test]
+    [Property("Req", "L2-ADMIN-003")]
+    public async Task Create_requires_real_enabled_track_active_mentor_and_ordered_dates()
+    {
+        // Traces to: L2-ADMIN-003 AC1
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var trackId = SeedTrack();
+        var mentorId = SeedUser(Roles.Mentor);
+
+        var missingTrack = await SendAsync(HttpMethod.Post, "/api/cohorts", new
+        {
+            name = "Missing track",
+            trackId = Guid.NewGuid(),
+            leadMentorId = mentorId,
+        }, adminToken);
+        Assert.That(missingTrack.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+
+        var wrongMentor = await SendAsync(HttpMethod.Post, "/api/cohorts", new
+        {
+            name = "Wrong mentor",
+            trackId,
+            leadMentorId = SeedUser(Roles.Volunteer),
+        }, adminToken);
+        Assert.That(wrongMentor.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+
+        var reversedDates = await SendAsync(HttpMethod.Post, "/api/cohorts", new
+        {
+            name = "Reversed dates",
+            trackId,
+            leadMentorId = mentorId,
+            startDate = new DateTime(2027, 1, 1),
+            endDate = new DateTime(2026, 1, 1),
+        }, adminToken);
+        Assert.That(reversedDates.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     [Test]
@@ -94,6 +148,114 @@ public sealed class CohortTests : IntegrationTestBase
         var cohorts = await list.Content.ReadFromJsonAsync<List<CohortSummaryDto>>();
         var summary = cohorts!.Single(c => c.Id == cohortId);
         Assert.That(summary.MemberCount, Is.EqualTo(1));
+
+        var detailResponse = await SendAsync(HttpMethod.Get, $"/api/cohorts/{cohortId}", null, adminToken);
+        var detail = await detailResponse.Content.ReadFromJsonAsync<CohortDetailDto>();
+        Assert.That(detail!.Members.Select(member => member.Id), Does.Contain(youthId));
+        Assert.That(detail.AvailableYouth.Select(youth => youth.Id), Does.Not.Contain(youthId));
+    }
+
+    [Test]
+    [Property("Req", "L2-ADMIN-003")]
+    public async Task Cohort_options_detail_and_audited_edit_support_the_management_screen()
+    {
+        // Traces to: L2-ADMIN-003 AC2/AC3
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var trackId = SeedTrack();
+        var mentorId = SeedUser(Roles.Mentor);
+        var replacementMentorId = SeedUser(Roles.Mentor);
+        var youthId = SeedUser(Roles.Youth);
+
+        var create = await SendAsync(HttpMethod.Post, "/api/cohorts", new
+        {
+            name = "Detail cohort",
+            trackId,
+            leadMentorId = mentorId,
+            startDate = new DateTime(2026, 9, 1),
+            endDate = new DateTime(2027, 1, 15),
+            location = "Old room",
+        }, adminToken);
+        var cohortId = (await create.Content.ReadFromJsonAsync<CohortResultDto>())!.Id;
+
+        var optionsResponse = await SendAsync(HttpMethod.Get, "/api/cohorts/options", null, adminToken);
+        var options = await optionsResponse.Content.ReadFromJsonAsync<CohortOptionsDto>();
+        Assert.That(options!.Tracks.Select(track => track.Id), Does.Contain(trackId));
+        Assert.That(options.Mentors.Select(mentor => mentor.Id), Does.Contain(replacementMentorId));
+
+        var beforeResponse = await SendAsync(HttpMethod.Get, $"/api/cohorts/{cohortId}", null, adminToken);
+        var before = await beforeResponse.Content.ReadFromJsonAsync<CohortDetailDto>();
+        Assert.That(before!.AvailableYouth.Select(youth => youth.Id), Does.Contain(youthId));
+
+        var edit = await SendAsync(HttpMethod.Post, $"/api/cohorts/{cohortId}/edit", new
+        {
+            name = "Detail cohort updated",
+            leadMentorId = replacementMentorId,
+            location = "Community hall",
+        }, adminToken);
+        Assert.That(edit.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var afterResponse = await SendAsync(HttpMethod.Get, $"/api/cohorts/{cohortId}", null, adminToken);
+        var after = await afterResponse.Content.ReadFromJsonAsync<CohortDetailDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(after!.Name, Is.EqualTo("Detail cohort updated"));
+            Assert.That(after.Location, Is.EqualTo("Community hall"));
+            Assert.That(after.LeadMentorId, Is.EqualTo(replacementMentorId));
+        });
+
+        using var scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.That(await db.AuditEntries.AnyAsync(entry =>
+            entry.Action == "CohortUpdated" && entry.TargetId == cohortId), Is.True);
+    }
+
+    [Test]
+    [Property("Req", "L2-ADMIN-003")]
+    public async Task Adding_members_rejects_non_youth_and_youth_already_in_another_cohort()
+    {
+        // Traces to: L2-ADMIN-003 AC2
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var trackId = SeedTrack();
+        var mentorId = SeedUser(Roles.Mentor);
+        var volunteerId = SeedUser(Roles.Volunteer);
+        var placedYouthId = SeedUser(Roles.Youth);
+        Guid otherCohortId;
+
+        var create = await SendAsync(HttpMethod.Post, "/api/cohorts", new
+        {
+            name = "Membership target",
+            trackId,
+            leadMentorId = mentorId,
+        }, adminToken);
+        var cohortId = (await create.Content.ReadFromJsonAsync<CohortResultDto>())!.Id;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var other = new Cohort { Name = "Other cohort" };
+            db.Cohorts.Add(other);
+            (await db.Users.SingleAsync(user => user.Id == placedYouthId)).CohortId = other.Id;
+            await db.SaveChangesAsync();
+            otherCohortId = other.Id;
+        }
+
+        var wrongRole = await SendAsync(
+            HttpMethod.Post,
+            $"/api/cohorts/{cohortId}/youth",
+            new { youthId = volunteerId },
+            adminToken);
+        Assert.That(wrongRole.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+
+        var alreadyPlaced = await SendAsync(
+            HttpMethod.Post,
+            $"/api/cohorts/{cohortId}/youth",
+            new { youthId = placedYouthId },
+            adminToken);
+        Assert.That(alreadyPlaced.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+
+        using var verifyScope = Factory.Services.CreateScope();
+        var verifyDb = verifyScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.That((await verifyDb.Users.SingleAsync(user => user.Id == placedYouthId)).CohortId,
+            Is.EqualTo(otherCohortId));
     }
 
     [Test]
@@ -142,7 +304,35 @@ public sealed class CohortTests : IntegrationTestBase
     }
 
     private sealed record CohortResultDto(Guid Id);
-    private sealed record CohortSummaryDto(Guid Id, string Name, Guid? TrackId, Guid? MentorId, int MemberCount);
+    private sealed record CohortSummaryDto(
+        Guid Id,
+        string Name,
+        Guid? TrackId,
+        string? TrackName,
+        Guid? MentorId,
+        string? MentorName,
+        DateTime StartDate,
+        DateTime EndDate,
+        string? Location,
+        int MemberCount);
+    private sealed record CohortDetailDto(
+        Guid Id,
+        string Name,
+        Guid? TrackId,
+        string? TrackName,
+        Guid? LeadMentorId,
+        string? LeadMentorName,
+        DateTime StartDate,
+        DateTime EndDate,
+        string? Location,
+        int MemberCount,
+        IReadOnlyList<CohortYouthDto> Members,
+        IReadOnlyList<CohortYouthDto> AvailableYouth);
+    private sealed record CohortYouthDto(Guid Id, string Name, string Email);
+    private sealed record CohortOptionsDto(
+        IReadOnlyList<CohortOptionDto> Tracks,
+        IReadOnlyList<CohortOptionDto> Mentors);
+    private sealed record CohortOptionDto(Guid Id, string Name);
     private sealed record ProgressBoardDto(
         List<ModuleColumnDto> Modules,
         List<YouthRowDto> Rows,
