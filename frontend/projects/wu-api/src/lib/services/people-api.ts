@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api-base-url';
-import { ListPeopleParams, PagedPeople } from '../models/people/people';
+import { DirectoryCohort, ListPeopleParams, PagedPeople } from '../models/people/people';
 
 /** Program-administration people directory (`/api/people`, admin only). */
 @Injectable({ providedIn: 'root' })
@@ -19,5 +19,9 @@ export class PeopleApi {
     if (opts.cohortId) params = params.set('cohortId', opts.cohortId);
     if (opts.search) params = params.set('search', opts.search);
     return this.http.get<PagedPeople>(`${this.base}/api/people`, { params });
+  }
+
+  cohorts(): Observable<DirectoryCohort[]> {
+    return this.http.get<DirectoryCohort[]>(`${this.base}/api/cohorts`);
   }
 }

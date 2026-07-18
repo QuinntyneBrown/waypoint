@@ -16,6 +16,21 @@ export class PeopleDirectoryPage extends BasePage {
     // An invite CTA appears in the header and (when empty) the empty state.
     return this.page.getByRole('link', { name: /invite/i }).first();
   }
+  roleFilter(name: string) {
+    return this.page.getByRole('button', { name, exact: true });
+  }
+  get cohortFilter() {
+    return this.page.getByLabel('Cohort');
+  }
+  get nextPage() {
+    return this.page.getByRole('button', { name: 'Next page' });
+  }
+  get previousPage() {
+    return this.page.getByRole('button', { name: 'Previous page' });
+  }
+  get pageStatus() {
+    return this.page.getByTestId('people-page-status');
+  }
   /** A directory row identified by a unique cell value (e.g. an email). */
   rowFor(text: string) {
     return this.page.getByText(text, { exact: true });

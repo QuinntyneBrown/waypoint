@@ -9,61 +9,143 @@
       <div class="wu-page__titles">
         <div class="wu-eyebrow">People</div>
         <h1 class="wu-page__title">People directory</h1>
-        <p class="wu-page__sub">Everyone in the program — search and filter.</p>
+        <p class="wu-page__sub">Search and filter everyone in the program.</p>
       </div>
       <a class="wu-btn wu-btn--primary" routerLink="/admin/invitations">Invite people</a>
     </div>
 
-    <div class="wu-field">
-      <label class="wu-label" for="peopleSearch">Search people</label>
-      <input
-        #searchBox
-        class="wu-input"
-        id="peopleSearch"
-        type="search"
-        placeholder="Name or email"
-        [value]="search()"
-        (input)="onSearch(searchBox.value)"
-      />
-    </div>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+
+    <section class="wu-card wu-mb-5" aria-label="Directory filters">
+      <div class="wu-card__body directory-filters">
+        <div class="wu-field">
+          <label class="wu-label" for="peopleSearch">Search people</label>
+          <input
+            #searchBox
+            class="wu-input"
+            id="peopleSearch"
+            type="search"
+            placeholder="Name or email"
+            [value]="search()"
+            (input)="onSearch(searchBox.value)"
+          />
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="peopleCohort">Cohort</label>
+          <select
+            #cohortSelect
+            id="peopleCohort"
+            class="wu-select"
+            [value]="cohortId()"
+            (change)="setCohort(cohortSelect.value)"
+          >
+            <option value="">All cohorts</option>
+            @for (cohort of cohorts(); track cohort.id) {
+              <option [value]="cohort.id">{{ cohort.name }}</option>
+            }
+          </select>
+        </div>
+        <fieldset class="role-filters">
+          <legend class="wu-label">Role</legend>
+          <div class="role-filter-list">
+            @for (
+              option of [
+                { label: 'All roles', value: '' },
+                { label: 'Youth', value: 'Youth' },
+                { label: 'Mentor', value: 'Mentor' },
+                { label: 'Guardian', value: 'Guardian' },
+                { label: 'Volunteer', value: 'Volunteer' },
+                { label: 'Administrator', value: 'ProgramAdministrator' },
+              ];
+              track option.value
+            ) {
+              <button
+                class="wu-btn wu-btn--sm"
+                [class.wu-btn--primary]="role() === option.value"
+                [class.wu-btn--secondary]="role() !== option.value"
+                type="button"
+                [attr.aria-pressed]="role() === option.value"
+                (click)="setRole(option.value)"
+              >
+                {{ option.label }}
+              </button>
+            }
+          </div>
+        </fieldset>
+      </div>
+    </section>
 
     @if (loading()) {
-      <p class="wu-muted">Loading…</p>
+      <p class="wu-muted" role="status">Loading people…</p>
     } @else if (people().length > 0) {
-      <div class="wu-table-wrap" style="overflow-x: auto">
-        <table class="wu-table">
+      <div class="wu-table-wrap">
+        <table class="wu-table wu-table--cards">
           <thead>
             <tr>
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
+              <th>Cohort</th>
               <th>Status</th>
               <th>Last active</th>
             </tr>
           </thead>
           <tbody>
             @for (person of people(); track person.id) {
-              <tr>
-                <td>{{ person.displayName }}</td>
-                <td>{{ person.email }}</td>
-                <td>{{ person.role }}</td>
-                <td>{{ person.status }}</td>
-                <td>{{ person.lastActive ? (person.lastActive | date: 'MMM d, y') : '—' }}</td>
+              <tr data-testid="person-row">
+                <td data-label="Name">
+                  <strong>{{ person.displayName }}</strong>
+                </td>
+                <td data-label="Email">{{ person.email }}</td>
+                <td data-label="Role">{{ person.role }}</td>
+                <td data-label="Cohort">{{ cohortName(person.cohortId) }}</td>
+                <td data-label="Status">{{ person.status }}</td>
+                <td data-label="Last active">
+                  {{ person.lastActive ? (person.lastActive | date: 'MMM d, y') : '—' }}
+                </td>
               </tr>
             }
           </tbody>
         </table>
       </div>
+      <nav class="pager wu-cluster wu-cluster--between" aria-label="People pages">
+        <button
+          class="wu-btn wu-btn--secondary"
+          type="button"
+          aria-label="Previous page"
+          [disabled]="page() <= 1"
+          (click)="previousPage()"
+        >
+          Previous
+        </button>
+        <strong data-testid="people-page-status">
+          Page {{ page() }} of {{ totalPages() }} · {{ result()?.total }} people
+        </strong>
+        <button
+          class="wu-btn wu-btn--secondary"
+          type="button"
+          aria-label="Next page"
+          [disabled]="page() >= totalPages()"
+          (click)="nextPage()"
+        >
+          Next
+        </button>
+      </nav>
     } @else {
       <div class="wu-empty">
-        <div class="wu-empty__icon">
-          <svg class="wu-icon"><use href="#i-users"></use></svg>
-        </div>
+        <div class="wu-empty__icon"><wu-icon name="users" /></div>
         <h3 class="wu-empty__title">No people found</h3>
-        <p class="wu-empty__text">
-          No one matches your search. Try a different term, or invite someone new.
-        </p>
-        <a class="wu-btn wu-btn--primary" routerLink="/admin/invitations">Invite people</a>
+        <p class="wu-empty__text">No one matches the current directory filters.</p>
+        <div class="wu-actions">
+          @if (hasFilters()) {
+            <button class="wu-btn wu-btn--secondary" type="button" (click)="clearFilters()">
+              Clear filters
+            </button>
+          }
+          <a class="wu-btn wu-btn--primary" routerLink="/admin/invitations">Invite people</a>
+        </div>
       </div>
     }
   </div>

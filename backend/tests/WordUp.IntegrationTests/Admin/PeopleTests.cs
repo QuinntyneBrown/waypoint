@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Infrastructure;
@@ -56,6 +57,21 @@ public sealed class PeopleTests : IntegrationTestBase
         var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
         var youth = await SeedUserAsync(Roles.Youth);
         var mentor = await SeedUserAsync(Roles.Mentor);
+        Guid cohortId;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var cohort = new Cohort
+            {
+                Name = "People filter cohort",
+                TermStart = DateTime.UtcNow.Date.AddMonths(-1),
+                TermEnd = DateTime.UtcNow.Date.AddMonths(6),
+            };
+            db.Cohorts.Add(cohort);
+            (await db.Users.SingleAsync(item => item.Id == youth.Id)).CohortId = cohort.Id;
+            await db.SaveChangesAsync();
+            cohortId = cohort.Id;
+        }
 
         var listResponse = await SendAsync(HttpMethod.Get, "/api/people?pageSize=500", token: adminToken);
         Assert.That(listResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -69,6 +85,13 @@ public sealed class PeopleTests : IntegrationTestBase
         Assert.That(youthList!.Items.All(p => p.Role == Roles.Youth), Is.True);
         Assert.That(youthList.Items.Any(p => p.Id == youth.Id), Is.True);
         Assert.That(youthList.Items.Any(p => p.Id == mentor.Id), Is.False);
+
+        var cohortOnly = await SendAsync(
+            HttpMethod.Get,
+            $"/api/people?role={Roles.Youth}&cohortId={cohortId}&pageSize=500",
+            token: adminToken);
+        var cohortList = await cohortOnly.Content.ReadFromJsonAsync<PagedPeopleDto>();
+        Assert.That(cohortList!.Items.Select(person => person.Id), Is.EqualTo(new[] { youth.Id }));
 
         var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
         var forbidden = await SendAsync(HttpMethod.Get, "/api/people", token: youthToken);

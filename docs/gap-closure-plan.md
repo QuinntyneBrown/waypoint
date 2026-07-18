@@ -176,8 +176,9 @@ requirement conflicts early (they gate "done").
       applicant/guardian detail, track/cohort/eligible-mentor placement, server-enforced guardian
       consent gate, confirmed approve/decline outcomes, cohort-track enrollment, contact email, and
       content-free decision audits, with desktop/mobile review acceptance.
-- [~] **G2** People directory `L2-ADMIN-001` — list + server-side search + empty-state/invite CTA,
-      E2E-verified (admin routing + `/admin/people`). Role/cohort filter chips still to add.
+- [x] **G2** People directory `L2-ADMIN-001` — debounced server search, composable role chips and
+      named cohort filter, reset-safe ten-row paging, total/page state, responsive table-to-cards,
+      labelled empty/error recovery, and invite CTA.
 - [ ] **G3** Person detail / account lifecycle `L2-ADMIN-002`
 - [ ] **G4** Cohorts & cohort detail `L2-ADMIN-003`
 - [ ] **G5** Progress board (+ live, export) `L2-ADMIN-004`, `L2-REPORT-003`
@@ -398,3 +399,9 @@ requirement conflicts early (they gate "done").
   an outcome email, and audits the action; confirmed decline keeps its optional note, emails the
   contact, and creates no account. Nine intake integrations plus desktop and mobile keyboard/touch/
   reflow journeys pass.
+- 2026-07-18 — G2 done: the people directory now composes debounced name/email search with accessible
+  role chips and named cohort selection, resets safely to page one when filters change, and exposes
+  deterministic ten-row previous/next navigation with totals. Results include cohort names and reflow
+  from a table into labelled cards; empty/error states retain filter recovery and the invite action.
+  HTTP role/cohort coverage, populated desktop paging/filter acceptance, mobile touch/reflow, portal
+  units, and the production build pass.

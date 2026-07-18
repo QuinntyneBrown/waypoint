@@ -26,3 +26,8 @@ export interface ListPeopleParams {
   cohortId?: string | null;
   search?: string | null;
 }
+
+export interface DirectoryCohort {
+  id: string;
+  name: string;
+}
