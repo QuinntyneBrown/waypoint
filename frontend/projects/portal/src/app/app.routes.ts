@@ -93,6 +93,18 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'volunteer',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'home',
+        title: 'Today · Word Up',
+        loadComponent: () =>
+          import('./features/volunteer/today/volunteer-today').then((m) => m.VolunteerToday),
+      },
+    ],
+  },
+  {
     path: 'settings',
     canActivate: [authGuard],
     children: [

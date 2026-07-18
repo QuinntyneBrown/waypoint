@@ -1,0 +1,55 @@
+<wu-shell
+  role="volunteer"
+  active="home"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Today</div>
+        <h1 class="wu-page__title">Today’s session</h1>
+        <p class="wu-page__sub">Your assignment for today, at a glance.</p>
+      </div>
+    </div>
+
+    @if (loading()) {
+      <p class="wu-muted">Loading…</p>
+    } @else if (today(); as session) {
+      <div class="wu-card">
+        <div class="wu-card__body wu-stack">
+          <h2 class="wu-card__title">{{ session.title }}</h2>
+          <p class="wu-muted">
+            {{ session.startsAt | date: 'EEEE, MMM d · h:mm a' }}
+            @if (session.durationMinutes) {
+              · {{ session.durationMinutes }} min
+            }
+          </p>
+          @if (session.location) {
+            <p>
+              <svg class="wu-icon"><use href="#i-map-pin"></use></svg> {{ session.location }}
+            </p>
+          }
+          <p>{{ session.rosterCount }} on the roster</p>
+          <a
+            class="wu-btn wu-btn--primary"
+            [routerLink]="['/volunteer/attendance', session.sessionId]"
+          >
+            Take attendance
+          </a>
+        </div>
+      </div>
+    } @else {
+      <div class="wu-empty">
+        <div class="wu-empty__icon">
+          <svg class="wu-icon"><use href="#i-calendar"></use></svg>
+        </div>
+        <h3 class="wu-empty__title">No session today</h3>
+        <p class="wu-empty__text">
+          You have no assigned session today. Check your schedule for what’s coming up.
+        </p>
+        <a class="wu-btn wu-btn--secondary" routerLink="/volunteer/schedule">View schedule</a>
+      </div>
+    }
+  </div>
+</wu-shell>

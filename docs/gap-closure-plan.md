@@ -56,10 +56,13 @@ requirement conflicts early (they gate "done").
 
 ## Phase C — Non-youth portal shell + Volunteer portal
 
-- [ ] **C0 · Role portal routing** — real feature routes + shell for admin/mentor/guardian/
-      volunteer (today they fall through to 404 despite `roleHome()`).
-- [ ] **C1 · Volunteer Today** — today's assigned session/logistics/count, no youth record data.
-      `L2-VOLUNTEER-001`.
+- [~] **C0 · Role portal routing** — real feature routes + shell for admin/mentor/guardian/
+      volunteer (today they fall through to 404 despite `roleHome()`). *Volunteer `/volunteer/home`
+      route added; the shell already renders every role via nav-config. Admin/Mentor/Guardian
+      routes still to build as those portals land.*
+- [~] **C1 · Volunteer Today** — today's assigned session/logistics/count, no youth record data.
+      `L2-VOLUNTEER-001`. *Routing + Today page + no-session empty state built and E2E-verified;
+      the populated-session card is implemented but its E2E awaits session-assignment seeding.*
 - [ ] **C2 · Volunteer schedule** — upcoming assigned sessions/status + empty state.
       `L2-VOLUNTEER-002`.
 - [ ] **C3 · Volunteer attendance** — names-only roster, Present/Absent, all-present, save,
