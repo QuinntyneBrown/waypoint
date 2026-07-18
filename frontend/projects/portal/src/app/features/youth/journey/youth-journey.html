@@ -1,0 +1,116 @@
+<wu-shell
+  role="youth"
+  active="journey"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Learning roadmap</div>
+        <h1 class="wu-page__title">My Journey</h1>
+        <p class="wu-page__sub">See what you have completed and what unlocks next.</p>
+      </div>
+    </div>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+
+    @if (journey(); as view) {
+      <section class="wu-card wu-card--ink">
+        <div class="wu-card__body wu-stack">
+          <div class="wu-eyebrow">Overall progress</div>
+          <h2>{{ completedModules() }} of {{ view.modules.length }} modules complete</h2>
+          @if (currentModule(); as current) {
+            <p>
+              You are in <strong>{{ current.name }}</strong> now.
+            </p>
+          }
+          <progress class="journey-progress" [value]="overallPercent()" max="100">
+            {{ overallPercent() }}%
+          </progress>
+          <strong>{{ overallPercent() }}%</strong>
+        </div>
+      </section>
+
+      <section class="wu-card">
+        <div class="wu-card__body wu-stack">
+          <h2>Your roadmap</h2>
+          @if (view.modules.length === 0) {
+            <div class="wu-empty">
+              <h3 class="wu-empty__title">Your roadmap is being prepared</h3>
+              <p class="wu-empty__text">
+                Your modules will appear after you join a curriculum track.
+              </p>
+            </div>
+          } @else {
+            <div class="journey-timeline wu-stack">
+              @for (module of view.modules; track module.moduleId) {
+                <article
+                  class="wu-card wu-card--greige journey-module"
+                  [class.journey-module--current]="module.current"
+                  [attr.data-testid]="module.current ? 'current-module' : 'journey-module'"
+                >
+                  <div class="wu-card__body wu-stack">
+                    <div class="wu-cluster wu-cluster--between">
+                      <h3>{{ module.name }}</h3>
+                      <span
+                        class="wu-badge"
+                        [class.wu-badge--success]="module.status === 'done'"
+                        [class.wu-badge--warning]="module.current"
+                        >{{ statusLabel(module.status) }}</span
+                      >
+                    </div>
+                    <p>
+                      {{ module.completedItems }} of {{ module.totalItems }} required items complete
+                    </p>
+                    @if (module.unlockCondition) {
+                      <p class="wu-muted">{{ module.unlockCondition }}</p>
+                    }
+                    @if (module.current) {
+                      <a class="wu-btn wu-btn--primary" routerLink="/youth/curriculum"
+                        >Continue module</a
+                      >
+                    }
+                  </div>
+                </article>
+              }
+            </div>
+          }
+        </div>
+      </section>
+
+      <section class="wu-card">
+        <div class="wu-card__body wu-stack">
+          <div class="wu-cluster wu-cluster--between">
+            <h2>Badge collection</h2>
+            <span class="wu-badge"
+              >{{ view.earned.length }} of {{ view.earned.length + view.locked.length }}</span
+            >
+          </div>
+          <div class="wu-grid wu-grid--3">
+            @for (badge of view.earned; track badge.badgeId) {
+              <div class="wu-card wu-card--greige">
+                <div class="wu-card__body">
+                  <strong>{{ badge.name }}</strong>
+                  <p class="wu-muted">Earned</p>
+                </div>
+              </div>
+            }
+            @for (badge of view.locked; track badge.badgeId) {
+              <div class="wu-card wu-card--greige">
+                <div class="wu-card__body">
+                  <strong>{{ badge.name }}</strong>
+                  <p class="wu-muted">{{ badge.progressLabel }}</p>
+                </div>
+              </div>
+            }
+          </div>
+          <a class="wu-btn wu-btn--ghost" routerLink="/youth/badges">View badge details</a>
+        </div>
+      </section>
+    } @else {
+      <p class="wu-muted">Loading your journey…</p>
+    }
+  </div>
+</wu-shell>

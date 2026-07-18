@@ -81,6 +81,27 @@ export class YouthCurriculumPage extends BasePage {
   }
 }
 
+export class YouthJourneyPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'My Journey', exact: true });
+  }
+  get currentModule() {
+    return this.page.getByTestId('current-module');
+  }
+  get badgeDetailsLink() {
+    return this.page.getByRole('link', { name: /view badge details/i });
+  }
+}
+
+export class YouthBadgesPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Badges', exact: true });
+  }
+  get progressLabels() {
+    return this.page.getByTestId('badge-progress');
+  }
+}
+
 /** `/youth/lessons/:id` — safe lesson reader with persisted reading controls. */
 export class YouthLessonPage extends BasePage {
   get heading() {

@@ -24,6 +24,7 @@ import {
   SaveCodingProgressInput,
   SubmitCodingProjectInput,
 } from '../models/learning/coding';
+import { YouthJourney } from '../models/learning/journey';
 
 @Injectable({ providedIn: 'root' })
 export class LearningApi {
@@ -33,6 +34,10 @@ export class LearningApi {
   curriculum(trackId?: string): Observable<YouthCurriculum> {
     const suffix = trackId ? `/${encodeURIComponent(trackId)}` : '';
     return this.http.get<YouthCurriculum>(`${this.base}/api/me/curriculum${suffix}`);
+  }
+
+  journey(): Observable<YouthJourney> {
+    return this.http.get<YouthJourney>(`${this.base}/api/me/journey`);
   }
 
   lesson(lessonId: string): Observable<YouthLesson> {

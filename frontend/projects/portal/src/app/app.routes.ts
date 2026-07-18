@@ -92,6 +92,20 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'journey',
+        title: 'My journey · Word Up',
+        loadComponent: () =>
+          import('./features/youth/journey/youth-journey').then(
+            (module) => module.YouthJourneyPage,
+          ),
+      },
+      {
+        path: 'badges',
+        title: 'Badges · Word Up',
+        loadComponent: () =>
+          import('./features/youth/badges/youth-badges').then((module) => module.YouthBadgesPage),
+      },
+      {
         path: 'coding/:id',
         title: 'Coding lesson · Word Up',
         loadComponent: () =>

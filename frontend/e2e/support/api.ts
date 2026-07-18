@@ -78,6 +78,7 @@ export interface SeededYouthCurriculum {
   codingFirstStepTitle: string;
   codingSecondStepTitle: string;
   codingBadgeName: string;
+  journeyBadgeName: string;
 }
 
 /**

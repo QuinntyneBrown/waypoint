@@ -15,6 +15,7 @@ export * from './lib/models/learning/curriculum';
 export * from './lib/models/learning/quiz';
 export * from './lib/models/learning/assignment';
 export * from './lib/models/learning/coding';
+export * from './lib/models/learning/journey';
 export * from './lib/models/public/public';
 export * from './lib/models/volunteer/volunteer';
 export * from './lib/models/people/people';

@@ -109,7 +109,10 @@ requirement conflicts early (they gate "done").
       resumable editor with sandboxed live preview, server-validated self-check progress, once-only
       completion badge, responsive keyboard journey, and project submission with an optional mentor
       note through the assignment review lifecycle.
-- [ ] **E9** Journey & badges (counted criteria, milestones) `L2-LEARN-009`
+- [x] **E9** Journey & badges (counted criteria, milestones) `L2-LEARN-009` — shared
+      curriculum snapshot with authoritative completion counts/current module, track-scoped earned and
+      locked badges, rule-aware counted progress, earn dates, joined/earned/next milestone timeline,
+      and responsive journey and collection routes.
 - [ ] **E10** Personal progress (quiz history, attendance tabs, competencies) `L2-LEARN-010`
 - [ ] **E11** Youth schedule & RSVP (youth-visible calendar, reminders) `L2-ENGAGE-005/008`
 - [ ] **E12** Youth messaging (mentor thread + realtime) `L2-ENGAGE-007`, `L2-NFR-005`
@@ -159,7 +162,7 @@ requirement conflicts early (they gate "done").
 - [ ] **H4** Media-consent enforcement on youth media `L2-CONSENT-001/004`
 - [~] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`, `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence now uses private DB-backed JPG/PNG storage with MIME/extension/signature/size checks and authenticated no-sniff serving; curriculum media lifecycle/removal remains.
 - [ ] **H6** Curriculum mutation lifecycle completion `L2-CURRIC-002..006`
-- [ ] **H7** Shared progress model/views `L2-ADMIN-004`, `L2-LEARN-009/010`, `L2-GUARDIAN-001`, `L2-REPORT-001`
+- [~] **H7** Shared progress model/views `L2-ADMIN-004`, `L2-LEARN-009/010`, `L2-GUARDIAN-001`, `L2-REPORT-001` — curriculum and journey now share one module completion/current-state snapshot and badge counts derive from authoritative progress records; cross-role histories, reports, and full self-analytics remain.
 - [~] **H8** Grading outcomes (rubric validation, badges, notifications, live) `L2-MENTOR-003`, `L2-LEARN-007`, `L2-ENGAGE-008` — youth-visible rubric/badge results plus notification and user-scoped realtime publishing are in place; mentor review UI and stricter rubric-total reconciliation remain.
 - [ ] **H9** Automated at-risk evaluation `L2-MENTOR-007`
 - [ ] **H10** Assignment side effects (journey, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008`

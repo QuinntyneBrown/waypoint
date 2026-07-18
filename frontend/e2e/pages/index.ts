@@ -29,6 +29,8 @@ export {
 export {
   YouthAnnouncementsPage,
   YouthCurriculumPage,
+  YouthJourneyPage,
+  YouthBadgesPage,
   YouthHomePage,
   YouthLessonPage,
   YouthCodingPage,

@@ -746,6 +746,15 @@ if (app.Environment.IsEnvironment("Testing"))
             AutoRule = "coding-checklist-completed",
             TargetRefId = firstLesson.Id,
         };
+        var journeyBadge = new Badge
+        {
+            Name = $"First Steps Badge {suffix}",
+            Icon = "footprints",
+            Description = "Complete your first lesson.",
+            CriteriaKind = BadgeCriteriaKind.Auto,
+            AutoRule = "lesson-completed",
+            TargetRefId = firstLesson.Id,
+        };
         var assignment = new Assignment
         {
             ModuleId = firstModule.Id,
@@ -817,7 +826,13 @@ if (app.Environment.IsEnvironment("Testing"))
         });
         db.Quizzes.Add(quiz);
         db.QuizQuestions.AddRange(firstQuizQuestion, secondQuizQuestion);
-        db.Badges.AddRange(quizBadge, codingBadge);
+        db.Badges.AddRange(quizBadge, codingBadge, journeyBadge);
+        db.BadgeAwards.Add(new BadgeAward
+        {
+            BadgeId = journeyBadge.Id,
+            YouthUserId = youth.Id,
+            AwardedAt = now.AddDays(-1),
+        });
         db.Assignments.AddRange(assignment, codingAssignment);
         db.RubricCriteria.Add(assignmentCriterion);
         db.Badges.Add(assignmentBadge);
@@ -886,6 +901,7 @@ if (app.Environment.IsEnvironment("Testing"))
             codingFirstStepTitle = codingFirstStep.Title,
             codingSecondStepTitle = codingSecondStep.Title,
             codingBadgeName = codingBadge.Name,
+            journeyBadgeName = journeyBadge.Name,
         });
     });
 

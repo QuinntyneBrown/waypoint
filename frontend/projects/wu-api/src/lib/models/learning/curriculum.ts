@@ -27,6 +27,9 @@ export interface CurriculumModule {
   description: string | null;
   scriptureAnchor: string | null;
   items: CurriculumItem[];
+  completedItems: number;
+  totalItems: number;
+  current: boolean;
 }
 
 // Traces to: L2-LEARN-001

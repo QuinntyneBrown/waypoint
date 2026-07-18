@@ -22,7 +22,10 @@ public record ModuleStatus(
     string? UnlockCondition,
     string? Description,
     string? ScriptureAnchor,
-    IReadOnlyList<CurriculumItem> Items);
+    IReadOnlyList<CurriculumItem> Items,
+    int CompletedItems,
+    int TotalItems,
+    bool Current);
 
 public record CurriculumItem(
     Guid ItemId,

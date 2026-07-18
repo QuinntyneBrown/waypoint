@@ -1,0 +1,104 @@
+<wu-shell
+  role="youth"
+  active="badges"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <a class="wu-btn wu-btn--ghost" routerLink="/youth/journey">Back to journey</a>
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Achievements</div>
+        <h1 class="wu-page__title">Badges</h1>
+        <p class="wu-page__sub">Every badge marks progress you have made.</p>
+      </div>
+    </div>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+
+    @if (journey(); as view) {
+      <section class="wu-card wu-card--greige">
+        <div class="wu-card__body">
+          <div class="wu-cluster wu-cluster--between">
+            <div>
+              <div class="wu-eyebrow">Collection</div>
+              <h2>{{ view.earned.length }} earned · {{ view.locked.length }} to unlock</h2>
+            </div>
+            <span class="wu-badge wu-badge--success">{{ view.earned.length }} earned</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="wu-stack" aria-labelledby="earned-badges">
+        <h2 id="earned-badges">Earned</h2>
+        @if (view.earned.length === 0) {
+          <div class="wu-empty">
+            <h3 class="wu-empty__title">No badges yet</h3>
+            <p class="wu-empty__text">Complete your next learning step to begin your collection.</p>
+          </div>
+        }
+        <div class="wu-grid wu-grid--3">
+          @for (badge of view.earned; track badge.badgeId) {
+            <article class="wu-card">
+              <div class="wu-card__body wu-stack">
+                <div class="wu-eyebrow">Badge earned</div>
+                <h3>{{ badge.name }}</h3>
+                <p>{{ badge.criteria }}</p>
+                <span class="wu-badge wu-badge--success"
+                  >Earned {{ badge.awardedAt | date: 'mediumDate' }}</span
+                >
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="wu-stack" aria-labelledby="locked-badges">
+        <h2 id="locked-badges">Still to unlock</h2>
+        <div class="wu-grid wu-grid--3">
+          @for (badge of view.locked; track badge.badgeId) {
+            <article class="wu-card wu-card--greige">
+              <div class="wu-card__body wu-stack">
+                <div class="wu-eyebrow">Locked badge</div>
+                <h3>{{ badge.name }}</h3>
+                <p>{{ badge.criteria }}</p>
+                <progress [value]="badge.completedCriteria" [max]="badge.totalCriteria">
+                  {{ badge.progressLabel }}</progress
+                ><span class="wu-badge" data-testid="badge-progress">{{
+                  badge.progressLabel
+                }}</span>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="wu-stack" aria-labelledby="milestones">
+        <h2 id="milestones">Your milestones</h2>
+        <div class="wu-card">
+          <div class="wu-card__body">
+            <ol class="wu-stack">
+              @for (milestone of view.milestones; track $index) {
+                <li [class.wu-card]="milestone.current" [class.wu-card--greige]="milestone.current">
+                  <strong>{{ milestone.title }}</strong>
+                  <p>
+                    {{ milestone.detail }}
+                    @if (milestone.occurredAt) {
+                      · {{ milestone.occurredAt | date: 'mediumDate' }}
+                    }
+                  </p>
+                  @if (milestone.current) {
+                    <span class="wu-badge wu-badge--warning">Current goal</span>
+                  }
+                </li>
+              }
+            </ol>
+          </div>
+        </div>
+      </section>
+    } @else {
+      <p class="wu-muted">Loading badges…</p>
+    }
+  </div>
+</wu-shell>

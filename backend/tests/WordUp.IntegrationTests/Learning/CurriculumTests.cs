@@ -367,19 +367,41 @@ public sealed class CurriculumTests : IntegrationTestBase
 
     [Test]
     [Property("Req", "L2-LEARN-009")]
-    public async Task Journey_returns_modules_and_an_earned_badge()
+    public async Task Journey_returns_current_module_counted_badges_and_a_milestone_timeline()
     {
-        // Traces to: L2-LEARN-009
+        // Traces to: L2-LEARN-009 AC1-AC3
         var seed = await SeedTrackAndYouthAsync();
+        await SendAsync(HttpMethod.Post, $"/api/me/lessons/{seed.Lesson1Id}/complete", null, seed.YouthToken);
 
-        Guid badgeId;
+        Guid earnedBadgeId, moduleBadgeId;
         using (var scope = Factory.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            var badge = new Badge { Name = "First Steps", Icon = "footprints", CriteriaKind = BadgeCriteriaKind.Manual };
-            badgeId = badge.Id;
-            db.Badges.Add(badge);
-            db.BadgeAwards.Add(new BadgeAward { BadgeId = badge.Id, YouthUserId = seed.YouthId });
+            var earnedBadge = new Badge
+            {
+                Name = "First Steps",
+                Icon = "footprints",
+                Description = "Complete your first lesson",
+                CriteriaKind = BadgeCriteriaKind.Manual,
+            };
+            var moduleBadge = new Badge
+            {
+                Name = "Foundations Finisher",
+                Icon = "book-open",
+                Description = "Complete every required item in Foundations",
+                CriteriaKind = BadgeCriteriaKind.Auto,
+                AutoRule = "module-completed",
+                TargetRefId = seed.ModuleAId,
+            };
+            earnedBadgeId = earnedBadge.Id;
+            moduleBadgeId = moduleBadge.Id;
+            db.Badges.AddRange(earnedBadge, moduleBadge);
+            db.BadgeAwards.Add(new BadgeAward
+            {
+                BadgeId = earnedBadge.Id,
+                YouthUserId = seed.YouthId,
+                AwardedAt = DateTime.UtcNow.AddDays(-2),
+            });
             await db.SaveChangesAsync();
         }
 
@@ -387,8 +409,33 @@ public sealed class CurriculumTests : IntegrationTestBase
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var view = await response.Content.ReadFromJsonAsync<JourneyViewDto>();
-        Assert.That(view!.Modules, Has.Count.EqualTo(2));
-        Assert.That(view.Earned.Any(e => e.BadgeId == badgeId && e.Name == "First Steps"), Is.True);
+        var current = view!.Modules.Single(module => module.ModuleId == seed.ModuleAId);
+        var lockedBadge = view.Locked.Single(badge => badge.BadgeId == moduleBadgeId);
+        Assert.Multiple(() =>
+        {
+            Assert.That(view.Modules, Has.Count.EqualTo(2));
+            Assert.That(current.Current, Is.True);
+            Assert.That(current.CompletedItems, Is.EqualTo(1));
+            Assert.That(current.TotalItems, Is.EqualTo(3));
+            Assert.That(view.Earned.Any(e => e.BadgeId == earnedBadgeId && e.Name == "First Steps"), Is.True);
+            Assert.That(lockedBadge.CompletedCriteria, Is.EqualTo(1));
+            Assert.That(lockedBadge.TotalCriteria, Is.EqualTo(3));
+            Assert.That(lockedBadge.ProgressLabel, Is.EqualTo("1 of 3"));
+            Assert.That(view.Milestones.Any(item => item.Type == "Joined"), Is.True);
+            Assert.That(view.Milestones.Any(item => item.Type == "BadgeEarned" && item.Title.Contains("First Steps")), Is.True);
+            Assert.That(view.Milestones.Single(item => item.Current).Title, Does.Contain("Foundations Finisher"));
+        });
+
+        // Journey and curriculum use the same module snapshot rather than recomputing competing counts.
+        var curriculum = await (await SendAsync(
+            HttpMethod.Get,
+            $"/api/me/curriculum/{seed.TrackId}",
+            null,
+            seed.YouthToken)).Content.ReadFromJsonAsync<CurriculumViewDto>();
+        var curriculumCurrent = curriculum!.Modules.Single(module => module.ModuleId == seed.ModuleAId);
+        Assert.That(
+            (curriculumCurrent.CompletedItems, curriculumCurrent.TotalItems, curriculumCurrent.Current),
+            Is.EqualTo((current.CompletedItems, current.TotalItems, current.Current)));
     }
 
     [Test]
@@ -419,7 +466,10 @@ public sealed class CurriculumTests : IntegrationTestBase
         string? UnlockCondition,
         string? Description,
         string? ScriptureAnchor,
-        IReadOnlyList<CurriculumItemDto> Items);
+        IReadOnlyList<CurriculumItemDto> Items,
+        int CompletedItems,
+        int TotalItems,
+        bool Current);
 
     private sealed record CurriculumItemDto(
         Guid ItemId,
@@ -460,9 +510,29 @@ public sealed class CurriculumTests : IntegrationTestBase
     private sealed record JourneyViewDto(
         IReadOnlyList<ModuleStatusDto> Modules,
         IReadOnlyList<EarnedBadgeDto> Earned,
-        IReadOnlyList<LockedBadgeDto> Locked);
+        IReadOnlyList<LockedBadgeDto> Locked,
+        IReadOnlyList<MilestoneDto> Milestones);
 
-    private sealed record EarnedBadgeDto(Guid BadgeId, string Name, string Icon, DateTime AwardedAt);
+    private sealed record EarnedBadgeDto(
+        Guid BadgeId,
+        string Name,
+        string Icon,
+        string Criteria,
+        DateTime AwardedAt);
 
-    private sealed record LockedBadgeDto(Guid BadgeId, string Name, string Icon, string Criteria);
+    private sealed record LockedBadgeDto(
+        Guid BadgeId,
+        string Name,
+        string Icon,
+        string Criteria,
+        int CompletedCriteria,
+        int TotalCriteria,
+        string ProgressLabel);
+
+    private sealed record MilestoneDto(
+        string Type,
+        string Title,
+        string Detail,
+        DateTime? OccurredAt,
+        bool Current);
 }

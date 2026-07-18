@@ -247,7 +247,16 @@ internal static class CurriculumProgressCalculator
                 unlock,
                 module.Description,
                 module.ScriptureAnchor,
-                items));
+                items,
+                done,
+                total,
+                false));
+        }
+
+        var currentIndex = results.FindIndex(module => !module.Locked && module.Status != "done");
+        if (currentIndex >= 0)
+        {
+            results[currentIndex] = results[currentIndex] with { Current = true };
         }
 
         return results;
