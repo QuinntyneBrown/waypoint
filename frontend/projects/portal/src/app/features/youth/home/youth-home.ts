@@ -1,30 +1,72 @@
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { OnboardingApi } from '@wu/api';
+import { ApiError, LearningApi, YouthHomeView } from '@wu/api';
 import { AuthStore } from '@wu/auth';
 import { WuShell } from '@wu/ui';
 
-// Traces to: L2-PLATFORM-011
+// Traces to: L2-LEARN-001..010, L2-ENGAGE-005, L2-MENTOR-008, L2-PLATFORM-011
 @Component({
   selector: 'wu-youth-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink],
+  imports: [WuShell, RouterLink, DatePipe, DecimalPipe],
   templateUrl: './youth-home.html',
+  styles: `
+    .home-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--wu-sp-5);
+      align-items: center;
+    }
+    .home-progress {
+      width: 100%;
+    }
+    .home-progress__value {
+      font-size: clamp(2rem, 7vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1;
+    }
+    .assignment-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .assignment-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--wu-sp-4);
+      align-items: center;
+      padding-block: var(--wu-sp-4);
+      border-top: 1px solid var(--wu-border);
+    }
+    .assignment-row:first-child {
+      border-top: 0;
+    }
+    @media (max-width: 42rem) {
+      .home-hero,
+      .assignment-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .assignment-row .wu-btn {
+        width: 100%;
+      }
+    }
+  `,
 })
 export class YouthHome {
   protected readonly auth = inject(AuthStore);
-  private readonly onboarding = inject(OnboardingApi);
+  private readonly learning = inject(LearningApi);
 
   protected readonly firstName = computed(
     () => (this.auth.user()?.displayName ?? '').split(/\s+/)[0] || 'friend',
   );
-  /** null = still loading; true = placed in a cohort; false = no cohort yet. */
-  protected readonly placed = signal<boolean | null>(null);
+  protected readonly home = signal<YouthHomeView | undefined>(undefined);
+  protected readonly errorMessage = signal<string | null>(null);
 
   constructor() {
-    this.onboarding.status().subscribe({
-      next: (status) => this.placed.set(status.cohortId !== null),
-      error: () => this.placed.set(false),
+    this.learning.home().subscribe({
+      next: (home) => this.home.set(home),
+      error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
     });
   }
 }

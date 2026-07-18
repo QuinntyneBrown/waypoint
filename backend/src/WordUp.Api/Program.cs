@@ -914,6 +914,16 @@ if (app.Environment.IsEnvironment("Testing"))
             Body = "Welcome! Message me whenever you need support.",
             SentAt = now.AddMinutes(-30),
         });
+        db.AssignedWork.Add(new AssignedWork
+        {
+            ItemType = "Project",
+            ItemId = assignment.Id,
+            YouthUserId = youth.Id,
+            DueDate = now.AddDays(5),
+            Message = "Bring your leadership ideas to this project.",
+            AssignedByUserId = mentor.Id,
+            CreatedAt = now.AddDays(-1),
+        });
         db.AttendanceRecords.AddRange(
             new AttendanceRecord
             {

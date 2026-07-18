@@ -26,11 +26,16 @@ import {
 } from '../models/learning/coding';
 import { YouthJourney } from '../models/learning/journey';
 import { YouthProgress } from '../models/learning/progress';
+import { YouthHomeView } from '../models/learning/home';
 
 @Injectable({ providedIn: 'root' })
 export class LearningApi {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
+
+  home(): Observable<YouthHomeView> {
+    return this.http.get<YouthHomeView>(`${this.base}/api/me/home`);
+  }
 
   curriculum(trackId?: string): Observable<YouthCurriculum> {
     const suffix = trackId ? `/${encodeURIComponent(trackId)}` : '';

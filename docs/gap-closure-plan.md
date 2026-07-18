@@ -122,7 +122,9 @@ requirement conflicts early (they gate "done").
 - [x] **E12** Youth messaging (mentor thread + realtime) `L2-ENGAGE-007`, `L2-NFR-005` —
       assigned-mentor identity and one private thread, unread clearing, safe text rendering, send/receive,
       recipient-scoped live delivery, reconnect reconciliation, and responsive keyboard composer.
-- [ ] **E13** Youth home placed-state content + `/youth/messages` link fix `L2-LEARN-*`, `L2-PLATFORM-011`
+- [x] **E13** Youth home placed-state content + `/youth/messages` link fix `L2-LEARN-*`, `L2-PLATFORM-011` —
+      authoritative current-learning action, shared curriculum progress, next cohort session/RSVP,
+      mentor-assigned work with due/status links, mentor support, and preserved no-cohort guidance.
 - [ ] **E14** Youth notifications deep links + live events `L2-ENGAGE-008`, `L2-NFR-005`
 
 ## Phase F — Mentor portal (`L2-MENTOR-001..008`, `L2-ENGAGE-001..004/007/008`)
@@ -223,7 +225,7 @@ requirement conflicts early (they gate "done").
 - [x] **Youth curriculum fixture** — Testing-only multi-track enrollment data covers published/draft
       filtering, ordered lesson/quiz gates, prerequisite locking, progress, safe lesson content,
       failed optional media, reflection hand-off, upcoming cohort logistics, an assigned-mentor thread,
-      and an empty enrolled track.
+      mentor-assigned work, the placed dashboard, and an empty enrolled track.
 
 ## Progress log
 
@@ -275,3 +277,7 @@ requirement conflicts early (they gate "done").
   read when the thread opens, safely renders and sends text, and receives recipient-scoped SignalR
   events through an app-level token-aware reconnecting client. Reconnects reconcile from the server
   without duplicates; desktop live-reply and mobile keyboard paths pass.
+- 2026-07-18 — E13 done: the placed youth home now combines the next accessible curriculum item,
+  calculator-backed progress, same-cohort next session and RSVP, and youth-scoped assigned work with
+  resolved due/status destinations. The no-cohort mentor path now reaches the delivered thread;
+  desktop, mobile reflow/keyboard, and no-cohort regression paths pass.

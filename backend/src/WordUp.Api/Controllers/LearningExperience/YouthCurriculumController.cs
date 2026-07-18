@@ -15,6 +15,10 @@ public class YouthCurriculumController : ControllerBase
 
     public YouthCurriculumController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("home")]
+    public async Task<ActionResult<YouthHomeView>> Home(CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new YouthHomeQuery(), cancellationToken));
+
     [HttpGet("curriculum")]
     public async Task<ActionResult<CurriculumView>> Browse(CancellationToken cancellationToken)
     {

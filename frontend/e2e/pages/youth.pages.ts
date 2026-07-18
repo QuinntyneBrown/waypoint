@@ -21,6 +21,21 @@ export class YouthHomePage extends BasePage {
   get messageMentorLink() {
     return this.page.getByRole('link', { name: /message your mentor/i });
   }
+  get placedDashboard() {
+    return this.page.getByTestId('placed-home');
+  }
+  get progressCard() {
+    return this.page.getByTestId('home-progress');
+  }
+  get sessionCard() {
+    return this.page.getByTestId('home-session');
+  }
+  get assignmentsCard() {
+    return this.page.getByTestId('home-assignments');
+  }
+  get continueLearningLink() {
+    return this.page.getByRole('link', { name: /start learning|resume learning/i });
+  }
 
   async goto(): Promise<void> {
     await this.page.goto(YouthHomePage.path);

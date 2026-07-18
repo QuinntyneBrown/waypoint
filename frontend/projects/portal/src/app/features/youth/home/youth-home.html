@@ -4,38 +4,177 @@
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-container--narrow wu-page">
+  <div class="wu-container wu-page">
     <div class="wu-page__head">
       <div class="wu-page__titles">
         <div class="wu-eyebrow">Home</div>
         <h1 class="wu-page__title">Welcome, {{ firstName() }}</h1>
-        <p class="wu-page__sub">You’re signed in. Your journey picks up here.</p>
+        <p class="wu-page__sub">Your learning, schedule, and support in one place.</p>
       </div>
     </div>
 
-    @if (placed() === false) {
-      <div class="wu-empty">
-        <div class="wu-empty__icon">
-          <svg class="wu-icon"><use href="#i-users"></use></svg>
-        </div>
-        <h3 class="wu-empty__title">You’re not in a cohort yet</h3>
-        <p class="wu-empty__text">
-          Your mentor will place you in a cohort soon. Once you’re placed, your lessons and journey
-          unlock here. Reach out if you have questions.
-        </p>
-        <a class="wu-btn wu-btn--primary" routerLink="/youth/messages">
-          <svg class="wu-icon"><use href="#i-message-square"></use></svg>Message your mentor
-        </a>
-      </div>
-    } @else {
-      <div class="wu-card wu-card--greige">
-        <div class="wu-card__body">
-          <div class="wu-scripture">
-            “For even the Son of Man did not come to be served, but to serve.”
-            <span class="wu-scripture__ref">Mark 10:45</span>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+
+    @if (home(); as view) {
+      @if (!view.placed) {
+        <div class="wu-empty">
+          <div class="wu-empty__icon">
+            <svg class="wu-icon"><use href="#i-users"></use></svg>
           </div>
+          <h2 class="wu-empty__title">You’re not in a cohort yet</h2>
+          <p class="wu-empty__text">
+            Your mentor will place you in a cohort soon. Once you’re placed, your lessons and
+            journey unlock here. Reach out if you have questions.
+          </p>
+          <a class="wu-btn wu-btn--primary" routerLink="/youth/messages">
+            <svg class="wu-icon"><use href="#i-message-square"></use></svg>Message your mentor
+          </a>
         </div>
-      </div>
+      } @else {
+        <div class="wu-stack wu-stack--lg" data-testid="placed-home">
+          <section class="wu-card wu-card--lime">
+            <div class="wu-card__body home-hero">
+              <div class="wu-stack">
+                <div class="wu-eyebrow">{{ view.cohortName }}</div>
+                <h2>Ready for your next step?</h2>
+                @if (view.continueLearning; as learning) {
+                  <p>
+                    Continue <strong>{{ learning.title }}</strong> in {{ learning.moduleName }}.
+                    @if (learning.estimatedMinutes) {
+                      About {{ learning.estimatedMinutes }} minutes.
+                    }
+                  </p>
+                  <div class="wu-actions">
+                    <a class="wu-btn wu-btn--primary" [routerLink]="learning.targetPath">
+                      {{ learning.status === 'in-progress' ? 'Resume learning' : 'Start learning' }}
+                    </a>
+                    <a class="wu-btn wu-btn--ghost" routerLink="/youth/curriculum"
+                      >View curriculum</a
+                    >
+                  </div>
+                } @else {
+                  <p>Your published learning is complete. Beautiful work.</p>
+                  <a class="wu-btn wu-btn--primary" routerLink="/youth/journey">View my journey</a>
+                }
+              </div>
+              <div class="wu-scripture">
+                “The Son of Man did not come to be served, but to serve.”
+                <span class="wu-scripture__ref">Mark 10:45</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="wu-grid wu-grid--2">
+            <section class="wu-card" data-testid="home-progress">
+              <div class="wu-card__body wu-stack">
+                <div class="wu-cluster wu-cluster--between">
+                  <div>
+                    <div class="wu-eyebrow">Learning</div>
+                    <h2 class="wu-card__title">My progress</h2>
+                  </div>
+                  <strong class="home-progress__value"
+                    >{{ view.overallPercent | number: '1.0-0' }}%</strong
+                  >
+                </div>
+                <progress class="home-progress" [value]="view.overallPercent" max="100">
+                  {{ view.overallPercent }}%
+                </progress>
+                <p>{{ view.completedItems }} of {{ view.totalItems }} required items complete.</p>
+                <a class="wu-btn wu-btn--ghost" routerLink="/youth/progress">See all progress</a>
+              </div>
+            </section>
+
+            <section class="wu-card" data-testid="home-session">
+              <div class="wu-card__body wu-stack">
+                <div>
+                  <div class="wu-eyebrow">Next up</div>
+                  <h2 class="wu-card__title">Schedule</h2>
+                </div>
+                @if (view.nextSession; as session) {
+                  <h3>{{ session.title }}</h3>
+                  <p>
+                    <time [attr.datetime]="session.startsAt">{{
+                      session.startsAt | date: 'fullDate'
+                    }}</time
+                    ><br />
+                    {{ session.startsAt | date: 'shortTime' }}
+                    @if (session.durationMinutes) {
+                      · {{ session.durationMinutes }} minutes
+                    }
+                    @if (session.location) {
+                      <br />{{ session.location }}
+                    }
+                  </p>
+                  @if (session.rsvpResponse) {
+                    <span class="wu-badge"
+                      >RSVP:
+                      {{
+                        session.rsvpResponse === 'CantAttend'
+                          ? 'Can’t make it'
+                          : session.rsvpResponse
+                      }}</span
+                    >
+                  }
+                  <a class="wu-btn wu-btn--ghost" routerLink="/youth/schedule">
+                    {{ session.rsvpResponse ? 'Update RSVP' : 'RSVP now' }}
+                  </a>
+                } @else {
+                  <p class="wu-muted">No upcoming cohort sessions are scheduled yet.</p>
+                  <a class="wu-btn wu-btn--ghost" routerLink="/youth/schedule">View schedule</a>
+                }
+              </div>
+            </section>
+          </div>
+
+          <section class="wu-card" data-testid="home-assignments">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-cluster--between wu-mb-4">
+                <div>
+                  <div class="wu-eyebrow">From your mentor</div>
+                  <h2 class="wu-card__title">Assigned work</h2>
+                </div>
+                @if (view.mentorName) {
+                  <a class="wu-btn wu-btn--ghost" routerLink="/youth/messages"
+                    >Message {{ view.mentorName }}</a
+                  >
+                }
+              </div>
+              @if (view.assignedWork.length === 0) {
+                <div class="wu-empty">
+                  <h3 class="wu-empty__title">Nothing assigned right now</h3>
+                  <p class="wu-empty__text">Your next mentor assignment will appear here.</p>
+                </div>
+              } @else {
+                <ul class="assignment-list">
+                  @for (work of view.assignedWork; track work.assignmentId) {
+                    <li class="assignment-row">
+                      <div>
+                        <div class="wu-cluster">
+                          <h3>{{ work.title }}</h3>
+                          <span class="wu-badge" [class.wu-badge--error]="work.overdue">
+                            {{ work.overdue ? 'Overdue' : work.status }}
+                          </span>
+                        </div>
+                        @if (work.dueDate) {
+                          <p class="wu-muted">Due {{ work.dueDate | date: 'mediumDate' }}</p>
+                        }
+                        @if (work.message) {
+                          <p>{{ work.message }}</p>
+                        }
+                      </div>
+                      <a class="wu-btn wu-btn--secondary" [routerLink]="work.targetPath">Open</a>
+                    </li>
+                  }
+                </ul>
+              }
+            </div>
+          </section>
+        </div>
+      }
+    } @else if (!errorMessage()) {
+      <p class="wu-muted" role="status">Loading your home…</p>
     }
   </div>
 </wu-shell>
