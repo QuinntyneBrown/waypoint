@@ -47,6 +47,8 @@ export interface SeededGuardianFamily {
 export interface SeededYouthCurriculum {
   youthId: string;
   youthName: string;
+  guardianName: string;
+  guardianEmail: string;
   youthEmail: string;
   youthPassword: string;
   primaryTrackId: string;

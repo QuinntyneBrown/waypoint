@@ -136,7 +136,9 @@ requirement conflicts early (they gate "done").
 - [x] **F1** Dashboard/roster/reviews preview `L2-MENTOR-001` — assigned-youth-only summary
       counts, overdue review totals, progress and at-risk status, server-side roster search/status
       filters, labelled populated/empty states, and assignment/quiz review previews with grading links.
-- [ ] **F2** Youth detail (scoped tabs) `L2-MENTOR-002`
+- [x] **F2** Youth detail (scoped tabs) `L2-MENTOR-002` — assigned-youth-only profile and
+      guardian contact, authoritative progress, attendance, privacy-trimmed check-in history,
+      submission and competency tabs, plus named/timestamped at-risk attribution.
 - [ ] **F3** Submission review/grading (+ queue/detail API, outcomes) `L2-MENTOR-003`, `L2-LEARN-007`
 - [ ] **F4** Quiz assessment approvals (+ pending/review queries) `L2-MENTOR-004`
 - [ ] **F5** Competency tracker `L2-MENTOR-005`
@@ -232,8 +234,8 @@ requirement conflicts early (they gate "done").
 - [x] **Youth curriculum fixture** — Testing-only multi-track enrollment data covers published/draft
       filtering, ordered lesson/quiz gates, prerequisite locking, progress, safe lesson content,
       failed optional media, reflection hand-off, upcoming cohort logistics, an assigned-mentor thread,
-      mentor-assigned work, an overdue mentor review/active flag, the placed dashboard, and an empty
-      enrolled track.
+      mentor-assigned work, an overdue mentor review/active flag, guardian contact, a private check-in,
+      the placed dashboard, and an empty enrolled track.
 
 ## Progress log
 
@@ -299,3 +301,8 @@ requirement conflicts early (they gate "done").
   and assignment/quiz reviews; My Youth provides debounced server search and all/on-track/at-risk/new
   filters with labelled empty states. Integration acceptance excludes another mentor's youth, flags,
   and overdue work; desktop and mobile keyboard/reflow paths pass.
+- 2026-07-18 — F2 done: an assigned youth's mentor-only record now provides semantic tabs for
+  profile/guardian contact, curriculum-aware lesson progress, attendance, privacy-trimmed check-ins,
+  submissions, and latest named competencies. Active risk banners identify the reason, flagger, and
+  date; HTTP tests preserve the cross-mentor 403 and prove private prayer text is excluded, while
+  desktop/mobile acceptance covers every populated tab and keyboard reflow.

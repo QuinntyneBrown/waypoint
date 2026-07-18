@@ -6,6 +6,7 @@ import {
   MentorDashboardView,
   MentorReviewPreview,
   MentorRosterYouth,
+  MentorYouthDetail,
 } from '../models/mentoring/mentor';
 
 @Injectable({ providedIn: 'root' })
@@ -27,5 +28,11 @@ export class MentorApi {
     return this.http.get<MentorReviewPreview[]>(`${this.base}/api/mentor/reviews`, {
       params: new HttpParams().set('take', take),
     });
+  }
+
+  youth(id: string): Observable<MentorYouthDetail> {
+    return this.http.get<MentorYouthDetail>(
+      `${this.base}/api/mentor/youth/${encodeURIComponent(id)}`,
+    );
   }
 }

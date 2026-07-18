@@ -41,6 +41,33 @@ public sealed class RosterTests : IntegrationTestBase
         Guid? CohortId,
         string? CohortName,
         DateTime LastActiveAt);
+    private sealed record YouthDetailAcceptance(
+        Guid Id,
+        string DisplayName,
+        string Email,
+        string? Pronouns,
+        string? CohortName,
+        GuardianAcceptance? Guardian,
+        bool AtRisk,
+        string? AtRiskReason,
+        string? FlaggedByName,
+        DateTime? FlaggedAt,
+        ProgressAcceptance Progress,
+        IReadOnlyList<AttendanceAcceptance> Attendance,
+        IReadOnlyList<CheckInAcceptance> CheckIns,
+        IReadOnlyList<SubmissionAcceptance> Submissions,
+        IReadOnlyList<CompetencyAcceptance> Competencies);
+    private sealed record GuardianAcceptance(
+        string Name,
+        string Email,
+        string? Phone,
+        string? EmergencyContactName,
+        string? EmergencyContactPhone);
+    private sealed record ProgressAcceptance(int CompletedLessons, int TotalLessons, double Percent);
+    private sealed record AttendanceAcceptance(string SessionTitle, string Status);
+    private sealed record CheckInAcceptance(Guid Id, string Type, string Visibility);
+    private sealed record SubmissionAcceptance(Guid Id, string AssignmentTitle, string Status);
+    private sealed record CompetencyAcceptance(string Name, string Level, string? Notes);
 
     private async Task<Scenario> SeedMentorWithYouthAsync()
     {
@@ -285,5 +312,130 @@ public sealed class RosterTests : IntegrationTestBase
 
         var forbidden = await GetAsync($"/api/mentor/youth/{scenario.OtherYouth}", token);
         Assert.That(forbidden.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+    }
+
+    [Test]
+    [Property("Req", "L2-MENTOR-002")]
+    [Property("Req", "L2-AUTH-010")]
+    public async Task Assigned_youth_detail_contains_each_scoped_tab_and_guardian_contact()
+    {
+        // Traces to: L2-MENTOR-002 AC1-AC4
+        var scenario = await SeedMentorWithYouthAsync();
+        var now = DateTime.UtcNow;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+            var guardian = new User
+            {
+                Email = $"guardian.{Guid.NewGuid():N}@example.com",
+                DisplayName = "Grace Guardian",
+                Role = Roles.Guardian,
+                Status = UserStatus.Active,
+                PasswordHash = hasher.Hash("Passw0rd!"),
+            };
+            var track = new Track { Name = "Mentor detail track", Key = $"detail-{Guid.NewGuid():N}", Status = PublishStatus.Published };
+            var cohort = new Cohort { Name = "Detail cohort", TrackId = track.Id, MentorId = scenario.MentorId };
+            var module = new Module { TrackId = track.Id, Name = "Detail module", Order = 1, Status = PublishStatus.Published };
+            var lessonA = new Lesson { ModuleId = module.Id, Title = "Completed lesson", Order = 1, Status = PublishStatus.Published };
+            var lessonB = new Lesson { ModuleId = module.Id, Title = "Next lesson", Order = 2, Status = PublishStatus.Published };
+            var session = new Session { CohortId = cohort.Id, MentorId = scenario.MentorId, Title = "Coaching lab", StartsAt = now.AddDays(-2), CreatedByUserId = scenario.MentorId };
+            var assignment = new Assignment { Title = "Leadership reflection", TaskDescription = "Reflect", SubmissionTypes = "text" };
+            var stage = new ProgressionStage { Name = "Growth", Order = 1 };
+            var competency = new Competency { StageId = stage.Id, Name = "Listening", Order = 1 };
+            db.Users.Add(guardian);
+            db.Tracks.Add(track);
+            db.Cohorts.Add(cohort);
+            db.Modules.Add(module);
+            db.Lessons.AddRange(lessonA, lessonB);
+            db.Sessions.Add(session);
+            db.Assignments.Add(assignment);
+            db.ProgressionStages.Add(stage);
+            db.Competencies.Add(competency);
+
+            var youth = await db.Users.FindAsync(scenario.YouthA);
+            youth!.Pronouns = "they/them";
+            youth.GuardianUserId = guardian.Id;
+            youth.CohortId = cohort.Id;
+            db.GuardianProfiles.Add(new GuardianProfile
+            {
+                GuardianUserId = guardian.Id,
+                Phone = "416-555-0102",
+                EmergencyContactName = "Auntie Joy",
+                EmergencyContactPhone = "416-555-0199",
+            });
+            db.LessonProgress.Add(new LessonProgress
+            {
+                YouthUserId = youth.Id,
+                LessonId = lessonA.Id,
+                Status = ProgressStatus.Completed,
+                CompletedAt = now.AddDays(-1),
+            });
+            db.AttendanceRecords.Add(new AttendanceRecord
+            {
+                SessionId = session.Id,
+                YouthUserId = youth.Id,
+                Status = AttendanceStatus.Present,
+                RecordedByUserId = scenario.MentorId,
+                RecordedAt = now.AddDays(-2),
+            });
+            var checkIn = new CheckIn
+            {
+                YouthUserId = youth.Id,
+                MentorUserId = scenario.MentorId,
+                Date = now.AddDays(-1),
+                Type = "1:1",
+                Visibility = Visibility.Private,
+                PrayerRequests = "Must not appear in the summary payload",
+            };
+            db.CheckIns.Add(checkIn);
+            var submission = new Submission
+            {
+                YouthUserId = youth.Id,
+                AssignmentId = assignment.Id,
+                Status = SubmissionStatus.Submitted,
+            };
+            db.Submissions.Add(submission);
+            db.CompetencyAssessments.Add(new CompetencyAssessment
+            {
+                YouthUserId = youth.Id,
+                CompetencyId = competency.Id,
+                Level = CompetencyLevel.Proficient,
+                Notes = "Listens before responding",
+                AssessedByUserId = scenario.MentorId,
+                AssessedAt = now,
+            });
+            db.Flags.Add(new Flag
+            {
+                YouthUserId = youth.Id,
+                Reason = "Two missed sessions",
+                FlaggedByUserId = scenario.MentorId,
+                FlaggedAt = now,
+            });
+            await db.SaveChangesAsync();
+        }
+
+        var token = await SignInAsync(scenario.MentorEmail);
+        var response = await GetAsync($"/api/mentor/youth/{scenario.YouthA}", token);
+        var detail = await response.Content.ReadFromJsonAsync<YouthDetailAcceptance>();
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.Multiple(() =>
+        {
+            Assert.That(detail!.Pronouns, Is.EqualTo("they/them"));
+            Assert.That(detail.CohortName, Is.EqualTo("Detail cohort"));
+            Assert.That(detail.Guardian!.Name, Is.EqualTo("Grace Guardian"));
+            Assert.That(detail.Guardian.Phone, Is.EqualTo("416-555-0102"));
+            Assert.That(detail.AtRiskReason, Is.EqualTo("Two missed sessions"));
+            Assert.That(detail.FlaggedByName, Is.EqualTo("Mentor One"));
+            Assert.That(detail.Progress.CompletedLessons, Is.EqualTo(1));
+            Assert.That(detail.Progress.TotalLessons, Is.EqualTo(2));
+            Assert.That(detail.Attendance.Single().SessionTitle, Is.EqualTo("Coaching lab"));
+            Assert.That(detail.CheckIns.Single().Type, Is.EqualTo("1:1"));
+            Assert.That(detail.Submissions.Single().AssignmentTitle, Is.EqualTo("Leadership reflection"));
+            Assert.That(detail.Competencies.Single().Name, Is.EqualTo("Listening"));
+            Assert.That(detail.Competencies.Single().Level, Is.EqualTo("Proficient"));
+        });
+        var json = await response.Content.ReadAsStringAsync();
+        Assert.That(json, Does.Not.Contain("Must not appear"));
     }
 }

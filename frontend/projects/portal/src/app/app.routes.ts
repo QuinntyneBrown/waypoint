@@ -236,6 +236,14 @@ export const routes: Routes = [
             (module) => module.MentorRosterPage,
           ),
       },
+      {
+        path: 'youth/:id',
+        title: 'Youth detail · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/youth-detail/mentor-youth-detail').then(
+            (module) => module.MentorYouthDetailPage,
+          ),
+      },
     ],
   },
   {

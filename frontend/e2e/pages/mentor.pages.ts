@@ -71,3 +71,19 @@ export class MentorRosterPage extends BasePage {
     await this.page.goto(MentorRosterPage.path);
   }
 }
+
+/** `/mentor/youth/:id` — assigned-youth record with privacy-scoped detail tabs. */
+export class MentorYouthDetailPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get atRiskBanner() {
+    return this.page.getByTestId('youth-at-risk-banner');
+  }
+  tab(name: 'Profile' | 'Progress' | 'Attendance' | 'Check-ins' | 'Submissions' | 'Competencies') {
+    return this.page.getByRole('tab', { name, exact: true });
+  }
+  panel(name: string) {
+    return this.page.getByRole('tabpanel', { name });
+  }
+}

@@ -869,6 +869,15 @@ if (app.Environment.IsEnvironment("Testing"))
         };
 
         db.Users.AddRange(guardian, mentor, youth);
+        db.GuardianProfiles.Add(new GuardianProfile
+        {
+            GuardianUserId = guardian.Id,
+            Relationship = "Parent",
+            Phone = "416-555-0142",
+            EmergencyContactName = "Community Auntie",
+            EmergencyContactPhone = "416-555-0188",
+            UpdatedAt = now,
+        });
         db.Tracks.AddRange(primaryTrack, secondTrack);
         db.Modules.AddRange(firstModule, lockedModule, draftModule);
         db.Lessons.AddRange(firstLesson, secondLesson);
@@ -924,6 +933,18 @@ if (app.Environment.IsEnvironment("Testing"))
             RecipientId = youth.Id,
             Body = "Welcome! Message me whenever you need support.",
             SentAt = now.AddMinutes(-30),
+        });
+        db.CheckIns.Add(new CheckIn
+        {
+            YouthUserId = youth.Id,
+            MentorUserId = mentor.Id,
+            Date = now.AddDays(-2),
+            Type = "1:1",
+            Engagement = "Engaged",
+            Visibility = Visibility.Private,
+            PrayerRequests = "PRIVATE PRAYER DETAIL",
+            NextFollowUp = now.AddDays(5),
+            CreatedAt = now.AddDays(-2),
         });
         db.AssignedWork.Add(new AssignedWork
         {
@@ -1002,6 +1023,8 @@ if (app.Environment.IsEnvironment("Testing"))
         {
             youthId = youth.Id,
             youthName = youth.DisplayName,
+            guardianName = guardian.DisplayName,
+            guardianEmail = guardian.Email,
             youthEmail = youth.Email,
             youthPassword,
             primaryTrackId = primaryTrack.Id,

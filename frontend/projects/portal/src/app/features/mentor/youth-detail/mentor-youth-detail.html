@@ -1,0 +1,163 @@
+<wu-shell
+  role="mentor"
+  active="my-youth"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <a class="wu-link" routerLink="/mentor/my-youth">Back to My youth</a>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (detail(); as youth) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">{{ youth.cohortName ?? 'Cohort not assigned' }}</div>
+          <h1 class="wu-page__title">{{ youth.displayName }}</h1>
+          <p class="wu-page__sub">Mentor-only coaching record</p>
+        </div>
+      </div>
+
+      @if (youth.atRisk) {
+        <aside class="wu-alert wu-alert--error" data-testid="youth-at-risk-banner">
+          <strong>At risk:</strong> {{ youth.atRiskReason }}
+          @if (youth.flaggedByName && youth.flaggedAt) {
+            <span
+              >Flagged by {{ youth.flaggedByName }} on
+              {{ youth.flaggedAt | date: 'mediumDate' }}.</span
+            >
+          }
+        </aside>
+      }
+
+      <div class="detail-tabs" role="tablist" aria-label="Youth record sections">
+        @for (tab of tabs; track tab.key) {
+          <button
+            class="wu-tab detail-tab"
+            type="button"
+            role="tab"
+            [id]="'detail-tab-' + tab.key"
+            [attr.aria-controls]="'detail-panel-' + tab.key"
+            [attr.aria-selected]="activeTab() === tab.key"
+            [attr.tabindex]="activeTab() === tab.key ? 0 : -1"
+            [class.is-active]="activeTab() === tab.key"
+            (click)="selectTab(tab.key)"
+          >
+            {{ tab.label }}
+          </button>
+        }
+      </div>
+
+      @for (tab of tabs; track tab.key) {
+        @if (activeTab() === tab.key) {
+          <section
+            class="wu-card wu-mt-4"
+            role="tabpanel"
+            [id]="'detail-panel-' + tab.key"
+            [attr.aria-labelledby]="'detail-tab-' + tab.key"
+          >
+            <div class="wu-card__body">
+              @switch (tab.key) {
+                @case ('profile') {
+                  <div class="detail-grid">
+                    <div>
+                      <h2>Profile</h2>
+                      <p><strong>Email:</strong> {{ youth.email }}</p>
+                      <p><strong>Pronouns:</strong> {{ youth.pronouns ?? 'Not provided' }}</p>
+                      <p><strong>Cohort:</strong> {{ youth.cohortName ?? 'Not assigned' }}</p>
+                    </div>
+                    <div>
+                      <h2>Guardian contact</h2>
+                      @if (youth.guardian; as guardian) {
+                        <p><strong>Name:</strong> {{ guardian.name }}</p>
+                        <p><strong>Email:</strong> {{ guardian.email }}</p>
+                        <p><strong>Phone:</strong> {{ guardian.phone ?? 'Not provided' }}</p>
+                        <p>
+                          <strong>Emergency contact:</strong>
+                          {{ guardian.emergencyContactName ?? 'Not provided' }}
+                          @if (guardian.emergencyContactPhone) {
+                            · {{ guardian.emergencyContactPhone }}
+                          }
+                        </p>
+                      } @else {
+                        <p class="wu-muted">No guardian contact is linked.</p>
+                      }
+                    </div>
+                  </div>
+                }
+                @case ('progress') {
+                  <h2>Progress</h2>
+                  <p>
+                    {{ youth.progress.completedLessons }} of
+                    {{ youth.progress.totalLessons }} lessons complete
+                  </p>
+                  <progress max="100" [value]="percent(youth.progress.percent)">
+                    {{ percent(youth.progress.percent) }}%
+                  </progress>
+                }
+                @case ('attendance') {
+                  <h2>Attendance</h2>
+                  <ul class="detail-list">
+                    @for (item of youth.attendance; track item.sessionId) {
+                      <li class="detail-row">
+                        <strong>{{ item.sessionTitle }}</strong> · {{ item.status }}
+                        <span class="wu-muted">{{ item.startsAt | date: 'mediumDate' }}</span>
+                      </li>
+                    } @empty {
+                      <li class="wu-muted">No attendance recorded.</li>
+                    }
+                  </ul>
+                }
+                @case ('check-ins') {
+                  <h2>Check-ins</h2>
+                  <ul class="detail-list">
+                    @for (item of youth.checkIns; track item.id) {
+                      <li class="detail-row">
+                        <strong>{{ item.type }}</strong> · {{ item.visibility }} ·
+                        {{ item.date | date: 'mediumDate' }}
+                      </li>
+                    } @empty {
+                      <li class="wu-muted">No check-ins recorded.</li>
+                    }
+                  </ul>
+                }
+                @case ('submissions') {
+                  <h2>Submissions</h2>
+                  <ul class="detail-list">
+                    @for (item of youth.submissions; track item.id) {
+                      <li class="detail-row">
+                        <a [routerLink]="['/mentor/reviews/submissions', item.id]">{{
+                          item.assignmentTitle
+                        }}</a>
+                        · {{ item.status }} · {{ item.submittedAt | date: 'mediumDate' }}
+                      </li>
+                    } @empty {
+                      <li class="wu-muted">No submissions yet.</li>
+                    }
+                  </ul>
+                }
+                @case ('competencies') {
+                  <h2>Competencies</h2>
+                  <ul class="detail-list">
+                    @for (item of youth.competencies; track item.competencyId) {
+                      <li class="detail-row">
+                        <strong>{{ item.name }}</strong> · {{ item.level }}
+                        @if (item.notes) {
+                          <p>{{ item.notes }}</p>
+                        }
+                      </li>
+                    } @empty {
+                      <li class="wu-muted">No competency assessments yet.</li>
+                    }
+                  </ul>
+                }
+              }
+            </div>
+          </section>
+        }
+      }
+    } @else if (!errorMessage()) {
+      <p class="wu-muted" role="status">Loading youth record…</p>
+    }
+  </div>
+</wu-shell>

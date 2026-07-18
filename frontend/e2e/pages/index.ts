@@ -59,7 +59,7 @@ export {
   VolunteerSchedulePage,
 } from './volunteer.pages';
 export { PeopleDirectoryPage, ApplicationsListPage } from './admin.pages';
-export { MentorDashboardPage, MentorRosterPage } from './mentor.pages';
+export { MentorDashboardPage, MentorRosterPage, MentorYouthDetailPage } from './mentor.pages';
 export {
   LandingPage,
   ProgramsPage,
