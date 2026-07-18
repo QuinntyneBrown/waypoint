@@ -297,3 +297,117 @@ export class MentorAssignWorkPage extends BasePage {
     return this.page.getByRole('status');
   }
 }
+
+export class MentorCalendarPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Calendar', exact: true });
+  }
+  get monthTab() {
+    return this.page.getByRole('tab', { name: 'Month', exact: true });
+  }
+  get weekTab() {
+    return this.page.getByRole('tab', { name: 'Week', exact: true });
+  }
+  get agendaTab() {
+    return this.page.getByRole('tab', { name: 'Agenda', exact: true });
+  }
+  get month() {
+    return this.page.getByTestId('month-calendar');
+  }
+  get week() {
+    return this.page.getByTestId('week-calendar');
+  }
+  get agenda() {
+    return this.page.getByTestId('agenda-calendar');
+  }
+  get title() {
+    return this.page.getByLabel('Title', { exact: true });
+  }
+  get cohort() {
+    return this.page.getByLabel('Cohort', { exact: true }).last();
+  }
+  get mentor() {
+    return this.page.getByLabel('Mentor', { exact: true });
+  }
+  get date() {
+    return this.page.getByLabel('Date', { exact: true });
+  }
+  get time() {
+    return this.page.getByLabel('Time', { exact: true });
+  }
+  get location() {
+    return this.page.getByLabel('Location', { exact: true });
+  }
+  get repeatsWeekly() {
+    return this.page.getByRole('checkbox', { name: /repeat weekly/i });
+  }
+  get repeatsWeeklyControl() {
+    return this.page.locator('label.wu-check').filter({ hasText: /repeat weekly/i });
+  }
+  get schedule() {
+    return this.page.getByRole('button', { name: /schedule session/i });
+  }
+  get status() {
+    return this.page.locator('p.wu-sr-only[role="status"]');
+  }
+}
+
+export class MentorAttendanceCapturePage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get rows() {
+    return this.page.getByTestId('mentor-attendance-row');
+  }
+  row(name: string) {
+    return this.rows.filter({ hasText: name });
+  }
+  statusButton(name: string, status: 'Present' | 'Late' | 'Excused' | 'Absent') {
+    return this.row(name).getByRole('button', { name: status, exact: true });
+  }
+  note(name: string) {
+    return this.row(name).getByLabel(`Staff note for ${name}`, { exact: true });
+  }
+  get allPresent() {
+    return this.page.getByRole('button', { name: 'All present', exact: true });
+  }
+  get save() {
+    return this.page.getByRole('button', { name: /save attendance/i });
+  }
+  get status() {
+    return this.page.getByRole('status');
+  }
+}
+
+export class MentorAttendanceHistoryPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Attendance', exact: true });
+  }
+  get sessionTab() {
+    return this.page.getByRole('tab', { name: 'By session', exact: true });
+  }
+  get youthTab() {
+    return this.page.getByRole('tab', { name: 'By youth', exact: true });
+  }
+  get from() {
+    return this.page.getByLabel('From', { exact: true });
+  }
+  get to() {
+    return this.page.getByLabel('To', { exact: true });
+  }
+  get applyFilters() {
+    return this.page.getByRole('button', { name: 'Apply filters', exact: true });
+  }
+  get sessionRows() {
+    return this.page.getByTestId('attendance-session-row');
+  }
+  get youthRows() {
+    return this.page.getByTestId('attendance-youth-row');
+  }
+  get exportCsv() {
+    return this.page.getByRole('button', { name: 'Export CSV', exact: true });
+  }
+  get exportPdf() {
+    return this.page.getByRole('button', { name: 'Export PDF', exact: true });
+  }
+}

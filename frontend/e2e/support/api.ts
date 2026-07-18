@@ -72,6 +72,9 @@ export interface SeededYouthCurriculum {
   mentorEmail: string;
   mentorPassword: string;
   mentorName: string;
+  mentorId: string;
+  cohortId: string;
+  cohortName: string;
   assignmentId: string;
   assignmentTitle: string;
   assignmentCriterionId: string;

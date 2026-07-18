@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api-base-url';
@@ -9,6 +9,83 @@ import {
   SupportResult,
 } from '../models/platform/platform';
 import { MessageResult, MessageView, YouthMessageThread } from '../models/engagement/messages';
+import {
+  AttendanceHistoryFilter,
+  AttendanceTally,
+  AttendanceWrite,
+  CalendarSession,
+  CreateSessionRequest,
+  CreateSessionResult,
+  SessionAttendanceSummary,
+  SessionSchedulingOptions,
+  StaffSessionAttendance,
+  YouthAttendanceSummary,
+} from '../models/engagement/operations';
+
+/** Staff session scheduling, attendance capture, history, and filtered exports. */
+@Injectable({ providedIn: 'root' })
+export class StaffOperationsApi {
+  private readonly http = inject(HttpClient);
+  private readonly base = inject(API_BASE_URL);
+
+  sessionOptions(): Observable<SessionSchedulingOptions> {
+    return this.http.get<SessionSchedulingOptions>(`${this.base}/api/sessions/options`);
+  }
+
+  sessions(filter: AttendanceHistoryFilter = {}): Observable<CalendarSession[]> {
+    return this.http.get<CalendarSession[]>(`${this.base}/api/sessions`, {
+      params: this.params(filter),
+    });
+  }
+
+  createSession(request: CreateSessionRequest): Observable<CreateSessionResult> {
+    return this.http.post<CreateSessionResult>(`${this.base}/api/sessions`, request);
+  }
+
+  attendanceRoster(sessionId: string): Observable<StaffSessionAttendance> {
+    return this.http.get<StaffSessionAttendance>(
+      `${this.base}/api/attendance/${encodeURIComponent(sessionId)}/roster`,
+    );
+  }
+
+  saveAttendance(write: AttendanceWrite, idempotencyKey: string): Observable<AttendanceTally> {
+    return this.http.post<AttendanceTally>(`${this.base}/api/attendance`, write, {
+      headers: { 'Idempotency-Key': idempotencyKey },
+    });
+  }
+
+  sessionHistory(filter: AttendanceHistoryFilter = {}): Observable<SessionAttendanceSummary[]> {
+    return this.http.get<SessionAttendanceSummary[]>(
+      `${this.base}/api/attendance/history/by-session`,
+      { params: this.params(filter) },
+    );
+  }
+
+  youthHistory(filter: AttendanceHistoryFilter = {}): Observable<YouthAttendanceSummary[]> {
+    return this.http.get<YouthAttendanceSummary[]>(`${this.base}/api/attendance/history/youth`, {
+      params: this.params(filter),
+    });
+  }
+
+  exportAttendance(
+    format: 'csv' | 'pdf',
+    view: 'session' | 'youth',
+    filter: AttendanceHistoryFilter = {},
+  ): Observable<Blob> {
+    return this.http.get(`${this.base}/api/attendance/history/export`, {
+      params: this.params(filter).set('format', format).set('view', view),
+      responseType: 'blob',
+    });
+  }
+
+  private params(filter: AttendanceHistoryFilter): HttpParams {
+    let params = new HttpParams();
+    if (filter.cohortId) params = params.set('cohortId', filter.cohortId);
+    if (filter.from) params = params.set('from', filter.from);
+    if (filter.to) params = params.set('to', filter.to);
+    return params;
+  }
+}
 
 /** Assigned-mentor messaging (`/api/me/messages`, Youth). */
 @Injectable({ providedIn: 'root' })

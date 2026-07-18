@@ -1,3 +1,4 @@
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
@@ -30,6 +31,41 @@ public class CreateSessionCommandHandler : IRequestHandler<CreateSessionCommand,
             ?? throw new NotFoundException("Cohort not found.");
 
         var createdBy = _currentUser.UserId!.Value;
+        var mentorId = request.MentorId!.Value;
+        var mentorExists = await _db.Users.AnyAsync(
+            user => user.Id == mentorId
+                && user.Role == Roles.Mentor
+                && user.Status == UserStatus.Active,
+            cancellationToken);
+        if (!mentorExists) throw new NotFoundException("Active mentor not found.");
+        if (_currentUser.Role == Roles.Mentor)
+        {
+            if (mentorId != createdBy)
+            {
+                throw new ForbiddenException("Mentors may only schedule sessions assigned to themselves.");
+            }
+
+            var hasCohortAccess = cohort.MentorId == createdBy
+                || await _db.CohortMentors.AnyAsync(
+                    assignment => assignment.CohortId == cohort.Id
+                        && assignment.MentorId == createdBy,
+                    cancellationToken)
+                || await _db.Users.AnyAsync(
+                    user => user.CohortId == cohort.Id
+                        && user.MentorId == createdBy
+                        && user.Role == Roles.Youth
+                        && user.Status == UserStatus.Active,
+                    cancellationToken);
+            if (!hasCohortAccess)
+            {
+                throw new ForbiddenException("This cohort is not assigned to you.");
+            }
+        }
+        if (request.StartsAt < cohort.TermStart || request.StartsAt > cohort.TermEnd)
+        {
+            throw new ValidationException("The session must fall within the cohort term.");
+        }
+
         var now = _clock.UtcNow;
         var sessions = new List<Session>();
 

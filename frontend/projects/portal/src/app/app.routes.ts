@@ -267,6 +267,31 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'calendar',
+        title: 'Calendar · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/calendar/mentor-calendar').then(
+            (module) => module.MentorCalendarPage,
+          ),
+      },
+      {
+        path: 'attendance',
+        title: 'Attendance · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/attendance-history/mentor-attendance-history').then(
+            (module) => module.MentorAttendanceHistoryPage,
+          ),
+      },
+      {
+        path: 'attendance/:sessionId',
+        title: 'Take attendance · Word Up',
+        canDeactivate: [unsavedChangesGuard],
+        loadComponent: () =>
+          import('./features/mentor/attendance-capture/mentor-attendance-capture').then(
+            (module) => module.MentorAttendanceCapturePage,
+          ),
+      },
+      {
         path: 'youth/:id/competencies',
         title: 'Competency tracker · Word Up',
         loadComponent: () =>

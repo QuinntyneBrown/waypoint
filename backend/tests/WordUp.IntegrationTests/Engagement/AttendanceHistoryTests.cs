@@ -155,6 +155,7 @@ public sealed class AttendanceHistoryTests : IntegrationTestBase
         Assert.That(low.Total, Is.EqualTo(3));
         Assert.That(low.Rate, Is.EqualTo(1.0 / 3).Within(0.001));
         Assert.That(low.BelowThreshold, Is.True);
+        Assert.That(low.Trend, Is.EqualTo("declining"));
 
         var highResponse = await SendAsync(HttpMethod.Get, $"/api/attendance/history/by-youth?youthId={youthHigh}", token: token);
         Assert.That(highResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -163,11 +164,21 @@ public sealed class AttendanceHistoryTests : IntegrationTestBase
         Assert.That(high.Total, Is.EqualTo(3));
         Assert.That(high.Rate, Is.EqualTo(1.0));
         Assert.That(high.BelowThreshold, Is.False);
+        Assert.That(high.Trend, Is.EqualTo("steady"));
     }
 
     private sealed record SessionAttendanceSummaryDto(
         Guid SessionId, string Title, DateTime StartsAt, int Present, int Marked, double Rate, string Status);
 
     private sealed record YouthAttendanceSummaryDto(
-        Guid YouthUserId, int Attended, int Late, int Excused, int Absent, int Total, double Rate, bool BelowThreshold);
+        Guid YouthUserId,
+        int Attended,
+        int Late,
+        int Excused,
+        int Absent,
+        int Total,
+        double Rate,
+        bool BelowThreshold,
+        string DisplayName,
+        string Trend);
 }

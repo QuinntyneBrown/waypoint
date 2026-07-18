@@ -2,7 +2,8 @@ using MediatR;
 
 namespace WordUp.Application.Engagement.Attendance;
 
-public record AttendanceHistoryByYouthQuery(Guid YouthId) : IRequest<YouthAttendanceSummary>;
+public record AttendanceHistoryByYouthQuery(Guid YouthId, DateTime? From = null, DateTime? To = null)
+    : IRequest<YouthAttendanceSummary>;
 
 public record YouthAttendanceSummary(
     Guid YouthUserId,
@@ -12,4 +13,6 @@ public record YouthAttendanceSummary(
     int Absent,
     int Total,
     double Rate,
-    bool BelowThreshold);
+    bool BelowThreshold,
+    string DisplayName,
+    string Trend);

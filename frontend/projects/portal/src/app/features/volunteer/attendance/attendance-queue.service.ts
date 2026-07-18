@@ -1,12 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import {
-  ApiError,
-  AttendanceTally,
-  VolunteerApi,
-  VolunteerAttendanceWrite,
-  VolunteerRosterEntry,
-} from '@wu/api';
+import { ApiError, AttendanceTally, AttendanceWrite, VolunteerApi } from '@wu/api';
 import { AuthStore } from '@wu/auth';
 import { OfflineService } from '@wu/ui';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
@@ -16,7 +10,7 @@ interface QueuedAttendanceWrite {
   ownerUserId: string;
   createdAt: string;
   state: 'queued' | 'conflict';
-  write: VolunteerAttendanceWrite;
+  write: AttendanceWrite;
 }
 
 interface OwnerQueue {
@@ -56,7 +50,7 @@ export class AttendanceQueueService {
     });
   }
 
-  save(write: VolunteerAttendanceWrite): Observable<AttendanceSaveOutcome> {
+  save(write: AttendanceWrite): Observable<AttendanceSaveOutcome> {
     const ownerUserId = this.auth.user()?.userId;
     if (!ownerUserId) {
       return throwError(() => new Error('Attendance cannot be saved without a signed-in owner.'));
@@ -98,7 +92,10 @@ export class AttendanceQueueService {
   }
 
   /** Rebase a rejected offline operation onto the versions the user has just reviewed. */
-  retryConflicts(sessionId: string, latestRoster: VolunteerRosterEntry[]): void {
+  retryConflicts(
+    sessionId: string,
+    latestRoster: ReadonlyArray<{ youthUserId: string; version: string | null }>,
+  ): void {
     const ownerUserId = this.auth.user()?.userId;
     if (!ownerUserId) return;
     const versions = new Map(latestRoster.map((row) => [row.youthUserId, row.version]));

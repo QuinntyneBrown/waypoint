@@ -1,5 +1,9 @@
 /** Volunteer portal models (L2-VOLUNTEER-001/002). Names-only / no youth records. */
 
+import type { AttendanceMarkInput, AttendanceWrite } from '../engagement/operations';
+
+export type { AttendanceTally } from '../engagement/operations';
+
 // Traces to: L2-VOLUNTEER-001 (AC1 today's session logistics + roster count, no youth data)
 export interface VolunteerTodayView {
   sessionId: string;
@@ -28,23 +32,10 @@ export interface VolunteerRosterEntry {
   version: string | null;
 }
 
-export interface VolunteerAttendanceMark {
-  youthId: string;
+export interface VolunteerAttendanceMark extends Omit<AttendanceMarkInput, 'status'> {
   status: 'Present' | 'Absent';
-  note: null;
-  expectedVersion: string | null;
 }
 
-export interface VolunteerAttendanceWrite {
-  sessionId: string;
+export interface VolunteerAttendanceWrite extends Omit<AttendanceWrite, 'marks'> {
   marks: VolunteerAttendanceMark[];
-}
-
-export interface AttendanceTally {
-  present: number;
-  late: number;
-  excused: number;
-  absent: number;
-  marked: number;
-  total: number;
 }

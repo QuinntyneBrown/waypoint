@@ -1,17 +1,31 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
+using WordUp.Application.Shared.Common;
 
 namespace WordUp.Application.Engagement.Attendance;
 
 public class SessionAttendanceQueryHandler : IRequestHandler<SessionAttendanceQuery, IReadOnlyList<AttendanceMarkView>>
 {
     private readonly IAppDbContext _db;
+    private readonly ICurrentUser _currentUser;
 
-    public SessionAttendanceQueryHandler(IAppDbContext db) => _db = db;
+    public SessionAttendanceQueryHandler(IAppDbContext db, ICurrentUser currentUser)
+    {
+        _db = db;
+        _currentUser = currentUser;
+    }
 
     public async Task<IReadOnlyList<AttendanceMarkView>> Handle(SessionAttendanceQuery request, CancellationToken cancellationToken)
     {
+        var session = await _db.Sessions.AsNoTracking()
+            .FirstOrDefaultAsync(item => item.Id == request.SessionId, cancellationToken)
+            ?? throw new NotFoundException("Session not found.");
+        if (_currentUser.Role == Roles.Mentor && session.MentorId != _currentUser.UserId)
+        {
+            throw new ForbiddenException("This session is not assigned to you.");
+        }
+
         var rows = await _db.AttendanceRecords
             .Where(r => r.SessionId == request.SessionId)
             .OrderBy(r => r.YouthUserId)

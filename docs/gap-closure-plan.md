@@ -161,7 +161,10 @@ requirement conflicts early (they gate "done").
       scoped published module/lesson/project picker, individual or whole-cohort recipients, due date
       and reminder cadence, optional personal message, responsive confirmation count, and durable
       youth journey/message/notification placement.
-- [ ] **F9** Mentor calendar & attendance `L2-ENGAGE-001..004`
+- [x] **F9** Mentor calendar & attendance `L2-ENGAGE-001..004` — scoped named month/week/agenda
+      views, cohort filtering, mentor-owned weekly recurrence through term end, attendance links,
+      four-state roster capture with notes/bulk tallies, shared offline/concurrency recovery, filtered
+      session/youth rates and trends, and filter-honouring CSV/PDF exports.
 - [ ] **F10** Mentor messaging/notifications `L2-ENGAGE-007/008`, `L2-NFR-005`
 
 ## Phase G — Program Administrator portal
@@ -221,7 +224,10 @@ requirement conflicts early (they gate "done").
       reconnect without duplicates, and preserve server-authoritative read state.
 - [ ] **H15** Security audit coverage (denied actions, tamper-evidence) `L2-AUTH-009`, `L2-CONSENT-003`
 - [ ] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002`
-- [ ] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004`
+- [~] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004` —
+      scoped attendance reporting now supports cohort/date filters, session status/rates, youth
+      counts/trends/thresholds, and exact-filter CSV/PDF exports; org reporting, cross-report
+      comparisons, and the remaining export targets still remain.
 - [ ] **H18** Data-subject fulfillment + retention/anonymization `L2-NFR-003`
 - [ ] **H19** Unsaved-change framework `L2-NFR-007`
 - [ ] **H20** Logging/alerting (correlation ids, PII redaction) `L2-PLATFORM-008`, `L2-NFR-011`
@@ -365,3 +371,11 @@ requirement conflicts early (they gate "done").
   cross-mentor, unpublished, and out-of-journey targets before writing; accepted work reaches each
   youth journey, real mentor thread, and preference-aware immediate/due notification feed. HTTP tests,
   portal unit/build checks, and desktop/mobile keyboard acceptance pass.
+- 2026-07-18 — F9 done and H17 advanced: mentors now have scoped month/week/agenda calendars with
+  cohort filters, named logistics, attendance links, and a required cohort/mentor session form that
+  materializes weekly recurrence only through term end. Session rosters support Present/Late/Excused/
+  Absent, staff notes, bulk actions, live tallies, optimistic versions, unsaved warnings, and the same
+  private owner-bound offline queue used by volunteers. Filtered session and youth history exposes
+  saved/review/low-turnout states, rates, trends, and below-threshold flags; CSV and valid PDF exports
+  honour the active filters. Cross-mentor denials, desktop/mobile keyboard flows, offline replay, shared
+  volunteer regression, 30 engagement integrations, portal units, and the production build pass.

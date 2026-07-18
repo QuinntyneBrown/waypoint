@@ -12,4 +12,8 @@ public record SessionView(
     string Title,
     DateTime StartsAt,
     int? DurationMinutes,
-    string? Location);
+    string? Location,
+    string CohortName,
+    string MentorName,
+    bool AttendanceTaken,
+    int RosterCount);

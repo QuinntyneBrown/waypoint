@@ -25,19 +25,30 @@ public sealed class SessionSchedulingTests : IntegrationTestBase
         return await Client.SendAsync(request);
     }
 
-    private async Task<Guid> SeedCohortAsync(DateTime termStart, DateTime termEnd)
+    private async Task<(Guid CohortId, Guid MentorId)> SeedCohortAsync(
+        DateTime termStart,
+        DateTime termEnd)
     {
         using var scope = Factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var mentor = new User
+        {
+            Email = $"mentor.{Guid.NewGuid():N}@example.com",
+            DisplayName = "Session Mentor",
+            Role = Roles.Mentor,
+            Status = UserStatus.Active,
+        };
         var cohort = new Cohort
         {
             Name = $"Cohort {Guid.NewGuid():N}",
             TermStart = termStart,
             TermEnd = termEnd,
+            MentorId = mentor.Id,
         };
+        db.Users.Add(mentor);
         db.Cohorts.Add(cohort);
         await db.SaveChangesAsync();
-        return cohort.Id;
+        return (cohort.Id, mentor.Id);
     }
 
     [Test]
@@ -48,11 +59,12 @@ public sealed class SessionSchedulingTests : IntegrationTestBase
         var token = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
         var termStart = new DateTime(2026, 9, 1, 18, 0, 0, DateTimeKind.Utc);
         var termEnd = termStart.AddDays(28); // occurrences fall on days 0, 7, 14, 21, 28 => 5, inclusive
-        var cohortId = await SeedCohortAsync(termStart, termEnd);
+        var (cohortId, mentorId) = await SeedCohortAsync(termStart, termEnd);
 
         var response = await SendAsync(HttpMethod.Post, "/api/sessions", body: new
         {
             cohortId,
+            mentorId,
             title = "Weekly Standup",
             startsAt = termStart,
             durationMinutes = 90,
@@ -83,12 +95,13 @@ public sealed class SessionSchedulingTests : IntegrationTestBase
         // Traces to: L2-ENGAGE-001
         var token = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
         var termStart = new DateTime(2026, 10, 1, 18, 0, 0, DateTimeKind.Utc);
-        var cohortA = await SeedCohortAsync(termStart, termStart.AddDays(7));
-        var cohortB = await SeedCohortAsync(termStart, termStart.AddDays(7));
+        var (cohortA, mentorA) = await SeedCohortAsync(termStart, termStart.AddDays(7));
+        var (cohortB, mentorB) = await SeedCohortAsync(termStart, termStart.AddDays(7));
 
         await SendAsync(HttpMethod.Post, "/api/sessions", body: new
         {
             cohortId = cohortA,
+            mentorId = mentorA,
             title = "Cohort A kickoff",
             startsAt = termStart,
             repeatsWeekly = false,
@@ -96,6 +109,7 @@ public sealed class SessionSchedulingTests : IntegrationTestBase
         await SendAsync(HttpMethod.Post, "/api/sessions", body: new
         {
             cohortId = cohortB,
+            mentorId = mentorB,
             title = "Cohort B kickoff",
             startsAt = termStart,
             repeatsWeekly = false,

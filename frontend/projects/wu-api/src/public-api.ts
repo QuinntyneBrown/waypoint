@@ -21,6 +21,7 @@ export * from './lib/models/learning/home';
 export * from './lib/models/mentoring/mentor';
 export * from './lib/models/engagement/schedule';
 export * from './lib/models/engagement/messages';
+export * from './lib/models/engagement/operations';
 export * from './lib/models/public/public';
 export * from './lib/models/volunteer/volunteer';
 export * from './lib/models/people/people';

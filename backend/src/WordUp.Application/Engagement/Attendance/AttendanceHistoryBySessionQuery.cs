@@ -12,4 +12,8 @@ public record SessionAttendanceSummary(
     int Present,
     int Marked,
     double Rate,
-    string Status);
+    string Status,
+    Guid CohortId,
+    string CohortName,
+    int RosterTotal,
+    string? Location);

@@ -38,6 +38,10 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
         {
             throw new ForbiddenException("This session is not assigned to you.");
         }
+        if (_currentUser.Role == Roles.Mentor && session.MentorId != recordedBy)
+        {
+            throw new ForbiddenException("This session is not assigned to you.");
+        }
 
         var fingerprint = Fingerprint(request);
         if (!string.IsNullOrWhiteSpace(request.IdempotencyKey))
@@ -82,7 +86,10 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
 
         var youthIds = parsed.Select(p => p.YouthId).Distinct().ToList();
         var allowedYouthCount = await _db.Users.CountAsync(
-            u => youthIds.Contains(u.Id) && u.CohortId == session.CohortId && u.Role == Roles.Youth,
+            u => youthIds.Contains(u.Id)
+                && u.CohortId == session.CohortId
+                && u.Role == Roles.Youth
+                && u.Status == UserStatus.Active,
             cancellationToken);
         if (allowedYouthCount != youthIds.Count)
         {
@@ -153,7 +160,9 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
         var marked = sessionRecords.Count;
 
         var total = await _db.Users
-            .CountAsync(u => u.CohortId == session.CohortId && u.Role == Roles.Youth, cancellationToken);
+            .CountAsync(u => u.CohortId == session.CohortId
+                && u.Role == Roles.Youth
+                && u.Status == UserStatus.Active, cancellationToken);
 
         var tally = new AttendanceTally(present, late, excused, absent, marked, total);
         if (!string.IsNullOrWhiteSpace(request.IdempotencyKey))

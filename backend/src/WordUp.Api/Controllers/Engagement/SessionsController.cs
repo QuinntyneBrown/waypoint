@@ -14,6 +14,12 @@ public class SessionsController : ControllerBase
     public SessionsController(IMediator mediator) => _mediator = mediator;
 
     [Authorize(Roles = Roles.ProgramAdministrator + "," + Roles.Mentor)]
+    [HttpGet("api/sessions/options")]
+    public async Task<ActionResult<SessionSchedulingOptions>> Options(
+        CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new SessionOptionsQuery(), cancellationToken));
+
+    [Authorize(Roles = Roles.ProgramAdministrator + "," + Roles.Mentor)]
     [HttpPost("api/sessions")]
     public async Task<ActionResult<CreateSessionResult>> Create(
         [FromBody] CreateSessionRequest request, CancellationToken cancellationToken)

@@ -3,12 +3,11 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api-base-url';
 import {
-  AttendanceTally,
-  VolunteerAttendanceWrite,
   VolunteerRosterEntry,
   VolunteerScheduleItem,
   VolunteerTodayView,
 } from '../models/volunteer/volunteer';
+import { AttendanceTally, AttendanceWrite } from '../models/engagement/operations';
 
 /**
  * Volunteer portal queries (`/api/volunteer`). Strictly volunteer-scoped: no
@@ -37,10 +36,7 @@ export class VolunteerApi {
   }
 
   /** Save or replay one attendance operation with a durable idempotency key. */
-  saveAttendance(
-    write: VolunteerAttendanceWrite,
-    idempotencyKey: string,
-  ): Observable<AttendanceTally> {
+  saveAttendance(write: AttendanceWrite, idempotencyKey: string): Observable<AttendanceTally> {
     return this.http.post<AttendanceTally>(`${this.base}/api/attendance`, write, {
       headers: { 'Idempotency-Key': idempotencyKey },
     });
