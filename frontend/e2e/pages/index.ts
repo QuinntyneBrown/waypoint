@@ -30,6 +30,7 @@ export {
   YouthAnnouncementsPage,
   YouthCurriculumPage,
   YouthHomePage,
+  YouthLessonPage,
   YouthNotificationsPage,
 } from './youth.pages';
 export {

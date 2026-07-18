@@ -55,7 +55,10 @@ export interface SeededYouthCurriculum {
   firstModuleName: string;
   lockedModuleName: string;
   firstLessonTitle: string;
+  firstLessonId: string;
   secondLessonTitle: string;
+  secondLessonId: string;
+  leaderSecret: string;
 }
 
 /**

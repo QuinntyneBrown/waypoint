@@ -80,3 +80,25 @@ export class YouthCurriculumPage extends BasePage {
     await this.page.goto(YouthCurriculumPage.path);
   }
 }
+
+/** `/youth/lessons/:id` — safe lesson reader with persisted reading controls. */
+export class YouthLessonPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get stepProgress() {
+    return this.page.getByTestId('lesson-step-progress');
+  }
+  get largeTextButton() {
+    return this.page.getByRole('button', { name: /large text/i });
+  }
+  get bookmarkButton() {
+    return this.page.getByRole('button', { name: /bookmark lesson/i });
+  }
+  get retryMediaButton() {
+    return this.page.getByRole('button', { name: /retry media/i });
+  }
+  get completeButton() {
+    return this.page.getByRole('button', { name: /mark lesson complete/i });
+  }
+}
