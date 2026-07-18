@@ -8,6 +8,7 @@ public class Session
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid CohortId { get; set; }
     public Guid? MentorId { get; set; }
+    public Guid? VolunteerId { get; set; } // assigned volunteer (L2-VOLUNTEER-001/002)
     public string Title { get; set; } = string.Empty;
     public DateTime StartsAt { get; set; }
     public int? DurationMinutes { get; set; }

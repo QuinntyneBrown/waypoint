@@ -20,7 +20,7 @@ public class AttendanceController : ControllerBase
         [FromBody] SaveAttendanceRequest request, CancellationToken cancellationToken)
     {
         var marks = (request.Marks ?? new List<AttendanceMarkInput>())
-            .Select(m => new AttendanceMark(m.YouthId, m.Status, m.Note))
+            .Select(m => new AttendanceMark(m.YouthId, m.Status, m.Note, m.ExpectedVersion))
             .ToList();
         var result = await _mediator.Send(new SaveAttendanceCommand(request.SessionId, marks), cancellationToken);
         return Ok(result);
@@ -60,4 +60,4 @@ public class AttendanceController : ControllerBase
 
 public record SaveAttendanceRequest(Guid SessionId, List<AttendanceMarkInput>? Marks);
 
-public record AttendanceMarkInput(Guid YouthId, string Status, string? Note);
+public record AttendanceMarkInput(Guid YouthId, string Status, string? Note, string? ExpectedVersion = null);

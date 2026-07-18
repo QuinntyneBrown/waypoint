@@ -50,6 +50,10 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<NotificationPreference> NotificationPreferences => Set<NotificationPreference>();
     public DbSet<DisplayPreference> DisplayPreferences => Set<DisplayPreference>();
     public DbSet<SupportRequest> SupportRequests => Set<SupportRequest>();
+    public DbSet<GuardianProfile> GuardianProfiles => Set<GuardianProfile>();
+    public DbSet<ContactRequest> ContactRequests => Set<ContactRequest>();
+    public DbSet<VolunteerSignup> VolunteerSignups => Set<VolunteerSignup>();
+    public DbSet<DonationPledge> DonationPledges => Set<DonationPledge>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -284,6 +288,42 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Description).HasMaxLength(4000).IsRequired();
             b.Property(x => x.ReplyToEmail).HasMaxLength(256).IsRequired();
             b.Property(x => x.ScreenshotUrl).HasMaxLength(512);
+            b.HasIndex(x => x.CreatedAt);
+        });
+
+        // Guardian portal + public site (M5)
+        modelBuilder.Entity<GuardianProfile>(b =>
+        {
+            b.Property(x => x.Relationship).HasMaxLength(64);
+            b.Property(x => x.Phone).HasMaxLength(32);
+            b.Property(x => x.EmergencyContactName).HasMaxLength(128);
+            b.Property(x => x.EmergencyContactPhone).HasMaxLength(32);
+            b.HasIndex(x => x.GuardianUserId).IsUnique();
+        });
+        modelBuilder.Entity<ContactRequest>(b =>
+        {
+            b.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            b.Property(x => x.Email).HasMaxLength(256).IsRequired();
+            b.Property(x => x.Topic).HasMaxLength(128).IsRequired();
+            b.Property(x => x.Message).HasMaxLength(4000).IsRequired();
+            b.HasIndex(x => x.CreatedAt);
+        });
+        modelBuilder.Entity<VolunteerSignup>(b =>
+        {
+            b.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            b.Property(x => x.Email).HasMaxLength(256).IsRequired();
+            b.Property(x => x.Phone).HasMaxLength(32);
+            b.Property(x => x.AreasOfInterest).HasMaxLength(512);
+            b.HasIndex(x => x.CreatedAt);
+        });
+        modelBuilder.Entity<DonationPledge>(b =>
+        {
+            b.Property(x => x.DonorName).HasMaxLength(128).IsRequired();
+            b.Property(x => x.Email).HasMaxLength(256).IsRequired();
+            b.Property(x => x.Tier).HasMaxLength(64).IsRequired();
+            b.Property(x => x.MonthlyAmount).HasColumnType("decimal(18,2)");
+            b.Property(x => x.Frequency).HasMaxLength(32).IsRequired();
+            b.Property(x => x.ProviderReference).HasMaxLength(256);
             b.HasIndex(x => x.CreatedAt);
         });
     }

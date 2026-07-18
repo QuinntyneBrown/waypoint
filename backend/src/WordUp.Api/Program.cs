@@ -2,17 +2,21 @@ using System.Text;
 using System.Threading.RateLimiting;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WordUp.Api.Authorization;
 using WordUp.Api.Middleware;
+using WordUp.Api.Realtime;
 using WordUp.Application;
+using WordUp.Application.Abstractions;
 using WordUp.Application.Auth;
 using WordUp.Application.Common;
 using WordUp.Domain;
 using WordUp.Infrastructure;
+using WordUp.Infrastructure.Health;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +25,14 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddHealthChecks();
+
+// Near-real-time delivery hub + its Application-facing port (L2-NFR-005).
+builder.Services.AddSignalR();
+builder.Services.AddSingleton<IChangePublisher, SignalRChangePublisher>();
+
+// Liveness (/health, no checks) + readiness (/health/ready, DB reachability) — L2-NFR-011 AC1.
+builder.Services.AddHealthChecks()
+    .AddCheck<DatabaseReadyHealthCheck>("database", tags: new[] { "ready" });
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Word Up API", Version = "v1" });
@@ -70,6 +81,22 @@ builder.Services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationSc
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.SigningKey)),
             ClockSkew = TimeSpan.FromSeconds(30),
         };
+
+        // Browser websocket clients cannot send an Authorization header, so accept the token from the
+        // query string for the SignalR hub path only (L2-NFR-005 AC2).
+        bearer.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    context.HttpContext.Request.Path.StartsWithSegments("/hubs"))
+                {
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            },
+        };
     });
 
 builder.Services.AddAuthorization(options =>
@@ -109,6 +136,10 @@ if (!builder.Environment.IsEnvironment("Testing"))
 }
 
 var app = builder.Build();
+
+// First in the pipeline so security headers cover every response, including the exception (500) and
+// maintenance (503) short-circuits below (L2-NFR-002 AC3).
+app.UseMiddleware<SecurityHeadersMiddleware>();
 
 app.UseExceptionHandler(handler =>
 {
@@ -163,7 +194,11 @@ if (!app.Environment.IsEnvironment("Testing"))
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.MapHealthChecks("/health");
+app.MapHub<RealtimeHub>("/hubs/realtime");
+
+// Liveness: process is up (no dependency checks). Readiness: dependencies (DB) reachable. L2-NFR-011 AC1.
+app.MapHealthChecks("/health", new HealthCheckOptions { Predicate = _ => false });
+app.MapHealthChecks("/health/ready", new HealthCheckOptions { Predicate = r => r.Tags.Contains("ready") });
 
 // Diagnostics hook (never mapped in Production) used to verify the global 500 contract
 // (friendly body, no stack trace) — L2-PLATFORM-008.

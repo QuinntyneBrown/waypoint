@@ -14,6 +14,11 @@ public class AttendanceRecord
     public Guid RecordedByUserId { get; set; }
     public DateTime RecordedAt { get; set; } = DateTime.UtcNow;
 
-    // Concurrency token so a second save on the same session cannot silently overwrite (L2-ENGAGE-002 AC5).
+    // Database-level optimistic-concurrency token (populated by SQL Server's rowversion).
     public byte[]? RowVersion { get; set; }
+
+    // Application-managed concurrency stamp, advanced on every save. This is the version surfaced to and
+    // echoed back by clients so a stale save is rejected (L2-NFR-006) — it works on every EF provider,
+    // not just those that generate a rowversion.
+    public Guid ConcurrencyStamp { get; set; } = Guid.NewGuid();
 }

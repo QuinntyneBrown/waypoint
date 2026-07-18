@@ -12,12 +12,14 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Mes
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
     private readonly IClock _clock;
+    private readonly IChangePublisher _publisher;
 
-    public SendMessageCommandHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock)
+    public SendMessageCommandHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock, IChangePublisher publisher)
     {
         _db = db;
         _currentUser = currentUser;
         _clock = clock;
+        _publisher = publisher;
     }
 
     public async Task<MessageResult> Handle(SendMessageCommand request, CancellationToken cancellationToken)
@@ -69,7 +71,7 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Mes
 
         if (preference is null || preference.InApp)
         {
-            _db.Notifications.Add(new Notification
+            var notification = new Notification
             {
                 UserId = request.ToUserId,
                 EventKey = "new-message",
@@ -77,8 +79,25 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Mes
                 Body = "You have a new message.",
                 LinkPath = $"/messages/{senderId}",
                 CreatedAt = _clock.UtcNow,
-            });
+            };
+            _db.Notifications.Add(notification);
             await _db.SaveChangesAsync(cancellationToken);
+
+            // Near-real-time delivery to the recipient's own group only; the payload carries just what
+            // the recipient may already see in their notification feed (L2-NFR-005).
+            await _publisher.PublishToUserAsync(
+                request.ToUserId,
+                "notification",
+                new
+                {
+                    id = notification.Id,
+                    eventKey = notification.EventKey,
+                    title = notification.Title,
+                    body = notification.Body,
+                    linkPath = notification.LinkPath,
+                    createdAt = notification.CreatedAt,
+                },
+                cancellationToken);
         }
 
         return new MessageResult(message.Id);

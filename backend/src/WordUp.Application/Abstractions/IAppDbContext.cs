@@ -58,5 +58,11 @@ public interface IAppDbContext
     DbSet<DisplayPreference> DisplayPreferences { get; }
     DbSet<SupportRequest> SupportRequests { get; }
 
+    // Guardian portal + public site (M5)
+    DbSet<GuardianProfile> GuardianProfiles { get; }
+    DbSet<ContactRequest> ContactRequests { get; }
+    DbSet<VolunteerSignup> VolunteerSignups { get; }
+    DbSet<DonationPledge> DonationPledges { get; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

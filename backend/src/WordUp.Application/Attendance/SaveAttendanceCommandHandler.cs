@@ -35,7 +35,7 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
 
         // Parse statuses and enforce the volunteer restriction up-front so nothing is written on rejection
         // (volunteers may only mark Present/Absent — L2-ENGAGE-002).
-        var parsed = new List<(Guid YouthId, AttendanceStatus Status, string? Note)>();
+        var parsed = new List<(Guid YouthId, AttendanceStatus Status, string? Note, string? ExpectedVersion)>();
         foreach (var mark in request.Marks)
         {
             var status = Enum.Parse<AttendanceStatus>(mark.Status, ignoreCase: true);
@@ -43,7 +43,7 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
             {
                 throw new ForbiddenException("Volunteers may only mark youth Present or Absent.");
             }
-            parsed.Add((mark.YouthId, status, mark.Note));
+            parsed.Add((mark.YouthId, status, mark.Note, mark.ExpectedVersion));
         }
 
         var youthIds = parsed.Select(p => p.YouthId).ToList();
@@ -51,9 +51,27 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
             .Where(r => r.SessionId == request.SessionId && youthIds.Contains(r.YouthUserId))
             .ToListAsync(cancellationToken);
 
+        // Optimistic concurrency: if a client supplies the version it last read, reject the whole save
+        // when any target row has moved on since — no silent overwrite (L2-NFR-006 AC1). Checked before
+        // any mutation so nothing is written on conflict.
+        foreach (var (youthId, _, _, expectedVersion) in parsed)
+        {
+            if (expectedVersion is null)
+            {
+                continue;
+            }
+
+            var current = existing.FirstOrDefault(r => r.YouthUserId == youthId);
+            var currentVersion = current?.ConcurrencyStamp.ToString();
+            if (currentVersion != expectedVersion)
+            {
+                throw new ConflictException("This attendance record was changed by someone else. Reload and try again.");
+            }
+        }
+
         // Upsert by (SessionId, YouthUserId): re-saving updates the existing row rather than inserting a
         // duplicate, which is what makes offline sync / re-save idempotent (L2-ENGAGE-003 AC2).
-        foreach (var (youthId, status, note) in parsed)
+        foreach (var (youthId, status, note, _) in parsed)
         {
             var record = existing.FirstOrDefault(r => r.YouthUserId == youthId);
             if (record is null)
@@ -66,6 +84,7 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
                     Note = note,
                     RecordedByUserId = recordedBy,
                     RecordedAt = now,
+                    ConcurrencyStamp = Guid.NewGuid(),
                 };
                 _db.AttendanceRecords.Add(record);
                 existing.Add(record); // guard against the same youth appearing twice in one request
@@ -76,6 +95,7 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
                 record.Note = note;
                 record.RecordedByUserId = recordedBy;
                 record.RecordedAt = now;
+                record.ConcurrencyStamp = Guid.NewGuid(); // advance the version on every save (L2-NFR-006 AC2)
             }
         }
 

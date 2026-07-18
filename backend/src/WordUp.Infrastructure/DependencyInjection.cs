@@ -10,7 +10,11 @@ public static class InfrastructureDependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+        // Fail fast at startup if JWT configuration is missing/weak (L2-NFR-011 AC4).
+        services.AddOptions<JwtOptions>()
+            .Bind(configuration.GetSection("Jwt"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
         var connectionString = configuration.GetConnectionString("Default");
 
