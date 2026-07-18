@@ -13,7 +13,12 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "paths": {
+      "@wu/ui": ["./projects/wu-ui/src/public-api.ts"],
+      "@wu/api": ["./projects/wu-api/src/public-api.ts"],
+      "@wu/auth": ["./projects/wu-auth/src/public-api.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -21,5 +26,31 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/portal/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/portal/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/wu-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/wu-ui/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/wu-api/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/wu-api/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/wu-auth/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/wu-auth/tsconfig.spec.json"
+    }
+  ]
 }

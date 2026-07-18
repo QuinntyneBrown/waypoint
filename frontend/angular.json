@@ -6,5 +6,148 @@
   },
   "newProjectRoot": "projects",
   "projects": {
+    "portal": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/portal",
+      "sourceRoot": "projects/portal/src",
+      "prefix": "wu",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/portal/src/main.ts",
+            "tsConfig": "projects/portal/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/portal/public"
+              }
+            ],
+            "styles": ["projects/portal/src/styles.css"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 4200,
+            "proxyConfig": "proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "portal:build:production"
+            },
+            "development": {
+              "buildTarget": "portal:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
+    },
+    "wu-ui": {
+      "projectType": "library",
+      "root": "projects/wu-ui",
+      "sourceRoot": "projects/wu-ui/src",
+      "prefix": "wu",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/wu-ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/wu-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/wu-ui/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "wu-api": {
+      "projectType": "library",
+      "root": "projects/wu-api",
+      "sourceRoot": "projects/wu-api/src",
+      "prefix": "wu",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/wu-api/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/wu-api/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/wu-api/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "wu-auth": {
+      "projectType": "library",
+      "root": "projects/wu-auth",
+      "sourceRoot": "projects/wu-auth/src",
+      "prefix": "wu",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/wu-auth/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/wu-auth/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/wu-auth/tsconfig.spec.json"
+          }
+        }
+      }
+    }
   }
 }
