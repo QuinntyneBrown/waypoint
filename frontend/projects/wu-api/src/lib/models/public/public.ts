@@ -26,3 +26,19 @@ export interface SubmitVolunteerSignupResult {
   volunteerSignupId: string;
   acknowledgement: string;
 }
+
+// Traces to: L2-PUB-003 (AC3 donation pledge; external PCI provider, no card data stored)
+export interface SubmitDonationPledgeRequest {
+  donorName: string;
+  email: string;
+  tier: string;
+  monthlyAmount: number | null;
+  frequency: string | null;
+  /** Opaque reference returned by the external provider; never card/PAN data. */
+  providerReference: string | null;
+}
+
+export interface SubmitDonationPledgeResult {
+  donationPledgeId: string;
+  acknowledgement: string;
+}

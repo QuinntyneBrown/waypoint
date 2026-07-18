@@ -5,6 +5,8 @@ import { API_BASE_URL } from '../api-base-url';
 import {
   SubmitContactRequest,
   SubmitContactResult,
+  SubmitDonationPledgeRequest,
+  SubmitDonationPledgeResult,
   SubmitVolunteerSignupRequest,
   SubmitVolunteerSignupResult,
 } from '../models/public/public';
@@ -31,5 +33,10 @@ export class PublicSiteApi {
       `${this.base}/api/public/volunteer-signup`,
       body,
     );
+  }
+
+  /** `POST /api/public/donation` (L2-PUB-003 AC3). */
+  submitDonation(body: SubmitDonationPledgeRequest): Observable<SubmitDonationPledgeResult> {
+    return this.http.post<SubmitDonationPledgeResult>(`${this.base}/api/public/donation`, body);
   }
 }

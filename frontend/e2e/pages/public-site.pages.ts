@@ -186,6 +186,12 @@ export class GetInvolvedPage extends BasePage {
 export class DonatePage extends BasePage {
   static readonly path = '/donate';
 
+  get donorName() {
+    return this.page.getByLabel('Your name');
+  }
+  get email() {
+    return this.page.getByLabel('Email');
+  }
   /** Any on-page card/CVC input — asserted absent (no card data collected). */
   get cardInputs() {
     return this.page.locator(
@@ -194,6 +200,12 @@ export class DonatePage extends BasePage {
   }
   tier(label: string) {
     return this.page.getByRole('button', { name: label });
+  }
+  get nameError() {
+    return this.page.getByText(/enter your name/i);
+  }
+  get emailError() {
+    return this.page.getByText(/valid email/i);
   }
   get continueButton() {
     return this.page.getByRole('button', { name: /continue to secure checkout/i });
