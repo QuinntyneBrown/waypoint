@@ -21,4 +21,4 @@ export {
 } from './settings.pages';
 export { YouthHomePage, YouthAnnouncementsPage, YouthNotificationsPage } from './youth.pages';
 export { NotFoundPage } from './states.pages';
-export { LandingPage, ApplyPage, DonatePage } from './public-site.pages';
+export { LandingPage, ApplyPage, ContactPage, DonatePage } from './public-site.pages';

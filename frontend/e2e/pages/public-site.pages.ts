@@ -106,6 +106,43 @@ export class ApplyPage extends BasePage {
   }
 }
 
+/** `/contact` — anonymous contact form (public-site). */
+export class ContactPage extends BasePage {
+  static readonly path = '/contact';
+
+  get name() {
+    return this.page.getByLabel('Your name');
+  }
+  get email() {
+    return this.page.getByLabel('Email');
+  }
+  get topic() {
+    return this.page.getByLabel('Topic');
+  }
+  get message() {
+    return this.page.getByLabel('Message');
+  }
+  get sendButton() {
+    return this.page.getByRole('button', { name: /send message/i });
+  }
+  get acknowledgementHeading() {
+    return this.page.getByRole('heading', { name: /message sent/i });
+  }
+  get nameError() {
+    return this.page.getByText(/enter your name/i);
+  }
+  get emailError() {
+    return this.page.getByText(/valid email/i);
+  }
+  get messageError() {
+    return this.page.getByText(/enter a message/i);
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(ContactPage.path);
+  }
+}
+
 /** `/donate` — donation tiers with hand-off to an external PCI provider. */
 export class DonatePage extends BasePage {
   static readonly path = '/donate';
