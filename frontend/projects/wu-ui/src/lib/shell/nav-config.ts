@@ -39,6 +39,7 @@ export const WU_NAV: Record<WuRole, WuRoleNav> = {
     items: [
       { key: 'home', label: 'Home', icon: 'home', path: '/youth/home' },
       { key: 'journey', label: 'My Journey', icon: 'target', path: '/youth/journey' },
+      { key: 'progress', label: 'My Progress', icon: 'trending-up', path: '/youth/progress' },
       { key: 'curriculum', label: 'Curriculum', icon: 'book-open', path: '/youth/curriculum' },
       { key: 'badges', label: 'Badges', icon: 'award', path: '/youth/badges' },
       { key: 'schedule', label: 'Schedule', icon: 'calendar', path: '/youth/schedule' },

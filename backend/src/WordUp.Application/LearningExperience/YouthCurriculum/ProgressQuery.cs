@@ -10,7 +10,30 @@ public record ProgressView(
     double OverallPercent,
     double QuizAverage,
     int LessonsCompleted,
+    int LessonsTotal,
     double AttendanceRate,
+    IReadOnlyList<QuizHistoryItem> QuizHistory,
+    IReadOnlyList<AttendanceHistoryItem> AttendanceHistory,
     IReadOnlyList<CompetencyLevelDto> Competencies);
 
-public record CompetencyLevelDto(Guid CompetencyId, string Level);
+public record QuizHistoryItem(
+    Guid AttemptId,
+    Guid QuizId,
+    string QuizTitle,
+    string ModuleName,
+    int Score,
+    bool Passed,
+    DateTime ApprovedAt);
+
+public record AttendanceHistoryItem(
+    Guid SessionId,
+    string SessionTitle,
+    DateTime StartsAt,
+    string Status);
+
+public record CompetencyLevelDto(
+    Guid CompetencyId,
+    string Name,
+    string Level,
+    int Percent,
+    DateTime AssessedAt);

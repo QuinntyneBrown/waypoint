@@ -674,6 +674,12 @@ if (app.Environment.IsEnvironment("Testing"))
             AttemptsAllowed = 2,
             RequiredToCompleteModule = true,
         };
+        var progressQuiz = new Quiz
+        {
+            LessonId = secondLesson.Id,
+            PassMark = 70,
+            AttemptsAllowed = 2,
+        };
         var firstQuizQuestion = new QuizQuestion
         {
             QuizId = quiz.Id,
@@ -811,6 +817,35 @@ if (app.Environment.IsEnvironment("Testing"))
             GuardianUserId = guardian.Id,
             MentorId = mentor.Id,
         };
+        var progressStage = new ProgressionStage
+        {
+            Name = $"Leadership Growth {suffix}",
+            Order = 1,
+        };
+        var progressCompetency = new Competency
+        {
+            StageId = progressStage.Id,
+            Name = "Serving others",
+            Order = 1,
+        };
+        var presentSession = new Session
+        {
+            CohortId = cohort.Id,
+            MentorId = mentor.Id,
+            Title = $"Leadership Lab {suffix}",
+            StartsAt = now.AddDays(-7),
+            DurationMinutes = 90,
+            CreatedByUserId = mentor.Id,
+        };
+        var absentSession = new Session
+        {
+            CohortId = cohort.Id,
+            MentorId = mentor.Id,
+            Title = $"Community Night {suffix}",
+            StartsAt = now.AddDays(-14),
+            DurationMinutes = 90,
+            CreatedByUserId = mentor.Id,
+        };
 
         db.Users.AddRange(guardian, mentor, youth);
         db.Tracks.AddRange(primaryTrack, secondTrack);
@@ -824,7 +859,7 @@ if (app.Environment.IsEnvironment("Testing"))
             Url = "https://media.example.test/lesson-video.mp4",
             CreatedAt = now,
         });
-        db.Quizzes.Add(quiz);
+        db.Quizzes.AddRange(quiz, progressQuiz);
         db.QuizQuestions.AddRange(firstQuizQuestion, secondQuizQuestion);
         db.Badges.AddRange(quizBadge, codingBadge, journeyBadge);
         db.BadgeAwards.Add(new BadgeAward
@@ -837,6 +872,47 @@ if (app.Environment.IsEnvironment("Testing"))
         db.RubricCriteria.Add(assignmentCriterion);
         db.Badges.Add(assignmentBadge);
         db.Cohorts.Add(cohort);
+        db.ProgressionStages.Add(progressStage);
+        db.Competencies.Add(progressCompetency);
+        db.CompetencyAssessments.Add(new CompetencyAssessment
+        {
+            YouthUserId = youth.Id,
+            CompetencyId = progressCompetency.Id,
+            Level = CompetencyLevel.Proficient,
+            AssessedByUserId = mentor.Id,
+            AssessedAt = now.AddDays(-2),
+        });
+        db.QuizAttempts.Add(new QuizAttempt
+        {
+            YouthUserId = youth.Id,
+            QuizId = progressQuiz.Id,
+            AttemptNumber = 1,
+            AutoScore = 82,
+            Passed = true,
+            IsSubmitted = true,
+            SubmittedAt = now.AddDays(-3),
+            ApprovedScore = 82,
+            ApprovedByUserId = mentor.Id,
+            ApprovedAt = now.AddDays(-2),
+        });
+        db.Sessions.AddRange(presentSession, absentSession);
+        db.AttendanceRecords.AddRange(
+            new AttendanceRecord
+            {
+                SessionId = presentSession.Id,
+                YouthUserId = youth.Id,
+                Status = AttendanceStatus.Present,
+                RecordedByUserId = mentor.Id,
+                RecordedAt = now.AddDays(-7),
+            },
+            new AttendanceRecord
+            {
+                SessionId = absentSession.Id,
+                YouthUserId = youth.Id,
+                Status = AttendanceStatus.Absent,
+                RecordedByUserId = mentor.Id,
+                RecordedAt = now.AddDays(-14),
+            });
         db.YouthTrackEnrollments.Add(new YouthTrackEnrollment
         {
             YouthUserId = youth.Id,
@@ -902,6 +978,10 @@ if (app.Environment.IsEnvironment("Testing"))
             codingSecondStepTitle = codingSecondStep.Title,
             codingBadgeName = codingBadge.Name,
             journeyBadgeName = journeyBadge.Name,
+            progressQuizTitle = $"{secondLesson.Title} quiz",
+            progressPresentSessionTitle = presentSession.Title,
+            progressAbsentSessionTitle = absentSession.Title,
+            progressCompetencyName = progressCompetency.Name,
         });
     });
 

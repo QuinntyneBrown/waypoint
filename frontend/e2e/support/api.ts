@@ -79,6 +79,10 @@ export interface SeededYouthCurriculum {
   codingSecondStepTitle: string;
   codingBadgeName: string;
   journeyBadgeName: string;
+  progressQuizTitle: string;
+  progressPresentSessionTitle: string;
+  progressAbsentSessionTitle: string;
+  progressCompetencyName: string;
 }
 
 /**

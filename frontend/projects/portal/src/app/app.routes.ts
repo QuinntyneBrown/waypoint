@@ -106,6 +106,14 @@ export const routes: Routes = [
           import('./features/youth/badges/youth-badges').then((module) => module.YouthBadgesPage),
       },
       {
+        path: 'progress',
+        title: 'My progress · Word Up',
+        loadComponent: () =>
+          import('./features/youth/progress/youth-progress').then(
+            (module) => module.YouthProgressPage,
+          ),
+      },
+      {
         path: 'coding/:id',
         title: 'Coding lesson · Word Up',
         loadComponent: () =>

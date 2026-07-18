@@ -1,0 +1,214 @@
+<wu-shell
+  role="youth"
+  active="progress"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Learning analytics</div>
+        <h1 class="wu-page__title">My progress</h1>
+        <p class="wu-page__sub">The full picture of how you are growing.</p>
+      </div>
+    </div>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+
+    @if (progress(); as view) {
+      <div class="progress-tabs" role="tablist" aria-label="Progress sections">
+        @for (tab of tabs; track tab.id; let index = $index) {
+          <button
+            class="wu-btn progress-tab"
+            [class.wu-btn--primary]="activeTab() === tab.id"
+            [class.wu-btn--ghost]="activeTab() !== tab.id"
+            type="button"
+            role="tab"
+            [id]="'progress-tab-' + tab.id"
+            [attr.aria-controls]="'progress-panel-' + tab.id"
+            [attr.aria-selected]="activeTab() === tab.id"
+            [tabIndex]="activeTab() === tab.id ? 0 : -1"
+            (click)="selectTab(tab.id)"
+            (keydown)="tabKeydown($event, index)"
+          >
+            {{ tab.label }}
+          </button>
+        }
+      </div>
+
+      @if (activeTab() === 'overview') {
+        <section
+          id="progress-panel-overview"
+          role="tabpanel"
+          aria-labelledby="progress-tab-overview"
+          class="wu-stack"
+          data-testid="progress-overview"
+        >
+          <div class="wu-grid wu-grid--2">
+            <article class="wu-card progress-stat">
+              <div class="wu-card__body wu-stack">
+                <span class="wu-muted">Overall progress</span
+                ><strong class="progress-stat__value"
+                  >{{ view.overallPercent | number: '1.0-0' }}%</strong
+                >
+              </div>
+            </article>
+            <article class="wu-card progress-stat">
+              <div class="wu-card__body wu-stack">
+                <span class="wu-muted">Quiz average</span
+                ><strong class="progress-stat__value"
+                  >{{ view.quizAverage | number: '1.0-0' }}%</strong
+                >
+              </div>
+            </article>
+            <article class="wu-card progress-stat">
+              <div class="wu-card__body wu-stack">
+                <span class="wu-muted">Lessons done</span
+                ><strong class="progress-stat__value"
+                  >{{ view.lessonsCompleted
+                  }}<span class="wu-muted">/{{ view.lessonsTotal }}</span></strong
+                >
+              </div>
+            </article>
+            <article class="wu-card wu-card--lime progress-stat">
+              <div class="wu-card__body wu-stack">
+                <span>Attendance</span
+                ><strong class="progress-stat__value"
+                  >{{ view.attendanceRate | number: '1.0-0' }}%</strong
+                >
+              </div>
+            </article>
+          </div>
+          <section class="wu-card">
+            <div class="wu-card__body wu-stack">
+              <h2>Leadership competencies</h2>
+              @if (view.competencies.length === 0) {
+                <p class="wu-muted">Your mentor assessments will appear here.</p>
+              }
+              @for (competency of view.competencies; track competency.competencyId) {
+                <div class="wu-stack">
+                  <div class="wu-cluster wu-cluster--between">
+                    <strong>{{ competency.name }}</strong
+                    ><span class="wu-badge">{{ competency.level }}</span>
+                  </div>
+                  <progress class="competency-progress" [value]="competency.percent" max="100">
+                    {{ competency.percent }}%</progress
+                  ><span>{{ competency.percent }}%</span>
+                </div>
+              }
+            </div>
+          </section>
+        </section>
+      }
+
+      @if (activeTab() === 'quizzes') {
+        <section
+          id="progress-panel-quizzes"
+          role="tabpanel"
+          aria-labelledby="progress-tab-quizzes"
+          class="wu-card"
+          data-testid="progress-quizzes"
+        >
+          <div class="wu-card__body wu-stack">
+            <div class="wu-cluster wu-cluster--between">
+              <h2>Quiz history</h2>
+              <span class="wu-badge">Average {{ view.quizAverage | number: '1.0-0' }}%</span>
+            </div>
+            @if (view.quizHistory.length === 0) {
+              <div class="wu-empty">
+                <h3 class="wu-empty__title">No approved quizzes yet</h3>
+                <p class="wu-empty__text">Your results appear after mentor approval.</p>
+              </div>
+            } @else {
+              <div class="wu-table-wrap">
+                <table class="wu-table wu-table--cards">
+                  <thead>
+                    <tr>
+                      <th>Quiz</th>
+                      <th>Module</th>
+                      <th>Score</th>
+                      <th>Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (quiz of view.quizHistory; track quiz.attemptId) {
+                      <tr>
+                        <td data-label="Quiz">{{ quiz.quizTitle }}</td>
+                        <td data-label="Module">{{ quiz.moduleName }}</td>
+                        <td data-label="Score">{{ quiz.score }}%</td>
+                        <td data-label="Result">
+                          <span
+                            class="wu-badge"
+                            [class.wu-badge--success]="quiz.passed"
+                            [class.wu-badge--error]="!quiz.passed"
+                            >{{ quiz.passed ? 'Passed' : 'Not passed' }}</span
+                          >
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+          </div>
+        </section>
+      }
+
+      @if (activeTab() === 'attendance') {
+        <section
+          id="progress-panel-attendance"
+          role="tabpanel"
+          aria-labelledby="progress-tab-attendance"
+          class="wu-card"
+          data-testid="progress-attendance"
+        >
+          <div class="wu-card__body wu-stack">
+            <div class="wu-cluster wu-cluster--between">
+              <h2>Session attendance</h2>
+              <span class="wu-badge">{{ view.attendanceRate | number: '1.0-0' }}%</span>
+            </div>
+            @if (view.attendanceHistory.length === 0) {
+              <div class="wu-empty">
+                <h3 class="wu-empty__title">No attendance recorded yet</h3>
+              </div>
+            } @else {
+              <div class="wu-table-wrap">
+                <table class="wu-table wu-table--cards">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Session</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (session of view.attendanceHistory; track session.sessionId) {
+                      <tr>
+                        <td data-label="Date">{{ session.startsAt | date: 'mediumDate' }}</td>
+                        <td data-label="Session">{{ session.sessionTitle }}</td>
+                        <td data-label="Status">
+                          <span
+                            class="wu-badge"
+                            [class.wu-badge--success]="session.status === 'Present'"
+                            [class.wu-badge--warning]="
+                              session.status === 'Late' || session.status === 'Excused'
+                            "
+                            [class.wu-badge--error]="session.status === 'Absent'"
+                            >{{ session.status }}</span
+                          >
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+          </div>
+        </section>
+      }
+    } @else {
+      <p class="wu-muted">Loading progress…</p>
+    }
+  </div>
+</wu-shell>

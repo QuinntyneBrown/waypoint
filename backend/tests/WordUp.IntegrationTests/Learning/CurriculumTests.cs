@@ -295,6 +295,128 @@ public sealed class CurriculumTests : IntegrationTestBase
     }
 
     [Test]
+    [Property("Req", "L2-LEARN-010")]
+    public async Task Progress_returns_approved_quiz_attendance_and_latest_competency_evidence()
+    {
+        // Traces to: L2-LEARN-010 AC1-AC4
+        var seed = await SeedTrackAndYouthAsync();
+        var now = DateTime.UtcNow;
+        Guid competencyId;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var stage = new ProgressionStage { Name = "Leadership", Order = 1 };
+            var competency = new Competency { StageId = stage.Id, Name = "Serving others", Order = 1 };
+            competencyId = competency.Id;
+            db.ProgressionStages.Add(stage);
+            db.Competencies.Add(competency);
+            db.CompetencyAssessments.AddRange(
+                new CompetencyAssessment
+                {
+                    YouthUserId = seed.YouthId,
+                    CompetencyId = competency.Id,
+                    Level = CompetencyLevel.Developing,
+                    AssessedByUserId = seed.YouthId,
+                    AssessedAt = now.AddDays(-7),
+                },
+                new CompetencyAssessment
+                {
+                    YouthUserId = seed.YouthId,
+                    CompetencyId = competency.Id,
+                    Level = CompetencyLevel.Proficient,
+                    AssessedByUserId = seed.YouthId,
+                    AssessedAt = now.AddDays(-1),
+                });
+            db.QuizAttempts.AddRange(
+                new QuizAttempt
+                {
+                    YouthUserId = seed.YouthId,
+                    QuizId = seed.QuizId,
+                    AttemptNumber = 1,
+                    IsSubmitted = true,
+                    AutoScore = 82,
+                    ApprovedScore = 82,
+                    ApprovedByUserId = seed.YouthId,
+                    ApprovedAt = now.AddDays(-2),
+                    SubmittedAt = now.AddDays(-3),
+                },
+                new QuizAttempt
+                {
+                    YouthUserId = seed.YouthId,
+                    QuizId = seed.QuizId,
+                    AttemptNumber = 2,
+                    IsSubmitted = true,
+                    AutoScore = 100,
+                    SubmittedAt = now,
+                });
+            var cohortId = (await db.Users.FindAsync(seed.YouthId))!.CohortId!.Value;
+            var presentSession = new Session
+            {
+                CohortId = cohortId,
+                Title = "Leadership lab",
+                StartsAt = now.AddDays(-7),
+                CreatedByUserId = seed.YouthId,
+            };
+            var absentSession = new Session
+            {
+                CohortId = cohortId,
+                Title = "Community night",
+                StartsAt = now.AddDays(-14),
+                CreatedByUserId = seed.YouthId,
+            };
+            var excusedSession = new Session
+            {
+                CohortId = cohortId,
+                Title = "Holiday workshop",
+                StartsAt = now.AddDays(-21),
+                CreatedByUserId = seed.YouthId,
+            };
+            db.Sessions.AddRange(presentSession, absentSession, excusedSession);
+            db.AttendanceRecords.AddRange(
+                new AttendanceRecord
+                {
+                    SessionId = presentSession.Id,
+                    YouthUserId = seed.YouthId,
+                    Status = AttendanceStatus.Present,
+                    RecordedByUserId = seed.YouthId,
+                },
+                new AttendanceRecord
+                {
+                    SessionId = absentSession.Id,
+                    YouthUserId = seed.YouthId,
+                    Status = AttendanceStatus.Absent,
+                    RecordedByUserId = seed.YouthId,
+                },
+                new AttendanceRecord
+                {
+                    SessionId = excusedSession.Id,
+                    YouthUserId = seed.YouthId,
+                    Status = AttendanceStatus.Excused,
+                    RecordedByUserId = seed.YouthId,
+                });
+            await db.SaveChangesAsync();
+        }
+
+        var response = await SendAsync(HttpMethod.Get, "/api/me/progress", null, seed.YouthToken);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var view = await response.Content.ReadFromJsonAsync<ProgressViewDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(view!.QuizAverage, Is.EqualTo(82));
+            Assert.That(view.QuizHistory, Has.Count.EqualTo(1), "unapproved attempts stay hidden");
+            Assert.That(view.QuizHistory[0].Score, Is.EqualTo(82));
+            Assert.That(view.QuizHistory[0].Passed, Is.True);
+            Assert.That(view.AttendanceRate, Is.EqualTo(50));
+            Assert.That(view.AttendanceHistory.Select(item => item.Status),
+                Is.EqualTo(new[] { "Present", "Absent", "Excused" }));
+            Assert.That(view.Competencies.Single().CompetencyId, Is.EqualTo(competencyId));
+            Assert.That(view.Competencies.Single().Name, Is.EqualTo("Serving others"));
+            Assert.That(view.Competencies.Single().Level, Is.EqualTo("Proficient"));
+            Assert.That(view.Competencies.Single().Percent, Is.EqualTo(75));
+        });
+    }
+
+    [Test]
     [Property("Req", "L2-LEARN-002")]
     public async Task Lesson_reader_returns_safe_content_persists_reading_state_and_enforces_item_gate()
     {
@@ -502,10 +624,36 @@ public sealed class CurriculumTests : IntegrationTestBase
     private sealed record LessonReadingStateDto(string TextSize, bool Bookmarked, int Position);
 
     private sealed record ProgressViewDto(
-        double OverallPercent, double QuizAverage, int LessonsCompleted, double AttendanceRate,
+        double OverallPercent,
+        double QuizAverage,
+        int LessonsCompleted,
+        int LessonsTotal,
+        double AttendanceRate,
+        IReadOnlyList<QuizHistoryDto> QuizHistory,
+        IReadOnlyList<AttendanceHistoryDto> AttendanceHistory,
         IReadOnlyList<CompetencyLevelDtoRow> Competencies);
 
-    private sealed record CompetencyLevelDtoRow(Guid CompetencyId, string Level);
+    private sealed record QuizHistoryDto(
+        Guid AttemptId,
+        Guid QuizId,
+        string QuizTitle,
+        string ModuleName,
+        int Score,
+        bool Passed,
+        DateTime ApprovedAt);
+
+    private sealed record AttendanceHistoryDto(
+        Guid SessionId,
+        string SessionTitle,
+        DateTime StartsAt,
+        string Status);
+
+    private sealed record CompetencyLevelDtoRow(
+        Guid CompetencyId,
+        string Name,
+        string Level,
+        int Percent,
+        DateTime AssessedAt);
 
     private sealed record JourneyViewDto(
         IReadOnlyList<ModuleStatusDto> Modules,

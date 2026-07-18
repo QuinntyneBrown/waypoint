@@ -102,6 +102,30 @@ export class YouthBadgesPage extends BasePage {
   }
 }
 
+export class YouthProgressPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'My progress', exact: true });
+  }
+  get overviewTab() {
+    return this.page.getByRole('tab', { name: 'Overview', exact: true });
+  }
+  get quizzesTab() {
+    return this.page.getByRole('tab', { name: 'Quizzes', exact: true });
+  }
+  get attendanceTab() {
+    return this.page.getByRole('tab', { name: 'Attendance', exact: true });
+  }
+  get overviewPanel() {
+    return this.page.getByTestId('progress-overview');
+  }
+  get quizzesPanel() {
+    return this.page.getByTestId('progress-quizzes');
+  }
+  get attendancePanel() {
+    return this.page.getByTestId('progress-attendance');
+  }
+}
+
 /** `/youth/lessons/:id` — safe lesson reader with persisted reading controls. */
 export class YouthLessonPage extends BasePage {
   get heading() {
