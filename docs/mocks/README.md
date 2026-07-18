@@ -6,19 +6,28 @@ Open [`index.html`](index.html) in a browser. It is the searchable product map f
 
 These files are an interaction and visual reference, not the production application. All people, cohorts, lessons, messages, progress, and other sample information are fictional.
 
-## Product roles and screens
+## Subsystems and screens
 
-| Folder                       | Screens | Coverage                                                                                 |
-| ---------------------------- | ------: | ---------------------------------------------------------------------------------------- |
-| `public/`                    |       8 | Landing, application, involvement, contact, about, programs, and privacy                 |
-| `auth/`                      |      12 | Sign-in, PIN, invitations, consent, recovery, shared-device, and setup flows             |
-| `youth/`                     |      23 | Home, journey, Bible and coding lessons, quizzes, reflections, progress, and submissions |
-| `mentor/`                    |      19 | Dashboard, roster, assignments, grading, competency, check-ins, attendance, and reviews  |
-| `admin/`                     |      29 | Cohorts, curriculum, people, attendance, applications, reports, audit, and settings      |
-| `guardian/` and `volunteer/` |       7 | Guardian progress and consent; volunteer schedule and attendance                         |
-| `shared/` and `states/`      |      17 | Profiles, settings, help, support, search, offline, permission, and error states         |
+Screen mocks use the same top-level subsystem structure as [`../specs`](../specs/README.md). Within each subsystem, a role folder preserves the screen's audience and avoids filename collisions such as the youth, mentor, and admin calendar views.
 
-The folder also contains the product map, style guide, and reusable page templates, bringing the complete reference to more than 120 HTML files.
+| Subsystem                       | Screens | Role folders                            | Coverage                                                        |
+| ------------------------------- | ------: | --------------------------------------- | --------------------------------------------------------------- |
+| `application-intake/`           |       3 | `admin/`, `public/`                     | Application, confirmation, and review                            |
+| `authentication/`               |      13 | `admin/`, `auth/`                       | Sign-in, invitations, recovery, shared-device, roles, and setup  |
+| `consent-and-safeguarding/`     |       2 | `admin/`, `auth/`                       | Initial guardian consent and the safeguarding audit log          |
+| `curriculum-authoring/`         |       7 | `admin/`                                | Tracks, modules, lessons, quizzes, assignments, badges, and progression |
+| `engagement/`                   |      12 | `admin/`, `mentor/`, `youth/`           | Calendars, attendance, announcements, messages, and notifications |
+| `guardian-portal/`              |       4 | `guardian/`                             | Guardian home, progress, news, and consent                       |
+| `learning-experience/`          |      17 | `youth/`                                | Curriculum, lessons, quizzes, reflections, badges, and submissions |
+| `mentoring/`                    |      13 | `mentor/`                               | Dashboard, roster, grading, competencies, check-ins, and reviews |
+| `non-functional/`               |       0 | —                                       | Cross-cutting quality is demonstrated throughout the mock set    |
+| `platform-services/`            |      21 | `admin/`, `mentor/`, `shared/`, `states/`, `youth/` | Profiles, settings, help, support, and system states   |
+| `program-administration/`       |       6 | `admin/`                                | People, cohorts, progress board, and organization settings       |
+| `public-site/`                  |       6 | `public/`                               | Landing, involvement, contact, about, programs, and privacy      |
+| `reporting-and-data/`           |       8 | `admin/`                                | Dashboard, reports, exports, and data import                     |
+| `volunteer-portal/`             |       3 | `volunteer/`                            | Volunteer home, schedule, and attendance                         |
+
+The root also contains the product map, style guide, reusable page templates, and shared assets, bringing the complete reference to more than 120 HTML files.
 
 ## Design system
 

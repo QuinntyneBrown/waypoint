@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Attendance history · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+</head>
+<body data-role="mentor" data-active="attendance" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Attendance</div>
+          <h1 class="wu-page__title">Attendance history</h1>
+          <p class="wu-page__sub">Session-by-session record and per-youth attendance rates for the term.</p>
+        </div>
+        <div class="wu-page__actions">
+          <button class="wu-btn wu-btn--ghost"><svg class="wu-icon"><use href="#i-download"></use></svg>Export CSV</button>
+          <a class="wu-btn wu-btn--primary" href="attendance.html"><svg class="wu-icon"><use href="#i-check-circle"></use></svg>Take attendance</a>
+        </div>
+      </div>
+
+      <!-- Filter -->
+      <div class="wu-cluster wu-justify-between wu-mb-4">
+        <div class="wu-cluster wu-gap-2">
+          <label class="wu-label wu-mb-0" for="f-cohort">Cohort</label>
+          <select class="wu-select" id="f-cohort" style="max-width:240px">
+            <option selected>Rexdale Fall '25</option>
+            <option>Warden Winter '26</option>
+            <option>St. Clair Spring '26</option>
+          </select>
+        </div>
+        <div class="wu-segment" role="tablist" aria-label="View by">
+          <button class="wu-segment__item is-active" role="tab" aria-selected="true">By session</button>
+          <button class="wu-segment__item" role="tab" aria-selected="false">By youth</button>
+        </div>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="wu-grid wu-grid--4 wu-mb-4">
+        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Term attendance</div><div class="wu-statcard__value">86%</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+3% vs last term</div></div>
+        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Sessions held</div><div class="wu-statcard__value">12</div><div class="wu-statcard__delta">of 14 planned</div></div>
+        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Perfect attendance</div><div class="wu-statcard__value">3</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-star"></use></svg>youth</div></div>
+        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Below 60%</div><div class="wu-statcard__value">2</div><div class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-flag"></use></svg><a href="../../mentoring/mentor/flags.html">needs follow-up</a></div></div>
+      </div>
+
+      <!-- ===== DEFAULT ===== -->
+      <div data-when-state="default">
+
+        <!-- By session -->
+        <div class="wu-card wu-mb-4">
+          <div class="wu-card__header">
+            <h3 class="wu-card__title">Sessions · Rexdale Fall '25</h3>
+            <span class="wu-muted">Sep–Dec 2025 · Thu 4:00pm</span>
+          </div>
+          <div class="wu-card__body">
+            <div class="wu-table-wrap">
+              <table class="wu-table wu-table--cards">
+                <thead><tr><th>Date</th><th>Lesson</th><th>Present</th><th>Rate</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td data-label="Date">Thu Jul 17</td>
+                    <td data-label="Lesson">Servant Leadership — “Last Shall Be First”</td>
+                    <td data-label="Present">7 / 8</td>
+                    <td data-label="Rate"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:88%"></div></div><span class="wu-progress__num">88%</span></div></td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Saved</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Date">Thu Jul 10</td>
+                    <td data-label="Lesson">Servant Leadership — “The Towel and the Basin”</td>
+                    <td data-label="Present">8 / 8</td>
+                    <td data-label="Rate"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:100%"></div></div><span class="wu-progress__num">100%</span></div></td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Saved</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Date">Thu Jul 3</td>
+                    <td data-label="Lesson">Leading a Small Group — intro</td>
+                    <td data-label="Present">6 / 8</td>
+                    <td data-label="Rate"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:75%"></div></div><span class="wu-progress__num">75%</span></div></td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Saved</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Date">Thu Jun 26</td>
+                    <td data-label="Lesson">Identity in Christ — group project</td>
+                    <td data-label="Present">7 / 8</td>
+                    <td data-label="Rate"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:88%"></div></div><span class="wu-progress__num">88%</span></div></td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Saved</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Date">Thu Jun 19</td>
+                    <td data-label="Lesson">Who Is Jesus? — discussion</td>
+                    <td data-label="Present">5 / 8</td>
+                    <td data-label="Rate"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:63%"></div></div><span class="wu-progress__num">63%</span></div></td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Low turnout</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Date">Thu Jun 12</td>
+                    <td data-label="Lesson">Sharing Your Story — practice</td>
+                    <td data-label="Present">8 / 8</td>
+                    <td data-label="Rate"><div class="wu-progress__row"><div class="wu-progress wu-progress--thin"><div class="wu-progress__fill" style="--val:100%"></div></div><span class="wu-progress__num">100%</span></div></td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Saved</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- By youth -->
+        <div class="wu-card">
+          <div class="wu-card__header">
+            <h3 class="wu-card__title">Per-youth attendance</h3>
+            <span class="wu-muted">Across 12 sessions this term</span>
+          </div>
+          <div class="wu-card__body">
+            <div class="wu-table-wrap">
+              <table class="wu-table wu-table--cards">
+                <thead><tr><th>Youth</th><th>Attended</th><th>Late</th><th>Excused</th><th>Rate</th><th>Trend</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
+                    <td data-label="Attended">12 / 12</td>
+                    <td data-label="Late">0</td>
+                    <td data-label="Excused">0</td>
+                    <td data-label="Rate"><span class="wu-badge wu-badge--success wu-badge--dot">100%</span></td>
+                    <td data-label="Trend"><span class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>Steady</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
+                    <td data-label="Attended">11 / 12</td>
+                    <td data-label="Late">1</td>
+                    <td data-label="Excused">1</td>
+                    <td data-label="Rate"><span class="wu-badge wu-badge--success wu-badge--dot">92%</span></td>
+                    <td data-label="Trend"><span class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+8%</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Zara Mensah"></span>Zara Mensah</div></td>
+                    <td data-label="Attended">10 / 12</td>
+                    <td data-label="Late">2</td>
+                    <td data-label="Excused">0</td>
+                    <td data-label="Rate"><span class="wu-badge wu-badge--success wu-badge--dot">83%</span></td>
+                    <td data-label="Trend"><span class="wu-statcard__delta">Steady</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
+                    <td data-label="Attended">10 / 12</td>
+                    <td data-label="Late">0</td>
+                    <td data-label="Excused">2</td>
+                    <td data-label="Rate"><span class="wu-badge wu-badge--success wu-badge--dot">83%</span></td>
+                    <td data-label="Trend"><span class="wu-statcard__delta">Steady</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
+                    <td data-label="Attended">9 / 12</td>
+                    <td data-label="Late">3</td>
+                    <td data-label="Excused">0</td>
+                    <td data-label="Rate"><span class="wu-badge wu-badge--warning wu-badge--dot">75%</span></td>
+                    <td data-label="Trend"><span class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-trending-down"></use></svg>-6%</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Fatima Ali"></span>Fatima Ali</div></td>
+                    <td data-label="Attended">8 / 12</td>
+                    <td data-label="Late">1</td>
+                    <td data-label="Excused">3</td>
+                    <td data-label="Rate"><span class="wu-badge wu-badge--warning wu-badge--dot">67%</span></td>
+                    <td data-label="Trend"><span class="wu-statcard__delta">Steady</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Noah Williams"></span>Noah Williams <span class="wu-badge wu-badge--error wu-badge--dot">At risk</span></div></td>
+                    <td data-label="Attended">4 / 12</td>
+                    <td data-label="Late">1</td>
+                    <td data-label="Excused">2</td>
+                    <td data-label="Rate"><span class="wu-badge wu-badge--error wu-badge--dot">33%</span></td>
+                    <td data-label="Trend"><span class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-trending-down"></use></svg>-14%</span></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span>Devon Grant <span class="wu-badge wu-badge--error wu-badge--dot">At risk</span></div></td>
+                    <td data-label="Attended">4 / 12</td>
+                    <td data-label="Late">0</td>
+                    <td data-label="Excused">1</td>
+                    <td data-label="Rate"><span class="wu-badge wu-badge--error wu-badge--dot">33%</span></td>
+                    <td data-label="Trend"><span class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-trending-down"></use></svg>-11%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== LOADING ===== -->
+      <div data-when-state="loading" class="wu-hide">
+        <div class="wu-card"><div class="wu-card__body">
+          <span class="wu-skeleton wu-skeleton--title"></span>
+          <span class="wu-skeleton wu-skeleton--text"></span>
+          <span class="wu-skeleton wu-skeleton--text" style="width:85%"></span>
+          <span class="wu-skeleton wu-skeleton--text" style="width:70%"></span>
+          <div class="wu-mt-4"></div>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+        </div></div>
+      </div>
+
+      <!-- ===== EMPTY ===== -->
+      <div data-when-state="empty" class="wu-hide">
+        <div class="wu-card"><div class="wu-empty">
+          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-clipboard"></use></svg></div>
+          <h3 class="wu-empty__title">No attendance recorded yet</h3>
+          <p class="wu-empty__text">Once you take attendance for Rexdale Fall '25, session history and rates will appear here.</p>
+          <a class="wu-btn wu-btn--primary" href="attendance.html"><svg class="wu-icon"><use href="#i-check-circle"></use></svg>Take attendance</a>
+        </div></div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

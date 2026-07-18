@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Audit log · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+</head>
+<body data-role="admin" data-active="audit" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Youth safety</div>
+          <h1 class="wu-page__title">Audit log</h1>
+          <p class="wu-page__sub">A tamper-evident record of who did what, when — for accountability and safeguarding.</p>
+        </div>
+        <div class="wu-page__actions">
+          <button class="wu-btn wu-btn--ghost"><svg class="wu-icon"><use href="#i-download"></use></svg>Export CSV</button>
+        </div>
+      </div>
+
+      <!-- ===== DEFAULT ===== -->
+      <div data-when-state="default">
+
+        <div class="wu-card wu-mb-4">
+          <div class="wu-card__body">
+            <div class="wu-grid wu-grid--3">
+              <div class="wu-field wu-mb-0">
+                <label class="wu-label">User</label>
+                <select class="wu-select"><option>All users</option><option>Shawn Peters</option><option>Marcus Bello</option><option>Grace Adeyemi</option><option>Danielle Osei</option></select>
+              </div>
+              <div class="wu-field wu-mb-0">
+                <label class="wu-label">Action</label>
+                <select class="wu-select"><option>All actions</option><option>Approved application</option><option>Logged check-in</option><option>Edited lesson</option><option>Signed in</option><option>Changed role</option></select>
+              </div>
+              <div class="wu-field wu-mb-0">
+                <label class="wu-label">Date range</label>
+                <input class="wu-input" type="date" value="2026-07-01">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wu-card">
+          <div class="wu-table-wrap">
+            <table class="wu-table wu-table--cards">
+              <thead>
+                <tr><th>Who</th><th>Action</th><th>Target</th><th>When</th><th>Source</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Who"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
+                  <td data-label="Action"><span class="wu-badge wu-badge--success wu-badge--dot">Approved application</span></td>
+                  <td data-label="Target">Sofia Nguyen → Rexdale Fall '25</td>
+                  <td data-label="When">Jul 17, 2026 · 2:41 PM</td>
+                  <td data-label="Source"><span class="wu-muted">web · Toronto</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Who"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
+                  <td data-label="Action"><span class="wu-badge wu-badge--info wu-badge--dot">Logged check-in</span></td>
+                  <td data-label="Target"><span class="wu-cluster wu-gap-2">Devon Grant <svg class="wu-icon"><use href="#i-lock"></use></svg> <span class="wu-muted">private</span></span></td>
+                  <td data-label="When">Jul 17, 2026 · 11:08 AM</td>
+                  <td data-label="Source"><span class="wu-muted">mobile</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Who"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Grace Adeyemi"></span>Grace Adeyemi</div></td>
+                  <td data-label="Action"><span class="wu-badge wu-badge--warning wu-badge--dot">Edited lesson</span></td>
+                  <td data-label="Target">"Leading Like Jesus" · Servant Leadership</td>
+                  <td data-label="When">Jul 16, 2026 · 5:22 PM</td>
+                  <td data-label="Source"><span class="wu-muted">web</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Who"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Danielle Osei"></span>Danielle Osei</div></td>
+                  <td data-label="Action"><span class="wu-badge wu-badge--info wu-badge--dot">Logged check-in</span></td>
+                  <td data-label="Target"><span class="wu-cluster wu-gap-2">Noah Williams <svg class="wu-icon"><use href="#i-lock"></use></svg> <span class="wu-muted">private</span></span></td>
+                  <td data-label="When">Jul 16, 2026 · 1:15 PM</td>
+                  <td data-label="Source"><span class="wu-muted">mobile</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Who"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
+                  <td data-label="Action"><span class="wu-badge wu-badge--ink wu-badge--dot">Changed role</span></td>
+                  <td data-label="Target">Marcus Bello → Lead Mentor</td>
+                  <td data-label="When">Jul 15, 2026 · 9:03 AM</td>
+                  <td data-label="Source"><span class="wu-muted">web · Toronto</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Who"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
+                  <td data-label="Action"><span class="wu-badge wu-badge--outline wu-badge--dot">Took attendance</span></td>
+                  <td data-label="Target">Rexdale Fall '25 · Week 6 session</td>
+                  <td data-label="When">Jul 14, 2026 · 6:12 PM</td>
+                  <td data-label="Source"><span class="wu-muted">mobile</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Who"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
+                  <td data-label="Action"><span class="wu-badge wu-badge--outline wu-badge--dot">Signed in</span></td>
+                  <td data-label="Target"><span class="wu-muted">—</span></td>
+                  <td data-label="When">Jul 14, 2026 · 8:55 AM</td>
+                  <td data-label="Source"><span class="wu-muted">web · Toronto</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Who"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Grace Adeyemi"></span>Grace Adeyemi</div></td>
+                  <td data-label="Action"><span class="wu-badge wu-badge--success wu-badge--dot">Awarded badge</span></td>
+                  <td data-label="Target">Servant Heart → Jayden Alcantara</td>
+                  <td data-label="When">Jul 12, 2026 · 3:47 PM</td>
+                  <td data-label="Source"><span class="wu-muted">web</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="wu-cluster wu-cluster--between wu-mt-4">
+          <span class="wu-muted">Showing 8 of 214 events</span>
+          <button class="wu-btn wu-btn--ghost wu-btn--sm"><svg class="wu-icon"><use href="#i-refresh"></use></svg>Load more</button>
+        </div>
+
+      </div>
+
+      <!-- ===== LOADING ===== -->
+      <div data-when-state="loading" class="wu-hide">
+        <div class="wu-card"><div class="wu-card__body">
+          <span class="wu-skeleton wu-skeleton--title"></span>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+          <div class="wu-mt-4"></div>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+          <div class="wu-mt-4"></div>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+          <div class="wu-mt-4"></div>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+        </div></div>
+      </div>
+
+      <!-- ===== EMPTY ===== -->
+      <div data-when-state="empty" class="wu-hide">
+        <div class="wu-card"><div class="wu-empty">
+          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-shield"></use></svg></div>
+          <h3 class="wu-empty__title">No activity for this filter</h3>
+          <p class="wu-empty__text">No audit events match the users, actions or dates you selected. Try widening the range.</p>
+          <button class="wu-btn wu-btn--secondary"><svg class="wu-icon"><use href="#i-refresh"></use></svg>Clear filters</button>
+        </div></div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

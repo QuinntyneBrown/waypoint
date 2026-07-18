@@ -82,7 +82,7 @@ projects/portal/
 │       │                         #   drawer, messages entry point. Renders what the server says
 │       │                         #   the user may see — never the authority itself.
 │       ├── auth/                 # Sign-in, invitation acceptance, password reset request/confirm,
-│       │                         #   lockout screens (mocks: docs/mocks/auth/; specs: AUTH)
+│       │                         #   lockout screens (mocks: docs/mocks/authentication/auth/; specs: AUTH)
 │       ├── onboarding/           # Resumable onboarding + profile setup wizard (specs: AUTH/PLATFORM)
 │       ├── features/
 │       │   ├── youth/            # Home, journey, curriculum, lessons, Bible reflections, quizzes,
@@ -103,7 +103,7 @@ projects/portal/
 │       │   │                     #   sync, L2-NFR-004) within a narrow permission boundary
 │       │                         #   (mocks: volunteer/; specs: VOLUNTEER, ENGAGE)
 │       └── states/               # Shared empty / loading / error / forbidden / offline state
-│                                 #   components (mocks: docs/mocks/states/)
+│                                 #   components (mocks: docs/mocks/platform-services/states/)
 ├── tsconfig.app.json
 └── tsconfig.spec.json
 ```
@@ -204,15 +204,20 @@ projects/wu-realtime/src/lib/
 
 | `docs/mocks/` | Lands in |
 |---|---|
-| `public/` | `public-site` features |
-| `auth/` | `portal` → `app/auth/` |
-| `youth/` | `portal` → `features/youth/` |
-| `mentor/` | `portal` → `features/mentor/` |
-| `admin/` | `portal` → `features/admin/` |
-| `guardian/` | `portal` → `features/guardian/` |
-| `volunteer/` | `portal` → `features/volunteer/` |
-| `shared/` | `wu-ui` components + `portal` shell |
-| `states/` | `wu-ui` state primitives + `portal` `app/states/` |
+| `application-intake/` | `portal` → application-intake feature |
+| `authentication/` | `portal` → `app/auth/` and access administration |
+| `consent-and-safeguarding/` | `portal` → consent gates and safeguarding administration |
+| `curriculum-authoring/` | `portal` → curriculum-authoring features |
+| `engagement/` | `portal` → calendar, attendance, announcements, messages, and notifications |
+| `guardian-portal/` | `portal` → guardian features |
+| `learning-experience/` | `portal` → youth learning features |
+| `mentoring/` | `portal` → mentor features |
+| `non-functional/` | Cross-cutting quality references |
+| `platform-services/` | `wu-ui` state primitives + `portal` settings, help, and system states |
+| `program-administration/` | `portal` → people, cohort, and organization features |
+| `public-site/` | `public-site` features |
+| `reporting-and-data/` | `portal` → reporting and import features |
+| `volunteer-portal/` | `portal` → volunteer features |
 | `assets/`, `styleguide.html` | `wu-ui` styles/tokens (visual reference) |
 
 ---

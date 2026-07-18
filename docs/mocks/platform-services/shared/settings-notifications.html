@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notification settings · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+  <style>
+    .set-tabs{display:flex;gap:4px;overflow-x:auto}
+    .set-tabs a{text-decoration:none}
+    .notif-row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:14px 0}
+    .notif-row + .notif-row{border-top:var(--wu-bw) solid var(--wu-border)}
+    .notif-row__body{min-width:0}
+    .notif-row__title{font-weight:650;margin:0}
+    .notif-row__sub{font-size:.82rem;color:var(--wu-muted);margin:2px 0 0}
+    .notif-col{display:flex;flex-direction:column;align-items:center;gap:6px;width:56px}
+    .notif-col__head{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--wu-muted);font-weight:600}
+    .notif-head{display:grid;grid-template-columns:1fr auto auto;gap:12px;padding:0 0 8px}
+    .notif-head span{width:56px;text-align:center;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--wu-muted);font-weight:600}
+    .notif-row .wu-switch span:last-child{display:none}
+  </style>
+</head>
+<body data-role="youth" data-active="profile" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-container--narrow wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Settings</div>
+          <h1 class="wu-page__title">Settings</h1>
+          <p class="wu-page__sub">Manage your account, notifications, and display.</p>
+        </div>
+      </div>
+
+      <div class="wu-tabs set-tabs wu-mb-6" role="tablist" aria-label="Settings sections">
+        <a class="wu-tab" href="settings-profile.html">Profile</a>
+        <a class="wu-tab is-active" href="settings-notifications.html" aria-current="page">Notifications</a>
+        <a class="wu-tab" href="settings-display.html">Display</a>
+      </div>
+
+      <form class="wu-stack" onsubmit="return false">
+
+        <section class="wu-card" aria-labelledby="sec-what">
+          <div class="wu-card__header"><h3 class="wu-card__title" id="sec-what">What we notify you about</h3></div>
+          <div class="wu-card__body">
+            <div class="notif-head" aria-hidden="true">
+              <span></span><span>Email</span><span>Push</span>
+            </div>
+
+            <div class="notif-row">
+              <div class="notif-row__body">
+                <p class="notif-row__title">New lesson available</p>
+                <p class="notif-row__sub">When your mentor unlocks the next lesson.</p>
+              </div>
+              <div class="notif-col">
+                <span class="notif-col__head">Email</span>
+                <label class="wu-switch"><input type="checkbox" checked><span class="wu-switch__track"></span><span>New lesson email</span></label>
+              </div>
+              <div class="notif-col">
+                <span class="notif-col__head">Push</span>
+                <label class="wu-switch"><input type="checkbox" checked><span class="wu-switch__track"></span><span>New lesson push</span></label>
+              </div>
+            </div>
+
+            <div class="notif-row">
+              <div class="notif-row__body">
+                <p class="notif-row__title">Work graded</p>
+                <p class="notif-row__sub">When Marcus Bello reviews your reflection or quiz.</p>
+              </div>
+              <div class="notif-col">
+                <span class="notif-col__head">Email</span>
+                <label class="wu-switch"><input type="checkbox" checked><span class="wu-switch__track"></span><span>Graded email</span></label>
+              </div>
+              <div class="notif-col">
+                <span class="notif-col__head">Push</span>
+                <label class="wu-switch"><input type="checkbox" checked><span class="wu-switch__track"></span><span>Graded push</span></label>
+              </div>
+            </div>
+
+            <div class="notif-row">
+              <div class="notif-row__body">
+                <p class="notif-row__title">New message</p>
+                <p class="notif-row__sub">Direct messages from your mentor.</p>
+              </div>
+              <div class="notif-col">
+                <span class="notif-col__head">Email</span>
+                <label class="wu-switch"><input type="checkbox"><span class="wu-switch__track"></span><span>Message email</span></label>
+              </div>
+              <div class="notif-col">
+                <span class="notif-col__head">Push</span>
+                <label class="wu-switch"><input type="checkbox" checked><span class="wu-switch__track"></span><span>Message push</span></label>
+              </div>
+            </div>
+
+            <div class="notif-row">
+              <div class="notif-row__body">
+                <p class="notif-row__title">Reminders</p>
+                <p class="notif-row__sub">Study streak nudges and upcoming session reminders.</p>
+              </div>
+              <div class="notif-col">
+                <span class="notif-col__head">Email</span>
+                <label class="wu-switch"><input type="checkbox"><span class="wu-switch__track"></span><span>Reminder email</span></label>
+              </div>
+              <div class="notif-col">
+                <span class="notif-col__head">Push</span>
+                <label class="wu-switch"><input type="checkbox" checked><span class="wu-switch__track"></span><span>Reminder push</span></label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wu-card" aria-labelledby="sec-quiet">
+          <div class="wu-card__header"><h3 class="wu-card__title" id="sec-quiet">Quiet hours</h3></div>
+          <div class="wu-card__body">
+            <label class="wu-switch wu-mb-4"><input type="checkbox" checked><span class="wu-switch__track"></span><span>Pause push notifications overnight</span></label>
+            <div class="wu-grid wu-grid--2">
+              <div class="wu-field">
+                <label class="wu-label" for="q-from">From</label>
+                <input class="wu-input" id="q-from" type="time" value="21:00">
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="q-to">To</label>
+                <input class="wu-input" id="q-to" type="time" value="07:00">
+              </div>
+            </div>
+            <div class="wu-help">During quiet hours we'll hold notifications and deliver them in the morning.</div>
+          </div>
+        </section>
+
+        <div class="wu-cluster wu-justify-between wu-mt-2">
+          <a class="wu-btn wu-btn--ghost" href="../youth/profile.html">Cancel</a>
+          <button type="submit" class="wu-btn wu-btn--primary" data-toast="Notification preferences saved" data-toast-type="success">Save changes</button>
+        </div>
+      </form>
+
+    </div>
+  </main>
+</body>
+</html>

@@ -16,7 +16,7 @@ Monorepo alongside the mockups:
 ```
 word-up/
   docs/
-    mocks/                                   # existing front-end prototype (index.html, youth/, admin/ …)
+    mocks/                                   # existing front-end prototype (index.html + subsystem folders)
     contract.md                              # front-end build contract
     backend-implementation-plan.md           # this file
     specs/                                   # L1/L2 requirements (acceptance criteria) — every acceptance test traces to an L2 id

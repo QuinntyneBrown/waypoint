@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invite expired · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+</head>
+<body>
+  <div class="wu-authpage">
+    <div class="wu-empty" style="max-width:480px">
+      <div class="wu-empty__icon" style="width:80px;height:80px;background:var(--wu-warning-bg)">
+        <svg class="wu-icon" style="width:38px;height:38px;color:var(--wu-warning)"><use href="#i-clock"></use></svg>
+      </div>
+      <div class="wu-eyebrow">Invite expired</div>
+      <h1 class="wu-empty__title" style="font-size:1.6rem">This invite link has expired</h1>
+      <p class="wu-empty__text">Invite links last 7 days to keep things secure. Yours has timed out — but getting a fresh one is quick. Ask your mentor for a new invite and you’ll be in.</p>
+      <div class="wu-person" style="justify-content:center;margin:0 auto var(--wu-s6)">
+        <span class="wu-avatar" data-name="Marcus Bello"></span>
+        <div style="text-align:left"><div class="wu-person__name">Marcus Bello</div><div class="wu-person__meta">Lead Mentor · Rexdale Fall ’25</div></div>
+      </div>
+      <div class="wu-cluster" style="justify-content:center">
+        <button class="wu-btn wu-btn--primary" data-open-modal="m-request-invite"><svg class="wu-icon"><use href="#i-send"></use></svg>Request a new invite</button>
+        <a class="wu-btn wu-btn--ghost" href="../../authentication/auth/login.html">I already have an account</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wu-modal wu-modal--sm" id="m-request-invite" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Request a new invite</h2><p class="wu-modal__sub">We’ll let Marcus Bello know you need a fresh link.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label" for="ri-name">Your name <span class="wu-label__req">*</span></label>
+          <input class="wu-input" id="ri-name" placeholder="Jayden Alcantara">
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="ri-email">Email <span class="wu-label__req">*</span></label>
+          <input class="wu-input" id="ri-email" type="email" placeholder="you@example.com">
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="ri-note">Note to your mentor</label>
+          <textarea class="wu-textarea" id="ri-note" placeholder="My invite link expired — could you send a new one?"></textarea>
+        </div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Request sent to Marcus Bello" data-toast-type="success" data-toast-title="On its way">Send request</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

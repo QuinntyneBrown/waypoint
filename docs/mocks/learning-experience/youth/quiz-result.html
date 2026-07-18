@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz result · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+  <style>
+    .qr-hero{text-align:center;padding:var(--wu-s5) 0}
+    .qr-hero .wu-ring{margin:0 auto var(--wu-s4)}
+    .qr-review__q{font-weight:600;margin:0 0 8px}
+    .qr-actions{position:sticky;bottom:0;background:var(--wu-white);border-top:var(--wu-bw) solid var(--wu-border);padding:var(--wu-s4) 0;margin-top:var(--wu-s6);display:flex;gap:12px}
+    .qr-actions .wu-btn--primary{flex:1}
+  </style>
+</head>
+<body data-role="youth" data-active="curriculum" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-container--narrow wu-page">
+
+      <div class="qr-hero">
+        <div class="wu-eyebrow">Servant Leadership Check</div>
+        <div class="wu-ring wu-ring--lg" style="--val:80" aria-label="Score: 8 out of 10"><span class="wu-ring__label">8/10</span></div>
+        <span class="wu-badge wu-badge--success wu-badge--dot">Passed · 80%</span>
+        <h1 class="wu-page__title wu-mt-4 wu-mb-0">You passed, Jayden!</h1>
+        <p class="wu-muted" style="max-width:48ch;margin:8px auto 0">You cleared the 70% mark on your first attempt. Servant leadership isn’t just a right answer — keep living it out this week.</p>
+      </div>
+
+      <div class="wu-card wu-card--lime">
+        <div class="wu-card__body wu-cluster wu-gap-3">
+          <span class="wu-badgeitem__medal"><svg class="wu-icon"><use href="#i-award"></use></svg></span>
+          <div>
+            <div class="wu-eyebrow">You earned</div>
+            <strong style="font-size:1.05rem">Word Warrior</strong>
+            <p class="wu-text-sm wu-mb-0">Added to your badges. See it on your journey.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="wu-mt-6 wu-mb-4" style="font-size:1.15rem">Review your answers</h2>
+      <div class="wu-stack">
+        <div>
+          <p class="qr-review__q">1. What did Jesus wash in John 13?</p>
+          <div class="wu-quiz__opt is-correct"><span class="wu-quiz__key">B</span>The disciples’ feet</div>
+        </div>
+        <div>
+          <p class="qr-review__q">2. In Mark 10:45, the Son of Man came to…</p>
+          <div class="wu-quiz__opt is-correct"><span class="wu-quiz__key">B</span>Serve, and give his life as a ransom for many</div>
+        </div>
+        <div>
+          <p class="qr-review__q">3. “Whoever wants to be great must be your…”</p>
+          <div class="wu-quiz__opt is-wrong"><span class="wu-quiz__key">C</span>Leader <span class="wu-badge wu-badge--error wu-badge--dot">Your answer</span></div>
+          <div class="wu-quiz__opt is-correct"><span class="wu-quiz__key">A</span>Servant</div>
+        </div>
+        <div>
+          <p class="qr-review__q">4. What did James and John ask Jesus for?</p>
+          <div class="wu-quiz__opt is-correct"><span class="wu-quiz__key">D</span>Seats at his right and left</div>
+        </div>
+        <div>
+          <p class="qr-review__q">5. Servant leadership means putting others…</p>
+          <div class="wu-quiz__opt is-correct"><span class="wu-quiz__key">A</span>First</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wu-container wu-container--narrow">
+      <div class="qr-actions">
+        <a class="wu-btn wu-btn--ghost" href="quiz-intro.html"><svg class="wu-icon"><use href="#i-refresh"></use></svg>Retake</a>
+        <a class="wu-btn wu-btn--primary" href="module.html">Continue<svg class="wu-icon"><use href="#i-arrow-right"></use></svg></a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

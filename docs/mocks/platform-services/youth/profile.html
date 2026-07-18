@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+  <style>
+    .prof-hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+    .prof-hero h1{margin:8px 0 0}
+    .prof-link{display:flex;gap:14px;align-items:center;padding:14px 4px;text-decoration:none;color:inherit}
+    .prof-link + .prof-link{border-top:var(--wu-bw) solid var(--wu-border)}
+    .prof-link__icon{width:36px;height:36px;border-radius:10px;background:var(--wu-g100);display:grid;place-items:center;flex:none}
+    .prof-link__icon .wu-icon{width:18px;height:18px}
+    .prof-link__body{flex:1}
+    .prof-link__title{font-weight:650;margin:0}
+    .prof-link__sub{font-size:.82rem;color:var(--wu-muted);margin:1px 0 0}
+  </style>
+</head>
+<body data-role="youth" data-active="profile" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-container--narrow wu-page">
+
+      <section class="wu-card" aria-labelledby="prof-name">
+        <div class="wu-card__body prof-hero">
+          <span class="wu-avatar wu-avatar--xl" data-name="Jayden Alcantara"></span>
+          <h1 id="prof-name" class="wu-page__title">Jayden Alcantara</h1>
+          <div class="wu-cluster wu-gap-2 wu-justify-center">
+            <span class="wu-badge wu-badge--lime">Rexdale Fall '25</span>
+            <span class="wu-badge wu-badge--success wu-badge--dot">On track</span>
+          </div>
+          <p class="wu-muted wu-text-sm wu-mb-0">Mentor · Marcus Bello</p>
+        </div>
+      </section>
+
+      <section class="wu-card wu-card--greige wu-mt-4" aria-labelledby="goal-heading">
+        <div class="wu-card__body">
+          <div class="wu-eyebrow" id="goal-heading">My goal</div>
+          <div class="wu-scripture wu-mt-2">“I want to lead my youth group and learn to serve like Jesus did.”<span class="wu-scripture__ref">Jayden · Mark 10:45</span></div>
+        </div>
+      </section>
+
+      <section class="wu-grid wu-grid--3 wu-mt-4" aria-label="Your stats">
+        <div class="wu-card wu-statcard">
+          <div class="wu-statcard__label">Progress</div>
+          <div class="wu-statcard__value">82%</div>
+          <div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+8% this month</div>
+        </div>
+        <div class="wu-card wu-statcard">
+          <div class="wu-statcard__label">Badges</div>
+          <div class="wu-statcard__value">3</div>
+          <div class="wu-statcard__delta"><svg class="wu-icon"><use href="#i-award"></use></svg>of 6</div>
+        </div>
+        <div class="wu-card wu-statcard">
+          <div class="wu-statcard__label">Streak</div>
+          <div class="wu-statcard__value">4</div>
+          <div class="wu-statcard__delta"><svg class="wu-icon"><use href="#i-zap"></use></svg>weeks</div>
+        </div>
+      </section>
+
+      <section class="wu-card wu-mt-4" aria-labelledby="links-heading">
+        <div class="wu-card__header"><h3 class="wu-card__title" id="links-heading">Account</h3></div>
+        <div class="wu-card__body">
+          <a class="prof-link" href="../shared/settings-profile.html">
+            <div class="prof-link__icon"><svg class="wu-icon"><use href="#i-settings"></use></svg></div>
+            <div class="prof-link__body"><p class="prof-link__title">Settings</p><p class="prof-link__sub">Name, notifications, password</p></div>
+            <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+          </a>
+          <a class="prof-link" href="../../learning-experience/youth/badges.html">
+            <div class="prof-link__icon"><svg class="wu-icon"><use href="#i-award"></use></svg></div>
+            <div class="prof-link__body"><p class="prof-link__title">My badges</p><p class="prof-link__sub">3 earned · 3 to unlock</p></div>
+            <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+          </a>
+          <a class="prof-link" href="help.html">
+            <div class="prof-link__icon"><svg class="wu-icon"><use href="#i-help-circle"></use></svg></div>
+            <div class="prof-link__body"><p class="prof-link__title">Help &amp; FAQ</p><p class="prof-link__sub">Get answers, contact your mentor</p></div>
+            <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+          </a>
+        </div>
+      </section>
+
+      <div class="wu-mt-6">
+        <button class="wu-btn wu-btn--ghost wu-btn--block" data-open-modal="m-signout"><svg class="wu-icon"><use href="#i-log-out"></use></svg>Sign out</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== page-scoped modals ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-signout" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Sign out?</h2><p class="wu-modal__sub">You can always sign back in.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <p class="wu-mb-0">You’ll be signed out of Word Up on this device.</p>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Signed out" data-toast-type="info" data-then="authentication/auth/login.html">Sign out</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

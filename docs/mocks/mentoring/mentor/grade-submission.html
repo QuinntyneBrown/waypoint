@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grade submission · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+</head>
+<body data-role="mentor" data-active="reviews" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow"><a href="reviews.html">Reviews</a> · Grade submission</div>
+          <h1 class="wu-page__title">Serve someone this week</h1>
+          <p class="wu-page__sub">Servant Leadership · assignment · submitted 2 hours ago</p>
+        </div>
+        <div class="wu-page__actions">
+          <a class="wu-btn wu-btn--ghost" href="reviews.html"><svg class="wu-icon"><use href="#i-arrow-left"></use></svg>Back to queue</a>
+        </div>
+      </div>
+
+      <div class="wu-person wu-mb-4">
+        <span class="wu-avatar wu-avatar--lg" data-name="Amara Okafor"></span>
+        <div><div class="wu-person__name">Amara Okafor</div><div class="wu-person__meta">Rexdale Fall '25 · 74% · mentored by Marcus Bello</div></div>
+      </div>
+
+      <div class="wu-grid wu-grid--3">
+        <!-- Submission -->
+        <div style="grid-column:span 2">
+          <div class="wu-card">
+            <div class="wu-card__header"><h3 class="wu-card__title">Submission</h3><span class="wu-badge wu-badge--warning wu-badge--dot">Awaiting review</span></div>
+            <div class="wu-card__body">
+              <div class="wu-scripture">“For even the Son of Man did not come to be served, but to serve.”<span class="wu-scripture__ref">Mark 10:45</span></div>
+
+              <div class="wu-field">
+                <label class="wu-label">Photo</label>
+                <div class="wu-card wu-card--greige"><div class="wu-card__body wu-cluster wu-justify-center" style="min-height:200px">
+                  <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-camera"></use></svg></div>
+                  <span class="wu-muted">serving-at-food-drive.jpg</span>
+                </div></div>
+              </div>
+
+              <div class="wu-field">
+                <label class="wu-label">Written reflection</label>
+                <p class="wu-mb-0">This week I volunteered at the church food drive with my little brother. We packed grocery boxes for two hours and carried them out to cars. One woman almost cried when we helped her — she said she’d been having a hard month. It made me realize serving isn’t about big moments, it’s about showing up. I want to keep doing this once a month. Jesus washed feet; the least I can do is carry some boxes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grading -->
+        <div>
+          <div class="wu-card">
+            <div class="wu-card__header"><h3 class="wu-card__title">Rubric</h3></div>
+            <div class="wu-card__body">
+              <div class="wu-field">
+                <label class="wu-label" for="r1">Followed the prompt <span class="wu-muted">/ 5</span></label>
+                <input class="wu-input" type="number" id="r1" min="0" max="5" value="5">
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="r2">Depth of reflection <span class="wu-muted">/ 5</span></label>
+                <input class="wu-input" type="number" id="r2" min="0" max="5" value="4">
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="r3">Scripture connection <span class="wu-muted">/ 5</span></label>
+                <input class="wu-input" type="number" id="r3" min="0" max="5" value="5">
+              </div>
+              <div class="wu-divider"></div>
+              <div class="wu-cluster wu-justify-between">
+                <span class="wu-label wu-mb-0">Total</span>
+                <span class="wu-badge wu-badge--lime">14 / 15</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="wu-card wu-mt-4">
+            <div class="wu-card__header"><h3 class="wu-card__title">Feedback</h3></div>
+            <div class="wu-card__body">
+              <div class="wu-field">
+                <label class="wu-label" for="cmt">Comment to Amara</label>
+                <textarea class="wu-textarea" id="cmt" placeholder="Encourage and guide…">This is beautiful, Amara. You connected serving to Mark 10:45 exactly right. Love the plan to keep going monthly — that’s a leader’s heart.</textarea>
+              </div>
+            </div>
+            <div class="wu-card__footer wu-stack wu-stack--sm">
+              <button class="wu-btn wu-btn--primary wu-btn--block" data-toast="Submission approved" data-toast-type="success" data-toast-title="Approved" data-then="mentoring/mentor/reviews.html">
+                <svg class="wu-icon"><use href="#i-check-circle"></use></svg>Approve
+              </button>
+              <button class="wu-btn wu-btn--secondary wu-btn--block" data-open-modal="m-revision">
+                <svg class="wu-icon"><use href="#i-refresh"></use></svg>Request revision
+              </button>
+              <button class="wu-btn wu-btn--ghost wu-btn--block" data-toast="Draft saved" data-toast-type="info">Save draft</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== Request revision modal ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-revision" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Request a revision</h2><p class="wu-modal__sub">Amara will get your note and can resubmit.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label" for="rev-note">What should she change? <span class="wu-label__req">*</span></label>
+          <textarea class="wu-textarea" id="rev-note" placeholder="Be specific and kind…">Great start! Could you add one sentence on how you’ll invite a friend to serve with you next time?</textarea>
+        </div>
+        <label class="wu-check"><input type="checkbox" checked><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Notify guardian</span></label>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Revision requested" data-toast-type="warning" data-then="mentoring/mentor/reviews.html">Send request</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

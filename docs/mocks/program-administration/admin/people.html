@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>People · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+</head>
+<body data-role="admin" data-active="people" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Word Up · Toronto</div>
+          <h1 class="wu-page__title">People</h1>
+          <p class="wu-page__sub">Everyone in the program — youth, staff and guardians.</p>
+        </div>
+        <div class="wu-page__actions">
+          <button class="wu-btn wu-btn--ghost"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
+          <button class="wu-btn wu-btn--primary" data-open-modal="m-invite"><svg class="wu-icon"><use href="#i-user-plus"></use></svg>Invite</button>
+        </div>
+      </div>
+
+      <!-- ===== Filters ===== -->
+      <div class="wu-cluster wu-justify-between wu-mb-6" style="flex-wrap:wrap;gap:12px">
+        <div class="wu-pillrow">
+          <span class="wu-pill is-active">All <span class="wu-badge wu-badge--ink">18</span></span>
+          <span class="wu-pill">Youth <span class="wu-badge">12</span></span>
+          <span class="wu-pill">Staff <span class="wu-badge">4</span></span>
+          <span class="wu-pill">Guardians <span class="wu-badge">2</span></span>
+        </div>
+        <div class="wu-cluster wu-gap-3" style="flex-wrap:wrap">
+          <div class="wu-field wu-mb-0" style="min-width:220px">
+            <label class="wu-label wu-hide" for="p-search">Search people</label>
+            <input id="p-search" class="wu-input" placeholder="Search by name or email…">
+          </div>
+          <div class="wu-field wu-mb-0" style="min-width:180px">
+            <label class="wu-label wu-hide" for="p-cohort">Filter by cohort</label>
+            <select id="p-cohort" class="wu-select">
+              <option>All cohorts</option>
+              <option>Rexdale Fall '25</option>
+              <option>Warden Winter '26</option>
+              <option>St. Clair Spring '26</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== DEFAULT: populated roster ===== -->
+      <div data-when-state="default">
+        <div class="wu-table-wrap">
+          <table class="wu-table wu-table--cards">
+            <thead>
+              <tr>
+                <th>Person</th><th>Role</th><th>Cohort</th><th>Mentor</th><th>Status</th><th>Last active</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Person"><a class="wu-table__cellmain" href="person-detail.html"><span class="wu-avatar wu-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</a></td>
+                <td data-label="Role"><span class="wu-badge wu-badge--lime">Youth</span></td>
+                <td data-label="Cohort">Rexdale Fall '25</td>
+                <td data-label="Mentor">Marcus Bello</td>
+                <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Active</span></td>
+                <td data-label="Last active">2 hrs ago</td>
+                <td data-label="Actions"><a class="wu-iconbtn" href="person-detail.html" aria-label="Open Priya Sharma"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a></td>
+              </tr>
+              <tr>
+                <td data-label="Person"><a class="wu-table__cellmain" href="person-detail.html"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</a></td>
+                <td data-label="Role"><span class="wu-badge wu-badge--lime">Youth</span></td>
+                <td data-label="Cohort">Rexdale Fall '25</td>
+                <td data-label="Mentor">Marcus Bello</td>
+                <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Active</span></td>
+                <td data-label="Last active">Today</td>
+                <td data-label="Actions"><a class="wu-iconbtn" href="person-detail.html" aria-label="Open Jayden Alcantara"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a></td>
+              </tr>
+              <tr>
+                <td data-label="Person"><a class="wu-table__cellmain" href="person-detail.html"><span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span>Devon Grant</a></td>
+                <td data-label="Role"><span class="wu-badge wu-badge--lime">Youth</span></td>
+                <td data-label="Cohort">Rexdale Fall '25</td>
+                <td data-label="Mentor">Marcus Bello</td>
+                <td data-label="Status"><span class="wu-badge wu-badge--error wu-badge--dot">At risk</span></td>
+                <td data-label="Last active">6 days ago</td>
+                <td data-label="Actions"><a class="wu-iconbtn" href="person-detail.html" aria-label="Open Devon Grant"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a></td>
+              </tr>
+              <tr>
+                <td data-label="Person"><a class="wu-table__cellmain" href="person-detail.html"><span class="wu-avatar wu-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</a></td>
+                <td data-label="Role"><span class="wu-badge wu-badge--lime">Youth</span></td>
+                <td data-label="Cohort">Warden Winter '26</td>
+                <td data-label="Mentor">Danielle Osei</td>
+                <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Active</span></td>
+                <td data-label="Last active">Yesterday</td>
+                <td data-label="Actions"><a class="wu-iconbtn" href="person-detail.html" aria-label="Open Amara Okafor"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a></td>
+              </tr>
+              <tr>
+                <td data-label="Person"><a class="wu-table__cellmain" href="person-detail.html"><span class="wu-avatar wu-avatar--sm" data-name="Noah Williams"></span>Noah Williams</a></td>
+                <td data-label="Role"><span class="wu-badge wu-badge--lime">Youth</span></td>
+                <td data-label="Cohort">Warden Winter '26</td>
+                <td data-label="Mentor">Danielle Osei</td>
+                <td data-label="Status"><span class="wu-badge wu-badge--error wu-badge--dot">At risk</span></td>
+                <td data-label="Last active">13 days ago</td>
+                <td data-label="Actions"><a class="wu-iconbtn" href="person-detail.html" aria-label="Open Noah Williams"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a></td>
+              </tr>
+              <tr>
+                <td data-label="Person"><a class="wu-table__cellmain" href="person-detail.html"><span class="wu-avatar wu-avatar--sm" data-name="Sofia Nguyen"></span>Sofia Nguyen</a></td>
+                <td data-label="Role"><span class="wu-badge wu-badge--lime">Youth</span></td>
+                <td data-label="Cohort">St. Clair Spring '26</td>
+                <td data-label="Mentor">Grace Adeyemi</td>
+                <td data-label="Status"><span class="wu-badge wu-badge--info wu-badge--dot">New</span></td>
+                <td data-label="Last active">3 days ago</td>
+                <td data-label="Actions"><a class="wu-iconbtn" href="person-detail.html" aria-label="Open Sofia Nguyen"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a></td>
+              </tr>
+              <tr>
+                <td data-label="Person"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
+                <td data-label="Role"><span class="wu-badge wu-badge--ink">Lead Mentor</span></td>
+                <td data-label="Cohort">Rexdale Fall '25</td>
+                <td data-label="Mentor">—</td>
+                <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Active</span></td>
+                <td data-label="Last active">Today</td>
+                <td data-label="Actions"><a class="wu-iconbtn" href="person-detail.html" aria-label="Open Marcus Bello"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a></td>
+              </tr>
+              <tr>
+                <td data-label="Person"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Danielle Osei"></span>Danielle Osei</div></td>
+                <td data-label="Role"><span class="wu-badge wu-badge--ink">Mentor</span></td>
+                <td data-label="Cohort">Warden Winter '26</td>
+                <td data-label="Mentor">—</td>
+                <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Active</span></td>
+                <td data-label="Last active">Yesterday</td>
+                <td data-label="Actions"><a class="wu-iconbtn" href="person-detail.html" aria-label="Open Danielle Osei"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a></td>
+              </tr>
+              <tr>
+                <td data-label="Person"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Nadia Sharma"></span>Nadia Sharma</div></td>
+                <td data-label="Role"><span class="wu-badge wu-badge--outline">Guardian</span></td>
+                <td data-label="Cohort">Rexdale Fall '25</td>
+                <td data-label="Mentor">— (Priya Sharma)</td>
+                <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Consent pending</span></td>
+                <td data-label="Last active">5 days ago</td>
+                <td data-label="Actions"><a class="wu-iconbtn" href="person-detail.html" aria-label="Open Nadia Sharma"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="wu-muted wu-text-sm wu-mt-4">Showing 9 of 18 people.</p>
+      </div>
+
+      <!-- ===== LOADING: skeletons ===== -->
+      <div data-when-state="loading" class="wu-hide">
+        <div class="wu-table-wrap">
+          <table class="wu-table wu-table--cards">
+            <thead><tr><th>Person</th><th>Role</th><th>Cohort</th><th>Mentor</th><th>Status</th><th>Last active</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr>
+                <td data-label="Person"><div class="wu-cluster wu-gap-3"><span class="wu-skeleton wu-skeleton--circle"></span><span class="wu-skeleton wu-skeleton--text" style="width:120px"></span></div></td>
+                <td data-label="Role"><span class="wu-skeleton wu-skeleton--btn"></span></td>
+                <td data-label="Cohort"><span class="wu-skeleton wu-skeleton--text"></span></td>
+                <td data-label="Mentor"><span class="wu-skeleton wu-skeleton--text"></span></td>
+                <td data-label="Status"><span class="wu-skeleton wu-skeleton--btn"></span></td>
+                <td data-label="Last active"><span class="wu-skeleton wu-skeleton--text"></span></td>
+                <td data-label="Actions"><span class="wu-skeleton wu-skeleton--circle"></span></td>
+              </tr>
+              <tr>
+                <td data-label="Person"><div class="wu-cluster wu-gap-3"><span class="wu-skeleton wu-skeleton--circle"></span><span class="wu-skeleton wu-skeleton--text" style="width:120px"></span></div></td>
+                <td data-label="Role"><span class="wu-skeleton wu-skeleton--btn"></span></td>
+                <td data-label="Cohort"><span class="wu-skeleton wu-skeleton--text"></span></td>
+                <td data-label="Mentor"><span class="wu-skeleton wu-skeleton--text"></span></td>
+                <td data-label="Status"><span class="wu-skeleton wu-skeleton--btn"></span></td>
+                <td data-label="Last active"><span class="wu-skeleton wu-skeleton--text"></span></td>
+                <td data-label="Actions"><span class="wu-skeleton wu-skeleton--circle"></span></td>
+              </tr>
+              <tr>
+                <td data-label="Person"><div class="wu-cluster wu-gap-3"><span class="wu-skeleton wu-skeleton--circle"></span><span class="wu-skeleton wu-skeleton--text" style="width:120px"></span></div></td>
+                <td data-label="Role"><span class="wu-skeleton wu-skeleton--btn"></span></td>
+                <td data-label="Cohort"><span class="wu-skeleton wu-skeleton--text"></span></td>
+                <td data-label="Mentor"><span class="wu-skeleton wu-skeleton--text"></span></td>
+                <td data-label="Status"><span class="wu-skeleton wu-skeleton--btn"></span></td>
+                <td data-label="Last active"><span class="wu-skeleton wu-skeleton--text"></span></td>
+                <td data-label="Actions"><span class="wu-skeleton wu-skeleton--circle"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== EMPTY ===== -->
+      <div data-when-state="empty" class="wu-hide">
+        <div class="wu-card">
+          <div class="wu-empty">
+            <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-users"></use></svg></div>
+            <h3 class="wu-empty__title">No people match those filters</h3>
+            <p class="wu-empty__text">Try clearing the search or cohort filter, or invite someone new.</p>
+            <button class="wu-btn wu-btn--primary" data-open-modal="m-invite"><svg class="wu-icon"><use href="#i-user-plus"></use></svg>Invite someone</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== Invite modal ===== -->
+  <div class="wu-modal" id="m-invite" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Invite someone</h2><p class="wu-modal__sub">They'll get an email to set up their Word Up account.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label" for="inv-email">Email <span class="wu-label__req">*</span></label>
+          <input id="inv-email" class="wu-input" type="email" placeholder="name@example.com">
+          <div class="wu-help">We'll send a secure invite link.</div>
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="inv-role">Role <span class="wu-label__req">*</span></label>
+          <select id="inv-role" class="wu-select">
+            <option>Youth</option>
+            <option>Mentor</option>
+            <option>Lead Mentor</option>
+            <option>Guardian</option>
+            <option>Volunteer</option>
+          </select>
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="inv-cohort">Cohort</label>
+          <select id="inv-cohort" class="wu-select">
+            <option>Rexdale Fall '25</option>
+            <option>Warden Winter '26</option>
+            <option>St. Clair Spring '26</option>
+            <option>No cohort yet</option>
+          </select>
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="inv-mentor">Mentor</label>
+          <select id="inv-mentor" class="wu-select">
+            <option>Marcus Bello</option>
+            <option>Danielle Osei</option>
+            <option>Grace Adeyemi</option>
+            <option>Unassigned</option>
+          </select>
+        </div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Invitation sent" data-toast-type="success" data-toast-title="Invite on its way">Send invite</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Delete / remove modal (danger) ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-delete" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div>
+          <div class="wu-modal__icon wu-modal__icon--danger"><svg class="wu-icon"><use href="#i-trash"></use></svg></div>
+          <h2 class="wu-modal__title">Remove this person?</h2>
+          <p class="wu-modal__sub">This removes them from Word Up and revokes access. Progress records are kept for reporting.</p>
+        </div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-alert wu-alert--warning"><svg class="wu-alert__icon wu-icon"><use href="#i-alert-triangle"></use></svg><div>This action can't be undone.</div></div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--danger" data-close-modal data-toast="Person removed" data-toast-type="error">Remove person</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

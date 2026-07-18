@@ -1,0 +1,40 @@
+@startuml
+!pragma layout smetana
+left to right direction
+title Application Context view\nV-APP-AUTH-RECOVER-PASSWORD
+
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam defaultFontName Arial
+skinparam defaultFontSize 14
+skinparam rectangleBorderColor #334155
+skinparam rectangleFontColor #0F172A
+skinparam ArrowColor #64748B
+
+rectangle "Word Up software system\n<<entity of interest>>" as word_up #F3F4F6 {
+  rectangle "Portal application\n<<Angular authenticated application>>" as app_portal #DBEAFE {
+    rectangle "Authentication and Access subsystem" as subsystem_portal #EFF6FF {
+      rectangle "Recover a password\n<<feature-slice contribution>>" as feature_portal #FEF3C7
+    }
+  }
+  rectangle "WordUp API application\n<<ASP.NET Core application>>" as app_api #DCFCE7 {
+    rectangle "Authentication and Access subsystem" as subsystem_api #F0FDF4 {
+      rectangle "Recover a password\n<<feature-slice contribution>>" as feature_api #FEF3C7
+    }
+  }
+  app_portal -[hidden]right-> app_api
+}
+
+legend bottom
+|= Notation |= Meaning |
+| Grey outer rectangle | Word Up software system, the entity of interest |
+| Blue application rectangle | Angular application |
+| Green application rectangle | ASP.NET Core application |
+| Pale inner rectangle | Subsystem boundary within an application |
+| Amber rectangle | Feature-slice contribution |
+| Rectangle nesting | Containment |
+endlegend
+
+caption Figure 1 - Recover a password application context (VC-APP-AUTH-RECOVER-PASSWORD)
+@enduml

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Module editor · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+</head>
+<body data-role="admin" data-active="tracks" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <a class="wu-btn wu-btn--ghost wu-btn--sm wu-mb-4" href="tracks.html"><svg class="wu-icon"><use href="#i-arrow-left"></use></svg>Back to curriculum</a>
+          <div class="wu-eyebrow">Bible &amp; Leadership</div>
+          <h1 class="wu-page__title">Servant Leadership</h1>
+          <p class="wu-page__sub">Edit the module details, objectives and lessons youth work through.</p>
+        </div>
+        <div class="wu-page__actions">
+          <span class="wu-badge wu-badge--warning wu-badge--dot">In review</span>
+          <button class="wu-btn wu-btn--ghost">Cancel</button>
+          <button class="wu-btn wu-btn--primary" data-toast="Module saved" data-toast-type="success" data-toast-title="Saved"><svg class="wu-icon"><use href="#i-check"></use></svg>Save</button>
+        </div>
+      </div>
+
+      <div class="wu-grid wu-grid--3">
+        <!-- ===== Main column ===== -->
+        <div style="grid-column:span 2;min-width:0">
+
+          <div class="wu-card wu-mb-6">
+            <div class="wu-card__header"><h3 class="wu-card__title">Details</h3></div>
+            <div class="wu-card__body">
+              <div class="wu-field">
+                <label class="wu-label">Module name <span class="wu-label__req">*</span></label>
+                <input class="wu-input" value="Servant Leadership">
+              </div>
+              <div class="wu-field">
+                <label class="wu-label">Description</label>
+                <textarea class="wu-textarea">Jesus led by serving. In this module youth explore what it means to lead like Christ — putting others first, using influence to build people up, and finding greatness in service.</textarea>
+                <div class="wu-help">Shown to youth on the module cover.</div>
+              </div>
+              <div class="wu-grid wu-grid--2">
+                <div class="wu-field">
+                  <label class="wu-label">Prerequisites</label>
+                  <select class="wu-select">
+                    <option>Identity in Christ</option>
+                    <option>Who Is Jesus?</option>
+                    <option>None</option>
+                  </select>
+                  <div class="wu-help">Youth must finish this first.</div>
+                </div>
+                <div class="wu-field">
+                  <label class="wu-label">Scripture anchor</label>
+                  <input class="wu-input" value="Mark 10:45">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wu-card wu-mb-6">
+            <div class="wu-card__header">
+              <h3 class="wu-card__title">Learning objectives</h3>
+              <button class="wu-btn wu-btn--subtle wu-btn--sm" data-toast="Objective row added" data-toast-type="info"><svg class="wu-icon"><use href="#i-plus"></use></svg>Add objective</button>
+            </div>
+            <div class="wu-card__body">
+              <div class="wu-stack wu-stack--sm">
+                <div class="wu-cluster wu-gap-2">
+                  <input class="wu-input" value="Define servant leadership from Mark 10:35–45.">
+                  <button class="wu-iconbtn" aria-label="Remove objective"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+                </div>
+                <div class="wu-cluster wu-gap-2">
+                  <input class="wu-input" value="Identify one area to serve within their cohort or church.">
+                  <button class="wu-iconbtn" aria-label="Remove objective"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+                </div>
+                <div class="wu-cluster wu-gap-2">
+                  <input class="wu-input" value="Practice giving encouragement to peers.">
+                  <button class="wu-iconbtn" aria-label="Remove objective"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wu-card">
+            <div class="wu-card__header">
+              <h3 class="wu-card__title">Lessons</h3>
+              <button class="wu-btn wu-btn--subtle wu-btn--sm" data-toast="Lesson added" data-toast-type="info" data-then="curriculum-authoring/admin/lesson-editor.html"><svg class="wu-icon"><use href="#i-plus"></use></svg>Add lesson</button>
+            </div>
+            <div class="wu-card__body">
+              <div class="wu-eyebrow wu-mb-4">Drag to reorder</div>
+
+              <div class="wu-lessonstep is-done">
+                <button class="wu-iconbtn" aria-label="Drag to reorder" title="Drag to reorder"><svg class="wu-icon"><use href="#i-menu"></use></svg></button>
+                <span class="wu-lessonstep__num">1</span>
+                <a class="wu-listitem__body" href="lesson-editor.html" style="text-decoration:none;color:inherit">
+                  <div class="wu-listitem__title">The Towel and the Basin</div>
+                  <div class="wu-listitem__meta">John 13 · 12 min · Published</div>
+                </a>
+                <span class="wu-badge wu-badge--success wu-badge--dot">Published</span>
+                <button class="wu-iconbtn" aria-label="Edit lesson"><svg class="wu-icon"><use href="#i-edit"></use></svg></button>
+                <button class="wu-iconbtn" aria-label="Delete lesson" data-open-modal="m-delete"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+              </div>
+
+              <div class="wu-lessonstep">
+                <button class="wu-iconbtn" aria-label="Drag to reorder" title="Drag to reorder"><svg class="wu-icon"><use href="#i-menu"></use></svg></button>
+                <span class="wu-lessonstep__num">2</span>
+                <a class="wu-listitem__body" href="lesson-editor.html" style="text-decoration:none;color:inherit">
+                  <div class="wu-listitem__title">Last Shall Be First</div>
+                  <div class="wu-listitem__meta">Mark 10 · 15 min · Draft</div>
+                </a>
+                <span class="wu-badge wu-badge--dot">Draft</span>
+                <button class="wu-iconbtn" aria-label="Edit lesson"><svg class="wu-icon"><use href="#i-edit"></use></svg></button>
+                <button class="wu-iconbtn" aria-label="Delete lesson" data-open-modal="m-delete"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+              </div>
+
+              <div class="wu-lessonstep">
+                <button class="wu-iconbtn" aria-label="Drag to reorder" title="Drag to reorder"><svg class="wu-icon"><use href="#i-menu"></use></svg></button>
+                <span class="wu-lessonstep__num">3</span>
+                <a class="wu-listitem__body" href="lesson-editor.html" style="text-decoration:none;color:inherit">
+                  <div class="wu-listitem__title">Leading Like Jesus</div>
+                  <div class="wu-listitem__meta">18 min · Draft</div>
+                </a>
+                <span class="wu-badge wu-badge--dot">Draft</span>
+                <button class="wu-iconbtn" aria-label="Edit lesson"><svg class="wu-icon"><use href="#i-edit"></use></svg></button>
+                <button class="wu-iconbtn" aria-label="Delete lesson" data-open-modal="m-delete"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+              </div>
+
+              <div class="wu-lessonstep">
+                <button class="wu-iconbtn" aria-label="Drag to reorder" title="Drag to reorder"><svg class="wu-icon"><use href="#i-menu"></use></svg></button>
+                <span class="wu-lessonstep__num"><svg class="wu-icon"><use href="#i-clipboard-check"></use></svg></span>
+                <a class="wu-listitem__body" href="quiz-builder.html" style="text-decoration:none;color:inherit">
+                  <div class="wu-listitem__title">Module quiz</div>
+                  <div class="wu-listitem__meta">6 questions · pass mark 70%</div>
+                </a>
+                <span class="wu-badge wu-badge--success wu-badge--dot">Published</span>
+                <button class="wu-iconbtn" aria-label="Edit quiz"><svg class="wu-icon"><use href="#i-edit"></use></svg></button>
+                <button class="wu-iconbtn" aria-label="Delete quiz" data-open-modal="m-delete"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ===== Sidebar ===== -->
+        <div style="min-width:0">
+          <div class="wu-card wu-mb-6">
+            <div class="wu-card__header"><h3 class="wu-card__title">Visibility</h3></div>
+            <div class="wu-card__body">
+              <label class="wu-switch"><input type="checkbox"><span class="wu-switch__track"></span><span>Published to cohorts</span></label>
+              <div class="wu-help wu-mt-4">Currently in review. Publishing makes it visible to all assigned cohorts.</div>
+              <div class="wu-divider"></div>
+              <div class="wu-eyebrow wu-mb-4">Assigned cohorts</div>
+              <div class="wu-stack wu-stack--sm">
+                <span class="wu-badge wu-badge--info">Rexdale Fall '25</span>
+                <span class="wu-badge wu-badge--info">Warden Winter '26</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="wu-card wu-card--greige">
+            <div class="wu-card__body">
+              <div class="wu-eyebrow wu-mb-4">Scripture anchor</div>
+              <div class="wu-scripture">“For even the Son of Man did not come to be served, but to serve.”<span class="wu-scripture__ref">Mark 10:45</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===================== MODALS ===================== -->
+  <div class="wu-modal wu-modal--sm" id="m-delete" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div class="wu-cluster wu-gap-2">
+          <span class="wu-modal__icon wu-modal__icon--danger"><svg class="wu-icon"><use href="#i-trash"></use></svg></span>
+          <div><h2 class="wu-modal__title">Delete this lesson?</h2><p class="wu-modal__sub">This can't be undone.</p></div>
+        </div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-alert wu-alert--warning"><svg class="wu-alert__icon wu-icon"><use href="#i-alert-triangle"></use></svg><div>Youth progress for this lesson will be archived. Any linked quiz stays intact.</div></div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--danger" data-close-modal data-toast="Lesson deleted" data-toast-type="success"><svg class="wu-icon"><use href="#i-trash"></use></svg>Delete lesson</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

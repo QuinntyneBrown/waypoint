@@ -199,77 +199,77 @@
   /* ---------------- Navigation config per role ---------------- */
   var NAV = {
     youth: {
-      brandHref: "youth/home.html",
+      brandHref: "learning-experience/youth/home.html",
       botnav: ["home", "journey", "curriculum", "messages", "profile"],
       items: [
-        { key: "home", label: "Home", icon: "home", path: "youth/home.html" },
-        { key: "journey", label: "My Journey", icon: "target", path: "youth/journey.html" },
-        { key: "curriculum", label: "Curriculum", icon: "book-open", path: "youth/curriculum.html" },
-        { key: "badges", label: "Badges", icon: "award", path: "youth/badges.html" },
-        { key: "schedule", label: "Schedule", icon: "calendar", path: "youth/schedule.html" },
-        { key: "messages", label: "Messages", icon: "message-square", path: "youth/messages.html", badge: "2" },
-        { key: "announcements", label: "Announcements", icon: "bell", path: "youth/announcements.html" },
-        { key: "profile", label: "Profile", icon: "user", path: "youth/profile.html" }
+        { key: "home", label: "Home", icon: "home", path: "learning-experience/youth/home.html" },
+        { key: "journey", label: "My Journey", icon: "target", path: "learning-experience/youth/journey.html" },
+        { key: "curriculum", label: "Curriculum", icon: "book-open", path: "learning-experience/youth/curriculum.html" },
+        { key: "badges", label: "Badges", icon: "award", path: "learning-experience/youth/badges.html" },
+        { key: "schedule", label: "Schedule", icon: "calendar", path: "engagement/youth/schedule.html" },
+        { key: "messages", label: "Messages", icon: "message-square", path: "engagement/youth/messages.html", badge: "2" },
+        { key: "announcements", label: "Announcements", icon: "bell", path: "engagement/youth/announcements.html" },
+        { key: "profile", label: "Profile", icon: "user", path: "platform-services/youth/profile.html" }
       ]
     },
     mentor: {
-      brandHref: "mentor/dashboard.html",
+      brandHref: "mentoring/mentor/dashboard.html",
       items: [
-        { key: "dashboard", label: "Dashboard", icon: "grid", path: "mentor/dashboard.html" },
-        { key: "my-youth", label: "My Youth", icon: "users", path: "mentor/my-youth.html" },
-        { key: "check-ins", label: "Check-ins", icon: "clipboard-check", path: "mentor/check-in-history.html" },
-        { key: "reviews", label: "Reviews", icon: "file-text", path: "mentor/reviews.html", badge: "5" },
-        { key: "attendance", label: "Attendance", icon: "user-check", path: "mentor/attendance.html" },
-        { key: "flags", label: "At-risk", icon: "flag", path: "mentor/flags.html", badge: "2" },
+        { key: "dashboard", label: "Dashboard", icon: "grid", path: "mentoring/mentor/dashboard.html" },
+        { key: "my-youth", label: "My Youth", icon: "users", path: "mentoring/mentor/my-youth.html" },
+        { key: "check-ins", label: "Check-ins", icon: "clipboard-check", path: "mentoring/mentor/check-in-history.html" },
+        { key: "reviews", label: "Reviews", icon: "file-text", path: "mentoring/mentor/reviews.html", badge: "5" },
+        { key: "attendance", label: "Attendance", icon: "user-check", path: "engagement/mentor/attendance.html" },
+        { key: "flags", label: "At-risk", icon: "flag", path: "mentoring/mentor/flags.html", badge: "2" },
         { group: "Program" },
-        { key: "curriculum", label: "Curriculum", icon: "book-open", path: "mentor/curriculum.html" },
-        { key: "calendar", label: "Calendar", icon: "calendar", path: "mentor/calendar.html" },
-        { key: "messages", label: "Messages", icon: "message-square", path: "mentor/messages.html" }
+        { key: "curriculum", label: "Curriculum", icon: "book-open", path: "mentoring/mentor/curriculum.html" },
+        { key: "calendar", label: "Calendar", icon: "calendar", path: "engagement/mentor/calendar.html" },
+        { key: "messages", label: "Messages", icon: "message-square", path: "engagement/mentor/messages.html" }
       ]
     },
     admin: {
-      brandHref: "admin/dashboard.html",
+      brandHref: "reporting-and-data/admin/dashboard.html",
       items: [
-        { key: "dashboard", label: "Dashboard", icon: "grid", path: "admin/dashboard.html" },
+        { key: "dashboard", label: "Dashboard", icon: "grid", path: "reporting-and-data/admin/dashboard.html" },
         { group: "People" },
-        { key: "people", label: "People", icon: "users", path: "admin/people.html" },
-        { key: "cohorts", label: "Cohorts", icon: "layers", path: "admin/cohorts.html" },
-        { key: "applications", label: "Applications", icon: "user-plus", path: "admin/applications.html", badge: "3" },
-        { key: "invitations", label: "Invitations", icon: "mail", path: "admin/invitations.html" },
-        { key: "users-roles", label: "Users & Roles", icon: "shield", path: "admin/users-roles.html" },
+        { key: "people", label: "People", icon: "users", path: "program-administration/admin/people.html" },
+        { key: "cohorts", label: "Cohorts", icon: "layers", path: "program-administration/admin/cohorts.html" },
+        { key: "applications", label: "Applications", icon: "user-plus", path: "application-intake/admin/applications.html", badge: "3" },
+        { key: "invitations", label: "Invitations", icon: "mail", path: "authentication/admin/invitations.html" },
+        { key: "users-roles", label: "Users & Roles", icon: "shield", path: "authentication/admin/users-roles.html" },
         { group: "Progress" },
-        { key: "cohort-progress", label: "Progress Board", icon: "table", path: "admin/cohort-progress.html" },
-        { key: "reports", label: "Reports", icon: "bar-chart", path: "admin/reports.html" },
-        { key: "attendance", label: "Attendance", icon: "user-check", path: "admin/attendance-admin.html" },
+        { key: "cohort-progress", label: "Progress Board", icon: "table", path: "program-administration/admin/cohort-progress.html" },
+        { key: "reports", label: "Reports", icon: "bar-chart", path: "reporting-and-data/admin/reports.html" },
+        { key: "attendance", label: "Attendance", icon: "user-check", path: "engagement/admin/attendance-admin.html" },
         { group: "Curriculum" },
-        { key: "tracks", label: "Curriculum", icon: "book-open", path: "admin/tracks.html" },
-        { key: "badges", label: "Badges", icon: "award", path: "admin/badge-builder.html" },
-        { key: "progression", label: "Progression", icon: "target", path: "admin/progression-editor.html" },
+        { key: "tracks", label: "Curriculum", icon: "book-open", path: "curriculum-authoring/admin/tracks.html" },
+        { key: "badges", label: "Badges", icon: "award", path: "curriculum-authoring/admin/badge-builder.html" },
+        { key: "progression", label: "Progression", icon: "target", path: "curriculum-authoring/admin/progression-editor.html" },
         { group: "Program" },
-        { key: "calendar", label: "Calendar", icon: "calendar", path: "admin/calendar.html" },
-        { key: "announcements", label: "Announcements", icon: "bell", path: "admin/announcements.html" },
+        { key: "calendar", label: "Calendar", icon: "calendar", path: "engagement/admin/calendar.html" },
+        { key: "announcements", label: "Announcements", icon: "bell", path: "engagement/admin/announcements.html" },
         { group: "System" },
-        { key: "settings", label: "Settings", icon: "settings", path: "admin/settings-org.html" },
-        { key: "audit", label: "Audit Log", icon: "activity", path: "admin/audit-log.html" }
+        { key: "settings", label: "Settings", icon: "settings", path: "program-administration/admin/settings-org.html" },
+        { key: "audit", label: "Audit Log", icon: "activity", path: "consent-and-safeguarding/admin/audit-log.html" }
       ]
     },
     guardian: {
-      brandHref: "guardian/home.html",
+      brandHref: "guardian-portal/guardian/home.html",
       botnav: ["home", "progress", "announcements", "consent"],
       items: [
-        { key: "home", label: "Home", icon: "home", path: "guardian/home.html" },
-        { key: "progress", label: "My Youth", icon: "trending-up", path: "guardian/child-progress.html" },
-        { key: "announcements", label: "News", icon: "bell", path: "guardian/announcements.html" },
-        { key: "consent", label: "Consent", icon: "shield", path: "guardian/consent.html" }
+        { key: "home", label: "Home", icon: "home", path: "guardian-portal/guardian/home.html" },
+        { key: "progress", label: "My Youth", icon: "trending-up", path: "guardian-portal/guardian/child-progress.html" },
+        { key: "announcements", label: "News", icon: "bell", path: "guardian-portal/guardian/announcements.html" },
+        { key: "consent", label: "Consent", icon: "shield", path: "guardian-portal/guardian/consent.html" }
       ]
     },
     volunteer: {
-      brandHref: "volunteer/home.html",
+      brandHref: "volunteer-portal/volunteer/home.html",
       botnav: ["home", "attendance", "schedule"],
       items: [
-        { key: "home", label: "Today", icon: "home", path: "volunteer/home.html" },
-        { key: "attendance", label: "Attendance", icon: "user-check", path: "volunteer/attendance.html" },
-        { key: "schedule", label: "Schedule", icon: "calendar", path: "volunteer/schedule.html" }
+        { key: "home", label: "Today", icon: "home", path: "volunteer-portal/volunteer/home.html" },
+        { key: "attendance", label: "Attendance", icon: "user-check", path: "volunteer-portal/volunteer/attendance.html" },
+        { key: "schedule", label: "Schedule", icon: "calendar", path: "volunteer-portal/volunteer/schedule.html" }
       ]
     }
   };
@@ -331,7 +331,7 @@
 
     var scrim = '<div class="wu-navscrim" data-nav-toggle></div>';
     var sidenav = '<nav class="wu-sidenav" aria-label="Main">' + sideItems +
-      '<div class="wu-sidenav__foot"><a class="wu-sidenav__item" href="' + WordUp.href("auth/signed-out.html") + '">' + icon("log-out") + "<span>Sign out</span></a></div></nav>";
+      '<div class="wu-sidenav__foot"><a class="wu-sidenav__item" href="' + WordUp.href("authentication/auth/signed-out.html") + '">' + icon("log-out") + "<span>Sign out</span></a></div></nav>";
     var botnav = hasBot ? '<nav class="wu-botnav" aria-label="Primary">' + botItems + "</nav>" : "";
 
     // menus (popovers)
@@ -345,17 +345,17 @@
         '<div class="wu-menu__item"><span>' + icon("check-circle") + "</span><span><b>Quiz graded</b><br><span class=\"wu-muted wu-text-sm\">You scored 8/10 on “Who Is Jesus?”</span></span></div>" +
         '<div class="wu-menu__item"><span>' + icon("award") + '</span><span><b>New badge earned</b><br><span class="wu-muted wu-text-sm">Faithful Five — 5-day streak</span></span></div>' +
         '<div class="wu-menu__sep"></div>' +
-        '<a class="wu-menu__item" href="' + WordUp.href(role === "mentor" ? "mentor/notifications.html" : "youth/notifications.html") + '">' + icon("bell") + "View all notifications</a>" +
+        '<a class="wu-menu__item" href="' + WordUp.href(role === "mentor" ? "engagement/mentor/notifications.html" : "engagement/youth/notifications.html") + '">' + icon("bell") + "View all notifications</a>" +
       "</div>";
     var acctMenu =
       '<div class="wu-menu wu-hide" id="wu-accountmenu" style="top:52px;right:12px">' +
         '<div class="wu-menu__item" style="pointer-events:none"><span class="wu-avatar wu-avatar--sm" data-name="' + ROLE_USER[role] + '"></span><span><b>' + ROLE_USER[role] + "</b><br><span class=\"wu-muted wu-text-sm\">" + ROLE_LABEL[role] + "</span></span></div>" +
         '<div class="wu-menu__sep"></div>' +
-        '<a class="wu-menu__item" href="' + WordUp.href("shared/settings-profile.html") + '">' + icon("user") + "Profile &amp; settings</a>" +
-        '<a class="wu-menu__item" href="' + WordUp.href("shared/help.html") + '">' + icon("help-circle") + "Help</a>" +
-        '<a class="wu-menu__item" href="' + WordUp.href("auth/switch-user.html") + '">' + icon("refresh") + "Switch user</a>" +
+        '<a class="wu-menu__item" href="' + WordUp.href("platform-services/shared/settings-profile.html") + '">' + icon("user") + "Profile &amp; settings</a>" +
+        '<a class="wu-menu__item" href="' + WordUp.href("platform-services/shared/help.html") + '">' + icon("help-circle") + "Help</a>" +
+        '<a class="wu-menu__item" href="' + WordUp.href("authentication/auth/switch-user.html") + '">' + icon("refresh") + "Switch user</a>" +
         '<div class="wu-menu__sep"></div>' +
-        '<a class="wu-menu__item wu-menu__item--danger" href="' + WordUp.href("auth/signed-out.html") + '">' + icon("log-out") + "Sign out</a>" +
+        '<a class="wu-menu__item wu-menu__item--danger" href="' + WordUp.href("authentication/auth/signed-out.html") + '">' + icon("log-out") + "Sign out</a>" +
       "</div>";
 
     document.body.insertAdjacentHTML("afterbegin",

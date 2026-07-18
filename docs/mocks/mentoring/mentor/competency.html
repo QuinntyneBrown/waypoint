@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Competency tracker · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+  <style>
+    .comp-item{padding:18px 0;border-bottom:var(--wu-bw) solid var(--wu-border)}
+    .comp-item:last-child{border-bottom:0}
+    .comp-item__head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .comp-item__title{font-family:var(--wu-font-head);font-weight:600;margin:0}
+    .comp-item__ref{font-size:.82rem;color:var(--wu-muted);margin:2px 0 0}
+    .comp-seg{margin-top:12px;flex-wrap:wrap}
+    .comp-note{margin-top:12px}
+    .comp-bar{position:sticky;bottom:0;background:var(--wu-white);border-top:var(--wu-bw) solid var(--wu-border);padding:14px 0;margin-top:var(--wu-s6);display:flex;align-items:center;justify-content:space-between;gap:12px}
+  </style>
+</head>
+<body data-role="mentor" data-active="my-youth" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+      <a class="wu-btn wu-btn--ghost wu-btn--sm wu-mb-4" href="youth-detail.html"><svg class="wu-icon"><use href="#i-arrow-left"></use></svg>Back to youth</a>
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Competency tracker</div>
+          <h1 class="wu-page__title">Jayden Alcantara</h1>
+          <p class="wu-page__sub">Rexdale Fall '25 · Bible &amp; Leadership · Set each competency and add notes.</p>
+        </div>
+        <div class="wu-page__actions">
+          <div class="wu-person"><span class="wu-avatar" data-name="Jayden Alcantara"></span><div><div class="wu-person__name">Jayden Alcantara</div><div class="wu-person__meta">3 of 5 mastered or proficient</div></div></div>
+        </div>
+      </div>
+
+      <div class="wu-alert wu-alert--info wu-mb-4">
+        <svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg>
+        <div>Rate each competency as you observe it. Levels: <strong>Not started → Developing → Proficient → Mastered</strong>.</div>
+      </div>
+
+      <div class="wu-card">
+        <div class="wu-card__body">
+
+          <!-- 1 -->
+          <div class="comp-item">
+            <div class="comp-item__head">
+              <div>
+                <h3 class="comp-item__title">Knows the Gospel</h3>
+                <p class="comp-item__ref">Can explain the good news of Jesus in their own words.</p>
+              </div>
+              <span class="wu-badge wu-badge--success wu-badge--dot">Mastered</span>
+            </div>
+            <div class="wu-segment comp-seg" role="group" aria-label="Level for Knows the Gospel">
+              <button class="wu-segment__item">Not started</button>
+              <button class="wu-segment__item">Developing</button>
+              <button class="wu-segment__item">Proficient</button>
+              <button class="wu-segment__item is-active">Mastered</button>
+            </div>
+            <div class="wu-field comp-note wu-mb-0">
+              <label class="wu-label" for="n1">Notes</label>
+              <textarea class="wu-textarea" id="n1">Led the devotional for the group in June — clear and confident.</textarea>
+            </div>
+          </div>
+
+          <!-- 2 -->
+          <div class="comp-item">
+            <div class="comp-item__head">
+              <div>
+                <h3 class="comp-item__title">Leads prayer</h3>
+                <p class="comp-item__ref">Opens and closes group time in prayer with confidence.</p>
+              </div>
+              <span class="wu-badge wu-badge--success wu-badge--dot">Proficient</span>
+            </div>
+            <div class="wu-segment comp-seg" role="group" aria-label="Level for Leads prayer">
+              <button class="wu-segment__item">Not started</button>
+              <button class="wu-segment__item">Developing</button>
+              <button class="wu-segment__item is-active">Proficient</button>
+              <button class="wu-segment__item">Mastered</button>
+            </div>
+            <div class="wu-field comp-note wu-mb-0">
+              <label class="wu-label" for="n2">Notes</label>
+              <textarea class="wu-textarea" id="n2" placeholder="Add a note…">Prays out loud without prompting. Encourage leading a longer prayer next.</textarea>
+            </div>
+          </div>
+
+          <!-- 3 -->
+          <div class="comp-item">
+            <div class="comp-item__head">
+              <div>
+                <h3 class="comp-item__title">Serves others</h3>
+                <p class="comp-item__ref">Looks for ways to help peers and the community — Mark 10:45.</p>
+              </div>
+              <span class="wu-badge wu-badge--success wu-badge--dot">Proficient</span>
+            </div>
+            <div class="wu-segment comp-seg" role="group" aria-label="Level for Serves others">
+              <button class="wu-segment__item">Not started</button>
+              <button class="wu-segment__item">Developing</button>
+              <button class="wu-segment__item is-active">Proficient</button>
+              <button class="wu-segment__item">Mastered</button>
+            </div>
+            <div class="wu-field comp-note wu-mb-0">
+              <label class="wu-label" for="n3">Notes</label>
+              <textarea class="wu-textarea" id="n3" placeholder="Add a note…">Volunteered to set up at the Parkdale hub two weeks running.</textarea>
+            </div>
+          </div>
+
+          <!-- 4 -->
+          <div class="comp-item">
+            <div class="comp-item__head">
+              <div>
+                <h3 class="comp-item__title">Facilitates a group</h3>
+                <p class="comp-item__ref">Guides discussion and keeps a small group on track.</p>
+              </div>
+              <span class="wu-badge wu-badge--warning wu-badge--dot">Developing</span>
+            </div>
+            <div class="wu-segment comp-seg" role="group" aria-label="Level for Facilitates a group">
+              <button class="wu-segment__item">Not started</button>
+              <button class="wu-segment__item is-active">Developing</button>
+              <button class="wu-segment__item">Proficient</button>
+              <button class="wu-segment__item">Mastered</button>
+            </div>
+            <div class="wu-field comp-note wu-mb-0">
+              <label class="wu-label" for="n4">Notes</label>
+              <textarea class="wu-textarea" id="n4" placeholder="Add a note…">Co-led the Leading a Small Group activity. Working on drawing out quieter members.</textarea>
+            </div>
+          </div>
+
+          <!-- 5 -->
+          <div class="comp-item">
+            <div class="comp-item__head">
+              <div>
+                <h3 class="comp-item__title">Shares testimony</h3>
+                <p class="comp-item__ref">Can tell their own story of faith to encourage others.</p>
+              </div>
+              <span class="wu-badge">Not started</span>
+            </div>
+            <div class="wu-segment comp-seg" role="group" aria-label="Level for Shares testimony">
+              <button class="wu-segment__item is-active">Not started</button>
+              <button class="wu-segment__item">Developing</button>
+              <button class="wu-segment__item">Proficient</button>
+              <button class="wu-segment__item">Mastered</button>
+            </div>
+            <div class="wu-field comp-note wu-mb-0">
+              <label class="wu-label" for="n5">Notes</label>
+              <textarea class="wu-textarea" id="n5" placeholder="Add a note…"></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="comp-bar">
+        <span class="wu-muted wu-text-sm">Last saved Jul 14 by Marcus Bello</span>
+        <div class="wu-cluster wu-gap-2">
+          <a class="wu-btn wu-btn--ghost" href="youth-detail.html">Cancel</a>
+          <button class="wu-btn wu-btn--primary" data-toast="Competencies saved" data-toast-type="success" data-toast-title="Saved"><svg class="wu-icon"><use href="#i-check"></use></svg>Save changes</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

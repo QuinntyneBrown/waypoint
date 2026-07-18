@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Assessment approvals · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+</head>
+<body data-role="mentor" data-active="reviews" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow"><a href="reviews.html">Reviews</a> · Assessments</div>
+          <h1 class="wu-page__title">Assessment approvals</h1>
+          <p class="wu-page__sub">Confirm auto-graded quizzes or override a score before it counts.</p>
+        </div>
+        <div class="wu-page__actions">
+          <button class="wu-btn wu-btn--primary" data-toast="3 assessments approved" data-toast-type="success" data-toast-title="Approved"><svg class="wu-icon"><use href="#i-check"></use></svg>Approve all</button>
+        </div>
+      </div>
+
+      <div class="wu-alert wu-alert--info wu-mb-4">
+        <svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg>
+        <div><div class="wu-alert__title">Manual assessment</div>Quizzes are auto-scored, but a mentor must approve the result. Override the score if a written answer deserves partial credit — youth see the approved score only.</div>
+      </div>
+
+      <!-- ===== DEFAULT ===== -->
+      <div data-when-state="default">
+        <div class="wu-table-wrap">
+          <table class="wu-table wu-table--cards">
+            <thead><tr><th>Youth</th><th>Quiz</th><th>Module</th><th>Auto-score</th><th>Override</th><th>Submitted</th><th></th></tr></thead>
+            <tbody>
+              <tr>
+                <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
+                <td data-label="Quiz">Servant Leadership quiz</td>
+                <td data-label="Module">Servant Leadership</td>
+                <td data-label="Auto-score"><span class="wu-badge wu-badge--success wu-badge--dot">9 / 10</span></td>
+                <td data-label="Override"><input class="wu-input" type="number" min="0" max="10" placeholder="9" style="max-width:96px"></td>
+                <td data-label="Submitted">Yesterday</td>
+                <td data-label=""><button class="wu-btn wu-btn--primary wu-btn--sm" data-toast="Approved for Priya Sharma" data-toast-type="success">Approve</button></td>
+              </tr>
+              <tr>
+                <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
+                <td data-label="Quiz">Identity in Christ quiz</td>
+                <td data-label="Module">Identity in Christ</td>
+                <td data-label="Auto-score"><span class="wu-badge wu-badge--warning wu-badge--dot">6 / 10</span></td>
+                <td data-label="Override"><input class="wu-input" type="number" min="0" max="10" placeholder="7" style="max-width:96px"></td>
+                <td data-label="Submitted">2 days ago</td>
+                <td data-label=""><button class="wu-btn wu-btn--primary wu-btn--sm" data-toast="Approved for Malik Johnson" data-toast-type="success">Approve</button></td>
+              </tr>
+              <tr>
+                <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
+                <td data-label="Quiz">Who Is Jesus? quiz</td>
+                <td data-label="Module">Who Is Jesus?</td>
+                <td data-label="Auto-score"><span class="wu-badge wu-badge--success wu-badge--dot">10 / 10</span></td>
+                <td data-label="Override"><input class="wu-input" type="number" min="0" max="10" placeholder="10" style="max-width:96px"></td>
+                <td data-label="Submitted">2 days ago</td>
+                <td data-label=""><button class="wu-btn wu-btn--primary wu-btn--sm" data-toast="Approved for Jayden Alcantara" data-toast-type="success">Approve</button></td>
+              </tr>
+              <tr>
+                <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Fatima Ali"></span>Fatima Ali</div></td>
+                <td data-label="Quiz">Leading a Small Group quiz</td>
+                <td data-label="Module">Leading a Small Group</td>
+                <td data-label="Auto-score"><span class="wu-badge wu-badge--warning wu-badge--dot">5 / 10</span></td>
+                <td data-label="Override"><input class="wu-input" type="number" min="0" max="10" placeholder="6" style="max-width:96px"></td>
+                <td data-label="Submitted">3 days ago</td>
+                <td data-label=""><button class="wu-btn wu-btn--primary wu-btn--sm" data-toast="Approved for Fatima Ali" data-toast-type="success">Approve</button></td>
+              </tr>
+              <tr>
+                <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td>
+                <td data-label="Quiz">Intro to Scratch quiz</td>
+                <td data-label="Module">Intro to Scratch</td>
+                <td data-label="Auto-score"><span class="wu-badge wu-badge--error wu-badge--dot">4 / 10</span></td>
+                <td data-label="Override"><input class="wu-input" type="number" min="0" max="10" placeholder="4" style="max-width:96px"></td>
+                <td data-label="Submitted">4 days ago</td>
+                <td data-label=""><button class="wu-btn wu-btn--primary wu-btn--sm" data-toast="Approved for Devon Grant" data-toast-type="success">Approve</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== LOADING ===== -->
+      <div data-when-state="loading" class="wu-hide">
+        <div class="wu-stack">
+          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--text" style="width:70%"></span></div></div>
+          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--text" style="width:60%"></span></div></div>
+          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--text" style="width:80%"></span></div></div>
+        </div>
+      </div>
+
+      <!-- ===== EMPTY ===== -->
+      <div data-when-state="empty" class="wu-hide">
+        <div class="wu-card"><div class="wu-empty">
+          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-clipboard-check"></use></svg></div>
+          <h3 class="wu-empty__title">No assessments to approve</h3>
+          <p class="wu-empty__text">Completed quizzes will appear here for your sign-off.</p>
+          <a class="wu-btn wu-btn--ghost" href="reviews.html">Back to reviews</a>
+        </div></div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

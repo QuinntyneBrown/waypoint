@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendar · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+</head>
+<body data-role="mentor" data-active="calendar" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Program</div>
+          <h1 class="wu-page__title">Calendar</h1>
+          <p class="wu-page__sub">Your sessions, retreats, and check-ins — July 2026.</p>
+        </div>
+        <div class="wu-page__actions">
+          <button class="wu-btn wu-btn--ghost"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
+          <button class="wu-btn wu-btn--primary" data-open-modal="m-session"><svg class="wu-icon"><use href="#i-plus"></use></svg>New session</button>
+        </div>
+      </div>
+
+      <!-- ===== default ===== -->
+      <div data-when-state="default">
+
+        <div class="wu-cluster wu-justify-between wu-mb-4">
+          <div class="wu-cluster wu-gap-2">
+            <button class="wu-iconbtn" aria-label="Previous week"><svg class="wu-icon"><use href="#i-chevron-left"></use></svg></button>
+            <h3 class="wu-mb-0">Jul 20 – Jul 26, 2026</h3>
+            <button class="wu-iconbtn" aria-label="Next week"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></button>
+          </div>
+          <div class="wu-segment" role="tablist" aria-label="View">
+            <button class="wu-segment__item" role="tab" aria-selected="false">Month</button>
+            <button class="wu-segment__item is-active" role="tab" aria-selected="true">Week</button>
+            <button class="wu-segment__item" role="tab" aria-selected="false">Agenda</button>
+          </div>
+        </div>
+
+        <!-- Week grid -->
+        <div class="wu-card wu-mb-6">
+          <div class="wu-card__body">
+            <div style="overflow-x:auto">
+            <div class="wu-grid" style="grid-template-columns:repeat(7,1fr);gap:8px;min-width:640px">
+              <div class="wu-stack wu-stack--sm">
+                <div class="wu-eyebrow">Mon 20</div>
+                <div class="wu-card wu-card--greige wu-card--flat"><div class="wu-card__body" style="padding:10px"><div class="wu-text-sm"><b>Prep &amp; review</b></div><div class="wu-muted wu-text-sm">Grade submissions</div></div></div>
+              </div>
+              <div class="wu-stack wu-stack--sm">
+                <div class="wu-eyebrow">Tue 21</div>
+              </div>
+              <div class="wu-stack wu-stack--sm">
+                <div class="wu-eyebrow">Wed 22</div>
+                <div class="wu-card wu-card--lime wu-card--flat"><div class="wu-card__body" style="padding:10px"><div class="wu-text-sm"><b>Rexdale weekly session</b></div><div class="wu-text-sm">6:30 PM · Rexdale Community Hub</div></div></div>
+              </div>
+              <div class="wu-stack wu-stack--sm">
+                <div class="wu-eyebrow">Thu 23</div>
+              </div>
+              <div class="wu-stack wu-stack--sm">
+                <div class="wu-eyebrow">Fri 24</div>
+                <div class="wu-card wu-card--greige wu-card--flat"><div class="wu-card__body" style="padding:10px"><div class="wu-text-sm"><b>Assignments due</b></div><div class="wu-muted wu-text-sm">Servant Leadership</div></div></div>
+              </div>
+              <div class="wu-stack wu-stack--sm">
+                <div class="wu-eyebrow">Sat 25</div>
+                <div class="wu-card wu-card--ink wu-card--flat"><div class="wu-card__body" style="padding:10px"><div class="wu-text-sm"><b>Fall retreat</b></div><div class="wu-text-sm">All day · Camp Muskoka</div></div></div>
+              </div>
+              <div class="wu-stack wu-stack--sm">
+                <div class="wu-eyebrow">Sun 26</div>
+                <div class="wu-card wu-card--ink wu-card--flat"><div class="wu-card__body" style="padding:10px"><div class="wu-text-sm"><b>Fall retreat</b></div><div class="wu-text-sm">Returns 4:00 PM</div></div></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agenda list -->
+        <h3>Upcoming sessions</h3>
+        <div class="wu-stack">
+
+          <div class="wu-card">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-justify-between">
+                <div class="wu-cluster wu-gap-2">
+                  <span class="wu-avatar" data-name="Rexdale Fall"></span>
+                  <div>
+                    <div class="wu-cluster wu-gap-2"><div class="wu-person__name">Rexdale weekly session</div><span class="wu-badge wu-badge--lime">Weekly</span></div>
+                    <div class="wu-muted wu-text-sm"><svg class="wu-icon"><use href="#i-clock"></use></svg> Wed Jul 22 · 6:30–8:00 PM &nbsp;·&nbsp; <svg class="wu-icon"><use href="#i-map-pin"></use></svg> Rexdale Community Hub</div>
+                  </div>
+                </div>
+                <div class="wu-cluster wu-gap-2">
+                  <div class="wu-avatarstack">
+                    <span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>
+                    <span class="wu-avatar wu-avatar--sm" data-name="Amara Okafor"></span>
+                    <span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span>
+                  </div>
+                  <a class="wu-btn wu-btn--ghost wu-btn--sm" href="attendance.html">Take attendance</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wu-card">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-justify-between">
+                <div class="wu-cluster wu-gap-2">
+                  <span class="wu-avatar" data-name="Fall Retreat"></span>
+                  <div>
+                    <div class="wu-cluster wu-gap-2"><div class="wu-person__name">Fall retreat — Camp Muskoka</div><span class="wu-badge wu-badge--info">Overnight</span></div>
+                    <div class="wu-muted wu-text-sm"><svg class="wu-icon"><use href="#i-clock"></use></svg> Sat Jul 25 – Sun Jul 26 · All day &nbsp;·&nbsp; <svg class="wu-icon"><use href="#i-map-pin"></use></svg> Camp Muskoka</div>
+                  </div>
+                </div>
+                <div class="wu-cluster wu-gap-2">
+                  <span class="wu-badge wu-badge--warning wu-badge--dot">4 consents pending</span>
+                  <button class="wu-btn wu-btn--ghost wu-btn--sm">Details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wu-card">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-justify-between">
+                <div class="wu-cluster wu-gap-2">
+                  <span class="wu-avatar" data-name="Devon Grant"></span>
+                  <div>
+                    <div class="wu-person__name">1:1 check-in — Devon Grant</div>
+                    <div class="wu-muted wu-text-sm"><svg class="wu-icon"><use href="#i-clock"></use></svg> Mon Jul 27 · 4:00–4:30 PM &nbsp;·&nbsp; Video call</div>
+                  </div>
+                </div>
+                <button class="wu-btn wu-btn--ghost wu-btn--sm">Reschedule</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== loading ===== -->
+      <div data-when-state="loading" class="wu-hide">
+        <div class="wu-card wu-mb-4"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--block" style="height:200px"></span></div></div>
+        <div class="wu-stack">
+          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--title"></span><span class="wu-skeleton wu-skeleton--text" style="width:60%"></span></div></div>
+          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--title"></span><span class="wu-skeleton wu-skeleton--text" style="width:50%"></span></div></div>
+        </div>
+      </div>
+
+      <!-- ===== empty ===== -->
+      <div data-when-state="empty" class="wu-hide">
+        <div class="wu-card"><div class="wu-empty">
+          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-calendar"></use></svg></div>
+          <h3 class="wu-empty__title">Nothing scheduled this week</h3>
+          <p class="wu-empty__text">Add your Rexdale weekly session or a 1:1 check-in to get started.</p>
+          <button class="wu-btn wu-btn--primary" data-open-modal="m-session"><svg class="wu-icon"><use href="#i-plus"></use></svg>New session</button>
+        </div></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- New session modal -->
+  <div class="wu-modal wu-modal--sm" id="m-session" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">New session</h2><p class="wu-modal__sub">Schedule a session for your group.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label" for="s-title">Title <span class="wu-label__req">*</span></label>
+          <input class="wu-input" id="s-title" placeholder="Rexdale weekly session">
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="s-cohort">Cohort</label>
+          <select class="wu-select" id="s-cohort"><option>Rexdale Fall '25</option><option>Warden Winter '26</option><option>St. Clair Spring '26</option></select>
+        </div>
+        <div class="wu-grid wu-grid--2">
+          <div class="wu-field"><label class="wu-label" for="s-date">Date</label><input class="wu-input" type="date" id="s-date" value="2026-07-22"></div>
+          <div class="wu-field"><label class="wu-label" for="s-time">Start time</label><input class="wu-input" type="time" id="s-time" value="18:30"></div>
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="s-loc">Location</label>
+          <input class="wu-input" id="s-loc" placeholder="Rexdale Community Hub">
+        </div>
+        <label class="wu-check"><input type="checkbox" checked><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Repeat weekly</span></label>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Session added to calendar" data-toast-type="success">Create session</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

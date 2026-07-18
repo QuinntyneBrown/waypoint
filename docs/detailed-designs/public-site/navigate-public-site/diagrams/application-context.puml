@@ -1,0 +1,34 @@
+@startuml
+!pragma layout smetana
+left to right direction
+title Application Context view\nV-APP-PUB-NAVIGATE-PUBLIC-SITE
+
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam defaultFontName Arial
+skinparam defaultFontSize 14
+skinparam rectangleBorderColor #334155
+skinparam rectangleFontColor #0F172A
+skinparam ArrowColor #64748B
+
+rectangle "Word Up software system\n<<entity of interest>>" as word_up #F3F4F6 {
+  rectangle "Public Site application\n<<Angular SSR application>>" as app_public #E0F2FE {
+    rectangle "Public Site subsystem" as subsystem_public #F0F9FF {
+      rectangle "Navigate the public site\n<<feature-slice contribution>>" as feature_public #FEF3C7
+    }
+  }
+}
+
+legend bottom
+|= Notation |= Meaning |
+| Grey outer rectangle | Word Up software system, the entity of interest |
+| Blue application rectangle | Angular application |
+| Green application rectangle | ASP.NET Core application |
+| Pale inner rectangle | Subsystem boundary within an application |
+| Amber rectangle | Feature-slice contribution |
+| Rectangle nesting | Containment |
+endlegend
+
+caption Figure 1 - Navigate the public site application context (VC-APP-PUB-NAVIGATE-PUBLIC-SITE)
+@enduml

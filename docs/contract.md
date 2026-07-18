@@ -1,6 +1,6 @@
 # Word Up — Page Builder Contract (READ FIRST, FOLLOW EXACTLY)
 
-> The mock pages this contract governs live in **`docs/mocks/`**. All relative paths below (`styleguide.html`, `../assets/…`, `_template-*.html`, the role folders) are relative to that folder.
+> The mock pages this contract governs live in **`docs/mocks/`**. Shared assets, templates, the style guide, and the product map live at that root. Screens are organized as `<subsystem>/<role>/<page>.html`, using the same subsystem names as `docs/specs/`.
 
 You are building **static HTML mockup pages** for the "Word Up" youth-leadership app. They must all look like one product. Follow this contract verbatim. Do **not** invent CSS classes, do **not** add colors, do **not** add external resources. Look at `styleguide.html` for the rendered look and copy its markup patterns.
 
@@ -8,12 +8,12 @@ You are building **static HTML mockup pages** for the "Word Up" youth-leadership
 1. **Runs from `file://` offline. ZERO network requests.** No `http://`/`https://` in any `src`/`href`. No Google Fonts link, no CDN, no analytics, no external images.
 2. **No `fetch`, no `XMLHttpRequest`, no ES modules, no `import`, no `<script type="module">`.** Behavior is declarative via `data-*` attributes handled by `wordup.js`. Inline `<script>` for tiny page demos is OK but keep it minimal and classic.
 3. **All filenames and hrefs lowercase ASCII**, `.html` extension. (ChromeOS is case-sensitive.)
-4. **One level of nesting only.** Every page lives directly in its role folder (e.g. `admin/people.html`).
+4. **Two levels of screen nesting only.** Every screen lives directly in a role folder under its owning subsystem (e.g. `program-administration/admin/people.html`).
 5. **Do not create, edit, or touch:** `assets/css/wordup.css`, `assets/js/wordup.js`, `index.html`, `styleguide.html`, other agents' folders. Create only the files assigned to you.
 6. **No inline hex colors / no `style="color:#..."`.** Use component classes and tokens. (A few layout-only inline styles like `style="max-width:52ch"` or `style="--val:64%"` are fine; color must come from classes.)
 7. **Use the shared sample data names** (below) so people/cohorts/lessons are consistent across every page.
 
-## Exact `<head>` (copy this; note the `../` for one-level-deep pages)
+## Exact `<head>` (copy this; note the `../../` for subsystem/role pages)
 ```html
 <!doctype html>
 <html lang="en">
@@ -22,8 +22,8 @@ You are building **static HTML mockup pages** for the "Word Up" youth-leadership
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PAGE NAME · Word Up</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../assets/css/wordup.css">
-  <script defer src="../assets/js/wordup.js"></script>
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
 </head>
 ```
 
@@ -38,9 +38,9 @@ You are building **static HTML mockup pages** for the "Word Up" youth-leadership
   </body>
   ```
   `data-role` = youth | mentor | admin | guardian | volunteer. `data-active` = the nav key for this page (list below). Youth/guardian/volunteer use `.wu-container--narrow` (mobile-first). Mentor/admin use full `.wu-container`.
-- **Auth pages:** no shell. Copy `_template-auth.html`. Wrap in `.wu-authpage` + `.wu-authcard`.
-- **Public pages:** no shell. Copy `_template-public.html` (marketing nav + footer).
-- **States pages:** no shell. Copy `_template-state.html`.
+- **Auth pages:** no shell. Copy `../../_template-auth.html`. Wrap in `.wu-authpage` + `.wu-authcard`.
+- **Public pages:** no shell. Copy `../../_template-public.html` (marketing nav + footer).
+- **States pages:** no shell. Copy `../../_template-state.html`.
 
 ### Nav keys (`data-active`)
 - youth: `home, journey, curriculum, badges, schedule, messages, announcements, profile`
@@ -75,9 +75,9 @@ You are building **static HTML mockup pages** for the "Word Up" youth-leadership
 
 ## Behavior hooks (declarative — no custom JS needed)
 - Open a modal: `data-open-modal="m-id"`. Close: `data-close-modal` (optionally `="m-id"`).
-- Fire a toast on click: `data-toast="Saved" data-toast-type="success"` (types: success error warning info) optional `data-toast-title="…"`, optional `data-then="youth/home.html"` to navigate after.
+- Fire a toast on click: `data-toast="Saved" data-toast-type="success"` (types: success error warning info) optional `data-toast-title="…"`, optional `data-then="learning-experience/youth/home.html"` to navigate after. `data-then` is relative to the `docs/mocks/` root because the shared runtime resolves it through `WordUp.href()`.
 - Track switch: `data-track-switch="coding"`. Offline toggle: `data-toggle-offline`.
-- Cross-page links: normal relative hrefs are fine (e.g. `href="youth/lesson.html"` from within youth/, or `../mentor/dashboard.html`). Shell links are handled for you.
+- Cross-page links: use normal paths relative to the current HTML file (e.g. `href="lesson.html"` within the same subsystem/role folder, or `../../mentoring/mentor/dashboard.html` across subsystems). Shell links are handled for you.
 
 ## Modal markup (page-scoped, placed before `</body>`)
 ```html

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help center · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+  <style>
+    .help-search{position:relative;margin-bottom:8px}
+    .help-search .wu-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--wu-muted)}
+    .help-search .wu-input{padding-left:44px;height:52px;font-size:1.05rem}
+    .help-cat{display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit;height:100%}
+    .help-cat__icon{width:40px;height:40px;border-radius:11px;background:var(--wu-g100);display:grid;place-items:center;flex:none}
+    .help-cat__icon .wu-icon{width:20px;height:20px}
+    .help-cat__title{font-weight:650;margin:0}
+    .help-cat__sub{font-size:.82rem;color:var(--wu-muted);margin:2px 0 0}
+    .faq summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;font-family:var(--wu-font-head);font-weight:650;font-size:1.02rem}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq summary .wu-icon{flex:none;transition:transform .18s ease}
+    .faq[open] summary .wu-icon{transform:rotate(90deg)}
+    .faq__answer{margin-top:12px;color:var(--wu-muted);line-height:1.55}
+  </style>
+</head>
+<body data-role="youth" data-active="profile" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-container--narrow wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Help center</div>
+          <h1 class="wu-page__title">How can we help?</h1>
+          <p class="wu-page__sub">Search answers or browse a topic below.</p>
+        </div>
+      </div>
+
+      <form class="help-search" role="search" onsubmit="return false">
+        <svg class="wu-icon" aria-hidden="true"><use href="#i-search"></use></svg>
+        <input class="wu-input" type="search" placeholder="Search help articles…" autocomplete="off" aria-label="Search help articles">
+      </form>
+
+      <div class="wu-grid wu-grid--3 wu-mt-4 wu-mb-6">
+        <a class="wu-card" href="#getting-started">
+          <div class="wu-card__body help-cat">
+            <div class="help-cat__icon"><svg class="wu-icon"><use href="#i-play-circle"></use></svg></div>
+            <div>
+              <p class="help-cat__title">Getting started</p>
+              <p class="help-cat__sub">Sign in, your journey, the basics</p>
+            </div>
+          </div>
+        </a>
+        <a class="wu-card" href="#lessons">
+          <div class="wu-card__body help-cat">
+            <div class="help-cat__icon"><svg class="wu-icon"><use href="#i-book-open"></use></svg></div>
+            <div>
+              <p class="help-cat__title">Lessons &amp; quizzes</p>
+              <p class="help-cat__sub">Submitting work, taking quizzes</p>
+            </div>
+          </div>
+        </a>
+        <a class="wu-card" href="#account">
+          <div class="wu-card__body help-cat">
+            <div class="help-cat__icon"><svg class="wu-icon"><use href="#i-user"></use></svg></div>
+            <div>
+              <p class="help-cat__title">Account</p>
+              <p class="help-cat__sub">Password, settings, privacy</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <h2 id="getting-started" class="wu-mb-3">Getting started</h2>
+      <div class="wu-stack wu-stack--sm wu-mb-6">
+        <details class="wu-card faq" open>
+          <summary class="wu-card__body">
+            <span>What is Word Up?</span>
+            <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+          </summary>
+          <div class="wu-card__body faq__answer" style="padding-top:0">
+            Word Up is a program that helps youth across Toronto grow in the Word and in leadership, one lesson at a time. You'll work through modules like Servant Leadership with your mentor, Marcus Bello.
+          </div>
+        </details>
+        <details class="wu-card faq">
+          <summary class="wu-card__body">
+            <span>Where do I find this week's lesson?</span>
+            <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+          </summary>
+          <div class="wu-card__body faq__answer" style="padding-top:0">
+            Open <a href="../../learning-experience/youth/home.html">Home</a> to see what's next, or browse everything under <a href="../../learning-experience/youth/curriculum.html">Curriculum</a>.
+          </div>
+        </details>
+      </div>
+
+      <h2 id="lessons" class="wu-mb-3">Lessons &amp; quizzes</h2>
+      <div class="wu-stack wu-stack--sm wu-mb-6">
+        <details class="wu-card faq">
+          <summary class="wu-card__body">
+            <span>How do I submit my work?</span>
+            <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+          </summary>
+          <div class="wu-card__body faq__answer" style="padding-top:0">
+            Open your lesson, type your reflection at the bottom, and tap the green <strong>Submit</strong> button. Your mentor sees it right away and sends feedback.
+          </div>
+        </details>
+        <details class="wu-card faq">
+          <summary class="wu-card__body">
+            <span>Can I retake a quiz?</span>
+            <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+          </summary>
+          <div class="wu-card__body faq__answer" style="padding-top:0">
+            Yes. Quizzes are about learning, not grades — you can retake any quiz as many times as you like.
+          </div>
+        </details>
+      </div>
+
+      <h2 id="account" class="wu-mb-3">Account</h2>
+      <div class="wu-stack wu-stack--sm wu-mb-6">
+        <details class="wu-card faq">
+          <summary class="wu-card__body">
+            <span>How do I change my password?</span>
+            <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+          </summary>
+          <div class="wu-card__body faq__answer" style="padding-top:0">
+            Go to <a href="settings-profile.html">Settings &rsaquo; Profile</a> and tap <strong>Change password</strong>.
+          </div>
+        </details>
+        <details class="wu-card faq">
+          <summary class="wu-card__body">
+            <span>How do I turn off notifications?</span>
+            <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+          </summary>
+          <div class="wu-card__body faq__answer" style="padding-top:0">
+            Manage email and push preferences under <a href="settings-notifications.html">Settings &rsaquo; Notifications</a>, including quiet hours.
+          </div>
+        </details>
+      </div>
+
+      <div class="wu-card wu-card--ink">
+        <div class="wu-card__body">
+          <div class="wu-eyebrow">Still stuck?</div>
+          <h3 class="wu-mt-2 wu-mb-1">We're here to help</h3>
+          <p class="wu-mb-3">Can't find your answer? Report a problem and our team will get back to you.</p>
+          <a class="wu-btn wu-btn--primary" href="support.html"><svg class="wu-icon"><use href="#i-message-square"></use></svg>Contact support</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

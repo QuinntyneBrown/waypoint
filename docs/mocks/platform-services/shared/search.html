@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+  <style>
+    .search-field{position:relative}
+    .search-field .wu-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--wu-muted)}
+    .search-field .wu-input{padding-left:44px;height:52px;font-size:1.05rem}
+    .res-group{margin-top:8px}
+    .res-group__label{display:flex;align-items:center;gap:8px;font-family:var(--wu-font-head);text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;color:var(--wu-muted);font-weight:600;margin:0 0 8px}
+    .res-item{display:flex;gap:14px;align-items:center;padding:14px;text-decoration:none;color:inherit}
+    .res-item + .res-item{border-top:var(--wu-bw) solid var(--wu-border)}
+    .res-item__icon{width:38px;height:38px;border-radius:10px;background:var(--wu-g100);display:grid;place-items:center;flex:none}
+    .res-item__icon .wu-icon{width:18px;height:18px}
+    .res-item__body{flex:1;min-width:0}
+    .res-item__title{font-weight:650;margin:0}
+    .res-item__title mark{background:var(--wu-brand);color:var(--wu-ink);border-radius:3px;padding:0 2px}
+    .res-item__sub{font-size:.82rem;color:var(--wu-muted);margin:2px 0 0}
+  </style>
+</head>
+<body data-role="admin" data-active="dashboard" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Search</div>
+          <h1 class="wu-page__title">Search results</h1>
+          <p class="wu-page__sub">Results for <strong>"Bello"</strong> across people, lessons, and cohorts.</p>
+        </div>
+      </div>
+
+      <form class="search-field wu-mb-4" role="search" onsubmit="return false">
+        <svg class="wu-icon" aria-hidden="true"><use href="#i-search"></use></svg>
+        <input class="wu-input" id="q" type="search" value="Bello" placeholder="Search people, lessons, cohorts…" autocomplete="off" aria-label="Search people, lessons, and cohorts">
+      </form>
+
+      <div class="wu-pillrow wu-mb-6">
+        <span class="wu-pill is-active">All <span class="wu-badge wu-badge--ink">9</span></span>
+        <span class="wu-pill">People <span class="wu-badge">4</span></span>
+        <span class="wu-pill">Lessons <span class="wu-badge">3</span></span>
+        <span class="wu-pill">Cohorts <span class="wu-badge">2</span></span>
+      </div>
+
+      <!-- ===== default: populated results ===== -->
+      <div data-when-state="default">
+        <div class="wu-card res-group">
+          <div class="wu-card__body">
+            <p class="res-group__label"><svg class="wu-icon"><use href="#i-users"></use></svg>People</p>
+
+            <a class="res-item" href="../../mentoring/mentor/dashboard.html">
+              <span class="wu-avatar" data-name="Marcus Bello"></span>
+              <div class="res-item__body">
+                <p class="res-item__title"><mark>Bello</mark>, Marcus</p>
+                <p class="res-item__sub">Lead Mentor · 4 youth · Rexdale Fall '25</p>
+              </div>
+              <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+            </a>
+            <a class="res-item" href="../../program-administration/admin/people.html">
+              <span class="wu-avatar" data-name="Jayden Alcantara"></span>
+              <div class="res-item__body">
+                <p class="res-item__title">Jayden Alcantara</p>
+                <p class="res-item__sub">Youth · Mentor Marcus <mark>Bello</mark> · 82% · On track</p>
+              </div>
+              <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+            </a>
+            <a class="res-item" href="../../program-administration/admin/people.html">
+              <span class="wu-avatar" data-name="Amara Okafor"></span>
+              <div class="res-item__body">
+                <p class="res-item__title">Amara Okafor</p>
+                <p class="res-item__sub">Youth · Mentor Marcus <mark>Bello</mark> · 74% · On track</p>
+              </div>
+              <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+            </a>
+            <a class="res-item" href="../../program-administration/admin/people.html">
+              <span class="wu-avatar" data-name="Devon Grant"></span>
+              <div class="res-item__body">
+                <p class="res-item__title">Devon Grant</p>
+                <p class="res-item__sub">Youth · Mentor Marcus <mark>Bello</mark> · 38% · At risk</p>
+              </div>
+              <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="wu-card res-group wu-mt-4">
+          <div class="wu-card__body">
+            <p class="res-group__label"><svg class="wu-icon"><use href="#i-book-open"></use></svg>Lessons</p>
+
+            <a class="res-item" href="../../learning-experience/youth/lesson-bible.html">
+              <div class="res-item__icon"><svg class="wu-icon"><use href="#i-file-text"></use></svg></div>
+              <div class="res-item__body">
+                <p class="res-item__title">The Towel and the Basin</p>
+                <p class="res-item__sub">Servant Leadership · John 13 · assigned by M. <mark>Bello</mark></p>
+              </div>
+              <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+            </a>
+            <a class="res-item" href="../../learning-experience/youth/lesson.html">
+              <div class="res-item__icon"><svg class="wu-icon"><use href="#i-file-text"></use></svg></div>
+              <div class="res-item__body">
+                <p class="res-item__title">Last Shall Be First</p>
+                <p class="res-item__sub">Servant Leadership · Mark 10 · anchor Mark 10:45</p>
+              </div>
+              <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+            </a>
+            <a class="res-item" href="../../learning-experience/youth/lesson.html">
+              <div class="res-item__icon"><svg class="wu-icon"><use href="#i-file-text"></use></svg></div>
+              <div class="res-item__body">
+                <p class="res-item__title">Leading Like Jesus</p>
+                <p class="res-item__sub">Servant Leadership · 4 lessons · Bible &amp; Leadership</p>
+              </div>
+              <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="wu-card res-group wu-mt-4">
+          <div class="wu-card__body">
+            <p class="res-group__label"><svg class="wu-icon"><use href="#i-layers"></use></svg>Cohorts</p>
+
+            <a class="res-item" href="../../program-administration/admin/cohorts.html">
+              <div class="res-item__icon"><svg class="wu-icon"><use href="#i-layers"></use></svg></div>
+              <div class="res-item__body">
+                <p class="res-item__title">Rexdale Fall '25</p>
+                <p class="res-item__sub">Sep–Dec 2025 · Mentor Marcus <mark>Bello</mark> · 5 youth · 68%</p>
+              </div>
+              <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+            </a>
+            <a class="res-item" href="../../program-administration/admin/cohorts.html">
+              <div class="res-item__icon"><svg class="wu-icon"><use href="#i-layers"></use></svg></div>
+              <div class="res-item__body">
+                <p class="res-item__title">Warden Winter '26</p>
+                <p class="res-item__sub">Jan–Apr 2026 · Mentor Danielle Osei · 5 youth · 41%</p>
+              </div>
+              <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== loading: skeletons ===== -->
+      <div data-when-state="loading" class="wu-hide">
+        <div class="wu-card">
+          <div class="wu-card__body">
+            <span class="wu-skeleton wu-skeleton--title" style="width:30%"></span>
+            <div class="wu-mt-4"></div>
+            <span class="wu-skeleton wu-skeleton--text"></span>
+            <span class="wu-skeleton wu-skeleton--text" style="width:85%"></span>
+            <span class="wu-skeleton wu-skeleton--text" style="width:70%"></span>
+          </div>
+        </div>
+        <div class="wu-card wu-mt-4">
+          <div class="wu-card__body">
+            <span class="wu-skeleton wu-skeleton--title" style="width:30%"></span>
+            <div class="wu-mt-4"></div>
+            <span class="wu-skeleton wu-skeleton--text"></span>
+            <span class="wu-skeleton wu-skeleton--text" style="width:80%"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== empty: no results ===== -->
+      <div data-when-state="empty" class="wu-hide">
+        <div class="wu-card">
+          <div class="wu-empty">
+            <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-search"></use></svg></div>
+            <h3 class="wu-empty__title">No results for "Bello"</h3>
+            <p class="wu-empty__text">Try a different name, lesson title, or cohort. Check your spelling or search by first name.</p>
+            <a class="wu-btn wu-btn--primary" href="../../program-administration/admin/people.html"><svg class="wu-icon"><use href="#i-users"></use></svg>Browse all people</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

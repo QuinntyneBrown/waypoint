@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile settings · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+  <style>
+    .set-tabs{display:flex;gap:4px;overflow-x:auto}
+    .set-tabs a{text-decoration:none}
+    .set-avatar{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  </style>
+</head>
+<body data-role="youth" data-active="profile" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-container--narrow wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Settings</div>
+          <h1 class="wu-page__title">Settings</h1>
+          <p class="wu-page__sub">Manage your account, notifications, and display.</p>
+        </div>
+      </div>
+
+      <div class="wu-tabs set-tabs wu-mb-6" role="tablist" aria-label="Settings sections">
+        <a class="wu-tab is-active" href="settings-profile.html" aria-current="page">Profile</a>
+        <a class="wu-tab" href="settings-notifications.html">Notifications</a>
+        <a class="wu-tab" href="settings-display.html">Display</a>
+      </div>
+
+      <form class="wu-stack" onsubmit="return false">
+
+        <section class="wu-card" aria-labelledby="sec-photo">
+          <div class="wu-card__header"><h3 class="wu-card__title" id="sec-photo">Profile photo</h3></div>
+          <div class="wu-card__body">
+            <div class="set-avatar">
+              <span class="wu-avatar wu-avatar--xl" data-name="Jayden Alcantara"></span>
+              <div class="wu-stack wu-stack--sm">
+                <div class="wu-cluster wu-gap-2">
+                  <button type="button" class="wu-btn wu-btn--secondary wu-btn--sm"><svg class="wu-icon"><use href="#i-upload"></use></svg>Upload photo</button>
+                  <button type="button" class="wu-btn wu-btn--ghost wu-btn--sm"><svg class="wu-icon"><use href="#i-trash"></use></svg>Remove</button>
+                </div>
+                <p class="wu-help wu-mb-0">JPG or PNG, up to 5 MB. A clear headshot works best.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wu-card" aria-labelledby="sec-details">
+          <div class="wu-card__header"><h3 class="wu-card__title" id="sec-details">Your details</h3></div>
+          <div class="wu-card__body">
+            <div class="wu-grid wu-grid--2">
+              <div class="wu-field">
+                <label class="wu-label" for="f-first">First name <span class="wu-label__req">*</span></label>
+                <input class="wu-input" id="f-first" value="Jayden">
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="f-last">Last name <span class="wu-label__req">*</span></label>
+                <input class="wu-input" id="f-last" value="Alcantara">
+              </div>
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="f-email">Email <span class="wu-label__req">*</span></label>
+              <input class="wu-input" id="f-email" type="email" value="jayden.alcantara@wordup.to">
+              <div class="wu-help">We use this to sign you in and send lesson reminders.</div>
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="f-cohort">Cohort</label>
+              <input class="wu-input" id="f-cohort" value="Rexdale Fall '25" disabled>
+              <div class="wu-help">Managed by your mentor, Marcus Bello.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wu-card" aria-labelledby="sec-lang">
+          <div class="wu-card__header"><h3 class="wu-card__title" id="sec-lang">Language</h3></div>
+          <div class="wu-card__body">
+            <div class="wu-field">
+              <label class="wu-label" for="f-lang">Display language</label>
+              <select class="wu-select" id="f-lang">
+                <option selected>English</option>
+                <option>Français</option>
+                <option>Español</option>
+                <option>Português</option>
+              </select>
+              <div class="wu-help">Scripture and lessons stay in their original language.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wu-card" aria-labelledby="sec-pass">
+          <div class="wu-card__header"><h3 class="wu-card__title" id="sec-pass">Password</h3></div>
+          <div class="wu-card__body">
+            <p class="wu-muted wu-mb-3">Keep your account secure. You'll stay signed in on this device.</p>
+            <button type="button" class="wu-btn wu-btn--secondary" data-open-modal="m-password"><svg class="wu-icon"><use href="#i-lock"></use></svg>Change password</button>
+          </div>
+        </section>
+
+        <div class="wu-cluster wu-justify-between wu-mt-2">
+          <a class="wu-btn wu-btn--ghost" href="../youth/profile.html">Cancel</a>
+          <button type="submit" class="wu-btn wu-btn--primary" data-toast="Profile saved" data-toast-type="success" data-toast-title="All set">Save changes</button>
+        </div>
+      </form>
+
+    </div>
+  </main>
+
+  <!-- ===== page-scoped modals ===== -->
+  <div class="wu-modal wu-modal--sm" id="m-password" role="dialog" aria-modal="true">
+    <div class="wu-modal__scrim"></div>
+    <div class="wu-modal__panel">
+      <div class="wu-modal__header">
+        <div><h2 class="wu-modal__title">Change password</h2><p class="wu-modal__sub">Pick something you'll remember.</p></div>
+        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="wu-modal__body">
+        <div class="wu-field">
+          <label class="wu-label" for="p-current">Current password <span class="wu-label__req">*</span></label>
+          <input class="wu-input" id="p-current" type="password" placeholder="••••••••">
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="p-new">New password <span class="wu-label__req">*</span></label>
+          <input class="wu-input" id="p-new" type="password" placeholder="At least 8 characters">
+          <div class="wu-help">Use 8+ characters with a number or symbol.</div>
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="p-confirm">Confirm new password <span class="wu-label__req">*</span></label>
+          <input class="wu-input" id="p-confirm" type="password" placeholder="Re-enter new password">
+        </div>
+      </div>
+      <div class="wu-modal__footer">
+        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
+        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Password updated" data-toast-type="success">Update password</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

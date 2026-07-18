@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reviews · Word Up</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../assets/css/wordup.css">
+  <script defer src="../../assets/js/wordup.js"></script>
+</head>
+<body data-role="mentor" data-active="reviews" data-track="bible">
+  <main class="wu-main">
+    <div class="wu-container wu-page">
+
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Reviews</div>
+          <h1 class="wu-page__title">Review queue <span class="wu-badge wu-badge--lime">5</span></h1>
+          <p class="wu-page__sub">Submissions from your youth waiting to be graded.</p>
+        </div>
+        <div class="wu-page__actions">
+          <a class="wu-btn wu-btn--ghost" href="assessment-approvals.html"><svg class="wu-icon"><use href="#i-check-circle"></use></svg>Assessment approvals</a>
+        </div>
+      </div>
+
+      <!-- Filter tabs -->
+      <div data-tabs-root>
+        <div class="wu-tabs">
+          <button class="wu-tab is-active" data-tab="all">All <span class="wu-badge wu-badge--lime">5</span></button>
+          <button class="wu-tab" data-tab="assign">Assignments <span class="wu-badge">3</span></button>
+          <button class="wu-tab" data-tab="quiz">Quizzes <span class="wu-badge">2</span></button>
+        </div>
+
+        <!-- ALL -->
+        <div data-tabpanel="all" class="wu-tabpanel is-active">
+
+          <!-- ===== DEFAULT ===== -->
+          <div data-when-state="default">
+            <div class="wu-table-wrap">
+              <table class="wu-table wu-table--cards">
+                <thead><tr><th>Youth</th><th>Assignment</th><th>Type</th><th>Submitted</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
+                    <td data-label="Assignment">Serve someone this week</td>
+                    <td data-label="Type"><span class="wu-badge wu-badge--info">Assignment</span></td>
+                    <td data-label="Submitted">2 hours ago</td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Awaiting</span></td>
+                    <td data-label=""><a class="wu-btn wu-btn--primary wu-btn--sm" href="grade-submission.html">Review</a></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
+                    <td data-label="Assignment">Reflection: Last Shall Be First (Mark 10)</td>
+                    <td data-label="Type"><span class="wu-badge wu-badge--info">Assignment</span></td>
+                    <td data-label="Submitted">Yesterday</td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Awaiting</span></td>
+                    <td data-label=""><a class="wu-btn wu-btn--primary wu-btn--sm" href="grade-submission.html">Review</a></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
+                    <td data-label="Assignment">Servant Leadership quiz</td>
+                    <td data-label="Type"><span class="wu-badge wu-badge--ink">Quiz</span></td>
+                    <td data-label="Submitted">Yesterday</td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Awaiting</span></td>
+                    <td data-label=""><a class="wu-btn wu-btn--primary wu-btn--sm" href="assessment-approvals.html">Review</a></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
+                    <td data-label="Assignment">Identity in Christ quiz</td>
+                    <td data-label="Type"><span class="wu-badge wu-badge--ink">Quiz</span></td>
+                    <td data-label="Submitted">2 days ago</td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Awaiting</span></td>
+                    <td data-label=""><a class="wu-btn wu-btn--primary wu-btn--sm" href="assessment-approvals.html">Review</a></td>
+                  </tr>
+                  <tr>
+                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Fatima Ali"></span>Fatima Ali</div></td>
+                    <td data-label="Assignment">Share Your Story (draft)</td>
+                    <td data-label="Type"><span class="wu-badge wu-badge--info">Assignment</span></td>
+                    <td data-label="Submitted">3 days ago</td>
+                    <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Awaiting</span></td>
+                    <td data-label=""><a class="wu-btn wu-btn--primary wu-btn--sm" href="grade-submission.html">Review</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ===== LOADING ===== -->
+          <div data-when-state="loading" class="wu-hide">
+            <div class="wu-stack">
+              <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--text" style="width:75%"></span></div></div>
+              <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--text" style="width:65%"></span></div></div>
+              <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--text" style="width:80%"></span></div></div>
+            </div>
+          </div>
+
+          <!-- ===== EMPTY ===== -->
+          <div data-when-state="empty" class="wu-hide">
+            <div class="wu-card"><div class="wu-empty">
+              <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-check-circle"></use></svg></div>
+              <h3 class="wu-empty__title">Nothing to review</h3>
+              <p class="wu-empty__text">You’re all caught up. New submissions from your youth will show up here.</p>
+              <a class="wu-btn wu-btn--ghost" href="dashboard.html">Back to dashboard</a>
+            </div></div>
+          </div>
+
+        </div>
+
+        <!-- ASSIGNMENTS -->
+        <div data-tabpanel="assign" class="wu-tabpanel">
+          <div class="wu-table-wrap">
+            <table class="wu-table wu-table--cards">
+              <thead><tr><th>Youth</th><th>Assignment</th><th>Submitted</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
+                  <td data-label="Assignment">Serve someone this week</td>
+                  <td data-label="Submitted">2 hours ago</td>
+                  <td data-label=""><a class="wu-btn wu-btn--primary wu-btn--sm" href="grade-submission.html">Review</a></td>
+                </tr>
+                <tr>
+                  <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
+                  <td data-label="Assignment">Reflection: Last Shall Be First (Mark 10)</td>
+                  <td data-label="Submitted">Yesterday</td>
+                  <td data-label=""><a class="wu-btn wu-btn--primary wu-btn--sm" href="grade-submission.html">Review</a></td>
+                </tr>
+                <tr>
+                  <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Fatima Ali"></span>Fatima Ali</div></td>
+                  <td data-label="Assignment">Share Your Story (draft)</td>
+                  <td data-label="Submitted">3 days ago</td>
+                  <td data-label=""><a class="wu-btn wu-btn--primary wu-btn--sm" href="grade-submission.html">Review</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- QUIZZES -->
+        <div data-tabpanel="quiz" class="wu-tabpanel">
+          <div class="wu-table-wrap">
+            <table class="wu-table wu-table--cards">
+              <thead><tr><th>Youth</th><th>Quiz</th><th>Auto-score</th><th>Submitted</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
+                  <td data-label="Quiz">Servant Leadership quiz</td>
+                  <td data-label="Auto-score">9 / 10</td>
+                  <td data-label="Submitted">Yesterday</td>
+                  <td data-label=""><a class="wu-btn wu-btn--primary wu-btn--sm" href="assessment-approvals.html">Review</a></td>
+                </tr>
+                <tr>
+                  <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
+                  <td data-label="Quiz">Identity in Christ quiz</td>
+                  <td data-label="Auto-score">6 / 10</td>
+                  <td data-label="Submitted">2 days ago</td>
+                  <td data-label=""><a class="wu-btn wu-btn--primary wu-btn--sm" href="assessment-approvals.html">Review</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>
