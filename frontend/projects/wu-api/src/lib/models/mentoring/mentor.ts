@@ -158,3 +158,29 @@ export interface QuizAssessmentQuestion {
   correctIndexes: number[];
   isCorrect: boolean;
 }
+
+export type CompetencyLevel = 'NotStarted' | 'Developing' | 'Proficient' | 'Mastered';
+
+export interface MentorCompetencySummary {
+  youthId: string;
+  youthName: string;
+  items: MentorCompetencyItem[];
+  masteredOrProficient: number;
+  total: number;
+}
+
+export interface MentorCompetencyItem {
+  competencyId: string;
+  name: string;
+  stageName: string;
+  level: CompetencyLevel;
+  notes: string | null;
+  assessedByName: string | null;
+  assessedAt: string | null;
+}
+
+export interface SetCompetencyLevelRequest {
+  competencyId: string;
+  level: CompetencyLevel;
+  notes: string | null;
+}

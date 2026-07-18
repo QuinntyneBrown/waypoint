@@ -159,3 +159,27 @@ export class MentorQuizReviewPage extends BasePage {
     return this.page.getByRole('link', { name: /back to reviews/i });
   }
 }
+
+export class MentorCompetencyPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get summary() {
+    return this.page.getByTestId('competency-summary');
+  }
+  card(name: string) {
+    return this.page.getByTestId('competency-card').filter({ hasText: name });
+  }
+  level(name: string) {
+    return this.page.getByLabel(`${name} level`);
+  }
+  notes(name: string) {
+    return this.page.getByLabel(`${name} notes`);
+  }
+  save(name: string) {
+    return this.card(name).getByRole('button', { name: /save assessment/i });
+  }
+  get status() {
+    return this.page.getByRole('status');
+  }
+}

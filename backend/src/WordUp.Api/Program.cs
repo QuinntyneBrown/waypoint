@@ -859,6 +859,12 @@ if (app.Environment.IsEnvironment("Testing"))
             Name = "Serving others",
             Order = 1,
         };
+        var mentorCompetency = new Competency
+        {
+            StageId = progressStage.Id,
+            Name = "Community initiative",
+            Order = 2,
+        };
         var presentSession = new Session
         {
             CohortId = cohort.Id,
@@ -923,7 +929,7 @@ if (app.Environment.IsEnvironment("Testing"))
         db.Badges.Add(assignmentBadge);
         db.Cohorts.Add(cohort);
         db.ProgressionStages.Add(progressStage);
-        db.Competencies.Add(progressCompetency);
+        db.Competencies.AddRange(progressCompetency, mentorCompetency);
         db.CompetencyAssessments.Add(new CompetencyAssessment
         {
             YouthUserId = youth.Id,
@@ -1098,6 +1104,8 @@ if (app.Environment.IsEnvironment("Testing"))
             progressPresentSessionTitle = presentSession.Title,
             progressAbsentSessionTitle = absentSession.Title,
             progressCompetencyName = progressCompetency.Name,
+            mentorCompetencyId = mentorCompetency.Id,
+            mentorCompetencyName = mentorCompetency.Name,
             scheduleSessionId = upcomingSession.Id,
             scheduleSessionTitle = upcomingSession.Title,
             scheduleSessionLocation = upcomingSession.Location,

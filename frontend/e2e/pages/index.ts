@@ -60,6 +60,7 @@ export {
 } from './volunteer.pages';
 export { PeopleDirectoryPage, ApplicationsListPage } from './admin.pages';
 export {
+  MentorCompetencyPage,
   MentorDashboardPage,
   MentorRosterPage,
   MentorYouthDetailPage,

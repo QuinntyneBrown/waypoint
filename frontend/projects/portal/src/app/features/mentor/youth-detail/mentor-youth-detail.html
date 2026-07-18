@@ -138,6 +138,14 @@
                 }
                 @case ('competencies') {
                   <h2>Competencies</h2>
+                  <p>
+                    <a
+                      class="wu-btn wu-btn--primary"
+                      [routerLink]="['/mentor/youth', youth.id, 'competencies']"
+                    >
+                      Open competency tracker
+                    </a>
+                  </p>
                   <ul class="detail-list">
                     @for (item of youth.competencies; track item.competencyId) {
                       <li class="detail-row">

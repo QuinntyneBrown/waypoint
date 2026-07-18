@@ -245,6 +245,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'youth/:id/competencies',
+        title: 'Competency tracker · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/competencies/mentor-competencies').then(
+            (module) => module.MentorCompetenciesPage,
+          ),
+      },
+      {
         path: 'reviews',
         title: 'Reviews · Word Up',
         loadComponent: () =>

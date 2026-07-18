@@ -8,7 +8,9 @@ import {
   MentorRosterYouth,
   MentorYouthDetail,
   GradeSubmissionRequest,
+  MentorCompetencySummary,
   QuizAssessmentReview,
+  SetCompetencyLevelRequest,
   SubmissionReviewView,
 } from '../models/mentoring/mentor';
 
@@ -67,5 +69,18 @@ export class MentorApi {
 
   approveAllQuizAttempts(): Observable<number> {
     return this.http.post<number>(`${this.base}/api/mentor/attempts/approve-all`, {});
+  }
+
+  competencies(youthId: string): Observable<MentorCompetencySummary> {
+    return this.http.get<MentorCompetencySummary>(
+      `${this.base}/api/mentor/youth/${encodeURIComponent(youthId)}/competencies`,
+    );
+  }
+
+  setCompetencyLevel(youthId: string, request: SetCompetencyLevelRequest): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}/api/mentor/youth/${encodeURIComponent(youthId)}/competencies`,
+      request,
+    );
   }
 }

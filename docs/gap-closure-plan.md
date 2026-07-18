@@ -147,7 +147,9 @@ requirement conflicts early (they gate "done").
       scoped pending queue with authored quiz titles, answer/correctness detail, auto-score approval,
       validated override, immutable auto/approved audit record, and confirmed scoped approve-all with
       one durable audit entry per assessment.
-- [ ] **F5** Competency tracker `L2-MENTOR-005`
+- [x] **F5** Competency tracker `L2-MENTOR-005` — complete ordered staged framework including
+      unassessed rows, four-level assessment and notes, append-only history with latest assessor/time,
+      live proficient/mastered summary, assigned-youth scoping, and shared latest youth-progress values.
 - [ ] **F6** Check-ins & history (+ shared read surfaces) `L2-MENTOR-006`
 - [ ] **F7** At-risk flags + automated evaluation `L2-MENTOR-007`
 - [ ] **F8** Assign work (+ journey placement, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008`
@@ -242,8 +244,9 @@ requirement conflicts early (they gate "done").
 - [x] **Youth curriculum fixture** — Testing-only multi-track enrollment data covers published/draft
       filtering, ordered lesson/quiz gates, prerequisite locking, progress, safe lesson content,
       failed optional media, reflection hand-off, upcoming cohort logistics, an assigned-mentor thread,
-      mentor-assigned work, overdue rubric and pending answer-backed quiz reviews, an active flag,
-      guardian contact, a private check-in, the placed dashboard, and an empty enrolled track.
+      mentor-assigned work, overdue rubric and pending answer-backed quiz reviews, assessed/unassessed
+      competencies, an active flag, guardian contact, a private check-in, the placed dashboard, and an
+      empty enrolled track.
 
 ## Progress log
 
@@ -324,3 +327,8 @@ requirement conflicts early (they gate "done").
   auto-score, enter a server-validated override, inspect the immutable auto/approved/actor/time record,
   or confirm approve-all; youth results expose only the approved score, while per-attempt and bulk
   audit records preserve every action. Desktop/mobile acceptance and all mentoring HTTP tests pass.
+- 2026-07-18 — F5 done: each assigned youth now has an ordered staged competency tracker covering
+  Not started through Mastered, including previously unassessed framework rows, notes, latest assessor
+  and timestamp, and a live proficient/mastered summary. Saves append history while mentor and youth
+  views resolve the latest assessment; HTTP scoping/history/downstream tests and desktop/mobile
+  keyboard acceptance pass.

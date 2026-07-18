@@ -87,6 +87,8 @@ export interface SeededYouthCurriculum {
   progressPresentSessionTitle: string;
   progressAbsentSessionTitle: string;
   progressCompetencyName: string;
+  mentorCompetencyId: string;
+  mentorCompetencyName: string;
   scheduleSessionId: string;
   scheduleSessionTitle: string;
   scheduleSessionLocation: string;

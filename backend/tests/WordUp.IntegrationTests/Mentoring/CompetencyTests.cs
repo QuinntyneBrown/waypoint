@@ -1,5 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Authentication.Auth;
@@ -76,7 +78,25 @@ public sealed class CompetencyTests : IntegrationTestBase
         var mentor = await SeedUserAsync(Roles.Mentor);
         var youth = await SeedUserAsync(Roles.Youth, mentorId: mentor.Id);
         var mentorToken = await SignInAsync(mentor.Email);
+        var youthToken = await SignInAsync(youth.Email);
         var competencyId = await SeedCompetencyAsync();
+
+        var initialResponse = await SendAsync(
+            HttpMethod.Get,
+            $"/api/mentor/youth/{youth.Id}/competencies",
+            token: mentorToken);
+        var initial = await initialResponse.Content.ReadFromJsonAsync<CompetencySummaryDto>();
+        var unassessed = initial!.Items.Single(item => item.CompetencyId == competencyId);
+        Assert.Multiple(() =>
+        {
+            Assert.That(initial.YouthId, Is.EqualTo(youth.Id));
+            Assert.That(initial.YouthName, Is.EqualTo("Seed Youth"));
+            Assert.That(initial.Total, Is.GreaterThanOrEqualTo(1));
+            Assert.That(unassessed.Name, Does.StartWith("Competency"));
+            Assert.That(unassessed.StageName, Does.StartWith("Stage"));
+            Assert.That(unassessed.Level, Is.EqualTo("NotStarted"));
+            Assert.That(unassessed.AssessedAt, Is.Null);
+        });
 
         var set = await SendAsync(HttpMethod.Post, $"/api/mentor/youth/{youth.Id}/competencies",
             body: new { competencyId, level = "Proficient", notes = "Strong grasp of core ideas." }, token: mentorToken);
@@ -89,8 +109,10 @@ public sealed class CompetencyTests : IntegrationTestBase
         var item = summary.Items.Single(i => i.CompetencyId == competencyId);
         Assert.That(item.Level, Is.EqualTo("Proficient"));
         Assert.That(item.Notes, Is.EqualTo("Strong grasp of core ideas."));
+        Assert.That(item.AssessedByName, Is.EqualTo("Seed Mentor"));
+        Assert.That(item.AssessedAt, Is.Not.Null);
 
-        // Setting again updates the same assessment (latest wins) rather than adding a second one.
+        // A later assessment becomes current while preserving the earlier history row.
         var reset = await SendAsync(HttpMethod.Post, $"/api/mentor/youth/{youth.Id}/competencies",
             body: new { competencyId, level = "Developing", notes = "Needs more practice." }, token: mentorToken);
         Assert.That(reset.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
@@ -100,6 +122,19 @@ public sealed class CompetencyTests : IntegrationTestBase
         Assert.That(after!.Items.Count(i => i.CompetencyId == competencyId), Is.EqualTo(1));
         Assert.That(after.Items.Single(i => i.CompetencyId == competencyId).Level, Is.EqualTo("Developing"));
         Assert.That(after.MasteredOrProficient, Is.EqualTo(0));
+
+        var progressResponse = await SendAsync(HttpMethod.Get, "/api/me/progress", token: youthToken);
+        var progress = await progressResponse.Content.ReadFromJsonAsync<JsonElement>();
+        var youthCompetency = progress.GetProperty("competencies")
+            .EnumerateArray()
+            .Single(item => item.GetProperty("competencyId").GetGuid() == competencyId);
+        Assert.That(youthCompetency.GetProperty("level").GetString(), Is.EqualTo("Developing"));
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            Assert.That(await db.CompetencyAssessments.CountAsync(item =>
+                item.YouthUserId == youth.Id && item.CompetencyId == competencyId), Is.EqualTo(2));
+        }
     }
 
     [Test]
@@ -116,9 +151,27 @@ public sealed class CompetencyTests : IntegrationTestBase
         var set = await SendAsync(HttpMethod.Post, $"/api/mentor/youth/{youth.Id}/competencies",
             body: new { competencyId, level = "Proficient", notes = (string?)null }, token: mentorToken);
         Assert.That(set.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+
+        var get = await SendAsync(
+            HttpMethod.Get,
+            $"/api/mentor/youth/{youth.Id}/competencies",
+            token: mentorToken);
+        Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
     }
 
-    private sealed record CompetencySummaryDto(List<CompetencyLevelItemDto> Items, int MasteredOrProficient);
+    private sealed record CompetencySummaryDto(
+        Guid YouthId,
+        string YouthName,
+        List<CompetencyLevelItemDto> Items,
+        int MasteredOrProficient,
+        int Total);
 
-    private sealed record CompetencyLevelItemDto(Guid CompetencyId, string Level, string? Notes);
+    private sealed record CompetencyLevelItemDto(
+        Guid CompetencyId,
+        string Name,
+        string StageName,
+        string Level,
+        string? Notes,
+        string? AssessedByName,
+        DateTime? AssessedAt);
 }

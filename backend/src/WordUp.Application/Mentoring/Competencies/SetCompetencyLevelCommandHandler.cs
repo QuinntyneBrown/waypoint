@@ -42,35 +42,34 @@ public class SetCompetencyLevelCommandHandler : IRequestHandler<SetCompetencyLev
             throw new NotFoundException("Competency not found.");
         }
 
-        var now = _clock.UtcNow;
+        var previousAt = await _db.CompetencyAssessments
+            .Where(assessment => assessment.YouthUserId == request.YouthId
+                && assessment.CompetencyId == request.CompetencyId)
+            .MaxAsync(assessment => (DateTime?)assessment.AssessedAt, cancellationToken);
+        var clockNow = _clock.UtcNow;
+        var now = previousAt >= clockNow
+            ? previousAt.Value.AddTicks(1)
+            : clockNow;
 
-        // Latest wins: update the existing assessment for this youth+competency, or insert a new one (MENTOR-005 AC1/AC2).
-        var existing = await _db.CompetencyAssessments
-            .FirstOrDefaultAsync(
-                a => a.YouthUserId == request.YouthId && a.CompetencyId == request.CompetencyId,
-                cancellationToken);
-
-        if (existing is null)
+        // Append assessments so the latest value drives views without erasing the audit history.
+        var assessment = new CompetencyAssessment
         {
-            _db.CompetencyAssessments.Add(new CompetencyAssessment
-            {
-                YouthUserId = request.YouthId,
-                CompetencyId = request.CompetencyId,
-                Level = request.Level,
-                Notes = request.Notes,
-                AssessedByUserId = _currentUser.UserId!.Value,
-                AssessedAt = now,
-            });
-        }
-        else
-        {
-            existing.Level = request.Level;
-            existing.Notes = request.Notes;
-            existing.AssessedByUserId = _currentUser.UserId!.Value;
-            existing.AssessedAt = now;
-        }
+            YouthUserId = request.YouthId,
+            CompetencyId = request.CompetencyId,
+            Level = request.Level,
+            Notes = request.Notes,
+            AssessedByUserId = _currentUser.UserId!.Value,
+            AssessedAt = now,
+        };
+        _db.CompetencyAssessments.Add(assessment);
 
         await _db.SaveChangesAsync(cancellationToken);
-        await _audit.LogAsync("CompetencyLevelSet", _currentUser.UserId, "CompetencyAssessment", request.CompetencyId, cancellationToken: cancellationToken);
+        await _audit.LogAsync(
+            "CompetencyLevelSet",
+            _currentUser.UserId,
+            "CompetencyAssessment",
+            assessment.Id,
+            details: $"competency={request.CompetencyId};level={request.Level}",
+            cancellationToken: cancellationToken);
     }
 }

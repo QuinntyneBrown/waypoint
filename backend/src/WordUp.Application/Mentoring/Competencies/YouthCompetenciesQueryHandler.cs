@@ -27,24 +27,61 @@ public class YouthCompetenciesQueryHandler : IRequestHandler<YouthCompetenciesQu
             throw new ForbiddenException("This youth is not assigned to you.");
         }
 
-        // Latest assessment per competency for the youth (MENTOR-005 AC2/AC3).
+        var stages = await _db.ProgressionStages
+            .OrderBy(stage => stage.Order)
+            .ThenBy(stage => stage.Name)
+            .ToListAsync(cancellationToken);
+        var stageById = stages.ToDictionary(stage => stage.Id);
+        var competencies = await _db.Competencies
+            .ToListAsync(cancellationToken);
+        competencies = competencies
+            .OrderBy(competency => stageById.GetValueOrDefault(competency.StageId)?.Order ?? int.MaxValue)
+            .ThenBy(competency => competency.Order)
+            .ThenBy(competency => competency.Name)
+            .ToList();
+
+        // Preserve history and render the latest assessment per competency (MENTOR-005 AC2/AC3).
         var assessments = await _db.CompetencyAssessments
             .Where(a => a.YouthUserId == request.YouthId)
             .ToListAsync(cancellationToken);
 
-        var latestPerCompetency = assessments
+        var latestByCompetency = assessments
             .GroupBy(a => a.CompetencyId)
             .Select(g => g.OrderByDescending(a => a.AssessedAt).First())
-            .OrderBy(a => a.AssessedAt)
+            .ToDictionary(assessment => assessment.CompetencyId);
+        var assessorIds = latestByCompetency.Values
+            .Select(assessment => assessment.AssessedByUserId)
+            .Distinct()
+            .ToList();
+        var assessorNames = await _db.Users
+            .Where(user => assessorIds.Contains(user.Id))
+            .ToDictionaryAsync(user => user.Id, user => user.DisplayName, cancellationToken);
+
+        var items = competencies
+            .Select(competency =>
+            {
+                latestByCompetency.TryGetValue(competency.Id, out var assessment);
+                return new CompetencyLevelDto(
+                    competency.Id,
+                    competency.Name,
+                    stageById.GetValueOrDefault(competency.StageId)?.Name ?? "Competencies",
+                    (assessment?.Level ?? CompetencyLevel.NotStarted).ToString(),
+                    assessment?.Notes,
+                    assessment is null
+                        ? null
+                        : assessorNames.GetValueOrDefault(assessment.AssessedByUserId),
+                    assessment?.AssessedAt);
+            })
             .ToList();
 
-        var items = latestPerCompetency
-            .Select(a => new CompetencyLevelDto(a.CompetencyId, a.Level.ToString(), a.Notes))
-            .ToList();
+        var masteredOrProficient = latestByCompetency.Values
+            .Count(assessment => assessment.Level is CompetencyLevel.Proficient or CompetencyLevel.Mastered);
 
-        var masteredOrProficient = latestPerCompetency
-            .Count(a => a.Level == CompetencyLevel.Proficient || a.Level == CompetencyLevel.Mastered);
-
-        return new CompetencySummary(items, masteredOrProficient);
+        return new CompetencySummary(
+            youth.Id,
+            youth.DisplayName,
+            items,
+            masteredOrProficient,
+            items.Count);
     }
 }
