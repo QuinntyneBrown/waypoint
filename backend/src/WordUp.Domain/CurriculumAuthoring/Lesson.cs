@@ -12,6 +12,8 @@ public class Lesson
     public string? TeachingBody { get; set; }
     public string? ReflectionPrompts { get; set; }
     public string? LeaderGuideNotes { get; set; }
+    public bool IsCodingLesson { get; set; }
+    public string? StarterCode { get; set; }
     public int Order { get; set; }
     public PublishStatus Status { get; set; } = PublishStatus.Draft;
     public DateTime? ArchivedAt { get; set; }

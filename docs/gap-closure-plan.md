@@ -105,7 +105,10 @@ requirement conflicts early (they gate "done").
 - [x] **E7** Submission status/resubmission (+ enriched status data) `L2-LEARN-007` —
       submitted copy, durable lifecycle timeline, mentor feedback, rubric points, assignment badge,
       status notification/realtime publish, revision editor, and return to review on resubmission.
-- [ ] **E8** Coding lesson/project (missing central outcome — no covering test yet) `L2-LEARN-008`
+- [x] **E8** Coding lesson/project `L2-LEARN-008` — authored ordered steps and code samples,
+      resumable editor with sandboxed live preview, server-validated self-check progress, once-only
+      completion badge, responsive keyboard journey, and project submission with an optional mentor
+      note through the assignment review lifecycle.
 - [ ] **E9** Journey & badges (counted criteria, milestones) `L2-LEARN-009`
 - [ ] **E10** Personal progress (quiz history, attendance tabs, competencies) `L2-LEARN-010`
 - [ ] **E11** Youth schedule & RSVP (youth-visible calendar, reminders) `L2-ENGAGE-005/008`

@@ -20,6 +20,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<Track> Tracks => Set<Track>();
     public DbSet<Module> Modules => Set<Module>();
     public DbSet<Lesson> Lessons => Set<Lesson>();
+    public DbSet<CodingLessonStep> CodingLessonSteps => Set<CodingLessonStep>();
     public DbSet<LessonMedia> LessonMedia => Set<LessonMedia>();
     public DbSet<Quiz> Quizzes => Set<Quiz>();
     public DbSet<QuizQuestion> QuizQuestions => Set<QuizQuestion>();
@@ -32,6 +33,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<OrgSettings> OrgSettings => Set<OrgSettings>();
     public DbSet<Term> Terms => Set<Term>();
     public DbSet<LessonProgress> LessonProgress => Set<LessonProgress>();
+    public DbSet<CodingLessonWorkspace> CodingLessonWorkspaces => Set<CodingLessonWorkspace>();
     public DbSet<YouthTrackEnrollment> YouthTrackEnrollments => Set<YouthTrackEnrollment>();
     public DbSet<LessonReadingState> LessonReadingStates => Set<LessonReadingState>();
     public DbSet<QuizAttempt> QuizAttempts => Set<QuizAttempt>();
@@ -170,6 +172,14 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Title).HasMaxLength(200).IsRequired();
             b.HasIndex(x => x.ModuleId);
         });
+        modelBuilder.Entity<CodingLessonStep>(b =>
+        {
+            b.Property(x => x.Title).HasMaxLength(200).IsRequired();
+            b.Property(x => x.Instructions).HasMaxLength(4000).IsRequired();
+            b.Property(x => x.CodeSample).HasMaxLength(50000).IsRequired();
+            b.Property(x => x.ChecklistLabel).HasMaxLength(300).IsRequired();
+            b.HasIndex(x => new { x.LessonId, x.Order }).IsUnique();
+        });
         modelBuilder.Entity<LessonMedia>(b => b.HasIndex(x => x.LessonId));
         modelBuilder.Entity<Quiz>(b => b.Property(x => x.FeedbackMode).HasMaxLength(32));
         modelBuilder.Entity<QuizQuestion>(b =>
@@ -207,6 +217,12 @@ public class AppDbContext : DbContext, IAppDbContext
 
         // Learning & mentoring (M3)
         modelBuilder.Entity<LessonProgress>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());
+        modelBuilder.Entity<CodingLessonWorkspace>(b =>
+        {
+            b.Property(x => x.Code).HasMaxLength(50000);
+            b.Property(x => x.CheckedStepIdsJson).HasMaxLength(4000).IsRequired();
+            b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique();
+        });
         modelBuilder.Entity<YouthTrackEnrollment>(b =>
             b.HasIndex(x => new { x.YouthUserId, x.TrackId }).IsUnique());
         modelBuilder.Entity<LessonReadingState>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());

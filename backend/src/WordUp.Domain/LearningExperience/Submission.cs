@@ -12,6 +12,7 @@ public class Submission
     public string? PhotoUrl { get; set; }
     public string? LinkUrl { get; set; }
     public bool IsCodingProject { get; set; }
+    public string? YouthNote { get; set; }
 
     public SubmissionStatus Status { get; set; } = SubmissionStatus.Submitted;
     public string? MentorComment { get; set; }

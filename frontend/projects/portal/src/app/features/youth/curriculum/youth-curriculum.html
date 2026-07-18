@@ -89,7 +89,9 @@
                                 [routerLink]="
                                   item.type === 'lesson'
                                     ? ['/youth/lessons', item.itemId]
-                                    : ['/youth/quizzes', item.itemId]
+                                    : item.type === 'coding'
+                                      ? ['/youth/coding', item.itemId]
+                                      : ['/youth/quizzes', item.itemId]
                                 "
                               >
                                 <strong>{{ item.title }}</strong>
@@ -98,7 +100,13 @@
                               <strong>{{ item.title }}</strong>
                             }
                             <p class="wu-muted">
-                              {{ item.type === 'lesson' ? 'Lesson' : 'Quiz' }}
+                              {{
+                                item.type === 'lesson'
+                                  ? 'Lesson'
+                                  : item.type === 'coding'
+                                    ? 'Coding lesson'
+                                    : 'Quiz'
+                              }}
                               @if (item.estimatedMinutes) {
                                 · {{ item.estimatedMinutes }} min
                               }

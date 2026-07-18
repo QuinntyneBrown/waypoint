@@ -33,7 +33,7 @@ internal static class CurriculumProgressCalculator
         var moduleStatus = (await BuildModuleStatusesAsync(db, module.TrackId, youthId, ct))
             .FirstOrDefault(item => item.ModuleId == module.Id);
         var curriculumItem = moduleStatus?.Items.FirstOrDefault(item =>
-            item.Type == "lesson" && item.ItemId == lesson.Id);
+            item.Type is "lesson" or "coding" && item.ItemId == lesson.Id);
         if (moduleStatus is null || moduleStatus.Locked || curriculumItem is null || curriculumItem.Locked)
         {
             throw new ForbiddenException("This lesson is locked.");
@@ -199,7 +199,7 @@ internal static class CurriculumProgressCalculator
                             : "not-started";
                 items.Add(new CurriculumItem(
                     lesson.Id,
-                    "lesson",
+                    lesson.IsCodingLesson ? "coding" : "lesson",
                     lesson.Title,
                     lesson.Order,
                     itemStatus,

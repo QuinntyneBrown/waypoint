@@ -19,5 +19,7 @@ public class SubmitAssignmentCommandValidator : AbstractValidator<SubmitAssignme
                 !string.IsNullOrWhiteSpace(x.PhotoUrl) ||
                 !string.IsNullOrWhiteSpace(x.LinkUrl))
             .WithMessage("Provide at least one of a written response, a photo, or a link.");
+
+        RuleFor(x => x.YouthNote).MaximumLength(1000);
     }
 }

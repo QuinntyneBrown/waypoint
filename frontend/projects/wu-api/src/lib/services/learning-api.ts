@@ -18,6 +18,12 @@ import {
   SubmitAssignmentInput,
   YouthSubmissionStatus,
 } from '../models/learning/assignment';
+import {
+  CodingLesson,
+  CodingProgressResult,
+  SaveCodingProgressInput,
+  SubmitCodingProjectInput,
+} from '../models/learning/coding';
 
 @Injectable({ providedIn: 'root' })
 export class LearningApi {
@@ -49,6 +55,32 @@ export class LearningApi {
     );
   }
 
+  codingLesson(lessonId: string): Observable<CodingLesson> {
+    return this.http.get<CodingLesson>(
+      `${this.base}/api/me/coding-lessons/${encodeURIComponent(lessonId)}`,
+    );
+  }
+
+  saveCodingProgress(
+    lessonId: string,
+    input: SaveCodingProgressInput,
+  ): Observable<CodingProgressResult> {
+    return this.http.put<CodingProgressResult>(
+      `${this.base}/api/me/coding-lessons/${encodeURIComponent(lessonId)}/progress`,
+      input,
+    );
+  }
+
+  submitCodingProject(
+    lessonId: string,
+    input: SubmitCodingProjectInput,
+  ): Observable<SubmissionResult> {
+    return this.http.post<SubmissionResult>(
+      `${this.base}/api/me/coding-lessons/${encodeURIComponent(lessonId)}/submissions`,
+      input,
+    );
+  }
+
   reflectionEditor(lessonId: string): Observable<ReflectionEditor> {
     return this.http.get<ReflectionEditor>(
       `${this.base}/api/me/reflections/lesson/${encodeURIComponent(lessonId)}`,
@@ -60,9 +92,7 @@ export class LearningApi {
   }
 
   quizIntro(quizId: string): Observable<QuizIntro> {
-    return this.http.get<QuizIntro>(
-      `${this.base}/api/me/quizzes/${encodeURIComponent(quizId)}`,
-    );
+    return this.http.get<QuizIntro>(`${this.base}/api/me/quizzes/${encodeURIComponent(quizId)}`);
   }
 
   startQuiz(quizId: string): Observable<YouthQuizAttempt> {

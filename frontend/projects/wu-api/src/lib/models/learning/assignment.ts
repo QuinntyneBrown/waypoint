@@ -32,6 +32,7 @@ export interface SubmitAssignmentInput {
   photoUrl: string | null;
   linkUrl: string | null;
   isCodingProject: boolean;
+  youthNote: string | null;
   attest: boolean;
 }
 
@@ -67,7 +68,9 @@ export interface YouthSubmissionStatus {
   assignmentId: string;
   assignmentTitle: string;
   status: string;
+  isCodingProject: boolean;
   bodyText: string | null;
+  youthNote: string | null;
   photoUrl: string | null;
   linkUrl: string | null;
   mentorComment: string | null;

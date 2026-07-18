@@ -19,6 +19,7 @@ public interface IAppDbContext
     DbSet<Track> Tracks { get; }
     DbSet<Module> Modules { get; }
     DbSet<Lesson> Lessons { get; }
+    DbSet<CodingLessonStep> CodingLessonSteps { get; }
     DbSet<LessonMedia> LessonMedia { get; }
     DbSet<Quiz> Quizzes { get; }
     DbSet<QuizQuestion> QuizQuestions { get; }
@@ -35,6 +36,7 @@ public interface IAppDbContext
 
     // Learning & mentoring (M3)
     DbSet<LessonProgress> LessonProgress { get; }
+    DbSet<CodingLessonWorkspace> CodingLessonWorkspaces { get; }
     DbSet<YouthTrackEnrollment> YouthTrackEnrollments { get; }
     DbSet<LessonReadingState> LessonReadingStates { get; }
     DbSet<QuizAttempt> QuizAttempts { get; }

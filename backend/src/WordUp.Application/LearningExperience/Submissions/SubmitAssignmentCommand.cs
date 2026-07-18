@@ -11,4 +11,5 @@ public record SubmitAssignmentCommand(
     string? PhotoUrl,
     string? LinkUrl,
     bool IsCodingProject,
+    string? YouthNote,
     bool Attest) : IRequest<SubmissionResult>;

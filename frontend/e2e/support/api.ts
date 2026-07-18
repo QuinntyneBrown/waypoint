@@ -73,6 +73,11 @@ export interface SeededYouthCurriculum {
   assignmentCriterionId: string;
   assignmentCriterion: string;
   assignmentBadgeName: string;
+  codingLessonId: string;
+  codingLessonTitle: string;
+  codingFirstStepTitle: string;
+  codingSecondStepTitle: string;
+  codingBadgeName: string;
 }
 
 /**

@@ -78,6 +78,7 @@ public class SubmitAssignmentCommandHandler : IRequestHandler<SubmitAssignmentCo
             PhotoUrl = photo is null ? request.PhotoUrl : $"/api/me/files/{photo.Id}",
             LinkUrl = request.LinkUrl,
             IsCodingProject = request.IsCodingProject,
+            YouthNote = request.YouthNote,
             Status = SubmissionStatus.Submitted,
             SubmittedAt = now,
             CreatedAt = now,

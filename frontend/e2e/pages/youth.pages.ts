@@ -103,6 +103,33 @@ export class YouthLessonPage extends BasePage {
   }
 }
 
+export class YouthCodingPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get editor() {
+    return this.page.getByTestId('coding-editor');
+  }
+  get preview() {
+    return this.page.getByTestId('coding-preview');
+  }
+  get progress() {
+    return this.page.getByTestId('coding-progress');
+  }
+  get mentorNote() {
+    return this.page.getByLabel(/note to your mentor/i);
+  }
+  get attestation() {
+    return this.page.getByRole('checkbox', { name: /this is my own work/i });
+  }
+  get submitButton() {
+    return this.page.getByRole('button', { name: /submit coding project/i });
+  }
+  step(name: string) {
+    return this.page.getByRole('button', { name: new RegExp(name, 'i') });
+  }
+}
+
 export class YouthReflectionPage extends BasePage {
   get heading() {
     return this.page.getByRole('heading', { level: 1 });

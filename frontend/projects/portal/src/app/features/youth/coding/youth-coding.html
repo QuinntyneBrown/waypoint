@@ -1,0 +1,167 @@
+<wu-shell
+  role="youth"
+  active="curriculum"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <a class="wu-btn wu-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (saveStatus(); as status) {
+      <p class="wu-alert wu-alert--success" role="status">{{ status }}</p>
+    }
+
+    @if (lesson(); as view) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Interactive coding lesson</div>
+          <h1 class="wu-page__title">{{ view.title }}</h1>
+          @if (view.introduction) {
+            <p class="wu-page__sub">{{ view.introduction }}</p>
+          }
+        </div>
+      </div>
+
+      <section class="wu-card wu-card--greige">
+        <div class="wu-card__body wu-stack">
+          <div class="wu-cluster wu-cluster--between">
+            <strong>Self-check progress</strong>
+            <span class="wu-badge" data-testid="coding-progress">{{ completionPercent() }}%</span>
+          </div>
+          <progress class="coding-progress" [value]="completionPercent()" max="100">
+            {{ completionPercent() }}%
+          </progress>
+          @if (view.badge; as badge) {
+            <p>
+              {{
+                badge.earned
+                  ? 'Badge earned: ' + badge.name
+                  : badge.completedCriteria +
+                    ' of ' +
+                    badge.totalCriteria +
+                    ' checks toward ' +
+                    badge.name
+              }}
+            </p>
+          }
+        </div>
+      </section>
+
+      <div class="coding-layout">
+        <aside class="wu-stack" aria-label="Coding lesson steps">
+          <h2>Steps</h2>
+          @for (step of view.steps; track step.id; let index = $index) {
+            <button
+              class="wu-btn coding-step-button"
+              [class.wu-btn--primary]="currentStepIndex() === index"
+              [class.wu-btn--ghost]="currentStepIndex() !== index"
+              type="button"
+              [attr.aria-current]="currentStepIndex() === index ? 'step' : null"
+              (click)="selectStep(index)"
+            >
+              {{ index + 1 }}. {{ step.title }}
+            </button>
+          }
+          @if (currentStep(); as step) {
+            <section class="wu-card">
+              <div class="wu-card__body wu-stack">
+                <h2>{{ step.title }}</h2>
+                <p>{{ step.instructions }}</p>
+                <h3>Code sample</h3>
+                <pre class="coding-sample"><code>{{ step.codeSample }}</code></pre>
+                <label class="wu-cluster">
+                  <input
+                    type="checkbox"
+                    [checked]="isChecked(step.id)"
+                    (change)="toggleStep(step.id, $any($event.target).checked)"
+                  />
+                  <strong>{{ step.checklistLabel }}</strong>
+                </label>
+              </div>
+            </section>
+          }
+        </aside>
+
+        <section class="wu-stack" aria-label="Coding workspace">
+          <div class="wu-field">
+            <label class="wu-field__label" for="coding-editor">Code editor</label>
+            <textarea
+              id="coding-editor"
+              class="wu-input coding-editor"
+              data-testid="coding-editor"
+              spellcheck="false"
+              [value]="code()"
+              (input)="updateCode($event)"
+            ></textarea>
+          </div>
+          <div class="wu-field">
+            <span class="wu-field__label">Live preview</span>
+            <iframe
+              class="coding-preview"
+              data-testid="coding-preview"
+              title="Live preview of your code"
+              sandbox=""
+              [srcdoc]="preview()"
+            ></iframe>
+          </div>
+        </section>
+      </div>
+
+      @if (view.existingSubmissionId) {
+        <a
+          class="wu-btn wu-btn--primary wu-btn--block"
+          [routerLink]="['/youth/submissions', view.existingSubmissionId]"
+          >View coding project submission</a
+        >
+      } @else {
+        <section class="wu-card">
+          <form
+            class="wu-card__body wu-stack"
+            [formGroup]="submitForm"
+            (ngSubmit)="submitProject()"
+          >
+            <div>
+              <div class="wu-eyebrow">Coding project</div>
+              <h2>Send your project for mentor review</h2>
+              <p>Your current editor code will become the read-only submitted copy.</p>
+            </div>
+            <div class="wu-field">
+              <label class="wu-field__label" for="mentor-note"
+                >Note to your mentor (optional)</label
+              >
+              <textarea
+                id="mentor-note"
+                class="wu-input"
+                formControlName="mentorNote"
+                rows="4"
+              ></textarea>
+            </div>
+            <label class="wu-card wu-card--greige"
+              ><span class="wu-card__body wu-cluster"
+                ><input type="checkbox" formControlName="attest" /><strong
+                  >This is my own work.</strong
+                ></span
+              ></label
+            >
+            @if (
+              submitForm.controls.attest.touched && submitForm.controls.attest.hasError('required')
+            ) {
+              <p class="wu-field__error">Confirm this is your own work before submitting.</p>
+            }
+            <button
+              class="wu-btn wu-btn--primary wu-btn--block"
+              type="submit"
+              [disabled]="submitting()"
+            >
+              Submit coding project
+            </button>
+          </form>
+        </section>
+      }
+    } @else {
+      <p class="wu-muted">Loading coding lesson…</p>
+    }
+  </div>
+</wu-shell>

@@ -7,7 +7,7 @@ export interface CurriculumTrackOption {
 
 export interface CurriculumItem {
   itemId: string;
-  type: 'lesson' | 'quiz';
+  type: 'lesson' | 'coding' | 'quiz';
   title: string;
   order: number;
   status: string;

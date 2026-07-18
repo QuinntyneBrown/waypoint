@@ -84,25 +84,31 @@ export class YouthAssignmentPage {
       this.errorMessage.set('Provide at least one of the allowed submission types.');
       return;
     }
-    if (!this.doc.defaultView?.confirm(
-      'Submit this assignment? Your submitted copy will be read-only unless your mentor requests a revision.',
-    )) return;
+    if (
+      !this.doc.defaultView?.confirm(
+        'Submit this assignment? Your submitted copy will be read-only unless your mentor requests a revision.',
+      )
+    )
+      return;
 
     this.saving.set(true);
     this.errorMessage.set(null);
-    this.api.submitAssignment(this.assignmentId, {
-      bodyText: value.bodyText.trim() || null,
-      photoUploadId: this.upload()?.id ?? null,
-      photoUrl: null,
-      linkUrl: value.linkUrl.trim() || null,
-      isCodingProject: false,
-      attest: value.attest,
-    }).subscribe({
-      next: (result) => void this.router.navigate(['/youth/submissions', result.id]),
-      error: (error: unknown) => {
-        this.saving.set(false);
-        this.errorMessage.set(ApiError.from(error).title);
-      },
-    });
+    this.api
+      .submitAssignment(this.assignmentId, {
+        bodyText: value.bodyText.trim() || null,
+        photoUploadId: this.upload()?.id ?? null,
+        photoUrl: null,
+        linkUrl: value.linkUrl.trim() || null,
+        isCodingProject: false,
+        youthNote: null,
+        attest: value.attest,
+      })
+      .subscribe({
+        next: (result) => void this.router.navigate(['/youth/submissions', result.id]),
+        error: (error: unknown) => {
+          this.saving.set(false);
+          this.errorMessage.set(ApiError.from(error).title);
+        },
+      });
   }
 }

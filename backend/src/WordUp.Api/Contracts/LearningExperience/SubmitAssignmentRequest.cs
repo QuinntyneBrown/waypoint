@@ -6,4 +6,5 @@ public record SubmitAssignmentRequest(
     string? PhotoUrl,
     string? LinkUrl,
     bool IsCodingProject,
+    string? YouthNote,
     bool Attest);

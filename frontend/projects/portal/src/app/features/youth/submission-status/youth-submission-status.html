@@ -1,15 +1,109 @@
-<wu-shell role="youth" active="curriculum" [userName]="auth.user()?.displayName ?? ''" (signOut)="auth.signOut()">
+<wu-shell
+  role="youth"
+  active="curriculum"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
   <div class="wu-container wu-container--narrow wu-page">
     <a class="wu-btn wu-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
-    @if (errorMessage(); as error) { <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p> }
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
     @if (submission(); as view) {
-      <div class="wu-page__head"><div class="wu-page__titles"><div class="wu-eyebrow">Submission status</div><h1 class="wu-page__title">{{ view.assignmentTitle }}</h1><p class="wu-badge" data-testid="submission-status">{{ displayStatus(view.status) }}</p></div></div>
-      <section class="wu-card"><div class="wu-card__body wu-stack"><h2>Your submitted copy</h2>@if (view.bodyText) { <p>{{ view.bodyText }}</p> }@if (photoUrl(); as photo) { <img [src]="photo" alt="Submitted evidence" style="max-width: 100%; max-height: 28rem" /> }@if (view.linkUrl) { <a [href]="view.linkUrl" target="_blank" rel="noopener">Open submitted evidence link</a> }</div></section>
-      <section class="wu-card wu-card--greige"><div class="wu-card__body wu-stack"><h2>Timeline</h2><ol class="wu-stack">@for (item of view.timeline; track $index) { <li><strong>{{ item.label }}</strong>@if (item.current) { <span class="wu-badge">Current</span> }</li> }</ol></div></section>
-      @if (view.mentorComment) { <section class="wu-alert wu-alert--info"><h2>Mentor feedback</h2><p>{{ view.mentorComment }}</p></section> }
-      @if (view.totalAwarded !== null) { <section class="wu-card"><div class="wu-card__body wu-stack"><h2>Rubric result</h2><p><strong>{{ view.totalAwarded }} of {{ view.totalPossible }} points</strong></p>@for (criterion of view.rubric; track criterion.criterionId) { <div class="wu-cluster wu-cluster--between"><span>{{ criterion.description }}</span><span>{{ criterion.awardedPoints }} / {{ criterion.possiblePoints }}</span></div> }</div></section> }
-      @if (view.earnedBadge; as badge) { <section class="wu-card wu-card--greige"><div class="wu-card__body"><div class="wu-eyebrow">Badge unlocked</div><h2>{{ badge.name }}</h2>@if (badge.description) { <p>{{ badge.description }}</p> }</div></section> }
-      @if (view.status === 'NeedsRevision') { <a class="wu-btn wu-btn--primary wu-btn--block" [routerLink]="['/youth/submissions', view.id, 'resubmit']">Revise and resubmit</a> }
-    } @else { <p class="wu-muted">Loading submission…</p> }
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Submission status</div>
+          <h1 class="wu-page__title">{{ view.assignmentTitle }}</h1>
+          <p class="wu-badge" data-testid="submission-status">{{ displayStatus(view.status) }}</p>
+        </div>
+      </div>
+      <section class="wu-card">
+        <div class="wu-card__body wu-stack">
+          <h2>Your submitted copy</h2>
+          @if (view.bodyText) {
+            @if (view.isCodingProject) {
+              <pre class="coding-sample"><code>{{ view.bodyText }}</code></pre>
+            } @else {
+              <p>{{ view.bodyText }}</p>
+            }
+          }
+          @if (view.youthNote) {
+            <div class="wu-card wu-card--greige">
+              <div class="wu-card__body">
+                <strong>Your note to the mentor</strong>
+                <p>{{ view.youthNote }}</p>
+              </div>
+            </div>
+          }
+          @if (photoUrl(); as photo) {
+            <img
+              [src]="photo"
+              alt="Submitted evidence"
+              style="max-width: 100%; max-height: 28rem"
+            />
+          }
+          @if (view.linkUrl) {
+            <a [href]="view.linkUrl" target="_blank" rel="noopener">Open submitted evidence link</a>
+          }
+        </div>
+      </section>
+      <section class="wu-card wu-card--greige">
+        <div class="wu-card__body wu-stack">
+          <h2>Timeline</h2>
+          <ol class="wu-stack">
+            @for (item of view.timeline; track $index) {
+              <li>
+                <strong>{{ item.label }}</strong>
+                @if (item.current) {
+                  <span class="wu-badge">Current</span>
+                }
+              </li>
+            }
+          </ol>
+        </div>
+      </section>
+      @if (view.mentorComment) {
+        <section class="wu-alert wu-alert--info">
+          <h2>Mentor feedback</h2>
+          <p>{{ view.mentorComment }}</p>
+        </section>
+      }
+      @if (view.totalAwarded !== null) {
+        <section class="wu-card">
+          <div class="wu-card__body wu-stack">
+            <h2>Rubric result</h2>
+            <p>
+              <strong>{{ view.totalAwarded }} of {{ view.totalPossible }} points</strong>
+            </p>
+            @for (criterion of view.rubric; track criterion.criterionId) {
+              <div class="wu-cluster wu-cluster--between">
+                <span>{{ criterion.description }}</span
+                ><span>{{ criterion.awardedPoints }} / {{ criterion.possiblePoints }}</span>
+              </div>
+            }
+          </div>
+        </section>
+      }
+      @if (view.earnedBadge; as badge) {
+        <section class="wu-card wu-card--greige">
+          <div class="wu-card__body">
+            <div class="wu-eyebrow">Badge unlocked</div>
+            <h2>{{ badge.name }}</h2>
+            @if (badge.description) {
+              <p>{{ badge.description }}</p>
+            }
+          </div>
+        </section>
+      }
+      @if (view.status === 'NeedsRevision') {
+        <a
+          class="wu-btn wu-btn--primary wu-btn--block"
+          [routerLink]="['/youth/submissions', view.id, 'resubmit']"
+          >Revise and resubmit</a
+        >
+      }
+    } @else {
+      <p class="wu-muted">Loading submission…</p>
+    }
   </div>
 </wu-shell>

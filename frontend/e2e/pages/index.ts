@@ -31,6 +31,7 @@ export {
   YouthCurriculumPage,
   YouthHomePage,
   YouthLessonPage,
+  YouthCodingPage,
   YouthReflectionPage,
   YouthQuizIntroPage,
   YouthQuizAttemptPage,

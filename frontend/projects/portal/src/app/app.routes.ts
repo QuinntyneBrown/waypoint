@@ -92,6 +92,12 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'coding/:id',
+        title: 'Coding lesson · Word Up',
+        loadComponent: () =>
+          import('./features/youth/coding/youth-coding').then((module) => module.YouthCodingPage),
+      },
+      {
         path: 'lessons/:id/reflection',
         title: 'Reflection · Word Up',
         canDeactivate: [unsavedChangesGuard],

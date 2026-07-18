@@ -591,7 +591,7 @@ if (app.Environment.IsEnvironment("Testing"))
         var secondTrackName = $"Leadership Practice {suffix}";
         var firstModuleName = $"Foundations {suffix}";
         var lockedModuleName = $"Deeper Practice {suffix}";
-        var firstLessonTitle = $"Welcome to the Word {suffix}";
+        var firstLessonTitle = $"Build a welcome card {suffix}";
         var secondLessonTitle = $"Living the Word {suffix}";
         var leaderSecret = $"MENTOR-ONLY GUIDE {suffix}";
 
@@ -647,6 +647,9 @@ if (app.Environment.IsEnvironment("Testing"))
         {
             ModuleId = firstModule.Id,
             Title = firstLessonTitle,
+            TeachingBody = "Follow the steps, edit the HTML, and check your work in the live preview.",
+            StarterCode = "<h1>Hello!</h1>",
+            IsCodingLesson = true,
             EstimatedMinutes = 12,
             Order = 1,
             Status = PublishStatus.Published,
@@ -705,6 +708,43 @@ if (app.Environment.IsEnvironment("Testing"))
             CriteriaKind = BadgeCriteriaKind.Auto,
             AutoRule = "quiz-passed",
             TargetRefId = quiz.Id,
+        };
+        var codingFirstStep = new CodingLessonStep
+        {
+            LessonId = firstLesson.Id,
+            Order = 1,
+            Title = "Add a welcome heading",
+            Instructions = "Change the h1 so it welcomes people to your page.",
+            CodeSample = "<h1>Welcome to my page</h1>",
+            ChecklistLabel = "My page has a welcome heading",
+        };
+        var codingSecondStep = new CodingLessonStep
+        {
+            LessonId = firstLesson.Id,
+            Order = 2,
+            Title = "Add an introduction",
+            Instructions = "Add a paragraph that tells visitors something about you.",
+            CodeSample = "<p>I am learning to build for the web.</p>",
+            ChecklistLabel = "My page has an introduction paragraph",
+        };
+        var codingAssignment = new Assignment
+        {
+            ModuleId = firstModule.Id,
+            LessonId = firstLesson.Id,
+            Title = $"Welcome Card Coding Project {suffix}",
+            TaskDescription = "Submit the welcome card from your coding workspace.",
+            SubmissionTypes = "text",
+            RequireMentorApproval = true,
+            TotalPoints = 10,
+        };
+        var codingBadge = new Badge
+        {
+            Name = $"Code Starter Badge {suffix}",
+            Icon = "code",
+            Description = "Complete every self-check in the welcome card lesson.",
+            CriteriaKind = BadgeCriteriaKind.Auto,
+            AutoRule = "coding-checklist-completed",
+            TargetRefId = firstLesson.Id,
         };
         var assignment = new Assignment
         {
@@ -767,6 +807,7 @@ if (app.Environment.IsEnvironment("Testing"))
         db.Tracks.AddRange(primaryTrack, secondTrack);
         db.Modules.AddRange(firstModule, lockedModule, draftModule);
         db.Lessons.AddRange(firstLesson, secondLesson);
+        db.CodingLessonSteps.AddRange(codingFirstStep, codingSecondStep);
         db.LessonMedia.Add(new LessonMedia
         {
             LessonId = secondLesson.Id,
@@ -776,8 +817,8 @@ if (app.Environment.IsEnvironment("Testing"))
         });
         db.Quizzes.Add(quiz);
         db.QuizQuestions.AddRange(firstQuizQuestion, secondQuizQuestion);
-        db.Badges.Add(quizBadge);
-        db.Assignments.Add(assignment);
+        db.Badges.AddRange(quizBadge, codingBadge);
+        db.Assignments.AddRange(assignment, codingAssignment);
         db.RubricCriteria.Add(assignmentCriterion);
         db.Badges.Add(assignmentBadge);
         db.Cohorts.Add(cohort);
@@ -840,6 +881,11 @@ if (app.Environment.IsEnvironment("Testing"))
             assignmentCriterionId = assignmentCriterion.Id,
             assignmentCriterion = assignmentCriterion.Description,
             assignmentBadgeName = assignmentBadge.Name,
+            codingLessonId = firstLesson.Id,
+            codingLessonTitle = firstLesson.Title,
+            codingFirstStepTitle = codingFirstStep.Title,
+            codingSecondStepTitle = codingSecondStep.Title,
+            codingBadgeName = codingBadge.Name,
         });
     });
 

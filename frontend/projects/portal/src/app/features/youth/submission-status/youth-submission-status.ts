@@ -11,6 +11,16 @@ import { WuShell } from '@wu/ui';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [WuShell, RouterLink],
   templateUrl: './youth-submission-status.html',
+  styles: `
+    .coding-sample {
+      overflow-x: auto;
+      white-space: pre-wrap;
+      padding: var(--wu-sp-4);
+      background: #17202a;
+      color: #f8f9f9;
+      border-radius: var(--wu-r-input);
+    }
+  `,
 })
 export class YouthSubmissionStatusPage implements OnDestroy {
   protected readonly auth = inject(AuthStore);

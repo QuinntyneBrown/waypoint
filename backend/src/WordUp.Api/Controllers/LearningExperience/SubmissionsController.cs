@@ -63,6 +63,7 @@ public class SubmissionsController : ControllerBase
                 request.PhotoUrl,
                 request.LinkUrl,
                 request.IsCodingProject,
+                request.YouthNote,
                 request.Attest),
             cancellationToken);
         return Ok(result);
