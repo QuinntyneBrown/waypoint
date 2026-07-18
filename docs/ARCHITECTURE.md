@@ -8,7 +8,7 @@ Word Up is an early full-stack application organized around a server-authoritati
 flowchart LR
   subgraph Clients["Client surfaces"]
     Mocks["Static HTML mocks\ninteraction reference"]
-    Angular["Angular 21 workspace\napplication pending"]
+    Angular["Angular apps\nportal + public-site"]
   end
 
   subgraph Server["ASP.NET Core / .NET 9"]
@@ -25,7 +25,7 @@ flowchart LR
     Sql["SQL Server\nintegration / configured environments"]
   end
 
-  Angular -. "future REST /api/*" .-> Pipeline
+  Angular -. "REST /api/* via same-origin proxy" .-> Pipeline
   Mocks -. "design and behaviour reference" .-> Angular
   Pipeline --> Controllers --> Handlers --> Domain
   Handlers --> Data
@@ -34,7 +34,7 @@ flowchart LR
   Data --> Sql
 ```
 
-The HTML mocks are standalone and do not call the API. The Angular workspace currently has no application project, so browser-to-API integration is a planned boundary rather than an implemented runtime path.
+The HTML mocks are standalone and do not call the API. The Angular `portal` and `public-site` apps call the REST API through a same-origin dev-server proxy; browser-to-API integration is exercised by the Playwright acceptance suite against the real backend.
 
 ## Backend layers
 
@@ -96,7 +96,7 @@ The system models youth applications, guardian information, consent, and audit r
 
 ## Frontend and design reference
 
-`frontend/` is a bare Angular 21 workspace with no application target. The future client will consume the REST API and must preserve the server-authoritative permission and safeguarding model.
+`frontend/` is an Angular 21 workspace with two applications — `portal` (the authenticated SPA for all signed-in roles) and `public-site` (SSR/prerendered marketing + anonymous application intake) — over shared `wu-ui` (design system), `wu-api` (typed API client), and `wu-auth` (session, rotating-refresh, guards) libraries. Both apps consume the API through a same-origin dev-server proxy and preserve the server-authoritative permission and safeguarding model — guards and hidden nav are presentational only. The implemented scope is **Tier A**: surfaces provable end-to-end against today's API with a register-created Youth (auth, onboarding, consent gate, intake, settings/preferences, states); Admin/Mentor/Guardian/Volunteer surfaces are **Tier B**, deferred until those identities are API-reachable (see `docs/frontend-implementation-plan.md`). Acceptance coverage is a Playwright suite (real API + both apps), each spec traced to an L2 requirement; see [DECISIONS.md](DECISIONS.md) #9.
 
 `docs/mocks/` contains the current responsive interaction reference: a product map, a living style guide, shared assets, templates, and role-specific screens. The mocks are intentionally framework-free and run directly from the filesystem. They contain fictional data and must not be mistaken for the production application.
 

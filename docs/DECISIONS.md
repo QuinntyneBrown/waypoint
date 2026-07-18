@@ -56,7 +56,7 @@ A running log of technical and product decisions worth recording. Each entry sta
 
 **Why.** Toolchain and package versions can be reviewed independently while backend acceptance slices establish the initial server contract.
 
-**Consequences.** `ng build`, `ng serve`, and `ng test` are not valid repository gates until a project is defined in `angular.json`. Documentation must not imply that a production frontend is currently runnable.
+**Consequences.** `ng build`, `ng serve`, and `ng test` were not valid repository gates until a project was defined in `angular.json`. **Superseded by #9:** the `portal` and `public-site` applications now exist, so those commands (plus the Playwright e2e suite) are enforced by the frontend CI workflow.
 
 ## 8. Real participant data is prohibited during early development
 
@@ -65,3 +65,11 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** The product domain includes minors, guardians, consent, attendance, communications, and progress records. Early-stage engineering environments do not yet have the necessary operational controls.
 
 **Consequences.** Contributors must redact sensitive evidence and follow `SECURITY.md`. A green test suite does not authorize production deployment or collection of real participant information.
+
+## 9. Two-app Angular frontend on a same-origin proxy with in-memory access tokens
+
+**Decision.** Build the frontend as two applications — `portal` (authenticated SPA) and `public-site` (SSR/prerendered) — over shared `wu-ui`/`wu-api`/`wu-auth` libraries consumed via `@wu/*` TypeScript path aliases pointing at library **source** (no separate library build). E2E and dev run both apps behind an Angular dev-server proxy that forwards `/api` to the backend, so the browser makes same-origin requests and the 4200-only CORS policy never bites. The access token lives in memory only; the rotating refresh token + user snapshot persist in `sessionStorage` (or `localStorage` when "remember me" is checked), and a boot initializer re-mints the access token via refresh.
+
+**Why.** The public site needs SSR/SEO and must not carry auth/shell code, while all signed-in roles share one session, shell, and design system — so one authenticated app with lazy role areas plus one public app fits better than one-app or one-app-per-role. Source-aliased libraries keep the ATDD loop fast (no lib rebuild). A same-origin proxy matches production deployment and removes CORS from the test path. Keeping the access token out of persistent storage limits its exposure; XSS is the threat model, so Angular's default sanitization is never bypassed on user content.
+
+**Consequences.** The frontend scope is Tier A — surfaces provable end-to-end against today's API (no data seeder, so the only self-service identity is a register-created Youth); Admin/Mentor/Guardian/Volunteer surfaces are deferred (Tier B). Every acceptance slice is a Playwright test traced to an L2 requirement, driven through the real app against the real API. The client renders forbidden/gated/redacted responses faithfully but is never the access authority (see #5).
