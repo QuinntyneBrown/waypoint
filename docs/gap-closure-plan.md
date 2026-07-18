@@ -120,7 +120,10 @@ requirement conflicts early (they gate "done").
 
 ## Phase G — Program Administrator portal
 
-- [ ] **G1** Application review `L2-INTAKE-002`
+- [~] **G1** Application review `L2-INTAKE-002` — server list query (`GET /api/applications`,
+      admin-only) + admin review-queue UI (`/admin/applications`), E2E-verified end to end
+      (anonymous submit → queue). Detail view + approve/decline UI + "Needs consent" gating still
+      to add (approve/decline commands already exist server-side).
 - [x] **G2** People directory `L2-ADMIN-001` — list + server-side search + empty-state/invite CTA,
       E2E-verified (admin routing + `/admin/people`). Role/cohort filter chips still to add.
 - [ ] **G3** Person detail / account lifecycle `L2-ADMIN-002`

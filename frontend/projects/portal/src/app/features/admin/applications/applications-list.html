@@ -1,0 +1,64 @@
+<wu-shell
+  role="admin"
+  active="applications"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Intake</div>
+        <h1 class="wu-page__title">Applications</h1>
+        <p class="wu-page__sub">Review submitted applications and enrol new youth.</p>
+      </div>
+    </div>
+
+    @if (loading()) {
+      <p class="wu-muted">Loading…</p>
+    } @else if (applications()!.length > 0) {
+      <div class="wu-table-wrap" style="overflow-x: auto">
+        <table class="wu-table">
+          <thead>
+            <tr>
+              <th>Applicant</th>
+              <th>Age</th>
+              <th>Neighbourhood</th>
+              <th>Track</th>
+              <th>Status</th>
+              <th>Submitted</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (application of applications(); track application.id) {
+              <tr>
+                <td>{{ application.firstName }} {{ application.lastName }}</td>
+                <td>
+                  {{ application.age }}
+                  @if (application.isMinor) {
+                    <span class="wu-badge wu-badge--muted">Minor</span>
+                  }
+                </td>
+                <td>{{ application.neighbourhood }}</td>
+                <td>{{ application.trackInterest ?? '—' }}</td>
+                <td>
+                  <span class="wu-badge">{{ application.status }}</span>
+                </td>
+                <td>{{ application.createdAt | date: 'MMM d, y' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="wu-empty">
+        <div class="wu-empty__icon">
+          <svg class="wu-icon"><use href="#i-user-plus"></use></svg>
+        </div>
+        <h3 class="wu-empty__title">No applications yet</h3>
+        <p class="wu-empty__text">
+          New applications submitted from the public site will appear here for review.
+        </p>
+      </div>
+    }
+  </div>
+</wu-shell>

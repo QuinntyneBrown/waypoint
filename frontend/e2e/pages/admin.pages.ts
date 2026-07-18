@@ -29,3 +29,27 @@ export class PeopleDirectoryPage extends BasePage {
     await this.searchInput.fill(term);
   }
 }
+
+/** `/admin/applications` — the Program Administrator application review queue. */
+export class ApplicationsListPage extends BasePage {
+  static readonly path = '/admin/applications';
+  static readonly urlPattern = /\/admin\/applications/;
+
+  get heading() {
+    return this.page.getByRole('heading', { name: /applications/i });
+  }
+  get emptyState() {
+    return this.page.getByRole('heading', { name: /no applications/i });
+  }
+  /**
+   * A queue row identified by a unique substring (e.g. an applicant's unique last
+   * name); substring match because the applicant cell combines first + last name.
+   */
+  rowFor(text: string) {
+    return this.page.getByText(text);
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(ApplicationsListPage.path);
+  }
+}

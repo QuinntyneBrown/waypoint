@@ -48,6 +48,42 @@ export async function registerUser(
   return { email, password, displayName, role, userId };
 }
 
+export interface SeededApplication {
+  applicationId: string;
+  firstName: string;
+  lastName: string;
+}
+
+/**
+ * Submit a public application through the real anonymous intake endpoint, with a
+ * unique last name so a specific application can be located in the shared test DB.
+ */
+export async function submitApplication(
+  request: APIRequestContext,
+  tag = 'app',
+): Promise<SeededApplication> {
+  const firstName = 'Ada';
+  const lastName = `E2E-${tag}-${crypto.randomUUID().slice(0, 8)}`;
+  const res = await request.post('/api/applications', {
+    data: {
+      firstName,
+      lastName,
+      age: 15,
+      neighbourhood: 'Peckham',
+      whyInterested: 'I want to grow as a leader and serve.',
+      trackInterest: 'Bible & Leadership',
+      guardianName: 'Ngozi Okafor',
+      guardianEmail: 'guardian@example.com',
+      guardianPhone: '4165550100',
+      participationConsentAck: true,
+      privacyAck: true,
+    },
+  });
+  expect(res.ok(), `submit application failed: ${res.status()} ${await res.text()}`).toBeTruthy();
+  const { applicationId } = (await res.json()) as { applicationId: string };
+  return { applicationId, firstName, lastName };
+}
+
 /** Sign in via the real API and return the auth result (for API-level setup as a user). */
 export async function signInApi(
   request: APIRequestContext,

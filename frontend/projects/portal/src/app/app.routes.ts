@@ -102,6 +102,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/admin/people/people-directory').then((m) => m.PeopleDirectory),
       },
+      {
+        path: 'applications',
+        title: 'Applications · Word Up',
+        loadComponent: () =>
+          import('./features/admin/applications/applications-list').then((m) => m.ApplicationsList),
+      },
     ],
   },
   {
