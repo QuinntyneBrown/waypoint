@@ -1,37 +1,39 @@
 import { expect, test } from '@playwright/test';
 import { registerYouth } from '../../support/api';
-import { signIn } from '../../support/sign-in';
+import { OnboardingPage, SignInPage, YouthHomePage } from '../../pages';
 
 // Traces to: L2-AUTH-011
 test('a new youth completes the onboarding wizard and lands home', async ({ page, request }) => {
   const creds = await registerYouth(request, 'onboard', { onboarded: false });
-  await signIn(page, creds);
-  await expect(page).toHaveURL(/\/onboarding/);
+  await new SignInPage(page).signIn(creds);
+  await expect(page).toHaveURL(OnboardingPage.urlPattern);
+
+  const onboarding = new OnboardingPage(page);
 
   // Step 1 — profile, display name prefilled from the account.
-  await expect(page.getByLabel('Display name')).toHaveValue(creds.displayName);
-  await page.getByLabel('Pronouns').fill('they/them');
-  await page.getByRole('button', { name: /next/i }).click();
+  await expect(onboarding.displayName).toHaveValue(creds.displayName);
+  await onboarding.pronouns.fill('they/them');
+  await onboarding.next();
 
   // Step 2 — cohort is read-only; a register-created youth is unplaced (no-cohort).
-  await expect(page.getByText(/not placed in a cohort yet/i)).toBeVisible();
-  await page.getByRole('button', { name: /next/i }).click();
+  await expect(onboarding.unplacedNotice).toBeVisible();
+  await onboarding.next();
 
   // Step 3 — notification defaults: lessons on, mentor on, announcements off.
-  await expect(page.getByRole('checkbox', { name: 'Lesson reminders' })).toBeChecked();
-  await expect(page.getByRole('checkbox', { name: 'Mentor messages' })).toBeChecked();
-  await expect(page.getByRole('checkbox', { name: 'Announcements' })).not.toBeChecked();
+  await expect(onboarding.checkbox('Lesson reminders')).toBeChecked();
+  await expect(onboarding.checkbox('Mentor messages')).toBeChecked();
+  await expect(onboarding.checkbox('Announcements')).not.toBeChecked();
 
-  await page.getByRole('button', { name: /finish/i }).click();
-  await expect(page).toHaveURL(/\/youth\/home/);
+  await onboarding.finish();
+  await expect(page).toHaveURL(YouthHomePage.urlPattern);
 });
 
 // Traces to: L2-AUTH-011
 test('a new youth can skip onboarding and still land home', async ({ page, request }) => {
   const creds = await registerYouth(request, 'skip', { onboarded: false });
-  await signIn(page, creds);
-  await expect(page).toHaveURL(/\/onboarding/);
+  await new SignInPage(page).signIn(creds);
+  await expect(page).toHaveURL(OnboardingPage.urlPattern);
 
-  await page.getByRole('button', { name: /skip for now/i }).click();
-  await expect(page).toHaveURL(/\/youth\/home/);
+  await new OnboardingPage(page).skip();
+  await expect(page).toHaveURL(YouthHomePage.urlPattern);
 });

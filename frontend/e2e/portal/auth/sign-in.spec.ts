@@ -1,17 +1,18 @@
 import { expect, test } from '@playwright/test';
 import { registerYouth } from '../../support/api';
+import { SignInPage, YouthHomePage } from '../../pages';
 
 // Traces to: L2-AUTH-001
 test('a registered youth signs in and is routed into the youth area', async ({ page, request }) => {
   const creds = await registerYouth(request, 'signin');
 
-  await page.goto('/auth/sign-in');
-  await page.getByLabel('Email').fill(creds.email);
-  await page.getByLabel('Password', { exact: true }).fill(creds.password);
-  await page.getByRole('button', { name: /sign in/i }).click();
+  const signInPage = new SignInPage(page);
+  await signInPage.goto();
+  await signInPage.submitCredentials(creds.email, creds.password);
 
-  await expect(page).toHaveURL(/\/youth\/home/);
-  await expect(page.getByRole('heading', { name: /welcome/i })).toBeVisible();
+  const home = new YouthHomePage(page);
+  await expect(page).toHaveURL(YouthHomePage.urlPattern);
+  await expect(home.welcomeHeading).toBeVisible();
 });
 
 // Traces to: L2-AUTH-001
@@ -21,23 +22,20 @@ test('sign-in with a wrong password fails with enumeration-safe copy', async ({
 }) => {
   const creds = await registerYouth(request, 'wrongpw');
 
-  await page.goto('/auth/sign-in');
-  await page.getByLabel('Email').fill(creds.email);
-  await page.getByLabel('Password', { exact: true }).fill('WrongPassword9');
-  await page.getByRole('button', { name: /sign in/i }).click();
+  const signInPage = new SignInPage(page);
+  await signInPage.goto();
+  await signInPage.submitCredentials(creds.email, 'WrongPassword9');
 
   // Same generic message for wrong password and unknown email (no enumeration).
-  const alert = page.getByRole('alert');
-  await expect(alert).toContainText(/invalid email or password/i);
+  await expect(signInPage.errorAlert).toContainText(/invalid email or password/i);
   await expect(page).toHaveURL(/\/auth\/sign-in/);
 });
 
 // Traces to: L2-AUTH-001
 test('sign-in with an unknown email shows the same generic failure', async ({ page }) => {
-  await page.goto('/auth/sign-in');
-  await page.getByLabel('Email').fill(`nobody-${crypto.randomUUID()}@wordup.test`);
-  await page.getByLabel('Password', { exact: true }).fill('WrongPassword9');
-  await page.getByRole('button', { name: /sign in/i }).click();
+  const signInPage = new SignInPage(page);
+  await signInPage.goto();
+  await signInPage.submitCredentials(`nobody-${crypto.randomUUID()}@wordup.test`, 'WrongPassword9');
 
-  await expect(page.getByRole('alert')).toContainText(/invalid email or password/i);
+  await expect(signInPage.errorAlert).toContainText(/invalid email or password/i);
 });

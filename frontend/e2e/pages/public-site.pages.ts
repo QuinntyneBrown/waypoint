@@ -1,0 +1,139 @@
+import { BasePage } from './base.page';
+
+/** `/` — the public marketing landing page (public-site). */
+export class LandingPage extends BasePage {
+  static readonly path = '/';
+
+  get heroHeading() {
+    return this.page.getByRole('heading', { name: /young leaders who love jesus/i });
+  }
+  /** A journey-step heading by exact title (Apply, Join a cohort, …). */
+  journeyStep(step: string) {
+    return this.page.getByRole('heading', { name: step, exact: true });
+  }
+  get signInLink() {
+    return this.page.getByRole('link', { name: 'Sign in' });
+  }
+  get getInvolvedLink() {
+    return this.page.getByRole('link', { name: 'Get involved' }).first();
+  }
+  get contactLink() {
+    return this.page.getByRole('link', { name: 'Contact' }).first();
+  }
+  get applyCta() {
+    return this.page.getByRole('link', { name: 'Apply', exact: true }).first();
+  }
+
+  /** Returns the navigation response so specs can assert the status code. */
+  goto() {
+    return this.page.goto(LandingPage.path);
+  }
+}
+
+/** `/apply` — the anonymous application intake form (public-site). */
+export class ApplyPage extends BasePage {
+  static readonly path = '/apply';
+
+  get firstName() {
+    return this.page.getByLabel('First name');
+  }
+  get lastName() {
+    return this.page.getByLabel('Last name');
+  }
+  get age() {
+    return this.page.getByLabel('Age');
+  }
+  get neighbourhood() {
+    return this.page.getByLabel('Neighbourhood');
+  }
+  get interest() {
+    return this.page.getByLabel(/why are you interested/i);
+  }
+  get guardianName() {
+    return this.page.getByLabel('Guardian name');
+  }
+  get guardianEmail() {
+    return this.page.getByLabel('Guardian email');
+  }
+  get guardianPhone() {
+    return this.page.getByLabel('Guardian phone');
+  }
+  get submitButton() {
+    return this.page.getByRole('button', { name: /submit application/i });
+  }
+  get confirmationHeading() {
+    return this.page.getByRole('heading', { name: /application received/i });
+  }
+  /** Next-steps copy confirming no account is created at intake. */
+  get accountNotice() {
+    return this.page.getByText(/account/i);
+  }
+  get participationCheckbox() {
+    return this.page.getByRole('checkbox', { name: /participation/i });
+  }
+  get privacyCheckbox() {
+    return this.page.getByRole('checkbox', { name: /privacy notice/i });
+  }
+  get eligibleAgesError() {
+    return this.page.getByText(/12.18 inclusive/i);
+  }
+  get participationError() {
+    return this.page.getByText(/acknowledge participation consent/i);
+  }
+  get privacyError() {
+    return this.page.getByText(/acknowledge the privacy notice/i);
+  }
+
+  /**
+   * Navigate to the form. Pass an absolute `origin` (e.g. the public-site URL)
+   * when driving from a project whose baseURL is a different app (portal-xs).
+   */
+  async goto(origin = ''): Promise<void> {
+    await this.page.goto(`${origin}${ApplyPage.path}`);
+  }
+
+  /** Toggle the participation-consent acknowledgement via its custom checkbox. */
+  async acknowledgeParticipation(): Promise<void> {
+    await this.page.locator('label.wu-check', { hasText: 'participation' }).click();
+  }
+
+  /** Toggle the privacy-notice acknowledgement via its custom checkbox box. */
+  async acknowledgePrivacy(): Promise<void> {
+    await this.page
+      .locator('label.wu-check', { hasText: 'privacy notice' })
+      .locator('.wu-check__box')
+      .click();
+  }
+}
+
+/** `/donate` — donation tiers with hand-off to an external PCI provider. */
+export class DonatePage extends BasePage {
+  static readonly path = '/donate';
+
+  /** Any on-page card/CVC input — asserted absent (no card data collected). */
+  get cardInputs() {
+    return this.page.locator(
+      'input[autocomplete="cc-number"], input[name*="card" i], input[name*="cvc" i]',
+    );
+  }
+  tier(label: string) {
+    return this.page.getByRole('button', { name: label });
+  }
+  get continueButton() {
+    return this.page.getByRole('button', { name: /continue to secure checkout/i });
+  }
+  get thankYou() {
+    return this.page.getByText(/thank you/i);
+  }
+  /** Confirmation summary for a chosen monthly amount, e.g. `monthlySummary('50')`. */
+  monthlySummary(amount: string) {
+    return this.page.getByText(new RegExp(`\\$${amount} monthly`, 'i'));
+  }
+  get providerLink() {
+    return this.page.getByRole('link', { name: /continue to secure provider/i });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(DonatePage.path);
+  }
+}

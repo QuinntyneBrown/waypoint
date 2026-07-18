@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { registerYouth } from '../../support/api';
-import { signIn } from '../../support/sign-in';
+import { SignInPage, YouthHomePage } from '../../pages';
 
 // Traces to: L2-CONSENT-002
 test('a register-created youth is not gated and reaches home', async ({ page, request }) => {
@@ -17,7 +17,7 @@ test('a register-created youth is not gated and reaches home', async ({ page, re
 
   // The client renders the allowed outcome: the consent guard permits youth
   // navigation and never diverts to consent-required.
-  await signIn(page, creds);
-  await expect(page).toHaveURL(/\/youth\/home/);
+  await new SignInPage(page).signIn(creds);
+  await expect(page).toHaveURL(YouthHomePage.urlPattern);
   await expect(page).not.toHaveURL(/consent-required/);
 });

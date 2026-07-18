@@ -1,18 +1,20 @@
 import { expect, test } from '@playwright/test';
 import { registerYouth } from '../../support/api';
-import { signIn } from '../../support/sign-in';
+import { ProfileSettingsPage, SignInPage } from '../../pages';
 
 // Traces to: L2-PLATFORM-002
 test('a user updates their profile and sees a confirmation', async ({ page, request }) => {
   const creds = await registerYouth(request, 'profile');
-  await signIn(page, creds);
-  await page.goto('/settings/profile');
+  await new SignInPage(page).signIn(creds);
 
-  await page.getByLabel('Display name').fill('Sam the Leader');
-  await page.getByLabel('Pronouns').fill('they/them');
-  await page.getByRole('button', { name: /save profile/i }).click();
+  const profile = new ProfileSettingsPage(page);
+  await profile.goto();
 
-  await expect(page.getByText(/profile updated/i)).toBeVisible();
+  await profile.displayName.fill('Sam the Leader');
+  await profile.pronouns.fill('they/them');
+  await profile.saveProfileButton.click();
+
+  await expect(profile.profileUpdatedToast).toBeVisible();
 });
 
 // Traces to: L2-PLATFORM-002
@@ -21,22 +23,22 @@ test('change-password enforces policy and blocks mismatches client-side', async 
   request,
 }) => {
   const creds = await registerYouth(request, 'changepw');
-  await signIn(page, creds);
-  await page.goto('/settings/profile');
+  await new SignInPage(page).signIn(creds);
 
-  const change = page.getByRole('button', { name: /change password/i });
+  const profile = new ProfileSettingsPage(page);
+  await profile.goto();
 
-  await page.getByLabel('Current password').fill(creds.password);
-  await page.getByLabel('New password', { exact: true }).fill('short');
-  await page.getByLabel('Confirm new password', { exact: true }).fill('short');
-  await expect(page.getByText(/at least 8 characters/i)).toBeVisible();
-  await expect(change).toBeDisabled();
+  await profile.currentPassword.fill(creds.password);
+  await profile.newPassword.fill('short');
+  await profile.confirmNewPassword.fill('short');
+  await expect(profile.passwordPolicyHint).toBeVisible();
+  await expect(profile.changePasswordButton).toBeDisabled();
 
-  await page.getByLabel('New password', { exact: true }).fill('NewPassword9');
-  await page.getByLabel('Confirm new password', { exact: true }).fill('Mismatch9');
-  await expect(page.getByText(/do not match/i)).toBeVisible();
-  await expect(change).toBeDisabled();
+  await profile.newPassword.fill('NewPassword9');
+  await profile.confirmNewPassword.fill('Mismatch9');
+  await expect(profile.passwordMismatchError).toBeVisible();
+  await expect(profile.changePasswordButton).toBeDisabled();
 
-  await page.getByLabel('Confirm new password', { exact: true }).fill('NewPassword9');
-  await expect(change).toBeEnabled();
+  await profile.confirmNewPassword.fill('NewPassword9');
+  await expect(profile.changePasswordButton).toBeEnabled();
 });

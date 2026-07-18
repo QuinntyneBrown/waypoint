@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { registerYouth } from '../../support/api';
-import { signIn } from '../../support/sign-in';
+import { SignInPage, YouthHomePage } from '../../pages';
 
 // Traces to: L2-PLATFORM-011
 test('an unplaced youth sees the no-cohort state on home with a message-mentor path', async ({
@@ -9,9 +9,10 @@ test('an unplaced youth sees the no-cohort state on home with a message-mentor p
 }) => {
   // Register-created youth are never placed in a cohort.
   const creds = await registerYouth(request, 'nocohort');
-  await signIn(page, creds);
-  await expect(page).toHaveURL(/\/youth\/home/);
+  await new SignInPage(page).signIn(creds);
 
-  await expect(page.getByRole('heading', { name: /not in a cohort yet/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /message your mentor/i })).toBeVisible();
+  const home = new YouthHomePage(page);
+  await expect(page).toHaveURL(YouthHomePage.urlPattern);
+  await expect(home.noCohortHeading).toBeVisible();
+  await expect(home.messageMentorLink).toBeVisible();
 });

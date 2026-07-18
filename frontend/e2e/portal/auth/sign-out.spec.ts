@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { registerYouth } from '../../support/api';
-import { signIn } from '../../support/sign-in';
+import { SignInPage, YouthHomePage } from '../../pages';
 
 // Traces to: L2-AUTH-007
 test('sign-out fully tears down the session and blocks protected pages', async ({
@@ -8,11 +8,14 @@ test('sign-out fully tears down the session and blocks protected pages', async (
   request,
 }) => {
   const creds = await registerYouth(request, 'signout');
-  await signIn(page, creds);
-  await expect(page).toHaveURL(/\/youth\/home/);
+  const signInPage = new SignInPage(page);
+  await signInPage.signIn(creds);
+
+  const home = new YouthHomePage(page);
+  await expect(page).toHaveURL(YouthHomePage.urlPattern);
 
   // Sign out from the shell (sidenav foot control).
-  await page.getByRole('button', { name: 'Sign out' }).click();
+  await home.shell.signOut();
   await expect(page).toHaveURL(/\/auth\/sign-in/);
 
   // No account data remains: the session storage is purged and a protected page
@@ -22,6 +25,6 @@ test('sign-out fully tears down the session and blocks protected pages', async (
   );
   expect(stored).toBeNull();
 
-  await page.goto('/youth/home');
+  await home.goto();
   await expect(page).toHaveURL(/\/auth\/sign-in/);
 });
