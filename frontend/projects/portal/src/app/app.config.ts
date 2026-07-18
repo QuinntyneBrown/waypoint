@@ -7,6 +7,7 @@ import {
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { authInterceptor, provideWuAuth } from '@wu/auth';
 import { routes } from './app.routes';
+import { apiStateInterceptor } from './api-state.interceptor';
 import { maintenanceInterceptor } from './maintenance.interceptor';
 
 export const appConfig: ApplicationConfig = {
@@ -14,7 +15,9 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(withInterceptors([authInterceptor, maintenanceInterceptor])),
+    provideHttpClient(
+      withInterceptors([authInterceptor, apiStateInterceptor, maintenanceInterceptor]),
+    ),
     provideWuAuth(),
   ],
 };

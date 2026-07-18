@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WordUp.Application.Shared.Abstractions;
+using WordUp.Api.Observability;
 
 namespace WordUp.IntegrationTests;
 
@@ -36,6 +37,8 @@ public sealed class SqlServerWebAppFactory : WebApplicationFactory<Program>
 
     /// <summary>Captured outbound emails (invitation / reset tokens are delivered only by email).</summary>
     public CapturingEmailSender Emails => Services.GetRequiredService<CapturingEmailSender>();
+    public CapturingExceptionAlertSink ExceptionAlerts =>
+        Services.GetRequiredService<CapturingExceptionAlertSink>();
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -61,6 +64,10 @@ public sealed class SqlServerWebAppFactory : WebApplicationFactory<Program>
             services.RemoveAll<IEmailSender>();
             services.AddSingleton<CapturingEmailSender>();
             services.AddSingleton<IEmailSender>(sp => sp.GetRequiredService<CapturingEmailSender>());
+            services.RemoveAll<IExceptionAlertSink>();
+            services.AddSingleton<CapturingExceptionAlertSink>();
+            services.AddSingleton<IExceptionAlertSink>(sp =>
+                sp.GetRequiredService<CapturingExceptionAlertSink>());
         });
     }
 }

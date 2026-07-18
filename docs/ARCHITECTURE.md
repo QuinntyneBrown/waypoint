@@ -98,6 +98,13 @@ The system models youth applications, guardian information, consent, and audit r
 
 `frontend/` is an Angular 21 workspace with two applications — `portal` (the authenticated SPA for all signed-in roles) and `public-site` (SSR/prerendered marketing + anonymous application intake) — over shared `wu-ui` (design system), `wu-api` (typed API client), and `wu-auth` (session, rotating-refresh, guards) libraries. Both apps consume the API through a same-origin dev-server proxy and preserve the server-authoritative permission and safeguarding model — guards and hidden nav are presentational only. The implemented scope is **Tier A**: surfaces provable end-to-end against today's API with a register-created Youth (auth, onboarding, consent gate, intake, settings/preferences, states); Admin/Mentor/Guardian/Volunteer surfaces are **Tier B**, deferred until those identities are API-reachable (see `docs/frontend-implementation-plan.md`). Acceptance coverage is a Playwright suite (real API + both apps), each spec traced to an L2 requirement; see [DECISIONS.md](DECISIONS.md) #9.
 
+The two apps have an explicit navigation boundary. Same-origin production defaults place the public
+site at `/` and the portal at `/portal`; deployments on separate origins replace each app's
+`runtime-config.js` and set `window.__WORD_UP_CONFIG__.portalBaseUrl` or `publicSiteBaseUrl`.
+Local development resolves the sibling apps on ports 4200 and 4201. Dynamic public SSR routes can
+call a private API origin through `WORD_UP_API_BASE_URL`, while browser API requests remain
+same-origin.
+
 `docs/mocks/` contains the current responsive interaction reference: a product map, a living style guide, shared assets, templates, and role-specific screens. The mocks are intentionally framework-free and run directly from the filesystem. They contain fictional data and must not be mistaken for the production application.
 
 ## Testing strategy

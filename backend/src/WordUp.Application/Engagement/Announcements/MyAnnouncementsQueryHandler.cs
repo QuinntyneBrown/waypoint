@@ -49,11 +49,14 @@ public class MyAnnouncementsQueryHandler : IRequestHandler<MyAnnouncementsQuery,
     }
 
     // Role targeting values a given role is allowed to see (ENGAGE-006).
-    internal static string[] TargetsForRole(string role) => role switch
+    // List<T>.Contains remains a parameterized SQL IN expression on all supported runtimes. Using
+    // an array here can bind to the newer ReadOnlySpan overload and fail during EF parameter
+    // extraction on preview runtimes.
+    internal static List<string> TargetsForRole(string role) => role switch
     {
-        Roles.Youth => new[] { "Youth", "YouthGuardians", "Everyone" },
-        Roles.Guardian => new[] { "Guardians", "YouthGuardians", "Everyone" },
-        Roles.Mentor => new[] { "Mentors", "Everyone" },
-        _ => new[] { "Everyone" },
+        Roles.Youth => new List<string> { "Youth", "YouthGuardians", "Everyone" },
+        Roles.Guardian => new List<string> { "Guardians", "YouthGuardians", "Everyone" },
+        Roles.Mentor => new List<string> { "Mentors", "Everyone" },
+        _ => new List<string> { "Everyone" },
     };
 }

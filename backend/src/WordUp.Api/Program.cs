@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WordUp.Api.Authorization;
 using WordUp.Api.Middleware;
+using WordUp.Api.Observability;
 using WordUp.Api.Realtime;
 using WordUp.Application;
 using WordUp.Application.Shared.Abstractions;
@@ -23,6 +24,7 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
+builder.Services.AddSingleton<IExceptionAlertSink, LoggingExceptionAlertSink>();
 builder.Services.AddEndpointsApiExplorer();
 
 // Near-real-time delivery hub + its Application-facing port (L2-NFR-005).
@@ -136,6 +138,9 @@ if (!builder.Environment.IsEnvironment("Testing"))
 
 var app = builder.Build();
 
+// Establish one validated correlation id before any response or exception path is handled.
+app.UseMiddleware<CorrelationIdMiddleware>();
+
 // First in the pipeline so security headers cover every response, including the exception (500) and
 // maintenance (503) short-circuits below (L2-NFR-002 AC3).
 app.UseMiddleware<SecurityHeadersMiddleware>();
@@ -146,6 +151,9 @@ app.UseExceptionHandler(handler =>
     {
         var feature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
         var ex = feature?.Error;
+        // ExceptionHandler clears the original response before running this branch, so restore the
+        // correlation header established by CorrelationIdMiddleware.
+        context.Response.Headers[CorrelationIdMiddleware.HeaderName] = context.TraceIdentifier;
 
         if (ex is ValidationException vex)
         {
@@ -173,7 +181,25 @@ app.UseExceptionHandler(handler =>
         }
 
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        await context.Response.WriteAsJsonAsync(new { title = "An unexpected error occurred." });
+        var correlationId = context.TraceIdentifier;
+        var logger = context.RequestServices.GetRequiredService<ILoggerFactory>()
+            .CreateLogger("WordUp.Api.UnhandledException");
+        logger.LogError(
+            ex,
+            "Unhandled API exception. CorrelationId={CorrelationId} Method={Method} Path={Path}",
+            correlationId,
+            context.Request.Method,
+            context.Request.Path);
+        await context.RequestServices.GetRequiredService<IExceptionAlertSink>().NotifyAsync(
+            ex ?? new InvalidOperationException("Unknown unhandled exception."),
+            correlationId,
+            context.Request.Method,
+            context.Request.Path);
+        await context.Response.WriteAsJsonAsync(new
+        {
+            title = "An unexpected error occurred.",
+            correlationId,
+        });
     });
 });
 

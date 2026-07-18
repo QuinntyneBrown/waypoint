@@ -45,12 +45,12 @@ requirement conflicts early (they gate "done").
 
 ## Phase B — Cross-app navigation & error/state wiring (small, high-leverage)
 
-- [ ] **B1 · Cross-app Sign in** — public "Sign in" opens the portal app across the deploy
+- [x] **B1 · Cross-app Sign in** — public "Sign in" opens the portal app across the deploy
       boundary; all public CTAs navigate correctly. `L2-PUB-001` AC3.
-- [ ] **B2 · Signed-out help links** — account-locked "Contact your mentor" and
+- [x] **B2 · Signed-out help links** — account-locked "Contact your mentor" and
       account-deactivated "Contact the director" target an anonymous route, not `/support`.
       `L2-AUTH-006`, `L2-PLATFORM-010`.
-- [ ] **B3 · Global API-error → state pages** — map API 403/404/500 to the 403/404/500 state
+- [x] **B3 · Global API-error → state pages** — map API 403/404/500 to the 403/404/500 state
       pages; 500 preserves in-progress form data; 500 handler logs/alerts with correlation id.
       `L2-PLATFORM-006/007/008`, `L2-NFR-011`.
 
@@ -196,6 +196,9 @@ requirement conflicts early (they gate "done").
 - 2026-07-18 — A4/A5 done: public marketing pages now render the authoritative content payload,
   `/about` lists privacy-safe current cohorts, and intake persists who submitted it plus cohort
   interest with end-to-end validation.
-- Note: 4 pre-existing Announcement integration tests fail locally under the InMemory-DB
-  fallback (LocalDB unavailable in this environment); confirmed failing at HEAD, unrelated to
-  this work. They are expected to pass against real SQL Server in CI.
+- 2026-07-18 — B1/B2/B3 done: runtime-configured links cross the public/portal boundary, signed-out
+  recovery links reach anonymous contact, API 403/404/500 responses map to shared states, transient
+  form drafts recover after a 500, and error responses/log alerts carry correlation IDs.
+- 2026-07-18 — Removed the local announcement-suite exception: role-target filtering now uses an
+  EF-translatable list on the preview runtime. All 141 backend integration tests pass with the
+  environment's InMemory fallback.

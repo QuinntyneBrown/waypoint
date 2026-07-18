@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { registerYouth } from '../../support/api';
-import { AccountLockedPage, SignInPage } from '../../pages';
+import { AccountLockedPage, ContactPage, SignInPage } from '../../pages';
 
 // Traces to: L2-AUTH-006
 test('five failed sign-ins lock the account and show the locked state', async ({
@@ -30,4 +30,8 @@ test('five failed sign-ins lock the account and show the locked state', async ({
   await expect(locked.lockoutDurationText).toBeVisible();
   await expect(locked.resetPasswordLink).toBeVisible();
   await expect(locked.contactMentorLink).toBeVisible();
+
+  await locked.contactMentorLink.click();
+  await expect(page).toHaveURL('http://localhost:4201/contact');
+  await expect(new ContactPage(page).heading).toBeVisible();
 });

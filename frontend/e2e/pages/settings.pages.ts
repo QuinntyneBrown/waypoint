@@ -127,6 +127,9 @@ export class SupportPage extends BasePage {
   get message() {
     return this.page.getByLabel(/how can we help/i);
   }
+  get replyToEmail() {
+    return this.page.getByLabel(/reply-to email/i);
+  }
   get sendButton() {
     return this.page.getByRole('button', { name: /send message/i });
   }

@@ -62,6 +62,22 @@ export class AccountLockedPage extends BasePage {
   }
 }
 
+/** `/auth/account-deactivated` — rejected sign-in with an anonymous recovery path. */
+export class AccountDeactivatedPage extends BasePage {
+  static readonly path = '/auth/account-deactivated';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: /account is inactive/i });
+  }
+  get contactDirectorLink() {
+    return this.page.getByRole('link', { name: /contact the director/i });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(AccountDeactivatedPage.path);
+  }
+}
+
 /** `/auth/forgot-password` — request a reset link. */
 export class ForgotPasswordPage extends BasePage {
   static readonly path = '/auth/forgot-password';

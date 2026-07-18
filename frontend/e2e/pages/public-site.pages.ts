@@ -132,7 +132,9 @@ export class ApplyPage extends BasePage {
    * when driving from a project whose baseURL is a different app (portal-xs).
    */
   async goto(origin = ''): Promise<void> {
-    await this.page.goto(`${origin}${ApplyPage.path}`);
+    // The public app is SSR + hydrated. Wait for browser bundles to settle so form events are
+    // attached before tests interact with controls rendered in the server response.
+    await this.page.goto(`${origin}${ApplyPage.path}`, { waitUntil: 'networkidle' });
   }
 
   /** Toggle the participation-consent acknowledgement via its custom checkbox. */
@@ -153,6 +155,9 @@ export class ApplyPage extends BasePage {
 export class ContactPage extends BasePage {
   static readonly path = '/contact';
 
+  get heading() {
+    return this.page.getByRole('heading', { name: /get in touch/i });
+  }
   get name() {
     return this.page.getByLabel('Your name');
   }

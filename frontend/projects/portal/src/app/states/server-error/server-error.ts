@@ -1,8 +1,8 @@
-import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthStore, roleHome } from '@wu/auth';
 import { WuStatePage } from '@wu/ui';
+import { FormDraftService } from '../../form-draft.service';
 
 // Traces to: L2-PLATFORM-008
 @Component({
@@ -21,12 +21,16 @@ import { WuStatePage } from '@wu/ui';
   </wu-state-page>`,
 })
 export class ServerError {
-  private readonly doc = inject(DOCUMENT);
   private readonly auth = inject(AuthStore);
+  private readonly router = inject(Router);
+  private readonly drafts = inject(FormDraftService);
   protected readonly home = this.auth.isAuthenticated()
     ? roleHome(this.auth.role())
     : '/auth/sign-in';
   protected retry(): void {
-    this.doc.defaultView?.location.reload();
+    const target = this.drafts.draftUrl() ?? this.home;
+    void this.router.navigateByUrl(target).then(() => {
+      setTimeout(() => this.drafts.restoreAndClear());
+    });
   }
 }

@@ -16,3 +16,20 @@ export class NotFoundPage extends BasePage {
     await this.page.goto(path);
   }
 }
+
+/** API 403 state. */
+export class ForbiddenPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: /don.t have access/i });
+  }
+}
+
+/** API 500 state with retry/draft recovery. */
+export class ServerErrorPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: /something went wrong/i });
+  }
+  get retryButton() {
+    return this.page.getByRole('button', { name: /try again/i });
+  }
+}

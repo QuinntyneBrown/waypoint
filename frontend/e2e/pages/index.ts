@@ -6,6 +6,7 @@ export { PortalAppPage } from './app.page';
 export {
   SignInPage,
   AccountLockedPage,
+  AccountDeactivatedPage,
   ForgotPasswordPage,
   ResetLinkSentPage,
   ResetPasswordPage,
@@ -20,7 +21,7 @@ export {
   SupportPage,
 } from './settings.pages';
 export { YouthHomePage, YouthAnnouncementsPage, YouthNotificationsPage } from './youth.pages';
-export { NotFoundPage } from './states.pages';
+export { ForbiddenPage, NotFoundPage, ServerErrorPage } from './states.pages';
 export { VolunteerTodayPage, VolunteerSchedulePage } from './volunteer.pages';
 export { PeopleDirectoryPage, ApplicationsListPage } from './admin.pages';
 export {

@@ -26,3 +26,14 @@ test('the landing page renders for anonymous visitors with journey, impact and C
   await landing.applyCta.click();
   await expect(page).toHaveURL(new RegExp(ApplyPage.path));
 });
+
+// Traces to: L2-PUB-001
+test('Sign in crosses from the public app to the portal app', async ({ page }) => {
+  const landing = new LandingPage(page);
+  await landing.goto();
+
+  await landing.signInLink.click();
+
+  await expect(page).toHaveURL('http://localhost:4200/auth/sign-in');
+  await expect(page.getByRole('heading', { name: /welcome back/i })).toBeVisible();
+});
