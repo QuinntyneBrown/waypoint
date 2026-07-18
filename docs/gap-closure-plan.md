@@ -85,7 +85,8 @@ requirement conflicts early (they gate "done").
 
 ## Phase E — Youth learning & engagement
 
-- [ ] **E1** Curriculum/track browser `L2-LEARN-001`
+- [x] **E1** Curriculum/track browser `L2-LEARN-001` — enrolled-only track switching,
+      published module map, ordered lesson/quiz gates, prerequisite explanations, and empty state.
 - [ ] **E2** Module & lesson reader (+ youth lesson-content read API) `L2-LEARN-002`
 - [ ] **E3** Reflection editor (+ read/restore API, draft) `L2-LEARN-003`, `L2-NFR-007`
 - [ ] **E4** Quiz intro & attempt (one-question, autosave/resume) `L2-LEARN-004`
@@ -189,6 +190,8 @@ requirement conflicts early (they gate "done").
 - [x] **Guardian family + email fixtures** — Testing-only family seeding covers aggregate, empty,
       consented, and consent-required states; the Testing-only email sink lets Playwright follow the
       delivered one-time link without exposing capability tokens in product responses.
+- [x] **Youth curriculum fixture** — Testing-only multi-track enrollment data covers published/draft
+      filtering, ordered lesson/quiz gates, prerequisite locking, progress, and an empty enrolled track.
 
 ## Progress log
 
@@ -213,3 +216,6 @@ requirement conflicts early (they gate "done").
   targeted news, contact/media management, consent receipts/copies/withdrawal, and responsive mobile
   paths. Blocked youth can deliver a hashed, expiring, one-time consent link; public typed e-signature
   capture emails a receipt and unblocks participation on the next server-authoritative access check.
+- 2026-07-18 — E1 done: youth curriculum now discovers only enrolled published tracks, switches
+  tracks, shows ordered per-item and per-module progress/gates with explanations, denies cross-track
+  and locked direct requests server-side, and is verified at desktop and mobile keyboard seams.

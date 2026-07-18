@@ -40,6 +40,14 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
 
         var module = await _db.Modules.FirstOrDefaultAsync(m => m.Id == lesson.ModuleId, cancellationToken)
             ?? throw new NotFoundException("Module not found.");
+        var enrolledTrackIds = await CurriculumProgressCalculator.ResolveYouthTrackIdsAsync(
+            _db,
+            youthId,
+            cancellationToken);
+        if (module.Status != PublishStatus.Published || !enrolledTrackIds.Contains(module.TrackId))
+        {
+            throw new ForbiddenException("This lesson is locked.");
+        }
 
         // The module must not be locked (its prerequisite must be complete for this youth).
         if (module.PrerequisiteModuleId is { } prereqId

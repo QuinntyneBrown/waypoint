@@ -15,6 +15,13 @@ public class YouthCurriculumController : ControllerBase
 
     public YouthCurriculumController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("curriculum")]
+    public async Task<ActionResult<CurriculumView>> Browse(CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new BrowseCurriculumQuery(), cancellationToken);
+        return Ok(result);
+    }
+
     [HttpGet("curriculum/{trackId:guid}")]
     public async Task<ActionResult<CurriculumView>> Browse(Guid trackId, CancellationToken cancellationToken)
     {
@@ -27,6 +34,13 @@ public class YouthCurriculumController : ControllerBase
     {
         await _mediator.Send(new CompleteLessonCommand(id), cancellationToken);
         return NoContent();
+    }
+
+    [HttpGet("lessons/{id:guid}")]
+    public async Task<ActionResult<LessonView>> Lesson(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new LessonQuery(id), cancellationToken);
+        return Ok(result);
     }
 
     [HttpPut("lessons/{id:guid}/reading-state")]

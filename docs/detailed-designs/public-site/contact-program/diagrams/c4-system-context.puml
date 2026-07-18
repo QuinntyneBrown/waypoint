@@ -1,31 +1,13 @@
 @startuml
-left to right direction
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
 title C4 level 1 — Contact the program — system context
-skinparam backgroundColor #FFFFFF
-skinparam shadowing false
-skinparam roundcorner 12
-skinparam defaultFontName Arial
-skinparam ArrowColor #344054
-skinparam rectangle {
-  BorderColor #344054
-  FontColor #101828
-}
-skinparam package {
-  BorderColor #667085
-  FontColor #101828
-  BackgroundColor #F9FAFB
-}
-actor "Anonymous visitor\n[Person]" as primary #E0F2FE
-actor "Program staff\n[Person]" as staff #E0F2FE
-rectangle "Word Up software system\n[Software system]\nYouth leadership, learning, mentoring, and program operations" as wordup #D1FADF
-rectangle "Email delivery service\n[External software system]" as ext1 #FFF4E5
-primary --> wordup : An anonymous visitor starts this feature interaction through the Public…
-staff --> wordup : Administers authorized program activity
-wordup --> ext1 : Exchanges email delivery data
-legend right
-  |= Element |= C4 meaning |
-  | Person | Human role outside the software boundary |
-  | Software system | Word Up entity of interest |
-  | External software system | Independently operated dependency |
-endlegend
+Person(primary, "Anonymous visitor", "Human role outside the software boundary")
+Person(staff, "Program staff", "Administers authorized program activity")
+System(wordup, "Word Up software system", "Youth leadership, learning, mentoring, and program operations")
+System_Ext(ext1, "Email delivery service", "Independently operated dependency")
+Rel(primary, wordup, "An anonymous visitor starts this feature interaction through the Public…")
+Rel(staff, wordup, "Administers authorized program activity")
+Rel(wordup, ext1, "Exchanges email delivery data")
+SHOW_LEGEND()
 @enduml

@@ -1,0 +1,125 @@
+<wu-shell
+  role="youth"
+  active="curriculum"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Learning</div>
+        <h1 class="wu-page__title">Curriculum</h1>
+        <p class="wu-page__sub">Follow your modules in order and see what unlocks next.</p>
+      </div>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+
+    @if (curriculum(); as view) {
+      @if (view.tracks.length > 1) {
+        <div class="wu-stack">
+          <h2 class="wu-card__title">Your tracks</h2>
+          <div class="wu-cluster" aria-label="Choose curriculum track">
+            @for (track of view.tracks; track track.trackId) {
+              <button
+                class="wu-btn"
+                type="button"
+                data-testid="curriculum-track"
+                [class.wu-btn--primary]="track.selected"
+                [class.wu-btn--ghost]="!track.selected"
+                [attr.aria-pressed]="track.selected"
+                [disabled]="switching()"
+                (click)="switchTrack(track.trackId)"
+              >
+                {{ track.name }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      @if (view.modules.length === 0) {
+        <div class="wu-empty">
+          <div class="wu-empty__icon">
+            <svg class="wu-icon" aria-hidden="true"><use href="#i-book-open"></use></svg>
+          </div>
+          <h2 class="wu-empty__title">This track is not set up yet</h2>
+          <p class="wu-empty__text">Published modules will appear here when they are ready.</p>
+        </div>
+      } @else {
+        <div class="wu-stack">
+          @for (module of view.modules; track module.moduleId) {
+            <section class="wu-card" data-testid="curriculum-module">
+              <div class="wu-card__body wu-stack">
+                <div class="wu-cluster wu-cluster--between">
+                  <div>
+                    <div class="wu-eyebrow">Module {{ module.order }}</div>
+                    <h2 class="wu-card__title">{{ module.name }}</h2>
+                  </div>
+                  <span
+                    class="wu-badge"
+                    [class.wu-badge--success]="module.status === 'done'"
+                    [class.wu-badge--warning]="module.status === 'in-progress'"
+                  >
+                    {{
+                      module.locked ? 'Locked' : (module.completionPercent | number: '1.0-0') + '%'
+                    }}
+                  </span>
+                </div>
+                @if (module.description) {
+                  <p>{{ module.description }}</p>
+                }
+                @if (module.scriptureAnchor) {
+                  <p class="wu-muted">Scripture anchor: {{ module.scriptureAnchor }}</p>
+                }
+                @if (module.unlockCondition) {
+                  <p class="wu-alert wu-alert--info">{{ module.unlockCondition }}</p>
+                }
+
+                @if (module.items.length > 0) {
+                  <ol class="wu-stack">
+                    @for (item of module.items; track item.itemId) {
+                      <li class="wu-card wu-card--greige" data-testid="curriculum-item">
+                        <div class="wu-card__body wu-cluster wu-cluster--between">
+                          <div>
+                            @if (!item.locked) {
+                              <a
+                                [routerLink]="
+                                  item.type === 'lesson'
+                                    ? ['/youth/lessons', item.itemId]
+                                    : ['/youth/quizzes', item.itemId]
+                                "
+                              >
+                                <strong>{{ item.title }}</strong>
+                              </a>
+                            } @else {
+                              <strong>{{ item.title }}</strong>
+                            }
+                            <p class="wu-muted">
+                              {{ item.type === 'lesson' ? 'Lesson' : 'Quiz' }}
+                              @if (item.estimatedMinutes) {
+                                · {{ item.estimatedMinutes }} min
+                              }
+                            </p>
+                            @if (item.unlockCondition) {
+                              <span class="wu-muted">{{ item.unlockCondition }}</span>
+                            }
+                          </div>
+                          <span class="wu-badge">{{ item.locked ? 'Locked' : item.status }}</span>
+                        </div>
+                      </li>
+                    }
+                  </ol>
+                }
+              </div>
+            </section>
+          }
+        </div>
+      }
+    } @else {
+      <p class="wu-muted">Loading curriculum…</p>
+    }
+  </div>
+</wu-shell>

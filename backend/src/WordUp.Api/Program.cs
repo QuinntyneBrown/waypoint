@@ -575,6 +575,165 @@ if (app.Environment.IsEnvironment("Testing"))
             : Results.Ok(new { email.To, email.Subject, email.Body });
     });
 
+    // Rich youth curriculum fixture: two explicit enrollments, ordered lesson/quiz gating, a locked
+    // prerequisite module, and an empty secondary track. Production enrollment remains admin-owned.
+    app.MapPost("/api/_test/youth-curriculum", async (
+        IAppDbContext db,
+        IPasswordHasher hasher,
+        IClock clock,
+        CancellationToken cancellationToken) =>
+    {
+        var suffix = Guid.NewGuid().ToString("N")[..8];
+        var now = clock.UtcNow;
+        const string youthPassword = "Password123";
+        var primaryTrackName = $"Bible Foundations {suffix}";
+        var secondTrackName = $"Leadership Practice {suffix}";
+        var firstModuleName = $"Foundations {suffix}";
+        var lockedModuleName = $"Deeper Practice {suffix}";
+        var firstLessonTitle = $"Welcome to the Word {suffix}";
+        var secondLessonTitle = $"Living the Word {suffix}";
+
+        var guardian = new User
+        {
+            Email = $"curriculum-guardian-{suffix}@wordup.test",
+            DisplayName = $"Curriculum Guardian {suffix}",
+            Role = Roles.Guardian,
+            Status = UserStatus.Active,
+            PasswordHash = hasher.Hash(youthPassword),
+            OnboardingCompleted = true,
+        };
+        var primaryTrack = new Track
+        {
+            Name = primaryTrackName,
+            Key = $"curriculum-primary-{suffix}",
+            Description = "The primary enrolled learning track.",
+            Status = PublishStatus.Published,
+        };
+        var secondTrack = new Track
+        {
+            Name = secondTrackName,
+            Key = $"curriculum-secondary-{suffix}",
+            Description = "A second enrolled track awaiting content.",
+            Status = PublishStatus.Published,
+        };
+        var firstModule = new Module
+        {
+            TrackId = primaryTrack.Id,
+            Name = firstModuleName,
+            Description = "Begin with scripture and everyday practice.",
+            ScriptureAnchor = "Mark 10:45",
+            Order = 1,
+            Status = PublishStatus.Published,
+        };
+        var lockedModule = new Module
+        {
+            TrackId = primaryTrack.Id,
+            Name = lockedModuleName,
+            Description = "Build on the foundations module.",
+            Order = 2,
+            Status = PublishStatus.Published,
+            PrerequisiteModuleId = firstModule.Id,
+        };
+        var draftModule = new Module
+        {
+            TrackId = primaryTrack.Id,
+            Name = "Draft module",
+            Order = 99,
+            Status = PublishStatus.Draft,
+        };
+        var firstLesson = new Lesson
+        {
+            ModuleId = firstModule.Id,
+            Title = firstLessonTitle,
+            EstimatedMinutes = 12,
+            Order = 1,
+            Status = PublishStatus.Published,
+        };
+        var secondLesson = new Lesson
+        {
+            ModuleId = firstModule.Id,
+            Title = secondLessonTitle,
+            EstimatedMinutes = 15,
+            Order = 2,
+            Status = PublishStatus.Published,
+        };
+        var quiz = new Quiz
+        {
+            ModuleId = firstModule.Id,
+            PassMark = 70,
+            AttemptsAllowed = 2,
+            RequiredToCompleteModule = true,
+        };
+        var cohort = new Cohort
+        {
+            Name = $"Curriculum Cohort {suffix}",
+            TrackId = primaryTrack.Id,
+            TermStart = now.Date.AddDays(-30),
+            TermEnd = now.Date.AddDays(120),
+        };
+        var youth = new User
+        {
+            Email = $"curriculum-youth-{suffix}@wordup.test",
+            DisplayName = $"Curriculum Youth {suffix}",
+            Role = Roles.Youth,
+            Status = UserStatus.Active,
+            PasswordHash = hasher.Hash(youthPassword),
+            OnboardingCompleted = true,
+            CohortId = cohort.Id,
+            GuardianUserId = guardian.Id,
+        };
+
+        db.Users.AddRange(guardian, youth);
+        db.Tracks.AddRange(primaryTrack, secondTrack);
+        db.Modules.AddRange(firstModule, lockedModule, draftModule);
+        db.Lessons.AddRange(firstLesson, secondLesson);
+        db.Quizzes.Add(quiz);
+        db.Cohorts.Add(cohort);
+        db.YouthTrackEnrollments.Add(new YouthTrackEnrollment
+        {
+            YouthUserId = youth.Id,
+            TrackId = secondTrack.Id,
+            EnrolledAt = now,
+        });
+        db.LessonProgress.Add(new LessonProgress
+        {
+            YouthUserId = youth.Id,
+            LessonId = firstLesson.Id,
+            Status = ProgressStatus.Completed,
+            CompletedAt = now.AddDays(-1),
+            UpdatedAt = now.AddDays(-1),
+        });
+        db.GuardianConsents.Add(new GuardianConsent
+        {
+            YouthUserId = youth.Id,
+            GuardianUserId = guardian.Id,
+            GuardianName = guardian.DisplayName,
+            Relationship = "Parent",
+            ParticipationConsent = true,
+            Signature = guardian.DisplayName,
+            ReferenceId = $"CURRIC-{suffix.ToUpperInvariant()}",
+            SignedAt = now.AddDays(-5),
+            ValidFrom = now.AddDays(-5),
+            ValidUntil = now.AddMonths(6),
+        });
+        await db.SaveChangesAsync(cancellationToken);
+
+        return Results.Created($"/api/me/curriculum/{primaryTrack.Id}", new
+        {
+            youthId = youth.Id,
+            youthEmail = youth.Email,
+            youthPassword,
+            primaryTrackId = primaryTrack.Id,
+            primaryTrackName,
+            secondTrackId = secondTrack.Id,
+            secondTrackName,
+            firstModuleName,
+            lockedModuleName,
+            firstLessonTitle,
+            secondLessonTitle,
+        });
+    });
+
     // Public-content E2E needs published curriculum and a privacy-safe cohort, but those records
     // cannot yet be assembled entirely through product APIs (track publishing and badge target
     // rules are still later curriculum-authoring slices). Keep this seed behind Testing only.

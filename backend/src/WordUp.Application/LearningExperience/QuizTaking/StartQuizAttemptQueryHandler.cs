@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
+using WordUp.Application.LearningExperience.YouthCurriculum;
 
 namespace WordUp.Application.LearningExperience.QuizTaking;
 
@@ -24,6 +25,33 @@ public class StartQuizAttemptQueryHandler : IRequestHandler<StartQuizAttemptQuer
 
         var quiz = await _db.Quizzes.FirstOrDefaultAsync(q => q.Id == request.QuizId, cancellationToken)
             ?? throw new NotFoundException("Quiz not found.");
+
+        if (quiz.ModuleId is { } moduleId)
+        {
+            var module = await _db.Modules.FirstOrDefaultAsync(item => item.Id == moduleId, cancellationToken)
+                ?? throw new NotFoundException("Module not found.");
+            var enrolledTrackIds = await CurriculumProgressCalculator.ResolveYouthTrackIdsAsync(
+                _db,
+                youthId,
+                cancellationToken);
+            if (module.Status != PublishStatus.Published || !enrolledTrackIds.Contains(module.TrackId))
+            {
+                throw new ForbiddenException("This quiz is locked.");
+            }
+
+            var moduleStatus = (await CurriculumProgressCalculator.BuildModuleStatusesAsync(
+                    _db,
+                    module.TrackId,
+                    youthId,
+                    cancellationToken))
+                .FirstOrDefault(item => item.ModuleId == module.Id);
+            var quizItem = moduleStatus?.Items.FirstOrDefault(item =>
+                item.Type == "quiz" && item.ItemId == quiz.Id);
+            if (moduleStatus is null || moduleStatus.Locked || quizItem is null || quizItem.Locked)
+            {
+                throw new ForbiddenException("This quiz is locked.");
+            }
+        }
 
         var attempts = await _db.QuizAttempts
             .Where(a => a.QuizId == quiz.Id && a.YouthUserId == youthId)

@@ -35,6 +35,7 @@ public interface IAppDbContext
 
     // Learning & mentoring (M3)
     DbSet<LessonProgress> LessonProgress { get; }
+    DbSet<YouthTrackEnrollment> YouthTrackEnrollments { get; }
     DbSet<LessonReadingState> LessonReadingStates { get; }
     DbSet<QuizAttempt> QuizAttempts { get; }
     DbSet<Submission> Submissions { get; }

@@ -16,7 +16,7 @@ skinparam package {
   BackgroundColor #F9FAFB
 }
 package "Frontend — Portal application" {
-  class "OfflineState" as page_OfflineState <<Angular component>> {
+  class "AttendanceQueueService" as page_AttendanceQueueService <<Angular component>> {
     +submit(): void
     +renderResult(): void
   }
@@ -45,7 +45,7 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "SyncAttendanceReliablyState" as entity_SyncAttendanceReliablyState <<domain type>>
 }
-page_OfflineState --> client_NonFunctionalApi : invokes
+page_AttendanceQueueService --> client_NonFunctionalApi : invokes
 client_NonFunctionalApi --> controller_NonFunctionalController : calls
 controller_NonFunctionalController ..> request_SyncAttendanceReliablyCommand : creates
 request_SyncAttendanceReliablyCommand --> handler_SyncAttendanceReliablyCommandHandler : dispatched to

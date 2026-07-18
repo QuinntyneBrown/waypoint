@@ -16,7 +16,7 @@ skinparam package {
   BackgroundColor #F9FAFB
 }
 package "Frontend — Portal application" {
-  class "YouthAnnouncements" as page_YouthAnnouncements <<Angular component>> {
+  class "AttendanceQueueService" as page_AttendanceQueueService <<Angular component>> {
     +submit(): void
     +renderResult(): void
   }
@@ -45,7 +45,7 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "CompetencyAssessment" as entity_CompetencyAssessment <<domain type>>
 }
-page_YouthAnnouncements --> client_MentoringApi : invokes
+page_AttendanceQueueService --> client_MentoringApi : invokes
 client_MentoringApi --> controller_CompetenciesController : calls
 controller_CompetenciesController ..> request_YouthCompetenciesQuery : creates
 request_YouthCompetenciesQuery --> handler_YouthCompetenciesQueryHandler : dispatched to

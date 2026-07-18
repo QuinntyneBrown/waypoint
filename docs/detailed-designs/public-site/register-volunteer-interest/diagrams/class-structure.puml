@@ -16,7 +16,7 @@ skinparam package {
   BackgroundColor #F9FAFB
 }
 package "Frontend — Public Site application" {
-  class "VolunteerSchedule" as page_VolunteerSchedule <<Angular component>> {
+  class "VolunteerAttendance" as page_VolunteerAttendance <<Angular component>> {
     +submit(): void
     +renderResult(): void
   }
@@ -45,7 +45,7 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "VolunteerSignup" as entity_VolunteerSignup <<domain type>>
 }
-page_VolunteerSchedule --> client_VolunteerApi : invokes
+page_VolunteerAttendance --> client_VolunteerApi : invokes
 client_VolunteerApi --> controller_PublicController : calls
 controller_PublicController ..> request_SubmitVolunteerSignupCommand : creates
 request_SubmitVolunteerSignupCommand --> handler_SubmitVolunteerSignupCommandHandler : dispatched to

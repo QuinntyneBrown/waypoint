@@ -16,7 +16,7 @@ skinparam package {
   BackgroundColor #F9FAFB
 }
 package "Frontend — Portal application" {
-  class "SessionExpired" as page_SessionExpired <<Angular component>> {
+  class "AttendanceQueueService" as page_AttendanceQueueService <<Angular component>> {
     +submit(): void
     +renderResult(): void
   }
@@ -45,7 +45,7 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "AttendanceRecord" as entity_AttendanceRecord <<domain type>>
 }
-page_SessionExpired --> client_EngagementApi : invokes
+page_AttendanceQueueService --> client_EngagementApi : invokes
 client_EngagementApi --> controller_AttendanceController : calls
 controller_AttendanceController ..> request_AttendanceHistoryBySessionQuery : creates
 request_AttendanceHistoryBySessionQuery --> handler_AttendanceHistoryBySessionQueryHandler : dispatched to

@@ -16,7 +16,7 @@ skinparam package {
   BackgroundColor #F9FAFB
 }
 package "Frontend — Portal application" {
-  class "AuthStore" as page_AuthStore <<Angular component>> {
+  class "AttendanceQueueService" as page_AttendanceQueueService <<Angular component>> {
     +load(): void
     +renderResult(): void
   }
@@ -45,7 +45,7 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "GuardianProfile" as entity_GuardianProfile <<domain type>>
 }
-page_AuthStore --> client_AuthApi : invokes
+page_AttendanceQueueService --> client_AuthApi : invokes
 client_AuthApi --> controller_GuardianController : calls
 controller_GuardianController ..> request_ChildProgressQuery : creates
 request_ChildProgressQuery --> handler_ChildProgressQueryHandler : dispatched to

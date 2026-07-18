@@ -1,114 +1,129 @@
-# Accept an invitation — Detailed design
+# Accept an invitation
 
 ## Overview
 
-Accept an invitation — vertical slice that refines `L2-AUTH-004` into one independently deliverable interaction. An invitee shall accept by setting display name + password; staff shall be able to resend and revoke invitations; expired/revoked links shall not work.
-
 Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Authentication and Access subsystem owns this feature slice.
+
+The Accept an invitation feature slice refines `L2-AUTH-004` into one independently deliverable interaction. An invitee shall accept by setting display name + password; staff shall be able to resend and revoke invitations; expired/revoked links shall not work.
 
 A program administrator or account holder starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The entity of interest (EoI) is the Word Up software system. This focused architecture description (AD) describes the Accept an invitation vertical slice and does not claim full conformance with 42010:2022.
+The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
-### Components, types, functions, and classes
+### Vertical slice boundary
 
-| Element | Kind | Source | Responsibility and public interface |
-| --- | --- | --- | --- |
-| `ConsentRequired` | Frontend page | [`../../../../frontend/projects/portal/src/app/states/consent-required/consent-required.ts`](../../../../frontend/projects/portal/src/app/states/consent-required/consent-required.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| `AuthStore` | Frontend page | [`../../../../frontend/projects/wu-auth/src/lib/auth-store.ts`](../../../../frontend/projects/wu-auth/src/lib/auth-store.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| `AuthApi` | Frontend API boundary | [`../../../../frontend/projects/wu-api/src/lib/services/auth-api.ts`](../../../../frontend/projects/wu-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| `InvitationsController` | API transport | [`../../../../backend/src/WordUp.Api/Controllers/Authentication/InvitationsController.cs`](../../../../backend/src/WordUp.Api/Controllers/Authentication/InvitationsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| `AcceptInviteCommand` | Application slice | [`../../../../backend/src/WordUp.Application/Authentication/Invitations/AcceptInviteCommand.cs`](../../../../backend/src/WordUp.Application/Authentication/Invitations/AcceptInviteCommand.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| `AcceptInviteCommandHandler` | Application slice | [`../../../../backend/src/WordUp.Application/Authentication/Invitations/AcceptInviteCommandHandler.cs`](../../../../backend/src/WordUp.Application/Authentication/Invitations/AcceptInviteCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| `AcceptInviteCommandValidator` | Application slice | [`../../../../backend/src/WordUp.Application/Authentication/Invitations/AcceptInviteCommandValidator.cs`](../../../../backend/src/WordUp.Application/Authentication/Invitations/AcceptInviteCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| `Invitation` | Domain state | [`../../../../backend/src/WordUp.Domain/Authentication/Invitation.cs`](../../../../backend/src/WordUp.Domain/Authentication/Invitation.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| `User` | Domain state | [`../../../../backend/src/WordUp.Domain/Authentication/User.cs`](../../../../backend/src/WordUp.Domain/Authentication/User.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| `InvitationStatus` | Domain state | [`../../../../backend/src/WordUp.Domain/Authentication/InvitationStatus.cs`](../../../../backend/src/WordUp.Domain/Authentication/InvitationStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| `UserStatus` | Domain state | [`../../../../backend/src/WordUp.Domain/Authentication/UserStatus.cs`](../../../../backend/src/WordUp.Domain/Authentication/UserStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| `NotFoundException` | Infrastructure and shared ports | [`../../../../backend/src/WordUp.Application/Shared/Common/NotFoundException.cs`](../../../../backend/src/WordUp.Application/Shared/Common/NotFoundException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Manage pending invitations is an adjacent feature slice that owns other outcomes within the same primary L2 capability.
 
-### Structure and relationships
+### Components and types
 
-- The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Manage pending invitations is an adjacent feature slice that owns other outcomes within the same primary L2 capability.
+A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
+
+| Layer | Components, types, and classes | Responsibility |
+| --- | --- | --- |
+| Frontend page | [`ConsentRequired`](../../../../frontend/projects/portal/src/app/states/consent-required/consent-required.ts)<br>[`AuthStore`](../../../../frontend/projects/wu-auth/src/lib/auth-store.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/wu-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`InvitationsController`](../../../../backend/src/WordUp.Api/Controllers/Authentication/InvitationsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`AcceptInviteCommand`](../../../../backend/src/WordUp.Application/Authentication/Invitations/AcceptInviteCommand.cs)<br>[`AcceptInviteCommandHandler`](../../../../backend/src/WordUp.Application/Authentication/Invitations/AcceptInviteCommandHandler.cs)<br>[`AcceptInviteCommandValidator`](../../../../backend/src/WordUp.Application/Authentication/Invitations/AcceptInviteCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`Invitation`](../../../../backend/src/WordUp.Domain/Authentication/Invitation.cs)<br>[`User`](../../../../backend/src/WordUp.Domain/Authentication/User.cs)<br>[`InvitationStatus`](../../../../backend/src/WordUp.Domain/Authentication/InvitationStatus.cs)<br>[`UserStatus`](../../../../backend/src/WordUp.Domain/Authentication/UserStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`NotFoundException`](../../../../backend/src/WordUp.Application/Shared/Common/NotFoundException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+
+### Functions and data flow
 
 - `ConsentRequired.submit()` starts the browser interaction and maintains presentation state.
-
 - `AuthApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
-
 - `InvitationsController.PostAsync()` applies transport policy and constructs `AcceptInviteCommand`.
-
 - `AcceptInviteCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Invitation`, and returns a typed result.
-
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-### Behaviour
+### Behavior
 
-1. A program administrator or account holder starts this feature interaction through the Portal application.
-
-2. The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-AUTH-004`, `L2-AUTH-008`, `L2-PLATFORM-011`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-
-3. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
+1. **Entry.** A program administrator or account holder starts this feature interaction through the Portal application.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-AUTH-004`, `L2-AUTH-008`, `L2-PLATFORM-011`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 
-This section contains L2 requirements only. It intentionally includes no L1 requirement text. The L1 specification identifier records the traceability correspondence for each L2 requirement.
+This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
 
-| L2 specification ID | L1 specification ID | Requirement text |
-| --- | --- | --- |
-| `L2-AUTH-004` | `L1-AUTH-003` | An invitee shall accept by setting display name + password; staff shall be able to resend and revoke invitations; expired/revoked links shall not work. |
-| `L2-AUTH-008` | `L1-AUTH-009` | All passwords shall satisfy a defined policy and be stored using a strong adaptive hash. |
-| `L2-PLATFORM-011` | `L1-PLATFORM-003` | Youth-lifecycle gates shall present clear states and recovery. |
+### L2-AUTH-004 — Invitation acceptance, resend, and revoke
+
+| Field | Value |
+| --- | --- |
+| Relationship | Primary |
+| L1 specification ID | `L1-AUTH-003` |
+
+An invitee shall accept by setting display name + password; staff shall be able to resend and revoke invitations; expired/revoked links shall not work.
+
+### L2-AUTH-008 — Password policy and hashing
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-AUTH-009` |
+
+All passwords shall satisfy a defined policy and be stored using a strong adaptive hash.
+
+### L2-PLATFORM-011 — Consent-required, invite-expired, and no-cohort handling
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-PLATFORM-003` |
+
+Youth-lifecycle gates shall present clear states and recovery.
 
 ## Diagrams
 
-The six architecture views use one caption pattern and stable EoI-local names. Each view component is available as PlantUML source and as an inline Portable Network Graphics (PNG) rendering.
+The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
 
-### C4 system context view
+### C4 diagrams
 
-[PlantUML source](diagrams/c4-system-context.puml)
+#### System context
 
-![Figure 1 — C4 system context view for Accept an invitation](diagrams/c4-system-context.png)
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
 
-Figure 1 — C4 system context view: the Word Up software system, its actors, and its external dependencies for Accept an invitation. The view component uses the C4 system context model kind.
+![Figure 1 — C4 system context for Accept an invitation.](diagrams/c4-system-context.png)
 
-### C4 container view
+*Figure 1 — C4 system context: Accept an invitation in the Word Up environment.*
 
-[PlantUML source](diagrams/c4-container.puml)
+#### Container
 
-![Figure 2 — C4 container view for Accept an invitation](diagrams/c4-container.png)
+Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
 
-Figure 2 — C4 container view: the frontend, backend, data, and integration boundaries for Accept an invitation. The view component uses the C4 container model kind.
+![Figure 2 — C4 container view for Accept an invitation.](diagrams/c4-container.png)
 
-### C4 component view
+*Figure 2 — C4 container view: application and data boundaries for Accept an invitation.*
 
-[PlantUML source](diagrams/c4-component.puml)
+#### Component
 
-![Figure 3 — C4 component view for Accept an invitation](diagrams/c4-component.png)
+Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
 
-Figure 3 — C4 component view: the source-level components and their structural relationships for Accept an invitation. The view component uses the C4 component model kind.
+![Figure 3 — C4 component view for Accept an invitation.](diagrams/c4-component.png)
 
-### C4 code view
+*Figure 3 — C4 component view: collaborating components for Accept an invitation.*
 
-[PlantUML source](diagrams/c4-code.puml)
+#### Code
 
-![Figure 4 — C4 code view for Accept an invitation](diagrams/c4-code.png)
+Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
 
-Figure 4 — C4 code view: the principal code elements and their dependency direction for Accept an invitation. The view component uses the C4 code model kind.
+![Figure 4 — C4 code view for Accept an invitation.](diagrams/c4-code.png)
 
-### Class view
+*Figure 4 — C4 code view: feature-owned code elements for Accept an invitation.*
 
-[PlantUML source](diagrams/class-structure.puml)
+### Class diagram
 
-![Figure 5 — Class view for Accept an invitation](diagrams/class-structure.png)
+Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
 
-Figure 5 — Class view: the feature types, functions, classes, entities, and their relationships for Accept an invitation. The view component uses the Unified Modeling Language (UML) class model kind.
+![Figure 5 — Class structure for Accept an invitation.](diagrams/class-structure.png)
 
-### Sequence view
+*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for Accept an invitation.*
 
-[PlantUML source](diagrams/sequence-behaviour.puml)
+### Sequence diagram
 
-![Figure 6 — Sequence view for Accept an invitation](diagrams/sequence-behaviour.png)
+Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
 
-Figure 6 — Sequence view: the principal end-to-end feature behaviour for Accept an invitation. Nested application boxes separate frontend behaviour from backend behaviour. The view component uses the UML sequence model kind.
+![Figure 6 — Sequence behavior for Accept an invitation.](diagrams/sequence-behaviour.png)
+
+*Figure 6 — Sequence behavior: the end-to-end accept an invitation interaction.*

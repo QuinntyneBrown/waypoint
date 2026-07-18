@@ -44,6 +44,20 @@ export interface SeededGuardianFamily {
   privateSecret: string;
 }
 
+export interface SeededYouthCurriculum {
+  youthId: string;
+  youthEmail: string;
+  youthPassword: string;
+  primaryTrackId: string;
+  primaryTrackName: string;
+  secondTrackId: string;
+  secondTrackName: string;
+  firstModuleName: string;
+  lockedModuleName: string;
+  firstLessonTitle: string;
+  secondLessonTitle: string;
+}
+
 /**
  * Provision an active user with an arbitrary role via the Testing-only seed
  * endpoint (`POST /api/_test/users`). Non-Youth roles have no self-service
@@ -104,6 +118,18 @@ export async function latestTestEmail(
   const res = await request.get(`/api/_test/emails/latest?to=${encodeURIComponent(to)}`);
   expect(res.ok(), `latest test email failed: ${res.status()} ${await res.text()}`).toBeTruthy();
   return (await res.json()) as { to: string; subject: string; body: string };
+}
+
+/** Seed a consented youth with multiple enrolled curriculum tracks (Testing only). */
+export async function seedYouthCurriculum(
+  request: APIRequestContext,
+): Promise<SeededYouthCurriculum> {
+  const res = await request.post('/api/_test/youth-curriculum');
+  expect(
+    res.ok(),
+    `seed youth curriculum failed: ${res.status()} ${await res.text()}`,
+  ).toBeTruthy();
+  return (await res.json()) as SeededYouthCurriculum;
 }
 
 export interface SeededApplication {

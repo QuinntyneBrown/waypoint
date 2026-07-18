@@ -23,6 +23,10 @@ public sealed class CurriculumTests : IntegrationTestBase
         Guid ModuleBId,
         Guid Lesson1Id,
         Guid Lesson2Id,
+        Guid QuizId,
+        Guid SecondTrackId,
+        Guid UnenrolledTrackId,
+        Guid UnenrolledLessonId,
         Guid YouthId,
         string YouthToken);
 
@@ -55,8 +59,54 @@ public sealed class CurriculumTests : IntegrationTestBase
             Status = PublishStatus.Published,
             PrerequisiteModuleId = moduleA.Id,
         };
-        var lesson1 = new Lesson { ModuleId = moduleA.Id, Title = "Lesson 1", Order = 1, Status = PublishStatus.Published };
+        var lesson1 = new Lesson
+        {
+            ModuleId = moduleA.Id,
+            Title = "Lesson 1",
+            ScriptureReference = "Mark 10:45",
+            LearningObjectives = "Understand servant leadership",
+            TeachingBody = "Serve others with humility.",
+            ReflectionPrompts = "Who can you serve this week?",
+            LeaderGuideNotes = "MENTOR SECRET DISCUSSION GUIDE",
+            EstimatedMinutes = 12,
+            Order = 1,
+            Status = PublishStatus.Published,
+        };
         var lesson2 = new Lesson { ModuleId = moduleA.Id, Title = "Lesson 2", Order = 2, Status = PublishStatus.Published };
+        var quiz = new Quiz { ModuleId = moduleA.Id, RequiredToCompleteModule = true };
+        var draftModule = new Module
+        {
+            TrackId = track.Id,
+            Name = "Draft module",
+            Order = 99,
+            Status = PublishStatus.Draft,
+        };
+        var secondTrack = new Track
+        {
+            Name = "Leadership",
+            Key = $"leadership-{Guid.NewGuid():N}",
+            Status = PublishStatus.Published,
+        };
+        var unenrolledTrack = new Track
+        {
+            Name = "Private track",
+            Key = $"private-{Guid.NewGuid():N}",
+            Status = PublishStatus.Published,
+        };
+        var unenrolledModule = new Module
+        {
+            TrackId = unenrolledTrack.Id,
+            Name = "Private module",
+            Order = 1,
+            Status = PublishStatus.Published,
+        };
+        var unenrolledLesson = new Lesson
+        {
+            ModuleId = unenrolledModule.Id,
+            Title = "Private lesson",
+            Order = 1,
+            Status = PublishStatus.Published,
+        };
 
         var email = $"youth.{Guid.NewGuid():N}@example.com";
         Guid youthId;
@@ -78,11 +128,23 @@ public sealed class CurriculumTests : IntegrationTestBase
             };
             youthId = youth.Id;
 
-            db.Tracks.Add(track);
-            db.Modules.AddRange(moduleA, moduleB);
-            db.Lessons.AddRange(lesson1, lesson2);
+            db.Tracks.AddRange(track, secondTrack, unenrolledTrack);
+            db.Modules.AddRange(moduleA, moduleB, draftModule, unenrolledModule);
+            db.Lessons.AddRange(lesson1, lesson2, unenrolledLesson);
+            db.LessonMedia.Add(new LessonMedia
+            {
+                LessonId = lesson1.Id,
+                MediaType = "video",
+                Url = "https://media.example.test/servant-leadership",
+            });
+            db.Quizzes.Add(quiz);
             db.Cohorts.Add(cohort);
             db.Users.Add(youth);
+            db.YouthTrackEnrollments.Add(new YouthTrackEnrollment
+            {
+                YouthUserId = youth.Id,
+                TrackId = secondTrack.Id,
+            });
             await db.SaveChangesAsync();
         }
 
@@ -90,7 +152,18 @@ public sealed class CurriculumTests : IntegrationTestBase
         signIn.EnsureSuccessStatusCode();
         var token = (await signIn.Content.ReadFromJsonAsync<AuthResult>())!.AccessToken;
 
-        return new Seed(track.Id, moduleA.Id, moduleB.Id, lesson1.Id, lesson2.Id, youthId, token);
+        return new Seed(
+            track.Id,
+            moduleA.Id,
+            moduleB.Id,
+            lesson1.Id,
+            lesson2.Id,
+            quiz.Id,
+            secondTrack.Id,
+            unenrolledTrack.Id,
+            unenrolledLesson.Id,
+            youthId,
+            token);
     }
 
     [Test]
@@ -114,6 +187,77 @@ public sealed class CurriculumTests : IntegrationTestBase
         Assert.That(moduleB.Locked, Is.True, "Module B is gated on Module A which is incomplete");
         Assert.That(moduleB.Status, Is.EqualTo("locked"));
         Assert.That(moduleB.UnlockCondition, Is.Not.Null.And.Contains("Foundations"));
+    }
+
+    [Test]
+    [Property("Req", "L2-LEARN-001")]
+    public async Task Curriculum_lists_only_enrolled_tracks_and_orders_lesson_and_quiz_gates()
+    {
+        // Traces to: L2-LEARN-001 AC1-AC5
+        var seed = await SeedTrackAndYouthAsync();
+
+        var response = await SendAsync(HttpMethod.Get, "/api/me/curriculum", null, seed.YouthToken);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var view = await response.Content.ReadFromJsonAsync<CurriculumViewDto>();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(view!.SelectedTrackId, Is.EqualTo(seed.TrackId));
+            Assert.That(view.Tracks.Select(track => track.TrackId),
+                Is.EquivalentTo(new[] { seed.TrackId, seed.SecondTrackId }));
+            Assert.That(view.Tracks.Any(track => track.TrackId == seed.UnenrolledTrackId), Is.False);
+            Assert.That(view.Modules.Any(module => module.Name == "Draft module"), Is.False);
+        });
+
+        var firstModule = view!.Modules.Single(module => module.ModuleId == seed.ModuleAId);
+        Assert.That(firstModule.Items.Select(item => (item.Type, item.ItemId)), Is.EqualTo(new[]
+        {
+            ("lesson", seed.Lesson1Id),
+            ("lesson", seed.Lesson2Id),
+            ("quiz", seed.QuizId),
+        }));
+        Assert.Multiple(() =>
+        {
+            Assert.That(firstModule.Items[0].Locked, Is.False);
+            Assert.That(firstModule.Items[1].Locked, Is.True);
+            Assert.That(firstModule.Items[1].UnlockCondition, Does.Contain("Lesson 1"));
+            Assert.That(firstModule.Items[2].Locked, Is.True);
+            Assert.That(firstModule.Items[2].UnlockCondition, Does.Contain("all lessons").IgnoreCase);
+        });
+
+        var lockedQuizStart = await SendAsync(
+            HttpMethod.Post,
+            $"/api/me/quizzes/{seed.QuizId}/attempts",
+            null,
+            seed.YouthToken);
+        Assert.That(lockedQuizStart.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+
+        var emptyTrack = await SendAsync(
+            HttpMethod.Get,
+            $"/api/me/curriculum/{seed.SecondTrackId}",
+            null,
+            seed.YouthToken);
+        var emptyView = await emptyTrack.Content.ReadFromJsonAsync<CurriculumViewDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(emptyTrack.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(emptyView!.SelectedTrackId, Is.EqualTo(seed.SecondTrackId));
+            Assert.That(emptyView.Modules, Is.Empty);
+        });
+
+        var forbidden = await SendAsync(
+            HttpMethod.Get,
+            $"/api/me/curriculum/{seed.UnenrolledTrackId}",
+            null,
+            seed.YouthToken);
+        Assert.That(forbidden.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+
+        var crossTrackCompletion = await SendAsync(
+            HttpMethod.Post,
+            $"/api/me/lessons/{seed.UnenrolledLessonId}/complete",
+            null,
+            seed.YouthToken);
+        Assert.That(crossTrackCompletion.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
     }
 
     [Test]
@@ -148,6 +292,77 @@ public sealed class CurriculumTests : IntegrationTestBase
             .Content.ReadFromJsonAsync<ProgressViewDto>();
         Assert.That(afterTwo!.LessonsCompleted, Is.EqualTo(2));
         Assert.That(afterTwo.OverallPercent, Is.EqualTo(100).Within(0.001));
+    }
+
+    [Test]
+    [Property("Req", "L2-LEARN-002")]
+    public async Task Lesson_reader_returns_safe_content_persists_reading_state_and_enforces_item_gate()
+    {
+        // Traces to: L2-LEARN-002 AC1-AC4
+        var seed = await SeedTrackAndYouthAsync();
+
+        var firstResponse = await SendAsync(
+            HttpMethod.Get,
+            $"/api/me/lessons/{seed.Lesson1Id}",
+            null,
+            seed.YouthToken);
+        Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var raw = await firstResponse.Content.ReadAsStringAsync();
+        var first = await firstResponse.Content.ReadFromJsonAsync<LessonViewDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(first!.Title, Is.EqualTo("Lesson 1"));
+            Assert.That(first.ScriptureReference, Is.EqualTo("Mark 10:45"));
+            Assert.That(first.TeachingBody, Does.Contain("humility"));
+            Assert.That(first.ReflectionPrompts, Does.Contain("serve"));
+            Assert.That(first.StepNumber, Is.EqualTo(1));
+            Assert.That(first.TotalSteps, Is.EqualTo(3));
+            Assert.That(first.Media.Single().Url, Does.Contain("servant-leadership"));
+            Assert.That(raw, Does.Not.Contain("MENTOR SECRET DISCUSSION GUIDE"));
+            Assert.That(raw, Does.Not.Contain("leaderGuideNotes").IgnoreCase);
+        });
+
+        var saveState = await SendAsync(
+            HttpMethod.Put,
+            $"/api/me/lessons/{seed.Lesson1Id}/reading-state",
+            new { textSize = "large", bookmarked = true, position = 640 },
+            seed.YouthToken);
+        Assert.That(saveState.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var resumed = await (await SendAsync(
+                HttpMethod.Get,
+                $"/api/me/lessons/{seed.Lesson1Id}",
+                null,
+                seed.YouthToken))
+            .Content.ReadFromJsonAsync<LessonViewDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(resumed!.ReadingState.TextSize, Is.EqualTo("large"));
+            Assert.That(resumed.ReadingState.Bookmarked, Is.True);
+            Assert.That(resumed.ReadingState.Position, Is.EqualTo(640));
+        });
+
+        var lockedSecond = await SendAsync(
+            HttpMethod.Get,
+            $"/api/me/lessons/{seed.Lesson2Id}",
+            null,
+            seed.YouthToken);
+        Assert.That(lockedSecond.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+
+        await SendAsync(HttpMethod.Post, $"/api/me/lessons/{seed.Lesson1Id}/complete", null, seed.YouthToken);
+        var unlockedSecond = await SendAsync(
+            HttpMethod.Get,
+            $"/api/me/lessons/{seed.Lesson2Id}",
+            null,
+            seed.YouthToken);
+        Assert.That(unlockedSecond.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        var crossTrackState = await SendAsync(
+            HttpMethod.Put,
+            $"/api/me/lessons/{seed.UnenrolledLessonId}/reading-state",
+            new { textSize = "small", bookmarked = true, position = 1 },
+            seed.YouthToken);
+        Assert.That(crossTrackState.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
     }
 
     [Test]
@@ -187,10 +402,54 @@ public sealed class CurriculumTests : IntegrationTestBase
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
     }
 
-    private sealed record CurriculumViewDto(IReadOnlyList<ModuleStatusDto> Modules);
+    private sealed record CurriculumViewDto(
+        Guid SelectedTrackId,
+        IReadOnlyList<TrackOptionDto> Tracks,
+        IReadOnlyList<ModuleStatusDto> Modules);
+
+    private sealed record TrackOptionDto(Guid TrackId, string Name, string? Description, bool Selected);
 
     private sealed record ModuleStatusDto(
-        Guid ModuleId, string Name, int Order, string Status, double CompletionPercent, bool Locked, string? UnlockCondition);
+        Guid ModuleId,
+        string Name,
+        int Order,
+        string Status,
+        double CompletionPercent,
+        bool Locked,
+        string? UnlockCondition,
+        string? Description,
+        string? ScriptureAnchor,
+        IReadOnlyList<CurriculumItemDto> Items);
+
+    private sealed record CurriculumItemDto(
+        Guid ItemId,
+        string Type,
+        string Title,
+        int Order,
+        string Status,
+        bool Locked,
+        string? UnlockCondition,
+        int? EstimatedMinutes);
+
+    private sealed record LessonViewDto(
+        Guid LessonId,
+        Guid ModuleId,
+        string ModuleName,
+        string Title,
+        string? ScriptureReference,
+        string? LearningObjectives,
+        string? TeachingBody,
+        string? ReflectionPrompts,
+        int? EstimatedMinutes,
+        int StepNumber,
+        int TotalSteps,
+        string Status,
+        IReadOnlyList<LessonMediaDto> Media,
+        LessonReadingStateDto ReadingState);
+
+    private sealed record LessonMediaDto(Guid MediaId, string MediaType, string Url);
+
+    private sealed record LessonReadingStateDto(string TextSize, bool Bookmarked, int Position);
 
     private sealed record ProgressViewDto(
         double OverallPercent, double QuizAverage, int LessonsCompleted, double AttendanceRate,

@@ -32,6 +32,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<OrgSettings> OrgSettings => Set<OrgSettings>();
     public DbSet<Term> Terms => Set<Term>();
     public DbSet<LessonProgress> LessonProgress => Set<LessonProgress>();
+    public DbSet<YouthTrackEnrollment> YouthTrackEnrollments => Set<YouthTrackEnrollment>();
     public DbSet<LessonReadingState> LessonReadingStates => Set<LessonReadingState>();
     public DbSet<QuizAttempt> QuizAttempts => Set<QuizAttempt>();
     public DbSet<Submission> Submissions => Set<Submission>();
@@ -204,6 +205,8 @@ public class AppDbContext : DbContext, IAppDbContext
 
         // Learning & mentoring (M3)
         modelBuilder.Entity<LessonProgress>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());
+        modelBuilder.Entity<YouthTrackEnrollment>(b =>
+            b.HasIndex(x => new { x.YouthUserId, x.TrackId }).IsUnique());
         modelBuilder.Entity<LessonReadingState>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());
         modelBuilder.Entity<QuizAttempt>(b => b.HasIndex(x => new { x.YouthUserId, x.QuizId }));
         modelBuilder.Entity<Submission>(b => b.HasIndex(x => new { x.YouthUserId, x.AssignmentId }));

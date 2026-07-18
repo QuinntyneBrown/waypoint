@@ -22,6 +22,12 @@ public class SaveReadingStateCommandHandler : IRequestHandler<SaveReadingStateCo
     {
         var youthId = _currentUser.UserId ?? throw new ForbiddenException();
 
+        await CurriculumProgressCalculator.EnsureLessonAccessibleAsync(
+            _db,
+            request.LessonId,
+            youthId,
+            cancellationToken);
+
         var now = _clock.UtcNow;
 
         var existing = await _db.LessonReadingStates

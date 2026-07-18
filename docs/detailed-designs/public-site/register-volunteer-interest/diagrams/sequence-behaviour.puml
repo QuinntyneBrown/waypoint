@@ -17,7 +17,7 @@ skinparam package {
 }
 actor "Anonymous visitor" as actor
 box "Frontend — Public Site application" #E0F2FE
-  participant "VolunteerSchedule" as page
+  participant "VolunteerAttendance" as page
   participant "VolunteerApi" as client
 end box
 box "Backend — WordUp API application" #D1FADF

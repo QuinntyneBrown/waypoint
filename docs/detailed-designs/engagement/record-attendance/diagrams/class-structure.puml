@@ -16,7 +16,7 @@ skinparam package {
   BackgroundColor #F9FAFB
 }
 package "Frontend — Portal application" {
-  class "ServerError" as page_ServerError <<Angular component>> {
+  class "VolunteerAttendance" as page_VolunteerAttendance <<Angular component>> {
     +submit(): void
     +renderResult(): void
   }
@@ -45,7 +45,7 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "AttendanceRecord" as entity_AttendanceRecord <<domain type>>
 }
-page_ServerError --> client_PublicSiteApi : invokes
+page_VolunteerAttendance --> client_PublicSiteApi : invokes
 client_PublicSiteApi --> controller_AttendanceController : calls
 controller_AttendanceController ..> request_AttendanceHistoryByYouthQuery : creates
 request_AttendanceHistoryByYouthQuery --> handler_AttendanceHistoryByYouthQueryHandler : dispatched to

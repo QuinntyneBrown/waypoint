@@ -90,6 +90,14 @@ export const routes: Routes = [
         loadComponent: () => import('./features/youth/home/youth-home').then((m) => m.YouthHome),
       },
       {
+        path: 'curriculum',
+        title: 'Curriculum · Word Up',
+        loadComponent: () =>
+          import('./features/youth/curriculum/youth-curriculum').then(
+            (module) => module.YouthCurriculumPage,
+          ),
+      },
+      {
         path: 'announcements',
         title: 'Announcements · Word Up',
         loadComponent: () =>

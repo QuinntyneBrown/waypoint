@@ -16,7 +16,7 @@ skinparam package {
   BackgroundColor #F9FAFB
 }
 package "Frontend — Portal application" {
-  class "YouthAnnouncements" as page_YouthAnnouncements <<Angular component>> {
+  class "AttendanceQueueService" as page_AttendanceQueueService <<Angular component>> {
     +load(): void
     +renderResult(): void
   }
@@ -45,7 +45,7 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "ViewStaffReportState" as entity_ViewStaffReportState <<domain type>>
 }
-page_YouthAnnouncements --> client_ReportingAndDataApi : invokes
+page_AttendanceQueueService --> client_ReportingAndDataApi : invokes
 client_ReportingAndDataApi --> controller_ReportsController : calls
 controller_ReportsController ..> request_StaffActivityReportQuery : creates
 request_StaffActivityReportQuery --> handler_StaffActivityReportQueryHandler : dispatched to

@@ -26,7 +26,12 @@ export {
   ProfileSettingsPage,
   SupportPage,
 } from './settings.pages';
-export { YouthHomePage, YouthAnnouncementsPage, YouthNotificationsPage } from './youth.pages';
+export {
+  YouthAnnouncementsPage,
+  YouthCurriculumPage,
+  YouthHomePage,
+  YouthNotificationsPage,
+} from './youth.pages';
 export {
   ConsentRequiredPage,
   ForbiddenPage,

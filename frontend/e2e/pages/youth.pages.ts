@@ -52,3 +52,31 @@ export class YouthNotificationsPage extends BasePage {
     await this.page.goto(YouthNotificationsPage.path);
   }
 }
+
+/** `/youth/curriculum` — enrolled track switcher and ordered gated module map. */
+export class YouthCurriculumPage extends BasePage {
+  static readonly path = '/youth/curriculum';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: /curriculum/i });
+  }
+  get trackOptions() {
+    return this.page.locator('[data-testid="curriculum-track"]');
+  }
+  get modules() {
+    return this.page.locator('[data-testid="curriculum-module"]');
+  }
+  get emptyState() {
+    return this.page.getByRole('heading', { name: /not set up yet/i });
+  }
+
+  module(name: string) {
+    return this.modules.filter({
+      has: this.page.getByRole('heading', { name, exact: true }),
+    });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(YouthCurriculumPage.path);
+  }
+}

@@ -17,7 +17,7 @@ skinparam package {
 }
 actor "Word Up participant" as actor
 box "Frontend — Portal application" #E0F2FE
-  participant "OfflineState" as page
+  participant "AttendanceQueueService" as page
   participant "NonFunctionalApi" as client
 end box
 box "Backend — WordUp API application" #D1FADF

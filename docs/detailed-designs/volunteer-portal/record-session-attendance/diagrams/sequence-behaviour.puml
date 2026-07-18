@@ -17,7 +17,7 @@ skinparam package {
 }
 actor "Volunteer" as actor
 box "Frontend — Portal application" #E0F2FE
-  participant "SessionPersistence" as page
+  participant "VolunteerAttendance" as page
   participant "VolunteerApi" as client
 end box
 box "Backend — WordUp API application" #D1FADF

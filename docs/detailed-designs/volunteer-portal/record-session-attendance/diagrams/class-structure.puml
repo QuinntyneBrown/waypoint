@@ -16,7 +16,7 @@ skinparam package {
   BackgroundColor #F9FAFB
 }
 package "Frontend — Portal application" {
-  class "SessionPersistence" as page_SessionPersistence <<Angular component>> {
+  class "VolunteerAttendance" as page_VolunteerAttendance <<Angular component>> {
     +submit(): void
     +renderResult(): void
   }
@@ -45,7 +45,7 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "RecordSessionAttendanceState" as entity_RecordSessionAttendanceState <<domain type>>
 }
-page_SessionPersistence --> client_VolunteerApi : invokes
+page_VolunteerAttendance --> client_VolunteerApi : invokes
 client_VolunteerApi --> controller_VolunteerController : calls
 controller_VolunteerController ..> request_VolunteerTodayQuery : creates
 request_VolunteerTodayQuery --> handler_VolunteerTodayQueryHandler : dispatched to
