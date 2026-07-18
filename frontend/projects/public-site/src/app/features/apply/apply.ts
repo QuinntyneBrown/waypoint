@@ -29,6 +29,7 @@ export class Apply {
     lastName: [''],
     age: [''],
     neighbourhood: [''],
+    cohortInterest: [''],
     trackInterest: [''],
     whyInterested: [''],
     guardianName: [''],
@@ -45,10 +46,12 @@ export class Apply {
   private readonly value = computed(() => {
     const v = this.rawValue();
     return {
+      whoIsFilling: v.whoIsFilling ?? '',
       firstName: v.firstName ?? '',
       lastName: v.lastName ?? '',
       age: v.age ?? '',
       neighbourhood: v.neighbourhood ?? '',
+      cohortInterest: v.cohortInterest ?? '',
       trackInterest: v.trackInterest ?? '',
       whyInterested: v.whyInterested ?? '',
       guardianName: v.guardianName ?? '',
@@ -73,6 +76,8 @@ export class Apply {
   protected readonly errors = computed<Record<string, string>>(() => {
     const v = this.value();
     const e: Record<string, string> = {};
+    if (!['self', 'guardian', 'referrer'].includes(v.whoIsFilling))
+      e['whoIsFilling'] = 'Choose who is filling out the application.';
     if (!v.firstName.trim()) e['firstName'] = 'Enter a first name.';
     if (!v.lastName.trim()) e['lastName'] = 'Enter a last name.';
     const age = Number(v.age);
@@ -80,6 +85,7 @@ export class Apply {
     else if (Number.isNaN(age) || age < APPLICANT_MIN_AGE || age > APPLICANT_MAX_AGE)
       e['age'] = `Applicants must be aged ${APPLICANT_MIN_AGE}–${APPLICANT_MAX_AGE} inclusive.`;
     if (!v.neighbourhood.trim()) e['neighbourhood'] = 'Enter a neighbourhood.';
+    if (!v.cohortInterest.trim()) e['cohortInterest'] = 'Choose a cohort of interest.';
     if (!v.whyInterested.trim()) e['whyInterested'] = 'Tell us why you’re interested.';
     if (this.needsGuardian()) {
       if (!v.guardianName.trim())
@@ -111,10 +117,12 @@ export class Apply {
     const v = this.form.getRawValue();
     this.intake
       .submit({
+        whoIsFilling: v.whoIsFilling as 'self' | 'guardian' | 'referrer',
         firstName: v.firstName.trim(),
         lastName: v.lastName.trim(),
         age: Number(v.age),
         neighbourhood: v.neighbourhood.trim(),
+        cohortInterest: v.cohortInterest.trim(),
         whyInterested: v.whyInterested.trim(),
         trackInterest: v.trackInterest || null,
         guardianName: this.needsGuardian() ? v.guardianName.trim() : null,

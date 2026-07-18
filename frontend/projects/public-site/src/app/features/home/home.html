@@ -21,7 +21,9 @@
   } @else if (error()) {
     <div class="wu-alert wu-alert--danger" role="alert">
       <p>{{ error() }}</p>
-      <button class="wu-btn wu-btn--ghost wu-btn--sm" type="button" (click)="load()">Try again</button>
+      <button class="wu-btn wu-btn--ghost wu-btn--sm" type="button" (click)="load()">
+        Try again
+      </button>
     </div>
   } @else if (content(); as publicContent) {
     <div class="wu-grid wu-grid--4 wu-mt-6">

@@ -15,7 +15,9 @@
     } @else if (error()) {
       <div class="wu-alert wu-alert--danger" role="alert">
         <p>{{ error() }}</p>
-        <button class="wu-btn wu-btn--ghost wu-btn--sm" type="button" (click)="load()">Try again</button>
+        <button class="wu-btn wu-btn--ghost wu-btn--sm" type="button" (click)="load()">
+          Try again
+        </button>
       </div>
     } @else if (content(); as publicContent) {
       @if (publicContent.cohorts.length === 0) {
@@ -40,8 +42,8 @@
                   <div>
                     <dt class="wu-text-sm wu-muted">Dates</dt>
                     <dd>
-                      {{ cohort.termStart | date: 'MMM d, y': 'UTC' }}–{{
-                        cohort.termEnd | date: 'MMM d, y': 'UTC'
+                      {{ cohort.termStart | date: 'MMM d, y' : 'UTC' }}–{{
+                        cohort.termEnd | date: 'MMM d, y' : 'UTC'
                       }}
                     </dd>
                   </div>

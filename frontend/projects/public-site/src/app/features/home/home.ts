@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, PublicContentView, PublicSiteApi } from '@wu/api';
 
-
 // Traces to: L2-PUB-002
 @Component({
   selector: 'wu-home',

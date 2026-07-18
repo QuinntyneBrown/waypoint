@@ -35,6 +35,21 @@
         </select>
       </div>
 
+      <div class="wu-field" [class.is-error]="error('cohortInterest')">
+        <label class="wu-label" for="cohortInterest"
+          >Cohort you’re interested in <span class="wu-label__req">*</span></label
+        >
+        <input
+          class="wu-input"
+          id="cohortInterest"
+          formControlName="cohortInterest"
+          placeholder="For example, Regent Park autumn cohort"
+        />
+        @if (error('cohortInterest')) {
+          <div class="wu-error-text">{{ error('cohortInterest') }}</div>
+        }
+      </div>
+
       <div class="wu-grid wu-grid--2">
         <div class="wu-field" [class.is-error]="error('firstName')">
           <label class="wu-label" for="firstName"

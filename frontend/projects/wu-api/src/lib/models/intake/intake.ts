@@ -2,7 +2,9 @@ export interface SubmitApplicationRequest {
   firstName: string;
   lastName: string;
   age: number;
+  whoIsFilling: 'self' | 'guardian' | 'referrer';
   neighbourhood: string;
+  cohortInterest: string;
   whyInterested: string;
   trackInterest?: string | null;
   guardianName?: string | null;

@@ -37,10 +37,10 @@ requirement conflicts early (they gate "done").
       `POST /api/public/volunteer-signup`. `L2-PUB-003` AC2.
 - [x] **A3 · Donate submission** — post pledge to `POST /api/public/donation`, record provider
       reference/result. `L2-PUB-003` AC3.
-- [ ] **A4 · Public content source + cohorts view** — Landing/Programs consume
+- [x] **A4 · Public content source + cohorts view** — Landing/Programs consume
       `GET /api/public/content`; About/current-cohorts view (neighbourhood, dates, lead mentor,
       status from the single authoritative record). `L2-PUB-002`.
-- [ ] **A5 · Apply intake completeness** — persist `whoIsFilling` and cohort/track of interest
+- [x] **A5 · Apply intake completeness** — persist `whoIsFilling` and cohort/track of interest
       (may need a backend command/field change first, TDD'd server-side). `L2-INTAKE-001`.
 
 ## Phase B — Cross-app navigation & error/state wiring (small, high-leverage)
@@ -193,6 +193,9 @@ requirement conflicts early (they gate "done").
 - 2026-07-18 — A1/A2/A3 done: L2-PUB-003 wired end to end (contact, volunteer, donation).
 - 2026-07-18 — Seeding foundation landed (Testing-only user seed endpoint) — unblocks the
   authenticated non-Youth portals.
+- 2026-07-18 — A4/A5 done: public marketing pages now render the authoritative content payload,
+  `/about` lists privacy-safe current cohorts, and intake persists who submitted it plus cohort
+  interest with end-to-end validation.
 - Note: 4 pre-existing Announcement integration tests fail locally under the InMemory-DB
   fallback (LocalDB unavailable in this environment); confirmed failing at HEAD, unrelated to
   this work. They are expected to pass against real SQL Server in CI.
