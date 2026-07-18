@@ -17,6 +17,49 @@ export interface YouthCredentials {
   auth: AuthResult;
 }
 
+export interface SeededUser {
+  email: string;
+  password: string;
+  displayName: string;
+  role: string;
+  userId: string;
+}
+
+/**
+ * Provision an active user with an arbitrary role via the Testing-only seed
+ * endpoint (`POST /api/_test/users`). Non-Youth roles have no self-service
+ * registration, so this is how E2E reaches the Program Administrator, Mentor,
+ * Guardian, and Volunteer portals. Tests then sign in through the real UI
+ * (`SignInPage`) or drive the product APIs with a token from {@link signInApi}.
+ */
+export async function registerUser(
+  request: APIRequestContext,
+  role: string,
+  tag = 'user',
+): Promise<SeededUser> {
+  const email = `e2e-${tag}-${crypto.randomUUID()}@wordup.test`;
+  const password = 'Password123';
+  const displayName = `E2E ${tag}`;
+  const res = await request.post('/api/_test/users', {
+    data: { email, password, displayName, role },
+  });
+  expect(res.ok(), `seed user failed: ${res.status()} ${await res.text()}`).toBeTruthy();
+  const { userId } = (await res.json()) as { userId: string };
+  return { email, password, displayName, role, userId };
+}
+
+/** Sign in via the real API and return the auth result (for API-level setup as a user). */
+export async function signInApi(
+  request: APIRequestContext,
+  creds: { email: string; password: string },
+): Promise<AuthResult> {
+  const res = await request.post('/api/auth/sign-in', {
+    data: { email: creds.email, password: creds.password },
+  });
+  expect(res.ok(), `sign-in failed: ${res.status()} ${await res.text()}`).toBeTruthy();
+  return (await res.json()) as AuthResult;
+}
+
 /**
  * Provisioning is invite-only per product, so no register UI exists. The
  * anonymous `POST /api/auth/register` endpoint is used purely as a Playwright

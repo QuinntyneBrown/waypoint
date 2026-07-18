@@ -209,6 +209,38 @@ if (!app.Environment.IsProduction())
     });
 }
 
+// Test-support seeding (Testing environment ONLY, never Production/Development). The E2E acceptance
+// harness has HTTP access only, so this lets it provision active non-Youth identities (Program
+// Administrator / Mentor / Guardian / Volunteer) that otherwise require in-process DbContext seeding.
+// Tests then drive the real product APIs as that identity.
+if (app.Environment.IsEnvironment("Testing"))
+{
+    app.MapPost("/api/_test/users", async (
+        WordUp.Api.Contracts.TestSupport.SeedUserBody body,
+        IAppDbContext db,
+        IPasswordHasher hasher,
+        CancellationToken cancellationToken) =>
+    {
+        if (!Roles.IsValid(body.Role))
+        {
+            return Results.BadRequest(new { title = $"Unknown role '{body.Role}'." });
+        }
+
+        var user = new User
+        {
+            Email = body.Email,
+            DisplayName = body.DisplayName,
+            Role = body.Role,
+            Status = UserStatus.Active,
+            PasswordHash = hasher.Hash(body.Password),
+            OnboardingCompleted = true,
+        };
+        db.Users.Add(user);
+        await db.SaveChangesAsync(cancellationToken);
+        return Results.Created($"/api/_test/users/{user.Id}", new { userId = user.Id });
+    });
+}
+
 app.Run();
 
 public partial class Program { }

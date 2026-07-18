@@ -166,6 +166,18 @@ requirement conflicts early (they gate "done").
 
 ---
 
+## Foundations (test infrastructure, not an L2 gap)
+
+- [x] **E2E seeding** — `POST /api/_test/users` (Testing environment only) provisions active
+      non-Youth identities so the HTTP-only Playwright harness can reach the Admin/Mentor/
+      Guardian/Volunteer portals. E2E helpers: `registerUser(role)`, `signInApi(creds)`.
+
 ## Progress log
 
 - 2026-07-18 — Plan created from `not-implemented.md`. Starting Phase A.
+- 2026-07-18 — A1/A2/A3 done: L2-PUB-003 wired end to end (contact, volunteer, donation).
+- 2026-07-18 — Seeding foundation landed (Testing-only user seed endpoint) — unblocks the
+  authenticated non-Youth portals.
+- Note: 4 pre-existing Announcement integration tests fail locally under the InMemory-DB
+  fallback (LocalDB unavailable in this environment); confirmed failing at HEAD, unrelated to
+  this work. They are expected to pass against real SQL Server in CI.
