@@ -1,0 +1,36 @@
+<wu-settings-shell heading="Notifications">
+  <p class="wu-muted wu-mb-6">
+    Choose how you’d like to hear from Word Up. Changes save automatically.
+  </p>
+
+  <div class="wu-stack wu-stack--lg">
+    @for (cat of categories; track cat.eventKey) {
+      <div>
+        <div>{{ cat.label }}</div>
+        <div class="wu-muted wu-text-sm wu-mb-2">{{ cat.description }}</div>
+        <div class="wu-cluster">
+          <label class="wu-check">
+            <input
+              type="checkbox"
+              [attr.aria-label]="cat.label + ' in-app'"
+              [checked]="prefs()[cat.eventKey].inApp"
+              (change)="toggle(cat.eventKey, 'inApp')"
+            />
+            <span class="wu-check__box"></span>
+            <span>In-app</span>
+          </label>
+          <label class="wu-check">
+            <input
+              type="checkbox"
+              [attr.aria-label]="cat.label + ' email'"
+              [checked]="prefs()[cat.eventKey].email"
+              (change)="toggle(cat.eventKey, 'email')"
+            />
+            <span class="wu-check__box"></span>
+            <span>Email</span>
+          </label>
+        </div>
+      </div>
+    }
+  </div>
+</wu-settings-shell>

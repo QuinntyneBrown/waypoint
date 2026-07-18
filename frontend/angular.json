@@ -27,6 +27,7 @@
             "styles": [
               "projects/wu-ui/src/styles/fonts.css",
               "projects/wu-ui/src/styles/core.css",
+              "projects/wu-ui/src/styles/a11y.css",
               "projects/portal/src/styles.css"
             ]
           },

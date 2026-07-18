@@ -1,0 +1,117 @@
+<wu-settings-shell heading="Profile">
+  <form [formGroup]="profile" (ngSubmit)="saveProfile()" novalidate class="wu-stack">
+    <div
+      class="wu-field"
+      [class.is-error]="
+        profile.controls.displayName.touched && profile.controls.displayName.invalid
+      "
+    >
+      <label class="wu-label" for="displayName"
+        >Display name <span class="wu-label__req">*</span></label
+      >
+      <input class="wu-input" id="displayName" formControlName="displayName" />
+    </div>
+    <div
+      class="wu-field"
+      [class.is-error]="profile.controls.email.touched && profile.controls.email.invalid"
+    >
+      <label class="wu-label" for="email">Email <span class="wu-label__req">*</span></label>
+      <input class="wu-input" id="email" type="email" formControlName="email" />
+      @if (profile.controls.email.touched && profile.controls.email.invalid) {
+        <div class="wu-error-text">Enter a valid email address.</div>
+      }
+    </div>
+    <div class="wu-field">
+      <label class="wu-label" for="pronouns">Pronouns</label>
+      <input
+        class="wu-input"
+        id="pronouns"
+        formControlName="pronouns"
+        placeholder="e.g. they/them"
+      />
+    </div>
+    <div class="wu-field">
+      <label class="wu-label" for="photoUrl">Photo URL</label>
+      <input class="wu-input" id="photoUrl" formControlName="photoUrl" placeholder="Optional" />
+    </div>
+    <div>
+      <button
+        class="wu-btn wu-btn--primary"
+        type="submit"
+        [class.is-loading]="savingProfile()"
+        [disabled]="savingProfile()"
+      >
+        Save profile
+      </button>
+    </div>
+  </form>
+
+  <div class="wu-divider"></div>
+
+  <h2>Change password</h2>
+  @if (passwordError()) {
+    <div class="wu-alert wu-alert--error" role="alert">
+      <wu-icon name="alert-circle" iconClass="wu-alert__icon" />
+      <div>{{ passwordError() }}</div>
+    </div>
+  }
+  <form [formGroup]="password" (ngSubmit)="changePassword()" novalidate class="wu-stack">
+    <div class="wu-field">
+      <label class="wu-label" for="currentPassword">Current password</label>
+      <input
+        class="wu-input"
+        id="currentPassword"
+        type="password"
+        autocomplete="current-password"
+        formControlName="currentPassword"
+      />
+    </div>
+    <div class="wu-field" [class.is-error]="confirmTouched() && !policyOk()">
+      <label class="wu-label" for="newPassword">New password</label>
+      <div style="position: relative">
+        <input
+          class="wu-input"
+          id="newPassword"
+          [type]="showNew() ? 'text' : 'password'"
+          autocomplete="new-password"
+          formControlName="newPassword"
+        />
+        <button
+          class="wu-iconbtn"
+          type="button"
+          style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%)"
+          [attr.aria-label]="showNew() ? 'Hide password' : 'Show password'"
+          (click)="showNew.set(!showNew())"
+        >
+          <wu-icon [name]="showNew() ? 'eye-off' : 'eye'" />
+        </button>
+      </div>
+      <div class="wu-help" [class.wu-error-text]="confirmTouched() && !policyOk()">
+        {{ policyMessage }}
+      </div>
+    </div>
+    <div class="wu-field" [class.is-error]="confirmTouched() && !matches()">
+      <label class="wu-label" for="confirmPassword">Confirm new password</label>
+      <input
+        class="wu-input"
+        id="confirmPassword"
+        type="password"
+        autocomplete="new-password"
+        formControlName="confirmPassword"
+      />
+      @if (confirmTouched() && !matches()) {
+        <div class="wu-error-text">Passwords do not match.</div>
+      }
+    </div>
+    <div>
+      <button
+        class="wu-btn wu-btn--primary"
+        type="submit"
+        [class.is-loading]="savingPassword()"
+        [disabled]="!canChangePassword() || savingPassword()"
+      >
+        Change password
+      </button>
+    </div>
+  </form>
+</wu-settings-shell>

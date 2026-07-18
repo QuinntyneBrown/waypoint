@@ -1,0 +1,75 @@
+<wu-shell [role]="role()" active="" [userName]="userName()" (signOut)="signOut()">
+  <div class="wu-container wu-container--narrow wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Help</div>
+        <h1 class="wu-page__title">Contact support</h1>
+      </div>
+    </div>
+
+    @if (done()) {
+      <div class="wu-empty">
+        <div class="wu-empty__icon"><wu-icon name="check-circle" /></div>
+        <h3 class="wu-empty__title">Thanks — we’ve got your message</h3>
+        <p class="wu-empty__text">
+          Our team will follow up at the email you gave us. We usually reply within a couple of
+          days.
+        </p>
+      </div>
+    } @else {
+      @if (errorMessage()) {
+        <div class="wu-alert wu-alert--error" role="alert">
+          <wu-icon name="alert-circle" iconClass="wu-alert__icon" />
+          <div>{{ errorMessage() }}</div>
+        </div>
+      }
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="wu-stack">
+        <div class="wu-field">
+          <label class="wu-label" for="category">What’s this about?</label>
+          <select class="wu-select" id="category" formControlName="category">
+            @for (cat of categories; track cat) {
+              <option [value]="cat">{{ cat }}</option>
+            }
+          </select>
+        </div>
+        <div
+          class="wu-field"
+          [class.is-error]="form.controls.description.touched && form.controls.description.invalid"
+        >
+          <label class="wu-label" for="description">How can we help?</label>
+          <textarea
+            class="wu-textarea"
+            id="description"
+            rows="5"
+            formControlName="description"
+          ></textarea>
+          @if (form.controls.description.touched && form.controls.description.invalid) {
+            <div class="wu-error-text">Please describe your issue (at least 10 characters).</div>
+          }
+        </div>
+        <div
+          class="wu-field"
+          [class.is-error]="
+            form.controls.replyToEmail.touched && form.controls.replyToEmail.invalid
+          "
+        >
+          <label class="wu-label" for="replyToEmail">Reply-to email</label>
+          <input class="wu-input" id="replyToEmail" type="email" formControlName="replyToEmail" />
+          @if (form.controls.replyToEmail.touched && form.controls.replyToEmail.invalid) {
+            <div class="wu-error-text">Enter a valid email address.</div>
+          }
+        </div>
+        <div>
+          <button
+            class="wu-btn wu-btn--primary"
+            type="submit"
+            [class.is-loading]="submitting()"
+            [disabled]="submitting()"
+          >
+            Send message
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</wu-shell>

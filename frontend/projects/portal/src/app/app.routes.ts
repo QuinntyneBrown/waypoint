@@ -74,7 +74,56 @@ export const routes: Routes = [
         title: 'Home · Word Up',
         loadComponent: () => import('./features/youth/home/youth-home').then((m) => m.YouthHome),
       },
+      {
+        path: 'announcements',
+        title: 'Announcements · Word Up',
+        loadComponent: () =>
+          import('./features/youth/announcements/youth-announcements').then(
+            (m) => m.YouthAnnouncements,
+          ),
+      },
+      {
+        path: 'notifications',
+        title: 'Notifications · Word Up',
+        loadComponent: () =>
+          import('./features/youth/notifications/youth-notifications').then(
+            (m) => m.YouthNotifications,
+          ),
+      },
     ],
+  },
+  {
+    path: 'settings',
+    canActivate: [authGuard],
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'profile' },
+      {
+        path: 'profile',
+        title: 'Profile · Word Up',
+        loadComponent: () =>
+          import('./settings/profile/settings-profile').then((m) => m.SettingsProfile),
+      },
+      {
+        path: 'notifications',
+        title: 'Notification settings · Word Up',
+        loadComponent: () =>
+          import('./settings/notifications/settings-notifications').then(
+            (m) => m.SettingsNotifications,
+          ),
+      },
+      {
+        path: 'display',
+        title: 'Display & accessibility · Word Up',
+        loadComponent: () =>
+          import('./settings/display/settings-display').then((m) => m.SettingsDisplay),
+      },
+    ],
+  },
+  {
+    path: 'support',
+    title: 'Contact support · Word Up',
+    canActivate: [authGuard],
+    loadComponent: () => import('./support/support').then((m) => m.Support),
   },
   {
     path: 'consent-required',

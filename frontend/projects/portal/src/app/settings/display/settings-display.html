@@ -1,0 +1,103 @@
+<wu-settings-shell heading="Display & accessibility">
+  <div class="wu-stack wu-stack--lg">
+    <div class="wu-field">
+      <label class="wu-label">Text size</label>
+      <div class="wu-cluster">
+        <button
+          class="wu-btn wu-btn--secondary"
+          type="button"
+          aria-label="Decrease text size"
+          (click)="changeScale(-10)"
+        >
+          A−
+        </button>
+        <span aria-live="polite" data-testid="text-scale">{{ prefs().textScalePercent }}%</span>
+        <button
+          class="wu-btn wu-btn--secondary"
+          type="button"
+          aria-label="Increase text size"
+          (click)="changeScale(10)"
+        >
+          A+
+        </button>
+      </div>
+      <div class="wu-help">Changes preview instantly across the app.</div>
+    </div>
+
+    <div class="wu-cluster wu-cluster--between">
+      <div>
+        <div>High contrast</div>
+        <div class="wu-muted wu-text-sm">Stronger borders and text.</div>
+      </div>
+      <label class="wu-switch">
+        <input
+          type="checkbox"
+          aria-label="High contrast"
+          [checked]="prefs().highContrast"
+          (change)="toggleContrast()"
+        />
+        <span class="wu-switch__track"></span>
+      </label>
+    </div>
+
+    <div class="wu-cluster wu-cluster--between">
+      <div>
+        <div>Reduce motion</div>
+        <div class="wu-muted wu-text-sm">Minimise animations and transitions.</div>
+      </div>
+      <label class="wu-switch">
+        <input
+          type="checkbox"
+          aria-label="Reduce motion"
+          [checked]="prefs().reduceMotion"
+          (change)="toggleMotion()"
+        />
+        <span class="wu-switch__track"></span>
+      </label>
+    </div>
+
+    <div class="wu-cluster wu-cluster--between">
+      <div>
+        <div>Underline links</div>
+        <div class="wu-muted wu-text-sm">Always underline links for clarity.</div>
+      </div>
+      <label class="wu-switch">
+        <input
+          type="checkbox"
+          aria-label="Underline links"
+          [checked]="prefs().underlineLinks"
+          (change)="toggleUnderline()"
+        />
+        <span class="wu-switch__track"></span>
+      </label>
+    </div>
+
+    <div class="wu-cluster wu-cluster--between">
+      <div>
+        <div>Reading font</div>
+        <div class="wu-muted wu-text-sm">Use a serif font for body text.</div>
+      </div>
+      <label class="wu-switch">
+        <input
+          type="checkbox"
+          aria-label="Reading font"
+          [checked]="prefs().readingFont === 'serif'"
+          (change)="toggleReadingFont()"
+        />
+        <span class="wu-switch__track"></span>
+      </label>
+    </div>
+
+    <div>
+      <button
+        class="wu-btn wu-btn--primary"
+        type="button"
+        [class.is-loading]="saving()"
+        [disabled]="saving()"
+        (click)="save()"
+      >
+        Save settings
+      </button>
+    </div>
+  </div>
+</wu-settings-shell>
