@@ -43,7 +43,7 @@ package "Backend — WordUp Application" {
   }
 }
 package "Backend — WordUp Domain" {
-  class "ContactRequest" as entity_ContactRequest <<domain type>>
+  class "ViewJourneyAndImpactState" as entity_ViewJourneyAndImpactState <<domain type>>
 }
 page_Programs --> client_PublicSiteApi : invokes
 client_PublicSiteApi --> controller_PublicController : calls
@@ -51,8 +51,8 @@ controller_PublicController ..> request_ViewJourneyAndImpactQuery : creates
 request_ViewJourneyAndImpactQuery --> handler_ViewJourneyAndImpactQueryHandler : dispatched to
 handler_ViewJourneyAndImpactQueryHandler --> IAppDbContext : depends on
 handler_ViewJourneyAndImpactQueryHandler --> ICurrentUser : scopes by
-handler_ViewJourneyAndImpactQueryHandler --> entity_ContactRequest : reads or changes
-IAppDbContext o-- entity_ContactRequest : persists
+handler_ViewJourneyAndImpactQueryHandler --> entity_ViewJourneyAndImpactState : reads or changes
+IAppDbContext o-- entity_ViewJourneyAndImpactState : persists
 legend right
   Solid arrows show runtime collaboration.
   Dashed arrows show construction.

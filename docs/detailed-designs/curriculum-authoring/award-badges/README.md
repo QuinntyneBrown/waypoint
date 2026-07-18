@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns the part of that software concerned with award badges.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns this feature slice.
 
 The Award badges feature slice refines `L2-CURRIC-005` into one independently deliverable interaction. Staff shall define badges with auto or manual award rules and optional competency mapping.
 
-A program administrator starts the award badges interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative award badges result.
+A program administrator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -26,7 +26,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend API boundary | [`NotificationPreferencesApi`](../../../../frontend/projects/wu-api/src/lib/services/notification-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`BadgesController`](../../../../backend/src/WordUp.Api/Controllers/CurriculumAuthoring/BadgesController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AwardBadgeCommand`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Badges/AwardBadgeCommand.cs)<br>[`AwardBadgeCommandHandler`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Badges/AwardBadgeCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`Badge`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Badge.cs)<br>[`BadgeCriteriaKind`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/BadgeCriteriaKind.cs)<br>[`Competency`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Competency.cs)<br>[`Assignment`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Assignment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | [`Badge`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Badge.cs)<br>[`BadgeCriteriaKind`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/BadgeCriteriaKind.cs)<br>[`Competency`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Competency.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`SecurityHeadersMiddleware`](../../../../backend/src/WordUp.Api/Middleware/SecurityHeadersMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A program administrator starts the award badges interaction through the Portal application.
+1. **Entry.** A program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-CURRIC-005`, `L2-NFR-005`, `L2-CONSENT-003`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative award badges result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Engagement and Operations subsystem owns the part of that software concerned with record attendance.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Engagement and Operations subsystem owns this feature slice.
 
 The Record attendance feature slice refines `L2-ENGAGE-002` into one independently deliverable interaction. Mentors/volunteers shall record per-youth attendance with the correct status set, bulk actions, and tallies.
 
-A mentor, volunteer, or program administrator starts the record attendance interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative record attendance result.
+A mentor, volunteer, or program administrator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -26,7 +26,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/wu-api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AttendanceController`](../../../../backend/src/WordUp.Api/Controllers/Engagement/AttendanceController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AttendanceHistoryByYouthQuery`](../../../../backend/src/WordUp.Application/Engagement/Attendance/AttendanceHistoryByYouthQuery.cs)<br>[`AttendanceHistoryByYouthQueryHandler`](../../../../backend/src/WordUp.Application/Engagement/Attendance/AttendanceHistoryByYouthQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`AttendanceRecord`](../../../../backend/src/WordUp.Domain/Engagement/AttendanceRecord.cs)<br>[`AttendanceStatus`](../../../../backend/src/WordUp.Domain/Engagement/AttendanceStatus.cs)<br>[`Announcement`](../../../../backend/src/WordUp.Domain/Engagement/Announcement.cs)<br>[`AnnouncementRead`](../../../../backend/src/WordUp.Domain/Engagement/AnnouncementRead.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | [`AttendanceRecord`](../../../../backend/src/WordUp.Domain/Engagement/AttendanceRecord.cs)<br>[`AttendanceStatus`](../../../../backend/src/WordUp.Domain/Engagement/AttendanceStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A mentor, volunteer, or program administrator starts the record attendance interaction through the Portal application.
+1. **Entry.** A mentor, volunteer, or program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-ENGAGE-002`, `L2-AUTH-009`, `L2-NFR-006`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative record attendance result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

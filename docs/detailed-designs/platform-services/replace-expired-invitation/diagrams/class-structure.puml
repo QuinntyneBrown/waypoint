@@ -30,8 +30,8 @@ package "Backend — WordUp API application" {
   }
 }
 package "Backend — WordUp Application" {
-  class "ReplaceExpiredInvitationCommand" as request_ReplaceExpiredInvitationCommand <<record>>
-  class "ReplaceExpiredInvitationCommandHandler" as handler_ReplaceExpiredInvitationCommandHandler <<handler>> {
+  class "AccessStateQuery" as request_AccessStateQuery <<record>>
+  class "AccessStateQueryHandler" as handler_AccessStateQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
   }
   interface IAppDbContext {
@@ -47,11 +47,11 @@ package "Backend — WordUp Domain" {
 }
 page_SessionExpired --> client_DisplayPreferencesApi : invokes
 client_DisplayPreferencesApi --> controller_AccessController : calls
-controller_AccessController ..> request_ReplaceExpiredInvitationCommand : creates
-request_ReplaceExpiredInvitationCommand --> handler_ReplaceExpiredInvitationCommandHandler : dispatched to
-handler_ReplaceExpiredInvitationCommandHandler --> IAppDbContext : depends on
-handler_ReplaceExpiredInvitationCommandHandler --> ICurrentUser : scopes by
-handler_ReplaceExpiredInvitationCommandHandler --> entity_DisplayPreference : reads or changes
+controller_AccessController ..> request_AccessStateQuery : creates
+request_AccessStateQuery --> handler_AccessStateQueryHandler : dispatched to
+handler_AccessStateQueryHandler --> IAppDbContext : depends on
+handler_AccessStateQueryHandler --> ICurrentUser : scopes by
+handler_AccessStateQueryHandler --> entity_DisplayPreference : reads or changes
 IAppDbContext o-- entity_DisplayPreference : persists
 legend right
   Solid arrows show runtime collaboration.

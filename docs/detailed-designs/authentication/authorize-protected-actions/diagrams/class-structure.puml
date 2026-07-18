@@ -43,7 +43,7 @@ package "Backend — WordUp Application" {
   }
 }
 package "Backend — WordUp Domain" {
-  class "Invitation" as entity_Invitation <<domain type>>
+  class "AuthorizeProtectedActionsState" as entity_AuthorizeProtectedActionsState <<domain type>>
 }
 page_AuthStore --> client_AuthApi : invokes
 client_AuthApi --> controller_AuthController : calls
@@ -51,8 +51,8 @@ controller_AuthController ..> request_AuthorizeProtectedActionsCommand : creates
 request_AuthorizeProtectedActionsCommand --> handler_AuthorizeProtectedActionsCommandHandler : dispatched to
 handler_AuthorizeProtectedActionsCommandHandler --> IAppDbContext : depends on
 handler_AuthorizeProtectedActionsCommandHandler --> ICurrentUser : scopes by
-handler_AuthorizeProtectedActionsCommandHandler --> entity_Invitation : reads or changes
-IAppDbContext o-- entity_Invitation : persists
+handler_AuthorizeProtectedActionsCommandHandler --> entity_AuthorizeProtectedActionsState : reads or changes
+IAppDbContext o-- entity_AuthorizeProtectedActionsState : persists
 legend right
   Solid arrows show runtime collaboration.
   Dashed arrows show construction.

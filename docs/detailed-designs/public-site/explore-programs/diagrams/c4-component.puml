@@ -31,7 +31,7 @@ rectangle "Word Up software system" as wordup {
       component "GetPublicContentQueryHandler\n[MediatR handler]" as handler #D1FADF
     }
     package "WordUp Domain" {
-      component "ContactRequest\n[Domain type]" as entity #F4EBFF
+      component "ExploreProgramsState\n[Domain type]" as entity #F4EBFF
     }
     package "WordUp Infrastructure" {
       component "AppDbContext\n[EF Core adapter]" as persistence #FFF4E5

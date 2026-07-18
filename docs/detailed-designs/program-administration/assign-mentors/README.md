@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Program Administration subsystem owns the part of that software concerned with assign mentors.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Program Administration subsystem owns this feature slice.
 
 The Assign mentors feature slice refines `L2-ADMIN-005` into one independently deliverable interaction. Admins shall assign mentors to youth and cohorts and see caseloads and imbalance.
 
-A program administrator starts the assign mentors interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative assign mentors result.
+A program administrator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -26,7 +26,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend API boundary | [`PeopleApi`](../../../../frontend/projects/wu-api/src/lib/services/people-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`OrgSettingsController`](../../../../backend/src/WordUp.Api/Controllers/ProgramAdministration/OrgSettingsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AssignMentorCommand`](../../../../backend/src/WordUp.Application/ProgramAdministration/People/AssignMentorCommand.cs)<br>[`AssignMentorCommandHandler`](../../../../backend/src/WordUp.Application/ProgramAdministration/People/AssignMentorCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`CohortMentor`](../../../../backend/src/WordUp.Domain/ProgramAdministration/CohortMentor.cs)<br>[`Cohort`](../../../../backend/src/WordUp.Domain/ProgramAdministration/Cohort.cs)<br>[`OrgSettings`](../../../../backend/src/WordUp.Domain/ProgramAdministration/OrgSettings.cs)<br>[`Term`](../../../../backend/src/WordUp.Domain/ProgramAdministration/Term.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | [`CohortMentor`](../../../../backend/src/WordUp.Domain/ProgramAdministration/CohortMentor.cs)<br>[`Cohort`](../../../../backend/src/WordUp.Domain/ProgramAdministration/Cohort.cs)<br>[`OrgSettings`](../../../../backend/src/WordUp.Domain/ProgramAdministration/OrgSettings.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A program administrator starts the assign mentors interaction through the Portal application.
+1. **Entry.** A program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-ADMIN-005`, `L2-AUTH-010`, `L2-REPORT-001`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative assign mentors result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

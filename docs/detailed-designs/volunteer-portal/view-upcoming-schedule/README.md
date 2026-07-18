@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Volunteer Portal subsystem owns the part of that software concerned with view an upcoming schedule.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Volunteer Portal subsystem owns this feature slice.
 
 The View an upcoming schedule feature slice refines `L2-VOLUNTEER-002` into one independently deliverable interaction. Volunteers shall view their upcoming schedule.
 
-A volunteer starts the view an upcoming schedule interaction through the Portal application. The frontend application presents an authorized and bounded view an upcoming schedule result.
+A volunteer starts this feature interaction through the Portal application. The frontend application presents an authorized and bounded feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A volunteer starts the view an upcoming schedule interaction through the Portal application.
+1. **Entry.** A volunteer starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-VOLUNTEER-002`, `L2-AUTH-010`, `L2-ENGAGE-001`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The frontend application presents an authorized and bounded view an upcoming schedule result.
+3. **Result.** The frontend application presents an authorized and bounded feature result.
 
 ## Requirements
 

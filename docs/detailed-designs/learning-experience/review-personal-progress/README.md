@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns the part of that software concerned with review personal progress.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns this feature slice.
 
 The Review personal progress feature slice refines `L2-LEARN-010` into one independently deliverable interaction. Youth shall see personal analytics across overview, quizzes, and attendance.
 
-A youth participant starts the review personal progress interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative review personal progress result.
+A youth participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -26,7 +26,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend API boundary | [`AuthApi`](../../../../frontend/projects/wu-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`YouthProgressController`](../../../../backend/src/WordUp.Api/Controllers/LearningExperience/YouthProgressController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`ProgressQuery`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/ProgressQuery.cs)<br>[`ProgressQueryHandler`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/ProgressQueryHandler.cs)<br>[`ProgressView`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/ProgressQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`LessonProgress`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonProgress.cs)<br>[`QuizAttempt`](../../../../backend/src/WordUp.Domain/LearningExperience/QuizAttempt.cs)<br>[`ProgressStatus`](../../../../backend/src/WordUp.Domain/LearningExperience/ProgressStatus.cs)<br>[`BadgeAward`](../../../../backend/src/WordUp.Domain/LearningExperience/BadgeAward.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | [`LessonProgress`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonProgress.cs)<br>[`QuizAttempt`](../../../../backend/src/WordUp.Domain/LearningExperience/QuizAttempt.cs)<br>[`ProgressStatus`](../../../../backend/src/WordUp.Domain/LearningExperience/ProgressStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A youth participant starts the review personal progress interaction through the Portal application.
+1. **Entry.** A youth participant starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-LEARN-010`, `L2-MENTOR-005`, `L2-AUTH-010`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative review personal progress result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

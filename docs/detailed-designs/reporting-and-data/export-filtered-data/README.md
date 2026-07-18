@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Reporting and Data subsystem owns the part of that software concerned with export filtered data.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Reporting and Data subsystem owns this feature slice.
 
 The Export filtered data feature slice refines `L2-REPORT-003` into one independently deliverable interaction. The system shall export data in CSV and PDF, respecting filters and authorization.
 
-A program administrator starts the export filtered data interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative export filtered data result.
+A program administrator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -22,7 +22,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`AuthStore`](../../../../frontend/projects/wu-auth/src/lib/auth-store.ts)<br>[`EntryResolver`](../../../../frontend/projects/portal/src/app/auth/entry.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend page | [`AuthStore`](../../../../frontend/projects/wu-auth/src/lib/auth-store.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
 | Frontend API boundary | [`AuthApi`](../../../../frontend/projects/wu-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`DataController`](../../../../backend/src/WordUp.Api/Controllers/ReportingAndData/DataController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`ExportAuditLogQuery`](../../../../backend/src/WordUp.Application/ReportingAndData/DataTransfer/ExportAuditLogQuery.cs)<br>[`ExportAuditLogQueryHandler`](../../../../backend/src/WordUp.Application/ReportingAndData/DataTransfer/ExportAuditLogQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A program administrator starts the export filtered data interaction through the Portal application.
+1. **Entry.** A program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-REPORT-003`, `L2-AUTH-010`, `L2-CONSENT-003`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative export filtered data result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns the part of that software concerned with author lessons.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns this feature slice.
 
 The Author lessons feature slice refines `L2-CURRIC-002` into one independently deliverable interaction. Staff shall author lesson content including teaching text, media, reflection prompts, and leader guides.
 
-A program administrator starts the author lessons interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative author lessons result.
+A program administrator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | `AuthorLessonsPage` *(planned boundary)* | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `CurriculumAuthoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`LessonsController`](../../../../backend/src/WordUp.Api/Controllers/CurriculumAuthoring/LessonsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`CreateLessonCommand`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Curriculum/CreateLessonCommand.cs)<br>[`CreateLessonCommandHandler`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Curriculum/CreateLessonCommandHandler.cs)<br>[`CreateLessonCommandValidator`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Curriculum/CreateLessonCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Lesson`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Lesson.cs)<br>[`Module`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Module.cs)<br>[`PublishStatus`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/PublishStatus.cs)<br>[`LessonMedia`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/LessonMedia.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,16 +32,16 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `AuthorLessonsPage.submit()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `CurriculumAuthoringApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `LessonsController.PostAsync()` applies transport policy and constructs `CreateLessonCommand`.
 - `CreateLessonCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Lesson`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A program administrator starts the author lessons interaction through the Portal application.
+1. **Entry.** A program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-CURRIC-002`, `L2-NFR-001`, `L2-CONSENT-003`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative author lessons result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

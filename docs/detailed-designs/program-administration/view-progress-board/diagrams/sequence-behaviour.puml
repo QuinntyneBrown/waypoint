@@ -30,19 +30,19 @@ end box
 box "Backend — WordUp Infrastructure" #FFF4E5
   database "Word Up database" as db
 end box
-actor -> page : A program administrator starts the view the progress board interaction thro…
+actor -> page : Start view the progress board
 page -> client : Build typed request
 client -> controller : HTTPS request
 controller -> controller : Authenticate and apply endpoint policy
 controller -> handler : Send ProgressBoardQuery
 handler -> db : Query authorized state
 db --> handler : Current state
-handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+handler -> entity : Apply L2-ADMIN-004, L2-REPORT-003, L2-NFR-005, L2-NFR-009 feature r…
 entity --> handler : Valid state transition or projection
-handler -> db : Save changes when the request changes state
+handler -> db : Complete bounded projection
 db --> handler : Commit or query result
 handler --> controller : Typed result
 controller --> client : HTTP response or ProblemDetails
 client --> page : Feature result
-page --> actor : The frontend application presents an authorized and bounded view the progre…
+page --> actor : Present view the progress board result
 @enduml

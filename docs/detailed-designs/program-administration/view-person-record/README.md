@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Program Administration subsystem owns the part of that software concerned with view a person record.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Program Administration subsystem owns this feature slice.
 
 The View a person record feature slice refines `L2-ADMIN-002` into one independently deliverable interaction. Each person shall have a detail record supporting edit, role change, password reset, deactivate, and remove, with correct data-retention semantics.
 
-A program administrator starts the view a person record interaction through the Portal application. The frontend application presents an authorized and bounded view a person record result.
+A program administrator starts this feature interaction through the Portal application. The frontend application presents an authorized and bounded feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -26,7 +26,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend API boundary | [`PasswordResetApi`](../../../../frontend/projects/wu-api/src/lib/services/password-reset-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`OrgSettingsController`](../../../../backend/src/WordUp.Api/Controllers/ProgramAdministration/OrgSettingsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`SendPasswordResetForPersonCommand`](../../../../backend/src/WordUp.Application/ProgramAdministration/People/SendPasswordResetForPersonCommand.cs)<br>[`SendPasswordResetForPersonCommandHandler`](../../../../backend/src/WordUp.Application/ProgramAdministration/People/SendPasswordResetForPersonCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`Cohort`](../../../../backend/src/WordUp.Domain/ProgramAdministration/Cohort.cs)<br>[`CohortMentor`](../../../../backend/src/WordUp.Domain/ProgramAdministration/CohortMentor.cs)<br>[`OrgSettings`](../../../../backend/src/WordUp.Domain/ProgramAdministration/OrgSettings.cs)<br>[`Term`](../../../../backend/src/WordUp.Domain/ProgramAdministration/Term.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | [`Cohort`](../../../../backend/src/WordUp.Domain/ProgramAdministration/Cohort.cs)<br>[`CohortMentor`](../../../../backend/src/WordUp.Domain/ProgramAdministration/CohortMentor.cs)<br>[`OrgSettings`](../../../../backend/src/WordUp.Domain/ProgramAdministration/OrgSettings.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A program administrator starts the view a person record interaction through the Portal application.
+1. **Entry.** A program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-ADMIN-002`, `L2-AUTH-010`, `L2-CONSENT-004`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The frontend application presents an authorized and bounded view a person record result.
+3. **Result.** The frontend application presents an authorized and bounded feature result.
 
 ## Requirements
 

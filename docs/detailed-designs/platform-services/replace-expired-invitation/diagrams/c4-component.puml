@@ -27,8 +27,8 @@ rectangle "Word Up software system" as wordup {
       component "AccessController\n[API controller]" as controller #D1FADF
     }
     package "WordUp Application" {
-      component "ReplaceExpiredInvitationCommand\n[MediatR request]" as request #D1FADF
-      component "ReplaceExpiredInvitationCommandHandler\n[MediatR handler]" as handler #D1FADF
+      component "AccessStateQuery\n[MediatR request]" as request #D1FADF
+      component "AccessStateQueryHandler\n[MediatR handler]" as handler #D1FADF
     }
     package "WordUp Domain" {
       component "DisplayPreference\n[Domain type]" as entity #F4EBFF

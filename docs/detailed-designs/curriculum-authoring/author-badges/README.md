@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns the part of that software concerned with author badges.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns this feature slice.
 
 The Author badges feature slice refines `L2-CURRIC-005` into one independently deliverable interaction. Staff shall define badges with auto or manual award rules and optional competency mapping.
 
-A program administrator starts the author badges interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative author badges result.
+A program administrator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | `AuthorBadgesPage` *(planned boundary)* | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `CurriculumAuthoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`BadgesController`](../../../../backend/src/WordUp.Api/Controllers/CurriculumAuthoring/BadgesController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AwardBadgeCommand`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Badges/AwardBadgeCommand.cs)<br>[`AwardBadgeCommandHandler`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Badges/AwardBadgeCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Badge`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Badge.cs)<br>[`BadgeCriteriaKind`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/BadgeCriteriaKind.cs)<br>[`Competency`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Competency.cs)<br>[`Assignment`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Assignment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,16 +32,16 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `AuthorBadgesPage.submit()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `CurriculumAuthoringApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `BadgesController.PostAsync()` applies transport policy and constructs `AwardBadgeCommand`.
 - `AwardBadgeCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Badge`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A program administrator starts the author badges interaction through the Portal application.
+1. **Entry.** A program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-CURRIC-005`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative author badges result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

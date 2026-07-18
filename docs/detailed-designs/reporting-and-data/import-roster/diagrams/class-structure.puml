@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +submit(): void
     +renderResult(): void
   }
-  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+  class "ReportingAndDataApi" as client_ReportingAndDataApi <<API client>> {
     +execute(request): Observable
   }
 }
@@ -45,8 +45,8 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "ImportRosterState" as entity_ImportRosterState <<domain type>>
 }
-page_ImportRosterPage --> client_AnnouncementsApi : invokes
-client_AnnouncementsApi --> controller_DataController : calls
+page_ImportRosterPage --> client_ReportingAndDataApi : invokes
+client_ReportingAndDataApi --> controller_DataController : calls
 controller_DataController ..> request_CommitRosterImportCommand : creates
 request_CommitRosterImportCommand --> handler_CommitRosterImportCommandHandler : dispatched to
 handler_CommitRosterImportCommandHandler --> IAppDbContext : depends on

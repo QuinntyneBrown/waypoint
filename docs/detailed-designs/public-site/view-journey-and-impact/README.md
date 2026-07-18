@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Public Site subsystem owns the part of that software concerned with view journey and impact.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Public Site subsystem owns this feature slice.
 
 The View journey and impact feature slice refines `L2-PUB-002` into one independently deliverable interaction. The landing/about/programs pages shall present the two tracks (Bible & Leadership, Coding for Kingdom), the mentorship model, the current cohorts, the 4-step journey, and impact statistics.
 
-An anonymous visitor starts the view journey and impact interaction through the Public Site application. The frontend application presents an authorized and bounded view journey and impact result.
+An anonymous visitor starts this feature interaction through the Public Site application. The frontend application presents an authorized and bounded feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -26,7 +26,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/wu-api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`PublicController`](../../../../backend/src/WordUp.Api/Controllers/PublicSite/PublicController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | `ViewJourneyAndImpactQuery` *(planned boundary)*<br>`ViewJourneyAndImpactQueryHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`ContactRequest`](../../../../backend/src/WordUp.Domain/PublicSite/ContactRequest.cs)<br>[`DonationPledge`](../../../../backend/src/WordUp.Domain/PublicSite/DonationPledge.cs)<br>[`VolunteerSignup`](../../../../backend/src/WordUp.Domain/PublicSite/VolunteerSignup.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | `ViewJourneyAndImpactState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
@@ -34,14 +34,14 @@ A source link identifies an existing realization. An unlinked name identifies a 
 - `Programs.load()` starts the browser interaction and maintains presentation state.
 - `PublicSiteApi.get()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `PublicController.GetAsync()` applies transport policy and constructs `ViewJourneyAndImpactQuery`.
-- `ViewJourneyAndImpactQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `ContactRequest`, and returns a typed result.
+- `ViewJourneyAndImpactQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `ViewJourneyAndImpactState`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** An anonymous visitor starts the view journey and impact interaction through the Public Site application.
+1. **Entry.** An anonymous visitor starts this feature interaction through the Public Site application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PUB-002`, `L2-AUTH-010`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The frontend application presents an authorized and bounded view journey and impact result.
+3. **Result.** The frontend application presents an authorized and bounded feature result.
 
 ## Requirements
 

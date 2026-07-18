@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +submit(): void
     +renderResult(): void
   }
-  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+  class "NonFunctionalApi" as client_NonFunctionalApi <<API client>> {
     +execute(request): Observable
   }
 }
@@ -45,8 +45,8 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "ProtectConcurrentUpdatesState" as entity_ProtectConcurrentUpdatesState <<domain type>>
 }
-page_ProtectConcurrentUpdatesPage --> client_AnnouncementsApi : invokes
-client_AnnouncementsApi --> controller_NonFunctionalController : calls
+page_ProtectConcurrentUpdatesPage --> client_NonFunctionalApi : invokes
+client_NonFunctionalApi --> controller_NonFunctionalController : calls
 controller_NonFunctionalController ..> request_ProtectConcurrentUpdatesCommand : creates
 request_ProtectConcurrentUpdatesCommand --> handler_ProtectConcurrentUpdatesCommandHandler : dispatched to
 handler_ProtectConcurrentUpdatesCommandHandler --> IAppDbContext : depends on

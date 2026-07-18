@@ -20,7 +20,7 @@ package "Frontend — Public Site application" {
     +submit(): void
     +renderResult(): void
   }
-  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+  class "NonFunctionalApi" as client_NonFunctionalApi <<API client>> {
     +execute(request): Observable
   }
 }
@@ -45,8 +45,8 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "AdaptLayoutsState" as entity_AdaptLayoutsState <<domain type>>
 }
-page_AdaptLayoutsPage --> client_AnnouncementsApi : invokes
-client_AnnouncementsApi --> controller_NonFunctionalController : calls
+page_AdaptLayoutsPage --> client_NonFunctionalApi : invokes
+client_NonFunctionalApi --> controller_NonFunctionalController : calls
 controller_NonFunctionalController ..> request_AdaptLayoutsCommand : creates
 request_AdaptLayoutsCommand --> handler_AdaptLayoutsCommandHandler : dispatched to
 handler_AdaptLayoutsCommandHandler --> IAppDbContext : depends on

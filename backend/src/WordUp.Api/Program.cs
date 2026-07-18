@@ -239,6 +239,76 @@ if (app.Environment.IsEnvironment("Testing"))
         await db.SaveChangesAsync(cancellationToken);
         return Results.Created($"/api/_test/users/{user.Id}", new { userId = user.Id });
     });
+
+    // Public-content E2E needs published curriculum and a privacy-safe cohort, but those records
+    // cannot yet be assembled entirely through product APIs (track publishing and badge target
+    // rules are still later curriculum-authoring slices). Keep this seed behind Testing only.
+    app.MapPost("/api/_test/public-content", async (
+        IAppDbContext db,
+        CancellationToken cancellationToken) =>
+    {
+        var suffix = Guid.NewGuid().ToString("N")[..8];
+        var track = new Track
+        {
+            Name = $"E2E Leadership Track {suffix}",
+            Key = $"e2e-leadership-{suffix}",
+            Description = "Leadership content served by the authoritative API.",
+            Status = PublishStatus.Published,
+            Enabled = true,
+        };
+        var module = new Module
+        {
+            TrackId = track.Id,
+            Name = $"E2E Servant Leadership Module {suffix}",
+            Description = "Lead by serving.",
+            Order = 1,
+            Status = PublishStatus.Published,
+        };
+        var badge = new Badge
+        {
+            Name = $"E2E Servant Heart Badge {suffix}",
+            Icon = "heart",
+            Description = "Complete the module.",
+            CriteriaKind = BadgeCriteriaKind.Auto,
+            AutoRule = "module-completed",
+            TargetRefId = module.Id,
+        };
+        var mentor = new User
+        {
+            Email = $"e2e-public-mentor-{suffix}@wordup.test",
+            DisplayName = $"E2E Pat Mentor {suffix}",
+            Role = Roles.Mentor,
+            Status = UserStatus.Active,
+        };
+        var cohort = new Cohort
+        {
+            Name = $"E2E Regent Park Cohort {suffix}",
+            TrackId = track.Id,
+            Location = "Regent Park",
+            TermStart = new DateTime(2999, 9, 8, 0, 0, 0, DateTimeKind.Utc),
+            TermEnd = new DateTime(2999, 12, 15, 0, 0, 0, DateTimeKind.Utc),
+            MentorId = mentor.Id,
+        };
+
+        db.Tracks.Add(track);
+        db.Modules.Add(module);
+        db.Badges.Add(badge);
+        db.Users.Add(mentor);
+        db.Cohorts.Add(cohort);
+        await db.SaveChangesAsync(cancellationToken);
+
+        return Results.Created("/api/public/content", new
+        {
+            trackName = track.Name,
+            moduleName = module.Name,
+            badgeName = badge.Name,
+            cohortName = cohort.Name,
+            neighbourhood = cohort.Location,
+            mentorName = mentor.DisplayName,
+            cohort.TermStart,
+            cohort.TermEnd,
+        });
+    });
 }
 
 app.Run();

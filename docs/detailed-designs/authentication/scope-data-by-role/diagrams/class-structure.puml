@@ -43,7 +43,7 @@ package "Backend — WordUp Application" {
   }
 }
 package "Backend — WordUp Domain" {
-  class "Invitation" as entity_Invitation <<domain type>>
+  class "ScopeDataByRoleState" as entity_ScopeDataByRoleState <<domain type>>
 }
 page_AuthStore --> client_AuthApi : invokes
 client_AuthApi --> controller_AuthController : calls
@@ -51,8 +51,8 @@ controller_AuthController ..> request_ScopeDataByRoleCommand : creates
 request_ScopeDataByRoleCommand --> handler_ScopeDataByRoleCommandHandler : dispatched to
 handler_ScopeDataByRoleCommandHandler --> IAppDbContext : depends on
 handler_ScopeDataByRoleCommandHandler --> ICurrentUser : scopes by
-handler_ScopeDataByRoleCommandHandler --> entity_Invitation : reads or changes
-IAppDbContext o-- entity_Invitation : persists
+handler_ScopeDataByRoleCommandHandler --> entity_ScopeDataByRoleState : reads or changes
+IAppDbContext o-- entity_ScopeDataByRoleState : persists
 legend right
   Solid arrows show runtime collaboration.
   Dashed arrows show construction.

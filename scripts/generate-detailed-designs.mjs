@@ -557,7 +557,11 @@ for (const slice of manifest.slices) {
   const diagramDirectory = path.join(featureDirectory, "diagrams");
   fs.mkdirSync(diagramDirectory, { recursive: true });
   const elements = designElements(slice);
-  fs.writeFileSync(path.join(featureDirectory, "README.md"), readmeFor(slice, elements), "utf8");
+  const readme = readmeFor(slice, elements).replace(
+    `The ${subsystemNames[slice.subsystem]} subsystem owns the part of that software concerned with ${slice.title.toLowerCase()}.`,
+    `The ${subsystemNames[slice.subsystem]} subsystem owns this feature slice.`,
+  );
+  fs.writeFileSync(path.join(featureDirectory, "README.md"), readme, "utf8");
   readmeCount += 1;
   const diagrams = {
     "c4-system-context.puml": systemContextDiagram(slice),

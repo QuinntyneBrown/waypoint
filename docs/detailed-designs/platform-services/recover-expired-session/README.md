@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns the part of that software concerned with recover an expired session.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
 
 The Recover an expired session feature slice refines `L2-PLATFORM-010` into one independently deliverable interaction. Expired sessions and deactivated accounts shall present appropriate states.
 
-An authenticated participant starts the recover an expired session interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative recover an expired session result.
+An authenticated participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -27,7 +27,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | API transport | [`AccessController`](../../../../backend/src/WordUp.Api/Controllers/PlatformServices/AccessController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AccessStateQuery`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs)<br>[`AccessStateQueryHandler`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQueryHandler.cs)<br>[`AccessState`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`SupportRequest`](../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs)<br>[`DisplayPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs)<br>[`NotificationPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`AppException`](../../../../backend/src/WordUp.Application/Shared/Common/AppException.cs)<br>[`ConflictException`](../../../../backend/src/WordUp.Application/Shared/Common/ConflictException.cs)<br>[`ForbiddenException`](../../../../backend/src/WordUp.Application/Shared/Common/ForbiddenException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** An authenticated participant starts the recover an expired session interaction through the Portal application.
+1. **Entry.** An authenticated participant starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-010`, `L2-AUTH-007`, `L2-NFR-007`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative recover an expired session result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

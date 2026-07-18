@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns the part of that software concerned with replace an expired invitation.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
 
 The Replace an expired invitation feature slice refines `L2-PLATFORM-011` into one independently deliverable interaction. Youth-lifecycle gates shall present clear states and recovery.
 
-An authenticated participant starts the replace an expired invitation interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative replace an expired invitation result.
+An authenticated participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -25,7 +25,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend page | [`SessionExpired`](../../../../frontend/projects/portal/src/app/states/session-expired/session-expired.ts)<br>[`DisplayPreferencesService`](../../../../frontend/projects/portal/src/app/settings/display-preferences.service.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
 | Frontend API boundary | [`DisplayPreferencesApi`](../../../../frontend/projects/wu-api/src/lib/services/display-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AccessController`](../../../../backend/src/WordUp.Api/Controllers/PlatformServices/AccessController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | `ReplaceExpiredInvitationCommand` *(planned boundary)*<br>`ReplaceExpiredInvitationCommandHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Application slice | [`AccessStateQuery`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs)<br>[`AccessStateQueryHandler`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQueryHandler.cs)<br>[`AccessState`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`DisplayPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs)<br>[`SupportRequest`](../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs)<br>[`NotificationPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`NotFoundException`](../../../../backend/src/WordUp.Application/Shared/Common/NotFoundException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
@@ -33,15 +33,15 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 - `SessionExpired.submit()` starts the browser interaction and maintains presentation state.
 - `DisplayPreferencesApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
-- `AccessController.PostAsync()` applies transport policy and constructs `ReplaceExpiredInvitationCommand`.
-- `ReplaceExpiredInvitationCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `DisplayPreference`, and returns a typed result.
+- `AccessController.PostAsync()` applies transport policy and constructs `AccessStateQuery`.
+- `AccessStateQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `DisplayPreference`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** An authenticated participant starts the replace an expired invitation interaction through the Portal application.
+1. **Entry.** An authenticated participant starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-011`, `L2-AUTH-004`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative replace an expired invitation result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

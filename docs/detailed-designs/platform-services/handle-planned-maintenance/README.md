@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns the part of that software concerned with handle planned maintenance.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
 
 The Handle planned maintenance feature slice refines `L2-PLATFORM-009` into one independently deliverable interaction. Planned maintenance shall present a 503 state.
 
-An authenticated participant starts the handle planned maintenance interaction through the Public Site application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative handle planned maintenance result.
+An authenticated participant starts this feature interaction through the Public Site application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -25,7 +25,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend page | [`Maintenance`](../../../../frontend/projects/portal/src/app/states/maintenance/maintenance.ts)<br>[`DisplayPreferencesService`](../../../../frontend/projects/portal/src/app/settings/display-preferences.service.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
 | Frontend API boundary | [`DisplayPreferencesApi`](../../../../frontend/projects/wu-api/src/lib/services/display-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AccessController`](../../../../backend/src/WordUp.Api/Controllers/PlatformServices/AccessController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | `HandlePlannedMaintenanceCommand` *(planned boundary)*<br>`HandlePlannedMaintenanceCommandHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Application slice | [`AccessStateQuery`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs)<br>[`AccessStateQueryHandler`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQueryHandler.cs)<br>[`AccessState`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`SupportRequest`](../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs)<br>[`DisplayPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs)<br>[`NotificationPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`MaintenanceMiddleware`](../../../../backend/src/WordUp.Api/Middleware/MaintenanceMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
@@ -33,15 +33,15 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 - `Maintenance.submit()` starts the browser interaction and maintains presentation state.
 - `DisplayPreferencesApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
-- `AccessController.PostAsync()` applies transport policy and constructs `HandlePlannedMaintenanceCommand`.
-- `HandlePlannedMaintenanceCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `SupportRequest`, and returns a typed result.
+- `AccessController.PostAsync()` applies transport policy and constructs `AccessStateQuery`.
+- `AccessStateQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `SupportRequest`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** An authenticated participant starts the handle planned maintenance interaction through the Public Site application.
+1. **Entry.** An authenticated participant starts this feature interaction through the Public Site application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-009`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative handle planned maintenance result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

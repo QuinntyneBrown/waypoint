@@ -25,24 +25,24 @@ box "Backend — WordUp API application" #D1FADF
 end box
 box "Backend — WordUp Application and Domain" #ECFDF3
   participant "ViewJourneyAndImpactQueryHandler" as handler
-  participant "ContactRequest" as entity
+  participant "ViewJourneyAndImpactState" as entity
 end box
 box "Backend — WordUp Infrastructure" #FFF4E5
   database "Word Up database" as db
 end box
-actor -> page : An anonymous visitor starts the view journey and impact interaction through…
+actor -> page : Start view journey and impact
 page -> client : Build typed request
 client -> controller : HTTPS request
 controller -> controller : Authenticate and apply endpoint policy
 controller -> handler : Send ViewJourneyAndImpactQuery
 handler -> db : Query authorized state
 db --> handler : Current state
-handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+handler -> entity : Apply L2-PUB-002, L2-AUTH-010 feature rules
 entity --> handler : Valid state transition or projection
-handler -> db : Save changes when the request changes state
+handler -> db : Complete bounded projection
 db --> handler : Commit or query result
 handler --> controller : Typed result
 controller --> client : HTTP response or ProblemDetails
 client --> page : Feature result
-page --> actor : The frontend application presents an authorized and bounded view journey an…
+page --> actor : Present view journey and impact result
 @enduml

@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Public Site subsystem owns the part of that software concerned with navigate the public site.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Public Site subsystem owns this feature slice.
 
 The Navigate the public site feature slice refines `L2-PUB-001` into one independently deliverable interaction. The public marketing pages shall be served to anonymous visitors and shall not require or leak authenticated data.
 
-An anonymous visitor starts the navigate the public site interaction through the Public Site application. The frontend application presents an authorized and bounded navigate the public site result.
+An anonymous visitor starts this feature interaction through the Public Site application. The frontend application presents an authorized and bounded feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -22,7 +22,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`NotFound`](../../../../frontend/projects/public-site/src/app/features/not-found/not-found.ts)<br>[`App`](../../../../frontend/projects/public-site/src/app/app.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend page | [`NotFound`](../../../../frontend/projects/public-site/src/app/features/not-found/not-found.ts)<br>[`About`](../../../../frontend/projects/public-site/src/app/features/about/about.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
 | Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/wu-api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`PublicController`](../../../../backend/src/WordUp.Api/Controllers/PublicSite/PublicController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`GetPublicContentQuery`](../../../../backend/src/WordUp.Application/PublicSite/GetPublicContentQuery.cs)<br>[`GetPublicContentQueryHandler`](../../../../backend/src/WordUp.Application/PublicSite/GetPublicContentQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** An anonymous visitor starts the navigate the public site interaction through the Public Site application.
+1. **Entry.** An anonymous visitor starts this feature interaction through the Public Site application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PUB-001`, `L2-NFR-009`, `L2-NFR-010`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The frontend application presents an authorized and bounded navigate the public site result.
+3. **Result.** The frontend application presents an authorized and bounded feature result.
 
 ## Requirements
 

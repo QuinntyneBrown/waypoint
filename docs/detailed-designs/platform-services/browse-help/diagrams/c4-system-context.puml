@@ -19,7 +19,7 @@ actor "Authenticated participant\n[Person]" as primary #E0F2FE
 actor "Program staff\n[Person]" as staff #E0F2FE
 rectangle "Word Up software system\n[Software system]\nYouth leadership, learning, mentoring, and program operations" as wordup #D1FADF
 
-primary --> wordup : An authenticated participant starts the browse help interaction through…
+primary --> wordup : An authenticated participant starts this feature interaction through th…
 staff --> wordup : Administers authorized program activity
 
 legend right

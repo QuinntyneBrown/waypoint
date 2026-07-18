@@ -33,7 +33,7 @@ rectangle "Word Up software system" {
       rectangle "ICurrentUser\n[Code element: port]" as current #D1FADF
     }
     package "WordUp Domain" {
-      rectangle "ContactRequest\n[Code element: domain type]" as entity #F4EBFF
+      rectangle "ExploreProgramsState\n[Code element: domain type]" as entity #F4EBFF
     }
   }
 }

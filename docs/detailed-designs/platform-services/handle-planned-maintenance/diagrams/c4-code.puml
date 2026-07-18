@@ -27,8 +27,8 @@ rectangle "Word Up software system" {
       rectangle "AccessController\n[Code element: controller]" as controller #D1FADF
     }
     package "WordUp Application" {
-      rectangle "HandlePlannedMaintenanceCommand\n[Code element: request record]" as request #D1FADF
-      rectangle "HandlePlannedMaintenanceCommandHandler\n[Code element: handler class]" as handler #D1FADF
+      rectangle "AccessStateQuery\n[Code element: request record]" as request #D1FADF
+      rectangle "AccessStateQueryHandler\n[Code element: handler class]" as handler #D1FADF
       rectangle "IAppDbContext\n[Code element: port]" as dbport #D1FADF
       rectangle "ICurrentUser\n[Code element: port]" as current #D1FADF
     }

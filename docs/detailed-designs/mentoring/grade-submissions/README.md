@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Mentoring and Coaching subsystem owns the part of that software concerned with grade submissions.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Mentoring and Coaching subsystem owns this feature slice.
 
 The Grade submissions feature slice refines `L2-MENTOR-003` into one independently deliverable interaction. Mentors shall grade submissions against the rubric and approve, request revision, or save a draft.
 
-A mentor starts the grade submissions interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative grade submissions result.
+A mentor starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -26,7 +26,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend API boundary | [`NotificationPreferencesApi`](../../../../frontend/projects/wu-api/src/lib/services/notification-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`MentorController`](../../../../backend/src/WordUp.Api/Controllers/Mentoring/MentorController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`GradeSubmissionCommand`](../../../../backend/src/WordUp.Application/Mentoring/Grading/GradeSubmissionCommand.cs)<br>[`GradeSubmissionCommandHandler`](../../../../backend/src/WordUp.Application/Mentoring/Grading/GradeSubmissionCommandHandler.cs)<br>[`GradeSubmissionCommandValidator`](../../../../backend/src/WordUp.Application/Mentoring/Grading/GradeSubmissionCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`AssignedWork`](../../../../backend/src/WordUp.Domain/Mentoring/AssignedWork.cs)<br>[`CheckIn`](../../../../backend/src/WordUp.Domain/Mentoring/CheckIn.cs)<br>[`CompetencyAssessment`](../../../../backend/src/WordUp.Domain/Mentoring/CompetencyAssessment.cs)<br>[`Flag`](../../../../backend/src/WordUp.Domain/Mentoring/Flag.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | `GradeSubmissionsState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`SecurityHeadersMiddleware`](../../../../backend/src/WordUp.Api/Middleware/SecurityHeadersMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
@@ -34,14 +34,14 @@ A source link identifies an existing realization. An unlinked name identifies a 
 - `YouthNotifications.submit()` starts the browser interaction and maintains presentation state.
 - `NotificationPreferencesApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `MentorController.PostAsync()` applies transport policy and constructs `GradeSubmissionCommand`.
-- `GradeSubmissionCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `AssignedWork`, and returns a typed result.
+- `GradeSubmissionCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `GradeSubmissionsState`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A mentor starts the grade submissions interaction through the Portal application.
+1. **Entry.** A mentor starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-MENTOR-003`, `L2-LEARN-007`, `L2-CONSENT-003`, `L2-NFR-005`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative grade submissions result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

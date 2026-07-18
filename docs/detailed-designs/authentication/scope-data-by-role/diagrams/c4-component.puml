@@ -31,7 +31,7 @@ rectangle "Word Up software system" as wordup {
       component "ScopeDataByRoleCommandHandler\n[MediatR handler]" as handler #D1FADF
     }
     package "WordUp Domain" {
-      component "Invitation\n[Domain type]" as entity #F4EBFF
+      component "ScopeDataByRoleState\n[Domain type]" as entity #F4EBFF
     }
     package "WordUp Infrastructure" {
       component "AppDbContext\n[EF Core adapter]" as persistence #FFF4E5

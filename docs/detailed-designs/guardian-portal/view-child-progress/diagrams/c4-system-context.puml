@@ -19,7 +19,7 @@ actor "Guardian\n[Person]" as primary #E0F2FE
 actor "Program staff\n[Person]" as staff #E0F2FE
 rectangle "Word Up software system\n[Software system]\nYouth leadership, learning, mentoring, and program operations" as wordup #D1FADF
 
-primary --> wordup : A guardian starts the view a child's progress interaction through the P…
+primary --> wordup : A guardian starts this feature interaction through the Portal applicati…
 staff --> wordup : Administers authorized program activity
 
 legend right

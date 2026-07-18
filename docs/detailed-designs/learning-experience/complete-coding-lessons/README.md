@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns the part of that software concerned with complete a coding lesson.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns this feature slice.
 
 The Complete a coding lesson feature slice refines `L2-LEARN-008` into one independently deliverable interaction. Youth shall complete interactive coding lessons and submit coding projects for mentor review.
 
-A youth participant starts the complete a coding lesson interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative complete a coding lesson result.
+A youth participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `LearningExperienceApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`YouthCurriculumController`](../../../../backend/src/WordUp.Api/Controllers/LearningExperience/YouthCurriculumController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`CompleteLessonCommand`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/CompleteLessonCommand.cs)<br>[`CompleteLessonCommandHandler`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/CompleteLessonCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`BadgeAward`](../../../../backend/src/WordUp.Domain/LearningExperience/BadgeAward.cs)<br>[`LessonProgress`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonProgress.cs)<br>[`ProgressStatus`](../../../../backend/src/WordUp.Domain/LearningExperience/ProgressStatus.cs)<br>[`LessonReadingState`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonReadingState.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,16 +32,16 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `YouthAnnouncements.submit()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `LearningExperienceApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `YouthCurriculumController.PostAsync()` applies transport policy and constructs `CompleteLessonCommand`.
 - `CompleteLessonCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `BadgeAward`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A youth participant starts the complete a coding lesson interaction through the Portal application.
+1. **Entry.** A youth participant starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-LEARN-008`, `L2-LEARN-001`, `L2-CURRIC-005`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative complete a coding lesson result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

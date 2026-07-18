@@ -19,7 +19,7 @@ actor "Volunteer\n[Person]" as primary #E0F2FE
 actor "Program staff\n[Person]" as staff #E0F2FE
 rectangle "Word Up software system\n[Software system]\nYouth leadership, learning, mentoring, and program operations" as wordup #D1FADF
 
-primary --> wordup : A volunteer starts the record session attendance interaction through th…
+primary --> wordup : A volunteer starts this feature interaction through the Portal applicat…
 staff --> wordup : Administers authorized program activity
 
 legend right

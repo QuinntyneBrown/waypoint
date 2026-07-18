@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Reporting and Data subsystem owns the part of that software concerned with view a youth report.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Reporting and Data subsystem owns this feature slice.
 
 The View a youth report feature slice refines `L2-REPORT-001` into one independently deliverable interaction. Staff shall access org, youth, cohort, attendance, and staff reports with filters.
 
-A program administrator starts the view a youth report interaction through the Portal application. The frontend application presents an authorized and bounded view a youth report result.
+A program administrator starts this feature interaction through the Portal application. The frontend application presents an authorized and bounded feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A program administrator starts the view a youth report interaction through the Portal application.
+1. **Entry.** A program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-REPORT-001`, `L2-AUTH-010`, `L2-MENTOR-006`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The frontend application presents an authorized and bounded view a youth report result.
+3. **Result.** The frontend application presents an authorized and bounded feature result.
 
 ## Requirements
 

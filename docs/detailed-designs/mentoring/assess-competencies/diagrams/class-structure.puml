@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +submit(): void
     +renderResult(): void
   }
-  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+  class "MentoringApi" as client_MentoringApi <<API client>> {
     +execute(request): Observable
   }
 }
@@ -45,8 +45,8 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "CompetencyAssessment" as entity_CompetencyAssessment <<domain type>>
 }
-page_YouthAnnouncements --> client_AnnouncementsApi : invokes
-client_AnnouncementsApi --> controller_CompetenciesController : calls
+page_YouthAnnouncements --> client_MentoringApi : invokes
+client_MentoringApi --> controller_CompetenciesController : calls
 controller_CompetenciesController ..> request_YouthCompetenciesQuery : creates
 request_YouthCompetenciesQuery --> handler_YouthCompetenciesQueryHandler : dispatched to
 handler_YouthCompetenciesQueryHandler --> IAppDbContext : depends on

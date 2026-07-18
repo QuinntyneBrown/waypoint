@@ -43,7 +43,7 @@ package "Backend — WordUp Application" {
   }
 }
 package "Backend — WordUp Domain" {
-  class "ContactRequest" as entity_ContactRequest <<domain type>>
+  class "ExploreProgramsState" as entity_ExploreProgramsState <<domain type>>
 }
 page_Programs --> client_PublicSiteApi : invokes
 client_PublicSiteApi --> controller_PublicController : calls
@@ -51,8 +51,8 @@ controller_PublicController ..> request_GetPublicContentQuery : creates
 request_GetPublicContentQuery --> handler_GetPublicContentQueryHandler : dispatched to
 handler_GetPublicContentQueryHandler --> IAppDbContext : depends on
 handler_GetPublicContentQueryHandler --> ICurrentUser : scopes by
-handler_GetPublicContentQueryHandler --> entity_ContactRequest : reads or changes
-IAppDbContext o-- entity_ContactRequest : persists
+handler_GetPublicContentQueryHandler --> entity_ExploreProgramsState : reads or changes
+IAppDbContext o-- entity_ExploreProgramsState : persists
 legend right
   Solid arrows show runtime collaboration.
   Dashed arrows show construction.

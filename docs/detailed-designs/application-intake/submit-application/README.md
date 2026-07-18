@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Application Intake subsystem owns the part of that software concerned with submit an application.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Application Intake subsystem owns this feature slice.
 
 The Submit an application feature slice refines `L2-INTAKE-001` into one independently deliverable interaction. The application form shall capture who is filling it out (self / guardian / referrer), youth details, guardian contact, neighbourhood, cohort of interest, track interest, motivation, and consent/privacy acknowledgements, and shall enforce eligibility and under-18 guardian rules.
 
-An applicant or referrer starts the submit an application interaction through the Public Site application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative submit an application result.
+An applicant or referrer starts this feature interaction through the Public Site application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** An applicant or referrer starts the submit an application interaction through the Public Site application.
+1. **Entry.** An applicant or referrer starts this feature interaction through the Public Site application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-INTAKE-001`, `L2-NFR-001`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative submit an application result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

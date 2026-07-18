@@ -19,7 +19,7 @@ rectangle "Word Up software system" {
   package "Frontend" {
     package "Portal application" {
       rectangle "NotFound\n[Code element: page]" as page #E0F2FE
-      rectangle "AnnouncementsApi\n[Code element: API client]" as client #E0F2FE
+      rectangle "NonFunctionalApi\n[Code element: API client]" as client #E0F2FE
     }
   }
   package "Backend" {

@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Authentication and Access subsystem owns the part of that software concerned with onboard a youth.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Authentication and Access subsystem owns this feature slice.
 
 The Onboard a youth feature slice refines `L2-AUTH-011` into one independently deliverable interaction. A newly activated youth shall be guided through onboarding with the ability to skip.
 
-An account holder starts the onboard a youth interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative onboard a youth result.
+An account holder starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -26,7 +26,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend API boundary | [`OnboardingApi`](../../../../frontend/projects/wu-api/src/lib/services/onboarding-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`OnboardingController`](../../../../backend/src/WordUp.Api/Controllers/Authentication/OnboardingController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`SkipOnboardingCommand`](../../../../backend/src/WordUp.Application/Authentication/Onboarding/SkipOnboardingCommand.cs)<br>[`SkipOnboardingCommandHandler`](../../../../backend/src/WordUp.Application/Authentication/Onboarding/SkipOnboardingCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`User`](../../../../backend/src/WordUp.Domain/Authentication/User.cs)<br>[`Invitation`](../../../../backend/src/WordUp.Domain/Authentication/Invitation.cs)<br>[`PasswordResetToken`](../../../../backend/src/WordUp.Domain/Authentication/PasswordResetToken.cs)<br>[`RefreshToken`](../../../../backend/src/WordUp.Domain/Authentication/RefreshToken.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | [`User`](../../../../backend/src/WordUp.Domain/Authentication/User.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`AppException`](../../../../backend/src/WordUp.Application/Shared/Common/AppException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** An account holder starts the onboard a youth interaction through the Portal application.
+1. **Entry.** An account holder starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-AUTH-011`, `L2-PLATFORM-003`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative onboard a youth result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

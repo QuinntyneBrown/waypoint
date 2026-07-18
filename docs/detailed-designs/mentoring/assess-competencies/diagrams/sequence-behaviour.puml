@@ -18,7 +18,7 @@ skinparam package {
 actor "Mentor" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "YouthAnnouncements" as page
-  participant "AnnouncementsApi" as client
+  participant "MentoringApi" as client
 end box
 box "Backend — WordUp API application" #D1FADF
   participant "CompetenciesController" as controller
@@ -30,19 +30,19 @@ end box
 box "Backend — WordUp Infrastructure" #FFF4E5
   database "Word Up database" as db
 end box
-actor -> page : A mentor starts the assess competencies interaction through the Portal appl…
+actor -> page : Start assess competencies
 page -> client : Build typed request
 client -> controller : HTTPS request
 controller -> controller : Authenticate and apply endpoint policy
 controller -> handler : Send YouthCompetenciesQuery
 handler -> db : Load and persist authorized state
 db --> handler : Current state
-handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+handler -> entity : Apply L2-MENTOR-005, L2-CURRIC-006, L2-LEARN-010 feature rules
 entity --> handler : Valid state transition or projection
-handler -> db : Save changes when the request changes state
+handler -> db : Save changes in one unit of work
 db --> handler : Commit or query result
 handler --> controller : Typed result
 controller --> client : HTTP response or ProblemDetails
 client --> page : Feature result
-page --> actor : The backend commits an authorized state change when applicable, and the fro…
+page --> actor : Present assess competencies result
 @enduml

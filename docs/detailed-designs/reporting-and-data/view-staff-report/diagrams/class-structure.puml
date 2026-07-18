@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +load(): void
     +renderResult(): void
   }
-  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+  class "ReportingAndDataApi" as client_ReportingAndDataApi <<API client>> {
     +get(request): Observable
   }
 }
@@ -45,8 +45,8 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "ViewStaffReportState" as entity_ViewStaffReportState <<domain type>>
 }
-page_YouthAnnouncements --> client_AnnouncementsApi : invokes
-client_AnnouncementsApi --> controller_ReportsController : calls
+page_YouthAnnouncements --> client_ReportingAndDataApi : invokes
+client_ReportingAndDataApi --> controller_ReportsController : calls
 controller_ReportsController ..> request_StaffActivityReportQuery : creates
 request_StaffActivityReportQuery --> handler_StaffActivityReportQueryHandler : dispatched to
 handler_StaffActivityReportQueryHandler --> IAppDbContext : depends on

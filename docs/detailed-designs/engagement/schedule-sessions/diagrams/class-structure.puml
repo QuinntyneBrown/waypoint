@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +submit(): void
     +renderResult(): void
   }
-  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+  class "EngagementApi" as client_EngagementApi <<API client>> {
     +execute(request): Observable
   }
 }
@@ -45,8 +45,8 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "Session" as entity_Session <<domain type>>
 }
-page_VolunteerSchedule --> client_AnnouncementsApi : invokes
-client_AnnouncementsApi --> controller_SessionsController : calls
+page_VolunteerSchedule --> client_EngagementApi : invokes
+client_EngagementApi --> controller_SessionsController : calls
 controller_SessionsController ..> request_CreateSessionCommand : creates
 request_CreateSessionCommand --> handler_CreateSessionCommandHandler : dispatched to
 handler_CreateSessionCommandHandler --> IAppDbContext : depends on

@@ -19,7 +19,7 @@ actor "Anonymous visitor\n[Person]" as primary #E0F2FE
 actor "Program staff\n[Person]" as staff #E0F2FE
 rectangle "Word Up software system\n[Software system]\nYouth leadership, learning, mentoring, and program operations" as wordup #D1FADF
 rectangle "External donation provider\n[External software system]" as ext1 #FFF4E5
-primary --> wordup : An anonymous visitor starts the start a donation interaction through th…
+primary --> wordup : An anonymous visitor starts this feature interaction through the Public…
 staff --> wordup : Administers authorized program activity
 wordup --> ext1 : Exchanges external donation provider data
 legend right

@@ -19,7 +19,7 @@ actor "Account holder\n[Person]" as primary #E0F2FE
 actor "Program staff\n[Person]" as staff #E0F2FE
 rectangle "Word Up software system\n[Software system]\nYouth leadership, learning, mentoring, and program operations" as wordup #D1FADF
 
-primary --> wordup : An account holder starts the sign in interaction through the Portal app…
+primary --> wordup : An account holder starts this feature interaction through the Portal ap…
 staff --> wordup : Administers authorized program activity
 
 legend right

@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Non-Functional and Quality subsystem owns the part of that software concerned with protect unsaved work.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Non-Functional and Quality subsystem owns this feature slice.
 
 The Protect unsaved work feature slice refines `L2-NFR-007` into one independently deliverable interaction. The UI shall warn before discarding unsaved changes.
 
-A Word Up participant starts the protect unsaved work interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative protect unsaved work result.
+A Word Up participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | `ProtectUnsavedWorkPage` *(planned boundary)* | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `NonFunctionalApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | `NonFunctionalController` *(planned boundary)* | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | `ProtectUnsavedWorkCommand` *(planned boundary)*<br>`ProtectUnsavedWorkCommandHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | `ProtectUnsavedWorkState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,16 +32,16 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `ProtectUnsavedWorkPage.submit()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `NonFunctionalApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `NonFunctionalController.PostAsync()` applies transport policy and constructs `ProtectUnsavedWorkCommand`.
 - `ProtectUnsavedWorkCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `ProtectUnsavedWorkState`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A Word Up participant starts the protect unsaved work interaction through the Portal application.
+1. **Entry.** A Word Up participant starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-NFR-007`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative protect unsaved work result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

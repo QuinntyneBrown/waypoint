@@ -30,19 +30,19 @@ end box
 box "Backend — WordUp Infrastructure" #FFF4E5
   database "Word Up database" as db
 end box
-actor -> page : An authenticated participant starts the browse help interaction through the…
+actor -> page : Start browse help
 page -> client : Build typed request
 client -> controller : HTTPS request
 controller -> controller : Authenticate and apply endpoint policy
 controller -> handler : Send SubmitSupportRequestCommand
 handler -> db : Query authorized state
 db --> handler : Current state
-handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+handler -> entity : Apply L2-PLATFORM-005, L2-AUTH-010 feature rules
 entity --> handler : Valid state transition or projection
-handler -> db : Save changes when the request changes state
+handler -> db : Complete bounded projection
 db --> handler : Commit or query result
 handler --> controller : Typed result
 controller --> client : HTTP response or ProblemDetails
 client --> page : Feature result
-page --> actor : The frontend application presents an authorized and bounded browse help res…
+page --> actor : Present browse help result
 @enduml

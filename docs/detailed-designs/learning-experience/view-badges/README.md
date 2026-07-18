@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns the part of that software concerned with view badges.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns this feature slice.
 
 The View badges feature slice refines `L2-LEARN-009` into one independently deliverable interaction. Youth shall see their journey roadmap and badge collection with unlock criteria and progress.
 
-A youth participant starts the view badges interaction through the Portal application. The frontend application presents an authorized and bounded view badges result.
+A youth participant starts this feature interaction through the Portal application. The frontend application presents an authorized and bounded feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -23,25 +23,25 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `LearningExperienceApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`YouthProgressController`](../../../../backend/src/WordUp.Api/Controllers/LearningExperience/YouthProgressController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`JourneyQuery`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/JourneyQuery.cs)<br>[`JourneyQueryHandler`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/JourneyQueryHandler.cs)<br>[`JourneyView`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/JourneyQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`BadgeAward`](../../../../backend/src/WordUp.Domain/LearningExperience/BadgeAward.cs)<br>[`LessonProgress`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonProgress.cs)<br>[`ProgressStatus`](../../../../backend/src/WordUp.Domain/LearningExperience/ProgressStatus.cs)<br>[`LessonReadingState`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonReadingState.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | [`BadgeAward`](../../../../backend/src/WordUp.Domain/LearningExperience/BadgeAward.cs)<br>[`LessonProgress`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonProgress.cs)<br>[`ProgressStatus`](../../../../backend/src/WordUp.Domain/LearningExperience/ProgressStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
 - `YouthAnnouncements.load()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.get()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `LearningExperienceApi.get()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `YouthProgressController.GetAsync()` applies transport policy and constructs `JourneyQuery`.
 - `JourneyQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `BadgeAward`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A youth participant starts the view badges interaction through the Portal application.
+1. **Entry.** A youth participant starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-LEARN-009`, `L2-CURRIC-005`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The frontend application presents an authorized and bounded view badges result.
+3. **Result.** The frontend application presents an authorized and bounded feature result.
 
 ## Requirements
 

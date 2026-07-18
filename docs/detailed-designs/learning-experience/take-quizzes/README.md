@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns the part of that software concerned with take a quiz.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns this feature slice.
 
 The Take a quiz feature slice refines `L2-LEARN-004` into one independently deliverable interaction. Youth shall take quizzes one question at a time with autosave and immutable-on-submit behavior within attempt limits.
 
-A youth participant starts the take a quiz interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative take a quiz result.
+A youth participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -23,25 +23,25 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `LearningExperienceApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`QuizTakingController`](../../../../backend/src/WordUp.Api/Controllers/LearningExperience/QuizTakingController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`SubmitQuizAttemptCommand`](../../../../backend/src/WordUp.Application/LearningExperience/QuizTaking/SubmitQuizAttemptCommand.cs)<br>[`SubmitQuizAttemptCommandHandler`](../../../../backend/src/WordUp.Application/LearningExperience/QuizTaking/SubmitQuizAttemptCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`QuizAttempt`](../../../../backend/src/WordUp.Domain/LearningExperience/QuizAttempt.cs)<br>[`BadgeAward`](../../../../backend/src/WordUp.Domain/LearningExperience/BadgeAward.cs)<br>[`LessonProgress`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonProgress.cs)<br>[`LessonReadingState`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonReadingState.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | [`QuizAttempt`](../../../../backend/src/WordUp.Domain/LearningExperience/QuizAttempt.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`ValidationBehavior`](../../../../backend/src/WordUp.Application/Shared/Behaviors/ValidationBehavior.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
 - `YouthAnnouncements.submit()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `LearningExperienceApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `QuizTakingController.PostAsync()` applies transport policy and constructs `SubmitQuizAttemptCommand`.
 - `SubmitQuizAttemptCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `QuizAttempt`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A youth participant starts the take a quiz interaction through the Portal application.
+1. **Entry.** A youth participant starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-LEARN-004`, `L2-CURRIC-003`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative take a quiz result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

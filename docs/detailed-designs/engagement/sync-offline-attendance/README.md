@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Engagement and Operations subsystem owns the part of that software concerned with sync offline attendance.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Engagement and Operations subsystem owns this feature slice.
 
 The Sync offline attendance feature slice refines `L2-ENGAGE-003` into one independently deliverable interaction. Attendance shall be capturable offline and sync on reconnect without loss or duplication.
 
-A mentor, volunteer, or program administrator starts the sync offline attendance interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative sync offline attendance result.
+A mentor, volunteer, or program administrator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -23,25 +23,25 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`OfflineState`](../../../../frontend/projects/portal/src/app/states/offline/offline-state.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `EngagementApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AttendanceController`](../../../../backend/src/WordUp.Api/Controllers/Engagement/AttendanceController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AttendanceHistoryBySessionQuery`](../../../../backend/src/WordUp.Application/Engagement/Attendance/AttendanceHistoryBySessionQuery.cs)<br>[`AttendanceHistoryBySessionQueryHandler`](../../../../backend/src/WordUp.Application/Engagement/Attendance/AttendanceHistoryBySessionQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`AttendanceRecord`](../../../../backend/src/WordUp.Domain/Engagement/AttendanceRecord.cs)<br>[`Session`](../../../../backend/src/WordUp.Domain/Engagement/Session.cs)<br>[`AttendanceStatus`](../../../../backend/src/WordUp.Domain/Engagement/AttendanceStatus.cs)<br>[`Announcement`](../../../../backend/src/WordUp.Domain/Engagement/Announcement.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Domain state | [`AttendanceRecord`](../../../../backend/src/WordUp.Domain/Engagement/AttendanceRecord.cs)<br>[`Session`](../../../../backend/src/WordUp.Domain/Engagement/Session.cs)<br>[`AttendanceStatus`](../../../../backend/src/WordUp.Domain/Engagement/AttendanceStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
 | Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
 - `OfflineState.submit()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `EngagementApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `AttendanceController.PostAsync()` applies transport policy and constructs `AttendanceHistoryBySessionQuery`.
 - `AttendanceHistoryBySessionQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `AttendanceRecord`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A mentor, volunteer, or program administrator starts the sync offline attendance interaction through the Portal application.
+1. **Entry.** A mentor, volunteer, or program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-ENGAGE-003`, `L2-NFR-004`, `L2-NFR-006`, `L2-NFR-007`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative sync offline attendance result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

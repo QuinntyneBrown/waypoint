@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Non-Functional and Quality subsystem owns the part of that software concerned with operate and observe the system.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Non-Functional and Quality subsystem owns this feature slice.
 
 The Operate and observe the system feature slice refines `L2-NFR-011` into one independently deliverable interaction. The system shall expose health checks, structured logging, and an admin CLI (operational tooling — an out-of-band ops interface, not product scope).
 
-A platform operator starts the operate and observe the system interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative operate and observe the system result.
+A platform operator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`NotFound`](../../../../frontend/projects/portal/src/app/states/not-found/not-found.ts)<br>[`NotFound`](../../../../frontend/projects/public-site/src/app/features/not-found/not-found.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `NonFunctionalApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | `NonFunctionalController` *(planned boundary)* | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | `OperateAndObserveSystemCommand` *(planned boundary)*<br>`OperateAndObserveSystemCommandHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | `OperateAndObserveSystemState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,16 +32,16 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `NotFound.submit()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `NonFunctionalApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `NonFunctionalController.PostAsync()` applies transport policy and constructs `OperateAndObserveSystemCommand`.
 - `OperateAndObserveSystemCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `OperateAndObserveSystemState`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A platform operator starts the operate and observe the system interaction through the Portal application.
+1. **Entry.** A platform operator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-NFR-011`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative operate and observe the system result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

@@ -30,8 +30,8 @@ package "Backend — WordUp API application" {
   }
 }
 package "Backend — WordUp Application" {
-  class "RecoverFromServerErrorCommand" as request_RecoverFromServerErrorCommand <<record>>
-  class "RecoverFromServerErrorCommandHandler" as handler_RecoverFromServerErrorCommandHandler <<handler>> {
+  class "AccessStateQuery" as request_AccessStateQuery <<record>>
+  class "AccessStateQueryHandler" as handler_AccessStateQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
   }
   interface IAppDbContext {
@@ -47,11 +47,11 @@ package "Backend — WordUp Domain" {
 }
 page_ServerError --> client_DisplayPreferencesApi : invokes
 client_DisplayPreferencesApi --> controller_AccessController : calls
-controller_AccessController ..> request_RecoverFromServerErrorCommand : creates
-request_RecoverFromServerErrorCommand --> handler_RecoverFromServerErrorCommandHandler : dispatched to
-handler_RecoverFromServerErrorCommandHandler --> IAppDbContext : depends on
-handler_RecoverFromServerErrorCommandHandler --> ICurrentUser : scopes by
-handler_RecoverFromServerErrorCommandHandler --> entity_SupportRequest : reads or changes
+controller_AccessController ..> request_AccessStateQuery : creates
+request_AccessStateQuery --> handler_AccessStateQueryHandler : dispatched to
+handler_AccessStateQueryHandler --> IAppDbContext : depends on
+handler_AccessStateQueryHandler --> ICurrentUser : scopes by
+handler_AccessStateQueryHandler --> entity_SupportRequest : reads or changes
 IAppDbContext o-- entity_SupportRequest : persists
 legend right
   Solid arrows show runtime collaboration.

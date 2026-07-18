@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Authentication and Access subsystem owns the part of that software concerned with recover a locked account.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Authentication and Access subsystem owns this feature slice.
 
 The Recover a locked account feature slice refines `L2-AUTH-006` into one independently deliverable interaction. After too many failed attempts, the account shall lock for a defined duration and offer recovery.
 
-An account holder starts the recover a locked account interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative recover a locked account result.
+An account holder starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -26,8 +26,8 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend API boundary | [`AuthApi`](../../../../frontend/projects/wu-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AuthController`](../../../../backend/src/WordUp.Api/Controllers/Authentication/AuthController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | `RecoverLockedAccountCommand` *(planned boundary)*<br>`RecoverLockedAccountCommandHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`PasswordResetToken`](../../../../backend/src/WordUp.Domain/Authentication/PasswordResetToken.cs)<br>[`RefreshToken`](../../../../backend/src/WordUp.Domain/Authentication/RefreshToken.cs)<br>[`Invitation`](../../../../backend/src/WordUp.Domain/Authentication/Invitation.cs)<br>[`Roles`](../../../../backend/src/WordUp.Domain/Authentication/Roles.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`SecurityHeadersMiddleware`](../../../../backend/src/WordUp.Api/Middleware/SecurityHeadersMiddleware.cs)<br>[`IJwtTokenIssuer`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IJwtTokenIssuer.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| Domain state | [`PasswordResetToken`](../../../../backend/src/WordUp.Domain/Authentication/PasswordResetToken.cs)<br>[`RefreshToken`](../../../../backend/src/WordUp.Domain/Authentication/RefreshToken.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`IJwtTokenIssuer`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IJwtTokenIssuer.cs)<br>[`SecurityHeadersMiddleware`](../../../../backend/src/WordUp.Api/Middleware/SecurityHeadersMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** An account holder starts the recover a locked account interaction through the Portal application.
+1. **Entry.** An account holder starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-AUTH-006`, `L2-AUTH-001`, `L2-CONSENT-003`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative recover a locked account result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

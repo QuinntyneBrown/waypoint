@@ -19,7 +19,7 @@ rectangle "Word Up software system" as wordup {
   package "Frontend" {
     package "Public Site application" {
       component "ValidateInputAndOutputPage\n[Angular page component]" as page #E0F2FE
-      component "AnnouncementsApi\n[Typed API client]" as client #E0F2FE
+      component "NonFunctionalApi\n[Typed API client]" as client #E0F2FE
     }
   }
   package "Backend" {

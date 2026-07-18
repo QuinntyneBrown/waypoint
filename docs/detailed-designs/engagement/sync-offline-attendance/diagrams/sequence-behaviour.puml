@@ -18,7 +18,7 @@ skinparam package {
 actor "Mentor, volunteer, or program administrator" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "OfflineState" as page
-  participant "AnnouncementsApi" as client
+  participant "EngagementApi" as client
 end box
 box "Backend — WordUp API application" #D1FADF
   participant "AttendanceController" as controller
@@ -30,19 +30,19 @@ end box
 box "Backend — WordUp Infrastructure" #FFF4E5
   database "Word Up database" as db
 end box
-actor -> page : A mentor, volunteer, or program administrator starts the sync offline atten…
+actor -> page : Start sync offline attendance
 page -> client : Build typed request
 client -> controller : HTTPS request
 controller -> controller : Authenticate and apply endpoint policy
 controller -> handler : Send AttendanceHistoryBySessionQuery
 handler -> db : Load and persist authorized state
 db --> handler : Current state
-handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+handler -> entity : Apply L2-ENGAGE-003, L2-NFR-004, L2-NFR-006, L2-NFR-007 feature rul…
 entity --> handler : Valid state transition or projection
-handler -> db : Save changes when the request changes state
+handler -> db : Save changes in one unit of work
 db --> handler : Commit or query result
 handler --> controller : Typed result
 controller --> client : HTTP response or ProblemDetails
 client --> page : Feature result
-page --> actor : The backend commits an authorized state change when applicable, and the fro…
+page --> actor : Present sync offline attendance result
 @enduml

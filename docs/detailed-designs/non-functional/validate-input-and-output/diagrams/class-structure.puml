@@ -20,7 +20,7 @@ package "Frontend — Public Site application" {
     +submit(): void
     +renderResult(): void
   }
-  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+  class "NonFunctionalApi" as client_NonFunctionalApi <<API client>> {
     +execute(request): Observable
   }
 }
@@ -45,8 +45,8 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "ValidateInputAndOutputState" as entity_ValidateInputAndOutputState <<domain type>>
 }
-page_ValidateInputAndOutputPage --> client_AnnouncementsApi : invokes
-client_AnnouncementsApi --> controller_NonFunctionalController : calls
+page_ValidateInputAndOutputPage --> client_NonFunctionalApi : invokes
+client_NonFunctionalApi --> controller_NonFunctionalController : calls
 controller_NonFunctionalController ..> request_ValidateInputAndOutputCommand : creates
 request_ValidateInputAndOutputCommand --> handler_ValidateInputAndOutputCommandHandler : dispatched to
 handler_ValidateInputAndOutputCommandHandler --> IAppDbContext : depends on

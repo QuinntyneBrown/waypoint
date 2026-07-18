@@ -43,7 +43,7 @@ package "Backend — WordUp Application" {
   }
 }
 package "Backend — WordUp Domain" {
-  class "AssignedWork" as entity_AssignedWork <<domain type>>
+  class "GradeSubmissionsState" as entity_GradeSubmissionsState <<domain type>>
 }
 page_YouthNotifications --> client_NotificationPreferencesApi : invokes
 client_NotificationPreferencesApi --> controller_MentorController : calls
@@ -51,8 +51,8 @@ controller_MentorController ..> request_GradeSubmissionCommand : creates
 request_GradeSubmissionCommand --> handler_GradeSubmissionCommandHandler : dispatched to
 handler_GradeSubmissionCommandHandler --> IAppDbContext : depends on
 handler_GradeSubmissionCommandHandler --> ICurrentUser : scopes by
-handler_GradeSubmissionCommandHandler --> entity_AssignedWork : reads or changes
-IAppDbContext o-- entity_AssignedWork : persists
+handler_GradeSubmissionCommandHandler --> entity_GradeSubmissionsState : reads or changes
+IAppDbContext o-- entity_GradeSubmissionsState : persists
 legend right
   Solid arrows show runtime collaboration.
   Dashed arrows show construction.

@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Reporting and Data subsystem owns the part of that software concerned with view a staff report.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Reporting and Data subsystem owns this feature slice.
 
 The View a staff report feature slice refines `L2-REPORT-001` into one independently deliverable interaction. Staff shall access org, youth, cohort, attendance, and staff reports with filters.
 
-A program administrator starts the view a staff report interaction through the Portal application. The frontend application presents an authorized and bounded view a staff report result.
+A program administrator starts this feature interaction through the Portal application. The frontend application presents an authorized and bounded feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `ReportingAndDataApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`ReportsController`](../../../../backend/src/WordUp.Api/Controllers/ReportingAndData/ReportsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`StaffActivityReportQuery`](../../../../backend/src/WordUp.Application/ReportingAndData/Reports/StaffActivityReportQuery.cs)<br>[`StaffActivityReportQueryHandler`](../../../../backend/src/WordUp.Application/ReportingAndData/Reports/StaffActivityReportQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | `ViewStaffReportState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,16 +32,16 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `YouthAnnouncements.load()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.get()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `ReportingAndDataApi.get()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `ReportsController.GetAsync()` applies transport policy and constructs `StaffActivityReportQuery`.
 - `StaffActivityReportQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `ViewStaffReportState`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A program administrator starts the view a staff report interaction through the Portal application.
+1. **Entry.** A program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-REPORT-001`, `L2-ADMIN-005`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The frontend application presents an authorized and bounded view a staff report result.
+3. **Result.** The frontend application presents an authorized and bounded feature result.
 
 ## Requirements
 

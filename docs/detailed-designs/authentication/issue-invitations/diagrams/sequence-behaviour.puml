@@ -30,19 +30,19 @@ end box
 box "Backend — WordUp Infrastructure" #FFF4E5
   database "Word Up database" as db
 end box
-actor -> page : A program administrator or account holder starts the issue invitations inte…
+actor -> page : Start issue invitations
 page -> client : Build typed request
 client -> controller : HTTPS request
 controller -> controller : Authenticate and apply endpoint policy
 controller -> handler : Send ResendInvitationCommand
 handler -> db : Load and persist authorized state
 db --> handler : Current state
-handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+handler -> entity : Apply L2-AUTH-003, L2-AUTH-009, L2-AUTH-012 feature rules
 entity --> handler : Valid state transition or projection
-handler -> db : Save changes when the request changes state
+handler -> db : Save changes in one unit of work
 db --> handler : Commit or query result
 handler --> controller : Typed result
 controller --> client : HTTP response or ProblemDetails
 client --> page : Feature result
-page --> actor : The backend commits an authorized state change when applicable, and the fro…
+page --> actor : Present issue invitations result
 @enduml

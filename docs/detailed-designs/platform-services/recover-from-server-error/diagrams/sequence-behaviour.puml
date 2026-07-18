@@ -24,25 +24,25 @@ box "Backend — WordUp API application" #D1FADF
   participant "AccessController" as controller
 end box
 box "Backend — WordUp Application and Domain" #ECFDF3
-  participant "RecoverFromServerErrorCommandHandler" as handler
+  participant "AccessStateQueryHandler" as handler
   participant "SupportRequest" as entity
 end box
 box "Backend — WordUp Infrastructure" #FFF4E5
   database "Word Up database" as db
 end box
-actor -> page : An authenticated participant starts the recover from a server error interac…
+actor -> page : Start recover from a server error
 page -> client : Build typed request
 client -> controller : HTTPS request
 controller -> controller : Authenticate and apply endpoint policy
-controller -> handler : Send RecoverFromServerErrorCommand
+controller -> handler : Send AccessStateQuery
 handler -> db : Load and persist authorized state
 db --> handler : Current state
-handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+handler -> entity : Apply L2-PLATFORM-008, L2-NFR-007, L2-NFR-011 feature rules
 entity --> handler : Valid state transition or projection
-handler -> db : Save changes when the request changes state
+handler -> db : Save changes in one unit of work
 db --> handler : Commit or query result
 handler --> controller : Typed result
 controller --> client : HTTP response or ProblemDetails
 client --> page : Feature result
-page --> actor : The backend commits an authorized state change when applicable, and the fro…
+page --> actor : Present recover from a server error result
 @enduml

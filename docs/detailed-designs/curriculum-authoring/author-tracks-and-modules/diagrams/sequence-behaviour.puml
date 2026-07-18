@@ -30,19 +30,19 @@ end box
 box "Backend — WordUp Infrastructure" #FFF4E5
   database "Word Up database" as db
 end box
-actor -> page : A program administrator starts the author tracks and modules interaction th…
+actor -> page : Start author tracks and modules
 page -> client : Build typed request
 client -> controller : HTTPS request
 controller -> controller : Authenticate and apply endpoint policy
 controller -> handler : Send ListTracksQuery
 handler -> db : Load and persist authorized state
 db --> handler : Current state
-handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+handler -> entity : Apply L2-CURRIC-001, L2-AUTH-009, L2-CONSENT-003 feature rules
 entity --> handler : Valid state transition or projection
-handler -> db : Save changes when the request changes state
+handler -> db : Save changes in one unit of work
 db --> handler : Commit or query result
 handler --> controller : Typed result
 controller --> client : HTTP response or ProblemDetails
 client --> page : Feature result
-page --> actor : The backend commits an authorized state change when applicable, and the fro…
+page --> actor : Present author tracks and modules result
 @enduml

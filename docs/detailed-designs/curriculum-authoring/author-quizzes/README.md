@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns the part of that software concerned with author quizzes.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns this feature slice.
 
 The Author quizzes feature slice refines `L2-CURRIC-003` into one independently deliverable interaction. Staff shall build quizzes with typed questions, correct answers, and rules.
 
-A program administrator starts the author quizzes interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative author quizzes result.
+A program administrator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `CurriculumAuthoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`QuizzesController`](../../../../backend/src/WordUp.Api/Controllers/CurriculumAuthoring/QuizzesController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AddQuizQuestionCommand`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Assessments/AddQuizQuestionCommand.cs)<br>[`AddQuizQuestionCommandHandler`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Assessments/AddQuizQuestionCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Quiz`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Quiz.cs)<br>[`QuizQuestion`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/QuizQuestion.cs)<br>[`QuestionType`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/QuestionType.cs)<br>[`Assignment`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Assignment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,16 +32,16 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `YouthAnnouncements.submit()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `CurriculumAuthoringApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `QuizzesController.PostAsync()` applies transport policy and constructs `AddQuizQuestionCommand`.
 - `AddQuizQuestionCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Quiz`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
 ### Behavior
 
-1. **Entry.** A program administrator starts the author quizzes interaction through the Portal application.
+1. **Entry.** A program administrator starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-CURRIC-003`, `L2-LEARN-004`, `L2-MENTOR-004`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative author quizzes result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 

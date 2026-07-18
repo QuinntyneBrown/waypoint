@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +submit(): void
     +renderResult(): void
   }
-  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+  class "NonFunctionalApi" as client_NonFunctionalApi <<API client>> {
     +execute(request): Observable
   }
 }
@@ -45,8 +45,8 @@ package "Backend — WordUp Application" {
 package "Backend — WordUp Domain" {
   class "OperateAndObserveSystemState" as entity_OperateAndObserveSystemState <<domain type>>
 }
-page_NotFound --> client_AnnouncementsApi : invokes
-client_AnnouncementsApi --> controller_NonFunctionalController : calls
+page_NotFound --> client_NonFunctionalApi : invokes
+client_NonFunctionalApi --> controller_NonFunctionalController : calls
 controller_NonFunctionalController ..> request_OperateAndObserveSystemCommand : creates
 request_OperateAndObserveSystemCommand --> handler_OperateAndObserveSystemCommandHandler : dispatched to
 handler_OperateAndObserveSystemCommandHandler --> IAppDbContext : depends on

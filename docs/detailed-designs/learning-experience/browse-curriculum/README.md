@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns the part of that software concerned with browse curriculum.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns this feature slice.
 
 The Browse curriculum feature slice refines `L2-LEARN-001` into one independently deliverable interaction. Youth shall browse their track's modules/lessons with correct gating and unlock rules.
 
-A youth participant starts the browse curriculum interaction through the Portal application. The frontend application presents an authorized and bounded browse curriculum result.
+A youth participant starts this feature interaction through the Portal application. The frontend application presents an authorized and bounded feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -26,8 +26,8 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/wu-api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`YouthCurriculumController`](../../../../backend/src/WordUp.Api/Controllers/LearningExperience/YouthCurriculumController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`BrowseCurriculumQuery`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/BrowseCurriculumQuery.cs)<br>[`BrowseCurriculumQueryHandler`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/BrowseCurriculumQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`LessonProgress`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonProgress.cs)<br>[`LessonReadingState`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonReadingState.cs)<br>[`BadgeAward`](../../../../backend/src/WordUp.Domain/LearningExperience/BadgeAward.cs)<br>[`QuizAttempt`](../../../../backend/src/WordUp.Domain/LearningExperience/QuizAttempt.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`SignalRChangePublisher`](../../../../backend/src/WordUp.Api/Realtime/SignalRChangePublisher.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| Domain state | [`LessonProgress`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonProgress.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A youth participant starts the browse curriculum interaction through the Portal application.
+1. **Entry.** A youth participant starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-LEARN-001`, `L2-AUTH-009`, `L2-CURRIC-001`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The frontend application presents an authorized and bounded browse curriculum result.
+3. **Result.** The frontend application presents an authorized and bounded feature result.
 
 ## Requirements
 

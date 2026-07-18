@@ -2,11 +2,11 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Consent and Safeguarding subsystem owns the part of that software concerned with manage guardian consent.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Consent and Safeguarding subsystem owns this feature slice.
 
 The Manage guardian consent feature slice refines `L2-CONSENT-001` into one independently deliverable interaction. The system shall capture guardian participation consent (required) and media/photo consent (optional, granular) with a typed e-signature record.
 
-A guardian or youth participant starts the manage guardian consent interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative manage guardian consent result.
+A guardian or youth participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -39,9 +39,9 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A guardian or youth participant starts the manage guardian consent interaction through the Portal application.
+1. **Entry.** A guardian or youth participant starts this feature interaction through the Portal application.
 2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-CONSENT-001`, `L2-ADMIN-006`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative manage guardian consent result.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 
