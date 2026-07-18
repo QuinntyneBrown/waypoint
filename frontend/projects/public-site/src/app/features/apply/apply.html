@@ -1,0 +1,183 @@
+<section class="wu-container wu-section" style="max-width: 720px">
+  @if (done()) {
+    <div class="wu-empty">
+      <div class="wu-empty__icon">
+        <wu-icon name="check-circle" />
+      </div>
+      <h1 class="wu-empty__title">Application received</h1>
+      <p class="wu-empty__text">
+        Thanks for applying to Word Up! We’ll review your application and reach out with next steps.
+        You don’t have an account yet — we’ll set one up once you’re accepted into a cohort.
+      </p>
+      <a class="wu-btn wu-btn--primary" routerLink="/">Back to home</a>
+    </div>
+  } @else {
+    <div class="wu-eyebrow">Apply</div>
+    <h1>Join a cohort</h1>
+    <p class="wu-muted">
+      Open to young people aged {{ minAge }}–{{ maxAge }}. It only takes a few minutes.
+    </p>
+
+    @if (serverError()) {
+      <div class="wu-alert wu-alert--error wu-mt-4" role="alert">
+        <wu-icon name="alert-circle" iconClass="wu-alert__icon" />
+        <div>{{ serverError() }}</div>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="wu-stack wu-mt-6">
+      <div class="wu-field">
+        <label class="wu-label" for="whoIsFilling">Who’s filling this out?</label>
+        <select class="wu-select" id="whoIsFilling" formControlName="whoIsFilling">
+          <option value="self">I’m applying for myself</option>
+          <option value="guardian">I’m a parent or guardian</option>
+          <option value="referrer">I’m referring someone</option>
+        </select>
+      </div>
+
+      <div class="wu-grid wu-grid--2">
+        <div class="wu-field" [class.is-error]="error('firstName')">
+          <label class="wu-label" for="firstName"
+            >First name <span class="wu-label__req">*</span></label
+          >
+          <input class="wu-input" id="firstName" formControlName="firstName" />
+          @if (error('firstName')) {
+            <div class="wu-error-text">{{ error('firstName') }}</div>
+          }
+        </div>
+        <div class="wu-field" [class.is-error]="error('lastName')">
+          <label class="wu-label" for="lastName"
+            >Last name <span class="wu-label__req">*</span></label
+          >
+          <input class="wu-input" id="lastName" formControlName="lastName" />
+          @if (error('lastName')) {
+            <div class="wu-error-text">{{ error('lastName') }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="wu-grid wu-grid--2">
+        <div class="wu-field" [class.is-error]="ageGateError() || error('age')">
+          <label class="wu-label" for="age">Age <span class="wu-label__req">*</span></label>
+          <input
+            class="wu-input"
+            id="age"
+            type="number"
+            formControlName="age"
+            [min]="minAge"
+            [max]="maxAge"
+          />
+          @if (ageGateError() || error('age')) {
+            <div class="wu-error-text">{{ ageGateError() || error('age') }}</div>
+          }
+        </div>
+        <div class="wu-field" [class.is-error]="error('neighbourhood')">
+          <label class="wu-label" for="neighbourhood"
+            >Neighbourhood <span class="wu-label__req">*</span></label
+          >
+          <input class="wu-input" id="neighbourhood" formControlName="neighbourhood" />
+          @if (error('neighbourhood')) {
+            <div class="wu-error-text">{{ error('neighbourhood') }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="wu-field">
+        <label class="wu-label" for="trackInterest">Track you’re most interested in</label>
+        <select class="wu-select" id="trackInterest" formControlName="trackInterest">
+          <option value="">No preference yet</option>
+          <option value="Bible &amp; Leadership">Bible &amp; Leadership</option>
+          <option value="Coding for Kingdom">Coding for Kingdom</option>
+        </select>
+      </div>
+
+      <div class="wu-field" [class.is-error]="error('whyInterested')">
+        <label class="wu-label" for="whyInterested"
+          >Why are you interested? <span class="wu-label__req">*</span></label
+        >
+        <textarea
+          class="wu-textarea"
+          id="whyInterested"
+          rows="4"
+          formControlName="whyInterested"
+        ></textarea>
+        @if (error('whyInterested')) {
+          <div class="wu-error-text">{{ error('whyInterested') }}</div>
+        }
+      </div>
+
+      @if (needsGuardian()) {
+        <div class="wu-divider"></div>
+        <h3>Parent or guardian</h3>
+        <p class="wu-muted wu-text-sm">Required for applicants under 18.</p>
+        <div class="wu-field" [class.is-error]="error('guardianName')">
+          <label class="wu-label" for="guardianName"
+            >Guardian name <span class="wu-label__req">*</span></label
+          >
+          <input class="wu-input" id="guardianName" formControlName="guardianName" />
+          @if (error('guardianName')) {
+            <div class="wu-error-text">{{ error('guardianName') }}</div>
+          }
+        </div>
+        <div class="wu-grid wu-grid--2">
+          <div class="wu-field" [class.is-error]="error('guardianEmail')">
+            <label class="wu-label" for="guardianEmail"
+              >Guardian email <span class="wu-label__req">*</span></label
+            >
+            <input
+              class="wu-input"
+              id="guardianEmail"
+              type="email"
+              formControlName="guardianEmail"
+            />
+            @if (error('guardianEmail')) {
+              <div class="wu-error-text">{{ error('guardianEmail') }}</div>
+            }
+          </div>
+          <div class="wu-field" [class.is-error]="error('guardianPhone')">
+            <label class="wu-label" for="guardianPhone"
+              >Guardian phone <span class="wu-label__req">*</span></label
+            >
+            <input class="wu-input" id="guardianPhone" formControlName="guardianPhone" />
+            @if (error('guardianPhone')) {
+              <div class="wu-error-text">{{ error('guardianPhone') }}</div>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="wu-divider"></div>
+
+      <div class="wu-field" [class.is-error]="error('participationConsentAck')">
+        <label class="wu-check">
+          <input type="checkbox" formControlName="participationConsentAck" />
+          <span class="wu-check__box"><wu-icon name="check" /></span>
+          <span>I confirm a parent or guardian consents to participation.</span>
+        </label>
+        @if (error('participationConsentAck')) {
+          <div class="wu-error-text">{{ error('participationConsentAck') }}</div>
+        }
+      </div>
+
+      <div class="wu-field" [class.is-error]="error('privacyAck')">
+        <label class="wu-check">
+          <input type="checkbox" formControlName="privacyAck" />
+          <span class="wu-check__box"><wu-icon name="check" /></span>
+          <span>I’ve read the <a routerLink="/privacy">privacy notice</a>.</span>
+        </label>
+        @if (error('privacyAck')) {
+          <div class="wu-error-text">{{ error('privacyAck') }}</div>
+        }
+      </div>
+
+      <button
+        class="wu-btn wu-btn--primary wu-btn--lg"
+        type="submit"
+        [class.is-loading]="submitting()"
+        [disabled]="submitting()"
+      >
+        Submit application
+      </button>
+    </form>
+  }
+</section>

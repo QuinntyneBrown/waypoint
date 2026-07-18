@@ -33,6 +33,11 @@ export default defineConfig({
       testDir: './e2e/portal',
       use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:4200' },
     },
+    {
+      name: 'public-site',
+      testDir: './e2e/public-site',
+      use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:4201' },
+    },
   ],
   webServer: [
     {
@@ -50,6 +55,12 @@ export default defineConfig({
     {
       command: 'npx ng serve portal --port 4200',
       url: 'http://localhost:4200',
+      timeout: 180_000,
+      reuseExistingServer: !CI,
+    },
+    {
+      command: 'npx ng serve public-site --port 4201',
+      url: 'http://localhost:4201',
       timeout: 180_000,
       reuseExistingServer: !CI,
     },

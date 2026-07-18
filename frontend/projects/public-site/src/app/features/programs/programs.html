@@ -1,0 +1,51 @@
+<section class="wu-container wu-section">
+  <div class="wu-eyebrow">Programs</div>
+  <h1>Two tracks, one mission</h1>
+  <p class="wu-text-lg wu-muted" style="max-width: 54ch">
+    Every young leader grows through mentorship and hands-on learning. Choose the track that fits —
+    or discover it once you’re in a cohort.
+  </p>
+
+  <div class="wu-grid wu-grid--2 wu-mt-6">
+    @for (track of tracks; track track.name) {
+      <div class="wu-card">
+        <div class="wu-card__header">
+          <h2 class="wu-card__title">{{ track.name }}</h2>
+        </div>
+        <div class="wu-card__body">
+          <p class="wu-muted">{{ track.blurb }}</p>
+          <h4>Modules</h4>
+          <ul>
+            @for (m of track.modules; track m) {
+              <li>{{ m }}</li>
+            }
+          </ul>
+          <h4>Outcome badges</h4>
+          <div class="wu-cluster">
+            @for (b of track.badges; track b) {
+              <span class="wu-badge wu-badge--lime">{{ b }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<section class="wu-container wu-section">
+  <div class="wu-eyebrow">Mentorship</div>
+  <h2>You’re never on your own</h2>
+  <div class="wu-grid wu-grid--3 wu-mt-6">
+    @for (m of mentorship; track m.title) {
+      <div class="wu-card">
+        <div class="wu-card__body">
+          <h3 class="wu-card__title">{{ m.title }}</h3>
+          <p class="wu-muted">{{ m.text }}</p>
+        </div>
+      </div>
+    }
+  </div>
+  <div class="wu-cluster wu-mt-6">
+    <a class="wu-btn wu-btn--primary" routerLink="/apply">Apply now</a>
+  </div>
+</section>

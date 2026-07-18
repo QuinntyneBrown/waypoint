@@ -1,0 +1,47 @@
+<section class="wu-hero">
+  <div class="wu-container">
+    <div class="wu-eyebrow">Word Up · Toronto</div>
+    <h1 style="max-width: 16ch">Raising up young leaders who love Jesus.</h1>
+    <p class="wu-text-lg wu-muted" style="max-width: 54ch">
+      A youth leadership program pairing mentorship with real skills — in faith and in code — so
+      young people in our neighbourhoods can grow, belong, and lead.
+    </p>
+    <div class="wu-cluster wu-mt-6">
+      <a class="wu-btn wu-btn--primary wu-btn--lg" routerLink="/apply">Apply now</a>
+      <a class="wu-btn wu-btn--ghost wu-btn--lg" routerLink="/programs">Explore the programs</a>
+    </div>
+  </div>
+</section>
+
+<section class="wu-container wu-section">
+  <div class="wu-eyebrow">How it works</div>
+  <h2>Your journey in four steps</h2>
+  <div class="wu-grid wu-grid--4 wu-mt-6">
+    @for (step of journey; track step.n) {
+      <div class="wu-card">
+        <div class="wu-card__body">
+          <div class="wu-eyebrow">Step {{ step.n }}</div>
+          <h3 class="wu-card__title">{{ step.title }}</h3>
+          <p class="wu-muted">{{ step.text }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<section class="wu-container wu-section">
+  <div class="wu-eyebrow">Our impact</div>
+  <h2>Growing leaders across the city</h2>
+  <div class="wu-grid wu-grid--4 wu-mt-6">
+    @for (stat of stats; track stat.label) {
+      <div class="wu-card wu-statcard">
+        <div class="wu-statcard__value">{{ stat.value }}</div>
+        <div class="wu-statcard__label">{{ stat.label }}</div>
+      </div>
+    }
+  </div>
+  <div class="wu-cluster wu-mt-6">
+    <a class="wu-btn wu-btn--primary" routerLink="/apply">Start your application</a>
+    <a class="wu-btn wu-btn--ghost" routerLink="/get-involved">Get involved</a>
+  </div>
+</section>

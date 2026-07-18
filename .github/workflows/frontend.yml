@@ -33,6 +33,7 @@ jobs:
       - run: npm ci
       - run: npx prettier --check .
       - run: npx ng build portal
+      - run: npx ng build public-site
       - run: npx ng test
 
   e2e:

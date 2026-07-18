@@ -1,26 +1,33 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {
+  afterRenderEffect,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  input,
+  viewChild,
+} from '@angular/core';
 import { WU_ICONS } from './wu-icons';
 
 /**
- * Renders a Word Up line icon by name as an inline `<svg class="wu-icon">`,
- * matching the mock contract `<svg class="wu-icon"><use .../></svg>` visually
- * while keeping the SVG inline so it is present in SSR output.
+ * Renders a Word Up line icon by name as an inline `<svg class="wu-icon">`.
  *
- * The inner markup comes from WU_ICONS — a build-time constant generated from
- * the design system, never user input — so bypassing sanitization here is safe
- * (Risks #11 forbids bypassSecurityTrust* on USER content only).
+ * The glyph markup (a build-time constant from WU_ICONS, never user input) is
+ * written to the svg via a browser-only `afterRenderEffect`. This keeps the
+ * component SSR-safe — the server renders an empty svg (no innerHTML on the
+ * server DOM), the browser fills it after hydration — and avoids any
+ * sanitizer bypass (Risks #11).
  */
 @Component({
   selector: 'wu-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { style: 'display: contents' },
   template: `<svg
+    #svg
     [class]="classes()"
     viewBox="0 0 24 24"
     aria-hidden="true"
     focusable="false"
-    [innerHTML]="markup()"
   ></svg>`,
 })
 export class WuIcon {
@@ -29,10 +36,13 @@ export class WuIcon {
   /** Extra classes applied to the inner svg (e.g. 'wu-alert__icon'). */
   readonly iconClass = input('');
 
-  private readonly sanitizer = inject(DomSanitizer);
+  private readonly svg = viewChild.required<ElementRef<SVGElement>>('svg');
 
   protected readonly classes = computed(() => `wu-icon ${this.iconClass()}`.trim());
-  protected readonly markup = computed<SafeHtml>(() =>
-    this.sanitizer.bypassSecurityTrustHtml(WU_ICONS[this.name()] ?? ''),
-  );
+
+  constructor() {
+    afterRenderEffect(() => {
+      this.svg().nativeElement.innerHTML = WU_ICONS[this.name()] ?? '';
+    });
+  }
 }

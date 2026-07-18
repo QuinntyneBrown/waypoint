@@ -152,6 +152,83 @@
           }
         }
       }
+    },
+    "public-site": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/public-site",
+      "sourceRoot": "projects/public-site/src",
+      "prefix": "wu",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/public-site/src/main.ts",
+            "tsConfig": "projects/public-site/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/public-site/public"
+              }
+            ],
+            "styles": [
+              "projects/wu-ui/src/styles/fonts.css",
+              "projects/wu-ui/src/styles/core.css",
+              "projects/public-site/src/styles.css"
+            ],
+            "server": "projects/public-site/src/main.server.ts",
+            "outputMode": "server",
+            "security": {
+              "allowedHosts": []
+            },
+            "ssr": {
+              "entry": "projects/public-site/src/server.ts"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "public-site:build:production"
+            },
+            "development": {
+              "buildTarget": "public-site:build:development"
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4201,
+            "proxyConfig": "proxy.conf.json"
+          }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
     }
   }
 }

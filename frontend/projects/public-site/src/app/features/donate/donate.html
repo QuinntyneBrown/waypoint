@@ -1,0 +1,57 @@
+<section class="wu-container wu-section" style="max-width: 640px">
+  <div class="wu-eyebrow">Give</div>
+  <h1>Back a young leader</h1>
+  <p class="wu-text-lg wu-muted">
+    A monthly gift helps a young person belong, grow, and lead. Choose a tier to get started.
+  </p>
+
+  <fieldset class="wu-mt-6" style="border: 0; padding: 0; margin: 0">
+    <legend class="wu-label">Monthly amount</legend>
+    <div class="wu-cluster wu-mt-2">
+      @for (tier of tiers; track tier) {
+        <button
+          type="button"
+          class="wu-btn"
+          [class.wu-btn--primary]="selected() === tier"
+          [class.wu-btn--secondary]="selected() !== tier"
+          [attr.aria-pressed]="selected() === tier"
+          (click)="select(tier)"
+        >
+          ${{ tier }}/mo
+        </button>
+      }
+    </div>
+  </fieldset>
+
+  <p class="wu-help wu-mt-4">
+    Payments are processed securely by our external PCI-compliant provider — Word Up never sees or
+    stores your card details.
+  </p>
+
+  <button
+    class="wu-btn wu-btn--primary wu-btn--lg wu-mt-4"
+    type="button"
+    [disabled]="selected() === null"
+    (click)="confirm()"
+  >
+    Continue to secure checkout
+  </button>
+
+  @if (confirmed()) {
+    <div class="wu-alert wu-alert--success wu-mt-6" role="status">
+      <div>
+        <div class="wu-alert__title">Thank you!</div>
+        You’re giving ${{ selected() }} monthly. Finish your donation with our secure provider — it
+        opens in a new tab.
+      </div>
+    </div>
+    <a
+      class="wu-btn wu-btn--primary wu-btn--lg wu-mt-4"
+      [href]="providerUrl()"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Continue to secure provider
+    </a>
+  }
+</section>

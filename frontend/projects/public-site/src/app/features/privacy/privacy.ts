@@ -1,0 +1,35 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+@Component({
+  selector: 'wu-privacy',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<section class="wu-container wu-section" style="max-width: 720px">
+    <div class="wu-eyebrow">Privacy</div>
+    <h1>Privacy &amp; safeguarding</h1>
+    <p class="wu-text-lg wu-muted">
+      Word Up works with young people, so protecting their privacy and safety is central to
+      everything we do.
+    </p>
+
+    <h2 class="wu-mt-6">What we collect</h2>
+    <p>
+      When you apply, we collect the details on the application form — the applicant’s name, age,
+      neighbourhood, and, for under-18 applicants, a guardian’s contact information — so we can
+      review the application and, with consent, welcome you into a cohort.
+    </p>
+
+    <h2 class="wu-mt-6">How we use it</h2>
+    <p>
+      We use your information only to run the program: reviewing applications, arranging consent,
+      and supporting your journey. We never sell personal information.
+    </p>
+
+    <h2 class="wu-mt-6">Safeguarding</h2>
+    <p>
+      Guardian consent is required before a minor participates, and everyone who works with youth
+      completes a screening and reference check. Payments are handled by an external PCI-compliant
+      provider — we never store card details.
+    </p>
+  </section>`,
+})
+export class Privacy {}

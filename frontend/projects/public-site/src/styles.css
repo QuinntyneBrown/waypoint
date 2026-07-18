@@ -1,0 +1,23 @@
+/* Public-site app-level styles. Design tokens/components come from wu-ui
+   (fonts.css + core.css, wired via angular.json). Only marketing-page helpers
+   not present in the core design system live here. */
+
+.wu-section {
+  padding-block: var(--wu-s9);
+}
+
+/* Accessible skip link: off-screen until focused (keyboard users). */
+.wu-skip-link {
+  position: absolute;
+  left: var(--wu-s4);
+  top: -60px;
+  z-index: 100;
+  padding: var(--wu-s2) var(--wu-s4);
+  background: var(--wu-ink);
+  color: var(--wu-white);
+  border-radius: var(--wu-r-input);
+  transition: top 0.15s ease;
+}
+.wu-skip-link:focus {
+  top: var(--wu-s3);
+}

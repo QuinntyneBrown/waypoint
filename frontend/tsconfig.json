@@ -51,6 +51,12 @@
     },
     {
       "path": "./projects/wu-auth/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/public-site/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/public-site/tsconfig.spec.json"
     }
   ]
 }
