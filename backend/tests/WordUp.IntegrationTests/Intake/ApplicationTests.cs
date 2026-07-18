@@ -29,6 +29,8 @@ public sealed class ApplicationTests : IntegrationTestBase
         lastName = "Okafor",
         age,
         neighbourhood = "Peckham",
+        whoIsFilling = "guardian",
+        cohortInterest = "Peckham Autumn cohort",
         whyInterested = "I want to learn to write and perform.",
         trackInterest = "Spoken Word",
         guardianName = "Ngozi Okafor",
@@ -60,6 +62,41 @@ public sealed class ApplicationTests : IntegrationTestBase
 
         // AC4: no account is provisioned at submission time.
         Assert.That(await UserCountAsync(), Is.EqualTo(before));
+    }
+
+    // Traces to: L2-INTAKE-001 (form ownership and cohort of interest are captured)
+    [Test]
+    [Property("Req", "L2-INTAKE-001")]
+    public async Task Submission_requires_and_records_who_is_filling_and_cohort_interest()
+    {
+        var missing = await PostAsync("/api/applications", new
+        {
+            firstName = "Ada",
+            lastName = "Okafor",
+            age = 18,
+            neighbourhood = "Peckham",
+            whyInterested = "I want to grow as a leader.",
+            participationConsentAck = true,
+            privacyAck = true,
+        });
+        Assert.That(missing.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+
+        var response = await PostAsync("/api/applications", ValidMinorSubmission());
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
+        var id = (await response.Content.ReadFromJsonAsync<SubmitResultDto>())!.ApplicationId;
+
+        using var scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var recorded = await db.Applications
+            .Where(a => a.Id == id)
+            .Select(a => new
+            {
+                WhoIsFilling = EF.Property<string>(a, "WhoIsFilling"),
+                CohortInterest = EF.Property<string>(a, "CohortInterest"),
+            })
+            .SingleAsync();
+        Assert.That(recorded.WhoIsFilling, Is.EqualTo("guardian"));
+        Assert.That(recorded.CohortInterest, Is.EqualTo("Peckham Autumn cohort"));
     }
 
     // Traces to: L2-INTAKE-001 (AC3 age range, AC2 guardian details)

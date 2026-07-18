@@ -117,7 +117,9 @@ public class AppDbContext : DbContext, IAppDbContext
             b.HasIndex(x => x.Status);
             b.Property(x => x.FirstName).HasMaxLength(128).IsRequired();
             b.Property(x => x.LastName).HasMaxLength(128).IsRequired();
+            b.Property(x => x.WhoIsFilling).HasMaxLength(32).IsRequired();
             b.Property(x => x.Neighbourhood).HasMaxLength(128).IsRequired();
+            b.Property(x => x.CohortInterest).HasMaxLength(256).IsRequired();
             b.Property(x => x.WhyInterested).HasMaxLength(2000).IsRequired();
             b.Property(x => x.TrackInterest).HasMaxLength(64);
             b.Property(x => x.GuardianName).HasMaxLength(128);

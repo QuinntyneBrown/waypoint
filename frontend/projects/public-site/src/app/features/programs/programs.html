@@ -32,7 +32,7 @@
               <ol>
                 @for (module of track.modules; track module.id) {
                   <li>
-                    {{ module.name }}
+                    <span>{{ module.name }}</span>
                     @if (module.outcomeBadge; as badge) {
                       <span class="wu-badge wu-badge--lime">{{ badge.name }}</span>
                     }

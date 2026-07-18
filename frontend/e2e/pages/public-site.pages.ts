@@ -68,6 +68,12 @@ export class AboutPage extends BasePage {
 export class ApplyPage extends BasePage {
   static readonly path = '/apply';
 
+  get whoIsFilling() {
+    return this.page.getByLabel(/who.s filling this out/i);
+  }
+  get cohortInterest() {
+    return this.page.getByLabel(/cohort.*interested in/i);
+  }
   get firstName() {
     return this.page.getByLabel('First name');
   }
@@ -116,6 +122,9 @@ export class ApplyPage extends BasePage {
   }
   get privacyError() {
     return this.page.getByText(/acknowledge the privacy notice/i);
+  }
+  get cohortInterestError() {
+    return this.page.getByText(/choose a cohort/i);
   }
 
   /**

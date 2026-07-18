@@ -8,7 +8,14 @@ public class SubmitApplicationCommandValidator : AbstractValidator<SubmitApplica
     {
         RuleFor(x => x.FirstName).NotEmpty().MaximumLength(128);
         RuleFor(x => x.LastName).NotEmpty().MaximumLength(128);
+        RuleFor(x => x.WhoIsFilling)
+            .NotEmpty()
+            .MaximumLength(32)
+            .Must(value => value is not null && new[] { "self", "guardian", "referrer" }
+                .Contains(value.Trim(), StringComparer.OrdinalIgnoreCase))
+            .WithMessage("Who is filling the application must be self, guardian, or referrer.");
         RuleFor(x => x.Neighbourhood).NotEmpty().MaximumLength(256);
+        RuleFor(x => x.CohortInterest).NotEmpty().MaximumLength(256);
         RuleFor(x => x.WhyInterested).NotEmpty().MaximumLength(2000);
         RuleFor(x => x.TrackInterest).MaximumLength(256);
 

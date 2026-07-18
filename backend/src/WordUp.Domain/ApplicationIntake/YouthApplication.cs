@@ -10,7 +10,9 @@ public class YouthApplication
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public int Age { get; set; }
+    public string WhoIsFilling { get; set; } = string.Empty;
     public string Neighbourhood { get; set; } = string.Empty;
+    public string CohortInterest { get; set; } = string.Empty;
     public string WhyInterested { get; set; } = string.Empty;
     public string? TrackInterest { get; set; }
 

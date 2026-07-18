@@ -40,7 +40,9 @@
                   <div>
                     <dt class="wu-text-sm wu-muted">Dates</dt>
                     <dd>
-                      {{ cohort.termStart | date: 'MMM d, y' }}–{{ cohort.termEnd | date: 'MMM d, y' }}
+                      {{ cohort.termStart | date: 'MMM d, y': 'UTC' }}–{{
+                        cohort.termEnd | date: 'MMM d, y': 'UTC'
+                      }}
                     </dd>
                   </div>
                   <div>

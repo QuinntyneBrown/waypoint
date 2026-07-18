@@ -8,6 +8,8 @@ test('a minor applicant submits a valid application and sees confirmation (no ac
   const apply = new ApplyPage(page);
   await apply.goto();
 
+  await apply.whoIsFilling.selectOption('guardian');
+  await apply.cohortInterest.fill('Rexdale Autumn cohort');
   await apply.firstName.fill('Sam');
   await apply.lastName.fill('Rivera');
   await apply.age.fill('15');
@@ -31,6 +33,25 @@ test('a minor applicant submits a valid application and sees confirmation (no ac
 
   await expect(apply.confirmationHeading).toBeVisible();
   await expect(apply.accountNotice).toBeVisible();
+});
+
+// Traces to: L2-INTAKE-001
+test('who is filling the form and cohort interest are required intake data', async ({ page }) => {
+  const apply = new ApplyPage(page);
+  await apply.goto();
+  await apply.firstName.fill('Sam');
+  await apply.lastName.fill('Rivera');
+  await apply.age.fill('18');
+  await apply.neighbourhood.fill('Rexdale');
+  await apply.interest.fill('I want to grow as a leader.');
+  await apply.acknowledgeParticipation();
+  await apply.acknowledgePrivacy();
+
+  await apply.cohortInterest.fill('');
+  await apply.submitButton.click();
+
+  await expect(apply.cohortInterestError).toBeVisible();
+  await expect(apply.confirmationHeading).toHaveCount(0);
 });
 
 // Traces to: L2-INTAKE-001
