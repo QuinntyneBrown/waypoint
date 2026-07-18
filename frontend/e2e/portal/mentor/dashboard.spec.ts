@@ -17,7 +17,7 @@ test('mentor sees only their dashboard, review preview, and filterable roster', 
   await expect(page).toHaveURL(/\/mentor\/dashboard/);
   await expect(dashboard.heading).toBeVisible();
   await expect(dashboard.youthCount).toHaveText('1');
-  await expect(dashboard.pendingReviews).toContainText('1');
+  await expect(dashboard.pendingReviews).toContainText('2');
   await expect(dashboard.pendingReviews).toContainText('1 overdue');
   await expect(dashboard.averageProgress).toContainText('%');
   await expect(dashboard.atRiskCount).toHaveText('1');

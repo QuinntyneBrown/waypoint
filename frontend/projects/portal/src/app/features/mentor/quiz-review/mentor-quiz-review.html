@@ -1,0 +1,132 @@
+<wu-shell
+  role="mentor"
+  active="reviews"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <a class="wu-link" routerLink="/mentor/reviews">Back to reviews</a>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    <p class="wu-sr-only" role="status">{{ statusMessage() }}</p>
+    @if (review(); as item) {
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Quiz assessment · {{ item.youthName }}</div>
+          <h1 class="wu-page__title">{{ item.quizTitle }}</h1>
+          <p class="wu-page__sub">
+            Attempt {{ item.attemptNumber }} · Submitted {{ item.submittedAt | date: 'medium' }}
+          </p>
+        </div>
+        <span class="wu-badge" [class.wu-badge--success]="item.status === 'Approved'">
+          {{ item.status }}
+        </span>
+      </div>
+
+      <div class="assessment-layout">
+        <section class="wu-stack" aria-labelledby="answers-heading">
+          <h2 id="answers-heading">Submitted answers</h2>
+          @if (item.questions.length === 0) {
+            <div class="wu-card wu-empty">
+              <h3 class="wu-empty__title">No question detail available</h3>
+              <p class="wu-empty__text">The auto-scored result can still be reviewed.</p>
+            </div>
+          }
+          @for (question of item.questions; track question.questionId; let number = $index) {
+            <article class="wu-card">
+              <div class="wu-card__header">
+                <div>
+                  <p class="wu-eyebrow">Question {{ number + 1 }}</p>
+                  <h3 class="wu-card__title">{{ question.text }}</h3>
+                </div>
+                <span
+                  class="wu-badge"
+                  [class.wu-badge--success]="question.isCorrect"
+                  [class.wu-badge--error]="!question.isCorrect"
+                >
+                  {{ question.isCorrect ? 'Correct' : 'Incorrect' }}
+                </span>
+              </div>
+              <div class="wu-card__body">
+                <ul class="answer-list">
+                  @for (option of question.options; track $index; let optionIndex = $index) {
+                    <li
+                      class="answer-option"
+                      [class.answer-option--selected]="optionSelected(question, optionIndex)"
+                    >
+                      <span class="answer-copy">{{ option }}</span>
+                      @if (optionSelected(question, optionIndex)) {
+                        <span class="wu-badge">Youth answer</span>
+                      }
+                      @if (optionCorrect(question, optionIndex)) {
+                        <span class="wu-badge wu-badge--success">Correct answer</span>
+                      }
+                    </li>
+                  }
+                </ul>
+              </div>
+            </article>
+          }
+        </section>
+
+        <aside class="wu-card">
+          <div class="wu-card__header"><h2 class="wu-card__title">Score approval</h2></div>
+          <div class="wu-card__body wu-stack">
+            <div class="score-grid">
+              <div>
+                <p class="wu-muted">Auto-scored</p>
+                <p class="score-value" data-testid="quiz-auto-score">{{ item.autoScore }}%</p>
+                <span class="wu-badge" [class.wu-badge--success]="item.autoPassed">
+                  {{ item.autoPassed ? 'Pass' : 'Below pass mark' }}
+                </span>
+              </div>
+              <div>
+                <p class="wu-muted">Pass mark</p>
+                <p class="score-value">{{ item.passMark }}%</p>
+              </div>
+            </div>
+
+            @if (item.approvedScore == null) {
+              <div class="wu-field">
+                <label class="wu-label" for="override-score">Override score (optional)</label>
+                <input
+                  class="wu-input"
+                  id="override-score"
+                  type="number"
+                  inputmode="numeric"
+                  min="0"
+                  max="100"
+                  step="1"
+                  [value]="overrideScore()"
+                  (input)="setOverrideScore($any($event.target).value)"
+                />
+                <p class="wu-help">Leave blank to approve the {{ item.autoScore }}% auto-score.</p>
+              </div>
+              <button
+                class="wu-btn wu-btn--primary approve-button"
+                type="button"
+                [disabled]="approving()"
+                (click)="approve()"
+              >
+                Approve score
+              </button>
+            } @else {
+              <div class="wu-stack" data-testid="quiz-approval-record">
+                <h3 class="wu-card__title">Approval record</h3>
+                <p>Auto-scored {{ item.autoScore }}%</p>
+                <p>Approved {{ item.approvedScore }}%</p>
+                <p class="wu-muted">
+                  {{ item.approvedByName ?? 'Staff member' }} ·
+                  {{ item.approvedAt | date: 'medium' }}
+                </p>
+              </div>
+            }
+          </div>
+        </aside>
+      </div>
+    } @else if (!errorMessage()) {
+      <p class="wu-muted" role="status">Loading assessment…</p>
+    }
+  </div>
+</wu-shell>

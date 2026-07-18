@@ -26,6 +26,15 @@ public class ApproveQuizAttemptCommandHandler : IRequestHandler<ApproveQuizAttem
         var attempt = await _db.QuizAttempts
             .FirstOrDefaultAsync(a => a.Id == request.AttemptId, cancellationToken)
             ?? throw new NotFoundException("Quiz attempt not found.");
+        if (!attempt.IsSubmitted)
+        {
+            throw new ConflictException("This quiz attempt has not been submitted.");
+        }
+
+        if (attempt.ApprovedAt.HasValue)
+        {
+            throw new ConflictException("This quiz assessment has already been approved.");
+        }
 
         var youth = await _db.Users
             .FirstOrDefaultAsync(u => u.Id == attempt.YouthUserId, cancellationToken)

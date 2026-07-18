@@ -15,6 +15,14 @@ public class QuizApprovalController : ControllerBase
 
     public QuizApprovalController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("attempts/{id:guid}")]
+    public async Task<ActionResult<QuizAssessmentReviewView>> Review(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        return Ok(await _mediator.Send(new QuizAssessmentReviewQuery(id), cancellationToken));
+    }
+
     // Approve a single quiz attempt, optionally overriding the auto score (L2-MENTOR-004, L2-LEARN-005).
     [HttpPost("attempts/{id:guid}/approve")]
     public async Task<IActionResult> Approve(

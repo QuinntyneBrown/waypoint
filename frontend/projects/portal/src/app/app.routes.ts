@@ -260,6 +260,14 @@ export const routes: Routes = [
             (module) => module.MentorSubmissionReviewPage,
           ),
       },
+      {
+        path: 'reviews/quizzes/:id',
+        title: 'Review quiz assessment · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/quiz-review/mentor-quiz-review').then(
+            (module) => module.MentorQuizReviewPage,
+          ),
+      },
     ],
   },
   {

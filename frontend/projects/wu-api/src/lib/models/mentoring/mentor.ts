@@ -130,3 +130,31 @@ export interface GradeSubmissionRequest {
   comment: string | null;
   guardianNotified: boolean;
 }
+
+export interface QuizAssessmentReview {
+  attemptId: string;
+  youthId: string;
+  youthName: string;
+  quizId: string;
+  quizTitle: string;
+  attemptNumber: number;
+  autoScore: number;
+  approvedScore: number | null;
+  passMark: number;
+  autoPassed: boolean;
+  approvedPassed: boolean | null;
+  status: 'Pending' | 'Approved';
+  submittedAt: string;
+  approvedAt: string | null;
+  approvedByName: string | null;
+  questions: QuizAssessmentQuestion[];
+}
+
+export interface QuizAssessmentQuestion {
+  questionId: string;
+  text: string;
+  options: string[];
+  selectedIndexes: number[];
+  correctIndexes: number[];
+  isCorrect: boolean;
+}

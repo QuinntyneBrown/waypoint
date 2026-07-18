@@ -706,6 +706,19 @@ if (app.Environment.IsEnvironment("Testing"))
             }),
             CorrectAnswersJson = JsonSerializer.Serialize(new[] { 1 }),
         };
+        var mentorQuizQuestion = new QuizQuestion
+        {
+            QuizId = progressQuiz.Id,
+            Text = "Which habit helps build a welcoming community?",
+            Type = QuestionType.MultipleChoice,
+            Order = 1,
+            OptionsJson = JsonSerializer.Serialize(new[]
+            {
+                "Listen carefully and offer help",
+                "Ignore people who are new",
+            }),
+            CorrectAnswersJson = JsonSerializer.Serialize(new[] { 0 }),
+        };
         var quizBadge = new Badge
         {
             Name = $"Neighbour Love Badge {suffix}",
@@ -897,7 +910,7 @@ if (app.Environment.IsEnvironment("Testing"))
             CreatedAt = now,
         });
         db.Quizzes.AddRange(quiz, progressQuiz);
-        db.QuizQuestions.AddRange(firstQuizQuestion, secondQuizQuestion);
+        db.QuizQuestions.AddRange(firstQuizQuestion, secondQuizQuestion, mentorQuizQuestion);
         db.Badges.AddRange(quizBadge, codingBadge, journeyBadge);
         db.BadgeAwards.Add(new BadgeAward
         {
@@ -932,6 +945,21 @@ if (app.Environment.IsEnvironment("Testing"))
             ApprovedByUserId = mentor.Id,
             ApprovedAt = now.AddDays(-2),
         });
+        var mentorQuizAttempt = new QuizAttempt
+        {
+            YouthUserId = youth.Id,
+            QuizId = progressQuiz.Id,
+            AttemptNumber = 2,
+            AnswersJson = JsonSerializer.Serialize(new Dictionary<Guid, int[]>
+            {
+                [mentorQuizQuestion.Id] = [1],
+            }),
+            AutoScore = 40,
+            Passed = false,
+            IsSubmitted = true,
+            SubmittedAt = now.AddHours(-6),
+        };
+        db.QuizAttempts.Add(mentorQuizAttempt);
         db.Sessions.AddRange(presentSession, absentSession, upcomingSession);
         db.Messages.Add(new Message
         {
@@ -1077,6 +1105,11 @@ if (app.Environment.IsEnvironment("Testing"))
             mentorReviewTitle = mentorReviewAssignment.Title,
             mentorReviewCriterionId = mentorReviewCriterion.Id,
             mentorReviewCriterion = mentorReviewCriterion.Description,
+            mentorQuizAttemptId = mentorQuizAttempt.Id,
+            mentorQuizTitle = $"{secondLesson.Title} quiz",
+            mentorQuizAutoScore = mentorQuizAttempt.AutoScore,
+            mentorQuizQuestion = mentorQuizQuestion.Text,
+            mentorQuizSelectedAnswer = "Ignore people who are new",
         });
     });
 

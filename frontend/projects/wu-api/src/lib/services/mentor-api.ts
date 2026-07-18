@@ -8,6 +8,7 @@ import {
   MentorRosterYouth,
   MentorYouthDetail,
   GradeSubmissionRequest,
+  QuizAssessmentReview,
   SubmissionReviewView,
 } from '../models/mentoring/mentor';
 
@@ -49,5 +50,22 @@ export class MentorApi {
       `${this.base}/api/mentor/submissions/${encodeURIComponent(id)}/grade`,
       request,
     );
+  }
+
+  quizAssessment(id: string): Observable<QuizAssessmentReview> {
+    return this.http.get<QuizAssessmentReview>(
+      `${this.base}/api/mentor/attempts/${encodeURIComponent(id)}`,
+    );
+  }
+
+  approveQuizAttempt(id: string, overrideScore: number | null): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}/api/mentor/attempts/${encodeURIComponent(id)}/approve`,
+      overrideScore == null ? {} : { overrideScore },
+    );
+  }
+
+  approveAllQuizAttempts(): Observable<number> {
+    return this.http.post<number>(`${this.base}/api/mentor/attempts/approve-all`, {});
   }
 }

@@ -64,6 +64,7 @@ export {
   MentorRosterPage,
   MentorYouthDetailPage,
   MentorReviewsPage,
+  MentorQuizReviewPage,
   MentorSubmissionReviewPage,
 } from './mentor.pages';
 export {

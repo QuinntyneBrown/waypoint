@@ -94,6 +94,11 @@ export interface SeededYouthCurriculum {
   mentorReviewTitle: string;
   mentorReviewCriterionId: string;
   mentorReviewCriterion: string;
+  mentorQuizAttemptId: string;
+  mentorQuizTitle: string;
+  mentorQuizAutoScore: number;
+  mentorQuizQuestion: string;
+  mentorQuizSelectedAnswer: string;
 }
 
 /**

@@ -75,6 +75,17 @@ public class ApproveAllQuizAttemptsCommandHandler : IRequestHandler<ApproveAllQu
 
         await _db.SaveChangesAsync(cancellationToken);
 
+        foreach (var attempt in pending)
+        {
+            await _audit.LogAsync(
+                "QuizApproved",
+                currentUserId,
+                "QuizAttempt",
+                attempt.Id,
+                details: $"auto={attempt.AutoScore};bulk=true",
+                cancellationToken: cancellationToken);
+        }
+
         await _audit.LogAsync(
             "QuizApprovedBulk", currentUserId, "QuizAttempt", null, details: $"count={pending.Count}");
 

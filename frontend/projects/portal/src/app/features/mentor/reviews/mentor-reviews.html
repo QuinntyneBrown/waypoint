@@ -11,10 +11,21 @@
         <h1 class="wu-page__title">Reviews</h1>
         <p class="wu-page__sub">Review pending assignments, coding projects, and quizzes.</p>
       </div>
+      @if (pendingQuizCount() > 0) {
+        <button
+          class="wu-btn wu-btn--secondary"
+          type="button"
+          [disabled]="approvingAll()"
+          (click)="approveAllQuizzes()"
+        >
+          Approve all quiz scores ({{ pendingQuizCount() }})
+        </button>
+      }
     </div>
     @if (errorMessage(); as error) {
       <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
     }
+    <p class="wu-sr-only" role="status">{{ statusMessage() }}</p>
     @if (items(); as reviews) {
       @if (reviews.length === 0) {
         <div class="wu-card wu-empty">

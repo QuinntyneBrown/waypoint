@@ -74,16 +74,45 @@ public sealed class ReviewQueueQueryHandler
             {
                 attempt.Id,
                 attempt.YouthUserId,
+                attempt.QuizId,
                 attempt.SubmittedAt,
                 attempt.CreatedAt,
             })
             .ToListAsync(cancellationToken);
+        var quizIds = attempts.Select(attempt => attempt.QuizId).Distinct().ToList();
+        var quizzes = await _db.Quizzes
+            .Where(quiz => quizIds.Contains(quiz.Id))
+            .Select(quiz => new { quiz.Id, quiz.ModuleId, quiz.LessonId })
+            .ToListAsync(cancellationToken);
+        var moduleIds = quizzes
+            .Where(quiz => quiz.ModuleId.HasValue)
+            .Select(quiz => quiz.ModuleId!.Value)
+            .Distinct()
+            .ToList();
+        var lessonIds = quizzes
+            .Where(quiz => quiz.LessonId.HasValue)
+            .Select(quiz => quiz.LessonId!.Value)
+            .Distinct()
+            .ToList();
+        var moduleNames = await _db.Modules
+            .Where(module => moduleIds.Contains(module.Id))
+            .ToDictionaryAsync(module => module.Id, module => module.Name, cancellationToken);
+        var lessonTitles = await _db.Lessons
+            .Where(lesson => lessonIds.Contains(lesson.Id))
+            .ToDictionaryAsync(lesson => lesson.Id, lesson => lesson.Title, cancellationToken);
+        var quizTitles = quizzes.ToDictionary(
+            quiz => quiz.Id,
+            quiz => quiz.ModuleId is Guid moduleId && moduleNames.TryGetValue(moduleId, out var moduleName)
+                ? $"{moduleName} quiz"
+                : quiz.LessonId is Guid lessonId && lessonTitles.TryGetValue(lessonId, out var lessonTitle)
+                    ? $"{lessonTitle} quiz"
+                    : "Quiz assessment");
         reviews.AddRange(attempts.Select(attempt => new MentorReviewPreview(
             attempt.Id,
             attempt.YouthUserId,
             youthById[attempt.YouthUserId],
             "Quiz",
-            "Quiz assessment",
+            quizTitles.GetValueOrDefault(attempt.QuizId, "Quiz assessment"),
             attempt.SubmittedAt ?? attempt.CreatedAt,
             null,
             false,

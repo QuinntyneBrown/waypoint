@@ -107,6 +107,30 @@ public sealed class GradingTests : IntegrationTestBase
         string Description,
         int PossiblePoints,
         int? AwardedPoints);
+    private sealed record MentorQuizReviewDto(
+        Guid AttemptId,
+        Guid YouthId,
+        string YouthName,
+        Guid QuizId,
+        string QuizTitle,
+        int AttemptNumber,
+        int AutoScore,
+        int? ApprovedScore,
+        int PassMark,
+        bool AutoPassed,
+        bool? ApprovedPassed,
+        string Status,
+        DateTime SubmittedAt,
+        DateTime? ApprovedAt,
+        string? ApprovedByName,
+        IReadOnlyList<MentorQuizQuestionDto> Questions);
+    private sealed record MentorQuizQuestionDto(
+        Guid QuestionId,
+        string Text,
+        IReadOnlyList<string> Options,
+        IReadOnlyList<int> SelectedIndexes,
+        IReadOnlyList<int> CorrectIndexes,
+        bool IsCorrect);
 
     private async Task<SeededSubmission> SeedSubmissionAsync(Guid youthId)
     {
@@ -396,6 +420,183 @@ public sealed class GradingTests : IntegrationTestBase
             var awarded = await db.BadgeAwards
                 .AnyAsync(a => a.BadgeId == badgeId && a.YouthUserId == youthId);
             Assert.That(awarded, Is.True, "a quiz-passed badge should have been awarded");
+        }
+    }
+
+    [Test]
+    [Property("Req", "L2-MENTOR-004")]
+    [Property("Req", "L2-LEARN-005")]
+    public async Task Quiz_review_is_scoped_and_retains_auto_and_overridden_scores_for_audit()
+    {
+        // Traces to: L2-MENTOR-004 AC1/AC2/AC4, L2-LEARN-005 AC2
+        var (_, mentorToken, youthId, youthToken) = await SeedMentorAndYouthAsync();
+        Guid attemptId;
+        Guid questionId;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var quiz = new Quiz { PassMark = 70, AttemptsAllowed = 2 };
+            var question = new QuizQuestion
+            {
+                QuizId = quiz.Id,
+                Text = "Which response shows service?",
+                Type = QuestionType.MultipleChoice,
+                Order = 1,
+                OptionsJson = JsonSerializer.Serialize(new[] { "Walk away", "Offer help" }),
+                CorrectAnswersJson = JsonSerializer.Serialize(new[] { 1 }),
+            };
+            var attempt = new QuizAttempt
+            {
+                YouthUserId = youthId,
+                QuizId = quiz.Id,
+                AttemptNumber = 1,
+                AnswersJson = JsonSerializer.Serialize(new Dictionary<Guid, int[]>
+                {
+                    [question.Id] = [0],
+                }),
+                AutoScore = 0,
+                Passed = false,
+                IsSubmitted = true,
+                SubmittedAt = DateTime.UtcNow,
+            };
+            db.Quizzes.Add(quiz);
+            db.QuizQuestions.Add(question);
+            db.QuizAttempts.Add(attempt);
+            await db.SaveChangesAsync();
+            attemptId = attempt.Id;
+            questionId = question.Id;
+        }
+
+        var detailResponse = await GetAsync($"/api/mentor/attempts/{attemptId}", mentorToken);
+        Assert.That(detailResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var detail = await detailResponse.Content.ReadFromJsonAsync<MentorQuizReviewDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(detail!.YouthName, Is.EqualTo("Youth"));
+            Assert.That(detail.QuizTitle, Is.EqualTo("Quiz"));
+            Assert.That(detail.AutoScore, Is.EqualTo(0));
+            Assert.That(detail.ApprovedScore, Is.Null);
+            Assert.That(detail.Status, Is.EqualTo("Pending"));
+            Assert.That(detail.Questions.Single().QuestionId, Is.EqualTo(questionId));
+            Assert.That(detail.Questions.Single().SelectedIndexes, Is.EqualTo(new[] { 0 }));
+            Assert.That(detail.Questions.Single().CorrectIndexes, Is.EqualTo(new[] { 1 }));
+        });
+
+        var strangerToken = await CreateUserAndGetTokenAsync(Roles.Mentor);
+        var forbidden = await GetAsync($"/api/mentor/attempts/{attemptId}", strangerToken);
+        Assert.That(forbidden.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+
+        var outsideRange = await PostAsync(
+            $"/api/mentor/attempts/{attemptId}/approve",
+            new { overrideScore = 101 },
+            mentorToken);
+        Assert.That(outsideRange.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+
+        var approve = await PostAsync(
+            $"/api/mentor/attempts/{attemptId}/approve",
+            new { overrideScore = 75 },
+            mentorToken);
+        Assert.That(approve.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var repeatApproval = await PostAsync(
+            $"/api/mentor/attempts/{attemptId}/approve",
+            new { overrideScore = 90 },
+            mentorToken);
+        Assert.That(repeatApproval.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+
+        var approvedResponse = await GetAsync($"/api/mentor/attempts/{attemptId}", mentorToken);
+        var approved = await approvedResponse.Content.ReadFromJsonAsync<MentorQuizReviewDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(approved!.AutoScore, Is.EqualTo(0));
+            Assert.That(approved.ApprovedScore, Is.EqualTo(75));
+            Assert.That(approved.ApprovedPassed, Is.True);
+            Assert.That(approved.Status, Is.EqualTo("Approved"));
+            Assert.That(approved.ApprovedAt, Is.Not.Null);
+            Assert.That(approved.ApprovedByName, Is.EqualTo("Mentor"));
+        });
+
+        var youthResult = await GetAsync($"/api/me/attempts/{attemptId}", youthToken);
+        var resultJson = await youthResult.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.That(resultJson.GetProperty("score").GetInt32(), Is.EqualTo(75));
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            Assert.That(await db.AuditEntries.AnyAsync(entry =>
+                entry.Action == "QuizApproved"
+                && entry.TargetId == attemptId
+                && entry.Details == "auto=0;override=75"), Is.True);
+        }
+    }
+
+    [Test]
+    [Property("Req", "L2-MENTOR-004")]
+    public async Task Approve_all_is_scoped_and_records_every_pending_assessment()
+    {
+        // Traces to: L2-MENTOR-004 AC3/AC4
+        var (_, mentorToken, youthId, _) = await SeedMentorAndYouthAsync();
+        var (_, _, otherYouthId, _) = await SeedMentorAndYouthAsync();
+        Guid firstId;
+        Guid secondId;
+        Guid outsiderId;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var quiz = new Quiz { PassMark = 70 };
+            db.Quizzes.Add(quiz);
+            var attempts = new[]
+            {
+                new QuizAttempt
+                {
+                    YouthUserId = youthId,
+                    QuizId = quiz.Id,
+                    AttemptNumber = 1,
+                    AutoScore = 80,
+                    IsSubmitted = true,
+                    SubmittedAt = DateTime.UtcNow,
+                },
+                new QuizAttempt
+                {
+                    YouthUserId = youthId,
+                    QuizId = quiz.Id,
+                    AttemptNumber = 2,
+                    AutoScore = 60,
+                    IsSubmitted = true,
+                    SubmittedAt = DateTime.UtcNow,
+                },
+                new QuizAttempt
+                {
+                    YouthUserId = otherYouthId,
+                    QuizId = quiz.Id,
+                    AttemptNumber = 1,
+                    AutoScore = 90,
+                    IsSubmitted = true,
+                    SubmittedAt = DateTime.UtcNow,
+                },
+            };
+            db.QuizAttempts.AddRange(attempts);
+            await db.SaveChangesAsync();
+            firstId = attempts[0].Id;
+            secondId = attempts[1].Id;
+            outsiderId = attempts[2].Id;
+        }
+
+        var approveAll = await PostAsync("/api/mentor/attempts/approve-all", new { }, mentorToken);
+        Assert.That(approveAll.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(await approveAll.Content.ReadFromJsonAsync<int>(), Is.EqualTo(2));
+
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            Assert.Multiple(() =>
+            {
+                Assert.That(db.QuizAttempts.Single(item => item.Id == firstId).ApprovedScore, Is.EqualTo(80));
+                Assert.That(db.QuizAttempts.Single(item => item.Id == secondId).ApprovedScore, Is.EqualTo(60));
+                Assert.That(db.QuizAttempts.Single(item => item.Id == outsiderId).ApprovedScore, Is.Null);
+                Assert.That(db.AuditEntries.Count(entry =>
+                    entry.Action == "QuizApproved"
+                    && (entry.TargetId == firstId || entry.TargetId == secondId)), Is.EqualTo(2));
+            });
         }
     }
 

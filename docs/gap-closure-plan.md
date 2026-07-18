@@ -143,7 +143,10 @@ requirement conflicts early (they gate "done").
       scoped pending queue and submitted-copy detail, persisted criterion drafts, server-validated
       rubric bounds/computed totals, confirmed approval or mandatory-feedback revision, default-on
       guardian choice, badges, audit, and recipient-scoped youth/guardian notifications.
-- [ ] **F4** Quiz assessment approvals (+ pending/review queries) `L2-MENTOR-004`
+- [x] **F4** Quiz assessment approvals (+ pending/review queries) `L2-MENTOR-004` —
+      scoped pending queue with authored quiz titles, answer/correctness detail, auto-score approval,
+      validated override, immutable auto/approved audit record, and confirmed scoped approve-all with
+      one durable audit entry per assessment.
 - [ ] **F5** Competency tracker `L2-MENTOR-005`
 - [ ] **F6** Check-ins & history (+ shared read surfaces) `L2-MENTOR-006`
 - [ ] **F7** At-risk flags + automated evaluation `L2-MENTOR-007`
@@ -239,8 +242,8 @@ requirement conflicts early (they gate "done").
 - [x] **Youth curriculum fixture** — Testing-only multi-track enrollment data covers published/draft
       filtering, ordered lesson/quiz gates, prerequisite locking, progress, safe lesson content,
       failed optional media, reflection hand-off, upcoming cohort logistics, an assigned-mentor thread,
-      mentor-assigned work, an overdue rubric-backed mentor review/active flag, guardian contact, a
-      private check-in, the placed dashboard, and an empty enrolled track.
+      mentor-assigned work, overdue rubric and pending answer-backed quiz reviews, an active flag,
+      guardian contact, a private check-in, the placed dashboard, and an empty enrolled track.
 
 ## Progress log
 
@@ -316,3 +319,8 @@ requirement conflicts early (they gate "done").
   feedback-required revision. The API rejects unknown, out-of-range, or incomplete final scores and
   computes totals itself; badge, audit, youth result/revision, durable youth/optional-guardian
   notification, and user-scoped live outcomes are exercised by HTTP plus desktop/mobile acceptance.
+- 2026-07-18 — F4 done: pending quiz assessments now carry their authored titles into the queue and
+  open a scoped answer-by-answer review with explicit selected/correct states. Mentors can approve the
+  auto-score, enter a server-validated override, inspect the immutable auto/approved/actor/time record,
+  or confirm approve-all; youth results expose only the approved score, while per-attempt and bulk
+  audit records preserve every action. Desktop/mobile acceptance and all mentoring HTTP tests pass.

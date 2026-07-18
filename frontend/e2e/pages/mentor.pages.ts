@@ -98,6 +98,12 @@ export class MentorReviewsPage extends BasePage {
   get emptyState() {
     return this.page.getByRole('heading', { name: /no reviews waiting/i });
   }
+  get approveAllQuizzes() {
+    return this.page.getByRole('button', { name: /approve all quiz scores/i });
+  }
+  get status() {
+    return this.page.getByRole('status');
+  }
 }
 
 export class MentorSubmissionReviewPage extends BasePage {
@@ -130,5 +136,26 @@ export class MentorSubmissionReviewPage extends BasePage {
   }
   get status() {
     return this.page.getByRole('status');
+  }
+}
+
+export class MentorQuizReviewPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get autoScore() {
+    return this.page.getByTestId('quiz-auto-score');
+  }
+  get overrideScore() {
+    return this.page.getByLabel(/override score/i);
+  }
+  get approve() {
+    return this.page.getByRole('button', { name: /approve score/i });
+  }
+  get auditRecord() {
+    return this.page.getByTestId('quiz-approval-record');
+  }
+  get backToReviews() {
+    return this.page.getByRole('link', { name: /back to reviews/i });
   }
 }
