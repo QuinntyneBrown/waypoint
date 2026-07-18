@@ -29,7 +29,7 @@ public class CheckInsController : ControllerBase
                 request.PrayerRequests,
                 request.ActionItems,
                 request.NextFollowUp,
-                request.ShareWithMentor,
+                request.ShareWithYouthAndGuardian,
                 request.GuardianInformed),
             cancellationToken);
         return Ok(result);

@@ -184,3 +184,32 @@ export interface SetCompetencyLevelRequest {
   level: CompetencyLevel;
   notes: string | null;
 }
+
+export interface MentorCheckIn {
+  id: string;
+  youthUserId: string;
+  youthName: string;
+  date: string;
+  type: '1:1' | 'call' | 'session';
+  engagement: string | null;
+  goalsDiscussed: string | null;
+  prayerRequests: string | null;
+  actionItems: string | null;
+  visibility: 'Private' | 'SharedWithMentor';
+  nextFollowUp: string | null;
+  guardianInformed: boolean;
+  createdAt: string;
+}
+
+export interface LogCheckInRequest {
+  youthId: string;
+  date: string;
+  type: '1:1' | 'call' | 'session';
+  engagement: string | null;
+  goalsDiscussed: string | null;
+  prayerRequests: string | null;
+  actionItems: string | null;
+  nextFollowUp: string | null;
+  shareWithYouthAndGuardian: boolean;
+  guardianInformed: boolean;
+}

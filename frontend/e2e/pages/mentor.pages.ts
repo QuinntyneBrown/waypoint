@@ -183,3 +183,54 @@ export class MentorCompetencyPage extends BasePage {
     return this.page.getByRole('status');
   }
 }
+
+export class MentorCheckInsPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Check-ins', exact: true });
+  }
+  get youth() {
+    return this.page.getByLabel('Youth', { exact: true });
+  }
+  get type() {
+    return this.page.getByLabel('Type', { exact: true });
+  }
+  get engagement() {
+    return this.page.getByLabel(/engagement \/ mood/i);
+  }
+  get goals() {
+    return this.page.getByLabel(/goals discussed/i);
+  }
+  get prayer() {
+    return this.page.getByLabel(/prayer requests/i);
+  }
+  get actions() {
+    return this.page.getByLabel(/action items/i);
+  }
+  get followUp() {
+    return this.page.getByLabel(/next follow-up/i);
+  }
+  get share() {
+    return this.page.getByRole('checkbox', { name: /share this check-in/i });
+  }
+  get shareControl() {
+    return this.page.locator('label.wu-check').filter({ hasText: /share this check-in/i });
+  }
+  get guardianInformed() {
+    return this.page.getByRole('checkbox', { name: /guardian was informed/i });
+  }
+  get guardianInformedControl() {
+    return this.page.locator('label.wu-check').filter({ hasText: /guardian was informed/i });
+  }
+  get save() {
+    return this.page.getByRole('button', { name: /save check-in/i });
+  }
+  get status() {
+    return this.page.getByRole('status');
+  }
+  get historyItems() {
+    return this.page.getByTestId('check-in-history-item');
+  }
+  get filterType() {
+    return this.page.getByLabel(/filter by type/i);
+  }
+}

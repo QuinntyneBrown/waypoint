@@ -31,15 +31,27 @@ public class CheckInHistoryQueryHandler : IRequestHandler<CheckInHistoryQuery, I
             query = query.Where(c => c.Type == request.Type);
         }
 
-        return await query
+        var checkIns = await query
             .OrderByDescending(c => c.Date)
-            .Select(c => new CheckInSummary(
-                c.Id,
-                c.YouthUserId,
-                c.Date,
-                c.Type,
-                c.Visibility.ToString(),
-                c.NextFollowUp))
             .ToListAsync(cancellationToken);
+        var youthIds = checkIns.Select(checkIn => checkIn.YouthUserId).Distinct().ToList();
+        var youthNames = await _db.Users
+            .Where(user => youthIds.Contains(user.Id))
+            .ToDictionaryAsync(user => user.Id, user => user.DisplayName, cancellationToken);
+
+        return checkIns.Select(checkIn => new CheckInSummary(
+            checkIn.Id,
+            checkIn.YouthUserId,
+            youthNames.GetValueOrDefault(checkIn.YouthUserId, "Youth"),
+            checkIn.Date,
+            checkIn.Type,
+            checkIn.Engagement,
+            checkIn.GoalsDiscussed,
+            checkIn.PrayerRequests,
+            checkIn.ActionItems,
+            checkIn.Visibility.ToString(),
+            checkIn.NextFollowUp,
+            checkIn.GuardianInformed,
+            checkIn.CreatedAt)).ToList();
     }
 }

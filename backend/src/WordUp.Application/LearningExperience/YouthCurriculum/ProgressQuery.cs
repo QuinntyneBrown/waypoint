@@ -14,7 +14,8 @@ public record ProgressView(
     double AttendanceRate,
     IReadOnlyList<QuizHistoryItem> QuizHistory,
     IReadOnlyList<AttendanceHistoryItem> AttendanceHistory,
-    IReadOnlyList<CompetencyLevelDto> Competencies);
+    IReadOnlyList<CompetencyLevelDto> Competencies,
+    IReadOnlyList<YouthSharedCheckIn> SharedCheckIns);
 
 public record QuizHistoryItem(
     Guid AttemptId,
@@ -37,3 +38,13 @@ public record CompetencyLevelDto(
     string Level,
     int Percent,
     DateTime AssessedAt);
+
+public record YouthSharedCheckIn(
+    Guid CheckInId,
+    DateTime Date,
+    string Type,
+    string? Engagement,
+    string? GoalsDiscussed,
+    string? PrayerRequests,
+    string? ActionItems,
+    DateTime? NextFollowUp);

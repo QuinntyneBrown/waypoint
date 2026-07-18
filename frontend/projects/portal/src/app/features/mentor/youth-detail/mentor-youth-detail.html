@@ -110,6 +110,15 @@
                 }
                 @case ('check-ins') {
                   <h2>Check-ins</h2>
+                  <p>
+                    <a
+                      class="wu-btn wu-btn--primary"
+                      [routerLink]="['/mentor/check-ins']"
+                      [queryParams]="{ youthId: youth.id }"
+                    >
+                      Log or view check-ins
+                    </a>
+                  </p>
                   <ul class="detail-list">
                     @for (item of youth.checkIns; track item.id) {
                       <li class="detail-row">

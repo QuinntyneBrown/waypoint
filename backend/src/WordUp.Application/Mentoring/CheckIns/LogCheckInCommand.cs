@@ -11,7 +11,7 @@ public record LogCheckInCommand(
     string? PrayerRequests,
     string? ActionItems,
     DateTime? NextFollowUp,
-    bool ShareWithMentor,
+    bool ShareWithYouthAndGuardian,
     bool GuardianInformed) : IRequest<CheckInResult>;
 
 public record CheckInResult(Guid Id);

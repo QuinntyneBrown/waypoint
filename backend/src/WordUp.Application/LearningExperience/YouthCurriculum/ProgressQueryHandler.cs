@@ -41,6 +41,20 @@ public class ProgressQueryHandler : IRequestHandler<ProgressQuery, ProgressView>
         var attended = rateRecords.Count(item => item.Status is "Present" or "Late");
         var attendanceRate = rateRecords.Count == 0 ? 0 : (double)attended / rateRecords.Count * 100;
         var competencies = await CompetenciesAsync(youthId, cancellationToken);
+        var sharedCheckIns = await _db.CheckIns.AsNoTracking()
+            .Where(checkIn => checkIn.YouthUserId == youthId
+                && checkIn.Visibility == Visibility.SharedWithMentor)
+            .OrderByDescending(checkIn => checkIn.Date)
+            .Select(checkIn => new YouthSharedCheckIn(
+                checkIn.Id,
+                checkIn.Date,
+                checkIn.Type,
+                checkIn.Engagement,
+                checkIn.GoalsDiscussed,
+                checkIn.PrayerRequests,
+                checkIn.ActionItems,
+                checkIn.NextFollowUp))
+            .ToListAsync(cancellationToken);
 
         return new ProgressView(
             overallPercent,
@@ -50,7 +64,8 @@ public class ProgressQueryHandler : IRequestHandler<ProgressQuery, ProgressView>
             attendanceRate,
             quizHistory,
             attendanceHistory,
-            competencies);
+            competencies,
+            sharedCheckIns);
     }
 
     private async Task<List<Guid>> TrackLessonIdsAsync(Guid youthId, CancellationToken cancellationToken)

@@ -237,6 +237,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'check-ins',
+        title: 'Check-ins · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/check-ins/mentor-check-ins').then(
+            (module) => module.MentorCheckInsPage,
+          ),
+      },
+      {
         path: 'youth/:id',
         title: 'Youth detail · Word Up',
         loadComponent: () =>

@@ -23,6 +23,17 @@ export interface YouthCompetencyProgress {
   assessedAt: string;
 }
 
+export interface YouthSharedCheckIn {
+  checkInId: string;
+  date: string;
+  type: string;
+  engagement: string | null;
+  goalsDiscussed: string | null;
+  prayerRequests: string | null;
+  actionItems: string | null;
+  nextFollowUp: string | null;
+}
+
 // Traces to: L2-LEARN-010
 export interface YouthProgress {
   overallPercent: number;
@@ -33,4 +44,5 @@ export interface YouthProgress {
   quizHistory: YouthQuizHistoryItem[];
   attendanceHistory: YouthAttendanceHistoryItem[];
   competencies: YouthCompetencyProgress[];
+  sharedCheckIns: YouthSharedCheckIn[];
 }

@@ -9,5 +9,5 @@ public record LogCheckInRequest(
     string? PrayerRequests,
     string? ActionItems,
     DateTime? NextFollowUp,
-    bool ShareWithMentor,
+    bool ShareWithYouthAndGuardian,
     bool GuardianInformed);

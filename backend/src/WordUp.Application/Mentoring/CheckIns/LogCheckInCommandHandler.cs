@@ -46,8 +46,10 @@ public class LogCheckInCommandHandler : IRequestHandler<LogCheckInCommand, Check
             PrayerRequests = request.PrayerRequests,
             ActionItems = request.ActionItems,
             NextFollowUp = request.NextFollowUp,
-            // Private by default; only shared with the youth when explicitly enabled (MENTOR-006 AC2).
-            Visibility = request.ShareWithMentor ? Visibility.SharedWithMentor : Visibility.Private,
+            // Private by default; only shared with youth/guardian when explicitly enabled (MENTOR-006 AC2).
+            Visibility = request.ShareWithYouthAndGuardian
+                ? Visibility.SharedWithMentor
+                : Visibility.Private,
             GuardianInformed = request.GuardianInformed,
             CreatedAt = _clock.UtcNow,
         };

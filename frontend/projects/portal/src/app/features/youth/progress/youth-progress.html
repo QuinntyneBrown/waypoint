@@ -99,6 +99,39 @@
               }
             </div>
           </section>
+          <section class="wu-card" data-testid="youth-shared-checkins">
+            <div class="wu-card__body wu-stack">
+              <h2>Shared mentor check-ins</h2>
+              @if (view.sharedCheckIns.length === 0) {
+                <p class="wu-muted">Your mentor has not shared any check-in notes with you.</p>
+              }
+              @for (checkIn of view.sharedCheckIns; track checkIn.checkInId) {
+                <article class="wu-stack">
+                  <div class="wu-cluster wu-cluster--between">
+                    <strong>{{ checkIn.type }}</strong>
+                    <span class="wu-muted">{{ checkIn.date | date: 'mediumDate' }}</span>
+                  </div>
+                  @if (checkIn.engagement) {
+                    <p><strong>Engagement:</strong> {{ checkIn.engagement }}</p>
+                  }
+                  @if (checkIn.goalsDiscussed) {
+                    <p><strong>Goals:</strong> {{ checkIn.goalsDiscussed }}</p>
+                  }
+                  @if (checkIn.prayerRequests) {
+                    <p><strong>Prayer:</strong> {{ checkIn.prayerRequests }}</p>
+                  }
+                  @if (checkIn.actionItems) {
+                    <p><strong>Actions:</strong> {{ checkIn.actionItems }}</p>
+                  }
+                  @if (checkIn.nextFollowUp) {
+                    <p class="wu-muted">
+                      Follow-up {{ checkIn.nextFollowUp | date: 'mediumDate' }}
+                    </p>
+                  }
+                </article>
+              }
+            </div>
+          </section>
         </section>
       }
 

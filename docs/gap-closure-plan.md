@@ -150,7 +150,10 @@ requirement conflicts early (they gate "done").
 - [x] **F5** Competency tracker `L2-MENTOR-005` — complete ordered staged framework including
       unassessed rows, four-level assessment and notes, append-only history with latest assessor/time,
       live proficient/mastered summary, assigned-youth scoping, and shared latest youth-progress values.
-- [ ] **F6** Check-ins & history (+ shared read surfaces) `L2-MENTOR-006`
+- [x] **F6** Check-ins & history (+ shared read surfaces) `L2-MENTOR-006` — assigned-youth
+      journal with required date/type, full conversation fields, follow-up and guardian-informed state,
+      private-by-default explicit sharing (including a prayer disclosure warning), scoped youth/type
+      filters and full mentor history, plus shared-only youth and guardian projections.
 - [ ] **F7** At-risk flags + automated evaluation `L2-MENTOR-007`
 - [ ] **F8** Assign work (+ journey placement, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008`
 - [ ] **F9** Mentor calendar & attendance `L2-ENGAGE-001..004`
@@ -245,8 +248,8 @@ requirement conflicts early (they gate "done").
       filtering, ordered lesson/quiz gates, prerequisite locking, progress, safe lesson content,
       failed optional media, reflection hand-off, upcoming cohort logistics, an assigned-mentor thread,
       mentor-assigned work, overdue rubric and pending answer-backed quiz reviews, assessed/unassessed
-      competencies, an active flag, guardian contact, a private check-in, the placed dashboard, and an
-      empty enrolled track.
+      competencies, an active flag, guardian contact, a private check-in and explicit-sharing journey,
+      the placed dashboard, and an empty enrolled track.
 
 ## Progress log
 
@@ -332,3 +335,9 @@ requirement conflicts early (they gate "done").
   and timestamp, and a live proficient/mastered summary. Saves append history while mentor and youth
   views resolve the latest assessment; HTTP scoping/history/downstream tests and desktop/mobile
   keyboard acceptance pass.
+- 2026-07-18 — F6 done: mentors now have an assigned-youth journal for dated 1:1, call, and session
+  notes, goals, prayer requests, actions, follow-up, and guardian-informed state, with youth/type
+  filters over the full scoped history. Entries remain private by default; the explicit sharing control
+  warns that every entered field, including prayer, reaches the youth and linked guardian. HTTP tests
+  prove cross-mentor denial and private/shared projection boundaries, while desktop cross-role and
+  mobile keyboard/reflow acceptance pass.

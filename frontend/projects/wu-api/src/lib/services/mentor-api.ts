@@ -8,6 +8,8 @@ import {
   MentorRosterYouth,
   MentorYouthDetail,
   GradeSubmissionRequest,
+  LogCheckInRequest,
+  MentorCheckIn,
   MentorCompetencySummary,
   QuizAssessmentReview,
   SetCompetencyLevelRequest,
@@ -82,5 +84,16 @@ export class MentorApi {
       `${this.base}/api/mentor/youth/${encodeURIComponent(youthId)}/competencies`,
       request,
     );
+  }
+
+  checkIns(youthId = '', type = ''): Observable<MentorCheckIn[]> {
+    let params = new HttpParams();
+    if (youthId) params = params.set('youthId', youthId);
+    if (type) params = params.set('type', type);
+    return this.http.get<MentorCheckIn[]>(`${this.base}/api/mentor/check-ins`, { params });
+  }
+
+  logCheckIn(request: LogCheckInRequest): Observable<{ id: string }> {
+    return this.http.post<{ id: string }>(`${this.base}/api/mentor/check-ins`, request);
   }
 }

@@ -1,0 +1,243 @@
+<wu-shell
+  role="mentor"
+  active="check-ins"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Mentor journal</div>
+        <h1 class="wu-page__title">Check-ins</h1>
+        <p class="wu-page__sub">Record conversations, actions, and planned follow-up.</p>
+      </div>
+    </div>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    <p class="wu-sr-only" role="status">{{ statusMessage() }}</p>
+
+    <div class="check-in-layout">
+      <section class="wu-card">
+        <div class="wu-card__header"><h2 class="wu-card__title">Log check-in</h2></div>
+        <div class="wu-card__body wu-stack">
+          <div class="wu-field">
+            <label class="wu-label" for="check-in-youth">Youth</label>
+            <select
+              class="wu-select"
+              id="check-in-youth"
+              [value]="selectedYouthId()"
+              (change)="selectedYouthId.set($any($event.target).value)"
+            >
+              <option value="">Choose youth</option>
+              @for (person of youth(); track person.id) {
+                <option [value]="person.id" [selected]="selectedYouthId() === person.id">
+                  {{ person.displayName }}
+                </option>
+              }
+            </select>
+          </div>
+          <div class="wu-grid wu-grid--2">
+            <div class="wu-field">
+              <label class="wu-label" for="check-in-date">Date</label>
+              <input
+                class="wu-input"
+                id="check-in-date"
+                type="date"
+                [value]="date()"
+                (input)="date.set($any($event.target).value)"
+              />
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="check-in-type">Type</label>
+              <select
+                class="wu-select"
+                id="check-in-type"
+                [value]="type()"
+                (change)="type.set($any($event.target).value)"
+              >
+                <option value="1:1">1:1</option>
+                <option value="call">Call</option>
+                <option value="session">Session</option>
+              </select>
+            </div>
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="engagement">Engagement / mood</label>
+            <textarea
+              class="wu-textarea"
+              id="engagement"
+              rows="3"
+              maxlength="2000"
+              [value]="engagement()"
+              (input)="engagement.set($any($event.target).value)"
+            ></textarea>
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="goals-discussed">Goals discussed</label>
+            <textarea
+              class="wu-textarea"
+              id="goals-discussed"
+              rows="3"
+              maxlength="2000"
+              [value]="goalsDiscussed()"
+              (input)="goalsDiscussed.set($any($event.target).value)"
+            ></textarea>
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="prayer-requests">Prayer requests</label>
+            <textarea
+              class="wu-textarea"
+              id="prayer-requests"
+              rows="3"
+              maxlength="2000"
+              [value]="prayerRequests()"
+              (input)="prayerRequests.set($any($event.target).value)"
+            ></textarea>
+            <p class="wu-help">Private unless you explicitly enable sharing below.</p>
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="action-items">Action items</label>
+            <textarea
+              class="wu-textarea"
+              id="action-items"
+              rows="3"
+              maxlength="2000"
+              [value]="actionItems()"
+              (input)="actionItems.set($any($event.target).value)"
+            ></textarea>
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="next-follow-up">Next follow-up</label>
+            <input
+              class="wu-input"
+              id="next-follow-up"
+              type="date"
+              [value]="nextFollowUp()"
+              (input)="nextFollowUp.set($any($event.target).value)"
+            />
+          </div>
+          <label class="wu-check">
+            <input
+              type="checkbox"
+              [checked]="share()"
+              (change)="share.set($any($event.target).checked)"
+            />
+            <span class="wu-check__box">
+              <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+            </span>
+            <span>Share this check-in with the youth and guardian</span>
+          </label>
+          @if (share()) {
+            <p class="wu-alert">
+              All entered fields, including prayer requests, will be visible to the youth and their
+              linked guardian.
+            </p>
+          }
+          <label class="wu-check">
+            <input
+              type="checkbox"
+              [checked]="guardianInformed()"
+              (change)="guardianInformed.set($any($event.target).checked)"
+            />
+            <span class="wu-check__box">
+              <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+            </span>
+            <span>Guardian was informed</span>
+          </label>
+          <button
+            class="wu-btn wu-btn--primary save-button"
+            type="button"
+            [disabled]="saving()"
+            (click)="save()"
+          >
+            Save check-in
+          </button>
+        </div>
+      </section>
+
+      <section class="wu-stack" aria-labelledby="history-heading">
+        <div>
+          <h2 id="history-heading">Check-in history</h2>
+          <div class="history-filters">
+            <div class="wu-field">
+              <label class="wu-label" for="filter-youth">Filter by youth</label>
+              <select
+                class="wu-select"
+                id="filter-youth"
+                [value]="filterYouthId()"
+                (change)="filterYouthId.set($any($event.target).value); applyFilters()"
+              >
+                <option value="">All youth</option>
+                @for (person of youth(); track person.id) {
+                  <option [value]="person.id" [selected]="filterYouthId() === person.id">
+                    {{ person.displayName }}
+                  </option>
+                }
+              </select>
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="filter-type">Filter by type</label>
+              <select
+                class="wu-select"
+                id="filter-type"
+                [value]="filterType()"
+                (change)="filterType.set($any($event.target).value); applyFilters()"
+              >
+                <option value="">All types</option>
+                <option value="1:1">1:1</option>
+                <option value="call">Call</option>
+                <option value="session">Session</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        @if (history(); as items) {
+          @for (item of items; track item.id) {
+            <article class="wu-card history-card" data-testid="check-in-history-item">
+              <div class="wu-card__header">
+                <div>
+                  <p class="wu-eyebrow">{{ item.youthName }}</p>
+                  <h3 class="wu-card__title">
+                    {{ item.type }} · {{ item.date | date: 'mediumDate' }}
+                  </h3>
+                </div>
+                <span class="wu-badge">
+                  {{ item.visibility === 'Private' ? 'Private mentor note' : 'Shared' }}
+                </span>
+              </div>
+              <div class="wu-card__body wu-stack">
+                @if (item.engagement) {
+                  <p><strong>Engagement:</strong> {{ item.engagement }}</p>
+                }
+                @if (item.goalsDiscussed) {
+                  <p><strong>Goals:</strong> {{ item.goalsDiscussed }}</p>
+                }
+                @if (item.prayerRequests) {
+                  <p><strong>Prayer:</strong> {{ item.prayerRequests }}</p>
+                }
+                @if (item.actionItems) {
+                  <p><strong>Actions:</strong> {{ item.actionItems }}</p>
+                }
+                @if (item.nextFollowUp) {
+                  <p><strong>Follow-up:</strong> {{ item.nextFollowUp | date: 'mediumDate' }}</p>
+                }
+                <p class="wu-muted">
+                  Guardian {{ item.guardianInformed ? 'was informed' : 'was not marked informed' }}.
+                </p>
+              </div>
+            </article>
+          } @empty {
+            <div class="wu-card wu-empty">
+              <div class="wu-empty__icon"><wu-icon name="clipboard-check" /></div>
+              <h3 class="wu-empty__title">No matching check-ins</h3>
+              <p class="wu-empty__text">Adjust the youth or type filter.</p>
+            </div>
+          }
+        } @else {
+          <p class="wu-muted" role="status">Loading check-in history…</p>
+        }
+      </section>
+    </div>
+  </div>
+</wu-shell>
