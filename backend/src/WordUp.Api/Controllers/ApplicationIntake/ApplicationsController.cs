@@ -37,6 +37,15 @@ public class ApplicationsController : ControllerBase
     }
 
     [Authorize(Policy = Policies.ApproveApplications)]
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyList<ApplicationSummary>>> List(
+        [FromQuery] string? status = null, CancellationToken cancellationToken = default)
+    {
+        var result = await _mediator.Send(new ListApplicationsQuery(status), cancellationToken);
+        return Ok(result);
+    }
+
+    [Authorize(Policy = Policies.ApproveApplications)]
     [HttpPost("{id:guid}/approve")]
     public async Task<ActionResult<ApproveApplicationResult>> Approve(
         Guid id, [FromBody] ApproveApplicationRequest request, CancellationToken cancellationToken)
