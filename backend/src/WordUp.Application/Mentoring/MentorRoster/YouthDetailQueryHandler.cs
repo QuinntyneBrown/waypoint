@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
+using WordUp.Application.Mentoring.Flags;
 
 namespace WordUp.Application.Mentoring.MentorRoster;
 
@@ -9,11 +10,16 @@ public class YouthDetailQueryHandler : IRequestHandler<YouthDetailQuery, YouthDe
 {
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
+    private readonly AtRiskEvaluator _atRiskEvaluator;
 
-    public YouthDetailQueryHandler(IAppDbContext db, ICurrentUser currentUser)
+    public YouthDetailQueryHandler(
+        IAppDbContext db,
+        ICurrentUser currentUser,
+        AtRiskEvaluator atRiskEvaluator)
     {
         _db = db;
         _currentUser = currentUser;
+        _atRiskEvaluator = atRiskEvaluator;
     }
 
     public async Task<YouthDetail> Handle(YouthDetailQuery request, CancellationToken cancellationToken)
@@ -61,6 +67,8 @@ public class YouthDetailQueryHandler : IRequestHandler<YouthDetailQuery, YouthDe
         {
             trackIds.Add(cohortTrackId);
         }
+
+        await _atRiskEvaluator.EvaluateAsync(new[] { youth.Id }, cancellationToken: cancellationToken);
         var moduleIds = await _db.Modules
             .Where(item => trackIds.Contains(item.TrackId) && item.Status == PublishStatus.Published)
             .Select(item => item.Id)
@@ -154,10 +162,12 @@ public class YouthDetailQueryHandler : IRequestHandler<YouthDetailQuery, YouthDe
 
         var flaggedByName = flag is null
             ? null
-            : await _db.Users
-                .Where(item => item.Id == flag.FlaggedByUserId)
-                .Select(item => item.DisplayName)
-                .FirstOrDefaultAsync(cancellationToken);
+            : flag.IsAutomatic
+                ? "Automated evaluation"
+                : await _db.Users
+                    .Where(item => item.Id == flag.FlaggedByUserId)
+                    .Select(item => item.DisplayName)
+                    .FirstOrDefaultAsync(cancellationToken);
 
         return new YouthDetail(
             youth.Id,

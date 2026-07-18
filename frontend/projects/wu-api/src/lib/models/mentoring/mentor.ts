@@ -213,3 +213,16 @@ export interface LogCheckInRequest {
   shareWithYouthAndGuardian: boolean;
   guardianInformed: boolean;
 }
+
+export interface AtRiskYouth {
+  flagId: string;
+  youthId: string;
+  displayName: string;
+  reasons: string[];
+  flaggedAt: string;
+  flaggedByName: string;
+  automatic: boolean;
+}
+
+export type FlagResolutionReason =
+  'Reconnected' | 'HandedToDirector' | 'LeftProgram' | 'FlaggedInError';

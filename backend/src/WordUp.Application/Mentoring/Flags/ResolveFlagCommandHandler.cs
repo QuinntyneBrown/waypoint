@@ -11,13 +11,20 @@ public class ResolveFlagCommandHandler : IRequestHandler<ResolveFlagCommand>
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly AtRiskEvaluator _evaluator;
 
-    public ResolveFlagCommandHandler(IAppDbContext db, IClock clock, IAuditLogger audit, ICurrentUser currentUser)
+    public ResolveFlagCommandHandler(
+        IAppDbContext db,
+        IClock clock,
+        IAuditLogger audit,
+        ICurrentUser currentUser,
+        AtRiskEvaluator evaluator)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
+        _evaluator = evaluator;
     }
 
     public async Task Handle(ResolveFlagCommand request, CancellationToken cancellationToken)
@@ -43,6 +50,17 @@ public class ResolveFlagCommandHandler : IRequestHandler<ResolveFlagCommand>
         flag.ResolutionReason = request.ResolutionReason;
         await _db.SaveChangesAsync(cancellationToken);
 
-        await _audit.LogAsync("YouthUnflagged", _currentUser.UserId, "User", youth.Id, details: request.ResolutionReason);
+        await _audit.LogAsync(
+            "YouthUnflagged",
+            _currentUser.UserId,
+            "User",
+            youth.Id,
+            isPrivate: true,
+            details: request.ResolutionReason,
+            cancellationToken: cancellationToken);
+        await _evaluator.EvaluateAsync(
+            new[] { youth.Id },
+            justResolvedFlagId: flag.Id,
+            cancellationToken: cancellationToken);
     }
 }

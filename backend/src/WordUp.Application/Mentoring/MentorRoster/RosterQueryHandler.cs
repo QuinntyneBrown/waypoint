@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
+using WordUp.Application.Mentoring.Flags;
 
 namespace WordUp.Application.Mentoring.MentorRoster;
 
@@ -10,12 +11,18 @@ public class RosterQueryHandler : IRequestHandler<RosterQuery, IReadOnlyList<Ros
     private readonly IAppDbContext _db;
     private readonly IClock _clock;
     private readonly ICurrentUser _currentUser;
+    private readonly AtRiskEvaluator _atRiskEvaluator;
 
-    public RosterQueryHandler(IAppDbContext db, IClock clock, ICurrentUser currentUser)
+    public RosterQueryHandler(
+        IAppDbContext db,
+        IClock clock,
+        ICurrentUser currentUser,
+        AtRiskEvaluator atRiskEvaluator)
     {
         _db = db;
         _clock = clock;
         _currentUser = currentUser;
+        _atRiskEvaluator = atRiskEvaluator;
     }
 
     public async Task<IReadOnlyList<RosterYouth>> Handle(RosterQuery request, CancellationToken cancellationToken)
@@ -29,6 +36,7 @@ public class RosterQueryHandler : IRequestHandler<RosterQuery, IReadOnlyList<Ros
             .ToListAsync(cancellationToken);
 
         var youthIds = youth.Select(y => y.Id).ToList();
+        await _atRiskEvaluator.EvaluateAsync(youthIds, cancellationToken: cancellationToken);
         var cohortIds = youth.Where(item => item.CohortId != null).Select(item => item.CohortId!.Value).Distinct().ToList();
         var cohortNames = await _db.Cohorts
             .Where(cohort => cohortIds.Contains(cohort.Id))

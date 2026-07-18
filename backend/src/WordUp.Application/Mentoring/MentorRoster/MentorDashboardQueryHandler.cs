@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
+using WordUp.Application.Mentoring.Flags;
 
 namespace WordUp.Application.Mentoring.MentorRoster;
 
@@ -10,12 +11,18 @@ public class MentorDashboardQueryHandler : IRequestHandler<MentorDashboardQuery,
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
     private readonly IClock _clock;
+    private readonly AtRiskEvaluator _atRiskEvaluator;
 
-    public MentorDashboardQueryHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock)
+    public MentorDashboardQueryHandler(
+        IAppDbContext db,
+        ICurrentUser currentUser,
+        IClock clock,
+        AtRiskEvaluator atRiskEvaluator)
     {
         _db = db;
         _currentUser = currentUser;
         _clock = clock;
+        _atRiskEvaluator = atRiskEvaluator;
     }
 
     public async Task<MentorDashboard> Handle(MentorDashboardQuery request, CancellationToken cancellationToken)
@@ -29,6 +36,7 @@ public class MentorDashboardQueryHandler : IRequestHandler<MentorDashboardQuery,
             .ToListAsync(cancellationToken);
 
         var youthCount = youthIds.Count;
+        await _atRiskEvaluator.EvaluateAsync(youthIds, cancellationToken: cancellationToken);
 
         // Pending reviews = submissions awaiting review + quiz attempts submitted-but-not-approved.
         var pendingSubmissions = await _db.Submissions

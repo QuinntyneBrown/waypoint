@@ -1,0 +1,201 @@
+<wu-shell
+  role="mentor"
+  active="flags"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Safeguarding follow-up</div>
+        <h1 class="wu-page__title">At-risk youth</h1>
+        <p class="wu-page__sub">
+          Review inactivity, missed-session, and cohort-progress signals, then record your action.
+        </p>
+      </div>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    <p class="wu-sr-only" role="status">{{ statusMessage() }}</p>
+
+    <section class="wu-card wu-mb-6" aria-labelledby="raise-flag-heading">
+      <div class="wu-card__header">
+        <div>
+          <h2 class="wu-card__title" id="raise-flag-heading">Raise a manual flag</h2>
+          <p class="wu-muted">Use this when a concern is not captured by an automatic signal.</p>
+        </div>
+      </div>
+      <div class="wu-card__body raise-grid">
+        <div class="wu-field wu-mb-0">
+          <label class="wu-label" for="flag-youth">Youth</label>
+          <select
+            class="wu-select"
+            id="flag-youth"
+            [value]="selectedYouthId()"
+            (change)="selectedYouthId.set($any($event.target).value)"
+          >
+            <option value="">Choose youth</option>
+            @for (person of youth(); track person.id) {
+              <option [value]="person.id" [selected]="selectedYouthId() === person.id">
+                {{ person.displayName }}
+              </option>
+            }
+          </select>
+        </div>
+        <div class="wu-field wu-mb-0">
+          <label class="wu-label" for="manual-flag-reason">Reason</label>
+          <input
+            class="wu-input"
+            id="manual-flag-reason"
+            maxlength="1000"
+            [value]="manualReason()"
+            (input)="manualReason.set($any($event.target).value)"
+          />
+        </div>
+        <button
+          class="wu-btn wu-btn--primary raise-button"
+          type="button"
+          [disabled]="busy()"
+          (click)="raise()"
+        >
+          Raise flag
+        </button>
+      </div>
+    </section>
+
+    <section aria-labelledby="active-flags-heading">
+      <div class="wu-cluster wu-cluster--between wu-mb-4">
+        <h2 class="wu-mb-0" id="active-flags-heading">Active flags</h2>
+        @if (flags(); as activeFlags) {
+          <span class="wu-badge">{{ activeFlags.length }} active</span>
+        }
+      </div>
+
+      @if (flags(); as activeFlags) {
+        <div class="flag-list">
+          @for (flag of activeFlags; track flag.flagId) {
+            <article class="wu-card flag-card" data-testid="at-risk-flag">
+              <div class="wu-card__header">
+                <div>
+                  <p class="wu-eyebrow">
+                    {{ flag.automatic ? 'Automatic signal' : 'Mentor-raised concern' }}
+                  </p>
+                  <h3 class="wu-card__title">{{ flag.displayName }}</h3>
+                  <p class="wu-muted">
+                    Flagged by {{ flag.flaggedByName }} · {{ flag.flaggedAt | date: 'medium' }}
+                  </p>
+                </div>
+                <span class="wu-badge wu-badge--error">At risk</span>
+              </div>
+              <div class="wu-card__body wu-stack">
+                <ul class="reason-list" aria-label="Reasons">
+                  @for (reason of flag.reasons; track reason) {
+                    <li>{{ reason }}</li>
+                  }
+                </ul>
+                <div class="wu-actions flag-actions">
+                  <a class="wu-btn wu-btn--ghost" [routerLink]="['/mentor/youth', flag.youthId]">
+                    View youth
+                  </a>
+                  <a
+                    class="wu-btn wu-btn--ghost"
+                    [routerLink]="['/mentor/check-ins']"
+                    [queryParams]="{ youthId: flag.youthId }"
+                  >
+                    Log check-in
+                  </a>
+                  <button class="wu-btn wu-btn--ghost" type="button" (click)="toggleMessage(flag)">
+                    Message
+                  </button>
+                  <button class="wu-btn wu-btn--danger" type="button" (click)="startResolve(flag)">
+                    Unflag
+                  </button>
+                </div>
+              </div>
+
+              @if (messageFlagId() === flag.flagId) {
+                <div class="inline-action wu-stack" data-testid="flag-message-composer">
+                  <div class="wu-field action-field wu-mb-0">
+                    <label class="wu-label" [for]="'flag-message-' + flag.flagId">
+                      Message {{ flag.displayName }}
+                    </label>
+                    <textarea
+                      class="wu-textarea"
+                      [id]="'flag-message-' + flag.flagId"
+                      rows="3"
+                      maxlength="4000"
+                      [value]="messageBody()"
+                      (input)="messageBody.set($any($event.target).value)"
+                    ></textarea>
+                  </div>
+                  <div class="wu-actions flag-actions">
+                    <button
+                      class="wu-btn wu-btn--primary"
+                      type="button"
+                      [disabled]="busy()"
+                      (click)="sendMessage(flag)"
+                    >
+                      Send message
+                    </button>
+                    <button
+                      class="wu-btn wu-btn--ghost"
+                      type="button"
+                      (click)="toggleMessage(flag)"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              }
+
+              @if (resolvingFlagId() === flag.flagId) {
+                <div class="inline-action wu-stack" data-testid="flag-resolution">
+                  <p><strong>Confirm this flag can be removed.</strong></p>
+                  <div class="wu-field action-field wu-mb-0">
+                    <label class="wu-label" [for]="'resolution-' + flag.flagId">
+                      Resolution reason
+                    </label>
+                    <select
+                      class="wu-select"
+                      [id]="'resolution-' + flag.flagId"
+                      [value]="resolutionReason()"
+                      (change)="setResolution($any($event.target).value)"
+                    >
+                      <option value="Reconnected">Reconnected</option>
+                      <option value="HandedToDirector">Handed to director</option>
+                      <option value="LeftProgram">Left program</option>
+                      <option value="FlaggedInError">Flagged in error</option>
+                    </select>
+                  </div>
+                  <div class="wu-actions flag-actions">
+                    <button
+                      class="wu-btn wu-btn--danger"
+                      type="button"
+                      [disabled]="busy()"
+                      (click)="confirmResolve(flag)"
+                    >
+                      Confirm unflag
+                    </button>
+                    <button class="wu-btn wu-btn--ghost" type="button" (click)="cancelResolve()">
+                      Keep flag
+                    </button>
+                  </div>
+                </div>
+              }
+            </article>
+          } @empty {
+            <div class="wu-card wu-empty">
+              <div class="wu-empty__icon"><wu-icon name="flag" /></div>
+              <h3 class="wu-empty__title">No active flags</h3>
+              <p class="wu-empty__text">No assigned youth currently need at-risk follow-up.</p>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="wu-muted" role="status">Evaluating at-risk signals…</p>
+      }
+    </section>
+  </div>
+</wu-shell>

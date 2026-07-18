@@ -31,18 +31,40 @@ public class RaiseFlagCommandHandler : IRequestHandler<RaiseFlagCommand>
             throw new ForbiddenException("This youth is not assigned to you.");
         }
 
+        if (youth.Role != Roles.Youth)
+        {
+            throw new NotFoundException("Youth not found.");
+        }
+
+        var active = await _db.Flags.FirstOrDefaultAsync(
+            flag => flag.YouthUserId == youth.Id && flag.ResolvedAt == null,
+            cancellationToken);
+        if (active is not null)
+        {
+            if (string.Equals(active.Reason, request.Reason, StringComparison.OrdinalIgnoreCase)) return;
+            throw new ConflictException("This youth already has an active at-risk flag.");
+        }
+
         var flag = new Flag
         {
             YouthUserId = youth.Id,
             Reason = request.Reason,
             FlaggedByUserId = _currentUser.UserId ?? Guid.Empty,
             FlaggedAt = _clock.UtcNow,
+            IsAutomatic = false,
         };
 
         _db.Flags.Add(flag);
         await _db.SaveChangesAsync(cancellationToken);
 
         // Visible to the director (L2-MENTOR-007).
-        await _audit.LogAsync("YouthFlagged", _currentUser.UserId, "User", youth.Id, details: request.Reason);
+        await _audit.LogAsync(
+            "YouthFlagged",
+            _currentUser.UserId,
+            "User",
+            youth.Id,
+            isPrivate: true,
+            details: request.Reason,
+            cancellationToken: cancellationToken);
     }
 }

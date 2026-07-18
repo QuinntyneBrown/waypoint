@@ -154,7 +154,9 @@ requirement conflicts early (they gate "done").
       journal with required date/type, full conversation fields, follow-up and guardian-informed state,
       private-by-default explicit sharing (including a prayer disclosure warning), scoped youth/type
       filters and full mentor history, plus shared-only youth and guardian projections.
-- [ ] **F7** At-risk flags + automated evaluation `L2-MENTOR-007`
+- [x] **F7** At-risk flags + automated evaluation `L2-MENTOR-007` — scoped active list with
+      specific combined signal reasons, manual raise, youth/detail/check-in/quick-message actions,
+      confirmed four-choice resolution, director visibility, and private-detail audit events.
 - [ ] **F8** Assign work (+ journey placement, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008`
 - [ ] **F9** Mentor calendar & attendance `L2-ENGAGE-001..004`
 - [ ] **F10** Mentor messaging/notifications `L2-ENGAGE-007/008`, `L2-NFR-005`
@@ -193,7 +195,10 @@ requirement conflicts early (they gate "done").
 - [x] **H8** Grading outcomes (rubric validation, badges, notifications, live) `L2-MENTOR-003`, `L2-LEARN-007`, `L2-ENGAGE-008` — rubric IDs/ranges and complete final scores are server-validated,
       totals are server-computed, configured badges and youth-visible results are applied, and final
       outcomes publish durable user-scoped youth plus opt-in guardian notifications in real time.
-- [ ] **H9** Automated at-risk evaluation `L2-MENTOR-007`
+- [x] **H9** Automated at-risk evaluation `L2-MENTOR-007` — shared dashboard/roster/detail/list
+      evaluation for configurable inactivity, missed-session, and cohort-progress-gap thresholds;
+      one active flag per youth, unchanged-signal suppression after resolution, and re-arming after
+      signals clear or change.
 - [ ] **H10** Assignment side effects (journey, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008`
 - [x] **H11** Attendance offline integrity protocol `L2-ENGAGE-003`, `L2-NFR-004/007` —
       owner-bound private queue, explicit durable idempotency receipts, automatic ordered replay,
@@ -341,3 +346,10 @@ requirement conflicts early (they gate "done").
   warns that every entered field, including prayer, reaches the youth and linked guardian. HTTP tests
   prove cross-mentor denial and private/shared projection boundaries, while desktop cross-role and
   mobile keyboard/reflow acceptance pass.
+- 2026-07-18 — F7 and H9 done: dashboard, roster, youth detail, and the at-risk workspace now share
+  configurable evaluation of seven-day inactivity, one missed session, and progress more than 15%
+  below the cohort average. Combined reasons attach to one active flag; resolution suppresses unchanged
+  signals until they clear or change, allowing genuine recurrence without duplicate flags. Mentors can
+  raise concerns, message, log a check-in, or confirm one of four resolution outcomes; directors see
+  all flags and private-detail audit events remain redacted. HTTP lifecycle/configuration tests and
+  desktop/mobile keyboard acceptance pass.

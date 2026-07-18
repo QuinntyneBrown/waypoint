@@ -245,6 +245,12 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'flags',
+        title: 'At-risk youth · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/flags/mentor-flags').then((module) => module.MentorFlagsPage),
+      },
+      {
         path: 'youth/:id',
         title: 'Youth detail · Word Up',
         loadComponent: () =>

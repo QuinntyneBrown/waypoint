@@ -234,3 +234,27 @@ export class MentorCheckInsPage extends BasePage {
     return this.page.getByLabel(/filter by type/i);
   }
 }
+
+export class MentorFlagsPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'At-risk youth', exact: true });
+  }
+  get flags() {
+    return this.page.getByTestId('at-risk-flag');
+  }
+  flag(name: string) {
+    return this.flags.filter({ hasText: name });
+  }
+  get youth() {
+    return this.page.getByLabel('Youth', { exact: true });
+  }
+  get manualReason() {
+    return this.page.getByLabel('Reason', { exact: true });
+  }
+  get raise() {
+    return this.page.getByRole('button', { name: /raise flag/i });
+  }
+  get status() {
+    return this.page.getByRole('status');
+  }
+}

@@ -33,6 +33,7 @@ public static class InfrastructureDependencyInjection
         services.AddSingleton<IClock, SystemClock>();
         services.AddSingleton<ISecureTokens, SecureTokens>();
         services.AddScoped<IAuditLogger, AuditLogger>();
+        services.AddSingleton<IAtRiskThresholds, ConfigurationAtRiskThresholds>();
         services.AddScoped<IEmailSender, LoggingEmailSender>();
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUser, HttpContextCurrentUser>();

@@ -8,6 +8,10 @@ public class Flag
     public string Reason { get; set; } = string.Empty;
     public Guid FlaggedByUserId { get; set; }
     public DateTime FlaggedAt { get; set; } = DateTime.UtcNow;
+    public bool IsAutomatic { get; set; }
+    public string? AutomaticReason { get; set; }
+    public string? AutomaticSignalKeys { get; set; }
+    public DateTime? AutomaticSignalsClearedAt { get; set; }
     public DateTime? ResolvedAt { get; set; }
     public string? ResolutionReason { get; set; }
 

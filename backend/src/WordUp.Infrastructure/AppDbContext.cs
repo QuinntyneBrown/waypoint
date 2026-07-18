@@ -250,8 +250,12 @@ public class AppDbContext : DbContext, IAppDbContext
         });
         modelBuilder.Entity<Flag>(b =>
         {
-            b.HasIndex(x => x.YouthUserId);
+            b.HasIndex(x => x.YouthUserId)
+                .HasFilter("[ResolvedAt] IS NULL")
+                .IsUnique();
             b.Property(x => x.Reason).HasMaxLength(500).IsRequired();
+            b.Property(x => x.AutomaticReason).HasMaxLength(500);
+            b.Property(x => x.AutomaticSignalKeys).HasMaxLength(128);
             b.Property(x => x.ResolutionReason).HasMaxLength(128);
         });
         modelBuilder.Entity<AssignedWork>(b =>

@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api-base-url';
 import {
+  AtRiskYouth,
+  FlagResolutionReason,
   MentorDashboardView,
   MentorReviewPreview,
   MentorRosterYouth,
@@ -95,5 +97,22 @@ export class MentorApi {
 
   logCheckIn(request: LogCheckInRequest): Observable<{ id: string }> {
     return this.http.post<{ id: string }>(`${this.base}/api/mentor/check-ins`, request);
+  }
+
+  flags(): Observable<AtRiskYouth[]> {
+    return this.http.get<AtRiskYouth[]>(`${this.base}/api/mentor/flags`);
+  }
+
+  raiseFlag(youthId: string, reason: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}/api/mentor/youth/${encodeURIComponent(youthId)}/flag`,
+      { reason },
+    );
+  }
+
+  resolveFlag(flagId: string, resolutionReason: FlagResolutionReason): Observable<void> {
+    return this.http.post<void>(`${this.base}/api/flags/${encodeURIComponent(flagId)}/resolve`, {
+      resolutionReason,
+    });
   }
 }
