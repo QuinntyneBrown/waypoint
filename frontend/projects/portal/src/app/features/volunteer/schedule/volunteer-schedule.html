@@ -1,0 +1,52 @@
+<wu-shell
+  role="volunteer"
+  active="schedule"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Schedule</div>
+        <h1 class="wu-page__title">Your schedule</h1>
+        <p class="wu-page__sub">Sessions you’re assigned to help with.</p>
+      </div>
+    </div>
+
+    @if (loading()) {
+      <p class="wu-muted">Loading…</p>
+    } @else if (sessions()!.length > 0) {
+      <div class="wu-stack">
+        @for (session of sessions(); track session.sessionId) {
+          <div class="wu-card">
+            <div class="wu-card__body">
+              <div class="wu-cluster wu-cluster--between">
+                <h2 class="wu-card__title">{{ session.title }}</h2>
+                <span class="wu-badge">{{ session.status }}</span>
+              </div>
+              <p class="wu-muted">
+                {{ session.startsAt | date: 'EEEE, MMM d · h:mm a' }}
+                @if (session.durationMinutes) {
+                  · {{ session.durationMinutes }} min
+                }
+              </p>
+              @if (session.location) {
+                <p>{{ session.location }}</p>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="wu-empty">
+        <div class="wu-empty__icon">
+          <svg class="wu-icon"><use href="#i-calendar"></use></svg>
+        </div>
+        <h3 class="wu-empty__title">No upcoming sessions</h3>
+        <p class="wu-empty__text">
+          You have no upcoming sessions assigned yet. We’ll show them here once you’re scheduled.
+        </p>
+      </div>
+    }
+  </div>
+</wu-shell>

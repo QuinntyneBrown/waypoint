@@ -21,7 +21,7 @@ export {
 } from './settings.pages';
 export { YouthHomePage, YouthAnnouncementsPage, YouthNotificationsPage } from './youth.pages';
 export { NotFoundPage } from './states.pages';
-export { VolunteerTodayPage } from './volunteer.pages';
+export { VolunteerTodayPage, VolunteerSchedulePage } from './volunteer.pages';
 export {
   LandingPage,
   ApplyPage,

@@ -9,3 +9,13 @@ export interface VolunteerTodayView {
   location: string | null;
   rosterCount: number;
 }
+
+// Traces to: L2-VOLUNTEER-002 (AC1 upcoming assigned sessions + derived status)
+export interface VolunteerScheduleItem {
+  sessionId: string;
+  title: string;
+  startsAt: string;
+  durationMinutes: number | null;
+  location: string | null;
+  status: string;
+}

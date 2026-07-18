@@ -102,6 +102,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/volunteer/today/volunteer-today').then((m) => m.VolunteerToday),
       },
+      {
+        path: 'schedule',
+        title: 'Schedule · Word Up',
+        loadComponent: () =>
+          import('./features/volunteer/schedule/volunteer-schedule').then(
+            (m) => m.VolunteerSchedule,
+          ),
+      },
     ],
   },
   {

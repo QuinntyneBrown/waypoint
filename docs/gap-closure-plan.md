@@ -63,11 +63,19 @@ requirement conflicts early (they gate "done").
 - [~] **C1 · Volunteer Today** — today's assigned session/logistics/count, no youth record data.
       `L2-VOLUNTEER-001`. *Routing + Today page + no-session empty state built and E2E-verified;
       the populated-session card is implemented but its E2E awaits session-assignment seeding.*
-- [ ] **C2 · Volunteer schedule** — upcoming assigned sessions/status + empty state.
-      `L2-VOLUNTEER-002`.
+- [~] **C2 · Volunteer schedule** — upcoming assigned sessions/status + empty state.
+      `L2-VOLUNTEER-002`. *Schedule page + empty state built and E2E-verified; populated list
+      awaits session-assignment seeding (no API assigns a Volunteer to a Session yet — see C3 note).*
 - [ ] **C3 · Volunteer attendance** — names-only roster, Present/Absent, all-present, save,
       offline owner-bound queue + sync, strict denial of other resources.
       `L2-VOLUNTEER-001`, `L2-NFR-004`.
+
+> **Blocker for populated Volunteer paths (C1/C2/C3):** `Session.VolunteerId` exists and the
+> volunteer read APIs filter on it, but **no endpoint assigns a Volunteer to a Session**
+> (`CreateSessionCommand` has no VolunteerId). Until an assignment capability exists (admin/mentor
+> session management, or a dedicated assign endpoint — likely alongside Phase F/G), the populated
+> Today/Schedule/roster states cannot be seeded through the real seam, so only their empty states
+> are E2E-verified. Track as a Phase H item.
 
 ## Phase D — Guardian portal
 
