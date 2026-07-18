@@ -1,49 +1,142 @@
+<div align="center">
+
 # Word Up
 
-A clickable **HTML mockup prototype** for **Word Up** — a program that trains youth (from Toronto subsidized housing across Rexdale, Warden, and St. Clair) to become *leaders who love Jesus* through Bible study, leadership training, and a coding track. It gives the program director a way to **monitor and track each youth's progression**, replacing the current manual Google Sheets.
+A youth leadership platform for helping young people grow as **leaders who love Jesus** through Bible study, mentoring, leadership development, and coding.
 
-Styled with **FaithTech's design system**.
+[![Backend CI](https://github.com/QuinntyneBrown/word-up/actions/workflows/backend.yml/badge.svg)](https://github.com/QuinntyneBrown/word-up/actions/workflows/backend.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-c6fb50.svg)](LICENSE)
+[![.NET 9](https://img.shields.io/badge/.NET-9-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![Angular 21](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Code style: Prettier](https://img.shields.io/badge/code_style-Prettier-F7B93E?logo=prettier&logoColor=black)](https://prettier.io/)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-1d8fb9.svg)](CONTRIBUTING.md)
 
-> These are **mockups** — a static, front-end-only prototype for review and stakeholder demos. There is no backend.
+[Implementation plan](docs/implementation-plan.md) | [Architecture](docs/ARCHITECTURE.md) | [Requirements](docs/specs/README.md) | [Design mocks](docs/mocks/README.md) | [Contributing](CONTRIBUTING.md)
+</div>
 
-## Open it
+## About the project
 
-Just **double-click `index.html`** — it's the prototype map that links to every screen. No server, no install, no internet required. Runs directly from the file system on any device (built to work on the org's shared Chromebooks, offline).
+Word Up supports a Toronto youth program serving communities across Rexdale, Warden, and St. Clair. The product brings applications, safeguarding, cohort administration, learning, mentoring, attendance, communications, and progress reporting into one role-aware platform, replacing workflows currently spread across spreadsheets and manual follow-up.
 
-- `index.html` — clickable sitemap of every screen (filter by role, search, open dialog/empty/loading variants)
-- `styleguide.html` — the living FaithTech design system
+The repository is being built from an acceptance-testable requirements set. Its current implementation is an early full-stack foundation: a .NET 9 API vertical slice, an Angular 21 workspace awaiting its first application, and roughly 115 static HTML screens used as the interaction and visual reference. The backend currently covers identity and access, invitations, application intake, onboarding, password recovery, guardian consent, role policies, and audit records.
 
-## What's inside (~115 screens)
+Word Up uses synthetic development and test data and has not completed an independent production security, privacy, safeguarding, or accessibility assessment. It is not ready to store real participant information or operate as a system of record. See the [implementation plan](docs/implementation-plan.md) for delivery status and sequencing.
 
-| Folder | Screens | |
-|---|---|---|
-| `public/` | 8 | Landing, apply/refer, donate, about, privacy |
-| `auth/` | 12 | Login, PIN sign-in, invite, guardian consent, shared-device sign-out & switch-user |
-| `youth/` | 23 | Home, journey roadmap, Bible-lesson reader, quiz flow, reflections, badges, coding track |
-| `mentor/` | 19 | Dashboard, roster, youth detail, competency tracker, check-ins, reviews, attendance |
-| `admin/` | 29 | Director dashboard, **cohort progress board**, reports, curriculum builder, people & roles |
-| `guardian/` · `volunteer/` | 7 | Read-only progress, consent, scoped attendance |
-| `shared/` · `states/` | 17 | Settings, help, 404/403/500, offline, session-expired, consent gates |
+## Features
 
-Dialogs, empty states, and loading skeletons live on their parent page and are reachable from the hub via `?open=…` / `?state=…` URL params.
+- Email and password authentication with JWT access tokens and rotating refresh tokens
+- Account lockout, password recovery, invitation expiry, and role-based authorization policies
+- Youth application intake with administrator approval and decline flows
+- Guardian consent capture, withdrawal, status checks, and safeguarding gates
+- Resumable onboarding for invited participants and staff
+- Auditable sensitive actions with role-restricted, redacted audit-log access
+- A requirements corpus spanning 14 subsystems and 88 detailed acceptance-testable requirements
+- Automated requirement traceability checks for acceptance tests
+- Roughly 115 responsive, offline-capable HTML design mocks covering all product roles
+- An Angular 21 workspace reserved for the production web client
 
-## How it's built (constraints)
+See [docs/mocks](docs/mocks/README.md) for the FaithTech-styled interaction reference and [docs/specs](docs/specs/README.md) for the product requirements.
 
-The organization has only a handful of shared Chromebooks, so the prototype is deliberately dependency-free and offline-first:
+## Getting started
 
-- **Zero network requests** — the FaithTech fonts (Space Grotesk, Inter, Fraunces) are base64-embedded in the CSS; icons are inline SVG; avatars are generated from initials.
-- **No build step, no framework, no npm.** Plain HTML + one CSS file + one classic JS file.
-- Runs from `file://`, lowercase filenames, one level of folder nesting.
+### Prerequisites
 
-### Project layout
+- [.NET SDK 9](https://dotnet.microsoft.com/) (pinned in [backend/global.json](backend/global.json))
+- [Node.js](https://nodejs.org/) 20 or later and npm
+- SQL Server for integration tests; LocalDB is the default on Windows, and environment variables can target another instance
+
+### Local development
+
+```bash
+git clone https://github.com/QuinntyneBrown/word-up.git
+cd word-up
+
+# Run the API with its default in-memory development database
+dotnet run --project backend/src/WordUp.Api --urls http://localhost:5099
+# Swagger: http://localhost:5099/swagger
+# Health:  http://localhost:5099/health
+
+# Install the Angular workspace dependencies
+cd frontend
+npm install
 ```
-index.html            # prototype map / sitemap
-styleguide.html       # design system reference
-assets/css/wordup.css # design tokens + components (built from _core.css + _fonts.css)
-assets/js/wordup.js   # shared shell, dialogs, toasts, icons, mock data (window.WordUp)
-docs/contract.md      # the component/class + JS API spec every page follows
-_template-*.html      # copy-me page starters
-public/ auth/ youth/ mentor/ admin/ guardian/ volunteer/ shared/ states/
+
+The Angular workspace does not yet define an application or runnable target. Until that vertical slice is built, open [`docs/mocks/index.html`](docs/mocks/index.html) directly in a browser to explore the product screens.
+
+The API uses an in-memory database when `ConnectionStrings:Default` is `InMemory`. Supply a SQL Server connection string through configuration for persistent environments. Never commit secrets: the development `Jwt:SigningKey` is a placeholder and must be replaced through user secrets or environment-specific configuration before any non-local use.
+
+## Technology
+
+| Area             | Technologies                                                                                      |
+| ---------------- | ------------------------------------------------------------------------------------------------- |
+| Backend          | .NET 9, ASP.NET Core, MediatR / CQS, FluentValidation                                             |
+| Persistence      | Entity Framework Core, SQL Server, in-memory development provider                                 |
+| Authentication   | JWT bearer tokens, rotating refresh tokens, BCrypt                                                |
+| Frontend         | Angular 21 workspace, RxJS, TypeScript 5                                                          |
+| Design reference | Static HTML, CSS, and JavaScript using the FaithTech design language                              |
+| Quality          | xUnit, `WebApplicationFactory`, GitHub Actions, requirements traceability, Prettier, EditorConfig |
+
+## Testing
+
+```bash
+# Restore, build, and run the backend unit and integration tests
+dotnet test backend/WordUp.sln --configuration Release
+
+# Verify that test trace headers reference valid detailed requirements
+node scripts/check-traceability.mjs
 ```
 
-All sample data (youth, mentors, cohorts, lessons) is **fictional** and kept consistent across pages for the demo.
+Integration tests provision a disposable SQL Server database. They default to `(localdb)\MSSQLLocalDB`; set `WORDUP_TEST_SQLSERVER` and, when needed, `WORDUP_TEST_SQLAUTH` to use another instance. The Angular workspace has no project target yet, so frontend build and test commands will become available when the first application is generated.
+
+## Project structure
+
+```text
+backend/
+  src/WordUp.Domain/               Core entities, roles, and lifecycle state
+  src/WordUp.Application/          Commands, handlers, validators, and abstractions
+  src/WordUp.Infrastructure/       EF Core, tokens, hashing, email, and audit services
+  src/WordUp.Api/                  Controllers, policies, middleware, and composition root
+  tests/WordUp.UnitTests/          Isolated validation and domain-level tests
+  tests/WordUp.IntegrationTests/   Full HTTP tests over disposable SQL Server databases
+frontend/                          Angular 21 workspace; application implementation pending
+docs/
+  PRD.md                           Product requirements source
+  specs/                           L1/L2 subsystem requirements and acceptance criteria
+  implementation-plan.md           Delivery phases and current status
+  backend-implementation-plan.md   Detailed backend phase-one plan
+  mocks/                           Static product map, design system, and role-based screens
+scripts/
+  check-traceability.mjs           Requirement-to-test reference validator
+```
+
+## Documentation
+
+| Document                                                           | Purpose                                                           |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| [Implementation plan](docs/implementation-plan.md)                 | Delivery sequence, current status, and verification gates         |
+| [Backend implementation plan](docs/backend-implementation-plan.md) | Detailed plan for the initial API foundation                      |
+| [Architecture](docs/ARCHITECTURE.md)                               | System layers, request flow, persistence, and security boundaries |
+| [Architecture decisions](docs/DECISIONS.md)                        | Technical and product decisions worth recording                   |
+| [Product requirements](docs/PRD.md)                                | Product goals, users, scope, and constraints                      |
+| [Requirements specification](docs/specs/README.md)                 | L1/L2 requirement organization, IDs, and traceability rules       |
+| [Design mocks](docs/mocks/README.md)                               | Static FaithTech-styled interaction and visual reference          |
+| [Page-builder contract](docs/contract.md)                          | Shared HTML, CSS, and JavaScript conventions for mock screens     |
+
+## Contributing
+
+Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow, branch conventions, quality gates, requirements traceability, and architecture boundaries. Participation is governed by the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+The people who help build Word Up are recognized in [CONTRIBUTORS.md](CONTRIBUTORS.md), and notable changes are recorded in [CHANGELOG.md](CHANGELOG.md).
+
+## Security
+
+Do not report vulnerabilities in a public issue. Follow [SECURITY.md](SECURITY.md) to submit a private report. For usage questions and non-sensitive problems, see [SUPPORT.md](SUPPORT.md).
+
+## Governance
+
+Maintainer responsibilities, decision making, and the path to becoming a maintainer are described in [GOVERNANCE.md](GOVERNANCE.md).
+
+## License
+
+Copyright (c) 2026 Word Up contributors. Released under the [MIT License](LICENSE).
