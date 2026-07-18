@@ -8,8 +8,10 @@ public class Cohort
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = string.Empty;
+    public Guid? TrackId { get; set; }
     public DateTime TermStart { get; set; }
     public DateTime TermEnd { get; set; }
-    public Guid? MentorId { get; set; }
+    public string? Location { get; set; }
+    public Guid? MentorId { get; set; } // lead mentor
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

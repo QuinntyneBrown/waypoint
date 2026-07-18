@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Abstractions;
+using WordUp.Domain;
 
 namespace WordUp.Application.Auth;
 
@@ -34,6 +35,11 @@ public class SignInCommandHandler : IRequestHandler<SignInCommand, AuthResult>
         // AC2: unrecognized email -> generic failure (no enumeration).
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken)
             ?? throw new InvalidCredentialsException();
+
+        if (user.Status == UserStatus.Deactivated)
+        {
+            throw new AccountDeactivatedException();
+        }
 
         if (user.IsLockedOut(now))
         {

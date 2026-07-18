@@ -16,6 +16,30 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<YouthApplication> Applications => Set<YouthApplication>();
     public DbSet<GuardianConsent> GuardianConsents => Set<GuardianConsent>();
     public DbSet<Cohort> Cohorts => Set<Cohort>();
+    public DbSet<CohortMentor> CohortMentors => Set<CohortMentor>();
+    public DbSet<Track> Tracks => Set<Track>();
+    public DbSet<Module> Modules => Set<Module>();
+    public DbSet<Lesson> Lessons => Set<Lesson>();
+    public DbSet<LessonMedia> LessonMedia => Set<LessonMedia>();
+    public DbSet<Quiz> Quizzes => Set<Quiz>();
+    public DbSet<QuizQuestion> QuizQuestions => Set<QuizQuestion>();
+    public DbSet<Assignment> Assignments => Set<Assignment>();
+    public DbSet<RubricCriterion> RubricCriteria => Set<RubricCriterion>();
+    public DbSet<Badge> Badges => Set<Badge>();
+    public DbSet<BadgeAward> BadgeAwards => Set<BadgeAward>();
+    public DbSet<ProgressionStage> ProgressionStages => Set<ProgressionStage>();
+    public DbSet<Competency> Competencies => Set<Competency>();
+    public DbSet<OrgSettings> OrgSettings => Set<OrgSettings>();
+    public DbSet<Term> Terms => Set<Term>();
+    public DbSet<LessonProgress> LessonProgress => Set<LessonProgress>();
+    public DbSet<LessonReadingState> LessonReadingStates => Set<LessonReadingState>();
+    public DbSet<QuizAttempt> QuizAttempts => Set<QuizAttempt>();
+    public DbSet<Submission> Submissions => Set<Submission>();
+    public DbSet<ReflectionEntry> Reflections => Set<ReflectionEntry>();
+    public DbSet<CompetencyAssessment> CompetencyAssessments => Set<CompetencyAssessment>();
+    public DbSet<CheckIn> CheckIns => Set<CheckIn>();
+    public DbSet<Flag> Flags => Set<Flag>();
+    public DbSet<AssignedWork> AssignedWork => Set<AssignedWork>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -106,6 +130,83 @@ public class AppDbContext : DbContext, IAppDbContext
         {
             b.HasKey(x => x.Id);
             b.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            b.Property(x => x.Location).HasMaxLength(256);
+        });
+
+        // Curriculum authoring (M2)
+        modelBuilder.Entity<Track>(b =>
+        {
+            b.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            b.Property(x => x.Key).HasMaxLength(64).IsRequired();
+            b.HasIndex(x => x.Key).IsUnique();
+        });
+        modelBuilder.Entity<Module>(b =>
+        {
+            b.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            b.HasIndex(x => x.TrackId);
+        });
+        modelBuilder.Entity<Lesson>(b =>
+        {
+            b.Property(x => x.Title).HasMaxLength(200).IsRequired();
+            b.HasIndex(x => x.ModuleId);
+        });
+        modelBuilder.Entity<LessonMedia>(b => b.HasIndex(x => x.LessonId));
+        modelBuilder.Entity<Quiz>(b => b.Property(x => x.FeedbackMode).HasMaxLength(32));
+        modelBuilder.Entity<QuizQuestion>(b =>
+        {
+            b.Property(x => x.Text).HasMaxLength(1000).IsRequired();
+            b.HasIndex(x => x.QuizId);
+        });
+        modelBuilder.Entity<Assignment>(b =>
+        {
+            b.Property(x => x.Title).HasMaxLength(200).IsRequired();
+            b.Property(x => x.SubmissionTypes).HasMaxLength(128);
+        });
+        modelBuilder.Entity<RubricCriterion>(b =>
+        {
+            b.Property(x => x.Description).HasMaxLength(500).IsRequired();
+            b.HasIndex(x => x.AssignmentId);
+        });
+        modelBuilder.Entity<Badge>(b =>
+        {
+            b.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            b.Property(x => x.Icon).HasMaxLength(64).IsRequired();
+        });
+        modelBuilder.Entity<BadgeAward>(b => b.HasIndex(x => new { x.BadgeId, x.YouthUserId }));
+        modelBuilder.Entity<ProgressionStage>(b => b.Property(x => x.Name).HasMaxLength(128).IsRequired());
+        modelBuilder.Entity<Competency>(b =>
+        {
+            b.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            b.HasIndex(x => x.StageId);
+        });
+
+        // Program administration (M2)
+        modelBuilder.Entity<OrgSettings>(b => b.Property(x => x.Name).HasMaxLength(128).IsRequired());
+        modelBuilder.Entity<Term>(b => b.Property(x => x.Name).HasMaxLength(128).IsRequired());
+        modelBuilder.Entity<CohortMentor>(b => b.HasIndex(x => new { x.CohortId, x.MentorId }));
+
+        // Learning & mentoring (M3)
+        modelBuilder.Entity<LessonProgress>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());
+        modelBuilder.Entity<LessonReadingState>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());
+        modelBuilder.Entity<QuizAttempt>(b => b.HasIndex(x => new { x.YouthUserId, x.QuizId }));
+        modelBuilder.Entity<Submission>(b => b.HasIndex(x => new { x.YouthUserId, x.AssignmentId }));
+        modelBuilder.Entity<ReflectionEntry>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }));
+        modelBuilder.Entity<CompetencyAssessment>(b => b.HasIndex(x => new { x.YouthUserId, x.CompetencyId }));
+        modelBuilder.Entity<CheckIn>(b =>
+        {
+            b.HasIndex(x => x.YouthUserId);
+            b.Property(x => x.Type).HasMaxLength(32).IsRequired();
+        });
+        modelBuilder.Entity<Flag>(b =>
+        {
+            b.HasIndex(x => x.YouthUserId);
+            b.Property(x => x.Reason).HasMaxLength(500).IsRequired();
+            b.Property(x => x.ResolutionReason).HasMaxLength(128);
+        });
+        modelBuilder.Entity<AssignedWork>(b =>
+        {
+            b.HasIndex(x => x.YouthUserId);
+            b.Property(x => x.ItemType).HasMaxLength(32).IsRequired();
         });
     }
 }
