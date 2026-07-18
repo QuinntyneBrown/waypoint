@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Secure the browser boundary
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Public Site application" {
+  class "ForgotPassword" as page_ForgotPassword <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "PasswordResetApi" as client_PasswordResetApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SecureBrowserBoundaryCommand" as request_SecureBrowserBoundaryCommand <<record>>
+  class "SecureBrowserBoundaryCommandHandler" as handler_SecureBrowserBoundaryCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "SecureBrowserBoundaryState" as entity_SecureBrowserBoundaryState <<domain type>>
+}
+page_ForgotPassword --> client_PasswordResetApi : invokes
+client_PasswordResetApi --> controller_NonFunctionalController : calls
+controller_NonFunctionalController ..> request_SecureBrowserBoundaryCommand : creates
+request_SecureBrowserBoundaryCommand --> handler_SecureBrowserBoundaryCommandHandler : dispatched to
+handler_SecureBrowserBoundaryCommandHandler --> IAppDbContext : depends on
+handler_SecureBrowserBoundaryCommandHandler --> ICurrentUser : scopes by
+handler_SecureBrowserBoundaryCommandHandler --> entity_SecureBrowserBoundaryState : reads or changes
+IAppDbContext o-- entity_SecureBrowserBoundaryState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

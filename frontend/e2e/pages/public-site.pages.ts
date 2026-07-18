@@ -30,6 +30,40 @@ export class LandingPage extends BasePage {
   }
 }
 
+/** `/programs` — published tracks, modules, badges, and mentorship. */
+export class ProgramsPage extends BasePage {
+  static readonly path = '/programs';
+
+  async goto(): Promise<void> {
+    await this.page.goto(ProgramsPage.path);
+  }
+
+  track(name: string) {
+    return this.page.getByRole('heading', { name, exact: true });
+  }
+
+  module(name: string) {
+    return this.page.getByText(name, { exact: true });
+  }
+
+  outcomeBadge(name: string) {
+    return this.page.getByText(name, { exact: true });
+  }
+}
+
+/** `/about` — the public, privacy-safe current-cohort view. */
+export class AboutPage extends BasePage {
+  static readonly path = '/about';
+
+  async goto(): Promise<void> {
+    await this.page.goto(AboutPage.path);
+  }
+
+  cohort(name: string) {
+    return this.page.getByRole('heading', { name, exact: true });
+  }
+}
+
 /** `/apply` — the anonymous application intake form (public-site). */
 export class ApplyPage extends BasePage {
   static readonly path = '/apply';

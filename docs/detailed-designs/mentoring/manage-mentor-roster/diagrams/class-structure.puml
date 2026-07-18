@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Manage a mentor roster
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "AuthStore" as page_AuthStore <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AuthApi" as client_AuthApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "MentorController" as controller_MentorController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "MentorDashboardQuery" as request_MentorDashboardQuery <<record>>
+  class "MentorDashboardQueryHandler" as handler_MentorDashboardQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Flag" as entity_Flag <<domain type>>
+}
+page_AuthStore --> client_AuthApi : invokes
+client_AuthApi --> controller_MentorController : calls
+controller_MentorController ..> request_MentorDashboardQuery : creates
+request_MentorDashboardQuery --> handler_MentorDashboardQueryHandler : dispatched to
+handler_MentorDashboardQueryHandler --> IAppDbContext : depends on
+handler_MentorDashboardQueryHandler --> ICurrentUser : scopes by
+handler_MentorDashboardQueryHandler --> entity_Flag : reads or changes
+IAppDbContext o-- entity_Flag : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

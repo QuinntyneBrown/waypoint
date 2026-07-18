@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Protect PII and data rights
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Public Site application" {
+  class "ConsentRequired" as page_ConsentRequired <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AuthApi" as client_AuthApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "ProtectPiiAndDataRightsCommand" as request_ProtectPiiAndDataRightsCommand <<record>>
+  class "ProtectPiiAndDataRightsCommandHandler" as handler_ProtectPiiAndDataRightsCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "ProtectPiiAndDataRightsState" as entity_ProtectPiiAndDataRightsState <<domain type>>
+}
+page_ConsentRequired --> client_AuthApi : invokes
+client_AuthApi --> controller_NonFunctionalController : calls
+controller_NonFunctionalController ..> request_ProtectPiiAndDataRightsCommand : creates
+request_ProtectPiiAndDataRightsCommand --> handler_ProtectPiiAndDataRightsCommandHandler : dispatched to
+handler_ProtectPiiAndDataRightsCommandHandler --> IAppDbContext : depends on
+handler_ProtectPiiAndDataRightsCommandHandler --> ICurrentUser : scopes by
+handler_ProtectPiiAndDataRightsCommandHandler --> entity_ProtectPiiAndDataRightsState : reads or changes
+IAppDbContext o-- entity_ProtectPiiAndDataRightsState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

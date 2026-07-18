@@ -16,30 +16,51 @@
 <section class="wu-container wu-section">
   <div class="wu-eyebrow">How it works</div>
   <h2>Your journey in four steps</h2>
-  <div class="wu-grid wu-grid--4 wu-mt-6">
-    @for (step of journey; track step.n) {
-      <div class="wu-card">
-        <div class="wu-card__body">
-          <div class="wu-eyebrow">Step {{ step.n }}</div>
-          <h3 class="wu-card__title">{{ step.title }}</h3>
-          <p class="wu-muted">{{ step.text }}</p>
+  @if (loading()) {
+    <p class="wu-muted" role="status">Loading program information…</p>
+  } @else if (error()) {
+    <div class="wu-alert wu-alert--danger" role="alert">
+      <p>{{ error() }}</p>
+      <button class="wu-btn wu-btn--ghost wu-btn--sm" type="button" (click)="load()">Try again</button>
+    </div>
+  } @else if (content(); as publicContent) {
+    <div class="wu-grid wu-grid--4 wu-mt-6">
+      @for (step of publicContent.journey; track step.step) {
+        <div class="wu-card">
+          <div class="wu-card__body">
+            <div class="wu-eyebrow">Step {{ step.step }}</div>
+            <h3 class="wu-card__title">{{ step.title }}</h3>
+            <p class="wu-muted">{{ step.description }}</p>
+          </div>
         </div>
-      </div>
-    }
-  </div>
+      }
+    </div>
+  }
 </section>
 
 <section class="wu-container wu-section">
   <div class="wu-eyebrow">Our impact</div>
   <h2>Growing leaders across the city</h2>
-  <div class="wu-grid wu-grid--4 wu-mt-6">
-    @for (stat of stats; track stat.label) {
+  @if (content(); as publicContent) {
+    <div class="wu-grid wu-grid--4 wu-mt-6">
       <div class="wu-card wu-statcard">
-        <div class="wu-statcard__value">{{ stat.value }}</div>
-        <div class="wu-statcard__label">{{ stat.label }}</div>
+        <div class="wu-statcard__value">{{ publicContent.impact.tracks }}</div>
+        <div class="wu-statcard__label">Learning tracks</div>
       </div>
-    }
-  </div>
+      <div class="wu-card wu-statcard">
+        <div class="wu-statcard__value">{{ publicContent.impact.cohorts }}</div>
+        <div class="wu-statcard__label">Cohorts</div>
+      </div>
+      <div class="wu-card wu-statcard">
+        <div class="wu-statcard__value">{{ publicContent.impact.modules }}</div>
+        <div class="wu-statcard__label">Published modules</div>
+      </div>
+      <div class="wu-card wu-statcard">
+        <div class="wu-statcard__value">{{ publicContent.impact.neighbourhoods }}</div>
+        <div class="wu-statcard__label">Neighbourhoods</div>
+      </div>
+    </div>
+  }
   <div class="wu-cluster wu-mt-6">
     <a class="wu-btn wu-btn--primary" routerLink="/apply">Start your application</a>
     <a class="wu-btn wu-btn--ghost" routerLink="/get-involved">Get involved</a>

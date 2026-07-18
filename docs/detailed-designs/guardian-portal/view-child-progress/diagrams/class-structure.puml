@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — View a child's progress
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "AuthStore" as page_AuthStore <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "AuthApi" as client_AuthApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "GuardianController" as controller_GuardianController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "ChildProgressQuery" as request_ChildProgressQuery <<record>>
+  class "ChildProgressQueryHandler" as handler_ChildProgressQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "GuardianProfile" as entity_GuardianProfile <<domain type>>
+}
+page_AuthStore --> client_AuthApi : invokes
+client_AuthApi --> controller_GuardianController : calls
+controller_GuardianController ..> request_ChildProgressQuery : creates
+request_ChildProgressQuery --> handler_ChildProgressQueryHandler : dispatched to
+handler_ChildProgressQueryHandler --> IAppDbContext : depends on
+handler_ChildProgressQueryHandler --> ICurrentUser : scopes by
+handler_ChildProgressQueryHandler --> entity_GuardianProfile : reads or changes
+IAppDbContext o-- entity_GuardianProfile : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

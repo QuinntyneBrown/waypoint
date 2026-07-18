@@ -1,0 +1,63 @@
+<section class="wu-container wu-section">
+  <div class="wu-eyebrow">About Word Up</div>
+  <h1>Mentorship and practical learning, close to home</h1>
+  <p class="wu-text-lg wu-muted" style="max-width: 60ch">
+    Word Up helps young people grow in faith, skills, and leadership alongside a dedicated mentor
+    and neighbourhood cohort.
+  </p>
+
+  <div class="wu-mt-6">
+    <div class="wu-eyebrow">Current cohorts</div>
+    <h2>Find your community</h2>
+
+    @if (loading()) {
+      <p class="wu-muted" role="status">Loading cohorts…</p>
+    } @else if (error()) {
+      <div class="wu-alert wu-alert--danger" role="alert">
+        <p>{{ error() }}</p>
+        <button class="wu-btn wu-btn--ghost wu-btn--sm" type="button" (click)="load()">Try again</button>
+      </div>
+    } @else if (content(); as publicContent) {
+      @if (publicContent.cohorts.length === 0) {
+        <div class="wu-empty">
+          <h3>No cohorts are currently listed</h3>
+          <p class="wu-muted">You can still apply and our team will share upcoming options.</p>
+        </div>
+      } @else {
+        <div class="wu-grid wu-grid--2 wu-mt-6">
+          @for (cohort of publicContent.cohorts; track cohort.id) {
+            <article class="wu-card">
+              <div class="wu-card__header wu-cluster wu-justify-between">
+                <h3 class="wu-card__title">{{ cohort.name }}</h3>
+                <span class="wu-badge">{{ cohort.status }}</span>
+              </div>
+              <div class="wu-card__body">
+                <dl class="wu-stack wu-gap-3">
+                  <div>
+                    <dt class="wu-text-sm wu-muted">Neighbourhood</dt>
+                    <dd>{{ cohort.neighbourhood || 'To be confirmed' }}</dd>
+                  </div>
+                  <div>
+                    <dt class="wu-text-sm wu-muted">Dates</dt>
+                    <dd>
+                      {{ cohort.termStart | date: 'MMM d, y' }}–{{ cohort.termEnd | date: 'MMM d, y' }}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="wu-text-sm wu-muted">Lead mentor</dt>
+                    <dd>{{ cohort.leadMentor || 'To be confirmed' }}</dd>
+                  </div>
+                </dl>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    }
+  </div>
+
+  <div class="wu-cluster wu-mt-6">
+    <a class="wu-btn wu-btn--primary" routerLink="/apply">Apply now</a>
+    <a class="wu-btn wu-btn--ghost" routerLink="/programs">Explore the programs</a>
+  </div>
+</section>

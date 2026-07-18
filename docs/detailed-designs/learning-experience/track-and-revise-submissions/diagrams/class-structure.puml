@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Track and revise a submission
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "YouthNotifications" as page_YouthNotifications <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "NotificationPreferencesApi" as client_NotificationPreferencesApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "SubmissionsController" as controller_SubmissionsController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SubmissionStatusQuery" as request_SubmissionStatusQuery <<record>>
+  class "SubmissionStatusQueryHandler" as handler_SubmissionStatusQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Submission" as entity_Submission <<domain type>>
+}
+page_YouthNotifications --> client_NotificationPreferencesApi : invokes
+client_NotificationPreferencesApi --> controller_SubmissionsController : calls
+controller_SubmissionsController ..> request_SubmissionStatusQuery : creates
+request_SubmissionStatusQuery --> handler_SubmissionStatusQueryHandler : dispatched to
+handler_SubmissionStatusQueryHandler --> IAppDbContext : depends on
+handler_SubmissionStatusQueryHandler --> ICurrentUser : scopes by
+handler_SubmissionStatusQueryHandler --> entity_Submission : reads or changes
+IAppDbContext o-- entity_Submission : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

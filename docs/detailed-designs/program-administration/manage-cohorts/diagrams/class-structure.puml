@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Manage cohorts
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "PeopleDirectory" as page_PeopleDirectory <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "PeopleApi" as client_PeopleApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "CohortsController" as controller_CohortsController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "CreateCohortCommand" as request_CreateCohortCommand <<record>>
+  class "CreateCohortCommandHandler" as handler_CreateCohortCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Cohort" as entity_Cohort <<domain type>>
+}
+page_PeopleDirectory --> client_PeopleApi : invokes
+client_PeopleApi --> controller_CohortsController : calls
+controller_CohortsController ..> request_CreateCohortCommand : creates
+request_CreateCohortCommand --> handler_CreateCohortCommandHandler : dispatched to
+handler_CreateCohortCommandHandler --> IAppDbContext : depends on
+handler_CreateCohortCommandHandler --> ICurrentUser : scopes by
+handler_CreateCohortCommandHandler --> entity_Cohort : reads or changes
+IAppDbContext o-- entity_Cohort : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

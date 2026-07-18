@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Search people
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "PeopleDirectory" as page_PeopleDirectory <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "PeopleApi" as client_PeopleApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "PeopleController" as controller_PeopleController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "ListPeopleQuery" as request_ListPeopleQuery <<record>>
+  class "ListPeopleQueryHandler" as handler_ListPeopleQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Cohort" as entity_Cohort <<domain type>>
+}
+page_PeopleDirectory --> client_PeopleApi : invokes
+client_PeopleApi --> controller_PeopleController : calls
+controller_PeopleController ..> request_ListPeopleQuery : creates
+request_ListPeopleQuery --> handler_ListPeopleQueryHandler : dispatched to
+handler_ListPeopleQueryHandler --> IAppDbContext : depends on
+handler_ListPeopleQueryHandler --> ICurrentUser : scopes by
+handler_ListPeopleQueryHandler --> entity_Cohort : reads or changes
+IAppDbContext o-- entity_Cohort : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

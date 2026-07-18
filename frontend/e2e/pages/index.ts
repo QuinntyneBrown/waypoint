@@ -25,6 +25,8 @@ export { VolunteerTodayPage, VolunteerSchedulePage } from './volunteer.pages';
 export { PeopleDirectoryPage, ApplicationsListPage } from './admin.pages';
 export {
   LandingPage,
+  ProgramsPage,
+  AboutPage,
   ApplyPage,
   ContactPage,
   GetInvolvedPage,

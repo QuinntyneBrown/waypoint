@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Browse help
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "Support" as page_Support <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "SupportApi" as client_SupportApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "AccessController" as controller_AccessController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SubmitSupportRequestCommand" as request_SubmitSupportRequestCommand <<record>>
+  class "SubmitSupportRequestCommandHandler" as handler_SubmitSupportRequestCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "SupportRequest" as entity_SupportRequest <<domain type>>
+}
+page_Support --> client_SupportApi : invokes
+client_SupportApi --> controller_AccessController : calls
+controller_AccessController ..> request_SubmitSupportRequestCommand : creates
+request_SubmitSupportRequestCommand --> handler_SubmitSupportRequestCommandHandler : dispatched to
+handler_SubmitSupportRequestCommandHandler --> IAppDbContext : depends on
+handler_SubmitSupportRequestCommandHandler --> ICurrentUser : scopes by
+handler_SubmitSupportRequestCommandHandler --> entity_SupportRequest : reads or changes
+IAppDbContext o-- entity_SupportRequest : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Start a donation
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Public Site application" {
+  class "ConsentRequired" as page_ConsentRequired <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "PublicSiteApi" as client_PublicSiteApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "PublicController" as controller_PublicController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SubmitDonationPledgeCommand" as request_SubmitDonationPledgeCommand <<record>>
+  class "SubmitDonationPledgeCommandHandler" as handler_SubmitDonationPledgeCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "DonationPledge" as entity_DonationPledge <<domain type>>
+}
+page_ConsentRequired --> client_PublicSiteApi : invokes
+client_PublicSiteApi --> controller_PublicController : calls
+controller_PublicController ..> request_SubmitDonationPledgeCommand : creates
+request_SubmitDonationPledgeCommand --> handler_SubmitDonationPledgeCommandHandler : dispatched to
+handler_SubmitDonationPledgeCommandHandler --> IAppDbContext : depends on
+handler_SubmitDonationPledgeCommandHandler --> ICurrentUser : scopes by
+handler_SubmitDonationPledgeCommandHandler --> entity_DonationPledge : reads or changes
+IAppDbContext o-- entity_DonationPledge : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

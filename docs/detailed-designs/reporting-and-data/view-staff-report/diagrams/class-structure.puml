@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — View a staff report
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "YouthAnnouncements" as page_YouthAnnouncements <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "ReportsController" as controller_ReportsController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "StaffActivityReportQuery" as request_StaffActivityReportQuery <<record>>
+  class "StaffActivityReportQueryHandler" as handler_StaffActivityReportQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "ViewStaffReportState" as entity_ViewStaffReportState <<domain type>>
+}
+page_YouthAnnouncements --> client_AnnouncementsApi : invokes
+client_AnnouncementsApi --> controller_ReportsController : calls
+controller_ReportsController ..> request_StaffActivityReportQuery : creates
+request_StaffActivityReportQuery --> handler_StaffActivityReportQueryHandler : dispatched to
+handler_StaffActivityReportQueryHandler --> IAppDbContext : depends on
+handler_StaffActivityReportQueryHandler --> ICurrentUser : scopes by
+handler_StaffActivityReportQueryHandler --> entity_ViewStaffReportState : reads or changes
+IAppDbContext o-- entity_ViewStaffReportState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

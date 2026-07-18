@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — View a cohort report
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "AuthStore" as page_AuthStore <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "AuthApi" as client_AuthApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "ReportsController" as controller_ReportsController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "CohortReportQuery" as request_CohortReportQuery <<record>>
+  class "CohortReportQueryHandler" as handler_CohortReportQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "ViewCohortReportState" as entity_ViewCohortReportState <<domain type>>
+}
+page_AuthStore --> client_AuthApi : invokes
+client_AuthApi --> controller_ReportsController : calls
+controller_ReportsController ..> request_CohortReportQuery : creates
+request_CohortReportQuery --> handler_CohortReportQueryHandler : dispatched to
+handler_CohortReportQueryHandler --> IAppDbContext : depends on
+handler_CohortReportQueryHandler --> ICurrentUser : scopes by
+handler_CohortReportQueryHandler --> entity_ViewCohortReportState : reads or changes
+IAppDbContext o-- entity_ViewCohortReportState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

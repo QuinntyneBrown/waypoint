@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Author assignments
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "AuthorAssignmentsPage" as page_AuthorAssignmentsPage <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "AssignmentsController" as controller_AssignmentsController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "CreateAssignmentCommand" as request_CreateAssignmentCommand <<record>>
+  class "CreateAssignmentCommandHandler" as handler_CreateAssignmentCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Assignment" as entity_Assignment <<domain type>>
+}
+page_AuthorAssignmentsPage --> client_AnnouncementsApi : invokes
+client_AnnouncementsApi --> controller_AssignmentsController : calls
+controller_AssignmentsController ..> request_CreateAssignmentCommand : creates
+request_CreateAssignmentCommand --> handler_CreateAssignmentCommandHandler : dispatched to
+handler_CreateAssignmentCommandHandler --> IAppDbContext : depends on
+handler_CreateAssignmentCommandHandler --> ICurrentUser : scopes by
+handler_CreateAssignmentCommandHandler --> entity_Assignment : reads or changes
+IAppDbContext o-- entity_Assignment : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Publish announcements
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "YouthAnnouncements" as page_YouthAnnouncements <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "AnnouncementsController" as controller_AnnouncementsController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "MarkAllAnnouncementsReadCommand" as request_MarkAllAnnouncementsReadCommand <<record>>
+  class "MarkAllAnnouncementsReadCommandHandler" as handler_MarkAllAnnouncementsReadCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Announcement" as entity_Announcement <<domain type>>
+}
+page_YouthAnnouncements --> client_AnnouncementsApi : invokes
+client_AnnouncementsApi --> controller_AnnouncementsController : calls
+controller_AnnouncementsController ..> request_MarkAllAnnouncementsReadCommand : creates
+request_MarkAllAnnouncementsReadCommand --> handler_MarkAllAnnouncementsReadCommandHandler : dispatched to
+handler_MarkAllAnnouncementsReadCommandHandler --> IAppDbContext : depends on
+handler_MarkAllAnnouncementsReadCommandHandler --> ICurrentUser : scopes by
+handler_MarkAllAnnouncementsReadCommandHandler --> entity_Announcement : reads or changes
+IAppDbContext o-- entity_Announcement : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

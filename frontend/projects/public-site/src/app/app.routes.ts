@@ -12,6 +12,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/programs/programs').then((m) => m.Programs),
   },
   {
+    path: 'about',
+    title: 'About · Word Up',
+    loadComponent: () => import('./features/about/about').then((m) => m.About),
+  },
+  {
     path: 'apply',
     title: 'Apply · Word Up',
     loadComponent: () => import('./features/apply/apply').then((m) => m.Apply),

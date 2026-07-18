@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Manage terms and tracks
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "SettingsDisplay" as page_SettingsDisplay <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "PeopleApi" as client_PeopleApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "OrgSettingsController" as controller_OrgSettingsController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "GetOrgSettingsQuery" as request_GetOrgSettingsQuery <<record>>
+  class "GetOrgSettingsQueryHandler" as handler_GetOrgSettingsQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "OrgSettings" as entity_OrgSettings <<domain type>>
+}
+page_SettingsDisplay --> client_PeopleApi : invokes
+client_PeopleApi --> controller_OrgSettingsController : calls
+controller_OrgSettingsController ..> request_GetOrgSettingsQuery : creates
+request_GetOrgSettingsQuery --> handler_GetOrgSettingsQueryHandler : dispatched to
+handler_GetOrgSettingsQueryHandler --> IAppDbContext : depends on
+handler_GetOrgSettingsQueryHandler --> ICurrentUser : scopes by
+handler_GetOrgSettingsQueryHandler --> entity_OrgSettings : reads or changes
+IAppDbContext o-- entity_OrgSettings : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

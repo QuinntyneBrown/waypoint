@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Exchange messages
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "SettingsNotifications" as page_SettingsNotifications <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "NotificationPreferencesApi" as client_NotificationPreferencesApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "MessagesController" as controller_MessagesController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "MessageThreadQuery" as request_MessageThreadQuery <<record>>
+  class "MessageThreadQueryHandler" as handler_MessageThreadQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Message" as entity_Message <<domain type>>
+}
+page_SettingsNotifications --> client_NotificationPreferencesApi : invokes
+client_NotificationPreferencesApi --> controller_MessagesController : calls
+controller_MessagesController ..> request_MessageThreadQuery : creates
+request_MessageThreadQuery --> handler_MessageThreadQueryHandler : dispatched to
+handler_MessageThreadQueryHandler --> IAppDbContext : depends on
+handler_MessageThreadQueryHandler --> ICurrentUser : scopes by
+handler_MessageThreadQueryHandler --> entity_Message : reads or changes
+IAppDbContext o-- entity_Message : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

@@ -1,0 +1,51 @@
+@startuml
+left to right direction
+title C4 level 3 — Author lessons — components
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+rectangle "Word Up software system" as wordup {
+  package "Frontend" {
+    package "Portal application" {
+      component "AuthorLessonsPage\n[Angular page component]" as page #E0F2FE
+      component "AnnouncementsApi\n[Typed API client]" as client #E0F2FE
+    }
+  }
+  package "Backend" {
+    package "WordUp API application" {
+      component "LessonsController\n[API controller]" as controller #D1FADF
+    }
+    package "WordUp Application" {
+      component "CreateLessonCommand\n[MediatR request]" as request #D1FADF
+      component "CreateLessonCommandHandler\n[MediatR handler]" as handler #D1FADF
+    }
+    package "WordUp Domain" {
+      component "Lesson\n[Domain type]" as entity #F4EBFF
+    }
+    package "WordUp Infrastructure" {
+      component "AppDbContext\n[EF Core adapter]" as persistence #FFF4E5
+    }
+  }
+}
+page --> client : Calls
+client --> controller : HTTPS JSON
+controller --> request : Constructs
+controller --> handler : Sends through MediatR
+handler --> entity : Reads or changes
+handler --> persistence : Queries or persists
+persistence --> entity : Maps
+legend right
+  Components appear inside their application and frontend/backend boundaries.
+endlegend
+@enduml

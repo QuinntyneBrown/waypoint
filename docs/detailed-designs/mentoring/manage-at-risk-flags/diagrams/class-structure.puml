@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Manage at-risk flags
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "Support" as page_Support <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "SupportApi" as client_SupportApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "FlagsController" as controller_FlagsController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "AtRiskListQuery" as request_AtRiskListQuery <<record>>
+  class "AtRiskListQueryHandler" as handler_AtRiskListQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Flag" as entity_Flag <<domain type>>
+}
+page_Support --> client_SupportApi : invokes
+client_SupportApi --> controller_FlagsController : calls
+controller_FlagsController ..> request_AtRiskListQuery : creates
+request_AtRiskListQuery --> handler_AtRiskListQueryHandler : dispatched to
+handler_AtRiskListQueryHandler --> IAppDbContext : depends on
+handler_AtRiskListQueryHandler --> ICurrentUser : scopes by
+handler_AtRiskListQueryHandler --> entity_Flag : reads or changes
+IAppDbContext o-- entity_Flag : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

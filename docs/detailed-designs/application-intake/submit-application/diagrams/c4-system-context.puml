@@ -1,0 +1,31 @@
+@startuml
+left to right direction
+title C4 level 1 — Submit an application — system context
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+actor "Applicant or referrer\n[Person]" as primary #E0F2FE
+actor "Program staff\n[Person]" as staff #E0F2FE
+rectangle "Word Up software system\n[Software system]\nYouth leadership, learning, mentoring, and program operations" as wordup #D1FADF
+rectangle "Email delivery service\n[External software system]" as ext1 #FFF4E5
+primary --> wordup : An applicant or referrer starts the submit an application interaction t…
+staff --> wordup : Administers authorized program activity
+wordup --> ext1 : Exchanges email delivery data
+legend right
+  |= Element |= C4 meaning |
+  | Person | Human role outside the software boundary |
+  | Software system | Word Up entity of interest |
+  | External software system | Independently operated dependency |
+endlegend
+@enduml

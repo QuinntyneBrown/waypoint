@@ -1,48 +1,129 @@
 # View a youth record
 
-## Identification and scope
-
-The Word Up software system is the entity of interest (EoI). The View a youth record feature slice (`FS-MENTOR-VIEW-YOUTH-RECORD`) is an architecture description element in the Mentoring and Coaching subsystem.
-
-| Item | Identification |
-| --- | --- |
-| Participating applications | Portal application; WordUp API application |
-| Architecture view | Application Context view (`V-APP-MENTOR-VIEW-YOUTH-RECORD`) |
-| Governing viewpoint | Application Context viewpoint (`VP-APP-CONTEXT`) |
-| View component | Nested Application Context component (`VC-APP-MENTOR-VIEW-YOUTH-RECORD`) |
-
-This focused description addresses feature scope, behavior, application context, and requirement correspondences. It does not claim conformance as a complete architecture description.
-
 ## Overview
 
-The View a youth record feature slice provides an assigned mentor the complete, safeguarded context needed to coach one youth.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Mentoring and Coaching subsystem owns the part of that software concerned with view a youth record.
 
-## Application context
+The View a youth record feature slice refines `L2-MENTOR-002` into one independently deliverable interaction. Mentors shall access a full per-youth record with coaching actions.
 
-The Application Context view (`V-APP-MENTOR-VIEW-YOUTH-RECORD`) applies the Application Context viewpoint (`VP-APP-CONTEXT`) to the Word Up software system. The viewpoint frames the application-location concern (`C-APP-LOCATION`). The view component (`VC-APP-MENTOR-VIEW-YOUTH-RECORD`) uses the nested-containment model kind.
+A mentor starts the view a youth record interaction through the Portal application. The frontend application presents an authorized and bounded view a youth record result.
 
-Nested rectangles identify the EoI, each participating application, the subsystem boundary, and the feature-slice contribution. Figure 1 presents the view component.
+The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
-![Figure 1 — Application Context view for the View a youth record feature slice.](diagrams/application-context.png)
+## Description
 
-*Figure 1 — Application Context view: the View a youth record feature slice within the participating Word Up applications.*
+### Vertical slice boundary
 
-## Behavior
+The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
-- **Entry.** A mentor selects a youth from their authorized roster.
-- **Processing.** The server verifies the assignment and returns profile, staff-visible guardian contact, progress, attendance, check-ins, submissions, competencies, and any at-risk banner in tabbed read models.
-- **Result.** The mentor can understand the youth's current situation and continue to an appropriate coaching action.
+### Components and types
 
-## Scope boundary
+A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
 
-Editing domain records occurs through dedicated grading, assessment, check-in, risk, and assignment slices.
+| Layer | Components, types, and classes | Responsibility |
+| --- | --- | --- |
+| Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/wu-api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`MentorController`](../../../../backend/src/WordUp.Api/Controllers/Mentoring/MentorController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`YouthDetailQuery`](../../../../backend/src/WordUp.Application/Mentoring/MentorRoster/YouthDetailQuery.cs)<br>[`YouthDetailQueryHandler`](../../../../backend/src/WordUp.Application/Mentoring/MentorRoster/YouthDetailQueryHandler.cs)<br>[`YouthDetail`](../../../../backend/src/WordUp.Application/Mentoring/MentorRoster/YouthDetailQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`Flag`](../../../../backend/src/WordUp.Domain/Mentoring/Flag.cs)<br>[`AssignedWork`](../../../../backend/src/WordUp.Domain/Mentoring/AssignedWork.cs)<br>[`CheckIn`](../../../../backend/src/WordUp.Domain/Mentoring/CheckIn.cs)<br>[`CompetencyAssessment`](../../../../backend/src/WordUp.Domain/Mentoring/CompetencyAssessment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
-## Correspondences
+### Functions and data flow
 
-The requirement-trace correspondence method (`M-REQ-TRACE`) relates stable L2 requirement identifiers to feature slices. The View a youth record requirement correspondence (`COR-REQ-MENTOR-VIEW-YOUTH-RECORD`) records the following relationships.
+- `YouthAnnouncements.load()` starts the browser interaction and maintains presentation state.
+- `PublicSiteApi.get()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `MentorController.GetAsync()` applies transport policy and constructs `YouthDetailQuery`.
+- `YouthDetailQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Flag`, and returns a typed result.
+- `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-| Requirement | Relationship |
+### Behavior
+
+1. **Entry.** A mentor starts the view a youth record interaction through the Portal application.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-MENTOR-002`, `L2-AUTH-009`, `L2-CONSENT-004`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+3. **Result.** The frontend application presents an authorized and bounded view a youth record result.
+
+## Requirements
+
+This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
+
+### L2-MENTOR-002 — Youth detail record (mentor)
+
+| Field | Value |
 | --- | --- |
-| `L2-MENTOR-002` | Primary requirement |
-| `L2-AUTH-009` | Dependency |
-| `L2-CONSENT-004` | Dependency |
+| Relationship | Primary |
+| L1 specification ID | `L1-MENTOR-002` |
+
+Mentors shall access a full per-youth record with coaching actions.
+
+### L2-AUTH-009 — Authorization is enforced server-side on every protected action
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-AUTH-007` |
+
+Every non-public endpoint shall verify authentication and role/resource authorization server-side; client-side gating is never sufficient.
+
+### L2-CONSENT-004 — Minor-specific safeguarding controls
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-CONSENT-003` |
+
+Because the platform serves minors, safeguarding controls shall be enforced beyond generic PII rules.
+
+## Diagrams
+
+The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
+
+### C4 diagrams
+
+#### System context
+
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+
+![Figure 1 — C4 system context for View a youth record.](diagrams/c4-system-context.png)
+
+*Figure 1 — C4 system context: View a youth record in the Word Up environment.*
+
+#### Container
+
+Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
+
+![Figure 2 — C4 container view for View a youth record.](diagrams/c4-container.png)
+
+*Figure 2 — C4 container view: application and data boundaries for View a youth record.*
+
+#### Component
+
+Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
+
+![Figure 3 — C4 component view for View a youth record.](diagrams/c4-component.png)
+
+*Figure 3 — C4 component view: collaborating components for View a youth record.*
+
+#### Code
+
+Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
+
+![Figure 4 — C4 code view for View a youth record.](diagrams/c4-code.png)
+
+*Figure 4 — C4 code view: feature-owned code elements for View a youth record.*
+
+### Class diagram
+
+Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
+
+![Figure 5 — Class structure for View a youth record.](diagrams/class-structure.png)
+
+*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for View a youth record.*
+
+### Sequence diagram
+
+Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
+
+![Figure 6 — Sequence behavior for View a youth record.](diagrams/sequence-behaviour.png)
+
+*Figure 6 — Sequence behavior: the end-to-end view a youth record interaction.*

@@ -1,47 +1,120 @@
 # Onboard a youth
 
-## Identification and scope
-
-The Word Up software system is the entity of interest (EoI). The Onboard a youth feature slice (`FS-AUTH-ONBOARD-YOUTH`) is an architecture description element in the Authentication and Access subsystem.
-
-| Item | Identification |
-| --- | --- |
-| Participating applications | Portal application; WordUp API application |
-| Architecture view | Application Context view (`V-APP-AUTH-ONBOARD-YOUTH`) |
-| Governing viewpoint | Application Context viewpoint (`VP-APP-CONTEXT`) |
-| View component | Nested Application Context component (`VC-APP-AUTH-ONBOARD-YOUTH`) |
-
-This focused description addresses feature scope, behavior, application context, and requirement correspondences. It does not claim conformance as a complete architecture description.
-
 ## Overview
 
-The Onboard a youth feature slice helps a newly activated youth establish their profile and preferences without delaying access.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Authentication and Access subsystem owns the part of that software concerned with onboard a youth.
 
-## Application context
+The Onboard a youth feature slice refines `L2-AUTH-011` into one independently deliverable interaction. A newly activated youth shall be guided through onboarding with the ability to skip.
 
-The Application Context view (`V-APP-AUTH-ONBOARD-YOUTH`) applies the Application Context viewpoint (`VP-APP-CONTEXT`) to the Word Up software system. The viewpoint frames the application-location concern (`C-APP-LOCATION`). The view component (`VC-APP-AUTH-ONBOARD-YOUTH`) uses the nested-containment model kind.
+An account holder starts the onboard a youth interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative onboard a youth result.
 
-Nested rectangles identify the EoI, each participating application, the subsystem boundary, and the feature-slice contribution. Figure 1 presents the view component.
+The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
-![Figure 1 — Application Context view for the Onboard a youth feature slice.](diagrams/application-context.png)
+## Description
 
-*Figure 1 — Application Context view: the Onboard a youth feature slice within the participating Word Up applications.*
+### Vertical slice boundary
 
-## Behavior
+The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
-- **Entry.** A youth signs in for the first time after invitation acceptance.
-- **Processing.** The wizard captures display name, pronouns, optional photo, confirms read-only cohort and mentor placement, and applies adjustable notification defaults; progress can be skipped and resumed.
-- **Result.** The youth lands on Youth Home with onboarding completion state and chosen preferences persisted.
+### Components and types
 
-## Scope boundary
+A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
 
-Invitation activation and general settings management are separate slices.
+| Layer | Components, types, and classes | Responsibility |
+| --- | --- | --- |
+| Frontend page | [`YouthNotifications`](../../../../frontend/projects/portal/src/app/features/youth/notifications/youth-notifications.ts)<br>[`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`OnboardingApi`](../../../../frontend/projects/wu-api/src/lib/services/onboarding-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`OnboardingController`](../../../../backend/src/WordUp.Api/Controllers/Authentication/OnboardingController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`SkipOnboardingCommand`](../../../../backend/src/WordUp.Application/Authentication/Onboarding/SkipOnboardingCommand.cs)<br>[`SkipOnboardingCommandHandler`](../../../../backend/src/WordUp.Application/Authentication/Onboarding/SkipOnboardingCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`User`](../../../../backend/src/WordUp.Domain/Authentication/User.cs)<br>[`Invitation`](../../../../backend/src/WordUp.Domain/Authentication/Invitation.cs)<br>[`PasswordResetToken`](../../../../backend/src/WordUp.Domain/Authentication/PasswordResetToken.cs)<br>[`RefreshToken`](../../../../backend/src/WordUp.Domain/Authentication/RefreshToken.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`AppException`](../../../../backend/src/WordUp.Application/Shared/Common/AppException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
-## Correspondences
+### Functions and data flow
 
-The requirement-trace correspondence method (`M-REQ-TRACE`) relates stable L2 requirement identifiers to feature slices. The Onboard a youth requirement correspondence (`COR-REQ-AUTH-ONBOARD-YOUTH`) records the following relationships.
+- `YouthNotifications.submit()` starts the browser interaction and maintains presentation state.
+- `OnboardingApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `OnboardingController.PostAsync()` applies transport policy and constructs `SkipOnboardingCommand`.
+- `SkipOnboardingCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `User`, and returns a typed result.
+- `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-| Requirement | Relationship |
+### Behavior
+
+1. **Entry.** An account holder starts the onboard a youth interaction through the Portal application.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-AUTH-011`, `L2-PLATFORM-003`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative onboard a youth result.
+
+## Requirements
+
+This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
+
+### L2-AUTH-011 — Youth onboarding wizard
+
+| Field | Value |
 | --- | --- |
-| `L2-AUTH-011` | Primary requirement |
-| `L2-PLATFORM-003` | Dependency |
+| Relationship | Primary |
+| L1 specification ID | `L1-AUTH-008` |
+
+A newly activated youth shall be guided through onboarding with the ability to skip.
+
+### L2-PLATFORM-003 — Notification preferences
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-PLATFORM-002` |
+
+Users shall configure per-event notification preferences, delivered as in-app notifications with email as an optional channel.
+
+## Diagrams
+
+The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
+
+### C4 diagrams
+
+#### System context
+
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+
+![Figure 1 — C4 system context for Onboard a youth.](diagrams/c4-system-context.png)
+
+*Figure 1 — C4 system context: Onboard a youth in the Word Up environment.*
+
+#### Container
+
+Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
+
+![Figure 2 — C4 container view for Onboard a youth.](diagrams/c4-container.png)
+
+*Figure 2 — C4 container view: application and data boundaries for Onboard a youth.*
+
+#### Component
+
+Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
+
+![Figure 3 — C4 component view for Onboard a youth.](diagrams/c4-component.png)
+
+*Figure 3 — C4 component view: collaborating components for Onboard a youth.*
+
+#### Code
+
+Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
+
+![Figure 4 — C4 code view for Onboard a youth.](diagrams/c4-code.png)
+
+*Figure 4 — C4 code view: feature-owned code elements for Onboard a youth.*
+
+### Class diagram
+
+Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
+
+![Figure 5 — Class structure for Onboard a youth.](diagrams/class-structure.png)
+
+*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for Onboard a youth.*
+
+### Sequence diagram
+
+Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
+
+![Figure 6 — Sequence behavior for Onboard a youth.](diagrams/sequence-behaviour.png)
+
+*Figure 6 — Sequence behavior: the end-to-end onboard a youth interaction.*

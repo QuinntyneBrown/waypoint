@@ -6,45 +6,62 @@
     or discover it once you’re in a cohort.
   </p>
 
-  <div class="wu-grid wu-grid--2 wu-mt-6">
-    @for (track of tracks; track track.name) {
-      <div class="wu-card">
-        <div class="wu-card__header">
-          <h2 class="wu-card__title">{{ track.name }}</h2>
-        </div>
-        <div class="wu-card__body">
-          <p class="wu-muted">{{ track.blurb }}</p>
-          <h4>Modules</h4>
-          <ul>
-            @for (m of track.modules; track m) {
-              <li>{{ m }}</li>
-            }
-          </ul>
-          <h4>Outcome badges</h4>
-          <div class="wu-cluster">
-            @for (b of track.badges; track b) {
-              <span class="wu-badge wu-badge--lime">{{ b }}</span>
-            }
+  @if (loading()) {
+    <p class="wu-muted" role="status">Loading programs…</p>
+  } @else if (error()) {
+    <div class="wu-alert wu-alert--danger" role="alert">
+      <p>{{ error() }}</p>
+      <button class="wu-btn wu-btn--ghost wu-btn--sm" type="button" (click)="load()">Try again</button>
+    </div>
+  } @else if (content(); as publicContent) {
+    @if (publicContent.tracks.length === 0) {
+      <div class="wu-empty wu-mt-6">
+        <h2>Programs are being prepared</h2>
+        <p class="wu-muted">Published program details will appear here soon.</p>
+      </div>
+    } @else {
+      <div class="wu-grid wu-grid--2 wu-mt-6">
+        @for (track of publicContent.tracks; track track.id) {
+          <div class="wu-card">
+            <div class="wu-card__header">
+              <h2 class="wu-card__title">{{ track.name }}</h2>
+            </div>
+            <div class="wu-card__body">
+              <p class="wu-muted">{{ track.description }}</p>
+              <h3 class="wu-text-base">Modules</h3>
+              <ol>
+                @for (module of track.modules; track module.id) {
+                  <li>
+                    {{ module.name }}
+                    @if (module.outcomeBadge; as badge) {
+                      <span class="wu-badge wu-badge--lime">{{ badge.name }}</span>
+                    }
+                  </li>
+                }
+              </ol>
+            </div>
           </div>
-        </div>
+        }
       </div>
     }
-  </div>
+  }
 </section>
 
 <section class="wu-container wu-section">
   <div class="wu-eyebrow">Mentorship</div>
   <h2>You’re never on your own</h2>
-  <div class="wu-grid wu-grid--3 wu-mt-6">
-    @for (m of mentorship; track m.title) {
-      <div class="wu-card">
-        <div class="wu-card__body">
-          <h3 class="wu-card__title">{{ m.title }}</h3>
-          <p class="wu-muted">{{ m.text }}</p>
+  @if (content(); as publicContent) {
+    <p class="wu-text-lg wu-muted">{{ publicContent.mentorship.summary }}</p>
+    <div class="wu-grid wu-grid--3 wu-mt-6">
+      @for (feature of publicContent.mentorship.features; track feature) {
+        <div class="wu-card">
+          <div class="wu-card__body">
+            <p>{{ feature }}</p>
+          </div>
         </div>
-      </div>
-    }
-  </div>
+      }
+    </div>
+  }
   <div class="wu-cluster wu-mt-6">
     <a class="wu-btn wu-btn--primary" routerLink="/apply">Apply now</a>
   </div>

@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — View the learning journey
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "YouthAnnouncements" as page_YouthAnnouncements <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "JourneyController" as controller_JourneyController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "JourneyQuery" as request_JourneyQuery <<record>>
+  class "JourneyQueryHandler" as handler_JourneyQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "BadgeAward" as entity_BadgeAward <<domain type>>
+}
+page_YouthAnnouncements --> client_AnnouncementsApi : invokes
+client_AnnouncementsApi --> controller_JourneyController : calls
+controller_JourneyController ..> request_JourneyQuery : creates
+request_JourneyQuery --> handler_JourneyQueryHandler : dispatched to
+handler_JourneyQueryHandler --> IAppDbContext : depends on
+handler_JourneyQueryHandler --> ICurrentUser : scopes by
+handler_JourneyQueryHandler --> entity_BadgeAward : reads or changes
+IAppDbContext o-- entity_BadgeAward : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

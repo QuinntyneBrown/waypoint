@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Protect unsaved work
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "ProtectUnsavedWorkPage" as page_ProtectUnsavedWorkPage <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "ProtectUnsavedWorkCommand" as request_ProtectUnsavedWorkCommand <<record>>
+  class "ProtectUnsavedWorkCommandHandler" as handler_ProtectUnsavedWorkCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "ProtectUnsavedWorkState" as entity_ProtectUnsavedWorkState <<domain type>>
+}
+page_ProtectUnsavedWorkPage --> client_AnnouncementsApi : invokes
+client_AnnouncementsApi --> controller_NonFunctionalController : calls
+controller_NonFunctionalController ..> request_ProtectUnsavedWorkCommand : creates
+request_ProtectUnsavedWorkCommand --> handler_ProtectUnsavedWorkCommandHandler : dispatched to
+handler_ProtectUnsavedWorkCommandHandler --> IAppDbContext : depends on
+handler_ProtectUnsavedWorkCommandHandler --> ICurrentUser : scopes by
+handler_ProtectUnsavedWorkCommandHandler --> entity_ProtectUnsavedWorkState : reads or changes
+IAppDbContext o-- entity_ProtectUnsavedWorkState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

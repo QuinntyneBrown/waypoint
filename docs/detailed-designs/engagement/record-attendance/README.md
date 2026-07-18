@@ -1,48 +1,129 @@
 # Record attendance
 
-## Identification and scope
-
-The Word Up software system is the entity of interest (EoI). The Record attendance feature slice (`FS-ENGAGE-RECORD-ATTENDANCE`) is an architecture description element in the Engagement and Operations subsystem.
-
-| Item | Identification |
-| --- | --- |
-| Participating applications | Portal application; WordUp API application |
-| Architecture view | Application Context view (`V-APP-ENGAGE-RECORD-ATTENDANCE`) |
-| Governing viewpoint | Application Context viewpoint (`VP-APP-CONTEXT`) |
-| View component | Nested Application Context component (`VC-APP-ENGAGE-RECORD-ATTENDANCE`) |
-
-This focused description addresses feature scope, behavior, application context, and requirement correspondences. It does not claim conformance as a complete architecture description.
-
 ## Overview
 
-The Record attendance feature slice allows an authorized mentor, volunteer, or administrator record attendance for one session.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Engagement and Operations subsystem owns the part of that software concerned with record attendance.
 
-## Application context
+The Record attendance feature slice refines `L2-ENGAGE-002` into one independently deliverable interaction. Mentors/volunteers shall record per-youth attendance with the correct status set, bulk actions, and tallies.
 
-The Application Context view (`V-APP-ENGAGE-RECORD-ATTENDANCE`) applies the Application Context viewpoint (`VP-APP-CONTEXT`) to the Word Up software system. The viewpoint frames the application-location concern (`C-APP-LOCATION`). The view component (`VC-APP-ENGAGE-RECORD-ATTENDANCE`) uses the nested-containment model kind.
+A mentor, volunteer, or program administrator starts the record attendance interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative record attendance result.
 
-Nested rectangles identify the EoI, each participating application, the subsystem boundary, and the feature-slice contribution. Figure 1 presents the view component.
+The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
-![Figure 1 — Application Context view for the Record attendance feature slice.](diagrams/application-context.png)
+## Description
 
-*Figure 1 — Application Context view: the Record attendance feature slice within the participating Word Up applications.*
+### Vertical slice boundary
 
-## Behavior
+The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
-- **Entry.** The user opens attendance from an assigned session.
-- **Processing.** The roster exposes the role-appropriate status set, supports all-present and clear actions, shows marked tallies, stores an optional session note, and protects saves with authorization and optimistic concurrency.
-- **Result.** One attendance record per youth drives history, rates, and badge streak rules.
+### Components and types
 
-## Scope boundary
+A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
 
-Offline queuing and historical analysis are separate slices.
+| Layer | Components, types, and classes | Responsibility |
+| --- | --- | --- |
+| Frontend page | [`ServerError`](../../../../frontend/projects/portal/src/app/states/server-error/server-error.ts)<br>[`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/wu-api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`AttendanceController`](../../../../backend/src/WordUp.Api/Controllers/Engagement/AttendanceController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`AttendanceHistoryByYouthQuery`](../../../../backend/src/WordUp.Application/Engagement/Attendance/AttendanceHistoryByYouthQuery.cs)<br>[`AttendanceHistoryByYouthQueryHandler`](../../../../backend/src/WordUp.Application/Engagement/Attendance/AttendanceHistoryByYouthQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`AttendanceRecord`](../../../../backend/src/WordUp.Domain/Engagement/AttendanceRecord.cs)<br>[`AttendanceStatus`](../../../../backend/src/WordUp.Domain/Engagement/AttendanceStatus.cs)<br>[`Announcement`](../../../../backend/src/WordUp.Domain/Engagement/Announcement.cs)<br>[`AnnouncementRead`](../../../../backend/src/WordUp.Domain/Engagement/AnnouncementRead.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
-## Correspondences
+### Functions and data flow
 
-The requirement-trace correspondence method (`M-REQ-TRACE`) relates stable L2 requirement identifiers to feature slices. The Record attendance requirement correspondence (`COR-REQ-ENGAGE-RECORD-ATTENDANCE`) records the following relationships.
+- `ServerError.submit()` starts the browser interaction and maintains presentation state.
+- `PublicSiteApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `AttendanceController.PostAsync()` applies transport policy and constructs `AttendanceHistoryByYouthQuery`.
+- `AttendanceHistoryByYouthQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `AttendanceRecord`, and returns a typed result.
+- `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-| Requirement | Relationship |
+### Behavior
+
+1. **Entry.** A mentor, volunteer, or program administrator starts the record attendance interaction through the Portal application.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-ENGAGE-002`, `L2-AUTH-009`, `L2-NFR-006`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative record attendance result.
+
+## Requirements
+
+This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
+
+### L2-ENGAGE-002 — Attendance capture
+
+| Field | Value |
 | --- | --- |
-| `L2-ENGAGE-002` | Primary requirement |
-| `L2-AUTH-009` | Dependency |
-| `L2-NFR-006` | Dependency |
+| Relationship | Primary |
+| L1 specification ID | `L1-ENGAGE-002` |
+
+Mentors/volunteers shall record per-youth attendance with the correct status set, bulk actions, and tallies.
+
+### L2-AUTH-009 — Authorization is enforced server-side on every protected action
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-AUTH-007` |
+
+Every non-public endpoint shall verify authentication and role/resource authorization server-side; client-side gating is never sufficient.
+
+### L2-NFR-006 — Concurrency and data integrity
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-NFR-009` |
+
+Mutable aggregates shall use optimistic concurrency to prevent lost updates.
+
+## Diagrams
+
+The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
+
+### C4 diagrams
+
+#### System context
+
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+
+![Figure 1 — C4 system context for Record attendance.](diagrams/c4-system-context.png)
+
+*Figure 1 — C4 system context: Record attendance in the Word Up environment.*
+
+#### Container
+
+Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
+
+![Figure 2 — C4 container view for Record attendance.](diagrams/c4-container.png)
+
+*Figure 2 — C4 container view: application and data boundaries for Record attendance.*
+
+#### Component
+
+Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
+
+![Figure 3 — C4 component view for Record attendance.](diagrams/c4-component.png)
+
+*Figure 3 — C4 component view: collaborating components for Record attendance.*
+
+#### Code
+
+Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
+
+![Figure 4 — C4 code view for Record attendance.](diagrams/c4-code.png)
+
+*Figure 4 — C4 code view: feature-owned code elements for Record attendance.*
+
+### Class diagram
+
+Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
+
+![Figure 5 — Class structure for Record attendance.](diagrams/class-structure.png)
+
+*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for Record attendance.*
+
+### Sequence diagram
+
+Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
+
+![Figure 6 — Sequence behavior for Record attendance.](diagrams/sequence-behaviour.png)
+
+*Figure 6 — Sequence behavior: the end-to-end record attendance interaction.*

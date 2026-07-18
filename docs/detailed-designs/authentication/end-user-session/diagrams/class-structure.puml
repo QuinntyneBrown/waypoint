@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — End a user session
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "SessionExpired" as page_SessionExpired <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AuthApi" as client_AuthApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "AuthController" as controller_AuthController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SignOutCommand" as request_SignOutCommand <<record>>
+  class "SignOutCommandHandler" as handler_SignOutCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "User" as entity_User <<domain type>>
+}
+page_SessionExpired --> client_AuthApi : invokes
+client_AuthApi --> controller_AuthController : calls
+controller_AuthController ..> request_SignOutCommand : creates
+request_SignOutCommand --> handler_SignOutCommandHandler : dispatched to
+handler_SignOutCommandHandler --> IAppDbContext : depends on
+handler_SignOutCommandHandler --> ICurrentUser : scopes by
+handler_SignOutCommandHandler --> entity_User : reads or changes
+IAppDbContext o-- entity_User : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

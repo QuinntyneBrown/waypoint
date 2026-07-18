@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Browse the program calendar
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "Programs" as page_Programs <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "AuthApi" as client_AuthApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "SessionsController" as controller_SessionsController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SessionCalendarQuery" as request_SessionCalendarQuery <<record>>
+  class "SessionCalendarQueryHandler" as handler_SessionCalendarQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Session" as entity_Session <<domain type>>
+}
+page_Programs --> client_AuthApi : invokes
+client_AuthApi --> controller_SessionsController : calls
+controller_SessionsController ..> request_SessionCalendarQuery : creates
+request_SessionCalendarQuery --> handler_SessionCalendarQueryHandler : dispatched to
+handler_SessionCalendarQueryHandler --> IAppDbContext : depends on
+handler_SessionCalendarQueryHandler --> ICurrentUser : scopes by
+handler_SessionCalendarQueryHandler --> entity_Session : reads or changes
+IAppDbContext o-- entity_Session : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

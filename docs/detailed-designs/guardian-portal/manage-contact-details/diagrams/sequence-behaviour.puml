@@ -1,0 +1,48 @@
+@startuml
+
+title UML sequence behaviour — Manage guardian contact details
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+actor "Guardian" as actor
+box "Frontend — Portal application" #E0F2FE
+  participant "Contact" as page
+  participant "AuthApi" as client
+end box
+box "Backend — WordUp API application" #D1FADF
+  participant "GuardianController" as controller
+end box
+box "Backend — WordUp Application and Domain" #ECFDF3
+  participant "UpdateGuardianContactCommandHandler" as handler
+  participant "GuardianProfile" as entity
+end box
+box "Backend — WordUp Infrastructure" #FFF4E5
+  database "Word Up database" as db
+end box
+actor -> page : A guardian starts the manage guardian contact details interaction through t…
+page -> client : Build typed request
+client -> controller : HTTPS request
+controller -> controller : Authenticate and apply endpoint policy
+controller -> handler : Send UpdateGuardianContactCommand
+handler -> db : Load and persist authorized state
+db --> handler : Current state
+handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+entity --> handler : Valid state transition or projection
+handler -> db : Save changes when the request changes state
+db --> handler : Commit or query result
+handler --> controller : Typed result
+controller --> client : HTTP response or ProblemDetails
+client --> page : Feature result
+page --> actor : The backend commits an authorized state change when applicable, and the fro…
+@enduml

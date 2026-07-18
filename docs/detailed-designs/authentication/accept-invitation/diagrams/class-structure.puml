@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Accept an invitation
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "ConsentRequired" as page_ConsentRequired <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AuthApi" as client_AuthApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "InvitationsController" as controller_InvitationsController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "AcceptInviteCommand" as request_AcceptInviteCommand <<record>>
+  class "AcceptInviteCommandHandler" as handler_AcceptInviteCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Invitation" as entity_Invitation <<domain type>>
+}
+page_ConsentRequired --> client_AuthApi : invokes
+client_AuthApi --> controller_InvitationsController : calls
+controller_InvitationsController ..> request_AcceptInviteCommand : creates
+request_AcceptInviteCommand --> handler_AcceptInviteCommandHandler : dispatched to
+handler_AcceptInviteCommandHandler --> IAppDbContext : depends on
+handler_AcceptInviteCommandHandler --> ICurrentUser : scopes by
+handler_AcceptInviteCommandHandler --> entity_Invitation : reads or changes
+IAppDbContext o-- entity_Invitation : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

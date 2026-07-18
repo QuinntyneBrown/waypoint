@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Browse curriculum
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "YouthAnnouncements" as page_YouthAnnouncements <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "PublicSiteApi" as client_PublicSiteApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "YouthCurriculumController" as controller_YouthCurriculumController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "BrowseCurriculumQuery" as request_BrowseCurriculumQuery <<record>>
+  class "BrowseCurriculumQueryHandler" as handler_BrowseCurriculumQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "LessonProgress" as entity_LessonProgress <<domain type>>
+}
+page_YouthAnnouncements --> client_PublicSiteApi : invokes
+client_PublicSiteApi --> controller_YouthCurriculumController : calls
+controller_YouthCurriculumController ..> request_BrowseCurriculumQuery : creates
+request_BrowseCurriculumQuery --> handler_BrowseCurriculumQueryHandler : dispatched to
+handler_BrowseCurriculumQueryHandler --> IAppDbContext : depends on
+handler_BrowseCurriculumQueryHandler --> ICurrentUser : scopes by
+handler_BrowseCurriculumQueryHandler --> entity_LessonProgress : reads or changes
+IAppDbContext o-- entity_LessonProgress : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

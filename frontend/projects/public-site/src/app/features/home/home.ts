@@ -1,15 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ApiError, PublicContentView, PublicSiteApi } from '@wu/api';
 
-interface JourneyStep {
-  n: number;
-  title: string;
-  text: string;
-}
-interface Stat {
-  value: string;
-  label: string;
-}
 
 // Traces to: L2-PUB-002
 @Component({
@@ -19,21 +11,28 @@ interface Stat {
   templateUrl: './home.html',
 })
 export class Home {
-  protected readonly journey: JourneyStep[] = [
-    { n: 1, title: 'Apply', text: 'Tell us about yourself — it takes five minutes.' },
-    { n: 2, title: 'Join a cohort', text: 'Get placed with a mentor and a group near you.' },
-    {
-      n: 3,
-      title: 'Learn the modules',
-      text: 'Grow through Bible & Leadership or Coding for Kingdom.',
-    },
-    { n: 4, title: 'Lead & graduate', text: 'Serve your community and step into leadership.' },
-  ];
+  private readonly api = inject(PublicSiteApi);
 
-  protected readonly stats: Stat[] = [
-    { value: '120+', label: 'Young leaders' },
-    { value: '3', label: 'Active cohorts' },
-    { value: '2', label: 'Learning tracks' },
-    { value: '94%', label: 'Would recommend' },
-  ];
+  protected readonly content = signal<PublicContentView | null>(null);
+  protected readonly loading = signal(true);
+  protected readonly error = signal<string | null>(null);
+
+  constructor() {
+    this.load();
+  }
+
+  protected load(): void {
+    this.loading.set(true);
+    this.error.set(null);
+    this.api.getContent().subscribe({
+      next: (content) => {
+        this.content.set(content);
+        this.loading.set(false);
+      },
+      error: (error: unknown) => {
+        this.error.set(ApiError.from(error).title);
+        this.loading.set(false);
+      },
+    });
+  }
 }

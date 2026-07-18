@@ -1,48 +1,129 @@
 # Author the progression framework
 
-## Identification and scope
-
-The Word Up software system is the entity of interest (EoI). The Author the progression framework feature slice (`FS-CURRIC-AUTHOR-PROGRESSION-FRAMEWORK`) is an architecture description element in the Curriculum Authoring subsystem.
-
-| Item | Identification |
-| --- | --- |
-| Participating applications | Portal application; WordUp API application |
-| Architecture view | Application Context view (`V-APP-CURRIC-AUTHOR-PROGRESSION-FRAMEWORK`) |
-| Governing viewpoint | Application Context viewpoint (`VP-APP-CONTEXT`) |
-| View component | Nested Application Context component (`VC-APP-CURRIC-AUTHOR-PROGRESSION-FRAMEWORK`) |
-
-This focused description addresses feature scope, behavior, application context, and requirement correspondences. It does not claim conformance as a complete architecture description.
-
 ## Overview
 
-The Author the progression framework feature slice allows staff define the ordered stages and competencies used to assess a youth's development.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns the part of that software concerned with author the progression framework.
 
-## Application context
+The Author the progression framework feature slice refines `L2-CURRIC-006` into one independently deliverable interaction. Staff shall define ordered stages and their competencies.
 
-The Application Context view (`V-APP-CURRIC-AUTHOR-PROGRESSION-FRAMEWORK`) applies the Application Context viewpoint (`VP-APP-CONTEXT`) to the Word Up software system. The viewpoint frames the application-location concern (`C-APP-LOCATION`). The view component (`VC-APP-CURRIC-AUTHOR-PROGRESSION-FRAMEWORK`) uses the nested-containment model kind.
+A program administrator starts the author the progression framework interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative author the progression framework result.
 
-Nested rectangles identify the EoI, each participating application, the subsystem boundary, and the feature-slice contribution. Figure 1 presents the view component.
+The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
-![Figure 1 — Application Context view for the Author the progression framework feature slice.](diagrams/application-context.png)
+## Description
 
-*Figure 1 — Application Context view: the Author the progression framework feature slice within the participating Word Up applications.*
+### Vertical slice boundary
 
-## Behavior
+The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
-- **Entry.** An authorized author opens the progression editor.
-- **Processing.** The editor creates, removes, and reorders stages and associates competencies with each stage, persisting one framework used by assessment and reporting calculations.
-- **Result.** Mentor assessments and youth/report views share the same current stage and competency vocabulary.
+### Components and types
 
-## Scope boundary
+A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
 
-Recording an assessment against the framework belongs to Mentoring.
+| Layer | Components, types, and classes | Responsibility |
+| --- | --- | --- |
+| Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`ProgressionController`](../../../../backend/src/WordUp.Api/Controllers/CurriculumAuthoring/ProgressionController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`AddCompetencyCommand`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Progression/AddCompetencyCommand.cs)<br>[`AddCompetencyCommandHandler`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Progression/AddCompetencyCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`Competency`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Competency.cs)<br>[`ProgressionStage`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/ProgressionStage.cs)<br>[`Assignment`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Assignment.cs)<br>[`Badge`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Badge.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
-## Correspondences
+### Functions and data flow
 
-The requirement-trace correspondence method (`M-REQ-TRACE`) relates stable L2 requirement identifiers to feature slices. The Author the progression framework requirement correspondence (`COR-REQ-CURRIC-AUTHOR-PROGRESSION-FRAMEWORK`) records the following relationships.
+- `YouthAnnouncements.submit()` starts the browser interaction and maintains presentation state.
+- `AnnouncementsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `ProgressionController.PostAsync()` applies transport policy and constructs `AddCompetencyCommand`.
+- `AddCompetencyCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Competency`, and returns a typed result.
+- `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-| Requirement | Relationship |
+### Behavior
+
+1. **Entry.** A program administrator starts the author the progression framework interaction through the Portal application.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-CURRIC-006`, `L2-MENTOR-005`, `L2-REPORT-001`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative author the progression framework result.
+
+## Requirements
+
+This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
+
+### L2-CURRIC-006 — Progression framework authoring
+
+| Field | Value |
 | --- | --- |
-| `L2-CURRIC-006` | Primary requirement |
-| `L2-MENTOR-005` | Dependency |
-| `L2-REPORT-001` | Dependency |
+| Relationship | Primary |
+| L1 specification ID | `L1-CURRIC-005` |
+
+Staff shall define ordered stages and their competencies.
+
+### L2-MENTOR-005 — Competency assessment
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-MENTOR-005` |
+
+Mentors shall set competency levels per youth with notes.
+
+### L2-REPORT-001 — Standard reports
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-REPORT-001` |
+
+Staff shall access org, youth, cohort, attendance, and staff reports with filters.
+
+## Diagrams
+
+The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
+
+### C4 diagrams
+
+#### System context
+
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+
+![Figure 1 — C4 system context for Author the progression framework.](diagrams/c4-system-context.png)
+
+*Figure 1 — C4 system context: Author the progression framework in the Word Up environment.*
+
+#### Container
+
+Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
+
+![Figure 2 — C4 container view for Author the progression framework.](diagrams/c4-container.png)
+
+*Figure 2 — C4 container view: application and data boundaries for Author the progression framework.*
+
+#### Component
+
+Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
+
+![Figure 3 — C4 component view for Author the progression framework.](diagrams/c4-component.png)
+
+*Figure 3 — C4 component view: collaborating components for Author the progression framework.*
+
+#### Code
+
+Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
+
+![Figure 4 — C4 code view for Author the progression framework.](diagrams/c4-code.png)
+
+*Figure 4 — C4 code view: feature-owned code elements for Author the progression framework.*
+
+### Class diagram
+
+Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
+
+![Figure 5 — Class structure for Author the progression framework.](diagrams/class-structure.png)
+
+*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for Author the progression framework.*
+
+### Sequence diagram
+
+Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
+
+![Figure 6 — Sequence behavior for Author the progression framework.](diagrams/sequence-behaviour.png)
+
+*Figure 6 — Sequence behavior: the end-to-end author the progression framework interaction.*

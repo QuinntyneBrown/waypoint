@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Configure notifications
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "SettingsNotifications" as page_SettingsNotifications <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "NotificationPreferencesApi" as client_NotificationPreferencesApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "PreferencesController" as controller_PreferencesController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "NotificationPreferencesQuery" as request_NotificationPreferencesQuery <<record>>
+  class "NotificationPreferencesQueryHandler" as handler_NotificationPreferencesQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "NotificationPreference" as entity_NotificationPreference <<domain type>>
+}
+page_SettingsNotifications --> client_NotificationPreferencesApi : invokes
+client_NotificationPreferencesApi --> controller_PreferencesController : calls
+controller_PreferencesController ..> request_NotificationPreferencesQuery : creates
+request_NotificationPreferencesQuery --> handler_NotificationPreferencesQueryHandler : dispatched to
+handler_NotificationPreferencesQueryHandler --> IAppDbContext : depends on
+handler_NotificationPreferencesQueryHandler --> ICurrentUser : scopes by
+handler_NotificationPreferencesQueryHandler --> entity_NotificationPreference : reads or changes
+IAppDbContext o-- entity_NotificationPreference : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

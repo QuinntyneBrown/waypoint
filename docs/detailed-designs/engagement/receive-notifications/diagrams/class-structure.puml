@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Receive notifications
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "SettingsNotifications" as page_SettingsNotifications <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "NotificationsApi" as client_NotificationsApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "NotificationsController" as controller_NotificationsController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "MarkAllNotificationsReadCommand" as request_MarkAllNotificationsReadCommand <<record>>
+  class "MarkAllNotificationsReadCommandHandler" as handler_MarkAllNotificationsReadCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Notification" as entity_Notification <<domain type>>
+}
+page_SettingsNotifications --> client_NotificationsApi : invokes
+client_NotificationsApi --> controller_NotificationsController : calls
+controller_NotificationsController ..> request_MarkAllNotificationsReadCommand : creates
+request_MarkAllNotificationsReadCommand --> handler_MarkAllNotificationsReadCommandHandler : dispatched to
+handler_MarkAllNotificationsReadCommandHandler --> IAppDbContext : depends on
+handler_MarkAllNotificationsReadCommandHandler --> ICurrentUser : scopes by
+handler_MarkAllNotificationsReadCommandHandler --> entity_Notification : reads or changes
+IAppDbContext o-- entity_Notification : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

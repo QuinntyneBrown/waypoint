@@ -1,0 +1,37 @@
+@startuml
+left to right direction
+title C4 level 2 — Manage pending invitations — containers
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+actor "Program administrator or account holder\n[Person]" as primary #E0F2FE
+rectangle "Word Up software system" as wordup {
+  package "Frontend" as frontend {
+    rectangle "Portal application\n[Container: Angular]\nManage pending invitations interaction" as app1 #E0F2FE
+  }
+  package "Backend" as backend {
+    rectangle "WordUp API application\n[Container: ASP.NET Core]\nAuthentication, policy, and feature endpoints" as api #D1FADF
+    rectangle "Realtime gateway\n[Container: SignalR]\nFeature change delivery" as realtime #D1FADF
+  }
+  database "Word Up database\n[Container: SQL Server]\nAuthoritative feature state" as db #F4EBFF
+}
+primary --> app1 : Uses
+app1 --> api : HTTPS JSON
+api --> db : EF Core
+api --> realtime : Publishes authorized changes
+realtime --> app1 : Pushes subscribed events
+legend right
+  Nested boxes identify the Word Up boundary, frontend boundary, backend boundary, and application containers.
+endlegend
+@enduml

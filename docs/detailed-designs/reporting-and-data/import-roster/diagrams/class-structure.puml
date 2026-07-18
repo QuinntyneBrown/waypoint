@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Import a roster
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "ImportRosterPage" as page_ImportRosterPage <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "DataController" as controller_DataController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "CommitRosterImportCommand" as request_CommitRosterImportCommand <<record>>
+  class "CommitRosterImportCommandHandler" as handler_CommitRosterImportCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "ImportRosterState" as entity_ImportRosterState <<domain type>>
+}
+page_ImportRosterPage --> client_AnnouncementsApi : invokes
+client_AnnouncementsApi --> controller_DataController : calls
+controller_DataController ..> request_CommitRosterImportCommand : creates
+request_CommitRosterImportCommand --> handler_CommitRosterImportCommandHandler : dispatched to
+handler_CommitRosterImportCommandHandler --> IAppDbContext : depends on
+handler_CommitRosterImportCommandHandler --> ICurrentUser : scopes by
+handler_CommitRosterImportCommandHandler --> entity_ImportRosterState : reads or changes
+IAppDbContext o-- entity_ImportRosterState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

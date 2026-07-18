@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — View a youth record
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "YouthAnnouncements" as page_YouthAnnouncements <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "PublicSiteApi" as client_PublicSiteApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "MentorController" as controller_MentorController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "YouthDetailQuery" as request_YouthDetailQuery <<record>>
+  class "YouthDetailQueryHandler" as handler_YouthDetailQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Flag" as entity_Flag <<domain type>>
+}
+page_YouthAnnouncements --> client_PublicSiteApi : invokes
+client_PublicSiteApi --> controller_MentorController : calls
+controller_MentorController ..> request_YouthDetailQuery : creates
+request_YouthDetailQuery --> handler_YouthDetailQueryHandler : dispatched to
+handler_YouthDetailQueryHandler --> IAppDbContext : depends on
+handler_YouthDetailQueryHandler --> ICurrentUser : scopes by
+handler_YouthDetailQueryHandler --> entity_Flag : reads or changes
+IAppDbContext o-- entity_Flag : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

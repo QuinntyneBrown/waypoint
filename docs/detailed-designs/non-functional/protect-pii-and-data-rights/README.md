@@ -1,49 +1,138 @@
 # Protect PII and data rights
 
-## Identification and scope
-
-The Word Up software system is the entity of interest (EoI). The Protect PII and data rights feature slice (`FS-NFR-PROTECT-PII-AND-DATA-RIGHTS`) is an architecture description element in the Non-Functional and Quality subsystem.
-
-| Item | Identification |
-| --- | --- |
-| Participating applications | Public Site application; Portal application; WordUp API application |
-| Architecture view | Application Context view (`V-APP-NFR-PROTECT-PII-AND-DATA-RIGHTS`) |
-| Governing viewpoint | Application Context viewpoint (`VP-APP-CONTEXT`) |
-| View component | Nested Application Context component (`VC-APP-NFR-PROTECT-PII-AND-DATA-RIGHTS`) |
-
-This focused description addresses feature scope, behavior, application context, and requirement correspondences. It does not claim conformance as a complete architecture description.
-
 ## Overview
 
-The Protect PII and data rights feature slice carries personal data from collection through restricted use, correction, withdrawal, and retention.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Non-Functional and Quality subsystem owns the part of that software concerned with protect pii and data rights.
 
-## Application context
+The Protect PII and data rights feature slice refines `L2-NFR-003` into one independently deliverable interaction. The system shall protect PII and honour access/correction/withdrawal/retention.
 
-The Application Context view (`V-APP-NFR-PROTECT-PII-AND-DATA-RIGHTS`) applies the Application Context viewpoint (`VP-APP-CONTEXT`) to the Word Up software system. The viewpoint frames the application-location concern (`C-APP-LOCATION`). The view component (`VC-APP-NFR-PROTECT-PII-AND-DATA-RIGHTS`) uses the nested-containment model kind.
+A Word Up participant starts the protect pii and data rights interaction through the Public Site application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative protect pii and data rights result.
 
-Nested rectangles identify the EoI, each participating application, the subsystem boundary, and the feature-slice contribution. Figure 1 presents the view component.
+The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
-![Figure 1 — Application Context view for the Protect PII and data rights feature slice.](diagrams/application-context.png)
+## Description
 
-*Figure 1 — Application Context view: the Protect PII and data rights feature slice within the participating Word Up applications.*
+### Vertical slice boundary
 
-## Behavior
+The feature spans Public Site application; Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
-- **Entry.** The platform stores personal data or receives an access, correction, removal, or consent-withdrawal request.
-- **Processing.** The API minimizes stored data, protects sensitive fields at rest, and restricts access through assignments. The API records subject actions and removes or anonymizes expired data. Operational logs redact secrets and PII.
-- **Result.** The organization can fulfil data-subject rights while preserving authorized de-identified reporting.
+### Components and types
 
-## Scope boundary
+A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
 
-Guardian consent semantics and role authorization provide related but independently testable rules.
+| Layer | Components, types, and classes | Responsibility |
+| --- | --- | --- |
+| Frontend page | [`ConsentRequired`](../../../../frontend/projects/portal/src/app/states/consent-required/consent-required.ts)<br>[`AuthStore`](../../../../frontend/projects/wu-auth/src/lib/auth-store.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/wu-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | `NonFunctionalController` *(planned boundary)* | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | `ProtectPiiAndDataRightsCommand` *(planned boundary)*<br>`ProtectPiiAndDataRightsCommandHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | `ProtectPiiAndDataRightsState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`SecurityHeadersMiddleware`](../../../../backend/src/WordUp.Api/Middleware/SecurityHeadersMiddleware.cs)<br>[`MaintenanceMiddleware`](../../../../backend/src/WordUp.Api/Middleware/MaintenanceMiddleware.cs)<br>[`NotFoundException`](../../../../backend/src/WordUp.Application/Shared/Common/NotFoundException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
-## Correspondences
+### Functions and data flow
 
-The requirement-trace correspondence method (`M-REQ-TRACE`) relates stable L2 requirement identifiers to feature slices. The Protect PII and data rights requirement correspondence (`COR-REQ-NFR-PROTECT-PII-AND-DATA-RIGHTS`) records the following relationships.
+- `ConsentRequired.submit()` starts the browser interaction and maintains presentation state.
+- `AuthApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `NonFunctionalController.PostAsync()` applies transport policy and constructs `ProtectPiiAndDataRightsCommand`.
+- `ProtectPiiAndDataRightsCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `ProtectPiiAndDataRightsState`, and returns a typed result.
+- `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-| Requirement | Relationship |
+### Behavior
+
+1. **Entry.** A Word Up participant starts the protect pii and data rights interaction through the Public Site application.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-NFR-003`, `L2-CONSENT-001`, `L2-AUTH-010`, `L2-NFR-011`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative protect pii and data rights result.
+
+## Requirements
+
+This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
+
+### L2-NFR-003 — PII protection and data-subject rights
+
+| Field | Value |
 | --- | --- |
-| `L2-NFR-003` | Primary requirement |
-| `L2-CONSENT-001` | Dependency |
-| `L2-AUTH-010` | Dependency |
-| `L2-NFR-011` | Dependency |
+| Relationship | Primary |
+| L1 specification ID | `L1-NFR-002` |
+
+The system shall protect PII and honour access/correction/withdrawal/retention.
+
+### L2-CONSENT-001 — Guardian consent capture with e-signature
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-CONSENT-001` |
+
+The system shall capture guardian participation consent (required) and media/photo consent (optional, granular) with a typed e-signature record.
+
+### L2-AUTH-010 — Role-scoped data visibility
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-AUTH-007` |
+
+Each role shall see only the data its scope permits, per the role scopes defined by the PRD (see L2-AUTH-009).
+
+### L2-NFR-011 — Observability and operations
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-NFR-008` |
+
+The system shall expose health checks, structured logging, and an admin CLI (operational tooling — an out-of-band ops interface, not product scope).
+
+## Diagrams
+
+The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
+
+### C4 diagrams
+
+#### System context
+
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+
+![Figure 1 — C4 system context for Protect PII and data rights.](diagrams/c4-system-context.png)
+
+*Figure 1 — C4 system context: Protect PII and data rights in the Word Up environment.*
+
+#### Container
+
+Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
+
+![Figure 2 — C4 container view for Protect PII and data rights.](diagrams/c4-container.png)
+
+*Figure 2 — C4 container view: application and data boundaries for Protect PII and data rights.*
+
+#### Component
+
+Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
+
+![Figure 3 — C4 component view for Protect PII and data rights.](diagrams/c4-component.png)
+
+*Figure 3 — C4 component view: collaborating components for Protect PII and data rights.*
+
+#### Code
+
+Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
+
+![Figure 4 — C4 code view for Protect PII and data rights.](diagrams/c4-code.png)
+
+*Figure 4 — C4 code view: feature-owned code elements for Protect PII and data rights.*
+
+### Class diagram
+
+Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
+
+![Figure 5 — Class structure for Protect PII and data rights.](diagrams/class-structure.png)
+
+*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for Protect PII and data rights.*
+
+### Sequence diagram
+
+Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
+
+![Figure 6 — Sequence behavior for Protect PII and data rights.](diagrams/sequence-behaviour.png)
+
+*Figure 6 — Sequence behavior: the end-to-end protect pii and data rights interaction.*

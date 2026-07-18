@@ -1,5 +1,65 @@
 /** Public marketing-site form models (anonymous). */
 
+// Traces to: L2-PUB-002 (authoritative published curriculum, cohorts, journey, and impact)
+export interface PublicContentView {
+  tracks: PublicTrackView[];
+  cohorts: PublicCohortView[];
+  mentorship: PublicMentorshipView;
+  journey: PublicJourneyStepView[];
+  impact: PublicImpactStatsView;
+}
+
+export interface PublicTrackView {
+  id: string;
+  name: string;
+  key: string;
+  description: string | null;
+  modules: PublicModuleView[];
+}
+
+export interface PublicModuleView {
+  id: string;
+  name: string;
+  description: string | null;
+  order: number;
+  outcomeBadge: PublicBadgeView | null;
+}
+
+export interface PublicBadgeView {
+  id: string;
+  name: string;
+  icon: string;
+  description: string | null;
+}
+
+export interface PublicCohortView {
+  id: string;
+  name: string;
+  neighbourhood: string | null;
+  termStart: string;
+  termEnd: string;
+  leadMentor: string | null;
+  status: 'Upcoming' | 'Active' | 'Completed';
+}
+
+export interface PublicMentorshipView {
+  summary: string;
+  features: string[];
+}
+
+export interface PublicJourneyStepView {
+  step: number;
+  title: string;
+  description: string;
+}
+
+export interface PublicImpactStatsView {
+  tracks: number;
+  cohorts: number;
+  modules: number;
+  neighbourhoods: number;
+}
+
 // Traces to: L2-PUB-003 (AC1 contact captured + acknowledged)
 export interface SubmitContactRequest {
   name: string;

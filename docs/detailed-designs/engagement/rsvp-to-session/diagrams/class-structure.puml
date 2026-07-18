@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — RSVP to a session
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "SessionPersistence" as page_SessionPersistence <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "NotificationPreferencesApi" as client_NotificationPreferencesApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "RsvpController" as controller_RsvpController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "CreateSessionCommand" as request_CreateSessionCommand <<record>>
+  class "CreateSessionCommandHandler" as handler_CreateSessionCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Session" as entity_Session <<domain type>>
+}
+page_SessionPersistence --> client_NotificationPreferencesApi : invokes
+client_NotificationPreferencesApi --> controller_RsvpController : calls
+controller_RsvpController ..> request_CreateSessionCommand : creates
+request_CreateSessionCommand --> handler_CreateSessionCommandHandler : dispatched to
+handler_CreateSessionCommandHandler --> IAppDbContext : depends on
+handler_CreateSessionCommandHandler --> ICurrentUser : scopes by
+handler_CreateSessionCommandHandler --> entity_Session : reads or changes
+IAppDbContext o-- entity_Session : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

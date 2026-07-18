@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — View journey and impact
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Public Site application" {
+  class "Programs" as page_Programs <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "PublicSiteApi" as client_PublicSiteApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "PublicController" as controller_PublicController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "ViewJourneyAndImpactQuery" as request_ViewJourneyAndImpactQuery <<record>>
+  class "ViewJourneyAndImpactQueryHandler" as handler_ViewJourneyAndImpactQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "ContactRequest" as entity_ContactRequest <<domain type>>
+}
+page_Programs --> client_PublicSiteApi : invokes
+client_PublicSiteApi --> controller_PublicController : calls
+controller_PublicController ..> request_ViewJourneyAndImpactQuery : creates
+request_ViewJourneyAndImpactQuery --> handler_ViewJourneyAndImpactQueryHandler : dispatched to
+handler_ViewJourneyAndImpactQueryHandler --> IAppDbContext : depends on
+handler_ViewJourneyAndImpactQueryHandler --> ICurrentUser : scopes by
+handler_ViewJourneyAndImpactQueryHandler --> entity_ContactRequest : reads or changes
+IAppDbContext o-- entity_ContactRequest : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

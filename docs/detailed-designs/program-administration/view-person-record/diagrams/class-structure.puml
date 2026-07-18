@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — View a person record
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "ResetPassword" as page_ResetPassword <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "PasswordResetApi" as client_PasswordResetApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "OrgSettingsController" as controller_OrgSettingsController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SendPasswordResetForPersonCommand" as request_SendPasswordResetForPersonCommand <<record>>
+  class "SendPasswordResetForPersonCommandHandler" as handler_SendPasswordResetForPersonCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Cohort" as entity_Cohort <<domain type>>
+}
+page_ResetPassword --> client_PasswordResetApi : invokes
+client_PasswordResetApi --> controller_OrgSettingsController : calls
+controller_OrgSettingsController ..> request_SendPasswordResetForPersonCommand : creates
+request_SendPasswordResetForPersonCommand --> handler_SendPasswordResetForPersonCommandHandler : dispatched to
+handler_SendPasswordResetForPersonCommandHandler --> IAppDbContext : depends on
+handler_SendPasswordResetForPersonCommandHandler --> ICurrentUser : scopes by
+handler_SendPasswordResetForPersonCommandHandler --> entity_Cohort : reads or changes
+IAppDbContext o-- entity_Cohort : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

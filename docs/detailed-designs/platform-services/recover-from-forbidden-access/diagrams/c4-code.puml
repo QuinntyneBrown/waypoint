@@ -1,0 +1,50 @@
+@startuml
+left to right direction
+title C4 level 4 — Recover from forbidden access — code elements
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+rectangle "Word Up software system" {
+  package "Frontend" {
+    package "Portal application" {
+      rectangle "Forbidden\n[Code element: page]" as page #E0F2FE
+      rectangle "DisplayPreferencesApi\n[Code element: API client]" as client #E0F2FE
+    }
+  }
+  package "Backend" {
+    package "WordUp API application" {
+      rectangle "AccessController\n[Code element: controller]" as controller #D1FADF
+    }
+    package "WordUp Application" {
+      rectangle "AccessStateQuery\n[Code element: request record]" as request #D1FADF
+      rectangle "AccessStateQueryHandler\n[Code element: handler class]" as handler #D1FADF
+      rectangle "IAppDbContext\n[Code element: port]" as dbport #D1FADF
+      rectangle "ICurrentUser\n[Code element: port]" as current #D1FADF
+    }
+    package "WordUp Domain" {
+      rectangle "SupportRequest\n[Code element: domain type]" as entity #F4EBFF
+    }
+  }
+}
+page --> client
+client --> controller
+controller --> request
+request --> handler
+handler --> dbport
+handler --> current
+handler --> entity
+legend right
+  Code elements are nested within the application container that owns them.
+endlegend
+@enduml

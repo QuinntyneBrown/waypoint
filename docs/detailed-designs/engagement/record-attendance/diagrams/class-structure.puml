@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Record attendance
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "ServerError" as page_ServerError <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "PublicSiteApi" as client_PublicSiteApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "AttendanceController" as controller_AttendanceController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "AttendanceHistoryByYouthQuery" as request_AttendanceHistoryByYouthQuery <<record>>
+  class "AttendanceHistoryByYouthQueryHandler" as handler_AttendanceHistoryByYouthQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "AttendanceRecord" as entity_AttendanceRecord <<domain type>>
+}
+page_ServerError --> client_PublicSiteApi : invokes
+client_PublicSiteApi --> controller_AttendanceController : calls
+controller_AttendanceController ..> request_AttendanceHistoryByYouthQuery : creates
+request_AttendanceHistoryByYouthQuery --> handler_AttendanceHistoryByYouthQueryHandler : dispatched to
+handler_AttendanceHistoryByYouthQueryHandler --> IAppDbContext : depends on
+handler_AttendanceHistoryByYouthQueryHandler --> ICurrentUser : scopes by
+handler_AttendanceHistoryByYouthQueryHandler --> entity_AttendanceRecord : reads or changes
+IAppDbContext o-- entity_AttendanceRecord : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Read guardian announcements
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "YouthAnnouncements" as page_YouthAnnouncements <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "GuardianController" as controller_GuardianController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "GuardianAnnouncementsQuery" as request_GuardianAnnouncementsQuery <<record>>
+  class "GuardianAnnouncementsQueryHandler" as handler_GuardianAnnouncementsQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "GuardianProfile" as entity_GuardianProfile <<domain type>>
+}
+page_YouthAnnouncements --> client_AnnouncementsApi : invokes
+client_AnnouncementsApi --> controller_GuardianController : calls
+controller_GuardianController ..> request_GuardianAnnouncementsQuery : creates
+request_GuardianAnnouncementsQuery --> handler_GuardianAnnouncementsQueryHandler : dispatched to
+handler_GuardianAnnouncementsQueryHandler --> IAppDbContext : depends on
+handler_GuardianAnnouncementsQueryHandler --> ICurrentUser : scopes by
+handler_GuardianAnnouncementsQueryHandler --> entity_GuardianProfile : reads or changes
+IAppDbContext o-- entity_GuardianProfile : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

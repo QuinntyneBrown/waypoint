@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Register volunteer interest
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Public Site application" {
+  class "VolunteerSchedule" as page_VolunteerSchedule <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "VolunteerApi" as client_VolunteerApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "PublicController" as controller_PublicController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SubmitVolunteerSignupCommand" as request_SubmitVolunteerSignupCommand <<record>>
+  class "SubmitVolunteerSignupCommandHandler" as handler_SubmitVolunteerSignupCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "VolunteerSignup" as entity_VolunteerSignup <<domain type>>
+}
+page_VolunteerSchedule --> client_VolunteerApi : invokes
+client_VolunteerApi --> controller_PublicController : calls
+controller_PublicController ..> request_SubmitVolunteerSignupCommand : creates
+request_SubmitVolunteerSignupCommand --> handler_SubmitVolunteerSignupCommandHandler : dispatched to
+handler_SubmitVolunteerSignupCommandHandler --> IAppDbContext : depends on
+handler_SubmitVolunteerSignupCommandHandler --> ICurrentUser : scopes by
+handler_SubmitVolunteerSignupCommandHandler --> entity_VolunteerSignup : reads or changes
+IAppDbContext o-- entity_VolunteerSignup : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

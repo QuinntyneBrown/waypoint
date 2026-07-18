@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Record audit events
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "ConsentRequired" as page_ConsentRequired <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "ConsentApi" as client_ConsentApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "AuditController" as controller_AuditController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "AuditLogQuery" as request_AuditLogQuery <<record>>
+  class "AuditLogQueryHandler" as handler_AuditLogQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "AuditEntry" as entity_AuditEntry <<domain type>>
+}
+page_ConsentRequired --> client_ConsentApi : invokes
+client_ConsentApi --> controller_AuditController : calls
+controller_AuditController ..> request_AuditLogQuery : creates
+request_AuditLogQuery --> handler_AuditLogQueryHandler : dispatched to
+handler_AuditLogQueryHandler --> IAppDbContext : depends on
+handler_AuditLogQueryHandler --> ICurrentUser : scopes by
+handler_AuditLogQueryHandler --> entity_AuditEntry : reads or changes
+IAppDbContext o-- entity_AuditEntry : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

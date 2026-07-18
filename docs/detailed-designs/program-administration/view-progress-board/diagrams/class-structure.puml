@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — View the progress board
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "SettingsNotifications" as page_SettingsNotifications <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "PeopleApi" as client_PeopleApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "OrgSettingsController" as controller_OrgSettingsController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "ProgressBoardQuery" as request_ProgressBoardQuery <<record>>
+  class "ProgressBoardQueryHandler" as handler_ProgressBoardQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Cohort" as entity_Cohort <<domain type>>
+}
+page_SettingsNotifications --> client_PeopleApi : invokes
+client_PeopleApi --> controller_OrgSettingsController : calls
+controller_OrgSettingsController ..> request_ProgressBoardQuery : creates
+request_ProgressBoardQuery --> handler_ProgressBoardQueryHandler : dispatched to
+handler_ProgressBoardQueryHandler --> IAppDbContext : depends on
+handler_ProgressBoardQueryHandler --> ICurrentUser : scopes by
+handler_ProgressBoardQueryHandler --> entity_Cohort : reads or changes
+IAppDbContext o-- entity_Cohort : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

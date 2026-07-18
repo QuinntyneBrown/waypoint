@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — View a consent record
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "ConsentRequired" as page_ConsentRequired <<Angular component>> {
+    +load(): void
+    +renderResult(): void
+  }
+  class "ConsentApi" as client_ConsentApi <<API client>> {
+    +get(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "GuardianController" as controller_GuardianController <<controller>> {
+    +GetAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "GuardianConsentRecordQuery" as request_GuardianConsentRecordQuery <<record>>
+  class "GuardianConsentRecordQueryHandler" as handler_GuardianConsentRecordQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "GuardianProfile" as entity_GuardianProfile <<domain type>>
+}
+page_ConsentRequired --> client_ConsentApi : invokes
+client_ConsentApi --> controller_GuardianController : calls
+controller_GuardianController ..> request_GuardianConsentRecordQuery : creates
+request_GuardianConsentRecordQuery --> handler_GuardianConsentRecordQueryHandler : dispatched to
+handler_GuardianConsentRecordQueryHandler --> IAppDbContext : depends on
+handler_GuardianConsentRecordQueryHandler --> ICurrentUser : scopes by
+handler_GuardianConsentRecordQueryHandler --> entity_GuardianProfile : reads or changes
+IAppDbContext o-- entity_GuardianProfile : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

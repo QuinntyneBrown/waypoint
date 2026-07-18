@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Adapt layouts
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Public Site application" {
+  class "AdaptLayoutsPage" as page_AdaptLayoutsPage <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "AdaptLayoutsCommand" as request_AdaptLayoutsCommand <<record>>
+  class "AdaptLayoutsCommandHandler" as handler_AdaptLayoutsCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "AdaptLayoutsState" as entity_AdaptLayoutsState <<domain type>>
+}
+page_AdaptLayoutsPage --> client_AnnouncementsApi : invokes
+client_AnnouncementsApi --> controller_NonFunctionalController : calls
+controller_NonFunctionalController ..> request_AdaptLayoutsCommand : creates
+request_AdaptLayoutsCommand --> handler_AdaptLayoutsCommandHandler : dispatched to
+handler_AdaptLayoutsCommandHandler --> IAppDbContext : depends on
+handler_AdaptLayoutsCommandHandler --> ICurrentUser : scopes by
+handler_AdaptLayoutsCommandHandler --> entity_AdaptLayoutsState : reads or changes
+IAppDbContext o-- entity_AdaptLayoutsState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

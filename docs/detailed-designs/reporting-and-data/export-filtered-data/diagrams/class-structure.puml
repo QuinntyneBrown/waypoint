@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Export filtered data
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "AuthStore" as page_AuthStore <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AuthApi" as client_AuthApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "DataController" as controller_DataController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "ExportAuditLogQuery" as request_ExportAuditLogQuery <<record>>
+  class "ExportAuditLogQueryHandler" as handler_ExportAuditLogQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "ExportFilteredDataState" as entity_ExportFilteredDataState <<domain type>>
+}
+page_AuthStore --> client_AuthApi : invokes
+client_AuthApi --> controller_DataController : calls
+controller_DataController ..> request_ExportAuditLogQuery : creates
+request_ExportAuditLogQuery --> handler_ExportAuditLogQueryHandler : dispatched to
+handler_ExportAuditLogQueryHandler --> IAppDbContext : depends on
+handler_ExportAuditLogQueryHandler --> ICurrentUser : scopes by
+handler_ExportAuditLogQueryHandler --> entity_ExportFilteredDataState : reads or changes
+IAppDbContext o-- entity_ExportFilteredDataState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

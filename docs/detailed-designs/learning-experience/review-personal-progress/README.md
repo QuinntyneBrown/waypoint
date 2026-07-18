@@ -1,48 +1,129 @@
 # Review personal progress
 
-## Identification and scope
-
-The Word Up software system is the entity of interest (EoI). The Review personal progress feature slice (`FS-LEARN-REVIEW-PERSONAL-PROGRESS`) is an architecture description element in the Learning Experience subsystem.
-
-| Item | Identification |
-| --- | --- |
-| Participating applications | Portal application; WordUp API application |
-| Architecture view | Application Context view (`V-APP-LEARN-REVIEW-PERSONAL-PROGRESS`) |
-| Governing viewpoint | Application Context viewpoint (`VP-APP-CONTEXT`) |
-| View component | Nested Application Context component (`VC-APP-LEARN-REVIEW-PERSONAL-PROGRESS`) |
-
-This focused description addresses feature scope, behavior, application context, and requirement correspondences. It does not claim conformance as a complete architecture description.
-
 ## Overview
 
-The Review personal progress feature slice provides a youth private analytics across learning, quizzes, attendance, and competencies.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns the part of that software concerned with review personal progress.
 
-## Application context
+The Review personal progress feature slice refines `L2-LEARN-010` into one independently deliverable interaction. Youth shall see personal analytics across overview, quizzes, and attendance.
 
-The Application Context view (`V-APP-LEARN-REVIEW-PERSONAL-PROGRESS`) applies the Application Context viewpoint (`VP-APP-CONTEXT`) to the Word Up software system. The viewpoint frames the application-location concern (`C-APP-LOCATION`). The view component (`VC-APP-LEARN-REVIEW-PERSONAL-PROGRESS`) uses the nested-containment model kind.
+A youth participant starts the review personal progress interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative review personal progress result.
 
-Nested rectangles identify the EoI, each participating application, the subsystem boundary, and the feature-slice contribution. Figure 1 presents the view component.
+The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
-![Figure 1 — Application Context view for the Review personal progress feature slice.](diagrams/application-context.png)
+## Description
 
-*Figure 1 — Application Context view: the Review personal progress feature slice within the participating Word Up applications.*
+### Vertical slice boundary
 
-## Behavior
+The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
-- **Entry.** A youth opens Progress and selects overview, quizzes, or attendance.
-- **Processing.** The server scopes results to the caller and computes overall completion, quiz average and history, completed lessons, session attendance, and latest mentor-assessed competency levels.
-- **Result.** The youth sees a consistent, evidence-based picture of their own development.
+### Components and types
 
-## Scope boundary
+A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
 
-Guardian aggregates, mentor youth records, and organization reports have separate privacy contracts.
+| Layer | Components, types, and classes | Responsibility |
+| --- | --- | --- |
+| Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/wu-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`YouthProgressController`](../../../../backend/src/WordUp.Api/Controllers/LearningExperience/YouthProgressController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`ProgressQuery`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/ProgressQuery.cs)<br>[`ProgressQueryHandler`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/ProgressQueryHandler.cs)<br>[`ProgressView`](../../../../backend/src/WordUp.Application/LearningExperience/YouthCurriculum/ProgressQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`LessonProgress`](../../../../backend/src/WordUp.Domain/LearningExperience/LessonProgress.cs)<br>[`QuizAttempt`](../../../../backend/src/WordUp.Domain/LearningExperience/QuizAttempt.cs)<br>[`ProgressStatus`](../../../../backend/src/WordUp.Domain/LearningExperience/ProgressStatus.cs)<br>[`BadgeAward`](../../../../backend/src/WordUp.Domain/LearningExperience/BadgeAward.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
-## Correspondences
+### Functions and data flow
 
-The requirement-trace correspondence method (`M-REQ-TRACE`) relates stable L2 requirement identifiers to feature slices. The Review personal progress requirement correspondence (`COR-REQ-LEARN-REVIEW-PERSONAL-PROGRESS`) records the following relationships.
+- `YouthAnnouncements.submit()` starts the browser interaction and maintains presentation state.
+- `AuthApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `YouthProgressController.PostAsync()` applies transport policy and constructs `ProgressQuery`.
+- `ProgressQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `LessonProgress`, and returns a typed result.
+- `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-| Requirement | Relationship |
+### Behavior
+
+1. **Entry.** A youth participant starts the review personal progress interaction through the Portal application.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-LEARN-010`, `L2-MENTOR-005`, `L2-AUTH-010`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative review personal progress result.
+
+## Requirements
+
+This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
+
+### L2-LEARN-010 — Learner progress self-view
+
+| Field | Value |
 | --- | --- |
-| `L2-LEARN-010` | Primary requirement |
-| `L2-MENTOR-005` | Dependency |
-| `L2-AUTH-010` | Dependency |
+| Relationship | Primary |
+| L1 specification ID | `L1-LEARN-008` |
+
+Youth shall see personal analytics across overview, quizzes, and attendance.
+
+### L2-MENTOR-005 — Competency assessment
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-MENTOR-005` |
+
+Mentors shall set competency levels per youth with notes.
+
+### L2-AUTH-010 — Role-scoped data visibility
+
+| Field | Value |
+| --- | --- |
+| Relationship | Dependency |
+| L1 specification ID | `L1-AUTH-007` |
+
+Each role shall see only the data its scope permits, per the role scopes defined by the PRD (see L2-AUTH-009).
+
+## Diagrams
+
+The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
+
+### C4 diagrams
+
+#### System context
+
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+
+![Figure 1 — C4 system context for Review personal progress.](diagrams/c4-system-context.png)
+
+*Figure 1 — C4 system context: Review personal progress in the Word Up environment.*
+
+#### Container
+
+Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
+
+![Figure 2 — C4 container view for Review personal progress.](diagrams/c4-container.png)
+
+*Figure 2 — C4 container view: application and data boundaries for Review personal progress.*
+
+#### Component
+
+Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
+
+![Figure 3 — C4 component view for Review personal progress.](diagrams/c4-component.png)
+
+*Figure 3 — C4 component view: collaborating components for Review personal progress.*
+
+#### Code
+
+Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
+
+![Figure 4 — C4 code view for Review personal progress.](diagrams/c4-code.png)
+
+*Figure 4 — C4 code view: feature-owned code elements for Review personal progress.*
+
+### Class diagram
+
+Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
+
+![Figure 5 — Class structure for Review personal progress.](diagrams/class-structure.png)
+
+*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for Review personal progress.*
+
+### Sequence diagram
+
+Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
+
+![Figure 6 — Sequence behavior for Review personal progress.](diagrams/sequence-behaviour.png)
+
+*Figure 6 — Sequence behavior: the end-to-end review personal progress interaction.*

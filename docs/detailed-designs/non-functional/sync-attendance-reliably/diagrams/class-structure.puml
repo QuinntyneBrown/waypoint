@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Sync attendance reliably
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "OfflineState" as page_OfflineState <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SyncAttendanceReliablyCommand" as request_SyncAttendanceReliablyCommand <<record>>
+  class "SyncAttendanceReliablyCommandHandler" as handler_SyncAttendanceReliablyCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "SyncAttendanceReliablyState" as entity_SyncAttendanceReliablyState <<domain type>>
+}
+page_OfflineState --> client_AnnouncementsApi : invokes
+client_AnnouncementsApi --> controller_NonFunctionalController : calls
+controller_NonFunctionalController ..> request_SyncAttendanceReliablyCommand : creates
+request_SyncAttendanceReliablyCommand --> handler_SyncAttendanceReliablyCommandHandler : dispatched to
+handler_SyncAttendanceReliablyCommandHandler --> IAppDbContext : depends on
+handler_SyncAttendanceReliablyCommandHandler --> ICurrentUser : scopes by
+handler_SyncAttendanceReliablyCommandHandler --> entity_SyncAttendanceReliablyState : reads or changes
+IAppDbContext o-- entity_SyncAttendanceReliablyState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

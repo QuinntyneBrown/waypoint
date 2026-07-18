@@ -1,0 +1,48 @@
+@startuml
+
+title UML sequence behaviour — Navigate the public site
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+actor "Anonymous visitor" as actor
+box "Frontend — Public Site application" #E0F2FE
+  participant "NotFound" as page
+  participant "PublicSiteApi" as client
+end box
+box "Backend — WordUp API application" #D1FADF
+  participant "PublicController" as controller
+end box
+box "Backend — WordUp Application and Domain" #ECFDF3
+  participant "GetPublicContentQueryHandler" as handler
+  participant "ContactRequest" as entity
+end box
+box "Backend — WordUp Infrastructure" #FFF4E5
+  database "Word Up database" as db
+end box
+actor -> page : An anonymous visitor starts the navigate the public site interaction throug…
+page -> client : Build typed request
+client -> controller : HTTPS request
+controller -> controller : Authenticate and apply endpoint policy
+controller -> handler : Send GetPublicContentQuery
+handler -> db : Query authorized state
+db --> handler : Current state
+handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+entity --> handler : Valid state transition or projection
+handler -> db : Save changes when the request changes state
+db --> handler : Commit or query result
+handler --> controller : Typed result
+controller --> client : HTTP response or ProblemDetails
+client --> page : Feature result
+page --> actor : The frontend application presents an authorized and bounded navigate the pu…
+@enduml

@@ -1,0 +1,48 @@
+@startuml
+
+title UML sequence behaviour — View an upcoming schedule
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+actor "Volunteer" as actor
+box "Frontend — Portal application" #E0F2FE
+  participant "VolunteerSchedule" as page
+  participant "VolunteerApi" as client
+end box
+box "Backend — WordUp API application" #D1FADF
+  participant "VolunteerController" as controller
+end box
+box "Backend — WordUp Application and Domain" #ECFDF3
+  participant "VolunteerScheduleQueryHandler" as handler
+  participant "ViewUpcomingScheduleState" as entity
+end box
+box "Backend — WordUp Infrastructure" #FFF4E5
+  database "Word Up database" as db
+end box
+actor -> page : A volunteer starts the view an upcoming schedule interaction through the Po…
+page -> client : Build typed request
+client -> controller : HTTPS request
+controller -> controller : Authenticate and apply endpoint policy
+controller -> handler : Send VolunteerScheduleQuery
+handler -> db : Query authorized state
+db --> handler : Current state
+handler -> entity : The frontend application captures the interaction and sends a typed request to the Word…
+entity --> handler : Valid state transition or projection
+handler -> db : Save changes when the request changes state
+db --> handler : Commit or query result
+handler --> controller : Typed result
+controller --> client : HTTP response or ProblemDetails
+client --> page : Feature result
+page --> actor : The frontend application presents an authorized and bounded view an upcomin…
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Validate input and output
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Public Site application" {
+  class "ValidateInputAndOutputPage" as page_ValidateInputAndOutputPage <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "ValidateInputAndOutputCommand" as request_ValidateInputAndOutputCommand <<record>>
+  class "ValidateInputAndOutputCommandHandler" as handler_ValidateInputAndOutputCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "ValidateInputAndOutputState" as entity_ValidateInputAndOutputState <<domain type>>
+}
+page_ValidateInputAndOutputPage --> client_AnnouncementsApi : invokes
+client_AnnouncementsApi --> controller_NonFunctionalController : calls
+controller_NonFunctionalController ..> request_ValidateInputAndOutputCommand : creates
+request_ValidateInputAndOutputCommand --> handler_ValidateInputAndOutputCommandHandler : dispatched to
+handler_ValidateInputAndOutputCommandHandler --> IAppDbContext : depends on
+handler_ValidateInputAndOutputCommandHandler --> ICurrentUser : scopes by
+handler_ValidateInputAndOutputCommandHandler --> entity_ValidateInputAndOutputState : reads or changes
+IAppDbContext o-- entity_ValidateInputAndOutputState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

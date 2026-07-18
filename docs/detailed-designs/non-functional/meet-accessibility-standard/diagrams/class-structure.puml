@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Meet the accessibility standard
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Public Site application" {
+  class "DisplayPreferencesService" as page_DisplayPreferencesService <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "DisplayPreferencesApi" as client_DisplayPreferencesApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "MeetAccessibilityStandardCommand" as request_MeetAccessibilityStandardCommand <<record>>
+  class "MeetAccessibilityStandardCommandHandler" as handler_MeetAccessibilityStandardCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "MeetAccessibilityStandardState" as entity_MeetAccessibilityStandardState <<domain type>>
+}
+page_DisplayPreferencesService --> client_DisplayPreferencesApi : invokes
+client_DisplayPreferencesApi --> controller_NonFunctionalController : calls
+controller_NonFunctionalController ..> request_MeetAccessibilityStandardCommand : creates
+request_MeetAccessibilityStandardCommand --> handler_MeetAccessibilityStandardCommandHandler : dispatched to
+handler_MeetAccessibilityStandardCommandHandler --> IAppDbContext : depends on
+handler_MeetAccessibilityStandardCommandHandler --> ICurrentUser : scopes by
+handler_MeetAccessibilityStandardCommandHandler --> entity_MeetAccessibilityStandardState : reads or changes
+IAppDbContext o-- entity_MeetAccessibilityStandardState : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

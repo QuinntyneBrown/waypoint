@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Submit an application
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Public Site application" {
+  class "ApplicationsList" as page_ApplicationsList <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "ApplicationsApi" as client_ApplicationsApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "ApplicationsController" as controller_ApplicationsController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SubmitApplicationCommand" as request_SubmitApplicationCommand <<record>>
+  class "SubmitApplicationCommandHandler" as handler_SubmitApplicationCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "YouthApplication" as entity_YouthApplication <<domain type>>
+}
+page_ApplicationsList --> client_ApplicationsApi : invokes
+client_ApplicationsApi --> controller_ApplicationsController : calls
+controller_ApplicationsController ..> request_SubmitApplicationCommand : creates
+request_SubmitApplicationCommand --> handler_SubmitApplicationCommandHandler : dispatched to
+handler_SubmitApplicationCommandHandler --> IAppDbContext : depends on
+handler_SubmitApplicationCommandHandler --> ICurrentUser : scopes by
+handler_SubmitApplicationCommandHandler --> entity_YouthApplication : reads or changes
+IAppDbContext o-- entity_YouthApplication : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Author tracks and modules
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "ServerError" as page_ServerError <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "PublicSiteApi" as client_PublicSiteApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "ModulesController" as controller_ModulesController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "ListTracksQuery" as request_ListTracksQuery <<record>>
+  class "ListTracksQueryHandler" as handler_ListTracksQueryHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "Track" as entity_Track <<domain type>>
+}
+page_ServerError --> client_PublicSiteApi : invokes
+client_PublicSiteApi --> controller_ModulesController : calls
+controller_ModulesController ..> request_ListTracksQuery : creates
+request_ListTracksQuery --> handler_ListTracksQueryHandler : dispatched to
+handler_ListTracksQueryHandler --> IAppDbContext : depends on
+handler_ListTracksQueryHandler --> ICurrentUser : scopes by
+handler_ListTracksQueryHandler --> entity_Track : reads or changes
+IAppDbContext o-- entity_Track : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+title UML class structure — Contact the program
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Public Site application" {
+  class "Contact" as page_Contact <<Angular component>> {
+    +submit(): void
+    +renderResult(): void
+  }
+  class "PublicSiteApi" as client_PublicSiteApi <<API client>> {
+    +execute(request): Observable
+  }
+}
+package "Backend — WordUp API application" {
+  class "PublicController" as controller_PublicController <<controller>> {
+    +PostAsync(request, cancellationToken): ActionResult
+  }
+}
+package "Backend — WordUp Application" {
+  class "SubmitContactRequestCommand" as request_SubmitContactRequestCommand <<record>>
+  class "SubmitContactRequestCommandHandler" as handler_SubmitContactRequestCommandHandler <<handler>> {
+    +Handle(request, cancellationToken): Result
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(cancellationToken): int
+  }
+  interface ICurrentUser {
+    +Id: Guid
+    +Role: string
+  }
+}
+package "Backend — WordUp Domain" {
+  class "ContactRequest" as entity_ContactRequest <<domain type>>
+}
+page_Contact --> client_PublicSiteApi : invokes
+client_PublicSiteApi --> controller_PublicController : calls
+controller_PublicController ..> request_SubmitContactRequestCommand : creates
+request_SubmitContactRequestCommand --> handler_SubmitContactRequestCommandHandler : dispatched to
+handler_SubmitContactRequestCommandHandler --> IAppDbContext : depends on
+handler_SubmitContactRequestCommandHandler --> ICurrentUser : scopes by
+handler_SubmitContactRequestCommandHandler --> entity_ContactRequest : reads or changes
+IAppDbContext o-- entity_ContactRequest : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

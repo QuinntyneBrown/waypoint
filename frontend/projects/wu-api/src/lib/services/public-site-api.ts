@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api-base-url';
 import {
+  PublicContentView,
   SubmitContactRequest,
   SubmitContactResult,
   SubmitDonationPledgeRequest,
@@ -19,6 +20,11 @@ import {
 export class PublicSiteApi {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
+
+  /** `GET /api/public/content` (L2-PUB-002). */
+  getContent(): Observable<PublicContentView> {
+    return this.http.get<PublicContentView>(`${this.base}/api/public/content`);
+  }
 
   /** `POST /api/public/contact` (L2-PUB-003 AC1). */
   submitContact(body: SubmitContactRequest): Observable<SubmitContactResult> {
