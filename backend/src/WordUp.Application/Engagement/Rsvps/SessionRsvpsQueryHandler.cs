@@ -15,7 +15,7 @@ public class SessionRsvpsQueryHandler : IRequestHandler<SessionRsvpsQuery, IRead
         return await _db.SessionRsvps
             .Where(r => r.SessionId == request.SessionId)
             .OrderBy(r => r.CreatedAt)
-            .Select(r => new RsvpView(r.YouthUserId, r.Response.ToString(), r.Note, r.ReminderSet))
+            .Select(r => new RsvpView(r.Id, r.YouthUserId, r.Response.ToString(), r.Note, r.ReminderSet))
             .ToListAsync(cancellationToken);
     }
 }

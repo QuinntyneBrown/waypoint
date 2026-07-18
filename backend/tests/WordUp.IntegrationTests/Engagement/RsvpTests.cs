@@ -27,7 +27,10 @@ public sealed class RsvpTests : IntegrationTestBase
         return await Client.SendAsync(request);
     }
 
-    private async Task<(Guid Id, string Email)> SeedUserAsync(string role, Guid? mentorId = null)
+    private async Task<(Guid Id, string Email)> SeedUserAsync(
+        string role,
+        Guid? mentorId = null,
+        Guid? cohortId = null)
     {
         var email = $"seed.{role.ToLowerInvariant()}.{Guid.NewGuid():N}@example.com";
         using var scope = Factory.Services.CreateScope();
@@ -40,6 +43,7 @@ public sealed class RsvpTests : IntegrationTestBase
             Role = role,
             Status = UserStatus.Active,
             MentorId = mentorId,
+            CohortId = cohortId,
             PasswordHash = hasher.Hash("Passw0rd!"),
         };
         db.Users.Add(user);
@@ -47,15 +51,15 @@ public sealed class RsvpTests : IntegrationTestBase
         return (user.Id, email);
     }
 
-    private async Task<Guid> SeedSessionAsync()
+    private async Task<Guid> SeedSessionAsync(Guid cohortId, int daysFromNow = 2)
     {
         using var scope = Factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var session = new Session
         {
-            CohortId = Guid.NewGuid(),
+            CohortId = cohortId,
             Title = "Weekly Session",
-            StartsAt = DateTime.UtcNow.AddDays(1),
+            StartsAt = DateTime.UtcNow.AddDays(daysFromNow),
             CreatedByUserId = Guid.NewGuid(),
         };
         db.Sessions.Add(session);
@@ -77,10 +81,44 @@ public sealed class RsvpTests : IntegrationTestBase
     {
         // Traces to: L2-ENGAGE-005
         var mentor = await SeedUserAsync(Roles.Mentor);
-        var youth = await SeedUserAsync(Roles.Youth, mentorId: mentor.Id);
-        var sessionId = await SeedSessionAsync();
+        Guid cohortId;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var cohort = new Cohort
+            {
+                Name = "Youth cohort",
+                MentorId = mentor.Id,
+                TermStart = DateTime.UtcNow.AddDays(-30),
+                TermEnd = DateTime.UtcNow.AddDays(90),
+            };
+            db.Cohorts.Add(cohort);
+            await db.SaveChangesAsync();
+            cohortId = cohort.Id;
+        }
+        var youth = await SeedUserAsync(Roles.Youth, mentorId: mentor.Id, cohortId: cohortId);
+        var sessionId = await SeedSessionAsync(cohortId);
+        var otherSessionId = await SeedSessionAsync(Guid.NewGuid());
+        await SeedSessionAsync(cohortId, daysFromNow: -1);
         var youthToken = await SignInAsync(youth.Email);
         var mentorToken = await SignInAsync(mentor.Email);
+
+        var before = await SendAsync(HttpMethod.Get, "/api/me/schedule", token: youthToken);
+        Assert.That(before.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var upcoming = await before.Content.ReadFromJsonAsync<List<YouthSessionDto>>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(upcoming, Has.Count.EqualTo(1), "only future sessions in the youth cohort are visible");
+            Assert.That(upcoming![0].SessionId, Is.EqualTo(sessionId));
+            Assert.That(upcoming[0].Response, Is.Null);
+        });
+
+        var crossCohort = await SendAsync(HttpMethod.Post, $"/api/sessions/{otherSessionId}/rsvp", body: new
+        {
+            response = "going",
+            reminderSet = false,
+        }, token: youthToken);
+        Assert.That(crossCohort.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
 
         var rsvp = await SendAsync(HttpMethod.Post, $"/api/sessions/{sessionId}/rsvp", body: new
         {
@@ -89,6 +127,16 @@ public sealed class RsvpTests : IntegrationTestBase
             reminderSet = true,
         }, token: youthToken);
         Assert.That(rsvp.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        var current = await SendAsync(HttpMethod.Get, "/api/me/schedule", token: youthToken);
+        var currentView = (await current.Content.ReadFromJsonAsync<List<YouthSessionDto>>())!.Single();
+        Assert.Multiple(() =>
+        {
+            Assert.That(currentView.Response, Is.EqualTo("Going"));
+            Assert.That(currentView.Note, Is.EqualTo("Bringing a friend from school."));
+            Assert.That(currentView.ReminderSet, Is.True);
+            Assert.That(currentView.ReminderAt, Is.Not.Null);
+        });
 
         var list = await SendAsync(HttpMethod.Get, $"/api/sessions/{sessionId}/rsvps", token: mentorToken);
         Assert.That(list.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -115,11 +163,93 @@ public sealed class RsvpTests : IntegrationTestBase
         Assert.That(updated[0].Note, Is.EqualTo("Something came up."));
         Assert.That(updated[0].ReminderSet, Is.False);
 
-        using var scope = Factory.Services.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var rows = db.SessionRsvps.Count(r => r.SessionId == sessionId && r.YouthUserId == youth.Id);
-        Assert.That(rows, Is.EqualTo(1));
+        using (var assertionScope = Factory.Services.CreateScope())
+        {
+            var assertionDb = assertionScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var rows = assertionDb.SessionRsvps.Count(r => r.SessionId == sessionId && r.YouthUserId == youth.Id);
+            var reminder = assertionDb.ScheduledNotifications.Single(item =>
+                item.UserId == youth.Id && item.SourceId == updated[0].Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(rows, Is.EqualTo(1));
+                Assert.That(reminder.CancelledAt, Is.Not.Null, "turning the reminder off cancels its pending delivery");
+            });
+        }
+
+        // A due reminder is dispatched once into the youth notification feed.
+        var reminderSessionId = await SeedSessionAsync(cohortId, daysFromNow: 3);
+        var setReminder = await SendAsync(HttpMethod.Post, $"/api/sessions/{reminderSessionId}/rsvp", body: new
+        {
+            response = "maybe",
+            reminderSet = true,
+        }, token: youthToken);
+        setReminder.EnsureSuccessStatusCode();
+        using (var dueScope = Factory.Services.CreateScope())
+        {
+            var dueDb = dueScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var scheduled = dueDb.ScheduledNotifications.Single(item =>
+                item.UserId == youth.Id && item.CancelledAt == null && item.DeliveredAt == null);
+            scheduled.DeliverAt = DateTime.UtcNow.AddMinutes(-1);
+            await dueDb.SaveChangesAsync();
+        }
+
+        var notificationFeed = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
+        var notificationFeedAgain = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
+        var reminders = (await notificationFeed.Content.ReadFromJsonAsync<List<NotificationDto>>())!
+            .Where(item => item.EventKey == "session-reminders")
+            .ToList();
+        var remindersAgain = (await notificationFeedAgain.Content.ReadFromJsonAsync<List<NotificationDto>>())!
+            .Where(item => item.EventKey == "session-reminders")
+            .ToList();
+        Assert.Multiple(() =>
+        {
+            Assert.That(reminders, Has.Count.EqualTo(1));
+            Assert.That(reminders[0].LinkPath, Is.EqualTo("/youth/schedule"));
+            Assert.That(remindersAgain, Has.Count.EqualTo(1), "a delivered schedule is consumed exactly once");
+        });
+
+        var optedOutSessionId = await SeedSessionAsync(cohortId, daysFromNow: 4);
+        var optedOutReminder = await SendAsync(HttpMethod.Post, $"/api/sessions/{optedOutSessionId}/rsvp", body: new
+        {
+            response = "going",
+            reminderSet = true,
+        }, token: youthToken);
+        optedOutReminder.EnsureSuccessStatusCode();
+        using (var preferenceScope = Factory.Services.CreateScope())
+        {
+            var preferenceDb = preferenceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            preferenceDb.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = youth.Id,
+                EventKey = "session-reminders",
+                InApp = false,
+                Email = false,
+            });
+            var scheduled = preferenceDb.ScheduledNotifications.Single(item =>
+                item.UserId == youth.Id && item.DeliveredAt == null && item.CancelledAt == null);
+            scheduled.DeliverAt = DateTime.UtcNow.AddMinutes(-1);
+            await preferenceDb.SaveChangesAsync();
+        }
+
+        var optedOutFeed = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
+        var optedOutReminders = (await optedOutFeed.Content.ReadFromJsonAsync<List<NotificationDto>>())!
+            .Count(item => item.EventKey == "session-reminders");
+        Assert.That(optedOutReminders, Is.EqualTo(1), "in-app opt-out suppresses the later due reminder");
     }
 
-    private sealed record RsvpDto(Guid YouthUserId, string Response, string? Note, bool ReminderSet);
+    private sealed record RsvpDto(Guid Id, Guid YouthUserId, string Response, string? Note, bool ReminderSet);
+
+    private sealed record YouthSessionDto(
+        Guid SessionId,
+        string Title,
+        DateTime StartsAt,
+        int? DurationMinutes,
+        string? Location,
+        string? Response,
+        string? Note,
+        bool ReminderSet,
+        DateTime? ReminderAt);
+
+    private sealed record NotificationDto(
+        Guid Id, string EventKey, string Title, string Body, string? LinkPath, bool Read, DateTime CreatedAt);
 }

@@ -32,6 +32,7 @@ export {
   YouthJourneyPage,
   YouthBadgesPage,
   YouthProgressPage,
+  YouthSchedulePage,
   YouthHomePage,
   YouthLessonPage,
   YouthCodingPage,

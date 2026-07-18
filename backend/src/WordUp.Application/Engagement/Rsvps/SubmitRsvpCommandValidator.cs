@@ -10,5 +10,6 @@ public class SubmitRsvpCommandValidator : AbstractValidator<SubmitRsvpCommand>
             .NotEmpty()
             .Must(r => SubmitRsvpCommand.TryParseResponse(r, out _))
             .WithMessage("Response must be one of: going, maybe, cant.");
+        RuleFor(x => x.Note).MaximumLength(1000);
     }
 }

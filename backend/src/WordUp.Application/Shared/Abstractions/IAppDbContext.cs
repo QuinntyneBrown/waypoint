@@ -58,6 +58,7 @@ public interface IAppDbContext
     DbSet<AnnouncementRead> AnnouncementReads { get; }
     DbSet<Message> Messages { get; }
     DbSet<Notification> Notifications { get; }
+    DbSet<ScheduledNotification> ScheduledNotifications { get; }
 
     // Platform services (M4)
     DbSet<NotificationPreference> NotificationPreferences { get; }

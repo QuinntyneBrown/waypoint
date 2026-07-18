@@ -1,0 +1,154 @@
+<wu-shell
+  role="youth"
+  active="schedule"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Your cohort</div>
+        <h1 class="wu-page__title">My schedule</h1>
+        <p class="wu-page__sub">See what’s coming up and let your mentor know your plans.</p>
+      </div>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+
+    @if (sessions(); as upcoming) {
+      @if (upcoming.length === 0) {
+        <section class="wu-card wu-empty">
+          <div class="wu-card__body">
+            <h2 class="wu-empty__title">No upcoming sessions yet</h2>
+            <p class="wu-empty__text">
+              New cohort sessions will appear here when they are planned.
+            </p>
+          </div>
+        </section>
+      } @else {
+        <div class="schedule-list">
+          @for (session of upcoming; track session.sessionId) {
+            <article class="wu-card" data-testid="youth-session">
+              <div class="wu-card__body session-card__layout">
+                <div class="wu-stack">
+                  <div>
+                    <div class="wu-eyebrow">Upcoming session</div>
+                    <h2 class="wu-card__title">{{ session.title }}</h2>
+                  </div>
+                  <ul class="session-meta wu-stack">
+                    <li>
+                      <strong>Date</strong><br />
+                      <time [attr.datetime]="session.startsAt">{{
+                        session.startsAt | date: 'fullDate'
+                      }}</time>
+                    </li>
+                    <li>
+                      <strong>Time</strong><br />{{ session.startsAt | date: 'shortTime' }}
+                      @if (session.durationMinutes) {
+                        · {{ session.durationMinutes }} minutes
+                      }
+                    </li>
+                    @if (session.location) {
+                      <li><strong>Location</strong><br />{{ session.location }}</li>
+                    }
+                  </ul>
+                  @if (session.response) {
+                    <span class="wu-badge wu-badge--success" data-testid="current-rsvp">
+                      Current response:
+                      {{ session.response === 'CantAttend' ? 'Can’t make it' : session.response }}
+                    </span>
+                  }
+                </div>
+
+                <div class="wu-stack">
+                  <fieldset class="wu-stack">
+                    <legend><strong>Your RSVP</strong></legend>
+                    <div class="rsvp-options">
+                      <label class="wu-radio rsvp-option">
+                        <input
+                          type="radio"
+                          [name]="'rsvp-' + session.sessionId"
+                          value="going"
+                          [checked]="draft(session.sessionId).response === 'going'"
+                          (change)="setResponse(session.sessionId, 'going')"
+                        />
+                        <span class="wu-radio__box"></span><span>Going</span>
+                      </label>
+                      <label class="wu-radio rsvp-option">
+                        <input
+                          type="radio"
+                          [name]="'rsvp-' + session.sessionId"
+                          value="maybe"
+                          [checked]="draft(session.sessionId).response === 'maybe'"
+                          (change)="setResponse(session.sessionId, 'maybe')"
+                        />
+                        <span class="wu-radio__box"></span><span>Maybe</span>
+                      </label>
+                      <label class="wu-radio rsvp-option">
+                        <input
+                          type="radio"
+                          [name]="'rsvp-' + session.sessionId"
+                          value="can't make it"
+                          [checked]="draft(session.sessionId).response === 'can\'t make it'"
+                          (change)="setResponse(session.sessionId, 'can\'t make it')"
+                        />
+                        <span class="wu-radio__box"></span><span>Can’t make it</span>
+                      </label>
+                    </div>
+                  </fieldset>
+
+                  <div class="wu-field">
+                    <label class="wu-label" [for]="'rsvp-note-' + session.sessionId">
+                      Note to your mentor <span class="wu-label__opt">(optional)</span>
+                    </label>
+                    <textarea
+                      class="wu-textarea rsvp-note"
+                      [id]="'rsvp-note-' + session.sessionId"
+                      maxlength="1000"
+                      [value]="draft(session.sessionId).note"
+                      (input)="setNote(session.sessionId, $any($event.target).value)"
+                    ></textarea>
+                  </div>
+
+                  <label class="wu-check">
+                    <input
+                      type="checkbox"
+                      [checked]="draft(session.sessionId).reminderSet"
+                      [disabled]="draft(session.sessionId).response === 'can\'t make it'"
+                      (change)="setReminder(session.sessionId, $any($event.target).checked)"
+                    />
+                    <span class="wu-check__box"></span>
+                    <span>Remind me before this session</span>
+                  </label>
+
+                  <div class="wu-actions">
+                    <button
+                      class="wu-btn wu-btn--primary"
+                      type="button"
+                      [disabled]="saving().has(session.sessionId)"
+                      (click)="save(session.sessionId)"
+                    >
+                      {{ saving().has(session.sessionId) ? 'Saving…' : 'Save RSVP' }}
+                    </button>
+                    <span role="status" [attr.data-testid]="'rsvp-status-' + session.sessionId">
+                      {{ statuses()[session.sessionId] }}
+                    </span>
+                  </div>
+                  @if (session.reminderSet && session.reminderAt) {
+                    <p class="wu-muted" data-testid="reminder-time">
+                      Reminder scheduled for {{ session.reminderAt | date: 'medium' }}.
+                    </p>
+                  }
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    } @else {
+      <p class="wu-muted" role="status">Loading schedule…</p>
+    }
+  </div>
+</wu-shell>

@@ -126,6 +126,57 @@ export class YouthProgressPage extends BasePage {
   }
 }
 
+/** `/youth/schedule` — upcoming cohort sessions and the youth's current RSVP. */
+export class YouthSchedulePage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'My schedule', exact: true });
+  }
+  get sessions() {
+    return this.page.getByTestId('youth-session');
+  }
+  get going() {
+    return this.page.getByRole('radio', { name: 'Going', exact: true });
+  }
+  get goingOption() {
+    return this.page.locator('label.rsvp-option').filter({ hasText: /^Going$/ });
+  }
+  get maybe() {
+    return this.page.getByRole('radio', { name: 'Maybe', exact: true });
+  }
+  get maybeOption() {
+    return this.page.locator('label.rsvp-option').filter({ hasText: /^Maybe$/ });
+  }
+  get cantMakeIt() {
+    return this.page.getByRole('radio', { name: 'Can’t make it', exact: true });
+  }
+  get cantMakeItOption() {
+    return this.page.locator('label.rsvp-option').filter({ hasText: /^Can’t make it$/ });
+  }
+  get mentorNote() {
+    return this.page.getByLabel(/note to your mentor/i);
+  }
+  get reminder() {
+    return this.page.getByRole('checkbox', { name: /remind me before this session/i });
+  }
+  get reminderOption() {
+    return this.page
+      .locator('label.wu-check')
+      .filter({ hasText: /remind me before this session/i });
+  }
+  get saveButton() {
+    return this.page.getByRole('button', { name: /save rsvp/i });
+  }
+  get status() {
+    return this.page.locator('[data-testid^="rsvp-status-"]');
+  }
+  get currentResponse() {
+    return this.page.getByTestId('current-rsvp');
+  }
+  get reminderTime() {
+    return this.page.getByTestId('reminder-time');
+  }
+}
+
 /** `/youth/lessons/:id` — safe lesson reader with persisted reading controls. */
 export class YouthLessonPage extends BasePage {
   get heading() {

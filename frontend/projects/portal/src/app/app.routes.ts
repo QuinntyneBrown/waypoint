@@ -114,6 +114,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'schedule',
+        title: 'My schedule · Word Up',
+        loadComponent: () =>
+          import('./features/youth/schedule/youth-schedule').then(
+            (module) => module.YouthSchedulePage,
+          ),
+      },
+      {
         path: 'coding/:id',
         title: 'Coding lesson · Word Up',
         loadComponent: () =>

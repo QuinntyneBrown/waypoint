@@ -53,6 +53,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<AnnouncementRead> AnnouncementReads => Set<AnnouncementRead>();
     public DbSet<Message> Messages => Set<Message>();
     public DbSet<Notification> Notifications => Set<Notification>();
+    public DbSet<ScheduledNotification> ScheduledNotifications => Set<ScheduledNotification>();
     public DbSet<NotificationPreference> NotificationPreferences => Set<NotificationPreference>();
     public DbSet<DisplayPreference> DisplayPreferences => Set<DisplayPreference>();
     public DbSet<SupportRequest> SupportRequests => Set<SupportRequest>();
@@ -321,6 +322,16 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Body).HasMaxLength(2000).IsRequired();
             b.Property(x => x.LinkPath).HasMaxLength(512);
             b.HasIndex(x => new { x.UserId, x.ReadAt });
+        });
+        modelBuilder.Entity<ScheduledNotification>(b =>
+        {
+            b.Property(x => x.EventKey).HasMaxLength(64).IsRequired();
+            b.Property(x => x.Title).HasMaxLength(200).IsRequired();
+            b.Property(x => x.Body).HasMaxLength(2000).IsRequired();
+            b.Property(x => x.LinkPath).HasMaxLength(512);
+            b.Property(x => x.SourceType).HasMaxLength(64).IsRequired();
+            b.HasIndex(x => new { x.UserId, x.EventKey, x.SourceType, x.SourceId }).IsUnique();
+            b.HasIndex(x => new { x.DeliveredAt, x.CancelledAt, x.DeliverAt });
         });
 
         // Platform services (M4)

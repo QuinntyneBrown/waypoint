@@ -13,6 +13,12 @@ public class RsvpController : ControllerBase
 
     public RsvpController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("api/me/schedule")]
+    [Authorize(Roles = Roles.Youth)]
+    public async Task<ActionResult<IReadOnlyList<YouthSessionView>>> Schedule(
+        CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new YouthScheduleQuery(), cancellationToken));
+
     [HttpPost("api/sessions/{sessionId:guid}/rsvp")]
     [Authorize(Roles = Roles.Youth)]
     public async Task<ActionResult<RsvpResult>> Submit(

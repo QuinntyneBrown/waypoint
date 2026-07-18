@@ -837,6 +837,16 @@ if (app.Environment.IsEnvironment("Testing"))
             DurationMinutes = 90,
             CreatedByUserId = mentor.Id,
         };
+        var upcomingSession = new Session
+        {
+            CohortId = cohort.Id,
+            MentorId = mentor.Id,
+            Title = $"Community Project Workshop {suffix}",
+            StartsAt = now.AddDays(4),
+            DurationMinutes = 75,
+            Location = "Word Up Community Hub",
+            CreatedByUserId = mentor.Id,
+        };
         var absentSession = new Session
         {
             CohortId = cohort.Id,
@@ -895,7 +905,7 @@ if (app.Environment.IsEnvironment("Testing"))
             ApprovedByUserId = mentor.Id,
             ApprovedAt = now.AddDays(-2),
         });
-        db.Sessions.AddRange(presentSession, absentSession);
+        db.Sessions.AddRange(presentSession, absentSession, upcomingSession);
         db.AttendanceRecords.AddRange(
             new AttendanceRecord
             {
@@ -982,6 +992,9 @@ if (app.Environment.IsEnvironment("Testing"))
             progressPresentSessionTitle = presentSession.Title,
             progressAbsentSessionTitle = absentSession.Title,
             progressCompetencyName = progressCompetency.Name,
+            scheduleSessionId = upcomingSession.Id,
+            scheduleSessionTitle = upcomingSession.Title,
+            scheduleSessionLocation = upcomingSession.Location,
         });
     });
 

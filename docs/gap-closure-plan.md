@@ -116,7 +116,9 @@ requirement conflicts early (they gate "done").
 - [x] **E10** Personal progress (quiz history, attendance tabs, competencies) `L2-LEARN-010` —
       authoritative lesson totals, approved-score average/history and pass state, per-session attendance
       with excused-aware rate, latest named mentor competency level/percent, and responsive semantic tabs.
-- [ ] **E11** Youth schedule & RSVP (youth-visible calendar, reminders) `L2-ENGAGE-005/008`
+- [x] **E11** Youth schedule & RSVP (youth-visible calendar, reminders) `L2-ENGAGE-005/008` —
+      future same-cohort sessions with logistics/current response, one-record RSVP updates, optional
+      mentor note, durable preference-aware reminders, and responsive keyboard/touch acceptance.
 - [ ] **E12** Youth messaging (mentor thread + realtime) `L2-ENGAGE-007`, `L2-NFR-005`
 - [ ] **E13** Youth home placed-state content + `/youth/messages` link fix `L2-LEARN-*`, `L2-PLATFORM-011`
 - [ ] **E14** Youth notifications deep links + live events `L2-ENGAGE-008`, `L2-NFR-005`
@@ -172,7 +174,10 @@ requirement conflicts early (they gate "done").
       owner-bound private queue, explicit durable idempotency receipts, automatic ordered replay,
       pending count, optimistic conflict choice, and route/browser unsaved-change warning.
 - [ ] **H12** Submission concurrency (version tokens) `L2-NFR-006`
-- [ ] **H13** Event/reminder generation + preference keys `L2-ENGAGE-005/008`, `L2-PLATFORM-003`
+- [~] **H13** Event/reminder generation + preference keys `L2-ENGAGE-005/008`, `L2-PLATFORM-003` —
+      session RSVP reminders now schedule, cancel, dispatch once, deep-link to the schedule, and obey
+      the canonical `session-reminders` in-app preference; other required event generators and email
+      delivery remain.
 - [ ] **H14** Frontend realtime client (`/hubs/realtime`) `L2-NFR-005`, `L2-ENGAGE-007/008`
 - [ ] **H15** Security audit coverage (denied actions, tamper-evidence) `L2-AUTH-009`, `L2-CONSENT-003`
 - [ ] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002`
@@ -212,7 +217,7 @@ requirement conflicts early (they gate "done").
       delivered one-time link without exposing capability tokens in product responses.
 - [x] **Youth curriculum fixture** — Testing-only multi-track enrollment data covers published/draft
       filtering, ordered lesson/quiz gates, prerequisite locking, progress, safe lesson content,
-      failed optional media, reflection hand-off, and an empty enrolled track.
+      failed optional media, reflection hand-off, upcoming cohort logistics, and an empty enrolled track.
 
 ## Progress log
 
@@ -256,3 +261,7 @@ requirement conflicts early (they gate "done").
   Youth status shows the durable review/revision timeline, submitted content, mentor comment, rubric
   points, and earned badge; grading produces a notification and scoped realtime event, and the
   revision editor returns resubmitted work to review. Desktop and mobile acceptance paths pass.
+- 2026-07-18 — E11 done: youth can see only upcoming sessions in their own cohort, submit and revise
+  one RSVP with an optional mentor-visible note, and schedule or cancel a 24-hour reminder. Due
+  reminders are consumed once into the preference-aware notification feed, and desktop/mobile
+  acceptance verifies persistence, touch containment, and keyboard operation.
