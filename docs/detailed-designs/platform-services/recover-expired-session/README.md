@@ -1,129 +1,113 @@
-# Recover an expired session
+# Recover an expired session — Detailed design
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
+Recover an expired session — vertical slice that refines `L2-PLATFORM-010` into one independently deliverable interaction. Expired sessions and deactivated accounts shall present appropriate states.
 
-The Recover an expired session feature slice refines `L2-PLATFORM-010` into one independently deliverable interaction. Expired sessions and deactivated accounts shall present appropriate states.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
 
 An authenticated participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The entity of interest (EoI) is the Word Up software system. This focused architecture description (AD) describes the Recover an expired session vertical slice and does not claim full conformance with 42010:2022.
 
 ## Description
 
-### Vertical slice boundary
+### Components, types, functions, and classes
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Handle a deactivated account is an adjacent feature slice that owns other outcomes within the same primary L2 capability.
+| Element | Kind | Source | Responsibility and public interface |
+| --- | --- | --- | --- |
+| `SessionExpired` | Frontend page | [`../../../../frontend/projects/portal/src/app/states/session-expired/session-expired.ts`](../../../../frontend/projects/portal/src/app/states/session-expired/session-expired.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| `SessionPersistence` | Frontend page | [`../../../../frontend/projects/wu-auth/src/lib/session-persistence.ts`](../../../../frontend/projects/wu-auth/src/lib/session-persistence.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| `DisplayPreferencesApi` | Frontend API boundary | [`../../../../frontend/projects/wu-api/src/lib/services/display-preferences-api.ts`](../../../../frontend/projects/wu-api/src/lib/services/display-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| `AccessController` | API transport | [`../../../../backend/src/WordUp.Api/Controllers/PlatformServices/AccessController.cs`](../../../../backend/src/WordUp.Api/Controllers/PlatformServices/AccessController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| `AccessStateQuery` | Application slice | [`../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `AccessStateQueryHandler` | Application slice | [`../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQueryHandler.cs`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `AccessState` | Application slice | [`../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `SupportRequest` | Domain state | [`../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs`](../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `DisplayPreference` | Domain state | [`../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs`](../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `NotificationPreference` | Domain state | [`../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs`](../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `IAppDbContext` | Infrastructure and shared ports | [`../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
-### Components and types
+### Structure and relationships
 
-A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
-
-| Layer | Components, types, and classes | Responsibility |
-| --- | --- | --- |
-| Frontend page | [`SessionExpired`](../../../../frontend/projects/portal/src/app/states/session-expired/session-expired.ts)<br>[`SessionPersistence`](../../../../frontend/projects/wu-auth/src/lib/session-persistence.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`DisplayPreferencesApi`](../../../../frontend/projects/wu-api/src/lib/services/display-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`AccessController`](../../../../backend/src/WordUp.Api/Controllers/PlatformServices/AccessController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`AccessStateQuery`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs)<br>[`AccessStateQueryHandler`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQueryHandler.cs)<br>[`AccessState`](../../../../backend/src/WordUp.Application/PlatformServices/Access/AccessStateQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`SupportRequest`](../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs)<br>[`DisplayPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs)<br>[`NotificationPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
-
-### Functions and data flow
+- The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Handle a deactivated account is an adjacent feature slice that owns other outcomes within the same primary L2 capability.
 
 - `SessionExpired.submit()` starts the browser interaction and maintains presentation state.
+
 - `DisplayPreferencesApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+
 - `AccessController.PostAsync()` applies transport policy and constructs `AccessStateQuery`.
+
 - `AccessStateQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `SupportRequest`, and returns a typed result.
+
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-### Behavior
+### Behaviour
 
-1. **Entry.** An authenticated participant starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-010`, `L2-AUTH-007`, `L2-NFR-007`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
+1. An authenticated participant starts this feature interaction through the Portal application.
+
+2. The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-010`, `L2-AUTH-007`, `L2-NFR-007`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+
+3. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 
-This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
+This section contains L2 requirements only. It intentionally includes no L1 requirement text. The L1 specification identifier records the traceability correspondence for each L2 requirement.
 
-### L2-PLATFORM-010 — Session-expired and account-deactivated handling
-
-| Field | Value |
-| --- | --- |
-| Relationship | Primary |
-| L1 specification ID | `L1-PLATFORM-003` |
-
-Expired sessions and deactivated accounts shall present appropriate states.
-
-### L2-AUTH-007 — Shared-device sign-out and session expiry
-
-| Field | Value |
-| --- | --- |
-| Relationship | Dependency |
-| L1 specification ID | `L1-AUTH-006` |
-
-The system shall fully tear down sessions on sign-out and expire idle sessions while preserving drafts.
-
-### L2-NFR-007 — Unsaved-changes protection
-
-| Field | Value |
-| --- | --- |
-| Relationship | Dependency |
-| L1 specification ID | `L1-NFR-009` |
-
-The UI shall warn before discarding unsaved changes.
+| L2 specification ID | L1 specification ID | Requirement text |
+| --- | --- | --- |
+| `L2-PLATFORM-010` | `L1-PLATFORM-003` | Expired sessions and deactivated accounts shall present appropriate states. |
+| `L2-AUTH-007` | `L1-AUTH-006` | The system shall fully tear down sessions on sign-out and expire idle sessions while preserving drafts. |
+| `L2-NFR-007` | `L1-NFR-009` | The UI shall warn before discarding unsaved changes. |
 
 ## Diagrams
 
-The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
+The six architecture views use one caption pattern and stable EoI-local names. Each view component is available as PlantUML source and as an inline Portable Network Graphics (PNG) rendering.
 
-### C4 diagrams
+### C4 system context view
 
-#### System context
+[PlantUML source](diagrams/c4-system-context.puml)
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+![Figure 1 — C4 system context view for Recover an expired session](diagrams/c4-system-context.png)
 
-![Figure 1 — C4 system context for Recover an expired session.](diagrams/c4-system-context.png)
+Figure 1 — C4 system context view: the Word Up software system, its actors, and its external dependencies for Recover an expired session. The view component uses the C4 system context model kind.
 
-*Figure 1 — C4 system context: Recover an expired session in the Word Up environment.*
+### C4 container view
 
-#### Container
+[PlantUML source](diagrams/c4-container.puml)
 
-Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
+![Figure 2 — C4 container view for Recover an expired session](diagrams/c4-container.png)
 
-![Figure 2 — C4 container view for Recover an expired session.](diagrams/c4-container.png)
+Figure 2 — C4 container view: the frontend, backend, data, and integration boundaries for Recover an expired session. The view component uses the C4 container model kind.
 
-*Figure 2 — C4 container view: application and data boundaries for Recover an expired session.*
+### C4 component view
 
-#### Component
+[PlantUML source](diagrams/c4-component.puml)
 
-Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
+![Figure 3 — C4 component view for Recover an expired session](diagrams/c4-component.png)
 
-![Figure 3 — C4 component view for Recover an expired session.](diagrams/c4-component.png)
+Figure 3 — C4 component view: the source-level components and their structural relationships for Recover an expired session. The view component uses the C4 component model kind.
 
-*Figure 3 — C4 component view: collaborating components for Recover an expired session.*
+### C4 code view
 
-#### Code
+[PlantUML source](diagrams/c4-code.puml)
 
-Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
+![Figure 4 — C4 code view for Recover an expired session](diagrams/c4-code.png)
 
-![Figure 4 — C4 code view for Recover an expired session.](diagrams/c4-code.png)
+Figure 4 — C4 code view: the principal code elements and their dependency direction for Recover an expired session. The view component uses the C4 code model kind.
 
-*Figure 4 — C4 code view: feature-owned code elements for Recover an expired session.*
+### Class view
 
-### Class diagram
+[PlantUML source](diagrams/class-structure.puml)
 
-Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
+![Figure 5 — Class view for Recover an expired session](diagrams/class-structure.png)
 
-![Figure 5 — Class structure for Recover an expired session.](diagrams/class-structure.png)
+Figure 5 — Class view: the feature types, functions, classes, entities, and their relationships for Recover an expired session. The view component uses the Unified Modeling Language (UML) class model kind.
 
-*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for Recover an expired session.*
+### Sequence view
 
-### Sequence diagram
+[PlantUML source](diagrams/sequence-behaviour.puml)
 
-Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
+![Figure 6 — Sequence view for Recover an expired session](diagrams/sequence-behaviour.png)
 
-![Figure 6 — Sequence behavior for Recover an expired session.](diagrams/sequence-behaviour.png)
-
-*Figure 6 — Sequence behavior: the end-to-end recover an expired session interaction.*
+Figure 6 — Sequence view: the principal end-to-end feature behaviour for Recover an expired session. Nested application boxes separate frontend behaviour from backend behaviour. The view component uses the UML sequence model kind.

@@ -17,16 +17,20 @@ public class AttendanceController : ControllerBase
     [Authorize(Policy = Policies.RecordAttendance)]
     [HttpPost("api/attendance")]
     public async Task<ActionResult<AttendanceTally>> Save(
-        [FromBody] SaveAttendanceRequest request, CancellationToken cancellationToken)
+        [FromBody] SaveAttendanceRequest request,
+        [FromHeader(Name = "Idempotency-Key")] string? idempotencyKey,
+        CancellationToken cancellationToken)
     {
         var marks = (request.Marks ?? new List<AttendanceMarkInput>())
             .Select(m => new AttendanceMark(m.YouthId, m.Status, m.Note, m.ExpectedVersion))
             .ToList();
-        var result = await _mediator.Send(new SaveAttendanceCommand(request.SessionId, marks), cancellationToken);
+        var result = await _mediator.Send(
+            new SaveAttendanceCommand(request.SessionId, marks, idempotencyKey),
+            cancellationToken);
         return Ok(result);
     }
 
-    [Authorize(Roles = Roles.ProgramAdministrator + "," + Roles.Mentor + "," + Roles.Volunteer)]
+    [Authorize(Roles = Roles.ProgramAdministrator + "," + Roles.Mentor)]
     [HttpGet("api/attendance/{sessionId:guid}")]
     public async Task<ActionResult<IReadOnlyList<AttendanceMarkView>>> Session(
         Guid sessionId, CancellationToken cancellationToken)
@@ -35,7 +39,7 @@ public class AttendanceController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize(Roles = Roles.ProgramAdministrator + "," + Roles.Mentor + "," + Roles.Volunteer)]
+    [Authorize(Roles = Roles.ProgramAdministrator + "," + Roles.Mentor)]
     [HttpGet("api/attendance/history/by-session")]
     public async Task<ActionResult<IReadOnlyList<SessionAttendanceSummary>>> HistoryBySession(
         [FromQuery] Guid? cohortId = null,
@@ -48,7 +52,7 @@ public class AttendanceController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize(Roles = Roles.ProgramAdministrator + "," + Roles.Mentor + "," + Roles.Volunteer)]
+    [Authorize(Roles = Roles.ProgramAdministrator + "," + Roles.Mentor)]
     [HttpGet("api/attendance/history/by-youth")]
     public async Task<ActionResult<YouthAttendanceSummary>> HistoryByYouth(
         [FromQuery] Guid youthId, CancellationToken cancellationToken)

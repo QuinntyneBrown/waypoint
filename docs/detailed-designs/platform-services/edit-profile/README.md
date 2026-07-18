@@ -1,129 +1,113 @@
-# Edit a profile
+# Edit a profile — Detailed design
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
+Edit a profile — vertical slice that refines `L2-PLATFORM-002` into one independently deliverable interaction. Users shall manage profile details, photo, and password.
 
-The Edit a profile feature slice refines `L2-PLATFORM-002` into one independently deliverable interaction. Users shall manage profile details, photo, and password.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
 
 An authenticated participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The entity of interest (EoI) is the Word Up software system. This focused architecture description (AD) describes the Edit a profile vertical slice and does not claim full conformance with 42010:2022.
 
 ## Description
 
-### Vertical slice boundary
+### Components, types, functions, and classes
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Change a password is an adjacent feature slice that owns other outcomes within the same primary L2 capability.
+| Element | Kind | Source | Responsibility and public interface |
+| --- | --- | --- | --- |
+| `SettingsProfile` | Frontend page | [`../../../../frontend/projects/portal/src/app/settings/profile/settings-profile.ts`](../../../../frontend/projects/portal/src/app/settings/profile/settings-profile.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| `DisplayPreferencesService` | Frontend page | [`../../../../frontend/projects/portal/src/app/settings/display-preferences.service.ts`](../../../../frontend/projects/portal/src/app/settings/display-preferences.service.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| `ProfileApi` | Frontend API boundary | [`../../../../frontend/projects/wu-api/src/lib/services/profile-api.ts`](../../../../frontend/projects/wu-api/src/lib/services/profile-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| `ProfileController` | API transport | [`../../../../backend/src/WordUp.Api/Controllers/PlatformServices/ProfileController.cs`](../../../../backend/src/WordUp.Api/Controllers/PlatformServices/ProfileController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| `UpdateProfileCommand` | Application slice | [`../../../../backend/src/WordUp.Application/PlatformServices/Profile/UpdateProfileCommand.cs`](../../../../backend/src/WordUp.Application/PlatformServices/Profile/UpdateProfileCommand.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `UpdateProfileCommandHandler` | Application slice | [`../../../../backend/src/WordUp.Application/PlatformServices/Profile/UpdateProfileCommandHandler.cs`](../../../../backend/src/WordUp.Application/PlatformServices/Profile/UpdateProfileCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `UpdateProfileCommandValidator` | Application slice | [`../../../../backend/src/WordUp.Application/PlatformServices/Profile/UpdateProfileCommandValidator.cs`](../../../../backend/src/WordUp.Application/PlatformServices/Profile/UpdateProfileCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `SupportRequest` | Domain state | [`../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs`](../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `DisplayPreference` | Domain state | [`../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs`](../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `NotificationPreference` | Domain state | [`../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs`](../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `ValidationBehavior` | Infrastructure and shared ports | [`../../../../backend/src/WordUp.Application/Shared/Behaviors/ValidationBehavior.cs`](../../../../backend/src/WordUp.Application/Shared/Behaviors/ValidationBehavior.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
-### Components and types
+### Structure and relationships
 
-A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
-
-| Layer | Components, types, and classes | Responsibility |
-| --- | --- | --- |
-| Frontend page | [`SettingsProfile`](../../../../frontend/projects/portal/src/app/settings/profile/settings-profile.ts)<br>[`DisplayPreferencesService`](../../../../frontend/projects/portal/src/app/settings/display-preferences.service.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`ProfileApi`](../../../../frontend/projects/wu-api/src/lib/services/profile-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`ProfileController`](../../../../backend/src/WordUp.Api/Controllers/PlatformServices/ProfileController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`UpdateProfileCommand`](../../../../backend/src/WordUp.Application/PlatformServices/Profile/UpdateProfileCommand.cs)<br>[`UpdateProfileCommandHandler`](../../../../backend/src/WordUp.Application/PlatformServices/Profile/UpdateProfileCommandHandler.cs)<br>[`UpdateProfileCommandValidator`](../../../../backend/src/WordUp.Application/PlatformServices/Profile/UpdateProfileCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`SupportRequest`](../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs)<br>[`DisplayPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs)<br>[`NotificationPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`ValidationBehavior`](../../../../backend/src/WordUp.Application/Shared/Behaviors/ValidationBehavior.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
-
-### Functions and data flow
+- The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Change a password is an adjacent feature slice that owns other outcomes within the same primary L2 capability.
 
 - `SettingsProfile.submit()` starts the browser interaction and maintains presentation state.
+
 - `ProfileApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+
 - `ProfileController.PostAsync()` applies transport policy and constructs `UpdateProfileCommand`.
+
 - `UpdateProfileCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `SupportRequest`, and returns a typed result.
+
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-### Behavior
+### Behaviour
 
-1. **Entry.** An authenticated participant starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-002`, `L2-NFR-001`, `L2-AUTH-010`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
+1. An authenticated participant starts this feature interaction through the Portal application.
+
+2. The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-002`, `L2-NFR-001`, `L2-AUTH-010`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+
+3. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 
-This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
+This section contains L2 requirements only. It intentionally includes no L1 requirement text. The L1 specification identifier records the traceability correspondence for each L2 requirement.
 
-### L2-PLATFORM-002 — Profile settings
-
-| Field | Value |
-| --- | --- |
-| Relationship | Primary |
-| L1 specification ID | `L1-PLATFORM-002` |
-
-Users shall manage profile details, photo, and password.
-
-### L2-NFR-001 — Input validation and injection defense
-
-| Field | Value |
-| --- | --- |
-| Relationship | Dependency |
-| L1 specification ID | `L1-NFR-001` |
-
-All input shall be validated and all output encoded to prevent injection and XSS.
-
-### L2-AUTH-010 — Role-scoped data visibility
-
-| Field | Value |
-| --- | --- |
-| Relationship | Dependency |
-| L1 specification ID | `L1-AUTH-007` |
-
-Each role shall see only the data its scope permits, per the role scopes defined by the PRD (see L2-AUTH-009).
+| L2 specification ID | L1 specification ID | Requirement text |
+| --- | --- | --- |
+| `L2-PLATFORM-002` | `L1-PLATFORM-002` | Users shall manage profile details, photo, and password. |
+| `L2-NFR-001` | `L1-NFR-001` | All input shall be validated and all output encoded to prevent injection and XSS. |
+| `L2-AUTH-010` | `L1-AUTH-007` | Each role shall see only the data its scope permits, per the role scopes defined by the PRD (see L2-AUTH-009). |
 
 ## Diagrams
 
-The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
+The six architecture views use one caption pattern and stable EoI-local names. Each view component is available as PlantUML source and as an inline Portable Network Graphics (PNG) rendering.
 
-### C4 diagrams
+### C4 system context view
 
-#### System context
+[PlantUML source](diagrams/c4-system-context.puml)
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+![Figure 1 — C4 system context view for Edit a profile](diagrams/c4-system-context.png)
 
-![Figure 1 — C4 system context for Edit a profile.](diagrams/c4-system-context.png)
+Figure 1 — C4 system context view: the Word Up software system, its actors, and its external dependencies for Edit a profile. The view component uses the C4 system context model kind.
 
-*Figure 1 — C4 system context: Edit a profile in the Word Up environment.*
+### C4 container view
 
-#### Container
+[PlantUML source](diagrams/c4-container.puml)
 
-Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
+![Figure 2 — C4 container view for Edit a profile](diagrams/c4-container.png)
 
-![Figure 2 — C4 container view for Edit a profile.](diagrams/c4-container.png)
+Figure 2 — C4 container view: the frontend, backend, data, and integration boundaries for Edit a profile. The view component uses the C4 container model kind.
 
-*Figure 2 — C4 container view: application and data boundaries for Edit a profile.*
+### C4 component view
 
-#### Component
+[PlantUML source](diagrams/c4-component.puml)
 
-Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
+![Figure 3 — C4 component view for Edit a profile](diagrams/c4-component.png)
 
-![Figure 3 — C4 component view for Edit a profile.](diagrams/c4-component.png)
+Figure 3 — C4 component view: the source-level components and their structural relationships for Edit a profile. The view component uses the C4 component model kind.
 
-*Figure 3 — C4 component view: collaborating components for Edit a profile.*
+### C4 code view
 
-#### Code
+[PlantUML source](diagrams/c4-code.puml)
 
-Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
+![Figure 4 — C4 code view for Edit a profile](diagrams/c4-code.png)
 
-![Figure 4 — C4 code view for Edit a profile.](diagrams/c4-code.png)
+Figure 4 — C4 code view: the principal code elements and their dependency direction for Edit a profile. The view component uses the C4 code model kind.
 
-*Figure 4 — C4 code view: feature-owned code elements for Edit a profile.*
+### Class view
 
-### Class diagram
+[PlantUML source](diagrams/class-structure.puml)
 
-Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
+![Figure 5 — Class view for Edit a profile](diagrams/class-structure.png)
 
-![Figure 5 — Class structure for Edit a profile.](diagrams/class-structure.png)
+Figure 5 — Class view: the feature types, functions, classes, entities, and their relationships for Edit a profile. The view component uses the Unified Modeling Language (UML) class model kind.
 
-*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for Edit a profile.*
+### Sequence view
 
-### Sequence diagram
+[PlantUML source](diagrams/sequence-behaviour.puml)
 
-Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
+![Figure 6 — Sequence view for Edit a profile](diagrams/sequence-behaviour.png)
 
-![Figure 6 — Sequence behavior for Edit a profile.](diagrams/sequence-behaviour.png)
-
-*Figure 6 — Sequence behavior: the end-to-end edit a profile interaction.*
+Figure 6 — Sequence view: the principal end-to-end feature behaviour for Edit a profile. Nested application boxes separate frontend behaviour from backend behaviour. The view component uses the UML sequence model kind.

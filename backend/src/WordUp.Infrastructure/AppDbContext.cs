@@ -41,6 +41,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<AssignedWork> AssignedWork => Set<AssignedWork>();
     public DbSet<Session> Sessions => Set<Session>();
     public DbSet<AttendanceRecord> AttendanceRecords => Set<AttendanceRecord>();
+    public DbSet<AttendanceWriteReceipt> AttendanceWriteReceipts => Set<AttendanceWriteReceipt>();
     public DbSet<SessionRsvp> SessionRsvps => Set<SessionRsvp>();
     public DbSet<Announcement> Announcements => Set<Announcement>();
     public DbSet<AnnouncementRead> AnnouncementReads => Set<AnnouncementRead>();
@@ -239,6 +240,12 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Note).HasMaxLength(1000);
             b.Property(x => x.Status).HasConversion<int>();
             b.Property(x => x.RowVersion).IsRowVersion();
+        });
+        modelBuilder.Entity<AttendanceWriteReceipt>(b =>
+        {
+            b.HasIndex(x => new { x.OwnerUserId, x.IdempotencyKey }).IsUnique();
+            b.Property(x => x.IdempotencyKey).HasMaxLength(100).IsRequired();
+            b.Property(x => x.RequestFingerprint).HasMaxLength(64).IsRequired();
         });
         modelBuilder.Entity<SessionRsvp>(b =>
         {

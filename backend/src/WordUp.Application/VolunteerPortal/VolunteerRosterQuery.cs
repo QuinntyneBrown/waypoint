@@ -7,4 +7,4 @@ namespace WordUp.Application.VolunteerPortal;
 /// safeguarding data.</summary>
 public record VolunteerRosterQuery(Guid SessionId) : IRequest<IReadOnlyList<VolunteerRosterEntry>>;
 
-public record VolunteerRosterEntry(Guid YouthUserId, string Name, string? Mark);
+public record VolunteerRosterEntry(Guid YouthUserId, string Name, string? Mark, string? Version);

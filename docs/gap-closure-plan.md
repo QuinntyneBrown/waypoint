@@ -60,22 +60,17 @@ requirement conflicts early (they gate "done").
       volunteer (today they fall through to 404 despite `roleHome()`). *Volunteer `/volunteer/home`
       route added; the shell already renders every role via nav-config. Admin/Mentor/Guardian
       routes still to build as those portals land.*
-- [~] **C1 · Volunteer Today** — today's assigned session/logistics/count, no youth record data.
-      `L2-VOLUNTEER-001`. *Routing + Today page + no-session empty state built and E2E-verified;
-      the populated-session card is implemented but its E2E awaits session-assignment seeding.*
-- [~] **C2 · Volunteer schedule** — upcoming assigned sessions/status + empty state.
-      `L2-VOLUNTEER-002`. *Schedule page + empty state built and E2E-verified; populated list
-      awaits session-assignment seeding (no API assigns a Volunteer to a Session yet — see C3 note).*
-- [ ] **C3 · Volunteer attendance** — names-only roster, Present/Absent, all-present, save,
+- [x] **C1 · Volunteer Today** — today's assigned session/logistics/count, no youth record data.
+      `L2-VOLUNTEER-001`. Empty and populated states are E2E-verified.
+- [x] **C2 · Volunteer schedule** — upcoming assigned sessions/status + empty state.
+      `L2-VOLUNTEER-002`. Empty and populated states are E2E-verified.
+- [x] **C3 · Volunteer attendance** — names-only roster, Present/Absent, all-present, save,
       offline owner-bound queue + sync, strict denial of other resources.
       `L2-VOLUNTEER-001`, `L2-NFR-004`.
 
-> **Blocker for populated Volunteer paths (C1/C2/C3):** `Session.VolunteerId` exists and the
-> volunteer read APIs filter on it, but **no endpoint assigns a Volunteer to a Session**
-> (`CreateSessionCommand` has no VolunteerId). Until an assignment capability exists (admin/mentor
-> session management, or a dedicated assign endpoint — likely alongside Phase F/G), the populated
-> Today/Schedule/roster states cannot be seeded through the real seam, so only their empty states
-> are E2E-verified. Track as a Phase H item.
+> `Session.VolunteerId` assignment remains part of the Phase G calendar/session-management surface.
+> A Testing-only assignment fixture now exercises the populated Volunteer paths through HTTP without
+> exposing a test seam outside the Testing environment.
 
 ## Phase D — Guardian portal
 
@@ -152,7 +147,9 @@ requirement conflicts early (they gate "done").
 - [ ] **H8** Grading outcomes (rubric validation, badges, notifications, live) `L2-MENTOR-003`, `L2-LEARN-007`, `L2-ENGAGE-008`
 - [ ] **H9** Automated at-risk evaluation `L2-MENTOR-007`
 - [ ] **H10** Assignment side effects (journey, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008`
-- [ ] **H11** Attendance offline integrity protocol `L2-ENGAGE-003`, `L2-NFR-004/007`
+- [x] **H11** Attendance offline integrity protocol `L2-ENGAGE-003`, `L2-NFR-004/007` —
+      owner-bound private queue, explicit durable idempotency receipts, automatic ordered replay,
+      pending count, optimistic conflict choice, and route/browser unsaved-change warning.
 - [ ] **H12** Submission concurrency (version tokens) `L2-NFR-006`
 - [ ] **H13** Event/reminder generation + preference keys `L2-ENGAGE-005/008`, `L2-PLATFORM-003`
 - [ ] **H14** Frontend realtime client (`/hubs/realtime`) `L2-NFR-005`, `L2-ENGAGE-007/008`
@@ -174,10 +171,10 @@ requirement conflicts early (they gate "done").
 
 ## Requirement conflicts (resolve to declare done)
 
-- [ ] **X1 · Volunteer roster** — API returns names only (correct). Align `L2-AUTH-010` AC3 text
-      to `L2-VOLUNTEER-001` AC2 (names only, no at-risk flag). Confirming test.
-- [ ] **X2 · Curriculum-edit role** — API grants Edit curriculum to Program Administrators only
-      (correct). Align `L2-CURRIC-001` AC5 text to the `L2-AUTH-009` permission matrix. Confirming test.
+- [x] **X1 · Volunteer roster** — aligned `L2-AUTH-010` AC3 to `L2-VOLUNTEER-001`
+      AC2 (names only, no at-risk flag); confirming test passes.
+- [x] **X2 · Curriculum-edit role** — aligned `L2-CURRIC-001` AC5 to the `L2-AUTH-009`
+      permission matrix (Program Administrators only); confirming authorization tests pass.
 
 ---
 
@@ -186,6 +183,9 @@ requirement conflicts early (they gate "done").
 - [x] **E2E seeding** — `POST /api/_test/users` (Testing environment only) provisions active
       non-Youth identities so the HTTP-only Playwright harness can reach the Admin/Mentor/
       Guardian/Volunteer portals. E2E helpers: `registerUser(role)`, `signInApi(creds)`.
+- [x] **Volunteer assignment fixture** — `POST /api/_test/volunteer-sessions` creates a populated,
+      assigned session in Testing only so Today, schedule, attendance, offline, and conflict paths
+      execute through real HTTP and product APIs.
 
 ## Progress log
 
@@ -202,3 +202,7 @@ requirement conflicts early (they gate "done").
 - 2026-07-18 — Removed the local announcement-suite exception: role-target filtering now uses an
   EF-translatable list on the preview runtime. All 141 backend integration tests pass with the
   environment's InMemory fallback.
+- 2026-07-18 — C1/C2/C3 and H11 done: populated Volunteer Today/schedule paths are verified;
+  attendance is names-only with Present/Absent bulk capture, scoped saves, durable idempotency,
+  owner-bound offline replay, visible pending state, deterministic conflict choice, and unsaved
+  navigation protection. The two governing requirement conflicts (X1/X2) are also reconciled.

@@ -12,7 +12,12 @@ namespace WordUp.IntegrationTests.NonFunctional;
 [Property("Req", "L2-NFR-004")]
 public sealed class OfflineAttendanceSyncTests : IntegrationTestBase
 {
-    private async Task<HttpResponseMessage> SendAsync(HttpMethod method, string url, object? body = null, string? token = null)
+    private async Task<HttpResponseMessage> SendAsync(
+        HttpMethod method,
+        string url,
+        object? body = null,
+        string? token = null,
+        string? idempotencyKey = null)
     {
         var request = new HttpRequestMessage(method, url);
         if (body is not null)
@@ -22,6 +27,10 @@ public sealed class OfflineAttendanceSyncTests : IntegrationTestBase
         if (token is not null)
         {
             Authorize(request, token);
+        }
+        if (idempotencyKey is not null)
+        {
+            request.Headers.Add("Idempotency-Key", idempotencyKey);
         }
         return await Client.SendAsync(request);
     }
@@ -88,16 +97,60 @@ public sealed class OfflineAttendanceSyncTests : IntegrationTestBase
             },
         };
 
-        var first = await SendAsync(HttpMethod.Post, "/api/attendance", body: body, token: token);
+        var idempotencyKey = Guid.NewGuid().ToString();
+        var first = await SendAsync(
+            HttpMethod.Post,
+            "/api/attendance",
+            body: body,
+            token: token,
+            idempotencyKey: idempotencyKey);
         Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        var replay = await SendAsync(HttpMethod.Post, "/api/attendance", body: body, token: token);
+
+        Guid firstVersion;
+        using (var firstScope = Factory.Services.CreateScope())
+        {
+            var firstDb = firstScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            firstVersion = firstDb.AttendanceRecords.Single(r =>
+                r.SessionId == sessionId && r.YouthUserId == youth[0]).ConcurrencyStamp;
+        }
+
+        var replay = await SendAsync(
+            HttpMethod.Post,
+            "/api/attendance",
+            body: body,
+            token: token,
+            idempotencyKey: idempotencyKey);
         Assert.That(replay.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        var mismatchedReplay = await SendAsync(
+            HttpMethod.Post,
+            "/api/attendance",
+            body: new
+            {
+                sessionId,
+                marks = new[]
+                {
+                    new { youthId = youth[0], status = "Absent", note = (string?)null },
+                },
+            },
+            token: token,
+            idempotencyKey: idempotencyKey);
+        Assert.That(mismatchedReplay.StatusCode, Is.EqualTo(HttpStatusCode.Conflict),
+            "an idempotency key cannot be reused for a different operation");
 
         using var scope = Factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
         var total = db.AttendanceRecords.Count(r => r.SessionId == sessionId);
         Assert.That(total, Is.EqualTo(3), "exactly one record per (session, youth) despite the replay");
+        Assert.That(
+            db.AttendanceRecords.Single(r => r.SessionId == sessionId && r.YouthUserId == youth[0]).ConcurrencyStamp,
+            Is.EqualTo(firstVersion),
+            "replaying an idempotency key must not execute the write a second time");
+        Assert.That(
+            db.AuditEntries.Count(a => a.Action == "AttendanceSaved" && a.TargetId == sessionId),
+            Is.EqualTo(1),
+            "exactly-once replay must not duplicate the audit side effect");
 
         foreach (var y in youth)
         {

@@ -220,6 +220,50 @@ public sealed class VolunteerPortalTests : IntegrationTestBase
     }
 
     [Test]
+    [Property("Req", "L2-VOLUNTEER-001")]
+    public async Task Saving_attendance_for_an_unassigned_session_is_forbidden()
+    {
+        // Traces to: L2-VOLUNTEER-001 AC4
+        var (_, tokenA) = await SeedVolunteerAndSignInAsync();
+        var (volunteerB, _) = await SeedVolunteerAndSignInAsync();
+        var (_, sessionB, youth) = await SeedSessionAsync(volunteerB, NoonTodayUtc(), youthCount: 1);
+
+        var response = await SendAsync(HttpMethod.Post, "/api/attendance", new
+        {
+            sessionId = sessionB,
+            marks = new[] { new { youthId = youth[0].Id, status = "Present", note = (string?)null } },
+        }, tokenA);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+
+        using var scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.That(db.AttendanceRecords.Any(r => r.SessionId == sessionB), Is.False,
+            "a volunteer must not be able to write another volunteer's session");
+    }
+
+    [Test]
+    [Property("Req", "L2-VOLUNTEER-001")]
+    public async Task Volunteer_is_denied_the_staff_attendance_record_and_history_resources()
+    {
+        // Traces to: L2-VOLUNTEER-001 AC4
+        var (volunteerId, token) = await SeedVolunteerAndSignInAsync();
+        var (_, sessionId, _) = await SeedSessionAsync(volunteerId, NoonTodayUtc(), youthCount: 1);
+
+        var records = await SendAsync(HttpMethod.Get, $"/api/attendance/{sessionId}", token: token);
+        var history = await SendAsync(
+            HttpMethod.Get,
+            "/api/attendance/history/by-session",
+            token: token);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(records.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+            Assert.That(history.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+        });
+    }
+
+    [Test]
     [Property("Req", "L2-VOLUNTEER-002")]
     public async Task Schedule_lists_only_this_volunteers_upcoming_assigned_sessions_in_order()
     {

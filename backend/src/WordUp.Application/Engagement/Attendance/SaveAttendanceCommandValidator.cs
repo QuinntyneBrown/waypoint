@@ -10,6 +10,7 @@ public class SaveAttendanceCommandValidator : AbstractValidator<SaveAttendanceCo
     {
         RuleFor(x => x.SessionId).NotEmpty();
         RuleFor(x => x.Marks).NotNull();
+        RuleFor(x => x.IdempotencyKey).MaximumLength(100);
         RuleForEach(x => x.Marks).ChildRules(mark =>
         {
             mark.RuleFor(m => m.YouthId).NotEmpty();

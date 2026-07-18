@@ -1,0 +1,132 @@
+<wu-shell
+  role="volunteer"
+  active="home"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-container--narrow wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Today’s session</div>
+        <h1 class="wu-page__title">Take attendance</h1>
+        <p class="wu-page__sub">Only names and Present/Absent attendance are shown.</p>
+      </div>
+      <a class="wu-btn wu-btn--ghost" routerLink="/volunteer/home">Back to today</a>
+    </div>
+
+    @if (rows() === undefined) {
+      <p class="wu-muted">Loading roster…</p>
+    } @else {
+      <div class="attendance-summary" aria-label="Attendance tallies">
+        <div class="wu-card" data-testid="marked-tally">
+          <strong>{{ marked() }} of {{ total() }}</strong>
+          <span>marked</span>
+        </div>
+        <div class="wu-card" data-testid="present-tally">
+          <strong>{{ present() }}</strong>
+          <span>present</span>
+        </div>
+        <div class="wu-card" data-testid="absent-tally">
+          <strong>{{ absent() }}</strong>
+          <span>absent</span>
+        </div>
+      </div>
+
+      <div class="wu-cluster wu-cluster--between">
+        <div class="wu-cluster">
+          <button class="wu-btn wu-btn--secondary" type="button" (click)="markAll('Present')">
+            All present
+          </button>
+          <button class="wu-btn wu-btn--ghost" type="button" (click)="markAll(null)">Clear</button>
+        </div>
+        @if (queue.pendingCount() > 0) {
+          <span class="wu-badge wu-badge--warning"> {{ queue.pendingCount() }} pending sync </span>
+        }
+      </div>
+
+      <div class="wu-card">
+        <div class="wu-card__body">
+          @for (row of rows(); track row.youthUserId) {
+            <div class="attendance-row" data-testid="attendance-row">
+              <span class="attendance-name">{{ row.name }}</span>
+              <div
+                class="attendance-actions"
+                role="group"
+                [attr.aria-label]="'Attendance for ' + row.name"
+              >
+                <button
+                  class="wu-btn wu-btn--secondary"
+                  [class.is-selected]="row.mark === 'Present'"
+                  [attr.aria-pressed]="row.mark === 'Present'"
+                  type="button"
+                  (click)="mark(row.youthUserId, 'Present')"
+                >
+                  Present
+                </button>
+                <button
+                  class="wu-btn wu-btn--secondary"
+                  [class.is-selected]="row.mark === 'Absent'"
+                  [attr.aria-pressed]="row.mark === 'Absent'"
+                  type="button"
+                  (click)="mark(row.youthUserId, 'Absent')"
+                >
+                  Absent
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      @if (queue.message(); as message) {
+        <p class="wu-alert wu-alert--info" role="status" aria-live="polite">{{ message }}</p>
+      } @else {
+        <p class="wu-muted" role="status" aria-live="polite"></p>
+      }
+      @if (queue.hasConflictForSession(sessionId)) {
+        <div class="wu-alert wu-alert--warning">
+          <div class="wu-stack wu-stack--sm">
+            <strong>Choose which attendance to keep</strong>
+            <p>
+              Someone saved this session after you went offline. Review the current roster, then
+              apply your queued selections or keep the newer server attendance.
+            </p>
+            <div class="wu-cluster">
+              <button class="wu-btn wu-btn--primary" type="button" (click)="applyQueuedConflict()">
+                Apply my changes
+              </button>
+              <button
+                class="wu-btn wu-btn--secondary"
+                type="button"
+                (click)="keepServerAttendance()"
+              >
+                Keep server attendance
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+      @if (errorMessage(); as error) {
+        <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      }
+
+      <div class="wu-cluster wu-cluster--between">
+        <span class="wu-muted">
+          @if (dirty()) {
+            Unsaved changes
+          } @else {
+            Changes saved
+          }
+        </span>
+        <button
+          class="wu-btn wu-btn--primary"
+          type="button"
+          [disabled]="marked() !== total() || total() === 0 || saving()"
+          (click)="save()"
+        >
+          {{ saving() ? 'Saving…' : 'Save attendance' }}
+        </button>
+      </div>
+    }
+  </div>
+</wu-shell>

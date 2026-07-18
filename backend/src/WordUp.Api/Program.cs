@@ -4,6 +4,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -264,6 +265,80 @@ if (app.Environment.IsEnvironment("Testing"))
         db.Users.Add(user);
         await db.SaveChangesAsync(cancellationToken);
         return Results.Created($"/api/_test/users/{user.Id}", new { userId = user.Id });
+    });
+
+    // Volunteer attendance E2E requires an assigned same-day session with a populated cohort. Session
+    // assignment is not otherwise exposed by the product API yet, so keep this fixture behind Testing.
+    app.MapPost("/api/_test/volunteer-sessions", async (
+        WordUp.Api.Contracts.TestSupport.SeedVolunteerSessionBody body,
+        IAppDbContext db,
+        IClock clock,
+        CancellationToken cancellationToken) =>
+    {
+        var volunteer = await db.Users.FirstOrDefaultAsync(
+            u => u.Id == body.VolunteerUserId && u.Role == Roles.Volunteer,
+            cancellationToken);
+        if (volunteer is null)
+        {
+            return Results.NotFound(new { title = "Volunteer not found." });
+        }
+
+        var suffix = Guid.NewGuid().ToString("N")[..8];
+        var today = clock.UtcNow.Date;
+        var cohort = new Cohort
+        {
+            Name = $"E2E Volunteer Cohort {suffix}",
+            TermStart = today.AddDays(-30),
+            TermEnd = today.AddDays(30),
+        };
+        var session = new Session
+        {
+            CohortId = cohort.Id,
+            VolunteerId = volunteer.Id,
+            Title = $"Community Workshop {suffix}",
+            StartsAt = today.AddDays(body.DaysFromToday).AddHours(18),
+            DurationMinutes = 90,
+            Location = "Main Hall",
+            CreatedByUserId = volunteer.Id,
+        };
+        var youth = new[]
+        {
+            new User
+            {
+                Email = $"amara.{suffix}@wordup.test",
+                DisplayName = $"Amara {suffix}",
+                Role = Roles.Youth,
+                Status = UserStatus.Active,
+                CohortId = cohort.Id,
+            },
+            new User
+            {
+                Email = $"david.{suffix}@wordup.test",
+                DisplayName = $"David {suffix}",
+                Role = Roles.Youth,
+                Status = UserStatus.Active,
+                CohortId = cohort.Id,
+            },
+            new User
+            {
+                Email = $"imani.{suffix}@wordup.test",
+                DisplayName = $"Imani {suffix}",
+                Role = Roles.Youth,
+                Status = UserStatus.Active,
+                CohortId = cohort.Id,
+            },
+        };
+
+        db.Cohorts.Add(cohort);
+        db.Sessions.Add(session);
+        db.Users.AddRange(youth);
+        await db.SaveChangesAsync(cancellationToken);
+
+        return Results.Created($"/api/volunteer/sessions/{session.Id}", new
+        {
+            sessionId = session.Id,
+            youth = youth.Select(user => new { youthUserId = user.Id, name = user.DisplayName }),
+        });
     });
 
     // Public-content E2E needs published curriculum and a privacy-safe cohort, but those records

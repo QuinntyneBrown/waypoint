@@ -1,6 +1,13 @@
-import { Routes } from '@angular/router';
+import { CanDeactivateFn, Routes } from '@angular/router';
 import { authGuard, guestGuard } from '@wu/auth';
 import { consentGuard } from './guards/consent.guard';
+
+interface UnsavedChangesAware {
+  canDeactivate(): boolean;
+}
+
+const confirmAttendanceNavigation: CanDeactivateFn<UnsavedChangesAware> = (component) =>
+  component.canDeactivate();
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'auth/sign-in' },
@@ -126,6 +133,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/volunteer/schedule/volunteer-schedule').then(
             (m) => m.VolunteerSchedule,
+          ),
+      },
+      {
+        path: 'attendance/:sessionId',
+        title: 'Take attendance · Word Up',
+        canDeactivate: [confirmAttendanceNavigation],
+        loadComponent: () =>
+          import('./features/volunteer/attendance/volunteer-attendance').then(
+            (module) => module.VolunteerAttendance,
           ),
       },
     ],

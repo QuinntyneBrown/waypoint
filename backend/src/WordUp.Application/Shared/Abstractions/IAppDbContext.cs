@@ -46,6 +46,7 @@ public interface IAppDbContext
     // Engagement & operations (M4)
     DbSet<Session> Sessions { get; }
     DbSet<AttendanceRecord> AttendanceRecords { get; }
+    DbSet<AttendanceWriteReceipt> AttendanceWriteReceipts { get; }
     DbSet<SessionRsvp> SessionRsvps { get; }
     DbSet<Announcement> Announcements { get; }
     DbSet<AnnouncementRead> AnnouncementReads { get; }

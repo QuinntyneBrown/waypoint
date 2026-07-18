@@ -25,6 +25,11 @@ export interface SeededUser {
   userId: string;
 }
 
+export interface SeededVolunteerSession {
+  sessionId: string;
+  youth: { youthUserId: string; name: string }[];
+}
+
 /**
  * Provision an active user with an arbitrary role via the Testing-only seed
  * endpoint (`POST /api/_test/users`). Non-Youth roles have no self-service
@@ -46,6 +51,22 @@ export async function registerUser(
   expect(res.ok(), `seed user failed: ${res.status()} ${await res.text()}`).toBeTruthy();
   const { userId } = (await res.json()) as { userId: string };
   return { email, password, displayName, role, userId };
+}
+
+/** Seed a same-day session assigned to an existing Volunteer (Testing only). */
+export async function seedVolunteerSession(
+  request: APIRequestContext,
+  volunteerUserId: string,
+  daysFromToday = 0,
+): Promise<SeededVolunteerSession> {
+  const res = await request.post('/api/_test/volunteer-sessions', {
+    data: { volunteerUserId, daysFromToday },
+  });
+  expect(
+    res.ok(),
+    `seed volunteer session failed: ${res.status()} ${await res.text()}`,
+  ).toBeTruthy();
+  return (await res.json()) as SeededVolunteerSession;
 }
 
 export interface SeededApplication {

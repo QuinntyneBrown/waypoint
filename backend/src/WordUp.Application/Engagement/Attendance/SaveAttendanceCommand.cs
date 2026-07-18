@@ -2,7 +2,10 @@ using MediatR;
 
 namespace WordUp.Application.Engagement.Attendance;
 
-public record SaveAttendanceCommand(Guid SessionId, IReadOnlyList<AttendanceMark> Marks)
+public record SaveAttendanceCommand(
+    Guid SessionId,
+    IReadOnlyList<AttendanceMark> Marks,
+    string? IdempotencyKey = null)
     : IRequest<AttendanceTally>;
 
 // ExpectedVersion (base64 RowVersion from a prior read) is optional; when supplied it is checked

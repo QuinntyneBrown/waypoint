@@ -4,6 +4,7 @@ import { DisplayPreferencesApi } from '@wu/api';
 import { SessionStore } from '@wu/auth';
 import { WuToastHost } from '@wu/ui';
 import { DisplayPreferencesService } from './settings/display-preferences.service';
+import { AttendanceQueueService } from './features/volunteer/attendance/attendance-queue.service';
 
 @Component({
   selector: 'wu-root',
@@ -17,6 +18,9 @@ export class App {
   private appliedFor: string | null = null;
 
   constructor() {
+    // Instantiate the owner-bound queue at app boot so reconnect replay is automatic even when the
+    // user is no longer on the attendance route.
+    void inject(AttendanceQueueService);
     // Re-apply saved display & accessibility preferences app-wide once a user is
     // authenticated (and again when a different user signs in).
     effect(() => {

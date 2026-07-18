@@ -22,7 +22,11 @@ export {
 } from './settings.pages';
 export { YouthHomePage, YouthAnnouncementsPage, YouthNotificationsPage } from './youth.pages';
 export { ForbiddenPage, NotFoundPage, ServerErrorPage } from './states.pages';
-export { VolunteerTodayPage, VolunteerSchedulePage } from './volunteer.pages';
+export {
+  VolunteerAttendancePage,
+  VolunteerTodayPage,
+  VolunteerSchedulePage,
+} from './volunteer.pages';
 export { PeopleDirectoryPage, ApplicationsListPage } from './admin.pages';
 export {
   LandingPage,

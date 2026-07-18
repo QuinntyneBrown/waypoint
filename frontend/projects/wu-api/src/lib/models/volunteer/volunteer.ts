@@ -19,3 +19,32 @@ export interface VolunteerScheduleItem {
   location: string | null;
   status: string;
 }
+
+// Traces to: L2-VOLUNTEER-001 (names and attendance state only; no youth record data)
+export interface VolunteerRosterEntry {
+  youthUserId: string;
+  name: string;
+  mark: 'Present' | 'Absent' | null;
+  version: string | null;
+}
+
+export interface VolunteerAttendanceMark {
+  youthId: string;
+  status: 'Present' | 'Absent';
+  note: null;
+  expectedVersion: string | null;
+}
+
+export interface VolunteerAttendanceWrite {
+  sessionId: string;
+  marks: VolunteerAttendanceMark[];
+}
+
+export interface AttendanceTally {
+  present: number;
+  late: number;
+  excused: number;
+  absent: number;
+  marked: number;
+  total: number;
+}

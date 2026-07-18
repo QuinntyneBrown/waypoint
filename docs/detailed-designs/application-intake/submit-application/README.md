@@ -1,120 +1,114 @@
-# Submit an application
+# Submit an application — Detailed design
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Application Intake subsystem owns this feature slice.
+Submit an application — vertical slice that refines `L2-INTAKE-001` into one independently deliverable interaction. The application form shall capture who is filling it out (self / guardian / referrer), youth details, guardian contact, neighbourhood, cohort of interest, track interest, motivation, and consent/privacy acknowledgements, and shall enforce eligibility and under-18 guardian rules.
 
-The Submit an application feature slice refines `L2-INTAKE-001` into one independently deliverable interaction. The application form shall capture who is filling it out (self / guardian / referrer), youth details, guardian contact, neighbourhood, cohort of interest, track interest, motivation, and consent/privacy acknowledgements, and shall enforce eligibility and under-18 guardian rules.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Application Intake subsystem owns this feature slice.
 
 An applicant or referrer starts this feature interaction through the Public Site application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The entity of interest (EoI) is the Word Up software system. This focused architecture description (AD) describes the Submit an application vertical slice and does not claim full conformance with 42010:2022.
 
 ## Description
 
-### Vertical slice boundary
+### Components, types, functions, and classes
 
-The feature spans Public Site application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+| Element | Kind | Source | Responsibility and public interface |
+| --- | --- | --- | --- |
+| `ApplicationsList` | Frontend page | [`../../../../frontend/projects/portal/src/app/features/admin/applications/applications-list.ts`](../../../../frontend/projects/portal/src/app/features/admin/applications/applications-list.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| `ConsentRequired` | Frontend page | [`../../../../frontend/projects/portal/src/app/states/consent-required/consent-required.ts`](../../../../frontend/projects/portal/src/app/states/consent-required/consent-required.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| `ApplicationsApi` | Frontend API boundary | [`../../../../frontend/projects/wu-api/src/lib/services/applications-api.ts`](../../../../frontend/projects/wu-api/src/lib/services/applications-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| `ApplicationsController` | API transport | [`../../../../backend/src/WordUp.Api/Controllers/ApplicationIntake/ApplicationsController.cs`](../../../../backend/src/WordUp.Api/Controllers/ApplicationIntake/ApplicationsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| `SubmitApplicationCommand` | Application slice | [`../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationCommand.cs`](../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationCommand.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `SubmitApplicationCommandHandler` | Application slice | [`../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationCommandHandler.cs`](../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `SubmitApplicationCommandValidator` | Application slice | [`../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationCommandValidator.cs`](../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `SubmitApplicationResult` | Application slice | [`../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationResult.cs`](../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationResult.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `YouthApplication` | Domain state | [`../../../../backend/src/WordUp.Domain/ApplicationIntake/YouthApplication.cs`](../../../../backend/src/WordUp.Domain/ApplicationIntake/YouthApplication.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `ApplicationStatus` | Domain state | [`../../../../backend/src/WordUp.Domain/ApplicationIntake/ApplicationStatus.cs`](../../../../backend/src/WordUp.Domain/ApplicationIntake/ApplicationStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `ValidationBehavior` | Infrastructure and shared ports | [`../../../../backend/src/WordUp.Application/Shared/Behaviors/ValidationBehavior.cs`](../../../../backend/src/WordUp.Application/Shared/Behaviors/ValidationBehavior.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| `AppException` | Infrastructure and shared ports | [`../../../../backend/src/WordUp.Application/Shared/Common/AppException.cs`](../../../../backend/src/WordUp.Application/Shared/Common/AppException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| `ConflictException` | Infrastructure and shared ports | [`../../../../backend/src/WordUp.Application/Shared/Common/ConflictException.cs`](../../../../backend/src/WordUp.Application/Shared/Common/ConflictException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
-### Components and types
+### Structure and relationships
 
-A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
-
-| Layer | Components, types, and classes | Responsibility |
-| --- | --- | --- |
-| Frontend page | [`ApplicationsList`](../../../../frontend/projects/portal/src/app/features/admin/applications/applications-list.ts)<br>[`ConsentRequired`](../../../../frontend/projects/portal/src/app/states/consent-required/consent-required.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`ApplicationsApi`](../../../../frontend/projects/wu-api/src/lib/services/applications-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`ApplicationsController`](../../../../backend/src/WordUp.Api/Controllers/ApplicationIntake/ApplicationsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`SubmitApplicationCommand`](../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationCommand.cs)<br>[`SubmitApplicationCommandHandler`](../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationCommandHandler.cs)<br>[`SubmitApplicationCommandValidator`](../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationCommandValidator.cs)<br>[`SubmitApplicationResult`](../../../../backend/src/WordUp.Application/ApplicationIntake/SubmitApplicationResult.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`YouthApplication`](../../../../backend/src/WordUp.Domain/ApplicationIntake/YouthApplication.cs)<br>[`ApplicationStatus`](../../../../backend/src/WordUp.Domain/ApplicationIntake/ApplicationStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`ValidationBehavior`](../../../../backend/src/WordUp.Application/Shared/Behaviors/ValidationBehavior.cs)<br>[`AppException`](../../../../backend/src/WordUp.Application/Shared/Common/AppException.cs)<br>[`ConflictException`](../../../../backend/src/WordUp.Application/Shared/Common/ConflictException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
-
-### Functions and data flow
+- The feature spans Public Site application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 - `ApplicationsList.submit()` starts the browser interaction and maintains presentation state.
+
 - `ApplicationsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+
 - `ApplicationsController.PostAsync()` applies transport policy and constructs `SubmitApplicationCommand`.
+
 - `SubmitApplicationCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `YouthApplication`, and returns a typed result.
+
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-### Behavior
+### Behaviour
 
-1. **Entry.** An applicant or referrer starts this feature interaction through the Public Site application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-INTAKE-001`, `L2-NFR-001`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
+1. An applicant or referrer starts this feature interaction through the Public Site application.
+
+2. The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-INTAKE-001`, `L2-NFR-001`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+
+3. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 
-This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
+This section contains L2 requirements only. It intentionally includes no L1 requirement text. The L1 specification identifier records the traceability correspondence for each L2 requirement.
 
-### L2-INTAKE-001 — Application/referral form captures applicant, guardian, and consent data
-
-| Field | Value |
-| --- | --- |
-| Relationship | Primary |
-| L1 specification ID | `L1-INTAKE-001` |
-
-The application form shall capture who is filling it out (self / guardian / referrer), youth details, guardian contact, neighbourhood, cohort of interest, track interest, motivation, and consent/privacy acknowledgements, and shall enforce eligibility and under-18 guardian rules.
-
-### L2-NFR-001 — Input validation and injection defense
-
-| Field | Value |
-| --- | --- |
-| Relationship | Dependency |
-| L1 specification ID | `L1-NFR-001` |
-
-All input shall be validated and all output encoded to prevent injection and XSS.
+| L2 specification ID | L1 specification ID | Requirement text |
+| --- | --- | --- |
+| `L2-INTAKE-001` | `L1-INTAKE-001` | The application form shall capture who is filling it out (self / guardian / referrer), youth details, guardian contact, neighbourhood, cohort of interest, track interest, motivation, and consent/privacy acknowledgements, and shall enforce eligibility and under-18 guardian rules. |
+| `L2-NFR-001` | `L1-NFR-001` | All input shall be validated and all output encoded to prevent injection and XSS. |
 
 ## Diagrams
 
-The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
+The six architecture views use one caption pattern and stable EoI-local names. Each view component is available as PlantUML source and as an inline Portable Network Graphics (PNG) rendering.
 
-### C4 diagrams
+### C4 system context view
 
-#### System context
+[PlantUML source](diagrams/c4-system-context.puml)
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+![Figure 1 — C4 system context view for Submit an application](diagrams/c4-system-context.png)
 
-![Figure 1 — C4 system context for Submit an application.](diagrams/c4-system-context.png)
+Figure 1 — C4 system context view: the Word Up software system, its actors, and its external dependencies for Submit an application. The view component uses the C4 system context model kind.
 
-*Figure 1 — C4 system context: Submit an application in the Word Up environment.*
+### C4 container view
 
-#### Container
+[PlantUML source](diagrams/c4-container.puml)
 
-Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
+![Figure 2 — C4 container view for Submit an application](diagrams/c4-container.png)
 
-![Figure 2 — C4 container view for Submit an application.](diagrams/c4-container.png)
+Figure 2 — C4 container view: the frontend, backend, data, and integration boundaries for Submit an application. The view component uses the C4 container model kind.
 
-*Figure 2 — C4 container view: application and data boundaries for Submit an application.*
+### C4 component view
 
-#### Component
+[PlantUML source](diagrams/c4-component.puml)
 
-Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
+![Figure 3 — C4 component view for Submit an application](diagrams/c4-component.png)
 
-![Figure 3 — C4 component view for Submit an application.](diagrams/c4-component.png)
+Figure 3 — C4 component view: the source-level components and their structural relationships for Submit an application. The view component uses the C4 component model kind.
 
-*Figure 3 — C4 component view: collaborating components for Submit an application.*
+### C4 code view
 
-#### Code
+[PlantUML source](diagrams/c4-code.puml)
 
-Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
+![Figure 4 — C4 code view for Submit an application](diagrams/c4-code.png)
 
-![Figure 4 — C4 code view for Submit an application.](diagrams/c4-code.png)
+Figure 4 — C4 code view: the principal code elements and their dependency direction for Submit an application. The view component uses the C4 code model kind.
 
-*Figure 4 — C4 code view: feature-owned code elements for Submit an application.*
+### Class view
 
-### Class diagram
+[PlantUML source](diagrams/class-structure.puml)
 
-Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
+![Figure 5 — Class view for Submit an application](diagrams/class-structure.png)
 
-![Figure 5 — Class structure for Submit an application.](diagrams/class-structure.png)
+Figure 5 — Class view: the feature types, functions, classes, entities, and their relationships for Submit an application. The view component uses the Unified Modeling Language (UML) class model kind.
 
-*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for Submit an application.*
+### Sequence view
 
-### Sequence diagram
+[PlantUML source](diagrams/sequence-behaviour.puml)
 
-Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
+![Figure 6 — Sequence view for Submit an application](diagrams/sequence-behaviour.png)
 
-![Figure 6 — Sequence behavior for Submit an application.](diagrams/sequence-behaviour.png)
-
-*Figure 6 — Sequence behavior: the end-to-end submit an application interaction.*
+Figure 6 — Sequence view: the principal end-to-end feature behaviour for Submit an application. Nested application boxes separate frontend behaviour from backend behaviour. The view component uses the UML sequence model kind.

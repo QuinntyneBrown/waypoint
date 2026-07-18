@@ -41,15 +41,18 @@ public class VolunteerRosterQueryHandler : IRequestHandler<VolunteerRosterQuery,
         // Current mark (if any) so the client can render the Present/Absent control's state.
         var marks = await _db.AttendanceRecords
             .Where(r => r.SessionId == session.Id)
-            .Select(r => new { r.YouthUserId, r.Status })
+            .Select(r => new { r.YouthUserId, r.Status, r.ConcurrencyStamp })
             .ToListAsync(cancellationToken);
-        var markByYouth = marks.ToDictionary(m => m.YouthUserId, m => m.Status.ToString());
+        var markByYouth = marks.ToDictionary(
+            m => m.YouthUserId,
+            m => new { Mark = m.Status.ToString(), Version = m.ConcurrencyStamp.ToString() });
 
         return youth
             .Select(y => new VolunteerRosterEntry(
                 y.Id,
                 y.DisplayName,
-                markByYouth.TryGetValue(y.Id, out var mark) ? mark : null))
+                markByYouth.TryGetValue(y.Id, out var mark) ? mark.Mark : null,
+                markByYouth.TryGetValue(y.Id, out var current) ? current.Version : "none"))
             .ToList();
     }
 }

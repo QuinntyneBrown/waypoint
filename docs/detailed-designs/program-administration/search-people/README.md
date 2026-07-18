@@ -1,129 +1,112 @@
-# Search people
+# Search people — Detailed design
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Program Administration subsystem owns this feature slice.
+Search people — vertical slice that refines `L2-ADMIN-001` into one independently deliverable interaction. Admins shall be able to list, search, and filter all people by role, cohort, and free text.
 
-The Search people feature slice refines `L2-ADMIN-001` into one independently deliverable interaction. Admins shall be able to list, search, and filter all people by role, cohort, and free text.
+Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Program Administration subsystem owns this feature slice.
 
 A program administrator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The entity of interest (EoI) is the Word Up software system. This focused architecture description (AD) describes the Search people vertical slice and does not claim full conformance with 42010:2022.
 
 ## Description
 
-### Vertical slice boundary
+### Components, types, functions, and classes
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+| Element | Kind | Source | Responsibility and public interface |
+| --- | --- | --- | --- |
+| `PeopleDirectory` | Frontend page | [`../../../../frontend/projects/portal/src/app/features/admin/people/people-directory.ts`](../../../../frontend/projects/portal/src/app/features/admin/people/people-directory.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| `SettingsDisplay` | Frontend page | [`../../../../frontend/projects/portal/src/app/settings/display/settings-display.ts`](../../../../frontend/projects/portal/src/app/settings/display/settings-display.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| `PeopleApi` | Frontend API boundary | [`../../../../frontend/projects/wu-api/src/lib/services/people-api.ts`](../../../../frontend/projects/wu-api/src/lib/services/people-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| `PeopleController` | API transport | [`../../../../backend/src/WordUp.Api/Controllers/ProgramAdministration/PeopleController.cs`](../../../../backend/src/WordUp.Api/Controllers/ProgramAdministration/PeopleController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| `ListPeopleQuery` | Application slice | [`../../../../backend/src/WordUp.Application/ProgramAdministration/People/ListPeopleQuery.cs`](../../../../backend/src/WordUp.Application/ProgramAdministration/People/ListPeopleQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `ListPeopleQueryHandler` | Application slice | [`../../../../backend/src/WordUp.Application/ProgramAdministration/People/ListPeopleQueryHandler.cs`](../../../../backend/src/WordUp.Application/ProgramAdministration/People/ListPeopleQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| `Cohort` | Domain state | [`../../../../backend/src/WordUp.Domain/ProgramAdministration/Cohort.cs`](../../../../backend/src/WordUp.Domain/ProgramAdministration/Cohort.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `CohortMentor` | Domain state | [`../../../../backend/src/WordUp.Domain/ProgramAdministration/CohortMentor.cs`](../../../../backend/src/WordUp.Domain/ProgramAdministration/CohortMentor.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `OrgSettings` | Domain state | [`../../../../backend/src/WordUp.Domain/ProgramAdministration/OrgSettings.cs`](../../../../backend/src/WordUp.Domain/ProgramAdministration/OrgSettings.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| `IAppDbContext` | Infrastructure and shared ports | [`../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
-### Components and types
+### Structure and relationships
 
-A source link identifies an existing realization. An unlinked name identifies a planned feature boundary where the repository has no dedicated type.
-
-| Layer | Components, types, and classes | Responsibility |
-| --- | --- | --- |
-| Frontend page | [`PeopleDirectory`](../../../../frontend/projects/portal/src/app/features/admin/people/people-directory.ts)<br>[`SettingsDisplay`](../../../../frontend/projects/portal/src/app/settings/display/settings-display.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`PeopleApi`](../../../../frontend/projects/wu-api/src/lib/services/people-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`PeopleController`](../../../../backend/src/WordUp.Api/Controllers/ProgramAdministration/PeopleController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`ListPeopleQuery`](../../../../backend/src/WordUp.Application/ProgramAdministration/People/ListPeopleQuery.cs)<br>[`ListPeopleQueryHandler`](../../../../backend/src/WordUp.Application/ProgramAdministration/People/ListPeopleQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`Cohort`](../../../../backend/src/WordUp.Domain/ProgramAdministration/Cohort.cs)<br>[`CohortMentor`](../../../../backend/src/WordUp.Domain/ProgramAdministration/CohortMentor.cs)<br>[`OrgSettings`](../../../../backend/src/WordUp.Domain/ProgramAdministration/OrgSettings.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
-
-### Functions and data flow
+- The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 - `PeopleDirectory.submit()` starts the browser interaction and maintains presentation state.
+
 - `PeopleApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+
 - `PeopleController.PostAsync()` applies transport policy and constructs `ListPeopleQuery`.
+
 - `ListPeopleQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Cohort`, and returns a typed result.
+
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
 
-### Behavior
+### Behaviour
 
-1. **Entry.** A program administrator starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-ADMIN-001`, `L2-NFR-008`, `L2-NFR-009`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
+1. A program administrator starts this feature interaction through the Portal application.
+
+2. The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-ADMIN-001`, `L2-NFR-008`, `L2-NFR-009`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+
+3. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
 
-This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
+This section contains L2 requirements only. It intentionally includes no L1 requirement text. The L1 specification identifier records the traceability correspondence for each L2 requirement.
 
-### L2-ADMIN-001 — People directory with search and filters
-
-| Field | Value |
-| --- | --- |
-| Relationship | Primary |
-| L1 specification ID | `L1-ADMIN-001` |
-
-Admins shall be able to list, search, and filter all people by role, cohort, and free text.
-
-### L2-NFR-008 — Performance targets
-
-| Field | Value |
-| --- | --- |
-| Relationship | Dependency |
-| L1 specification ID | `L1-NFR-005` |
-
-The system shall meet response-time and throughput targets, including on low-powered devices.
-
-### L2-NFR-009 — Responsive layout across breakpoints
-
-| Field | Value |
-| --- | --- |
-| Relationship | Dependency |
-| L1 specification ID | `L1-NFR-006` |
-
-Every UI shall render usably from XS to XL.
+| L2 specification ID | L1 specification ID | Requirement text |
+| --- | --- | --- |
+| `L2-ADMIN-001` | `L1-ADMIN-001` | Admins shall be able to list, search, and filter all people by role, cohort, and free text. |
+| `L2-NFR-008` | `L1-NFR-005` | The system shall meet response-time and throughput targets, including on low-powered devices. |
+| `L2-NFR-009` | `L1-NFR-006` | Every UI shall render usably from XS to XL. |
 
 ## Diagrams
 
-The six figures use one visual vocabulary. Blue boxes identify frontend elements, green boxes identify backend application elements, purple boxes identify domain or data elements, and orange boxes identify infrastructure or external elements. Nested boxes identify the software boundary, the frontend or backend boundary, and the owning application.
+The six architecture views use one caption pattern and stable EoI-local names. Each view component is available as PlantUML source and as an inline Portable Network Graphics (PNG) rendering.
 
-### C4 diagrams
+### C4 system context view
 
-#### System context
+[PlantUML source](diagrams/c4-system-context.puml)
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+![Figure 1 — C4 system context view for Search people](diagrams/c4-system-context.png)
 
-![Figure 1 — C4 system context for Search people.](diagrams/c4-system-context.png)
+Figure 1 — C4 system context view: the Word Up software system, its actors, and its external dependencies for Search people. The view component uses the C4 system context model kind.
 
-*Figure 1 — C4 system context: Search people in the Word Up environment.*
+### C4 container view
 
-#### Container
+[PlantUML source](diagrams/c4-container.puml)
 
-Figure 2 is a view component governed by the C4 container model kind. It separates frontend containers from backend and persistence containers.
+![Figure 2 — C4 container view for Search people](diagrams/c4-container.png)
 
-![Figure 2 — C4 container view for Search people.](diagrams/c4-container.png)
+Figure 2 — C4 container view: the frontend, backend, data, and integration boundaries for Search people. The view component uses the C4 container model kind.
 
-*Figure 2 — C4 container view: application and data boundaries for Search people.*
+### C4 component view
 
-#### Component
+[PlantUML source](diagrams/c4-component.puml)
 
-Figure 3 is a view component governed by the C4 component model kind. It locates the page, typed client, controller, handler, domain type, and persistence adapter inside their owning applications.
+![Figure 3 — C4 component view for Search people](diagrams/c4-component.png)
 
-![Figure 3 — C4 component view for Search people.](diagrams/c4-component.png)
+Figure 3 — C4 component view: the source-level components and their structural relationships for Search people. The view component uses the C4 component model kind.
 
-*Figure 3 — C4 component view: collaborating components for Search people.*
+### C4 code view
 
-#### Code
+[PlantUML source](diagrams/c4-code.puml)
 
-Figure 4 is a view component governed by the C4 code model kind. It shows the principal code elements and their dependency direction.
+![Figure 4 — C4 code view for Search people](diagrams/c4-code.png)
 
-![Figure 4 — C4 code view for Search people.](diagrams/c4-code.png)
+Figure 4 — C4 code view: the principal code elements and their dependency direction for Search people. The view component uses the C4 code model kind.
 
-*Figure 4 — C4 code view: feature-owned code elements for Search people.*
+### Class view
 
-### Class diagram
+[PlantUML source](diagrams/class-structure.puml)
 
-Figure 5 is a view component governed by the UML class-structure model kind. Solid relationships show runtime collaboration, dashed relationships show construction, and aggregation shows persistence ownership.
+![Figure 5 — Class view for Search people](diagrams/class-structure.png)
 
-![Figure 5 — Class structure for Search people.](diagrams/class-structure.png)
+Figure 5 — Class view: the feature types, functions, classes, entities, and their relationships for Search people. The view component uses the Unified Modeling Language (UML) class model kind.
 
-*Figure 5 — Class structure: relationships among frontend, API, application, domain, and persistence types for Search people.*
+### Sequence view
 
-### Sequence diagram
+[PlantUML source](diagrams/sequence-behaviour.puml)
 
-Figure 6 is a view component governed by the UML sequence model kind. Frontend and backend boxes identify the application context for each participant.
+![Figure 6 — Sequence view for Search people](diagrams/sequence-behaviour.png)
 
-![Figure 6 — Sequence behavior for Search people.](diagrams/sequence-behaviour.png)
-
-*Figure 6 — Sequence behavior: the end-to-end search people interaction.*
+Figure 6 — Sequence view: the principal end-to-end feature behaviour for Search people. Nested application boxes separate frontend behaviour from backend behaviour. The view component uses the UML sequence model kind.
