@@ -139,6 +139,26 @@ export const routes: Routes = [
       import('./states/session-expired/session-expired').then((m) => m.SessionExpired),
   },
   {
+    path: 'forbidden',
+    title: 'No access · Word Up',
+    loadComponent: () => import('./states/forbidden/forbidden').then((m) => m.Forbidden),
+  },
+  {
+    path: 'server-error',
+    title: 'Something went wrong · Word Up',
+    loadComponent: () => import('./states/server-error/server-error').then((m) => m.ServerError),
+  },
+  {
+    path: 'maintenance',
+    title: 'Maintenance · Word Up',
+    loadComponent: () => import('./states/maintenance/maintenance').then((m) => m.Maintenance),
+  },
+  {
+    path: 'offline',
+    title: 'Offline · Word Up',
+    loadComponent: () => import('./states/offline/offline-state').then((m) => m.OfflineState),
+  },
+  {
     path: '**',
     title: 'Not found · Word Up',
     loadComponent: () => import('./states/not-found/not-found').then((m) => m.NotFound),

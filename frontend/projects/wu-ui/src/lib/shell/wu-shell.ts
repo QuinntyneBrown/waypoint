@@ -1,7 +1,16 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { WuAvatar } from '../avatar/wu-avatar';
 import { WuIcon } from '../icon/wu-icon';
+import { OfflineService } from '../offline/offline.service';
 import { isNavGroup, WU_NAV, WU_ROLE_LABEL, WuNavItem, WuRole } from './nav-config';
 
 /**
@@ -19,7 +28,7 @@ import { isNavGroup, WU_NAV, WU_ROLE_LABEL, WuNavItem, WuRole } from './nav-conf
     '[class.wu-has-sidenav]': 'true',
     '[class.wu-has-botnav]': 'botItems().length > 0',
     '[class.is-nav-open]': 'navOpen()',
-    '[class.is-offline]': 'offline()',
+    '[class.is-offline]': 'showOffline()',
   },
   templateUrl: './wu-shell.html',
 })
@@ -29,8 +38,14 @@ export class WuShell {
   readonly active = input('');
   /** Display name for the account affordance. */
   readonly userName = input('');
+  /** Manual override; the live connectivity state is added automatically. */
   readonly offline = input(false);
   readonly signOut = output<void>();
+
+  private readonly offlineService = inject(OfflineService);
+  protected readonly showOffline = computed(
+    () => this.offline() || this.offlineService.isOffline(),
+  );
 
   protected readonly navOpen = signal(false);
   protected readonly accountOpen = signal(false);

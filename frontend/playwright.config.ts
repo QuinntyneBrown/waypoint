@@ -38,6 +38,12 @@ export default defineConfig({
       testDir: './e2e/public-site',
       use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:4201' },
     },
+    {
+      // Mobile-viewport a11y/responsive passes against the portal.
+      name: 'portal-xs',
+      testDir: './e2e/portal-xs',
+      use: { ...devices['Pixel 7'], baseURL: 'http://localhost:4200' },
+    },
   ],
   webServer: [
     {
