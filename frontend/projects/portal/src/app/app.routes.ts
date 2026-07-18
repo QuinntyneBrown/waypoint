@@ -13,6 +13,36 @@ export const routes: Routes = [
         loadComponent: () => import('./auth/sign-in/sign-in').then((m) => m.SignIn),
       },
       {
+        path: 'forgot-password',
+        title: 'Reset password · Word Up',
+        loadComponent: () =>
+          import('./auth/forgot-password/forgot-password').then((m) => m.ForgotPassword),
+      },
+      {
+        path: 'reset-link-sent',
+        title: 'Check your email · Word Up',
+        loadComponent: () =>
+          import('./auth/reset-link-sent/reset-link-sent').then((m) => m.ResetLinkSent),
+      },
+      {
+        path: 'reset-password',
+        title: 'Set a new password · Word Up',
+        loadComponent: () =>
+          import('./auth/reset-password/reset-password').then((m) => m.ResetPassword),
+      },
+      {
+        path: 'reset-link-invalid',
+        title: 'Reset link · Word Up',
+        loadComponent: () =>
+          import('./auth/reset-link-invalid/reset-link-invalid').then((m) => m.ResetLinkInvalid),
+      },
+      {
+        path: 'reset-success',
+        title: 'Password updated · Word Up',
+        loadComponent: () =>
+          import('./auth/reset-success/reset-success').then((m) => m.ResetSuccess),
+      },
+      {
         path: 'account-locked',
         title: 'Account locked · Word Up',
         loadComponent: () =>
