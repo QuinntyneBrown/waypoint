@@ -24,6 +24,8 @@ builder.Services.AddHealthChecks();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Word Up API", Version = "v1" });
+    // Namespace-qualified schema ids so same-named DTOs in different features don't collide.
+    options.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
     var scheme = new OpenApiSecurityScheme
     {
         Name = "Authorization",
