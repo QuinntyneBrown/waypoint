@@ -9,3 +9,4 @@ export * from './lib/toast/wu-toast-host';
 export * from './lib/avatar/wu-avatar';
 export * from './lib/shell/nav-config';
 export * from './lib/shell/wu-shell';
+export * from './lib/states/wu-state-page';

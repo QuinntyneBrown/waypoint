@@ -1,0 +1,93 @@
+<div class="wu-authpage">
+  <div class="wu-authcard">
+    <div class="wu-authcard__brand">
+      <span class="wu-brand__mark" style="width: 38px; height: 38px; font-size: 1.1rem">W</span>
+      <span style="font-family: var(--wu-font-head); font-weight: 700; font-size: 1.2rem"
+        >Word Up</span
+      >
+    </div>
+    <h1 style="font-size: 1.5rem; text-align: center">Welcome back</h1>
+    <p class="wu-muted wu-text-c wu-mb-6">Sign in to continue your journey.</p>
+
+    @if (errorMessage()) {
+      <div class="wu-alert wu-alert--error" role="alert">
+        <svg class="wu-alert__icon wu-icon"><use href="#i-alert-circle"></use></svg>
+        <div>{{ errorMessage() }}</div>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div
+        class="wu-field"
+        [class.is-error]="form.controls.email.touched && form.controls.email.invalid"
+      >
+        <label class="wu-label" for="email">Email</label>
+        <input
+          class="wu-input"
+          id="email"
+          type="email"
+          autocomplete="username"
+          formControlName="email"
+          placeholder="you@example.com"
+        />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <div class="wu-error-text">Enter a valid email address.</div>
+        }
+      </div>
+
+      <div
+        class="wu-field"
+        [class.is-error]="form.controls.password.touched && form.controls.password.invalid"
+      >
+        <label class="wu-label" for="password">Password</label>
+        <div style="position: relative">
+          <input
+            class="wu-input"
+            id="password"
+            [type]="showPassword() ? 'text' : 'password'"
+            autocomplete="current-password"
+            formControlName="password"
+            placeholder="••••••••"
+          />
+          <button
+            class="wu-iconbtn"
+            type="button"
+            style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%)"
+            [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+            [attr.aria-pressed]="showPassword()"
+            (click)="togglePassword()"
+          >
+            <wu-icon [name]="showPassword() ? 'eye-off' : 'eye'" />
+          </button>
+        </div>
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <div class="wu-error-text">Enter your password.</div>
+        }
+      </div>
+
+      <label class="wu-check">
+        <input type="checkbox" formControlName="remember" />
+        <span class="wu-check__box"
+          ><svg class="wu-icon"><use href="#i-check"></use></svg
+        ></span>
+        <span>Keep me signed in</span>
+      </label>
+      @if (form.controls.remember.value) {
+        <p class="wu-help wu-mt-2">Not recommended on shared or public devices.</p>
+      }
+
+      <button
+        class="wu-btn wu-btn--primary wu-btn--block wu-btn--lg wu-mt-4"
+        type="submit"
+        [class.is-loading]="submitting()"
+        [disabled]="submitting()"
+      >
+        Sign in
+      </button>
+    </form>
+
+    <p class="wu-text-c wu-mt-6 wu-text-sm">
+      <a routerLink="/auth/forgot-password">Forgot password?</a>
+    </p>
+  </div>
+</div>
