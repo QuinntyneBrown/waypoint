@@ -12,3 +12,17 @@ export interface SubmitContactResult {
   contactRequestId: string;
   acknowledgement: string;
 }
+
+// Traces to: L2-PUB-003 (AC2 volunteer sign-up; screening-consent recorded)
+export interface SubmitVolunteerSignupRequest {
+  name: string;
+  email: string;
+  phone: string;
+  areasOfInterest: string;
+  screeningConsentAck: boolean;
+}
+
+export interface SubmitVolunteerSignupResult {
+  volunteerSignupId: string;
+  acknowledgement: string;
+}

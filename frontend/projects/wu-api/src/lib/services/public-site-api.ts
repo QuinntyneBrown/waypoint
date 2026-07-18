@@ -2,7 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api-base-url';
-import { SubmitContactRequest, SubmitContactResult } from '../models/public/public';
+import {
+  SubmitContactRequest,
+  SubmitContactResult,
+  SubmitVolunteerSignupRequest,
+  SubmitVolunteerSignupResult,
+} from '../models/public/public';
 
 /**
  * Anonymous public marketing-site form submissions (contact, volunteer sign-up,
@@ -16,5 +21,15 @@ export class PublicSiteApi {
   /** `POST /api/public/contact` (L2-PUB-003 AC1). */
   submitContact(body: SubmitContactRequest): Observable<SubmitContactResult> {
     return this.http.post<SubmitContactResult>(`${this.base}/api/public/contact`, body);
+  }
+
+  /** `POST /api/public/volunteer-signup` (L2-PUB-003 AC2). */
+  submitVolunteerSignup(
+    body: SubmitVolunteerSignupRequest,
+  ): Observable<SubmitVolunteerSignupResult> {
+    return this.http.post<SubmitVolunteerSignupResult>(
+      `${this.base}/api/public/volunteer-signup`,
+      body,
+    );
   }
 }

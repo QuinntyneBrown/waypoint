@@ -33,7 +33,7 @@ requirement conflicts early (they gate "done").
 
 - [x] **A1 · Contact form** — name/email/topic/message, field-level validation, submit to
       `POST /api/public/contact`, acknowledgement. `L2-PUB-003` AC1.
-- [ ] **A2 · Volunteer sign-up form** — Get-involved form, screening-consent gate, submit to
+- [x] **A2 · Volunteer sign-up form** — Get-involved form, screening-consent gate, submit to
       `POST /api/public/volunteer-signup`. `L2-PUB-003` AC2.
 - [ ] **A3 · Donate submission** — post pledge to `POST /api/public/donation`, record provider
       reference/result. `L2-PUB-003` AC3.

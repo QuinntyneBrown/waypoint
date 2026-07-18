@@ -1,38 +1,89 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { ApiError, PublicSiteApi } from '@wu/api';
+import { WuIcon } from '@wu/ui';
 
+function isEmail(value: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+// Traces to: L2-PUB-003
 @Component({
   selector: 'wu-get-involved',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
-  template: `<section class="wu-container wu-section" style="max-width: 720px">
-    <div class="wu-eyebrow">Get involved</div>
-    <h1>Help raise up the next generation</h1>
-    <p class="wu-text-lg wu-muted">
-      There’s a place for you — as a mentor, a volunteer, or a monthly giver.
-    </p>
-
-    <div class="wu-grid wu-grid--2 wu-mt-6">
-      <div class="wu-card">
-        <div class="wu-card__body">
-          <h2 class="wu-card__title">Volunteer</h2>
-          <p class="wu-muted">
-            Walk alongside young people as a mentor or helper. Because you’ll work with youth, every
-            volunteer completes a screening and reference check before starting.
-          </p>
-          <a class="wu-btn wu-btn--secondary" routerLink="/contact">Talk to our team</a>
-        </div>
-      </div>
-      <div class="wu-card">
-        <div class="wu-card__body">
-          <h2 class="wu-card__title">Give monthly</h2>
-          <p class="wu-muted">
-            A recurring gift keeps cohorts running and mentors resourced all year long.
-          </p>
-          <a class="wu-btn wu-btn--primary" routerLink="/donate">Donate</a>
-        </div>
-      </div>
-    </div>
-  </section>`,
+  imports: [ReactiveFormsModule, RouterLink, WuIcon],
+  templateUrl: './get-involved.html',
 })
-export class GetInvolved {}
+export class GetInvolved {
+  private readonly fb = inject(FormBuilder);
+  private readonly api = inject(PublicSiteApi);
+
+  protected readonly form = this.fb.nonNullable.group({
+    name: [''],
+    email: [''],
+    phone: [''],
+    areasOfInterest: [''],
+    screeningConsentAck: [false],
+  });
+
+  private readonly rawValue = toSignal(this.form.valueChanges, {
+    initialValue: this.form.getRawValue(),
+  });
+  private readonly value = computed(() => {
+    const v = this.rawValue();
+    return {
+      name: v.name ?? '',
+      email: v.email ?? '',
+      phone: v.phone ?? '',
+      areasOfInterest: v.areasOfInterest ?? '',
+      screeningConsentAck: v.screeningConsentAck ?? false,
+    };
+  });
+
+  protected readonly showErrors = signal(false);
+  protected readonly submitting = signal(false);
+  protected readonly serverError = signal<string | null>(null);
+  protected readonly done = signal(false);
+
+  protected readonly errors = computed<Record<string, string>>(() => {
+    const v = this.value();
+    const e: Record<string, string> = {};
+    if (!v.name.trim()) e['name'] = 'Enter your name.';
+    if (!isEmail(v.email)) e['email'] = 'Enter a valid email address.';
+    // A volunteer working with youth must complete a screening/reference check (AC2).
+    if (!v.screeningConsentAck)
+      e['screeningConsentAck'] = 'Please acknowledge the screening and reference check.';
+    return e;
+  });
+
+  protected readonly isValid = computed(() => Object.keys(this.errors()).length === 0);
+
+  protected error(field: string): string {
+    return this.showErrors() ? (this.errors()[field] ?? '') : '';
+  }
+
+  protected submit(): void {
+    this.serverError.set(null);
+    this.showErrors.set(true);
+    if (!this.isValid()) return;
+    this.submitting.set(true);
+    const v = this.form.getRawValue();
+    this.api
+      .submitVolunteerSignup({
+        name: v.name.trim(),
+        email: v.email.trim(),
+        phone: v.phone.trim(),
+        areasOfInterest: v.areasOfInterest.trim(),
+        screeningConsentAck: v.screeningConsentAck,
+      })
+      .subscribe({
+        next: () => this.done.set(true),
+        error: (err: unknown) => {
+          this.submitting.set(false);
+          this.serverError.set(ApiError.from(err).title);
+        },
+      });
+  }
+}

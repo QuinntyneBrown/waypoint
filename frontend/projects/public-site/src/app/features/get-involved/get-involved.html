@@ -1,0 +1,110 @@
+<section class="wu-container wu-section" style="max-width: 720px">
+  @if (done()) {
+    <div class="wu-empty">
+      <div class="wu-empty__icon">
+        <wu-icon name="check-circle" />
+      </div>
+      <h1 class="wu-empty__title">Thanks for volunteering</h1>
+      <p class="wu-empty__text">
+        We’ve received your details. Our team will reach out about next steps, including the
+        screening and reference check every youth volunteer completes before starting.
+      </p>
+      <a class="wu-btn wu-btn--primary" routerLink="/">Back to home</a>
+    </div>
+  } @else {
+    <div class="wu-eyebrow">Get involved</div>
+    <h1>Help raise up the next generation</h1>
+    <p class="wu-text-lg wu-muted">
+      Walk alongside young people as a mentor or helper. Because you’ll work with youth, every
+      volunteer completes a screening and reference check before starting.
+    </p>
+
+    <div class="wu-grid wu-grid--2 wu-mt-6">
+      <div class="wu-card">
+        <div class="wu-card__body">
+          <h2 class="wu-card__title">Give monthly</h2>
+          <p class="wu-muted">
+            Prefer to give? A recurring gift keeps cohorts running and mentors resourced all year
+            long.
+          </p>
+          <a class="wu-btn wu-btn--secondary" routerLink="/donate">Donate</a>
+        </div>
+      </div>
+      <div class="wu-card">
+        <div class="wu-card__body">
+          <h2 class="wu-card__title">Have a question first?</h2>
+          <p class="wu-muted">
+            Not sure where you’d fit? Reach out and we’ll help you find a place.
+          </p>
+          <a class="wu-btn wu-btn--secondary" routerLink="/contact">Talk to our team</a>
+        </div>
+      </div>
+    </div>
+
+    @if (serverError()) {
+      <div class="wu-alert wu-alert--error wu-mt-4" role="alert">
+        <wu-icon name="alert-circle" iconClass="wu-alert__icon" />
+        <div>{{ serverError() }}</div>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="wu-stack wu-mt-6">
+      <h2>Volunteer with us</h2>
+
+      <div class="wu-grid wu-grid--2">
+        <div class="wu-field" [class.is-error]="error('name')">
+          <label class="wu-label" for="name">Your name <span class="wu-label__req">*</span></label>
+          <input class="wu-input" id="name" formControlName="name" />
+          @if (error('name')) {
+            <div class="wu-error-text">{{ error('name') }}</div>
+          }
+        </div>
+        <div class="wu-field" [class.is-error]="error('email')">
+          <label class="wu-label" for="email">Email <span class="wu-label__req">*</span></label>
+          <input class="wu-input" id="email" type="email" formControlName="email" />
+          @if (error('email')) {
+            <div class="wu-error-text">{{ error('email') }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="wu-field">
+        <label class="wu-label" for="phone">Phone</label>
+        <input class="wu-input" id="phone" formControlName="phone" />
+      </div>
+
+      <div class="wu-field">
+        <label class="wu-label" for="areasOfInterest">How would you like to help?</label>
+        <textarea
+          class="wu-textarea"
+          id="areasOfInterest"
+          rows="4"
+          formControlName="areasOfInterest"
+        ></textarea>
+      </div>
+
+      <div class="wu-field" [class.is-error]="error('screeningConsentAck')">
+        <label class="wu-check">
+          <input type="checkbox" formControlName="screeningConsentAck" />
+          <span class="wu-check__box"><wu-icon name="check" /></span>
+          <span>
+            I acknowledge that volunteers working with youth must complete a screening and reference
+            check before starting.
+          </span>
+        </label>
+        @if (error('screeningConsentAck')) {
+          <div class="wu-error-text">{{ error('screeningConsentAck') }}</div>
+        }
+      </div>
+
+      <button
+        class="wu-btn wu-btn--primary wu-btn--lg"
+        type="submit"
+        [class.is-loading]="submitting()"
+        [disabled]="submitting()"
+      >
+        Sign up to volunteer
+      </button>
+    </form>
+  }
+</section>

@@ -143,6 +143,45 @@ export class ContactPage extends BasePage {
   }
 }
 
+/** `/get-involved` — anonymous volunteer sign-up (public-site). */
+export class GetInvolvedPage extends BasePage {
+  static readonly path = '/get-involved';
+
+  get name() {
+    return this.page.getByLabel('Your name');
+  }
+  get email() {
+    return this.page.getByLabel('Email');
+  }
+  get phone() {
+    return this.page.getByLabel('Phone');
+  }
+  get areasOfInterest() {
+    return this.page.getByLabel(/how would you like to help/i);
+  }
+  get screeningCheckbox() {
+    return this.page.getByRole('checkbox', { name: /screening/i });
+  }
+  get submitButton() {
+    return this.page.getByRole('button', { name: /sign up to volunteer/i });
+  }
+  get acknowledgementHeading() {
+    return this.page.getByRole('heading', { name: /thanks for volunteering/i });
+  }
+  get screeningError() {
+    return this.page.getByText(/acknowledge the screening/i);
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(GetInvolvedPage.path);
+  }
+
+  /** Toggle the screening-consent acknowledgement via its custom checkbox. */
+  async acknowledgeScreening(): Promise<void> {
+    await this.page.locator('label.wu-check', { hasText: 'screening' }).click();
+  }
+}
+
 /** `/donate` — donation tiers with hand-off to an external PCI provider. */
 export class DonatePage extends BasePage {
   static readonly path = '/donate';
