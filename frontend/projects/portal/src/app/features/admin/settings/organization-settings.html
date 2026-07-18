@@ -1,0 +1,254 @@
+<wu-shell
+  role="admin"
+  active="settings"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Program administration</div>
+        <h1 class="wu-page__title">Organization settings</h1>
+        <p class="wu-page__sub">
+          Manage identity, guardian consent policy, program terms, and available tracks.
+        </p>
+      </div>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <div class="wu-alert wu-alert--error" role="alert">
+        <div>
+          <div class="wu-alert__title">{{ error }}</div>
+          Settings could not be loaded or saved.
+        </div>
+        <button class="wu-btn wu-btn--secondary" type="button" (click)="retry()">Retry</button>
+      </div>
+    }
+    @if (outcome(); as message) {
+      <p class="wu-alert wu-alert--success" data-testid="settings-outcome" role="status">
+        {{ message }}
+      </p>
+    }
+
+    @if (loaded()) {
+      <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+        <div class="settings-grid wu-mb-5">
+          <section class="wu-card settings-card" aria-labelledby="identity-heading">
+            <div class="wu-card__body wu-stack">
+              <div>
+                <h2 id="identity-heading">Organization identity</h2>
+                <p class="wu-muted">The platform colour palette remains fixed for accessibility.</p>
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="organization-name">Organization name</label>
+                <input class="wu-input" id="organization-name" formControlName="name" />
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="organization-display-name">Display name</label>
+                <input
+                  class="wu-input"
+                  id="organization-display-name"
+                  formControlName="displayName"
+                />
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="organization-logo">Logo URL</label>
+                <input class="wu-input" id="organization-logo" formControlName="logoUrl" />
+              </div>
+              @if (settingsForm.controls.logoUrl.value) {
+                <div class="logo-preview" aria-label="Logo preview">
+                  <img
+                    [src]="settingsForm.controls.logoUrl.value"
+                    alt="Organization logo preview"
+                  />
+                </div>
+              }
+              <div class="wu-field">
+                <label class="wu-label" for="organization-city">City</label>
+                <input class="wu-input" id="organization-city" formControlName="city" />
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="organization-contact">Contact email</label>
+                <input
+                  class="wu-input"
+                  id="organization-contact"
+                  type="email"
+                  formControlName="contactEmail"
+                />
+                <p class="wu-help">Shown to guardians on consent forms and emailed records.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="wu-card settings-card" aria-labelledby="consent-policy-heading">
+            <div class="wu-card__body wu-stack">
+              <div>
+                <h2 id="consent-policy-heading">Guardian consent policy</h2>
+                <p class="wu-muted">These settings drive term access and youth-media safeguards.</p>
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="consent-statement">Consent statement</label>
+                <textarea
+                  class="wu-textarea"
+                  id="consent-statement"
+                  rows="7"
+                  formControlName="consentStatement"
+                ></textarea>
+              </div>
+              <label class="policy-check">
+                <input type="checkbox" formControlName="requireReConsentEachTerm" />
+                <span>
+                  <strong>Require re-consent each term</strong><br />
+                  <span class="wu-muted">
+                    A prior-term record will not unlock participation once a new active term begins.
+                  </span>
+                </span>
+              </label>
+              <label class="policy-check">
+                <input type="checkbox" formControlName="requireMediaConsent" />
+                <span>
+                  <strong>Require media consent for youth media</strong><br />
+                  <span class="wu-muted">
+                    Photos and video require a current applicable guardian permission.
+                  </span>
+                </span>
+              </label>
+            </div>
+          </section>
+        </div>
+        <button class="wu-btn wu-btn--primary wu-mb-6" type="submit" [disabled]="savingSettings()">
+          {{ savingSettings() ? 'Saving…' : 'Save organization settings' }}
+        </button>
+      </form>
+
+      <section class="wu-card wu-mb-5" aria-labelledby="terms-heading">
+        <div class="wu-card__body wu-stack">
+          <div>
+            <h2 id="terms-heading">Terms and cohort cycles</h2>
+            <p class="wu-muted">
+              Maintain date ranges and advance each term through its lifecycle.
+            </p>
+          </div>
+          <form class="term-form" [formGroup]="termForm" (ngSubmit)="saveTerm()">
+            <div class="wu-field">
+              <label class="wu-label" for="term-name">Term name</label>
+              <input class="wu-input" id="term-name" formControlName="name" />
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="term-start">Start date</label>
+              <input class="wu-input" id="term-start" type="date" formControlName="startDate" />
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="term-end">End date</label>
+              <input class="wu-input" id="term-end" type="date" formControlName="endDate" />
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="term-status">Term status</label>
+              <select class="wu-select" id="term-status" formControlName="status">
+                <option value="Upcoming">Upcoming</option>
+                <option value="Active">Active</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+            <button class="wu-btn wu-btn--primary" type="submit" [disabled]="savingTerm()">
+              @if (savingTerm()) {
+                Saving…
+              } @else if (editingTermId()) {
+                Save term
+              } @else {
+                Create term
+              }
+            </button>
+          </form>
+          @if (editingTermId()) {
+            <button class="wu-btn wu-btn--ghost" type="button" (click)="cancelTermEdit()">
+              Cancel term edit
+            </button>
+          }
+          <ul class="term-list">
+            @for (term of terms(); track term.id) {
+              <li class="term-row" data-testid="term-row">
+                <div class="term-row__details">
+                  <strong>{{ term.name }}</strong>
+                  <div class="wu-muted">
+                    {{ term.startDate | date: 'mediumDate' }}–{{
+                      term.endDate | date: 'mediumDate'
+                    }}
+                  </div>
+                </div>
+                <div class="wu-actions">
+                  <span
+                    class="wu-badge"
+                    [class.wu-badge--success]="term.status === 'Active'"
+                    [class.wu-badge--info]="term.status === 'Upcoming'"
+                    [class.wu-badge--ink]="term.status === 'Completed'"
+                  >
+                    {{ term.status }}
+                  </span>
+                  <button
+                    class="wu-btn wu-btn--secondary wu-btn--sm"
+                    type="button"
+                    (click)="editTerm(term)"
+                  >
+                    Edit term
+                  </button>
+                </div>
+              </li>
+            } @empty {
+              <li class="wu-empty">
+                <div class="wu-empty__icon"><wu-icon name="calendar" /></div>
+                <h3 class="wu-empty__title">No terms yet</h3>
+                <p class="wu-empty__text">Create the first program term above.</p>
+              </li>
+            }
+          </ul>
+        </div>
+      </section>
+
+      <section class="wu-card" aria-labelledby="tracks-heading">
+        <div class="wu-card__body">
+          <h2 id="tracks-heading">Track availability</h2>
+          <p class="wu-muted">
+            Pausing a track preserves existing progress but blocks new enrolment and work
+            assignment.
+          </p>
+          <ul class="track-list">
+            @for (track of tracks(); track track.id) {
+              <li class="track-row" data-testid="track-row" [attr.data-track-id]="track.id">
+                <div class="track-row__details">
+                  <strong>{{ track.name }}</strong>
+                  <div class="wu-muted">{{ track.key }} · {{ track.status }}</div>
+                </div>
+                <div class="wu-actions">
+                  <span
+                    class="wu-badge"
+                    [class.wu-badge--success]="track.enabled"
+                    [class.wu-badge--warning]="!track.enabled"
+                  >
+                    {{ track.enabled ? 'Enabled' : 'Paused' }}
+                  </span>
+                  <button
+                    class="wu-btn wu-btn--secondary wu-btn--sm"
+                    type="button"
+                    [disabled]="savingTrackId() !== null"
+                    (click)="toggleTrack(track)"
+                  >
+                    {{ track.enabled ? 'Pause track' : 'Enable track' }}
+                  </button>
+                </div>
+              </li>
+            } @empty {
+              <li class="wu-empty">
+                <div class="wu-empty__icon"><wu-icon name="book-open" /></div>
+                <h3 class="wu-empty__title">No tracks available</h3>
+                <p class="wu-empty__text">Published curriculum tracks will appear here.</p>
+              </li>
+            }
+          </ul>
+        </div>
+      </section>
+    } @else if (!errorMessage()) {
+      <p class="wu-muted" role="status">Loading organization settings…</p>
+    }
+  </div>
+</wu-shell>

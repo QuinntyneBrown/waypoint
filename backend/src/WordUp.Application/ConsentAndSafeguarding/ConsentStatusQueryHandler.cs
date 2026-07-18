@@ -31,11 +31,12 @@ public class ConsentStatusQueryHandler : IRequestHandler<ConsentStatusQuery, Con
 
         // Minor: participation is allowed only while a valid guardian consent exists (server-side per-request gate).
         var now = _clock.UtcNow;
+        var policy = await ConsentPolicyEvaluator.LoadAsync(_db, now, cancellationToken);
         var consents = await _db.GuardianConsents
             .Where(c => c.YouthUserId == youth.Id)
             .ToListAsync(cancellationToken);
 
-        var allowed = consents.Any(c => c.IsParticipationValid(now));
+        var allowed = consents.Any(consent => policy.IsParticipationValid(consent, now));
         return new ConsentStatusResult(allowed);
     }
 }

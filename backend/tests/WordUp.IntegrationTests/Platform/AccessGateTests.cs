@@ -44,6 +44,8 @@ public sealed class AccessGateTests : IntegrationTestBase
             Relationship = "parent",
             ParticipationConsent = true,
             Signature = "Parent Guardian",
+            ValidFrom = DateTime.UtcNow.AddDays(-1),
+            ValidUntil = DateTime.UtcNow.AddMonths(3),
         });
         await db.SaveChangesAsync();
     }

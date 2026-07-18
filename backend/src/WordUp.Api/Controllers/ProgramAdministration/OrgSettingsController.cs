@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WordUp.Api.Authorization;
+using WordUp.Application.CurriculumAuthoring.Curriculum;
 using WordUp.Application.ProgramAdministration.Settings;
 
 namespace WordUp.Api.Controllers.ProgramAdministration;
@@ -44,6 +45,55 @@ public class OrgSettingsController : ControllerBase
     public async Task<IActionResult> SetTrackEnabled(Guid trackId, [FromBody] SetTrackEnabledRequest request, CancellationToken cancellationToken)
     {
         await _mediator.Send(new SetTrackEnabledCommand(trackId, request.Enabled), cancellationToken);
+        return NoContent();
+    }
+
+    [HttpGet("tracks")]
+    public async Task<ActionResult<IReadOnlyList<TrackSummary>>> Tracks(
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ListTracksQuery(), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpGet("terms")]
+    public async Task<ActionResult<IReadOnlyList<TermView>>> Terms(
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ListTermsQuery(), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPost("terms")]
+    public async Task<ActionResult<TermResult>> CreateTerm(
+        [FromBody] SaveTermRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new SaveTermCommand(
+                null,
+                request.Name,
+                request.StartDate,
+                request.EndDate,
+                request.Status),
+            cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPut("terms/{termId:guid}")]
+    public async Task<IActionResult> UpdateTerm(
+        Guid termId,
+        [FromBody] SaveTermRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(
+            new SaveTermCommand(
+                termId,
+                request.Name,
+                request.StartDate,
+                request.EndDate,
+                request.Status),
+            cancellationToken);
         return NoContent();
     }
 }

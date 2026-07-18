@@ -53,10 +53,7 @@ public sealed class CaptureRequestedConsentCommandHandler
             throw new ConsentRequestLinkInvalidException();
         }
 
-        var term = await _db.Terms
-            .Where(item => item.StartDate <= now && item.EndDate >= now)
-            .OrderBy(item => item.EndDate)
-            .FirstOrDefaultAsync(cancellationToken);
+        var policy = await ConsentPolicyEvaluator.LoadAsync(_db, now, cancellationToken);
         var referenceId = $"GC-{Guid.NewGuid():N}"[..11].ToUpperInvariant();
         var consent = new GuardianConsent
         {
@@ -72,10 +69,11 @@ public sealed class CaptureRequestedConsentCommandHandler
             Signature = request.Signature.Trim(),
             Method = "typed-e-signature",
             ReferenceId = referenceId,
-            Term = term?.Name,
+            TermId = policy.CurrentTermId,
+            Term = policy.CurrentTermName,
             SignedAt = now,
             ValidFrom = now,
-            ValidUntil = term?.EndDate ?? now.AddYears(1),
+            ValidUntil = policy.ConsentValidUntil(now),
         };
 
         consentRequest.UsedAt = now;
@@ -88,7 +86,8 @@ public sealed class CaptureRequestedConsentCommandHandler
             $"Thank you. Your consent for {youth.DisplayName} has been recorded. " +
             $"Reference: {consent.ReferenceId}. Participation consent: yes. " +
             $"Media consent: {(consent.MediaConsent ? "yes" : "no")}. " +
-            $"Valid until {consent.ValidUntil:yyyy-MM-dd}.",
+            $"Valid until {consent.ValidUntil:yyyy-MM-dd}." +
+            CaptureConsentCommandHandler.ContactSentence(policy.ContactEmail),
             cancellationToken);
         await _audit.LogAsync(
             "GuardianConsentCaptured",

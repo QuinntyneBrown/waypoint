@@ -393,6 +393,14 @@ export const routes: Routes = [
             (module) => module.MentorAssignmentsPage,
           ),
       },
+      {
+        path: 'settings',
+        title: 'Organization settings · Word Up',
+        loadComponent: () =>
+          import('./features/admin/settings/organization-settings').then(
+            (module) => module.OrganizationSettingsPage,
+          ),
+      },
     ],
   },
   {

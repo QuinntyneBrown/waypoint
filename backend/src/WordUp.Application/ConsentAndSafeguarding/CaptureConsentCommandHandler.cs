@@ -39,6 +39,7 @@ public class CaptureConsentCommandHandler : IRequestHandler<CaptureConsentComman
         }
 
         var now = _clock.UtcNow;
+        var policy = await ConsentPolicyEvaluator.LoadAsync(_db, now, cancellationToken);
         var referenceId = $"GC-{Guid.NewGuid():N}"[..11].ToUpperInvariant();
 
         var consent = new GuardianConsent
@@ -55,10 +56,11 @@ public class CaptureConsentCommandHandler : IRequestHandler<CaptureConsentComman
             Signature = request.Signature.Trim(),
             Method = "typed-e-signature",
             ReferenceId = referenceId,
-            Term = request.Term,
+            TermId = policy.CurrentTermId,
+            Term = policy.CurrentTermName ?? request.Term,
             SignedAt = now,
             ValidFrom = now,
-            ValidUntil = now.AddYears(1),
+            ValidUntil = policy.ConsentValidUntil(now),
         };
 
         _db.GuardianConsents.Add(consent);
@@ -72,7 +74,8 @@ public class CaptureConsentCommandHandler : IRequestHandler<CaptureConsentComman
                 "Your Word Up consent record",
                 $"Thank you. Your consent for {youth.DisplayName} has been recorded. " +
                 $"Reference: {consent.ReferenceId}. Participation consent: {(consent.ParticipationConsent ? "yes" : "no")}. " +
-                $"Media consent: {(consent.MediaConsent ? "yes" : "no")}. Valid until {consent.ValidUntil:yyyy-MM-dd}.",
+                $"Media consent: {(consent.MediaConsent ? "yes" : "no")}. Valid until {consent.ValidUntil:yyyy-MM-dd}." +
+                ContactSentence(policy.ContactEmail),
                 cancellationToken);
         }
 
@@ -81,4 +84,7 @@ public class CaptureConsentCommandHandler : IRequestHandler<CaptureConsentComman
 
         return new ConsentResult(consent.Id, consent.ReferenceId);
     }
+
+    internal static string ContactSentence(string? contactEmail) =>
+        string.IsNullOrWhiteSpace(contactEmail) ? string.Empty : $" Questions: {contactEmail}.";
 }

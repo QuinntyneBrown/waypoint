@@ -30,6 +30,7 @@ public class SetTrackEnabledCommandHandler : IRequestHandler<SetTrackEnabledComm
             request.Enabled ? "TrackEnabled" : "TrackDisabled",
             _currentUser.UserId,
             "Track",
-            track.Id);
+            track.Id,
+            cancellationToken: cancellationToken);
     }
 }

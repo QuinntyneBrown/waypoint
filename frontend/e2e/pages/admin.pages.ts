@@ -221,6 +221,67 @@ export class MentorAssignmentsPage extends BasePage {
   }
 }
 
+/** `/admin/settings` — identity, consent policy, terms, and track availability. */
+export class OrganizationSettingsPage extends BasePage {
+  static readonly path = '/admin/settings';
+
+  get organizationName() {
+    return this.page.getByLabel('Organization name');
+  }
+  get displayName() {
+    return this.page.getByLabel('Display name');
+  }
+  get logoUrl() {
+    return this.page.getByLabel('Logo URL');
+  }
+  get city() {
+    return this.page.getByLabel('City');
+  }
+  get contactEmail() {
+    return this.page.getByLabel('Contact email');
+  }
+  get consentStatement() {
+    return this.page.getByLabel('Consent statement');
+  }
+  get reconsentEachTerm() {
+    return this.page.getByRole('checkbox', { name: 'Require re-consent each term' });
+  }
+  get requireMediaConsent() {
+    return this.page.getByRole('checkbox', { name: 'Require media consent for youth media' });
+  }
+  get saveSettings() {
+    return this.page.getByRole('button', { name: 'Save organization settings' });
+  }
+  get termName() {
+    return this.page.getByLabel('Term name');
+  }
+  get termStart() {
+    return this.page.getByLabel('Start date');
+  }
+  get termEnd() {
+    return this.page.getByLabel('End date');
+  }
+  get termStatus() {
+    return this.page.getByLabel('Term status');
+  }
+  get saveTerm() {
+    return this.page.getByRole('button', { name: 'Create term' });
+  }
+  get outcome() {
+    return this.page.getByTestId('settings-outcome');
+  }
+  term(name: string) {
+    return this.page.getByTestId('term-row').filter({ hasText: name });
+  }
+  track(id: string) {
+    return this.page.locator(`[data-testid="track-row"][data-track-id="${id}"]`);
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(OrganizationSettingsPage.path);
+  }
+}
+
 /** `/admin/applications` — the Program Administrator application review queue. */
 export class ApplicationsListPage extends BasePage {
   static readonly path = '/admin/applications';

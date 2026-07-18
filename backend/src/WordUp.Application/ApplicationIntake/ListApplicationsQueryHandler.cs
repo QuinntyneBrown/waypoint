@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.ConsentAndSafeguarding;
 using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Application.ApplicationIntake;
@@ -26,16 +27,17 @@ public class ListApplicationsQueryHandler
             .Where(item => item.CreatedYouthUserId != null)
             .Select(item => item.CreatedYouthUserId!.Value)
             .ToList();
-        var consentedYouthIds = await _db.GuardianConsents.AsNoTracking()
-            .Where(consent => youthIds.Contains(consent.YouthUserId)
-                && consent.ParticipationConsent
-                && consent.WithdrawnAt == null
-                && consent.ValidFrom <= _clock.UtcNow
-                && consent.ValidUntil >= _clock.UtcNow)
-            .Select(consent => consent.YouthUserId)
-            .Distinct()
+        var policy = await ConsentPolicyEvaluator.LoadAsync(
+            _db,
+            _clock.UtcNow,
+            cancellationToken);
+        var consentRows = await _db.GuardianConsents.AsNoTracking()
+            .Where(consent => youthIds.Contains(consent.YouthUserId))
             .ToListAsync(cancellationToken);
-        var consented = consentedYouthIds.ToHashSet();
+        var consented = consentRows
+            .Where(consent => policy.IsParticipationValid(consent, _clock.UtcNow))
+            .Select(consent => consent.YouthUserId)
+            .ToHashSet();
 
         var rows = applications
             .Select(application => new

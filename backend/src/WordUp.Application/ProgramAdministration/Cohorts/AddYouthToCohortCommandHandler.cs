@@ -28,6 +28,15 @@ public class AddYouthToCohortCommandHandler : IRequestHandler<AddYouthToCohortCo
     {
         var cohort = await _db.Cohorts.FirstOrDefaultAsync(c => c.Id == request.CohortId, cancellationToken)
             ?? throw new NotFoundException("Cohort not found.");
+        if (cohort.TrackId is { } cohortTrackId
+            && !await _db.Tracks.AnyAsync(
+                track => track.Id == cohortTrackId
+                    && track.Enabled
+                    && track.Status == PublishStatus.Published,
+                cancellationToken))
+        {
+            throw new ConflictException("This cohort's track is paused for new enrolments.");
+        }
 
         var youth = await _db.Users.FirstOrDefaultAsync(u => u.Id == request.YouthId, cancellationToken)
             ?? throw new NotFoundException("User not found.");

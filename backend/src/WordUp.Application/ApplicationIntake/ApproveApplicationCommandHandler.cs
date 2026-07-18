@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
+using WordUp.Application.ConsentAndSafeguarding;
 
 namespace WordUp.Application.ApplicationIntake;
 
@@ -38,6 +39,15 @@ public class ApproveApplicationCommandHandler : IRequestHandler<ApproveApplicati
         var cohort = await _db.Cohorts.AsNoTracking()
             .FirstOrDefaultAsync(item => item.Id == request.CohortId, cancellationToken)
             ?? throw new ConflictException("Choose an available cohort.");
+        if (cohort.TrackId is { } cohortTrackId
+            && !await _db.Tracks.AsNoTracking().AnyAsync(
+                track => track.Id == cohortTrackId
+                    && track.Enabled
+                    && track.Status == PublishStatus.Published,
+                cancellationToken))
+        {
+            throw new ConflictException("The selected cohort's track is paused.");
+        }
         var mentor = await _db.Users.AsNoTracking()
             .FirstOrDefaultAsync(item => item.Id == request.MentorId
                 && item.Role == Roles.Mentor
@@ -51,14 +61,14 @@ public class ApproveApplicationCommandHandler : IRequestHandler<ApproveApplicati
         if (!mentorBelongsToCohort)
             throw new ConflictException("The selected mentor is not assigned to this cohort.");
 
-        var hasValidConsent = application.CreatedYouthUserId is { } consentYouthId
-            && await _db.GuardianConsents.AsNoTracking().AnyAsync(
-                consent => consent.YouthUserId == consentYouthId
-                    && consent.ParticipationConsent
-                    && consent.WithdrawnAt == null
-                    && consent.ValidFrom <= now
-                    && consent.ValidUntil >= now,
-                cancellationToken);
+        var policy = await ConsentPolicyEvaluator.LoadAsync(_db, now, cancellationToken);
+        var consentRows = application.CreatedYouthUserId is { } consentYouthId
+            ? await _db.GuardianConsents.AsNoTracking()
+                .Where(consent => consent.YouthUserId == consentYouthId)
+                .ToListAsync(cancellationToken)
+            : [];
+        var hasValidConsent = consentRows.Any(consent =>
+            policy.IsParticipationValid(consent, now));
         if (application.IsMinor && !hasValidConsent)
             throw new ConflictException(
                 "Guardian participation consent must be recorded before approval.");

@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
+using WordUp.Application.ConsentAndSafeguarding;
 
 namespace WordUp.Application.GuardianPortal;
 
@@ -11,17 +12,20 @@ public sealed class EmailConsentRecordCommandHandler : IRequestHandler<EmailCons
     private readonly ICurrentUser _currentUser;
     private readonly IEmailSender _email;
     private readonly IAuditLogger _audit;
+    private readonly IClock _clock;
 
     public EmailConsentRecordCommandHandler(
         IAppDbContext db,
         ICurrentUser currentUser,
         IEmailSender email,
-        IAuditLogger audit)
+        IAuditLogger audit,
+        IClock clock)
     {
         _db = db;
         _currentUser = currentUser;
         _email = email;
         _audit = audit;
+        _clock = clock;
     }
 
     public async Task Handle(EmailConsentRecordCommand request, CancellationToken cancellationToken)
@@ -41,6 +45,10 @@ public sealed class EmailConsentRecordCommandHandler : IRequestHandler<EmailCons
             .Where(user => user.Id == consent.YouthUserId)
             .Select(user => user.DisplayName)
             .FirstAsync(cancellationToken);
+        var policy = await ConsentPolicyEvaluator.LoadAsync(
+            _db,
+            _clock.UtcNow,
+            cancellationToken);
         await _email.SendAsync(
             guardian.Email,
             "Your Word Up consent record copy",
@@ -49,7 +57,8 @@ public sealed class EmailConsentRecordCommandHandler : IRequestHandler<EmailCons
             $"Participation consent: {(consent.ParticipationConsent ? "yes" : "no")}. " +
             $"Media consent: {(consent.MediaConsent ? "yes" : "no")}. " +
             $"Valid {consent.ValidFrom:yyyy-MM-dd} through {consent.ValidUntil:yyyy-MM-dd}. " +
-            $"Status: {(consent.WithdrawnAt is null ? "active" : "withdrawn")}.",
+            $"Status: {(consent.WithdrawnAt is null ? "active" : "withdrawn")}." +
+            CaptureConsentCommandHandler.ContactSentence(policy.ContactEmail),
             cancellationToken);
 
         await _audit.LogAsync(

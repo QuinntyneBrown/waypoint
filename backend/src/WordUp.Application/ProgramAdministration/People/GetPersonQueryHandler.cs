@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
+using WordUp.Application.ConsentAndSafeguarding;
 
 namespace WordUp.Application.ProgramAdministration.People;
 
@@ -44,7 +45,12 @@ public class GetPersonQueryHandler : IRequestHandler<GetPersonQuery, PersonDetai
             .OrderByDescending(item => item.SignedAt)
             .ToListAsync(cancellationToken);
         var currentConsent = consents.FirstOrDefault();
-        var hasValidConsent = consents.Any(item => item.IsParticipationValid(_clock.UtcNow));
+        var consentPolicy = await ConsentPolicyEvaluator.LoadAsync(
+            _db,
+            _clock.UtcNow,
+            cancellationToken);
+        var hasValidConsent = consents.Any(item =>
+            consentPolicy.IsParticipationValid(item, _clock.UtcNow));
         var guardian = guardianUser is null
             ? null
             : new PersonGuardianContact(

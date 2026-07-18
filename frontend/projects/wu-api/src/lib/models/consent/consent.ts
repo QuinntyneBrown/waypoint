@@ -12,6 +12,10 @@ export interface RequestedConsent {
   youthName: string;
   guardianDestination: string;
   expiresAt: string;
+  organizationName: string;
+  contactEmail: string | null;
+  consentStatement: string;
+  requireMediaConsent: boolean;
 }
 
 export interface RequestedConsentCapture {

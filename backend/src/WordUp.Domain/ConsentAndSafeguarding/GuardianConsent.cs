@@ -24,6 +24,7 @@ public class GuardianConsent
     public string Signature { get; set; } = string.Empty;
     public string Method { get; set; } = "typed-e-signature";
     public string ReferenceId { get; set; } = string.Empty;
+    public Guid? TermId { get; set; }
     public string? Term { get; set; }
     public DateTime SignedAt { get; set; } = DateTime.UtcNow;
     public DateTime ValidFrom { get; set; }

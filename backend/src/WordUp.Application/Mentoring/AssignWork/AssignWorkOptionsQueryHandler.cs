@@ -80,8 +80,14 @@ public sealed class AssignWorkOptionsQueryHandler : IRequestHandler<AssignWorkOp
             .Select(enrollment => enrollment.TrackId)
             .ToListAsync(cancellationToken));
         trackIds = trackIds.Distinct().ToList();
+        var enabledTrackIds = await _db.Tracks
+            .Where(track => trackIds.Contains(track.Id)
+                && track.Enabled
+                && track.Status == PublishStatus.Published)
+            .Select(track => track.Id)
+            .ToListAsync(cancellationToken);
         var modules = await _db.Modules
-            .Where(module => trackIds.Contains(module.TrackId)
+            .Where(module => enabledTrackIds.Contains(module.TrackId)
                 && module.Status == PublishStatus.Published)
             .OrderBy(module => module.Order)
             .ThenBy(module => module.Name)

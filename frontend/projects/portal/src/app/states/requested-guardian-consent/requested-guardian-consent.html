@@ -2,8 +2,10 @@
   <div class="wu-page__head">
     <div class="wu-page__titles">
       <div class="wu-eyebrow">Secure one-time form</div>
-      <h1 class="wu-page__title">Guardian consent</h1>
-      <p class="wu-page__sub">Review participation and optional media choices for Word Up.</p>
+      <h1 class="wu-page__title">
+        {{ request()?.organizationName ?? 'Word Up' }} guardian consent
+      </h1>
+      <p class="wu-page__sub">Review participation and optional media choices.</p>
     </div>
   </div>
 
@@ -20,6 +22,9 @@
           Thank you. The youth’s access updates automatically, and a copy has been sent to the
           guardian email.
         </p>
+        @if (request()?.contactEmail; as contactEmail) {
+          <p>Questions about this record? Contact {{ contactEmail }}.</p>
+        }
         <p>
           Reference:
           <strong data-testid="public-consent-reference">{{ saved.referenceId }}</strong>
@@ -35,6 +40,16 @@
             Requested for {{ consentRequest.guardianDestination }} · Link expires
             {{ consentRequest.expiresAt | date: 'medium' }}
           </span>
+        </div>
+
+        <div class="wu-card wu-card--subtle">
+          <div class="wu-card__body">
+            <strong>Participation statement</strong>
+            <p>{{ consentRequest.consentStatement }}</p>
+            @if (consentRequest.contactEmail) {
+              <p class="wu-muted">Questions: {{ consentRequest.contactEmail }}</p>
+            }
+          </div>
         </div>
 
         <div class="wu-field">
@@ -60,6 +75,12 @@
         </label>
 
         <h2 class="wu-card__title">Optional media choices</h2>
+        @if (consentRequest.requireMediaConsent) {
+          <p class="wu-alert wu-alert--info">
+            Organization policy: youth media requires recorded guardian permission. Participation
+            consent remains separate from these optional media choices.
+          </p>
+        }
         <label class="wu-check">
           <input type="checkbox" formControlName="mediaConsent" />
           <span class="wu-check__box">

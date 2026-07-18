@@ -7,4 +7,8 @@ public sealed record RequestedConsentQuery(string Token) : IRequest<RequestedCon
 public sealed record RequestedConsentView(
     string YouthName,
     string GuardianDestination,
-    DateTime ExpiresAt);
+    DateTime ExpiresAt,
+    string OrganizationName,
+    string? ContactEmail,
+    string ConsentStatement,
+    bool RequireMediaConsent);

@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.ConsentAndSafeguarding;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -24,14 +25,17 @@ public sealed class ApplicationDetailQueryHandler
         var application = await _db.Applications.AsNoTracking()
             .FirstOrDefaultAsync(item => item.Id == request.ApplicationId, cancellationToken)
             ?? throw new NotFoundException("Application not found.");
-        var hasValidConsent = application.CreatedYouthUserId is { } youthId
-            && await _db.GuardianConsents.AsNoTracking().AnyAsync(
-                consent => consent.YouthUserId == youthId
-                    && consent.ParticipationConsent
-                    && consent.WithdrawnAt == null
-                    && consent.ValidFrom <= _clock.UtcNow
-                    && consent.ValidUntil >= _clock.UtcNow,
-                cancellationToken);
+        var policy = await ConsentPolicyEvaluator.LoadAsync(
+            _db,
+            _clock.UtcNow,
+            cancellationToken);
+        var consentRows = application.CreatedYouthUserId is { } youthId
+            ? await _db.GuardianConsents.AsNoTracking()
+                .Where(consent => consent.YouthUserId == youthId)
+                .ToListAsync(cancellationToken)
+            : [];
+        var hasValidConsent = consentRows.Any(consent =>
+            policy.IsParticipationValid(consent, _clock.UtcNow));
 
         return new ApplicationDetailView(
             application.Id,

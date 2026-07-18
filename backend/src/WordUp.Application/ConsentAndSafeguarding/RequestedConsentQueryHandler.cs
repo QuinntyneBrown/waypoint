@@ -38,10 +38,18 @@ public sealed class RequestedConsentQueryHandler
         {
             throw new ConsentRequestLinkInvalidException();
         }
+        var policy = await ConsentPolicyEvaluator.LoadAsync(
+            _db,
+            _clock.UtcNow,
+            cancellationToken);
 
         return new RequestedConsentView(
             youth.DisplayName,
             RequestGuardianConsentCommandHandler.MaskEmail(consentRequest.Destination),
-            consentRequest.ExpiresAt);
+            consentRequest.ExpiresAt,
+            policy.OrganizationName,
+            policy.ContactEmail,
+            policy.ConsentStatement,
+            policy.RequireMediaConsent);
     }
 }

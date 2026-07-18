@@ -28,16 +28,24 @@ public class UpdateOrgSettingsCommandHandler : IRequestHandler<UpdateOrgSettings
         }
 
         settings.Name = request.Name.Trim();
-        settings.DisplayName = request.DisplayName;
-        settings.LogoUrl = request.LogoUrl;
-        settings.City = request.City;
-        settings.ContactEmail = request.ContactEmail;
-        settings.ConsentStatement = request.ConsentStatement;
+        settings.DisplayName = Clean(request.DisplayName);
+        settings.LogoUrl = Clean(request.LogoUrl);
+        settings.City = Clean(request.City);
+        settings.ContactEmail = Clean(request.ContactEmail)?.ToLowerInvariant();
+        settings.ConsentStatement = Clean(request.ConsentStatement);
         settings.RequireReConsentEachTerm = request.RequireReConsentEachTerm;
         settings.RequireMediaConsent = request.RequireMediaConsent;
 
         await _db.SaveChangesAsync(cancellationToken);
 
-        await _audit.LogAsync("OrgSettingsUpdated", _currentUser.UserId, "OrgSettings", settings.Id);
+        await _audit.LogAsync(
+            "OrgSettingsUpdated",
+            _currentUser.UserId,
+            "OrgSettings",
+            settings.Id,
+            cancellationToken: cancellationToken);
     }
+
+    private static string? Clean(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? null : value.Trim();
 }

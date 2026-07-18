@@ -32,6 +32,14 @@ public class AssignWorkCommandHandler : IRequestHandler<AssignWorkCommand, Assig
     {
         var recipients = await ResolveRecipientsAsync(request, cancellationToken);
         var item = await ResolveItemAsync(request.ItemType, request.ItemId, cancellationToken);
+        if (!await _db.Tracks.AnyAsync(
+            track => track.Id == item.TrackId
+                && track.Enabled
+                && track.Status == PublishStatus.Published,
+            cancellationToken))
+        {
+            throw new ConflictException("This track is paused for new assignments.");
+        }
 
         // A mentor may only assign to their assigned youth; a Program Administrator may assign to any (L2-AUTH-010).
         if (_currentUser.Role == Roles.Mentor && recipients.Any(r => r.MentorId != _currentUser.UserId))

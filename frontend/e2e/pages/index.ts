@@ -65,6 +65,7 @@ export {
   CohortDetailPage,
   ProgressBoardPage,
   MentorAssignmentsPage,
+  OrganizationSettingsPage,
   ApplicationsListPage,
 } from './admin.pages';
 export {

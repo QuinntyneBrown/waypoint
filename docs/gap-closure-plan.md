@@ -196,7 +196,11 @@ requirement conflicts early (they gate "done").
       active youth with active mentors, replaces audited cohort lead/supporting teams independently,
       and shows named caseload/check-in/review metrics against a shared 4–8 target band with explicit
       under-target, balanced, and overloaded states.
-- [ ] **G7** Organization settings + term lifecycle `L2-ADMIN-006`
+- [x] **G7** Organization settings + term lifecycle `L2-ADMIN-006` — Program Administrators can
+      maintain audited organization identity/contact and consent policy, create and advance uniquely
+      named dated terms, and pause or resume published tracks without losing progress. The configured
+      identity, contact, statement, re-consent rule, and media policy drive the guardian-consent flow;
+      disabled tracks reject new enrollment and work assignment while existing records remain intact.
 - [ ] **G8** Curriculum builder `L2-CURRIC-001..006`
 - [ ] **G9** Calendar/session management `L2-ENGAGE-001`
 - [ ] **G10** Attendance administration/history `L2-ENGAGE-002..004`
@@ -211,7 +215,11 @@ requirement conflicts early (they gate "done").
 
 - [ ] **H1** Idle expiry + draft recovery framework `L2-AUTH-007`, `L2-PLATFORM-010`, `L2-NFR-007`
 - [ ] **H2** Per-action consent enforcement in protected youth handlers `L2-CONSENT-002/004`
-- [ ] **H3** Correct consent validity (flag/withdrawal/window/term/re-consent) `L2-CONSENT-001/002`, `L2-ADMIN-006`
+- [x] **H3** Correct consent validity (flag/withdrawal/window/term/re-consent) `L2-CONSENT-001/002`, `L2-ADMIN-006` —
+      one authoritative policy evaluator now applies participation choice, withdrawal, validity window,
+      active-term identity, and the organization re-consent setting consistently to access, consent
+      status, application decisions/listing, and administrative person records; new records capture
+      the current term and policy-derived validity window.
 - [ ] **H4** Media-consent enforcement on youth media `L2-CONSENT-001/004`
 - [~] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`, `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence now uses private DB-backed JPG/PNG storage with MIME/extension/signature/size checks and authenticated no-sniff serving; curriculum media lifecycle/removal remains.
 - [ ] **H6** Curriculum mutation lifecycle completion `L2-CURRIC-002..006`
@@ -450,3 +458,12 @@ requirement conflicts early (they gate "done").
   check-ins, reviews, the shared 4–8 target band, and overload warnings with empty/error recovery and
   mobile reflow. Twenty-four adjacent backend integrations, six portal units, the production build,
   and three pairing/cohort-role/mobile browser scenarios pass.
+- 2026-07-18 — G7 and H3 done: audited Program Administrator settings now cover organization name,
+  display name, logo, city, contact, guardian statement, per-term re-consent, and media policy, with
+  the configured identity and contact carried into public consent forms, receipts, and emails. Admins
+  can create/edit validated Upcoming, Active, and Completed terms and pause or resume published tracks;
+  pausing retains progress while server-side enrollment, application placement, and mentor work
+  assignment reject new use. Consent capture records the authoritative active term and validity window,
+  and one shared evaluator applies participation, withdrawal, dates, term, and policy across all status
+  and administrative projections. Thirty-six adjacent backend integrations, six portal units, the
+  production build, and three consent/term/track/mobile browser scenarios pass.

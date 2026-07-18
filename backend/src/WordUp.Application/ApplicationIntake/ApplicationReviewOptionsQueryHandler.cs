@@ -16,6 +16,10 @@ public sealed class ApplicationReviewOptionsQueryHandler
         CancellationToken cancellationToken)
     {
         var cohorts = await _db.Cohorts.AsNoTracking()
+            .Where(item => item.TrackId == null || _db.Tracks.Any(track =>
+                track.Id == item.TrackId
+                && track.Enabled
+                && track.Status == PublishStatus.Published))
             .OrderBy(item => item.Name)
             .Select(item => new { item.Id, item.Name, item.MentorId })
             .ToListAsync(cancellationToken);
