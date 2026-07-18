@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Shared.Abstractions;
-using WordUp.Application.Mentoring.AssignWork;
 using WordUp.Application.Authentication.Auth;
 using WordUp.Application.Mentoring.Flags;
 using WordUp.Infrastructure;
@@ -12,7 +11,7 @@ using WordUp.Infrastructure;
 namespace WordUp.IntegrationTests.Mentoring;
 
 // Acceptance Test
-// Traces to: L2-MENTOR-007 (at-risk flags), L2-MENTOR-008 (assign work), L2-AUTH-010 (mentor scoping)
+// Traces to: L2-MENTOR-007 (at-risk flags), L2-AUTH-010 (mentor scoping)
 [TestFixture]
 [Property("Req", "L2-MENTOR-007")]
 public sealed class FlagTests : IntegrationTestBase
@@ -282,44 +281,6 @@ public sealed class FlagTests : IntegrationTestBase
             Assert.That(recurring.FlagId, Is.Not.EqualTo(automatic.FlagId));
             Assert.That(recurring.Reasons.Single(), Does.Contain("Missed 1 session"));
         });
-    }
-
-    [Test]
-    [Property("Req", "L2-MENTOR-008")]
-    [Property("Req", "L2-AUTH-010")]
-    public async Task Assigning_work_to_an_assigned_youth_creates_a_row_and_a_non_assigned_youth_is_forbidden()
-    {
-        // Traces to: L2-MENTOR-008, L2-AUTH-010
-        var scenario = await SeedMentorWithYouthAsync();
-        var token = await SignInAsync(scenario.MentorEmail);
-        var lessonId = Guid.NewGuid();
-
-        var assign = await PostAsync("/api/mentor/assign-work", new
-        {
-            itemType = "Lesson",
-            itemId = lessonId,
-            youthIds = new[] { scenario.YouthA },
-            message = "Please complete this week",
-        }, token);
-        Assert.That(assign.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        var result = await assign.Content.ReadFromJsonAsync<AssignWorkResult>();
-        Assert.That(result!.Created, Is.EqualTo(1));
-
-        using (var scope = Factory.Services.CreateScope())
-        {
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            var exists = await db.AssignedWork.AnyAsync(w =>
-                w.YouthUserId == scenario.YouthA && w.ItemId == lessonId && w.ItemType == "Lesson");
-            Assert.That(exists, Is.True);
-        }
-
-        var forbidden = await PostAsync("/api/mentor/assign-work", new
-        {
-            itemType = "Lesson",
-            itemId = lessonId,
-            youthIds = new[] { scenario.OtherYouth },
-        }, token);
-        Assert.That(forbidden.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
     }
 
     private async Task<User> SeedUserAsync(

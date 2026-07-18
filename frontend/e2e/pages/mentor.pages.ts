@@ -258,3 +258,42 @@ export class MentorFlagsPage extends BasePage {
     return this.page.getByRole('status');
   }
 }
+
+export class MentorAssignWorkPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Assign work', exact: true });
+  }
+  get itemType() {
+    return this.page.getByLabel(/what are you assigning/i);
+  }
+  get item() {
+    return this.page.getByLabel('Item', { exact: true });
+  }
+  youthCheckbox(name: string) {
+    return this.page.getByRole('checkbox', { name: new RegExp(name, 'i') });
+  }
+  youthControl(name: string) {
+    return this.page.locator('label.wu-check').filter({ hasText: name });
+  }
+  get dueDate() {
+    return this.page.getByLabel('Due date', { exact: true });
+  }
+  get reminder() {
+    return this.page.getByLabel('Reminder', { exact: true });
+  }
+  get message() {
+    return this.page.getByLabel(/message to youth/i);
+  }
+  get review() {
+    return this.page.getByRole('button', { name: /review & assign/i });
+  }
+  get dialog() {
+    return this.page.getByRole('dialog');
+  }
+  get confirm() {
+    return this.dialog.getByRole('button', { name: /assign to \d+ youth/i });
+  }
+  get status() {
+    return this.page.getByRole('status');
+  }
+}

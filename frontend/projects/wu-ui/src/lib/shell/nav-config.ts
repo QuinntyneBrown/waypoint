@@ -59,7 +59,7 @@ export const WU_NAV: Record<WuRole, WuRoleNav> = {
       { key: 'attendance', label: 'Attendance', icon: 'user-check', path: '/mentor/attendance' },
       { key: 'flags', label: 'At-risk', icon: 'flag', path: '/mentor/flags' },
       { group: 'Program' },
-      { key: 'curriculum', label: 'Curriculum', icon: 'book-open', path: '/mentor/curriculum' },
+      { key: 'curriculum', label: 'Assign work', icon: 'book-open', path: '/mentor/assign-work' },
       { key: 'calendar', label: 'Calendar', icon: 'calendar', path: '/mentor/calendar' },
       { key: 'messages', label: 'Messages', icon: 'message-square', path: '/mentor/messages' },
     ],

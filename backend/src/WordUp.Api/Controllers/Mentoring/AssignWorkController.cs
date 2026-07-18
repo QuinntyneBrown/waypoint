@@ -15,6 +15,10 @@ public class AssignWorkController : ControllerBase
 
     public AssignWorkController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("assign-work/options")]
+    public async Task<ActionResult<AssignWorkOptions>> Options(CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new AssignWorkOptionsQuery(), cancellationToken));
+
     [HttpPost("assign-work")]
     public async Task<ActionResult<AssignWorkResult>> AssignWork(
         [FromBody] AssignWorkRequest request,

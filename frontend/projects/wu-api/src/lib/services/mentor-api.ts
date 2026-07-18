@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api-base-url';
 import {
   AtRiskYouth,
+  AssignWorkOptions,
+  AssignWorkRequest,
   FlagResolutionReason,
   MentorDashboardView,
   MentorReviewPreview,
@@ -114,5 +116,13 @@ export class MentorApi {
     return this.http.post<void>(`${this.base}/api/flags/${encodeURIComponent(flagId)}/resolve`, {
       resolutionReason,
     });
+  }
+
+  assignWorkOptions(): Observable<AssignWorkOptions> {
+    return this.http.get<AssignWorkOptions>(`${this.base}/api/mentor/assign-work/options`);
+  }
+
+  assignWork(request: AssignWorkRequest): Observable<{ created: number }> {
+    return this.http.post<{ created: number }>(`${this.base}/api/mentor/assign-work`, request);
   }
 }

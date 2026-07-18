@@ -259,6 +259,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'assign-work',
+        title: 'Assign work · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/assign-work/mentor-assign-work').then(
+            (module) => module.MentorAssignWorkPage,
+          ),
+      },
+      {
         path: 'youth/:id/competencies',
         title: 'Competency tracker · Word Up',
         loadComponent: () =>

@@ -157,7 +157,10 @@ requirement conflicts early (they gate "done").
 - [x] **F7** At-risk flags + automated evaluation `L2-MENTOR-007` — scoped active list with
       specific combined signal reasons, manual raise, youth/detail/check-in/quick-message actions,
       confirmed four-choice resolution, director visibility, and private-detail audit events.
-- [ ] **F8** Assign work (+ journey placement, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008`
+- [x] **F8** Assign work (+ journey placement, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008` —
+      scoped published module/lesson/project picker, individual or whole-cohort recipients, due date
+      and reminder cadence, optional personal message, responsive confirmation count, and durable
+      youth journey/message/notification placement.
 - [ ] **F9** Mentor calendar & attendance `L2-ENGAGE-001..004`
 - [ ] **F10** Mentor messaging/notifications `L2-ENGAGE-007/008`, `L2-NFR-005`
 
@@ -199,15 +202,18 @@ requirement conflicts early (they gate "done").
       evaluation for configurable inactivity, missed-session, and cohort-progress-gap thresholds;
       one active flag per youth, unchanged-signal suppression after resolution, and re-arming after
       signals clear or change.
-- [ ] **H10** Assignment side effects (journey, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008`
+- [x] **H10** Assignment side effects (journey, message, reminders) `L2-MENTOR-008`, `L2-ENGAGE-008` —
+      each recipient receives independently scoped journey work, an optional real mentor-thread
+      message, and a once-consumed due reminder with actionable deep links and preference enforcement.
 - [x] **H11** Attendance offline integrity protocol `L2-ENGAGE-003`, `L2-NFR-004/007` —
       owner-bound private queue, explicit durable idempotency receipts, automatic ordered replay,
       pending count, optimistic conflict choice, and route/browser unsaved-change warning.
 - [ ] **H12** Submission concurrency (version tokens) `L2-NFR-006`
 - [~] **H13** Event/reminder generation + preference keys `L2-ENGAGE-005/008`, `L2-PLATFORM-003` —
       session RSVP reminders now schedule, cancel, dispatch once, deep-link to the schedule, and obey
-      the canonical `session-reminders` in-app preference; direct-message notifications now use the
-      matching `mentor-messages` key. Other required event generators and email delivery remain.
+      the canonical `session-reminders` in-app preference; assigned-work reminders now use
+      `lesson-reminders`, while direct and assignment-message notifications use the matching
+      `mentor-messages` key. Other required event generators and email delivery remain.
 - [x] **H14** Frontend realtime client (`/hubs/realtime`) `L2-NFR-005`, `L2-ENGAGE-007/008` —
       one token-authenticated app-level connection starts after sign-in, reconnects with the current
       token, reconciles threads without duplicates, updates youth messages, and tears down with the
@@ -353,3 +359,9 @@ requirement conflicts early (they gate "done").
   raise concerns, message, log a check-in, or confirm one of four resolution outcomes; directors see
   all flags and private-detail audit events remain redacted. HTTP lifecycle/configuration tests and
   desktop/mobile keyboard acceptance pass.
+- 2026-07-18 — F8 and H10 done: mentors can select published work from the tracks available to their
+  scoped caseload, target individual youth or an entirely owned cohort, set a due date and one/two-day
+  reminder, add a personal message, and confirm the exact recipient count. The command rejects partial,
+  cross-mentor, unpublished, and out-of-journey targets before writing; accepted work reaches each
+  youth journey, real mentor thread, and preference-aware immediate/due notification feed. HTTP tests,
+  portal unit/build checks, and desktop/mobile keyboard acceptance pass.

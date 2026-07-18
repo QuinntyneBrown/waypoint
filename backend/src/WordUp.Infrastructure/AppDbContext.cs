@@ -262,6 +262,8 @@ public class AppDbContext : DbContext, IAppDbContext
         {
             b.HasIndex(x => x.YouthUserId);
             b.Property(x => x.ItemType).HasMaxLength(32).IsRequired();
+            b.Property(x => x.ReminderCadence).HasMaxLength(32);
+            b.Property(x => x.Message).HasMaxLength(4000);
         });
 
         // Engagement & operations (M4)

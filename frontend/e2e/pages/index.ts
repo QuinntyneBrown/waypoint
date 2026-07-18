@@ -61,6 +61,7 @@ export {
 export { PeopleDirectoryPage, ApplicationsListPage } from './admin.pages';
 export {
   MentorCheckInsPage,
+  MentorAssignWorkPage,
   MentorFlagsPage,
   MentorCompetencyPage,
   MentorDashboardPage,

@@ -226,3 +226,43 @@ export interface AtRiskYouth {
 
 export type FlagResolutionReason =
   'Reconnected' | 'HandedToDirector' | 'LeftProgram' | 'FlaggedInError';
+
+export type AssignWorkItemType = 'Lesson' | 'Module' | 'Project';
+export type ReminderCadence = '1-day-before' | '2-days-before';
+
+export interface AssignWorkOptions {
+  items: AssignableWorkItem[];
+  youth: AssignableYouth[];
+  cohorts: AssignableCohort[];
+}
+
+export interface AssignableWorkItem {
+  itemId: string;
+  itemType: AssignWorkItemType;
+  title: string;
+  moduleName: string;
+}
+
+export interface AssignableYouth {
+  youthId: string;
+  displayName: string;
+  cohortId: string | null;
+  cohortName: string | null;
+  atRisk: boolean;
+}
+
+export interface AssignableCohort {
+  cohortId: string;
+  name: string;
+  youthCount: number;
+}
+
+export interface AssignWorkRequest {
+  itemType: AssignWorkItemType;
+  itemId: string;
+  youthIds: string[] | null;
+  cohortId: string | null;
+  dueDate: string | null;
+  reminderCadence: ReminderCadence | null;
+  message: string | null;
+}
