@@ -18,6 +18,7 @@ using WordUp.Api.Authorization;
 using WordUp.Api.Middleware;
 using WordUp.Api.Observability;
 using WordUp.Api.Realtime;
+using WordUp.Api.Security;
 using WordUp.Application;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Authentication.Auth;
@@ -69,12 +70,21 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy => policy
-        .WithOrigins("http://localhost:4200")
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .WithExposedHeaders("X-WordUp-State")
-        .AllowCredentials());
+    var allowedCorsOrigins = SecurityBoundaryConfiguration.GetAllowedCorsOrigins(
+        builder.Configuration,
+        builder.Environment);
+    options.AddDefaultPolicy(policy =>
+    {
+        if (allowedCorsOrigins.Length > 0)
+        {
+            policy.WithOrigins(allowedCorsOrigins);
+        }
+        policy
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithExposedHeaders("X-WordUp-State")
+            .AllowCredentials();
+    });
 });
 
 builder.Services
@@ -168,19 +178,35 @@ if (!builder.Environment.IsEnvironment("Testing"))
 {
     builder.Services.AddRateLimiter(options =>
     {
+        var sensitiveRateLimit = SecurityBoundaryConfiguration.GetSensitiveRateLimit(builder.Configuration);
         options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        options.OnRejected = async (rejected, _) =>
+        {
+            if (rejected.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+            {
+                rejected.HttpContext.Response.Headers.RetryAfter =
+                    Math.Ceiling(retryAfter.TotalSeconds).ToString();
+            }
+            await Results.Problem(
+                title: "Too many requests. Please try again later.",
+                statusCode: StatusCodes.Status429TooManyRequests)
+                .ExecuteAsync(rejected.HttpContext);
+        };
         options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
         {
-            if (!context.Request.Path.StartsWithSegments("/api/auth"))
+            if (!SecurityBoundaryConfiguration.IsSensitiveEndpoint(context.Request.Path))
             {
                 return RateLimitPartition.GetNoLimiter("unlimited");
             }
 
             var key = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
-            return RateLimitPartition.GetFixedWindowLimiter(key, _ => new FixedWindowRateLimiterOptions
+            return RateLimitPartition.GetFixedWindowLimiter($"sensitive:{key}", _ => new FixedWindowRateLimiterOptions
             {
-                PermitLimit = 20,
-                Window = TimeSpan.FromMinutes(1),
+                PermitLimit = sensitiveRateLimit.PermitLimit,
+                Window = TimeSpan.FromSeconds(sensitiveRateLimit.WindowSeconds),
+                QueueLimit = 0,
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                AutoReplenishment = true,
             });
         });
     });
@@ -194,6 +220,11 @@ app.UseMiddleware<CorrelationIdMiddleware>();
 // First in the pipeline so security headers cover every response, including the exception (500) and
 // maintenance (503) short-circuits below (L2-NFR-002 AC3).
 app.UseMiddleware<SecurityHeadersMiddleware>();
+
+if (app.Environment.IsProduction())
+{
+    app.UseMiddleware<RequireHttpsMiddleware>();
+}
 
 app.UseExceptionHandler(handler =>
 {

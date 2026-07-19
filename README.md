@@ -53,7 +53,7 @@ git clone https://github.com/QuinntyneBrown/word-up.git
 cd word-up
 
 # Run the API with its default in-memory development database
-dotnet run --project backend/src/WordUp.Api --urls http://localhost:5099
+dotnet run --project backend/src/WordUp.Api -e ASPNETCORE_ENVIRONMENT=Development --urls http://localhost:5099
 # Swagger: http://localhost:5099/swagger
 # Health:  http://localhost:5099/health
 

@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "api:build": "dotnet build ../backend/WordUp.sln",
-    "api": "dotnet run --project ../backend/src/WordUp.Api --urls http://127.0.0.1:5211",
+    "api": "dotnet run --project ../backend/src/WordUp.Api -e ASPNETCORE_ENVIRONMENT=Development --urls http://127.0.0.1:5211",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
     "serve:ssr:public-site": "node dist/public-site/server/server.mjs"

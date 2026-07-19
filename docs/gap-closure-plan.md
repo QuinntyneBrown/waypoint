@@ -316,7 +316,10 @@ requirement conflicts early (they gate "done").
       without request bodies; every named mutation uses the same writer. Audit rows form a signed,
       sequenced HMAC chain, EF rejects update/delete attempts, and the admin view verifies the entire
       chain and raises an incident warning when an unsigned, changed, removed, or forged row is found.
-- [ ] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002`
+- [x] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002` —
+      production rejects plain HTTP before credentials/tokens reach handlers and accepts only configured
+      HTTPS CORS origins; Development has its own localhost policy. One configurable IP window covers
+      sign-in/auth, password-reset, invitation, and staff-triggered reset routes with 429 + Retry-After.
 - [x] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004` —
       the standard organization, youth, cohort, attendance, and staff views now share date/cohort/
       track/mentor filters, KPIs, named activity details, counts/timestamps, status and retention,
@@ -667,3 +670,11 @@ requirement conflicts early (they gate "done").
   missing, changed, or forged records. All 225 backend integrations plus four unit tests, all 51
   frontend units, the 426.89 kB production build, and both healthy/failed audit-integrity browser
   scenarios pass.
+- 2026-07-19 — H16 done: a production-only transport gate now rejects non-HTTPS traffic before any
+  credential or token handler runs while preserving the global security headers. CORS reads only the
+  active configuration's exact origins, rejects malformed entries, requires HTTPS origins in
+  Production, defaults Development to the two local web apps, and otherwise fails closed. A shared,
+  configurable per-IP fixed window now covers all `/api/auth` routes (including reset), every
+  invitation route, and staff-triggered password resets; rejected calls return 429 with Retry-After.
+  Nine dedicated Development/Production host acceptances, twenty-one adjacent security/auth tests,
+  all 234 backend integrations, and all four backend unit tests pass.
