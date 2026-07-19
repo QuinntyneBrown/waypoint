@@ -452,3 +452,70 @@ export class ProgressionBuilderPage extends BasePage {
     await this.page.goto(ProgressionBuilderPage.path);
   }
 }
+
+/** Organization-wide session calendar and recurrence editor. */
+export class AdminCalendarPage extends BasePage {
+  static readonly path = '/admin/calendar';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Program calendar', exact: true });
+  }
+  get monthTab() {
+    return this.page.getByRole('tab', { name: 'Month', exact: true });
+  }
+  get weekTab() {
+    return this.page.getByRole('tab', { name: 'Week', exact: true });
+  }
+  get agendaTab() {
+    return this.page.getByRole('tab', { name: 'Agenda', exact: true });
+  }
+  get month() {
+    return this.page.getByTestId('month-calendar');
+  }
+  get week() {
+    return this.page.getByTestId('week-calendar');
+  }
+  get agenda() {
+    return this.page.getByTestId('agenda-calendar');
+  }
+  get filter() {
+    return this.page.getByLabel('Calendar cohort');
+  }
+  get title() {
+    return this.page.getByLabel('Title', { exact: true });
+  }
+  get cohort() {
+    return this.page.getByLabel('Cohort', { exact: true });
+  }
+  get mentor() {
+    return this.page.getByLabel('Mentor', { exact: true });
+  }
+  get date() {
+    return this.page.getByLabel('Date', { exact: true });
+  }
+  get time() {
+    return this.page.getByLabel('Time', { exact: true });
+  }
+  get location() {
+    return this.page.getByLabel('Location', { exact: true });
+  }
+  get repeatsWeekly() {
+    return this.page.getByRole('checkbox', { name: /repeat weekly/i });
+  }
+  get repeatsWeeklyControl() {
+    return this.page.locator('label.wu-check').filter({ hasText: /repeat weekly/i });
+  }
+  get schedule() {
+    return this.page.getByRole('button', { name: 'Schedule session', exact: true });
+  }
+  get status() {
+    return this.page.locator('p.wu-sr-only[role="status"]');
+  }
+  session(title: string) {
+    return this.agenda.getByRole('article').filter({ hasText: title });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(AdminCalendarPage.path);
+  }
+}

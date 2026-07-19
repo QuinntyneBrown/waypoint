@@ -418,6 +418,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'calendar',
+        title: 'Program calendar · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/calendar/mentor-calendar').then(
+            (module) => module.MentorCalendarPage,
+          ),
+      },
+      {
         path: 'settings',
         title: 'Organization settings · Word Up',
         loadComponent: () =>

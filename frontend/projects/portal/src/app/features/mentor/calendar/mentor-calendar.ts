@@ -9,7 +9,7 @@ import {
   StaffOperationsApi,
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { WuRole, WuShell } from '@wu/ui';
 
 type CalendarView = 'month' | 'week' | 'agenda';
 
@@ -122,6 +122,11 @@ export class MentorCalendarPage {
   protected readonly view = signal<CalendarView>('month');
   protected readonly anchor = signal(this.startOfDay(new Date()));
   protected readonly cohortFilter = signal('');
+  protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
+  protected readonly shellRole = computed<WuRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly attendanceBase = computed(() =>
+    this.isAdmin() ? '/admin/attendance' : '/mentor/attendance',
+  );
 
   protected readonly title = signal('');
   protected readonly cohortId = signal('');

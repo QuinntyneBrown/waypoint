@@ -1,5 +1,5 @@
 <wu-shell
-  role="mentor"
+  [role]="shellRole()"
   active="calendar"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
@@ -8,8 +8,14 @@
     <div class="wu-page__head">
       <div class="wu-page__titles">
         <div class="wu-eyebrow">Program</div>
-        <h1 class="wu-page__title">Calendar</h1>
-        <p class="wu-page__sub">Schedule your cohort sessions and open their attendance rosters.</p>
+        <h1 class="wu-page__title">{{ isAdmin() ? 'Program calendar' : 'Calendar' }}</h1>
+        <p class="wu-page__sub">
+          {{
+            isAdmin()
+              ? 'Schedule sessions across cohorts and open their attendance rosters.'
+              : 'Schedule your cohort sessions and open their attendance rosters.'
+          }}
+        </p>
       </div>
     </div>
 
@@ -40,14 +46,14 @@
           </div>
           <div class="wu-cluster">
             <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="calendar-cohort-filter">Cohort</label>
+              <label class="wu-label" for="calendar-cohort-filter">Calendar cohort</label>
               <select
                 class="wu-select"
                 id="calendar-cohort-filter"
                 [value]="cohortFilter()"
                 (change)="cohortFilter.set($any($event.target).value)"
               >
-                <option value="">All my cohorts</option>
+                <option value="">{{ isAdmin() ? 'All cohorts' : 'All my cohorts' }}</option>
                 @for (cohort of options()?.cohorts ?? []; track cohort.cohortId) {
                   <option [value]="cohort.cohortId">{{ cohort.name }}</option>
                 }
@@ -76,7 +82,7 @@
                 >
                   <strong>{{ day | date: 'd' }}</strong>
                   @for (session of sessionsFor(day); track session.id) {
-                    <a class="calendar-event" [routerLink]="['/mentor/attendance', session.id]">
+                    <a class="calendar-event" [routerLink]="[attendanceBase(), session.id]">
                       <strong>{{ session.startsAt | date: 'shortTime' }}</strong>
                       {{ session.title }}<br />
                       <span>
@@ -96,7 +102,7 @@
                 <div class="calendar-day" role="gridcell">
                   <strong>{{ day | date: 'EEE d' }}</strong>
                   @for (session of sessionsFor(day); track session.id) {
-                    <a class="calendar-event" [routerLink]="['/mentor/attendance', session.id]">
+                    <a class="calendar-event" [routerLink]="[attendanceBase(), session.id]">
                       <strong>{{ session.startsAt | date: 'shortTime' }}</strong>
                       {{ session.title }}<br />
                       <span>
@@ -126,10 +132,7 @@
                       {{ session.rosterCount }} youth
                     </p>
                   </div>
-                  <a
-                    class="wu-btn wu-btn--secondary"
-                    [routerLink]="['/mentor/attendance', session.id]"
-                  >
+                  <a class="wu-btn wu-btn--secondary" [routerLink]="[attendanceBase(), session.id]">
                     {{ session.attendanceTaken ? 'Edit attendance' : 'Take attendance' }}
                   </a>
                 </div>

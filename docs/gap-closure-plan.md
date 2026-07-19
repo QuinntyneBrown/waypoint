@@ -206,7 +206,10 @@ requirement conflicts early (they gate "done").
       progression workspaces. Exact-set ordering preserves prerequisites, publish actions expose
       authored work to the intended youth exactly once, badge rules support scoped automatic and
       manual awards, and the staged competency framework drives the mentor's current-stage view.
-- [ ] **G9** Calendar/session management `L2-ENGAGE-001`
+- [x] **G9** Calendar/session management `L2-ENGAGE-001` — the shared staff calendar now gives
+      Program Administrators organization-wide month, week, and agenda views with cohort filters,
+      named time/location/mentor/cohort detail, role-correct attendance links, and a validated
+      recurring-session form that materializes weekly rows only through the selected cohort term.
 - [ ] **G10** Attendance administration/history `L2-ENGAGE-002..004`
 - [ ] **G11** Announcement administration `L2-ENGAGE-006`
 - [ ] **G12** Reports hub + standard reports `L2-REPORT-001`
@@ -487,3 +490,9 @@ requirement conflicts early (they gate "done").
   mentor current-stage calculations. Youth text answers autosave/resume and score case-insensitively.
   All 199 backend integrations, four backend units, six portal units, the production build, and seven
   combined desktop/mobile browser scenarios pass.
+- 2026-07-18 — G9 done: Program Administrators now use the shared staff calendar with organization-
+  wide cohort and active-mentor options, month/week/agenda views, full event logistics, cohort
+  filtering, and admin attendance destinations. One-time and weekly session creation uses the
+  existing server-authoritative term boundary and reports the exact generated count. Four adjacent
+  scheduling/attendance integrations, six portal units, the production build, admin desktop/mobile
+  acceptance, and the complete mentor calendar/attendance/export regression pass.

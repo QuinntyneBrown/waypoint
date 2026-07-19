@@ -70,6 +70,7 @@ export {
   CurriculumBuilderPage,
   BadgeBuilderPage,
   ProgressionBuilderPage,
+  AdminCalendarPage,
 } from './admin.pages';
 export {
   MentorCheckInsPage,
