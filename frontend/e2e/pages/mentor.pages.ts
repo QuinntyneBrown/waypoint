@@ -210,6 +210,9 @@ export class MentorCompetencyPage extends BasePage {
   card(name: string) {
     return this.page.getByTestId('competency-card').filter({ hasText: name });
   }
+  cardById(id: string) {
+    return this.page.locator('[data-testid="competency-card"][data-competency-id="' + id + '"]');
+  }
   level(name: string) {
     return this.page.getByLabel(`${name} level`);
   }
@@ -218,6 +221,15 @@ export class MentorCompetencyPage extends BasePage {
   }
   save(name: string) {
     return this.card(name).getByRole('button', { name: /save assessment/i });
+  }
+  levelById(id: string) {
+    return this.page.locator('#level-' + id);
+  }
+  notesById(id: string) {
+    return this.page.locator('#notes-' + id);
+  }
+  saveById(id: string) {
+    return this.cardById(id).getByRole('button', { name: /save assessment/i });
   }
   get status() {
     return this.page.getByRole('status');

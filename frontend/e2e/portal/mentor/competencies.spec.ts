@@ -16,21 +16,25 @@ test('mentor assesses the full competency framework and youth progress gets the 
 
   const tracker = new MentorCompetencyPage(page);
   await expect(tracker.heading).toContainText(seeded.youthName);
-  await expect(tracker.summary).toContainText('1 of 2');
+  const initialSummary = (await tracker.summary.textContent()) ?? '';
+  const initialCounts = initialSummary.match(/Proficient or mastered\s*(\d+) of (\d+)/);
+  expect(initialCounts, initialSummary).not.toBeNull();
+  const initiallyMastered = Number(initialCounts![1]);
+  const frameworkTotal = Number(initialCounts![2]);
   await expect(tracker.summary).toContainText(/Current stage.+\d+%/s);
-  await expect(tracker.level(seeded.mentorCompetencyName)).toHaveValue('NotStarted');
-  await tracker.level(seeded.mentorCompetencyName).selectOption('Proficient');
+  await expect(tracker.levelById(seeded.mentorCompetencyId)).toHaveValue('NotStarted');
+  await tracker.levelById(seeded.mentorCompetencyId).selectOption('Proficient');
   await tracker
-    .notes(seeded.mentorCompetencyName)
+    .notesById(seeded.mentorCompetencyId)
     .fill('Took initiative welcoming a new participant.');
-  await tracker.save(seeded.mentorCompetencyName).click();
+  await tracker.saveById(seeded.mentorCompetencyId).click();
   await expect(tracker.status).toContainText(`Saved ${seeded.mentorCompetencyName}`);
-  await expect(tracker.summary).toContainText('2 of 2');
-  await expect(tracker.card(seeded.mentorCompetencyName)).toContainText(seeded.mentorName);
+  await expect(tracker.summary).toContainText(initiallyMastered + 1 + ' of ' + frameworkTotal);
+  await expect(tracker.cardById(seeded.mentorCompetencyId)).toContainText(seeded.mentorName);
 
   await page.reload();
-  await expect(tracker.level(seeded.mentorCompetencyName)).toHaveValue('Proficient');
-  await expect(tracker.notes(seeded.mentorCompetencyName)).toHaveValue(
+  await expect(tracker.levelById(seeded.mentorCompetencyId)).toHaveValue('Proficient');
+  await expect(tracker.notesById(seeded.mentorCompetencyId)).toHaveValue(
     'Took initiative welcoming a new participant.',
   );
 

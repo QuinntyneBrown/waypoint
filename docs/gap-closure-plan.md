@@ -201,7 +201,11 @@ requirement conflicts early (they gate "done").
       named dated terms, and pause or resume published tracks without losing progress. The configured
       identity, contact, statement, re-consent rule, and media policy drive the guardian-consent flow;
       disabled tracks reject new enrollment and work assignment while existing records remain intact.
-- [ ] **G8** Curriculum builder `L2-CURRIC-001..006`
+- [x] **G8** Curriculum builder `L2-CURRIC-001..006` — Program Administrators now have
+      responsive track, module, lesson/media, quiz/question, assignment/rubric, badge, and
+      progression workspaces. Exact-set ordering preserves prerequisites, publish actions expose
+      authored work to the intended youth exactly once, badge rules support scoped automatic and
+      manual awards, and the staged competency framework drives the mentor's current-stage view.
 - [ ] **G9** Calendar/session management `L2-ENGAGE-001`
 - [ ] **G10** Attendance administration/history `L2-ENGAGE-002..004`
 - [ ] **G11** Announcement administration `L2-ENGAGE-006`
@@ -221,8 +225,15 @@ requirement conflicts early (they gate "done").
       status, application decisions/listing, and administrative person records; new records capture
       the current term and policy-derived validity window.
 - [ ] **H4** Media-consent enforcement on youth media `L2-CONSENT-001/004`
-- [~] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`, `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence now uses private DB-backed JPG/PNG storage with MIME/extension/signature/size checks and authenticated no-sniff serving; curriculum media lifecycle/removal remains.
-- [ ] **H6** Curriculum mutation lifecycle completion `L2-CURRIC-002..006`
+- [~] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`,
+      `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence uses private
+      DB-backed JPG/PNG storage and lesson media uses private DB-backed PDF/MP4 storage, both with
+      MIME/extension/signature/size checks plus authenticated no-sniff serving and removal. Profile
+      photos, non-photo assignment files, and support screenshots remain.
+- [x] **H6** Curriculum mutation lifecycle completion `L2-CURRIC-002..006` — lesson content
+      and media update/removal, exact lesson/question ordering, typed quiz validation and short-answer
+      scoring, assignment update/publish/fan-out, competency soft removal, and module/attendance/
+      assignment automatic badge rules now have validated, audited, exact-once server lifecycles.
 - [~] **H7** Shared progress model/views `L2-ADMIN-004`, `L2-LEARN-009/010`, `L2-GUARDIAN-001`, `L2-REPORT-001` — curriculum and journey share one module completion/current-state snapshot, badge counts derive from authoritative progress records, and self-analytics now includes approved quiz, attendance, and latest competency histories; cross-role histories and report unification remain.
 - [x] **H8** Grading outcomes (rubric validation, badges, notifications, live) `L2-MENTOR-003`, `L2-LEARN-007`, `L2-ENGAGE-008` — rubric IDs/ranges and complete final scores are server-validated,
       totals are server-computed, configured badges and youth-visible results are applied, and final
@@ -467,3 +478,12 @@ requirement conflicts early (they gate "done").
   and one shared evaluator applies participation, withdrawal, dates, term, and policy across all status
   and administrative projections. Thirty-six adjacent backend integrations, six portal units, the
   production build, and three consent/term/track/mobile browser scenarios pass.
+- 2026-07-18 — G8 and H6 done; H5 advanced: admins can author complete ordered tracks with modules,
+  lessons, safe private PDF/MP4 media, typed quizzes including short answers, rubric assignments,
+  automatic/manual badge definitions, and ordered progression stages/competencies from three
+  responsive workspaces. Publishing fans assignments to enrolled youth exactly once; lesson,
+  module, quiz, assignment, and attendance events award scoped badges with durable and live
+  notifications exactly once, while archived competencies disappear from the active framework and
+  mentor current-stage calculations. Youth text answers autosave/resume and score case-insensitively.
+  All 199 backend integrations, four backend units, six portal units, the production build, and seven
+  combined desktop/mobile browser scenarios pass.

@@ -48,7 +48,11 @@
       } @else {
         <div class="competency-grid">
           @for (item of view.items; track item.competencyId) {
-            <article class="wu-card" data-testid="competency-card">
+            <article
+              class="wu-card"
+              data-testid="competency-card"
+              [attr.data-competency-id]="item.competencyId"
+            >
               <div class="wu-card__header">
                 <div>
                   <p class="wu-eyebrow">{{ item.stageName }}</p>
