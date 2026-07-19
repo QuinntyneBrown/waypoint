@@ -19,4 +19,5 @@ public record QuizQuestionDetail(
     QuestionType Type,
     int Order,
     IReadOnlyList<string> Options,
-    IReadOnlyList<int> CorrectIndexes);
+    IReadOnlyList<int> CorrectIndexes,
+    IReadOnlyList<string> CorrectAnswers);

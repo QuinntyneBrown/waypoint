@@ -181,7 +181,14 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.ChecklistLabel).HasMaxLength(300).IsRequired();
             b.HasIndex(x => new { x.LessonId, x.Order }).IsUnique();
         });
-        modelBuilder.Entity<LessonMedia>(b => b.HasIndex(x => x.LessonId));
+        modelBuilder.Entity<LessonMedia>(b =>
+        {
+            b.HasIndex(x => x.LessonId);
+            b.Property(x => x.MediaType).HasMaxLength(16).IsRequired();
+            b.Property(x => x.Url).HasMaxLength(2048).IsRequired();
+            b.Property(x => x.OriginalFileName).HasMaxLength(255);
+            b.Property(x => x.ContentType).HasMaxLength(128);
+        });
         modelBuilder.Entity<Quiz>(b => b.Property(x => x.FeedbackMode).HasMaxLength(32));
         modelBuilder.Entity<QuizQuestion>(b =>
         {
@@ -203,7 +210,8 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Name).HasMaxLength(128).IsRequired();
             b.Property(x => x.Icon).HasMaxLength(64).IsRequired();
         });
-        modelBuilder.Entity<BadgeAward>(b => b.HasIndex(x => new { x.BadgeId, x.YouthUserId }));
+        modelBuilder.Entity<BadgeAward>(b =>
+            b.HasIndex(x => new { x.BadgeId, x.YouthUserId }).IsUnique());
         modelBuilder.Entity<ProgressionStage>(b => b.Property(x => x.Name).HasMaxLength(128).IsRequired());
         modelBuilder.Entity<Competency>(b =>
         {

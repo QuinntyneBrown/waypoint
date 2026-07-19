@@ -31,4 +31,53 @@ public class AssignmentsController : ControllerBase
             cancellationToken);
         return Ok(result);
     }
+
+    [Authorize(Policy = Policies.EditCurriculum)]
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<AssignmentDetail>> Get(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        return Ok(await _mediator.Send(new GetAssignmentQuery(id), cancellationToken));
+    }
+
+    [Authorize(Policy = Policies.EditCurriculum)]
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(
+        Guid id,
+        [FromBody] CreateAssignmentRequest request,
+        CancellationToken cancellationToken)
+    {
+        var rubric = (request.Rubric ?? [])
+            .Select(item => new RubricInput(item.Description, item.Points))
+            .ToList();
+        await _mediator.Send(
+            new UpdateAssignmentCommand(
+                id,
+                request.ModuleId,
+                request.LessonId,
+                request.Title,
+                request.TaskDescription,
+                request.SubmissionTypes,
+                request.DueDate,
+                request.GracePeriodDays,
+                request.AllowLate,
+                request.RequireMentorApproval,
+                rubric),
+            cancellationToken);
+        return NoContent();
+    }
+
+    [Authorize(Policy = Policies.EditCurriculum)]
+    [HttpPost("{id:guid}/publish")]
+    public async Task<IActionResult> Publish(
+        Guid id,
+        [FromBody] PublishRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(
+            new PublishAssignmentCommand(id, request.Status),
+            cancellationToken);
+        return NoContent();
+    }
 }

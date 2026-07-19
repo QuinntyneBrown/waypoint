@@ -26,11 +26,16 @@ public class AddQuizQuestionCommandHandler : IRequestHandler<AddQuizQuestionComm
         var question = new QuizQuestion
         {
             QuizId = request.QuizId,
-            Text = request.Text,
+            Text = request.Text.Trim(),
             Type = request.Type,
             Order = nextOrder,
-            OptionsJson = JsonSerializer.Serialize(request.Options ?? Array.Empty<string>()),
-            CorrectAnswersJson = JsonSerializer.Serialize(request.CorrectIndexes ?? Array.Empty<int>()),
+            OptionsJson = JsonSerializer.Serialize(
+                request.Options?.Select(option => option.Trim()).ToList() ?? []),
+            CorrectAnswersJson = request.Type == QuestionType.ShortAnswer
+                ? JsonSerializer.Serialize(request.CorrectAnswers
+                    .Select(answer => answer.Trim())
+                    .Distinct(StringComparer.OrdinalIgnoreCase))
+                : JsonSerializer.Serialize(request.CorrectIndexes.Distinct()),
         };
 
         _db.QuizQuestions.Add(question);

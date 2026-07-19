@@ -168,7 +168,7 @@ public class ProgressQueryHandler : IRequestHandler<ProgressQuery, ProgressView>
             .ToList();
         var ids = latest.Select(item => item.CompetencyId).ToList();
         var definitions = await _db.Competencies.AsNoTracking()
-            .Where(item => ids.Contains(item.Id))
+            .Where(item => ids.Contains(item.Id) && item.ArchivedAt == null)
             .ToDictionaryAsync(item => item.Id, item => item.Name, cancellationToken);
         return latest
             .Where(item => definitions.ContainsKey(item.CompetencyId))

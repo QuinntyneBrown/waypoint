@@ -6,4 +6,5 @@ public record CreateBadgeRequest(
     string? Description,
     BadgeCriteriaKind CriteriaKind,
     string? AutoRule,
+    Guid? TargetRefId,
     Guid? CompetencyId);

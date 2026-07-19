@@ -332,3 +332,123 @@ export class ApplicationsListPage extends BasePage {
     await this.page.goto(ApplicationsListPage.path);
   }
 }
+
+/** Complete curriculum authoring workspace. */
+export class CurriculumBuilderPage extends BasePage {
+  static readonly path = '/admin/tracks';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Curriculum builder', exact: true });
+  }
+  get trackSelect() {
+    return this.page.getByLabel('Curriculum track');
+  }
+  get newTrack() {
+    return this.page.getByRole('button', { name: 'New track' });
+  }
+  get trackDialog() {
+    return this.page.getByRole('dialog', { name: 'Create track' });
+  }
+  get lessonDialog() {
+    return this.page.getByRole('dialog', { name: 'Add lesson' });
+  }
+  get quizDialog() {
+    return this.page.getByRole('dialog', { name: 'Add quiz' });
+  }
+  get assignmentDialog() {
+    return this.page.getByRole('dialog', { name: 'Add assignment' });
+  }
+  get questionEditor() {
+    return this.page.getByTestId('quiz-editor');
+  }
+  get outcome() {
+    return this.page.getByTestId('curriculum-outcome');
+  }
+  module(name: string) {
+    return this.page.getByTestId('curriculum-module').filter({ hasText: name });
+  }
+  lesson(title: string) {
+    return this.page.getByTestId('curriculum-lesson').filter({ hasText: title });
+  }
+  assignment(title: string) {
+    return this.page.getByTestId('curriculum-assignment').filter({ hasText: title });
+  }
+  quiz(id: string) {
+    return this.page.locator('[data-testid="curriculum-quiz"][data-quiz-id="' + id + '"]');
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(CurriculumBuilderPage.path);
+  }
+}
+
+/** Automatic/manual badge definitions and awards. */
+export class BadgeBuilderPage extends BasePage {
+  static readonly path = '/admin/badges';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Badge builder', exact: true });
+  }
+  get name() {
+    return this.page.getByLabel('Badge name');
+  }
+  get icon() {
+    return this.page.getByLabel('Badge icon');
+  }
+  get criteriaKind() {
+    return this.page.getByLabel('Criteria kind');
+  }
+  get autoRule() {
+    return this.page.getByLabel('Automatic rule');
+  }
+  get target() {
+    return this.page.getByLabel('Rule target');
+  }
+  get competency() {
+    return this.page.getByLabel('Mapped competency');
+  }
+  get saveBadge() {
+    return this.page.getByRole('button', { name: 'Save badge' });
+  }
+  get youth() {
+    return this.page.getByLabel('Youth recipient');
+  }
+  get outcome() {
+    return this.page.getByTestId('badge-outcome');
+  }
+  badge(name: string) {
+    return this.page.getByTestId('badge-definition').filter({ hasText: name });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(BadgeBuilderPage.path);
+  }
+}
+
+/** Ordered stages and competency framework editor. */
+export class ProgressionBuilderPage extends BasePage {
+  static readonly path = '/admin/progression';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Progression framework', exact: true });
+  }
+  get addStage() {
+    return this.page.getByRole('button', { name: 'Add stage' });
+  }
+  get stageDialog() {
+    return this.page.getByRole('dialog', { name: /stage/i });
+  }
+  get competencyDialog() {
+    return this.page.getByRole('dialog', { name: 'Add competency' });
+  }
+  get outcome() {
+    return this.page.getByTestId('progression-outcome');
+  }
+  stage(name: string) {
+    return this.page.getByTestId('progression-stage').filter({ hasText: name });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(ProgressionBuilderPage.path);
+  }
+}

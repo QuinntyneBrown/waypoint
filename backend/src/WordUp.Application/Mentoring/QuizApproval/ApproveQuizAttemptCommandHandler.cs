@@ -11,14 +11,20 @@ public class ApproveQuizAttemptCommandHandler : IRequestHandler<ApproveQuizAttem
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IChangePublisher _publisher;
 
     public ApproveQuizAttemptCommandHandler(
-        IAppDbContext db, IClock clock, IAuditLogger audit, ICurrentUser currentUser)
+        IAppDbContext db,
+        IClock clock,
+        IAuditLogger audit,
+        ICurrentUser currentUser,
+        IChangePublisher publisher)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
+        _publisher = publisher;
     }
 
     public async Task Handle(ApproveQuizAttemptCommand request, CancellationToken cancellationToken)
@@ -59,17 +65,28 @@ public class ApproveQuizAttemptCommandHandler : IRequestHandler<ApproveQuizAttem
             .FirstOrDefaultAsync(q => q.Id == attempt.QuizId, cancellationToken);
         var passed = quiz is not null ? approvedScore >= quiz.PassMark : attempt.Passed;
 
+        IReadOnlyList<Notification> badgeNotifications = [];
         if (passed)
         {
-            await QuizBadgeAwarder.AwardForPassedQuizAsync(
+            badgeNotifications = await QuizBadgeAwarder.AwardForPassedQuizAsync(
                 _db, attempt.QuizId, attempt.YouthUserId, _currentUser.UserId, now, cancellationToken);
         }
 
         await _db.SaveChangesAsync(cancellationToken);
+        await QuizBadgeAwarder.PublishNotificationsAsync(
+            _publisher,
+            badgeNotifications,
+            cancellationToken);
 
         var details = request.OverrideScore is { } overridden
             ? $"auto={attempt.AutoScore};override={overridden}"
             : $"auto={attempt.AutoScore}";
-        await _audit.LogAsync("QuizApproved", _currentUser.UserId, "QuizAttempt", attempt.Id, details: details);
+        await _audit.LogAsync(
+            "QuizApproved",
+            _currentUser.UserId,
+            "QuizAttempt",
+            attempt.Id,
+            details: details,
+            cancellationToken: cancellationToken);
     }
 }

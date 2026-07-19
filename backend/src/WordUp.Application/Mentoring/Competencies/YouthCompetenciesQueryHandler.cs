@@ -33,6 +33,7 @@ public class YouthCompetenciesQueryHandler : IRequestHandler<YouthCompetenciesQu
             .ToListAsync(cancellationToken);
         var stageById = stages.ToDictionary(stage => stage.Id);
         var competencies = await _db.Competencies
+            .Where(item => item.ArchivedAt == null)
             .ToListAsync(cancellationToken);
         competencies = competencies
             .OrderBy(competency => stageById.GetValueOrDefault(competency.StageId)?.Order ?? int.MaxValue)
@@ -76,10 +77,30 @@ public class YouthCompetenciesQueryHandler : IRequestHandler<YouthCompetenciesQu
 
         var masteredOrProficient = latestByCompetency.Values
             .Count(assessment => assessment.Level is CompetencyLevel.Proficient or CompetencyLevel.Mastered);
+        var populatedStages = stages
+            .Select(stage => new
+            {
+                Stage = stage,
+                Competencies = competencies.Where(item => item.StageId == stage.Id).ToList(),
+            })
+            .Where(item => item.Competencies.Count > 0)
+            .ToList();
+        var currentStage = populatedStages.FirstOrDefault(item => item.Competencies.Any(competency =>
+                !latestByCompetency.TryGetValue(competency.Id, out var assessment)
+                || assessment.Level is not (CompetencyLevel.Proficient or CompetencyLevel.Mastered)))
+            ?? populatedStages.LastOrDefault();
+        var currentStageComplete = currentStage?.Competencies.Count(competency =>
+            latestByCompetency.TryGetValue(competency.Id, out var assessment)
+            && assessment.Level is CompetencyLevel.Proficient or CompetencyLevel.Mastered) ?? 0;
+        var currentStageProgress = currentStage is null
+            ? 0
+            : currentStageComplete * 100 / currentStage.Competencies.Count;
 
         return new CompetencySummary(
             youth.Id,
             youth.DisplayName,
+            currentStage?.Stage.Name,
+            currentStageProgress,
             items,
             masteredOrProficient,
             items.Count);

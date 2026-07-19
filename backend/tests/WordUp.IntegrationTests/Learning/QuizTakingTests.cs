@@ -364,4 +364,58 @@ public sealed class QuizTakingTests : IntegrationTestBase
         var third = await PostAsync($"/api/me/quizzes/{seed.QuizId}/attempts", null, youthToken);
         Assert.That(third.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
     }
+
+    [Test]
+    [Property("Req", "L2-CURRIC-003")]
+    [Property("Req", "L2-LEARN-004")]
+    public async Task Short_answer_scoring_uses_the_authored_text_answers_case_insensitively()
+    {
+        // Traces to: L2-CURRIC-003 (AC1/AC4), L2-LEARN-004
+        Guid quizId;
+        Guid questionId;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var quiz = new Quiz { PassMark = 100, AttemptsAllowed = 2 };
+            var question = new QuizQuestion
+            {
+                QuizId = quiz.Id,
+                Text = "Complete the phrase: saved by ____.",
+                Type = QuestionType.ShortAnswer,
+                OptionsJson = "[]",
+                CorrectAnswersJson = JsonSerializer.Serialize(new[] { "grace", "God's grace" }),
+            };
+            db.Quizzes.Add(quiz);
+            db.QuizQuestions.Add(question);
+            await db.SaveChangesAsync();
+            quizId = quiz.Id;
+            questionId = question.Id;
+        }
+
+        var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
+        var attempt = await StartAsync(quizId, youthToken);
+        Assert.Multiple(() =>
+        {
+            Assert.That(attempt.Questions.Single().Type, Is.EqualTo("ShortAnswer"));
+            Assert.That(attempt.Questions.Single().Options, Is.Empty);
+        });
+        var answers = JsonSerializer.Serialize(new Dictionary<string, string>
+        {
+            [questionId.ToString()] = "  GRACE  ",
+        });
+        var submitted = await PostAsync(
+            $"/api/me/attempts/{attempt.AttemptId}/submit",
+            new { answersJson = answers },
+            youthToken);
+        Assert.That(submitted.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        using var verifyScope = Factory.Services.CreateScope();
+        var verifyDb = verifyScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var stored = await verifyDb.QuizAttempts.FindAsync(attempt.AttemptId);
+        Assert.Multiple(() =>
+        {
+            Assert.That(stored!.AutoScore, Is.EqualTo(100));
+            Assert.That(stored.Passed, Is.True);
+        });
+    }
 }

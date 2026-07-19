@@ -7,4 +7,5 @@ public class Competency
     public Guid StageId { get; set; }
     public string Name { get; set; } = string.Empty;
     public int Order { get; set; }
+    public DateTime? ArchivedAt { get; set; }
 }

@@ -27,6 +27,24 @@ public class ModulesController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(
+        Guid id,
+        [FromBody] CreateModuleRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(
+            new UpdateModuleCommand(
+                id,
+                request.TrackId,
+                request.Name,
+                request.Description,
+                request.PrerequisiteModuleId,
+                request.ScriptureAnchor),
+            cancellationToken);
+        return NoContent();
+    }
+
     [HttpPost("reorder")]
     public async Task<IActionResult> Reorder([FromBody] ReorderModulesRequest request, CancellationToken cancellationToken)
     {

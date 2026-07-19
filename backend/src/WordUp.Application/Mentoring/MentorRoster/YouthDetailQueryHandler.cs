@@ -149,9 +149,10 @@ public class YouthDetailQueryHandler : IRequestHandler<YouthDetailQuery, YouthDe
             .ToList();
         var competencyIds = latestAssessments.Select(item => item.CompetencyId).ToList();
         var competencyNames = await _db.Competencies
-            .Where(item => competencyIds.Contains(item.Id))
+            .Where(item => competencyIds.Contains(item.Id) && item.ArchivedAt == null)
             .ToDictionaryAsync(item => item.Id, item => item.Name, cancellationToken);
         var competencies = latestAssessments
+            .Where(item => competencyNames.ContainsKey(item.CompetencyId))
             .Select(item => new YouthCompetencySummary(
                 item.CompetencyId,
                 competencyNames.TryGetValue(item.CompetencyId, out var name) ? name : "Competency",

@@ -13,17 +13,20 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
     private readonly IClock _clock;
     private readonly ICurrentUser _currentUser;
     private readonly IAuditLogger _audit;
+    private readonly IChangePublisher _publisher;
 
     public SaveAttendanceCommandHandler(
         IAppDbContext db,
         IClock clock,
         ICurrentUser currentUser,
-        IAuditLogger audit)
+        IAuditLogger audit,
+        IChangePublisher publisher)
     {
         _db = db;
         _clock = clock;
         _currentUser = currentUser;
         _audit = audit;
+        _publisher = publisher;
     }
 
     public async Task<AttendanceTally> Handle(SaveAttendanceCommand request, CancellationToken cancellationToken)
@@ -183,6 +186,7 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
         }
 
         await _db.SaveChangesAsync(cancellationToken);
+        await AwardAttendanceStreakBadgesAsync(youthIds, now, cancellationToken);
         await _audit.LogAsync(
             "AttendanceSaved",
             recordedBy,
@@ -191,6 +195,102 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
             cancellationToken: cancellationToken);
 
         return tally;
+    }
+
+    private async Task AwardAttendanceStreakBadgesAsync(
+        IReadOnlyCollection<Guid> youthIds,
+        DateTime now,
+        CancellationToken cancellationToken)
+    {
+        var badges = await _db.Badges
+            .Where(item => item.CriteriaKind == BadgeCriteriaKind.Auto
+                && item.AutoRule == "attendance-streak"
+                && item.ArchivedAt == null)
+            .ToListAsync(cancellationToken);
+        if (badges.Count == 0)
+        {
+            return;
+        }
+
+        var badgeIds = badges.Select(item => item.Id).ToList();
+        var notifications = new List<Notification>();
+        foreach (var youthId in youthIds)
+        {
+            var statuses = await (
+                from record in _db.AttendanceRecords
+                join session in _db.Sessions on record.SessionId equals session.Id
+                where record.YouthUserId == youthId
+                orderby session.StartsAt descending
+                select record.Status)
+                .ToListAsync(cancellationToken);
+            var streak = 0;
+            foreach (var status in statuses)
+            {
+                if (status is AttendanceStatus.Present or AttendanceStatus.Late)
+                {
+                    streak++;
+                }
+                else if (status == AttendanceStatus.Absent)
+                {
+                    break;
+                }
+            }
+
+            if (streak < 5)
+            {
+                continue;
+            }
+
+            var earnedBadgeIds = await _db.BadgeAwards
+                .Where(item => item.YouthUserId == youthId && badgeIds.Contains(item.BadgeId))
+                .Select(item => item.BadgeId)
+                .ToListAsync(cancellationToken);
+            foreach (var badge in badges.Where(item => !earnedBadgeIds.Contains(item.Id)))
+            {
+                _db.BadgeAwards.Add(new BadgeAward
+                {
+                    BadgeId = badge.Id,
+                    YouthUserId = youthId,
+                    AwardedAt = now,
+                });
+                var notification = new Notification
+                {
+                    UserId = youthId,
+                    EventKey = "badge-earned",
+                    Title = $"Badge earned: {badge.Name}",
+                    Body = string.IsNullOrWhiteSpace(badge.Description)
+                        ? "You earned a new badge."
+                        : badge.Description,
+                    LinkPath = "/youth/journey",
+                    CreatedAt = now,
+                };
+                _db.Notifications.Add(notification);
+                notifications.Add(notification);
+            }
+        }
+
+        if (notifications.Count == 0)
+        {
+            return;
+        }
+
+        await _db.SaveChangesAsync(cancellationToken);
+        foreach (var notification in notifications)
+        {
+            await _publisher.PublishToUserAsync(
+                notification.UserId,
+                "notification",
+                new
+                {
+                    id = notification.Id,
+                    eventKey = notification.EventKey,
+                    title = notification.Title,
+                    body = notification.Body,
+                    linkPath = notification.LinkPath,
+                    createdAt = notification.CreatedAt,
+                },
+                cancellationToken);
+        }
     }
 
     private static string Fingerprint(SaveAttendanceCommand request)

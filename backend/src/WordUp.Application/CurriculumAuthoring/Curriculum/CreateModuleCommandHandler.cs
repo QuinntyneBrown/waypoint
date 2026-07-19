@@ -26,6 +26,14 @@ public class CreateModuleCommandHandler : IRequestHandler<CreateModuleCommand, M
             throw new NotFoundException("Track not found.");
         }
 
+        if (request.PrerequisiteModuleId is { } prerequisiteId
+            && !await _db.Modules.AnyAsync(
+                item => item.Id == prerequisiteId && item.TrackId == request.TrackId,
+                cancellationToken))
+        {
+            throw new ConflictException("The prerequisite must be an earlier module in this track.");
+        }
+
         // New modules append to the end of the track's ordered list (L2-CURRIC-001 AC2).
         var maxOrder = await _db.Modules
             .Where(m => m.TrackId == request.TrackId)
@@ -36,9 +44,9 @@ public class CreateModuleCommandHandler : IRequestHandler<CreateModuleCommand, M
         {
             TrackId = request.TrackId,
             Name = request.Name.Trim(),
-            Description = request.Description,
+            Description = Clean(request.Description),
             PrerequisiteModuleId = request.PrerequisiteModuleId,
-            ScriptureAnchor = request.ScriptureAnchor,
+            ScriptureAnchor = Clean(request.ScriptureAnchor),
             Order = maxOrder + 1,
             Status = PublishStatus.Draft,
         };
@@ -46,8 +54,16 @@ public class CreateModuleCommandHandler : IRequestHandler<CreateModuleCommand, M
         _db.Modules.Add(module);
         await _db.SaveChangesAsync(cancellationToken);
 
-        await _audit.LogAsync("ModuleCreated", _currentUser.UserId, "Module", module.Id);
+        await _audit.LogAsync(
+            "ModuleCreated",
+            _currentUser.UserId,
+            "Module",
+            module.Id,
+            cancellationToken: cancellationToken);
 
         return new ModuleResult(module.Id);
     }
+
+    private static string? Clean(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? null : value.Trim();
 }

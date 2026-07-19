@@ -8,8 +8,18 @@ namespace WordUp.Application.CurriculumAuthoring.Progression;
 public class AddCompetencyCommandHandler : IRequestHandler<AddCompetencyCommand, CompetencyResult>
 {
     private readonly IAppDbContext _db;
+    private readonly IAuditLogger _audit;
+    private readonly ICurrentUser _currentUser;
 
-    public AddCompetencyCommandHandler(IAppDbContext db) => _db = db;
+    public AddCompetencyCommandHandler(
+        IAppDbContext db,
+        IAuditLogger audit,
+        ICurrentUser currentUser)
+    {
+        _db = db;
+        _audit = audit;
+        _currentUser = currentUser;
+    }
 
     public async Task<CompetencyResult> Handle(AddCompetencyCommand request, CancellationToken cancellationToken)
     {
@@ -19,7 +29,9 @@ public class AddCompetencyCommandHandler : IRequestHandler<AddCompetencyCommand,
             throw new NotFoundException("Progression stage not found.");
         }
 
-        var nextOrder = await _db.Competencies.CountAsync(c => c.StageId == request.StageId, cancellationToken);
+        var nextOrder = await _db.Competencies.CountAsync(
+            item => item.StageId == request.StageId && item.ArchivedAt == null,
+            cancellationToken);
 
         var competency = new Competency
         {
@@ -30,6 +42,12 @@ public class AddCompetencyCommandHandler : IRequestHandler<AddCompetencyCommand,
 
         _db.Competencies.Add(competency);
         await _db.SaveChangesAsync(cancellationToken);
+        await _audit.LogAsync(
+            "CompetencyAdded",
+            _currentUser.UserId,
+            "Competency",
+            competency.Id,
+            cancellationToken: cancellationToken);
 
         return new CompetencyResult(competency.Id);
     }

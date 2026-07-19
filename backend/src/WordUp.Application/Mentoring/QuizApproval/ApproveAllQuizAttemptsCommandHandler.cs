@@ -11,14 +11,16 @@ public class ApproveAllQuizAttemptsCommandHandler : IRequestHandler<ApproveAllQu
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IChangePublisher _publisher;
 
     public ApproveAllQuizAttemptsCommandHandler(
-        IAppDbContext db, IClock clock, IAuditLogger audit, ICurrentUser currentUser)
+        IAppDbContext db, IClock clock, IAuditLogger audit, ICurrentUser currentUser, IChangePublisher publisher)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
+        _publisher = publisher;
     }
 
     public async Task<int> Handle(ApproveAllQuizAttemptsCommand request, CancellationToken cancellationToken)
@@ -55,6 +57,7 @@ public class ApproveAllQuizAttemptsCommandHandler : IRequestHandler<ApproveAllQu
             .Where(q => quizIds.Contains(q.Id))
             .ToDictionaryAsync(q => q.Id, cancellationToken);
 
+        var badgeNotifications = new List<Notification>();
         foreach (var attempt in pending)
         {
             var approvedScore = attempt.AutoScore;
@@ -68,12 +71,16 @@ public class ApproveAllQuizAttemptsCommandHandler : IRequestHandler<ApproveAllQu
 
             if (passed)
             {
-                await QuizBadgeAwarder.AwardForPassedQuizAsync(
-                    _db, attempt.QuizId, attempt.YouthUserId, currentUserId, now, cancellationToken);
+                badgeNotifications.AddRange(await QuizBadgeAwarder.AwardForPassedQuizAsync(
+                    _db, attempt.QuizId, attempt.YouthUserId, currentUserId, now, cancellationToken));
             }
         }
 
         await _db.SaveChangesAsync(cancellationToken);
+        await QuizBadgeAwarder.PublishNotificationsAsync(
+            _publisher,
+            badgeNotifications,
+            cancellationToken);
 
         foreach (var attempt in pending)
         {

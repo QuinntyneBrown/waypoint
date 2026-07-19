@@ -16,13 +16,18 @@ public class BadgesController : ControllerBase
     public BadgesController(IMediator mediator) => _mediator = mediator;
 
     [Authorize(Policy = Policies.EditCurriculum)]
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyList<BadgeDefinitionView>>> List(CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new ListBadgesQuery(), cancellationToken));
+
+    [Authorize(Policy = Policies.EditCurriculum)]
     [HttpPost]
     public async Task<ActionResult<BadgeResult>> Create([FromBody] CreateBadgeRequest request, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new CreateBadgeCommand(
                 request.Name, request.Icon, request.Description,
-                request.CriteriaKind, request.AutoRule, request.CompetencyId),
+                request.CriteriaKind, request.AutoRule, request.TargetRefId, request.CompetencyId),
             cancellationToken);
         return Ok(result);
     }

@@ -164,6 +164,8 @@ export type CompetencyLevel = 'NotStarted' | 'Developing' | 'Proficient' | 'Mast
 export interface MentorCompetencySummary {
   youthId: string;
   youthName: string;
+  currentStageName: string | null;
+  currentStageProgress: number;
   items: MentorCompetencyItem[];
   masteredOrProficient: number;
   total: number;

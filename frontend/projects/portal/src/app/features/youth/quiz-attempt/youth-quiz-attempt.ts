@@ -5,7 +5,7 @@ import { ApiError, LearningApi, YouthQuizAttempt, YouthQuizQuestion } from '@wu/
 import { AuthStore } from '@wu/auth';
 import { WuShell } from '@wu/ui';
 
-type QuizAnswers = Record<string, number[]>;
+type QuizAnswers = Record<string, number[] | string>;
 
 // Traces to: L2-LEARN-004
 @Component({
@@ -42,8 +42,8 @@ export class YouthQuizAttemptPage {
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly saveStatus = signal<string | null>(null);
   protected readonly submitting = signal(false);
-  protected readonly currentQuestion = computed<YouthQuizQuestion | undefined>(() =>
-    this.attempt()?.questions[this.currentIndex()],
+  protected readonly currentQuestion = computed<YouthQuizQuestion | undefined>(
+    () => this.attempt()?.questions[this.currentIndex()],
   );
 
   constructor() {
@@ -58,14 +58,16 @@ export class YouthQuizAttemptPage {
   }
 
   protected isSelected(questionId: string, optionIndex: number): boolean {
-    return this.answers()[questionId]?.includes(optionIndex) ?? false;
+    const answer = this.answers()[questionId];
+    return Array.isArray(answer) && answer.includes(optionIndex);
   }
 
   protected choose(question: YouthQuizQuestion, optionIndex: number, checked: boolean): void {
     this.answers.update((current) => {
       const updated = { ...current };
       if (question.type === 'MultipleAnswer') {
-        const selected = new Set(updated[question.id] ?? []);
+        const existing = updated[question.id];
+        const selected = new Set(Array.isArray(existing) ? existing : []);
         if (checked) selected.add(optionIndex);
         else selected.delete(optionIndex);
         updated[question.id] = [...selected].sort((a, b) => a - b);
@@ -74,6 +76,16 @@ export class YouthQuizAttemptPage {
       }
       return updated;
     });
+    this.queueSave(this.currentIndex());
+  }
+
+  protected textAnswer(questionId: string): string {
+    const answer = this.answers()[questionId];
+    return typeof answer === 'string' ? answer : '';
+  }
+
+  protected writeText(questionId: string, value: string): void {
+    this.answers.update((current) => ({ ...current, [questionId]: value }));
     this.queueSave(this.currentIndex());
   }
 
@@ -86,7 +98,8 @@ export class YouthQuizAttemptPage {
   }
 
   protected answered(questionId: string): boolean {
-    return (this.answers()[questionId]?.length ?? 0) > 0;
+    const answer = this.answers()[questionId];
+    return typeof answer === 'string' ? answer.trim().length > 0 : (answer?.length ?? 0) > 0;
   }
 
   protected submit(): void {
@@ -105,8 +118,7 @@ export class YouthQuizAttemptPage {
 
     this.submitting.set(true);
     this.api.submitQuiz(view.attemptId, JSON.stringify(this.answers())).subscribe({
-      next: () =>
-        void this.router.navigate(['/youth/quiz-attempts', view.attemptId, 'result']),
+      next: () => void this.router.navigate(['/youth/quiz-attempts', view.attemptId, 'result']),
       error: (error: unknown) => {
         this.submitting.set(false);
         this.errorMessage.set(ApiError.from(error).title);

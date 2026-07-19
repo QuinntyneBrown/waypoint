@@ -29,7 +29,12 @@ public class GetQuizQueryHandler : IRequestHandler<GetQuizQuery, QuizDetail>
                 q.Type,
                 q.Order,
                 Deserialize<string>(q.OptionsJson),
-                Deserialize<int>(q.CorrectAnswersJson)))
+                q.Type == QuestionType.ShortAnswer
+                    ? Array.Empty<int>()
+                    : Deserialize<int>(q.CorrectAnswersJson),
+                q.Type == QuestionType.ShortAnswer
+                    ? Deserialize<string>(q.CorrectAnswersJson)
+                    : Array.Empty<string>()))
             .ToList();
 
         return new QuizDetail(

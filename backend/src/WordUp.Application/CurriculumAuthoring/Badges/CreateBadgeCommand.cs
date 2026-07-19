@@ -8,4 +8,5 @@ public record CreateBadgeCommand(
     string? Description,
     BadgeCriteriaKind CriteriaKind,
     string? AutoRule,
+    Guid? TargetRefId,
     Guid? CompetencyId) : IRequest<BadgeResult>;

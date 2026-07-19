@@ -67,6 +67,9 @@ export {
   MentorAssignmentsPage,
   OrganizationSettingsPage,
   ApplicationsListPage,
+  CurriculumBuilderPage,
+  BadgeBuilderPage,
+  ProgressionBuilderPage,
 } from './admin.pages';
 export {
   MentorCheckInsPage,

@@ -3,6 +3,8 @@
 //            L2-ENGAGE-003 (idempotent re-save / offline sync: one record per session+youth)
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Infrastructure;
 
@@ -171,6 +173,92 @@ public sealed class AttendanceTests : IntegrationTestBase
         }, token: token);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+    }
+
+    [Test]
+    [Property("Req", "L2-CURRIC-005")]
+    [Property("Req", "L2-ENGAGE-002")]
+    public async Task Five_consecutive_attendances_award_the_streak_badge_once_with_notifications()
+    {
+        // Traces to: L2-CURRIC-005 AC2; L2-ENGAGE-002 AC4
+        var token = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        Guid youthId;
+        Guid badgeId;
+        List<Guid> sessionIds;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var startsAt = new DateTime(2026, 9, 1, 18, 0, 0, DateTimeKind.Utc);
+            var cohort = new Cohort
+            {
+                Name = $"Streak cohort {Guid.NewGuid():N}",
+                TermStart = startsAt,
+                TermEnd = startsAt.AddDays(35),
+            };
+            var youth = new User
+            {
+                Email = $"streak.{Guid.NewGuid():N}@example.com",
+                DisplayName = "Streak Youth",
+                Role = Roles.Youth,
+                Status = UserStatus.Active,
+                CohortId = cohort.Id,
+            };
+            var sessions = Enumerable.Range(0, 5)
+                .Select(index => new Session
+                {
+                    CohortId = cohort.Id,
+                    Title = $"Streak session {index + 1}",
+                    StartsAt = startsAt.AddDays(index * 7),
+                    CreatedByUserId = Guid.NewGuid(),
+                })
+                .ToList();
+            var badge = new Badge
+            {
+                Name = "Faithful Five",
+                Icon = "zap",
+                CriteriaKind = BadgeCriteriaKind.Auto,
+                AutoRule = "attendance-streak",
+            };
+            db.Cohorts.Add(cohort);
+            db.Users.Add(youth);
+            db.Sessions.AddRange(sessions);
+            db.Badges.Add(badge);
+            await db.SaveChangesAsync();
+            youthId = youth.Id;
+            badgeId = badge.Id;
+            sessionIds = sessions.Select(item => item.Id).ToList();
+        }
+
+        foreach (var sessionId in sessionIds)
+        {
+            var saved = await SendAsync(HttpMethod.Post, "/api/attendance", body: new
+            {
+                sessionId,
+                marks = new[] { new { youthId, status = "Present", note = (string?)null } },
+            }, token: token);
+            Assert.That(saved.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        }
+        var repeated = await SendAsync(HttpMethod.Post, "/api/attendance", body: new
+        {
+            sessionId = sessionIds[^1],
+            marks = new[] { new { youthId, status = "Present", note = (string?)null } },
+        }, token: token);
+        Assert.That(repeated.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        using var verifyScope = Factory.Services.CreateScope();
+        var verifyDb = verifyScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(verifyDb.BadgeAwards.Count(item =>
+                item.YouthUserId == youthId && item.BadgeId == badgeId), Is.EqualTo(1));
+            Assert.That(verifyDb.Notifications.Count(item =>
+                item.UserId == youthId && item.EventKey == "badge-earned"), Is.EqualTo(1));
+            Assert.That(Factory.Changes.Changes.Count(item =>
+                item.Audience == "user"
+                && item.AudienceId == youthId
+                && item.EventName == "notification"
+                && JsonSerializer.Serialize(item.Payload).Contains("badge-earned")), Is.EqualTo(1));
+        });
     }
 
     private sealed record AttendanceTallyDto(int Present, int Late, int Excused, int Absent, int Marked, int Total);

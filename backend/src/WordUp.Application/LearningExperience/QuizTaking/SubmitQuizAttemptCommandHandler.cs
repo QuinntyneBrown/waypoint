@@ -43,12 +43,12 @@ public class SubmitQuizAttemptCommandHandler : IRequestHandler<SubmitQuizAttempt
             .ToListAsync(cancellationToken);
 
         // Score server-side against the stored correct answers (never trust the client).
-        var answers = QuizAnswerScoring.ParseAnswers(request.AnswersJson);
+        var answers = QuizAnswerScoring.ParseAnswerValues(request.AnswersJson);
         var correct = 0;
         foreach (var question in questions)
         {
-            var expected = QuizAnswerScoring.ParseIntSet(question.CorrectAnswersJson);
-            if (expected.Count > 0 && answers.TryGetValue(question.Id, out var given) && given.SetEquals(expected))
+            answers.TryGetValue(question.Id, out var given);
+            if (QuizAnswerScoring.IsCorrect(question, given))
             {
                 correct++;
             }

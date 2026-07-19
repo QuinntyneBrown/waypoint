@@ -41,6 +41,67 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(
+        Guid id,
+        [FromBody] CreateLessonRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(
+            new UpdateLessonCommand(
+                id,
+                request.ModuleId,
+                request.Title,
+                request.ScriptureReference,
+                request.EstimatedMinutes,
+                request.LearningObjectives,
+                request.TeachingBody,
+                request.ReflectionPrompts,
+                request.LeaderGuideNotes),
+            cancellationToken);
+        return NoContent();
+    }
+
+    [HttpPost("reorder")]
+    public async Task<IActionResult> Reorder(
+        [FromBody] ReorderLessonsRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(
+            new ReorderLessonsCommand(request.ModuleId, request.OrderedLessonIds),
+            cancellationToken);
+        return NoContent();
+    }
+
+    [HttpPost("{id:guid}/media")]
+    [RequestSizeLimit(LessonMediaUploadPolicy.MaxBytes + 65536)]
+    public async Task<ActionResult<LessonMediaResult>> AddMedia(
+        Guid id,
+        IFormFile file,
+        CancellationToken cancellationToken)
+    {
+        await using var stream = new MemoryStream();
+        await file.CopyToAsync(stream, cancellationToken);
+        var result = await _mediator.Send(
+            new StoreLessonMediaCommand(
+                id,
+                file.FileName,
+                file.ContentType.ToLowerInvariant(),
+                stream.ToArray()),
+            cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpDelete("{lessonId:guid}/media/{mediaId:guid}")]
+    public async Task<IActionResult> RemoveMedia(
+        Guid lessonId,
+        Guid mediaId,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new DeleteLessonMediaCommand(lessonId, mediaId), cancellationToken);
+        return NoContent();
+    }
+
     [HttpPost("{id:guid}/publish")]
     public async Task<IActionResult> Publish(
         Guid id, [FromBody] PublishRequest request, CancellationToken cancellationToken)

@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Authentication.Auth;
@@ -485,6 +486,99 @@ public sealed class CurriculumTests : IntegrationTestBase
             new { textSize = "small", bookmarked = true, position = 1 },
             seed.YouthToken);
         Assert.That(crossTrackState.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+    }
+
+    [Test]
+    [Property("Req", "L2-CURRIC-005")]
+    [Property("Req", "L2-LEARN-002")]
+    public async Task Completing_the_last_lesson_awards_targeted_lesson_and_module_badges_once_with_notifications()
+    {
+        // Traces to: L2-CURRIC-005 AC2-AC3; L2-LEARN-002 AC3
+        var seed = await SeedTrackAndYouthAsync();
+        Guid finalLessonId;
+        Guid lessonBadgeId;
+        Guid moduleBadgeId;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var module = new Module
+            {
+                TrackId = seed.TrackId,
+                Name = "Award module",
+                Order = 3,
+                Status = PublishStatus.Published,
+            };
+            var lesson = new Lesson
+            {
+                ModuleId = module.Id,
+                Title = "Award lesson",
+                Order = 1,
+                Status = PublishStatus.Published,
+            };
+            var lessonBadge = new Badge
+            {
+                Name = "Lesson Finisher",
+                Icon = "book-open",
+                CriteriaKind = BadgeCriteriaKind.Auto,
+                AutoRule = "lesson-completed",
+                TargetRefId = lesson.Id,
+            };
+            var moduleBadge = new Badge
+            {
+                Name = "Module Finisher",
+                Icon = "award",
+                CriteriaKind = BadgeCriteriaKind.Auto,
+                AutoRule = "module-completed",
+                TargetRefId = module.Id,
+            };
+            db.Modules.Add(module);
+            db.Lessons.Add(lesson);
+            db.Badges.AddRange(lessonBadge, moduleBadge);
+            await db.SaveChangesAsync();
+            finalLessonId = lesson.Id;
+            lessonBadgeId = lessonBadge.Id;
+            moduleBadgeId = moduleBadge.Id;
+        }
+
+        var first = await SendAsync(
+            HttpMethod.Post,
+            $"/api/me/lessons/{finalLessonId}/complete",
+            null,
+            seed.YouthToken);
+        var repeated = await SendAsync(
+            HttpMethod.Post,
+            $"/api/me/lessons/{finalLessonId}/complete",
+            null,
+            seed.YouthToken);
+        Assert.Multiple(() =>
+        {
+            Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+            Assert.That(repeated.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+        });
+
+        using var verifyScope = Factory.Services.CreateScope();
+        var verifyDb = verifyScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var expectedBadgeIds = new List<Guid> { lessonBadgeId, moduleBadgeId };
+        var awards = await verifyDb.BadgeAwards
+            .Where(item => item.YouthUserId == seed.YouthId && expectedBadgeIds.Contains(item.BadgeId))
+            .ToListAsync();
+        var notifications = await verifyDb.Notifications
+            .Where(item => item.UserId == seed.YouthId && item.EventKey == "badge-earned")
+            .ToListAsync();
+        var liveNotifications = Factory.Changes.Changes
+            .Where(item => item.Audience == "user"
+                && item.AudienceId == seed.YouthId
+                && item.EventName == "notification")
+            .ToList();
+        Assert.Multiple(() =>
+        {
+            Assert.That(awards.Select(item => item.BadgeId), Is.EquivalentTo(expectedBadgeIds));
+            Assert.That(awards, Has.Count.EqualTo(2), "each definition is awarded at most once");
+            Assert.That(notifications, Has.Count.EqualTo(2), "each new award creates one durable notification");
+            Assert.That(notifications.Select(item => item.Title),
+                Is.EquivalentTo(new[] { "Badge earned: Lesson Finisher", "Badge earned: Module Finisher" }));
+            Assert.That(liveNotifications, Has.Count.EqualTo(2), "each durable notification is pushed live");
+        });
     }
 
     [Test]

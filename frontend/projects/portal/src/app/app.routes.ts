@@ -394,6 +394,30 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'tracks',
+        title: 'Curriculum builder · Word Up',
+        loadComponent: () =>
+          import('./features/admin/curriculum/curriculum-builder').then(
+            (module) => module.CurriculumBuilderPage,
+          ),
+      },
+      {
+        path: 'badges',
+        title: 'Badge builder · Word Up',
+        loadComponent: () =>
+          import('./features/admin/curriculum/badge-builder').then(
+            (module) => module.BadgeBuilderPage,
+          ),
+      },
+      {
+        path: 'progression',
+        title: 'Progression framework · Word Up',
+        loadComponent: () =>
+          import('./features/admin/curriculum/progression-builder').then(
+            (module) => module.ProgressionBuilderPage,
+          ),
+      },
+      {
         path: 'settings',
         title: 'Organization settings · Word Up',
         loadComponent: () =>

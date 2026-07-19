@@ -17,6 +17,7 @@ test('mentor assesses the full competency framework and youth progress gets the 
   const tracker = new MentorCompetencyPage(page);
   await expect(tracker.heading).toContainText(seeded.youthName);
   await expect(tracker.summary).toContainText('1 of 2');
+  await expect(tracker.summary).toContainText(/Current stage.+\d+%/s);
   await expect(tracker.level(seeded.mentorCompetencyName)).toHaveValue('NotStarted');
   await tracker.level(seeded.mentorCompetencyName).selectOption('Proficient');
   await tracker

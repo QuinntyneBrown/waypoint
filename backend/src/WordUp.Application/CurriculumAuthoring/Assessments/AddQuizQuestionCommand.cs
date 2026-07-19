@@ -7,4 +7,5 @@ public record AddQuizQuestionCommand(
     string Text,
     QuestionType Type,
     IReadOnlyList<string> Options,
-    IReadOnlyList<int> CorrectIndexes) : IRequest<QuestionResult>;
+    IReadOnlyList<int> CorrectIndexes,
+    IReadOnlyList<string> CorrectAnswers) : IRequest<QuestionResult>;

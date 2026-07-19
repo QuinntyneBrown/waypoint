@@ -25,7 +25,7 @@ interface CompetencyDraft {
   styles: `
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--wu-s4);
     }
     .summary-value {
@@ -45,12 +45,8 @@ interface CompetencyDraft {
       min-height: 44px;
     }
     @media (max-width: 48rem) {
+      .summary-grid,
       .competency-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 28rem) {
-      .summary-grid {
         grid-template-columns: 1fr;
       }
     }

@@ -14,5 +14,6 @@ public class Assignment
     public bool AllowLate { get; set; }
     public bool RequireMentorApproval { get; set; }
     public int TotalPoints { get; set; }
+    public PublishStatus Status { get; set; } = PublishStatus.Draft;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

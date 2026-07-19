@@ -31,4 +31,23 @@ public class TracksController : ControllerBase
         var result = await _mediator.Send(new ListTracksQuery(), cancellationToken);
         return Ok(result);
     }
+
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<TrackWorkspaceView>> Get(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetTrackWorkspaceQuery(id), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPost("{id:guid}/publish")]
+    public async Task<IActionResult> Publish(
+        Guid id,
+        [FromBody] PublishRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new PublishTrackCommand(id, request.Status), cancellationToken);
+        return NoContent();
+    }
 }

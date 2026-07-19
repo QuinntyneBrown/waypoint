@@ -55,7 +55,7 @@ public class QuizResultQueryHandler : IRequestHandler<QuizResultQuery, QuizResul
         }
 
         var approved = attempt.ApprovedScore.Value;
-        var answers = QuizAnswerScoring.ParseAnswers(attempt.AnswersJson);
+        var answerValues = QuizAnswerScoring.ParseAnswerValues(attempt.AnswersJson);
         var revealFeedback = quiz.FeedbackMode == "show-correct"
             || (quiz.FeedbackMode == "after-all-attempts" && attemptsRemaining == 0);
         IReadOnlyList<QuizQuestionReview> review = Array.Empty<QuizQuestionReview>();
@@ -67,8 +67,8 @@ public class QuizResultQueryHandler : IRequestHandler<QuizResultQuery, QuizResul
                 .ToListAsync(cancellationToken);
             review = questions.Select(question =>
             {
-                var selected = answers.TryGetValue(question.Id, out var value)
-                    ? value.OrderBy(index => index).ToList()
+                var selected = answerValues.TryGetValue(question.Id, out var value)
+                    ? value.Indexes.OrderBy(index => index).ToList()
                     : new List<int>();
                 var correct = QuizAnswerScoring.ParseIntSet(question.CorrectAnswersJson)
                     .OrderBy(index => index)
@@ -79,7 +79,7 @@ public class QuizResultQueryHandler : IRequestHandler<QuizResultQuery, QuizResul
                     QuizAnswerScoring.ParseOptions(question.OptionsJson),
                     selected,
                     correct,
-                    selected.SequenceEqual(correct));
+                    QuizAnswerScoring.IsCorrect(question, value));
             }).ToList();
         }
 

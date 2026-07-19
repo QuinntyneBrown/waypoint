@@ -73,6 +73,7 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
         var normalizedScores = scores.Count == 0 ? null : JsonSerializer.Serialize(scores);
         int? computedTotal = scores.Count == 0 ? null : scores.Values.Sum();
         var now = _clock.UtcNow;
+        var badgeNotifications = new List<Notification>();
 
         switch (request.Decision)
         {
@@ -108,6 +109,19 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
                             AwardedByUserId = _currentUser.UserId,
                             AwardedAt = now,
                         });
+                        var badgeNotification = new Notification
+                        {
+                            UserId = youth.Id,
+                            EventKey = "badge-earned",
+                            Title = $"Badge earned: {badge.Name}",
+                            Body = string.IsNullOrWhiteSpace(badge.Description)
+                                ? "You earned a new badge."
+                                : badge.Description,
+                            LinkPath = "/youth/journey",
+                            CreatedAt = now,
+                        };
+                        _db.Notifications.Add(badgeNotification);
+                        badgeNotifications.Add(badgeNotification);
                     }
                 }
                 break;
@@ -175,7 +189,7 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
 
             _db.Notifications.AddRange(notifications);
             await _db.SaveChangesAsync(cancellationToken);
-            foreach (var notification in notifications)
+            foreach (var notification in badgeNotifications.Concat(notifications))
             {
                 await _publisher.PublishToUserAsync(
                     notification.UserId,

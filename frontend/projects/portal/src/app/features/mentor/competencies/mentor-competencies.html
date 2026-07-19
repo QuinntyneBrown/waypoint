@@ -31,6 +31,11 @@
             <p class="wu-muted">Framework coverage</p>
             <p class="summary-value">{{ view.total }} competencies</p>
           </div>
+          <div>
+            <p class="wu-muted">Current stage</p>
+            <p class="summary-value">{{ view.currentStageName ?? 'Not configured' }}</p>
+            <p class="wu-muted">{{ view.currentStageProgress }}% complete</p>
+          </div>
         </div>
       </section>
 

@@ -36,7 +36,7 @@ public class SetCompetencyLevelCommandHandler : IRequestHandler<SetCompetencyLev
         }
 
         var competencyExists = await _db.Competencies
-            .AnyAsync(c => c.Id == request.CompetencyId, cancellationToken);
+            .AnyAsync(c => c.Id == request.CompetencyId && c.ArchivedAt == null, cancellationToken);
         if (!competencyExists)
         {
             throw new NotFoundException("Competency not found.");

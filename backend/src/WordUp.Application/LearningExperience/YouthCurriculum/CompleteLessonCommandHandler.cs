@@ -107,7 +107,7 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
 
         await _db.SaveChangesAsync(cancellationToken);
 
-        await AwardLessonCompletedBadgesAsync(lesson.Id, youthId, now, cancellationToken);
+        await AwardCompletionBadgesAsync(lesson, module, youthId, now, cancellationToken);
 
         await _audit.LogAsync("LessonCompleted", youthId, "Lesson", lesson.Id, cancellationToken: cancellationToken);
         var cohortId = await _db.Users
@@ -133,12 +133,6 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
             .Select(l => l.Id)
             .ToListAsync(ct);
 
-        // A module with no published lessons is treated as complete.
-        if (lessonIds.Count == 0)
-        {
-            return true;
-        }
-
         var completed = await _db.LessonProgress
             .Where(p => p.YouthUserId == youthId
                 && lessonIds.Contains(p.LessonId)
@@ -146,32 +140,66 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
             .Select(p => p.LessonId)
             .ToListAsync(ct);
 
-        return completed.Distinct().Count() >= lessonIds.Count;
+        if (completed.Distinct().Count() < lessonIds.Count)
+        {
+            return false;
+        }
+
+        var requiredQuizzes = await _db.Quizzes
+            .Where(item => item.ModuleId == moduleId && item.RequiredToCompleteModule)
+            .Select(item => new { item.Id, item.PassMark })
+            .ToListAsync(ct);
+        if (requiredQuizzes.Count == 0)
+        {
+            return true;
+        }
+
+        var requiredQuizIds = requiredQuizzes.Select(item => item.Id).ToList();
+        var approvedAttempts = await _db.QuizAttempts
+            .Where(item => item.YouthUserId == youthId
+                && requiredQuizIds.Contains(item.QuizId)
+                && item.IsSubmitted
+                && item.ApprovedScore != null)
+            .Select(item => new { item.QuizId, Score = item.ApprovedScore!.Value })
+            .ToListAsync(ct);
+        return requiredQuizzes.All(quiz =>
+            approvedAttempts.Any(attempt => attempt.QuizId == quiz.Id && attempt.Score >= quiz.PassMark));
     }
 
-    private async Task AwardLessonCompletedBadgesAsync(Guid lessonId, Guid youthId, DateTime now, CancellationToken ct)
+    private async Task AwardCompletionBadgesAsync(
+        Lesson lesson,
+        Module module,
+        Guid youthId,
+        DateTime now,
+        CancellationToken ct)
     {
         var badges = await _db.Badges
             .Where(b => b.AutoRule == "lesson-completed"
                 && b.ArchivedAt == null
-                && (b.TargetRefId == lessonId || b.TargetRefId == null))
+                && (b.TargetRefId == lesson.Id || b.TargetRefId == null))
             .ToListAsync(ct);
+        if (await ModuleCompleteAsync(module.Id, youthId, ct))
+        {
+            badges.AddRange(await _db.Badges
+                .Where(item => item.AutoRule == "module-completed"
+                    && item.ArchivedAt == null
+                    && item.TargetRefId == module.Id)
+                .ToListAsync(ct));
+        }
 
         if (badges.Count == 0)
         {
             return;
         }
 
-        var awarded = false;
-        foreach (var badge in badges)
+        var badgeIds = badges.Select(item => item.Id).Distinct().ToList();
+        var earnedBadgeIds = await _db.BadgeAwards
+            .Where(item => item.YouthUserId == youthId && badgeIds.Contains(item.BadgeId))
+            .Select(item => item.BadgeId)
+            .ToListAsync(ct);
+        var notifications = new List<Notification>();
+        foreach (var badge in badges.Where(item => !earnedBadgeIds.Contains(item.Id)))
         {
-            var already = await _db.BadgeAwards
-                .AnyAsync(a => a.BadgeId == badge.Id && a.YouthUserId == youthId, ct);
-            if (already)
-            {
-                continue;
-            }
-
             _db.BadgeAwards.Add(new BadgeAward
             {
                 BadgeId = badge.Id,
@@ -179,12 +207,42 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
                 AwardedByUserId = null,
                 AwardedAt = now,
             });
-            awarded = true;
+            var notification = new Notification
+            {
+                UserId = youthId,
+                EventKey = "badge-earned",
+                Title = $"Badge earned: {badge.Name}",
+                Body = string.IsNullOrWhiteSpace(badge.Description)
+                    ? "You earned a new badge."
+                    : badge.Description,
+                LinkPath = "/youth/journey",
+                CreatedAt = now,
+            };
+            _db.Notifications.Add(notification);
+            notifications.Add(notification);
         }
 
-        if (awarded)
+        if (notifications.Count == 0)
         {
-            await _db.SaveChangesAsync(ct);
+            return;
+        }
+
+        await _db.SaveChangesAsync(ct);
+        foreach (var notification in notifications)
+        {
+            await _publisher.PublishToUserAsync(
+                notification.UserId,
+                "notification",
+                new
+                {
+                    id = notification.Id,
+                    eventKey = notification.EventKey,
+                    title = notification.Title,
+                    body = notification.Body,
+                    linkPath = notification.LinkPath,
+                    createdAt = notification.CreatedAt,
+                },
+                ct);
         }
     }
 }

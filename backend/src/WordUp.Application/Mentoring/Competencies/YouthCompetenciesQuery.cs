@@ -7,6 +7,8 @@ public record YouthCompetenciesQuery(Guid YouthId) : IRequest<CompetencySummary>
 public record CompetencySummary(
     Guid YouthId,
     string YouthName,
+    string? CurrentStageName,
+    int CurrentStageProgress,
     IReadOnlyList<CompetencyLevelDto> Items,
     int MasteredOrProficient,
     int Total);

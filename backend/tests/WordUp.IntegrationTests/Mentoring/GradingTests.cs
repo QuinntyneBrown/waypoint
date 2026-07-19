@@ -247,6 +247,7 @@ public sealed class GradingTests : IntegrationTestBase
     }
 
     [Test]
+    [Property("Req", "L2-CURRIC-005")]
     [Property("Req", "L2-MENTOR-003")]
     public async Task Assigned_mentor_approves_but_an_unassigned_mentor_is_forbidden()
     {
@@ -268,7 +269,10 @@ public sealed class GradingTests : IntegrationTestBase
                 guardianNotified = false,
             },
             mentorToken);
-        Assert.That(grade.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+        Assert.That(
+            grade.StatusCode,
+            Is.EqualTo(HttpStatusCode.NoContent),
+            Factory.ExceptionAlerts.Alerts.LastOrDefault()?.Exception.ToString());
 
         var status = await GetAsync($"/api/me/submissions/{submission.Id}", youthToken);
         var view = await status.Content.ReadFromJsonAsync<SubmissionStatusDto>();
@@ -299,6 +303,13 @@ public sealed class GradingTests : IntegrationTestBase
                 "the guardian opted out of this outcome notification");
             Assert.That(await db.BadgeAwards.CountAsync(item =>
                 item.YouthUserId == youthId), Is.EqualTo(1));
+            Assert.That(await db.Notifications.CountAsync(item =>
+                item.UserId == youthId && item.EventKey == "badge-earned"), Is.EqualTo(1));
+            Assert.That(Factory.Changes.Changes.Count(item =>
+                item.Audience == "user"
+                && item.AudienceId == youthId
+                && item.EventName == "notification"
+                && JsonSerializer.Serialize(item.Payload).Contains("badge-earned")), Is.EqualTo(1));
         }
 
         // Traces to: L2-MENTOR-003 AC5 (a mentor not assigned to this youth cannot grade -> 403)
@@ -368,17 +379,39 @@ public sealed class GradingTests : IntegrationTestBase
     }
 
     [Test]
+    [Property("Req", "L2-CURRIC-005")]
     [Property("Req", "L2-MENTOR-004")]
     [Property("Req", "L2-LEARN-005")]
     public async Task Approving_a_passing_quiz_attempt_records_the_score_and_awards_the_quiz_badge()
     {
         var (_, mentorToken, youthId, _) = await SeedMentorAndYouthAsync();
 
-        Guid attemptId, badgeId;
+        Guid attemptId, badgeId, moduleBadgeId;
         using (var scope = Factory.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            var quiz = new Quiz { PassMark = 70, AttemptsAllowed = 2 };
+            var track = new Track
+            {
+                Name = "Quiz Track",
+                Key = $"quiz-{Guid.NewGuid():N}",
+                Status = PublishStatus.Published,
+            };
+            var module = new Module
+            {
+                TrackId = track.Id,
+                Name = "Quiz Module",
+                Order = 1,
+                Status = PublishStatus.Published,
+            };
+            var quiz = new Quiz
+            {
+                ModuleId = module.Id,
+                PassMark = 70,
+                AttemptsAllowed = 2,
+                RequiredToCompleteModule = true,
+            };
+            db.Tracks.Add(track);
+            db.Modules.Add(module);
             db.Quizzes.Add(quiz);
             var attempt = new QuizAttempt
             {
@@ -399,10 +432,19 @@ public sealed class GradingTests : IntegrationTestBase
                 AutoRule = "quiz-passed",
                 TargetRefId = quiz.Id,
             };
-            db.Badges.Add(badge);
+            var moduleBadge = new Badge
+            {
+                Name = "Quiz Module Finisher",
+                Icon = "award",
+                CriteriaKind = BadgeCriteriaKind.Auto,
+                AutoRule = "module-completed",
+                TargetRefId = module.Id,
+            };
+            db.Badges.AddRange(badge, moduleBadge);
             await db.SaveChangesAsync();
             attemptId = attempt.Id;
             badgeId = badge.Id;
+            moduleBadgeId = moduleBadge.Id;
         }
 
         // Traces to: L2-MENTOR-004 (mentor approves the attempt)
@@ -417,9 +459,25 @@ public sealed class GradingTests : IntegrationTestBase
             Assert.That(attempt.ApprovedScore, Is.EqualTo(80));
             Assert.That(attempt.ApprovedAt, Is.Not.Null);
 
-            var awarded = await db.BadgeAwards
-                .AnyAsync(a => a.BadgeId == badgeId && a.YouthUserId == youthId);
-            Assert.That(awarded, Is.True, "a quiz-passed badge should have been awarded");
+            var expectedBadgeIds = new List<Guid> { badgeId, moduleBadgeId };
+            var awards = await db.BadgeAwards
+                .Where(item => item.YouthUserId == youthId && expectedBadgeIds.Contains(item.BadgeId))
+                .Select(item => item.BadgeId)
+                .ToListAsync();
+            var notifications = await db.Notifications
+                .CountAsync(item => item.UserId == youthId && item.EventKey == "badge-earned");
+            var liveNotifications = Factory.Changes.Changes.Count(item =>
+                item.Audience == "user"
+                && item.AudienceId == youthId
+                && item.EventName == "notification");
+            Assert.Multiple(() =>
+            {
+                Assert.That(awards, Is.EquivalentTo(expectedBadgeIds),
+                    "quiz approval awards both the quiz and newly completed module badges");
+                Assert.That(awards, Has.Count.EqualTo(2), "each badge is awarded exactly once");
+                Assert.That(notifications, Is.EqualTo(2), "each badge creates one durable notification");
+                Assert.That(liveNotifications, Is.EqualTo(2), "each badge notification is pushed live");
+            });
         }
     }
 

@@ -24,20 +24,37 @@ public class ReorderModulesCommandHandler : IRequestHandler<ReorderModulesComman
             .Where(m => m.TrackId == request.TrackId)
             .ToListAsync(cancellationToken);
 
-        // Persist the caller's sequence as the new order (L2-CURRIC-001 AC3).
-        for (var i = 0; i < request.OrderedModuleIds.Count; i++)
+        var requestedIds = request.OrderedModuleIds?.ToList() ?? [];
+        if (requestedIds.Count != modules.Count
+            || requestedIds.Distinct().Count() != requestedIds.Count
+            || requestedIds.Except(modules.Select(item => item.Id)).Any())
         {
-            var module = modules.FirstOrDefault(m => m.Id == request.OrderedModuleIds[i]);
-            if (module is null)
-            {
-                throw new NotFoundException($"Module {request.OrderedModuleIds[i]} is not part of this track.");
-            }
+            throw new ConflictException("The module order must contain every module exactly once.");
+        }
+        var proposedOrder = requestedIds
+            .Select((id, index) => new { id, Order = index + 1 })
+            .ToDictionary(item => item.id, item => item.Order);
+        if (modules.Any(module => module.PrerequisiteModuleId is { } prerequisiteId
+                && (!proposedOrder.TryGetValue(prerequisiteId, out var prerequisiteOrder)
+                    || prerequisiteOrder >= proposedOrder[module.Id])))
+        {
+            throw new ConflictException("A prerequisite must remain before its dependent module.");
+        }
 
+        // Persist the caller's sequence as the new order (L2-CURRIC-001 AC3).
+        for (var i = 0; i < requestedIds.Count; i++)
+        {
+            var module = modules.First(m => m.Id == requestedIds[i]);
             module.Order = i + 1;
         }
 
         await _db.SaveChangesAsync(cancellationToken);
 
-        await _audit.LogAsync("ModulesReordered", _currentUser.UserId, "Track", request.TrackId);
+        await _audit.LogAsync(
+            "ModulesReordered",
+            _currentUser.UserId,
+            "Track",
+            request.TrackId,
+            cancellationToken: cancellationToken);
     }
 }

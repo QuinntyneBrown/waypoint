@@ -1,0 +1,211 @@
+<wu-shell
+  role="admin"
+  active="badges"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <main class="wu-container wu-page">
+    <header class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Program administration</div>
+        <h1 class="wu-page__title">Badge builder</h1>
+        <p class="wu-page__sub">
+          Define automatic milestones and manual recognition that mentors can award.
+        </p>
+      </div>
+    </header>
+
+    @if (errorMessage(); as error) {
+      <div class="wu-alert wu-alert--error" role="alert">
+        <span>{{ error }}</span>
+        <button class="wu-btn wu-btn--secondary" type="button" (click)="retry()">Retry</button>
+      </div>
+    }
+    @if (outcome(); as message) {
+      <p class="wu-alert wu-alert--success" data-testid="badge-outcome" role="status">
+        {{ message }}
+      </p>
+    }
+
+    <section class="wu-card wu-mb-5">
+      <form class="wu-card__body admin-form" [formGroup]="form" (ngSubmit)="saveBadge()">
+        <div class="admin-form__wide">
+          <h2>New badge definition</h2>
+          <p class="wu-muted">Archived badges remain on youth records but stop earning.</p>
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="badge-name">Badge name</label>
+          <input class="wu-input" id="badge-name" formControlName="name" />
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="badge-icon">Badge icon</label>
+          <input class="wu-input" id="badge-icon" formControlName="icon" />
+        </div>
+        <div class="wu-field">
+          <label class="wu-label" for="criteria-kind">Criteria kind</label>
+          <select
+            class="wu-select"
+            id="criteria-kind"
+            formControlName="criteriaKind"
+            (change)="criteriaChanged()"
+          >
+            <option value="Auto">Automatic</option>
+            <option value="Manual">Manual</option>
+          </select>
+        </div>
+        <div class="wu-field admin-form__wide">
+          <label class="wu-label" for="badge-description">Badge description</label>
+          <textarea
+            class="wu-textarea"
+            id="badge-description"
+            rows="3"
+            formControlName="description"
+          ></textarea>
+        </div>
+        @if (form.controls.criteriaKind.value === 'Auto') {
+          <div class="wu-field">
+            <label class="wu-label" for="automatic-rule">Automatic rule</label>
+            <select
+              class="wu-select"
+              id="automatic-rule"
+              formControlName="autoRule"
+              (change)="ruleChanged()"
+            >
+              <option value="module-completed">Module completed</option>
+              <option value="lesson-completed">Lesson completed</option>
+              <option value="quiz-passed">Quiz passed</option>
+              <option value="assignment-approved">Assignment approved</option>
+              <option value="attendance-streak">Five-session attendance streak</option>
+            </select>
+          </div>
+          @if (form.controls.autoRule.value !== 'attendance-streak') {
+            <div class="wu-field">
+              <label class="wu-label" for="rule-target">Rule target</label>
+              <select class="wu-select" id="rule-target" formControlName="targetRefId">
+                <option value="">Choose a curriculum item</option>
+                @for (target of targets(); track target.id) {
+                  <option [value]="target.id">{{ target.label }}</option>
+                }
+              </select>
+            </div>
+          }
+        }
+        <div class="wu-field">
+          <label class="wu-label" for="mapped-competency">Mapped competency</label>
+          <select class="wu-select" id="mapped-competency" formControlName="competencyId">
+            <option value="">No competency mapping</option>
+            @for (stage of stages(); track stage.id) {
+              <optgroup [label]="stage.name">
+                @for (competency of stage.competencies; track competency.id) {
+                  <option [value]="competency.id">{{ competency.name }}</option>
+                }
+              </optgroup>
+            }
+          </select>
+        </div>
+        <div class="admin-form__wide">
+          <button class="wu-btn wu-btn--primary" type="submit" [disabled]="busy()">
+            Save badge
+          </button>
+        </div>
+      </form>
+    </section>
+
+    @if (loading()) {
+      <p class="wu-muted" role="status">Loading badge definitions…</p>
+    } @else {
+      <section class="card-grid" aria-label="Badge definitions">
+        @for (badge of badges(); track badge.id) {
+          <article
+            class="wu-card admin-card"
+            data-testid="badge-definition"
+            [attr.data-badge-id]="badge.id"
+          >
+            <div class="wu-card__body wu-stack">
+              <header class="card-head">
+                <div>
+                  <p class="wu-eyebrow">{{ badge.criteriaKind }}</p>
+                  <h2>{{ badge.name }}</h2>
+                </div>
+                <span class="badge-icon" aria-hidden="true">{{ badge.icon }}</span>
+              </header>
+              @if (badge.description) {
+                <p>{{ badge.description }}</p>
+              }
+              <dl class="definition-list">
+                @if (badge.autoRule) {
+                  <div>
+                    <dt>Rule</dt>
+                    <dd>{{ badge.autoRule }}</dd>
+                  </div>
+                }
+                @if (badge.competencyName) {
+                  <div>
+                    <dt>Competency</dt>
+                    <dd>{{ badge.competencyName }}</dd>
+                  </div>
+                }
+                <div>
+                  <dt>Awards</dt>
+                  <dd>{{ badge.awardedCount }}</dd>
+                </div>
+              </dl>
+              <div class="wu-actions card-actions">
+                @if (badge.criteriaKind === 'Manual') {
+                  <button class="wu-btn wu-btn--primary" type="button" (click)="openAward(badge)">
+                    Award badge
+                  </button>
+                }
+                <button
+                  class="wu-btn wu-btn--danger"
+                  type="button"
+                  [disabled]="busy()"
+                  (click)="archive(badge)"
+                >
+                  Archive badge
+                </button>
+              </div>
+            </div>
+          </article>
+        } @empty {
+          <section class="wu-empty">
+            <h2 class="wu-empty__title">No active badges</h2>
+            <p class="wu-empty__text">Create the first badge definition above.</p>
+          </section>
+        }
+      </section>
+    }
+  </main>
+
+  @if (awardBadge(); as badge) {
+    <div class="dialog-backdrop">
+      <section
+        class="dialog-panel"
+        role="dialog"
+        aria-modal="true"
+        [attr.aria-label]="'Award ' + badge.name"
+      >
+        <h2>Award {{ badge.name }}</h2>
+        <form class="wu-stack" [formGroup]="awardForm" (ngSubmit)="confirmAward()">
+          <div class="wu-field">
+            <label class="wu-label" for="youth-recipient">Youth recipient</label>
+            <select class="wu-select" id="youth-recipient" formControlName="youthUserId">
+              <option value="">Choose a youth</option>
+              @for (person of youth(); track person.id) {
+                <option [value]="person.id">{{ person.displayName }}</option>
+              }
+            </select>
+          </div>
+          <div class="wu-actions">
+            <button class="wu-btn wu-btn--primary" type="submit" [disabled]="busy()">
+              Confirm award
+            </button>
+            <button class="wu-btn wu-btn--ghost" type="button" (click)="awardBadge.set(null)">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  }
+</wu-shell>

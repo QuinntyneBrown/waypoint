@@ -59,15 +59,15 @@ public sealed class QuizAssessmentReviewQueryHandler
                 ?? quizTitle;
         }
 
-        var answers = QuizAnswerScoring.ParseAnswers(attempt.AnswersJson);
+        var answerValues = QuizAnswerScoring.ParseAnswerValues(attempt.AnswersJson);
         var questions = await _db.QuizQuestions
             .Where(item => item.QuizId == quiz.Id)
             .OrderBy(item => item.Order)
             .ToListAsync(cancellationToken);
         var questionViews = questions.Select(question =>
         {
-            var selected = answers.TryGetValue(question.Id, out var selectedSet)
-                ? selectedSet.OrderBy(index => index).ToList()
+            var selected = answerValues.TryGetValue(question.Id, out var selectedAnswer)
+                ? selectedAnswer.Indexes.OrderBy(index => index).ToList()
                 : new List<int>();
             var correct = QuizAnswerScoring.ParseIntSet(question.CorrectAnswersJson)
                 .OrderBy(index => index)
@@ -78,7 +78,7 @@ public sealed class QuizAssessmentReviewQueryHandler
                 QuizAnswerScoring.ParseOptions(question.OptionsJson),
                 selected,
                 correct,
-                selected.SequenceEqual(correct));
+                QuizAnswerScoring.IsCorrect(question, selectedAnswer));
         }).ToList();
         string? approvedByName = null;
         if (attempt.ApprovedByUserId is Guid approverId)

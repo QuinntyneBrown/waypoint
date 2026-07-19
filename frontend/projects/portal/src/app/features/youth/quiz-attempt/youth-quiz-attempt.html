@@ -15,7 +15,9 @@
     @if (attempt(); as view) {
       <div class="wu-page__head">
         <div class="wu-page__titles">
-          <div class="wu-eyebrow">Attempt {{ view.attemptNumber }} of {{ view.attemptsAllowed }}</div>
+          <div class="wu-eyebrow">
+            Attempt {{ view.attemptNumber }} of {{ view.attemptsAllowed }}
+          </div>
           <h1 class="wu-page__title">{{ view.title }}</h1>
           <p class="wu-page__sub" data-testid="quiz-progress">
             Question {{ currentIndex() + 1 }} of {{ view.questionCount }}
@@ -28,24 +30,42 @@
           <div class="wu-card__body wu-stack">
             <h2 class="wu-card__title">{{ question.text }}</h2>
             <div class="wu-stack">
-              @for (option of question.options; track $index) {
-                <label class="quiz-option">
-                  @if (question.type === 'MultipleAnswer') {
-                    <input
-                      type="checkbox"
-                      [checked]="isSelected(question.id, $index)"
-                      (change)="choose(question, $index, $any($event.target).checked)"
-                    />
-                  } @else {
-                    <input
-                      type="radio"
-                      [name]="question.id"
-                      [checked]="isSelected(question.id, $index)"
-                      (change)="choose(question, $index, true)"
-                    />
-                  }
-                  <span>{{ option }}</span>
-                </label>
+              @if (question.type === 'ShortAnswer') {
+                <div class="wu-field">
+                  <label class="wu-label" [for]="'short-answer-' + question.id">
+                    Your answer
+                  </label>
+                  <input
+                    class="wu-input"
+                    [id]="'short-answer-' + question.id"
+                    type="text"
+                    maxlength="1000"
+                    autocomplete="off"
+                    [value]="textAnswer(question.id)"
+                    (change)="writeText(question.id, $any($event.target).value)"
+                  />
+                  <p class="wu-help">Your answer saves when you leave this field.</p>
+                </div>
+              } @else {
+                @for (option of question.options; track $index) {
+                  <label class="quiz-option">
+                    @if (question.type === 'MultipleAnswer') {
+                      <input
+                        type="checkbox"
+                        [checked]="isSelected(question.id, $index)"
+                        (change)="choose(question, $index, $any($event.target).checked)"
+                      />
+                    } @else {
+                      <input
+                        type="radio"
+                        [name]="question.id"
+                        [checked]="isSelected(question.id, $index)"
+                        (change)="choose(question, $index, true)"
+                      />
+                    }
+                    <span>{{ option }}</span>
+                  </label>
+                }
               }
             </div>
           </div>
@@ -70,7 +90,9 @@
             <button
               class="wu-btn wu-btn--primary"
               type="button"
-              [disabled]="!answered(question.id) || submitting() || saveStatus() === 'Saving answer…'"
+              [disabled]="
+                !answered(question.id) || submitting() || saveStatus() === 'Saving answer…'
+              "
               (click)="submit()"
             >
               Submit quiz

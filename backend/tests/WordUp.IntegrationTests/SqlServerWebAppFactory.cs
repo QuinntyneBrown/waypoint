@@ -39,6 +39,8 @@ public sealed class SqlServerWebAppFactory : WebApplicationFactory<Program>
     public CapturingEmailSender Emails => Services.GetRequiredService<CapturingEmailSender>();
     public CapturingExceptionAlertSink ExceptionAlerts =>
         Services.GetRequiredService<CapturingExceptionAlertSink>();
+    public CapturingChangePublisher Changes =>
+        Services.GetRequiredService<CapturingChangePublisher>();
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -68,6 +70,10 @@ public sealed class SqlServerWebAppFactory : WebApplicationFactory<Program>
             services.AddSingleton<CapturingExceptionAlertSink>();
             services.AddSingleton<IExceptionAlertSink>(sp =>
                 sp.GetRequiredService<CapturingExceptionAlertSink>());
+            services.RemoveAll<IChangePublisher>();
+            services.AddSingleton<CapturingChangePublisher>();
+            services.AddSingleton<IChangePublisher>(sp =>
+                sp.GetRequiredService<CapturingChangePublisher>());
         });
     }
 }
