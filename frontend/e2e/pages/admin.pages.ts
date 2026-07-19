@@ -683,6 +683,12 @@ export class AdminReportsPage extends BasePage {
   get recordCount() {
     return this.page.getByTestId('report-record-count');
   }
+  get exportCsv() {
+    return this.page.getByRole('button', { name: 'Export current report as CSV', exact: true });
+  }
+  get exportPdf() {
+    return this.page.getByRole('button', { name: 'Export current report as PDF', exact: true });
+  }
   get overviewTab() {
     return this.page.getByRole('tab', { name: 'Overview', exact: true });
   }

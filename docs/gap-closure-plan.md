@@ -223,8 +223,10 @@ requirement conflicts early (they gate "done").
       charts with authoritative timestamps and record counts. Detailed youth and cohort reports add
       curriculum, quiz, competency, attendance, badge, mentor-summary, status, retention, and
       comparison views; empty data, global error recovery, and mentor ownership boundaries are tested.
-- [~] **G13** Data export (PDF + targets) `L2-REPORT-003` — progress-board CSV/PDF exports use the
-      selected cohort and track and are audited; the remaining export targets still need delivery.
+- [x] **G13** Data export (PDF + targets) `L2-REPORT-003` — overview, youth, cohort, staff,
+      attendance, progress-board, and audit-log exports now provide real CSV/PDF files using the
+      active filters and authoritative role/resource scope. Every export is audited, PDF output is
+      valid, and formula-like CSV values are neutralized before spreadsheet delivery.
 - [ ] **G14** Roster import UI `L2-REPORT-004`
 - [ ] **G15** Audit log UI `L2-CONSENT-003`
 
@@ -278,11 +280,11 @@ requirement conflicts early (they gate "done").
       server on reconnect without duplicates, and preserve server-authoritative read state.
 - [ ] **H15** Security audit coverage (denied actions, tamper-evidence) `L2-AUTH-009`, `L2-CONSENT-003`
 - [ ] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002`
-- [~] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004` —
+- [x] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004` —
       the standard organization, youth, cohort, attendance, and staff views now share date/cohort/
       track/mentor filters, KPIs, named activity details, counts/timestamps, status and retention,
-      program/selected/previous comparisons, and mentor scope. Attendance and progress-board exports
-      already preserve their active filters; the remaining report export targets and PDF output remain.
+      program/selected/previous comparisons, and mentor scope. All standard reports plus attendance,
+      progress-board, and audit-log data export through filtered, authorized, audited CSV/PDF files.
 - [ ] **H18** Data-subject fulfillment + retention/anonymization `L2-NFR-003`
 - [ ] **H19** Unsaved-change framework `L2-NFR-007`
 - [ ] **H20** Logging/alerting (correlation ids, PII redaction) `L2-PLATFORM-008`, `L2-NFR-011`
@@ -530,3 +532,11 @@ requirement conflicts early (they gate "done").
   Mentor endpoints remain limited to assigned youth and cohorts; true empty data, shared 500 recovery,
   and mobile reflow are covered. Nine reporting integrations, six portal units, the production build,
   and three desktop/mobile browser scenarios pass.
+- 2026-07-18 — G13 and H17 done: the reports hub exports its current overview, generated youth,
+  generated cohort, or staff view as a real CSV or valid PDF while preserving date/cohort/track/mentor
+  scope and comparison selection. Mentor downloads reuse the same youth/cohort ownership checks, the
+  legacy cohort path now rejects cross-mentor access, and audit-log CSV/PDF downloads apply actor,
+  action, and date filters with private details redacted. Attendance and progress exports now join all
+  new targets in writing durable filter-aware audit records; the shared CSV boundary neutralizes
+  formula-like cells. Twenty-one adjacent backend integrations, six portal units, the production
+  build, and seven report/progress/attendance desktop/mobile browser scenarios pass.

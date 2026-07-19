@@ -2,6 +2,7 @@ using System.Text;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
+using WordUp.Application.Shared.Common;
 
 namespace WordUp.Application.ReportingAndData.DataTransfer;
 
@@ -24,6 +25,20 @@ public class ExportCohortReportQueryHandler : IRequestHandler<ExportCohortReport
 
     public async Task<CsvFile> Handle(ExportCohortReportQuery request, CancellationToken cancellationToken)
     {
+        if (_currentUser.Role == Roles.Mentor)
+        {
+            var allowed = await _db.Cohorts.AsNoTracking().AnyAsync(
+                    item => item.Id == request.CohortId && item.MentorId == _currentUser.UserId,
+                    cancellationToken)
+                || await _db.CohortMentors.AsNoTracking().AnyAsync(
+                    item => item.CohortId == request.CohortId && item.MentorId == _currentUser.UserId,
+                    cancellationToken)
+                || await _db.Users.AsNoTracking().AnyAsync(
+                    item => item.CohortId == request.CohortId && item.MentorId == _currentUser.UserId,
+                    cancellationToken);
+            if (!allowed) throw new ForbiddenException("This cohort is outside your scope.");
+        }
+
         var youth = await _db.Users
             .Where(u => u.CohortId == request.CohortId && u.Role == Roles.Youth)
             .OrderBy(u => u.DisplayName)

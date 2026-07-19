@@ -438,6 +438,15 @@ public sealed class CohortTests : IntegrationTestBase
         Assert.That(pdf.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var pdfBytes = await pdf.Content.ReadAsByteArrayAsync();
         Assert.That(System.Text.Encoding.ASCII.GetString(pdfBytes, 0, 8), Does.StartWith("%PDF-1.4"));
+
+        using var auditScope = Factory.Services.CreateScope();
+        var auditDb = auditScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.That(
+            auditDb.AuditEntries.Count(item =>
+                item.Action == "DataExported"
+                && item.TargetType == "CohortProgress"
+                && item.TargetId == cohortId),
+            Is.EqualTo(2));
     }
 
     private sealed record CohortResultDto(Guid Id);

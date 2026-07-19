@@ -2,6 +2,8 @@ using System.Globalization;
 using System.Text;
 using FluentValidation;
 using MediatR;
+using WordUp.Application.Shared.Abstractions;
+using ExportCsv = WordUp.Application.ReportingAndData.DataTransfer.Csv;
 
 namespace WordUp.Application.Engagement.Attendance;
 
@@ -21,8 +23,18 @@ public sealed class AttendanceExportQueryHandler
     : IRequestHandler<AttendanceExportQuery, AttendanceExportFile>
 {
     private readonly ISender _sender;
+    private readonly IAuditLogger _audit;
+    private readonly ICurrentUser _currentUser;
 
-    public AttendanceExportQueryHandler(ISender sender) => _sender = sender;
+    public AttendanceExportQueryHandler(
+        ISender sender,
+        IAuditLogger audit,
+        ICurrentUser currentUser)
+    {
+        _sender = sender;
+        _audit = audit;
+        _currentUser = currentUser;
+    }
 
     public async Task<AttendanceExportFile> Handle(
         AttendanceExportQuery request,
@@ -43,18 +55,29 @@ public sealed class AttendanceExportQueryHandler
             ? await SessionLinesAsync(request, cancellationToken)
             : await YouthLinesAsync(request, cancellationToken);
         var stamp = DateTime.UtcNow.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+        AttendanceExportFile file;
         if (format == "csv")
         {
-            return new AttendanceExportFile(
+            file = new AttendanceExportFile(
                 $"attendance-{view}-{stamp}.csv",
                 "text/csv; charset=utf-8",
                 Encoding.UTF8.GetBytes(string.Join(Environment.NewLine, lines) + Environment.NewLine));
         }
-
-        return new AttendanceExportFile(
-            $"attendance-{view}-{stamp}.pdf",
-            "application/pdf",
-            SimplePdf.Create($"Word Up attendance by {view}", lines));
+        else
+        {
+            file = new AttendanceExportFile(
+                $"attendance-{view}-{stamp}.pdf",
+                "application/pdf",
+                SimplePdf.Create($"Word Up attendance by {view}", lines));
+        }
+        await _audit.LogAsync(
+            "DataExported",
+            _currentUser.UserId,
+            "Attendance",
+            request.CohortId,
+            details: $"format={format};view={view};from={request.From:yyyy-MM-dd};to={request.To:yyyy-MM-dd}",
+            cancellationToken: cancellationToken);
+        return file;
     }
 
     private async Task<IReadOnlyList<string>> SessionLinesAsync(
@@ -105,10 +128,8 @@ public sealed class AttendanceExportQueryHandler
         return lines;
     }
 
-    private static string Csv(params string[] fields) => string.Join(",", fields.Select(field =>
-        field.IndexOfAny([',', '"', '\r', '\n']) >= 0
-            ? $"\"{field.Replace("\"", "\"\"")}\""
-            : field));
+    private static string Csv(params string[] fields) =>
+        ExportCsv.ToRow(fields);
 }
 
 internal static class SimplePdf

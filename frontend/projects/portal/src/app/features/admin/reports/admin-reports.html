@@ -14,7 +14,31 @@
           view.
         </p>
       </div>
+      <div class="wu-page__actions">
+        <button
+          class="wu-btn wu-btn--secondary"
+          type="button"
+          aria-label="Export current report as CSV"
+          [disabled]="!canExport() || exporting() !== null"
+          (click)="exportCurrent('csv')"
+        >
+          {{ exporting() === 'csv' ? 'Preparing CSV…' : 'Export CSV' }}
+        </button>
+        <button
+          class="wu-btn wu-btn--primary"
+          type="button"
+          aria-label="Export current report as PDF"
+          [disabled]="!canExport() || exporting() !== null"
+          (click)="exportCurrent('pdf')"
+        >
+          {{ exporting() === 'pdf' ? 'Preparing PDF…' : 'Export PDF' }}
+        </button>
+      </div>
     </div>
+
+    @if (exportStatus(); as status) {
+      <p class="wu-alert wu-alert--success" role="status">{{ status }}</p>
+    }
 
     @if (errorMessage(); as error) {
       <div class="wu-alert wu-alert--error" role="alert">

@@ -13,6 +13,7 @@ import {
 import { AuthStore } from '@wu/auth';
 import { WuIcon, WuShell } from '@wu/ui';
 import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
 
@@ -153,6 +154,8 @@ export class AdminReportsPage {
   protected readonly youthReport = signal<YouthReport | undefined>(undefined);
   protected readonly cohortReport = signal<CohortReport | undefined>(undefined);
   protected readonly loadingDetail = signal(false);
+  protected readonly exporting = signal<'csv' | 'pdf' | null>(null);
+  protected readonly exportStatus = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly dateError = signal<string | null>(null);
   protected readonly filterForm = this.fb.nonNullable.group({
@@ -174,6 +177,7 @@ export class AdminReportsPage {
 
   protected selectView(view: ReportView): void {
     this.view.set(view);
+    this.exportStatus.set(null);
   }
 
   protected applyFilters(): void {
@@ -183,6 +187,8 @@ export class AdminReportsPage {
       return;
     }
     this.dateError.set(null);
+    this.youthReport.set(undefined);
+    this.cohortReport.set(undefined);
     this.loadHub(this.filter(), true);
   }
 
@@ -224,6 +230,48 @@ export class AdminReportsPage {
 
   protected retry(): void {
     this.load();
+  }
+
+  protected canExport(): boolean {
+    if (this.hub() === undefined) return false;
+    if (this.view() === 'youth') {
+      return this.youthReport()?.youthId === this.youthForm.controls.youthId.value;
+    }
+    if (this.view() === 'cohort') {
+      return this.cohortReport()?.cohortId === this.cohortForm.controls.cohortId.value;
+    }
+    return true;
+  }
+
+  protected exportCurrent(format: 'csv' | 'pdf'): void {
+    if (!this.canExport() || this.exporting()) return;
+    const report = this.view();
+    const youthId =
+      report === 'youth' ? this.youthForm.controls.youthId.value || undefined : undefined;
+    const cohortId =
+      report === 'cohort' ? this.cohortForm.controls.cohortId.value || undefined : undefined;
+    const compareCohortId =
+      report === 'cohort' ? this.cohortForm.controls.compareCohortId.value || undefined : undefined;
+    this.exporting.set(format);
+    this.exportStatus.set(null);
+    this.errorMessage.set(null);
+    this.api
+      .exportReport(report, format, this.filter(), youthId, cohortId, compareCohortId)
+      .pipe(finalize(() => this.exporting.set(null)))
+      .subscribe({
+        next: (blob) => {
+          const url = URL.createObjectURL(blob);
+          const anchor = document.createElement('a');
+          anchor.href = url;
+          anchor.download = `${report}-report-${Date.now()}.${format}`;
+          anchor.click();
+          URL.revokeObjectURL(url);
+          this.exportStatus.set(
+            `${format.toUpperCase()} export prepared for the current report and filters.`,
+          );
+        },
+        error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
+      });
   }
 
   protected checkInLabel(count: number): string {

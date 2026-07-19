@@ -22,6 +22,22 @@ public class DataController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize(Policy = Policies.ViewAuditLog)]
+    [HttpGet("api/admin/audit/export")]
+    public async Task<IActionResult> ExportAuditLogFile(
+        [FromQuery] string format,
+        [FromQuery] string? action = null,
+        [FromQuery] Guid? actorUserId = null,
+        [FromQuery] DateTime? from = null,
+        [FromQuery] DateTime? to = null,
+        CancellationToken cancellationToken = default)
+    {
+        var result = await _mediator.Send(
+            new ExportAuditLogFileQuery(format, action, actorUserId, from, to),
+            cancellationToken);
+        return File(result.Content, result.ContentType, result.FileName);
+    }
+
     [Authorize(Policy = Policies.ImportExportData)]
     [HttpPost("api/admin/import/preview")]
     public async Task<ActionResult<RosterPreview>> PreviewImport(

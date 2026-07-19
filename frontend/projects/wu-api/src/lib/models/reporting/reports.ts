@@ -7,6 +7,9 @@ export interface ReportFilter {
   mentorId?: string;
 }
 
+export type ReportExportKind = 'overview' | 'youth' | 'cohort' | 'staff';
+export type ReportExportFormat = 'csv' | 'pdf';
+
 export interface ReportOption {
   id: string;
   name: string;

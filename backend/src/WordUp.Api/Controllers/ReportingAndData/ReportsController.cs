@@ -86,6 +86,32 @@ public class ReportsController : ControllerBase
     }
 
     [Authorize(Roles = Roles.ProgramAdministrator + "," + Roles.Mentor)]
+    [HttpGet("api/reports/export")]
+    public async Task<IActionResult> Export(
+        [FromQuery] string report,
+        [FromQuery] string format,
+        [FromQuery] DateTime? from,
+        [FromQuery] DateTime? to,
+        [FromQuery] Guid? cohortId,
+        [FromQuery] Guid? trackId,
+        [FromQuery] Guid? mentorId,
+        [FromQuery] Guid? youthId,
+        [FromQuery] Guid? compareCohortId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new ExportStandardReportQuery(
+                report,
+                format,
+                new ReportFilter(from, to, cohortId, trackId, mentorId),
+                youthId,
+                cohortId,
+                compareCohortId),
+            cancellationToken);
+        return File(result.Content, result.ContentType, result.FileName);
+    }
+
+    [Authorize(Roles = Roles.ProgramAdministrator + "," + Roles.Mentor)]
     [HttpGet("api/reports/cohort/{cohortId:guid}/export.csv")]
     public async Task<ActionResult<CsvFile>> ExportCohort(Guid cohortId, CancellationToken cancellationToken)
     {

@@ -14,6 +14,7 @@ test('reports filters and detail views remain touch usable on mobile', async ({
   await reports.goto();
 
   await expect(reports.heading).toBeVisible();
+  expect((await reports.exportCsv.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
   await reports.cohortFilter.selectOption(seeded.cohortId);
   expect((await reports.applyFilters.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
   await reports.applyFilters.click();
@@ -24,5 +25,7 @@ test('reports filters and detail views remain touch usable on mobile', async ({
   await expect(reports.youthReport).toContainText(seeded.youthName);
   await reports.staffTab.click();
   await expect(reports.staffRow(seeded.mentorName)).toBeVisible();
+  const [download] = await Promise.all([page.waitForEvent('download'), reports.exportCsv.click()]);
+  expect(download.suggestedFilename()).toMatch(/staff-report.*\.csv$/i);
   await expect.poll(() => reports.horizontalOverflow()).toBeLessThanOrEqual(1);
 });

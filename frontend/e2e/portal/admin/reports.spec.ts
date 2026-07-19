@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
 import { AdminReportsPage, SignInPage } from '../../pages';
 import { registerUser, seedYouthCurriculum, signInApi } from '../../support/api';
 
@@ -102,4 +103,41 @@ test('the reports hub shows a real empty scope and recovers from a load failure'
   await page.getByRole('button', { name: 'Try again', exact: true }).click();
   await expect(reports.heading).toBeVisible();
   await expect(reports.updatedAt).toContainText(/updated/i);
+});
+
+// Traces to: L2-REPORT-003, L2-AUTH-010, L2-CONSENT-003
+test('report downloads preserve the current view and filters in CSV and PDF', async ({
+  page,
+  request,
+}) => {
+  const included = await seedYouthCurriculum(request);
+  const excluded = await seedYouthCurriculum(request);
+  const admin = await registerUser(request, 'ProgramAdministrator', 'report-export');
+  await new SignInPage(page).signIn(admin);
+  const reports = new AdminReportsPage(page);
+  await reports.goto();
+
+  await reports.cohortFilter.selectOption(included.cohortId);
+  await reports.trackFilter.selectOption(included.primaryTrackId);
+  await reports.mentorFilter.selectOption(included.mentorId);
+  await reports.applyFilters.click();
+
+  const [csv] = await Promise.all([page.waitForEvent('download'), reports.exportCsv.click()]);
+  expect(csv.suggestedFilename()).toMatch(/overview-report.*\.csv$/i);
+  const csvPath = await csv.path();
+  expect(csvPath).not.toBeNull();
+  const csvText = await readFile(csvPath!, 'utf8');
+  expect(csvText).toContain(included.cohortName);
+  expect(csvText).toContain(included.mentorName);
+  expect(csvText).not.toContain(excluded.cohortName);
+
+  await reports.youthTab.click();
+  await reports.youth.selectOption(included.youthId);
+  await reports.generateYouth.click();
+  const [pdf] = await Promise.all([page.waitForEvent('download'), reports.exportPdf.click()]);
+  expect(pdf.suggestedFilename()).toMatch(/youth-report.*\.pdf$/i);
+  const pdfPath = await pdf.path();
+  expect(pdfPath).not.toBeNull();
+  const pdfBytes = await readFile(pdfPath!);
+  expect(pdfBytes.subarray(0, 8).toString('ascii')).toBe('%PDF-1.4');
 });

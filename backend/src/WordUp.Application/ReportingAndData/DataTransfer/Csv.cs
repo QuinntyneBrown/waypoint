@@ -15,6 +15,11 @@ internal static class Csv
     private static string Quote(string? field)
     {
         field ??= string.Empty;
+        if (field.Length > 0 && field[0] is '=' or '+' or '-' or '@' or '\t' or '\r')
+        {
+            // Neutralize spreadsheet formulas while preserving the visible value.
+            field = "'" + field;
+        }
         if (field.Contains(',') || field.Contains('"') || field.Contains('\n') || field.Contains('\r'))
         {
             return "\"" + field.Replace("\"", "\"\"") + "\"";

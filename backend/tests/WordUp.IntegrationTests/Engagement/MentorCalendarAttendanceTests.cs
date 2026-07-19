@@ -241,6 +241,15 @@ public sealed class MentorCalendarAttendanceTests : IntegrationTestBase
             Assert.That(System.Text.Encoding.ASCII.GetString(pdfBytes, 0, 8), Is.EqualTo("%PDF-1.4"));
             Assert.That(pdfBytes.Length, Is.GreaterThan(500));
         });
+        using var auditScope = Factory.Services.CreateScope();
+        var auditDb = auditScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.That(
+            auditDb.AuditEntries.Count(item =>
+                item.Action == "DataExported"
+                && item.TargetType == "Attendance"
+                && item.TargetId == scenario.Cohort.Id
+                && item.ActorUserId == scenario.Mentor.Id),
+            Is.EqualTo(2));
     }
 
     private async Task<Scenario> SeedScenarioAsync()
