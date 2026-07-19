@@ -28,6 +28,10 @@ using WordUp.Infrastructure.Health;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// The global handler emits a deliberately redacted event. Suppress the framework's duplicate event,
+// which otherwise includes the raw exception message and stack trace.
+builder.Logging.AddFilter("Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware", LogLevel.None);
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -216,6 +220,7 @@ var app = builder.Build();
 
 // Establish one validated correlation id before any response or exception path is handled.
 app.UseMiddleware<CorrelationIdMiddleware>();
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 // First in the pipeline so security headers cover every response, including the exception (500) and
 // maintenance (503) short-circuits below (L2-NFR-002 AC3).
@@ -271,19 +276,22 @@ app.UseExceptionHandler(handler =>
 
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         var correlationId = context.TraceIdentifier;
+        var exceptionType = ex?.GetType().Name ?? "UnknownException";
+        var route = SafeRequestTelemetry.Route(context);
         var logger = context.RequestServices.GetRequiredService<ILoggerFactory>()
             .CreateLogger("WordUp.Api.UnhandledException");
         logger.LogError(
-            ex,
-            "Unhandled API exception. CorrelationId={CorrelationId} Method={Method} Path={Path}",
+            "Unhandled API exception. CorrelationId={CorrelationId} ExceptionType={ExceptionType} " +
+            "Method={Method} Route={Route}",
             correlationId,
+            exceptionType,
             context.Request.Method,
-            context.Request.Path);
+            route);
         await context.RequestServices.GetRequiredService<IExceptionAlertSink>().NotifyAsync(
-            ex ?? new InvalidOperationException("Unknown unhandled exception."),
+            exceptionType,
             correlationId,
             context.Request.Method,
-            context.Request.Path);
+            route);
         await context.Response.WriteAsJsonAsync(new
         {
             title = "An unexpected error occurred.",
@@ -318,9 +326,12 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions { Predicate = r => r
 // (friendly body, no stack trace) — L2-PLATFORM-008.
 if (!app.Environment.IsProduction())
 {
+    var diagnosticMessage = app.Environment.IsEnvironment("Testing")
+        ? "Intentional diagnostic failure for diagnostic.person@example.test using Bearer diagnostic-secret-token."
+        : "Intentional diagnostic failure.";
     app.MapGet("/api/_diag/throw", () =>
     {
-        throw new InvalidOperationException("Intentional diagnostic failure.");
+        throw new InvalidOperationException(diagnosticMessage);
     });
 }
 

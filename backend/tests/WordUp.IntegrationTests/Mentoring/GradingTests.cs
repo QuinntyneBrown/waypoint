@@ -292,7 +292,7 @@ public sealed class GradingTests : IntegrationTestBase
         Assert.That(
             grade.StatusCode,
             Is.EqualTo(HttpStatusCode.NoContent),
-            Factory.ExceptionAlerts.Alerts.LastOrDefault()?.Exception.ToString());
+            Factory.ExceptionAlerts.Alerts.LastOrDefault()?.ExceptionType);
 
         var status = await GetAsync($"/api/me/submissions/{submission.Id}", youthToken);
         var view = await status.Content.ReadFromJsonAsync<SubmissionStatusDto>();

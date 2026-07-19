@@ -204,7 +204,7 @@ public sealed class BadgeProgressionTests : IntegrationTestBase
         Assert.That(
             list.StatusCode,
             Is.EqualTo(HttpStatusCode.OK),
-            Factory.ExceptionAlerts.Alerts.LastOrDefault()?.Exception.ToString()
+            Factory.ExceptionAlerts.Alerts.LastOrDefault()?.ExceptionType
                 ?? await list.Content.ReadAsStringAsync());
         var definitions = await list.Content.ReadFromJsonAsync<List<BadgeDefinitionDto>>();
         var definition = definitions!.Single(item => item.Id == badgeId);

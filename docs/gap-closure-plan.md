@@ -338,7 +338,11 @@ requirement conflicts early (they gate "done").
       protects reflection, mentor/volunteer attendance, grading, badge, progression, and multi-form
       curriculum editors. Navigation offers save-draft or stay; synchronous owner-bound local drafts
       and grading/reflection server drafts restore on return without exposing another user's work.
-- [ ] **H20** Logging/alerting (correlation ids, PII redaction) `L2-PLATFORM-008`, `L2-NFR-011`
+- [x] **H20** Logging/alerting (correlation ids, PII redaction) `L2-PLATFORM-008`, `L2-NFR-011` —
+      every request now emits one JSON-structured completion event with an explicit correlation id,
+      method, route template, status, and duration while excluding headers, query/body values, and raw
+      URLs. Unhandled errors and critical alerts retain only safe operational context and exception type;
+      framework duplicate exceptions, email recipients, subjects, tokens, and PII are not logged.
 - [ ] **H21** Operational CLI + durable DB lifecycle/migrations `L2-NFR-011`
 - [ ] **H22** Performance budgets `L2-NFR-008`
 - [ ] **H23** Responsive coverage (XS–XL) for every new surface `L2-NFR-009`
@@ -705,3 +709,10 @@ requirement conflicts early (they gate "done").
   responses so concurrent loads cannot overwrite the active editor. All 54 frontend units, the
   426.96 kB production portal build, and sixteen adjacent grading, authoring, reflection, and
   attendance browser scenarios pass.
+- 2026-07-19 — H20 done: the API now emits one JSON-structured completion record per request with
+  explicit correlation id, HTTP method, matched route template, status, and elapsed time. Logging does
+  not read request headers, query/body values, or raw URLs; token-bearing paths emit placeholders.
+  The global error handler suppresses the framework's raw duplicate and sends only correlation,
+  exception type, method, and safe route to error and critical-alert channels. Default email delivery
+  also omits recipient, subject, and body. All 241 backend integrations, all four backend unit tests,
+  and the complete solution build pass.

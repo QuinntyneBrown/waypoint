@@ -40,6 +40,7 @@ public sealed class SqlServerWebAppFactory : WebApplicationFactory<Program>
     public CapturingEmailSender Emails => Services.GetRequiredService<CapturingEmailSender>();
     public CapturingExceptionAlertSink ExceptionAlerts =>
         Services.GetRequiredService<CapturingExceptionAlertSink>();
+    public CapturingLoggerProvider Logs => Services.GetRequiredService<CapturingLoggerProvider>();
     public CapturingChangePublisher Changes =>
         Services.GetRequiredService<CapturingChangePublisher>();
 
@@ -71,6 +72,9 @@ public sealed class SqlServerWebAppFactory : WebApplicationFactory<Program>
             services.AddSingleton<CapturingExceptionAlertSink>();
             services.AddSingleton<IExceptionAlertSink>(sp =>
                 sp.GetRequiredService<CapturingExceptionAlertSink>());
+            services.AddSingleton<CapturingLoggerProvider>();
+            services.AddSingleton<Microsoft.Extensions.Logging.ILoggerProvider>(sp =>
+                sp.GetRequiredService<CapturingLoggerProvider>());
             services.RemoveAll<IChangePublisher>();
             services.AddSingleton<SignalRChangePublisher>();
             services.AddSingleton<CapturingChangePublisher>();

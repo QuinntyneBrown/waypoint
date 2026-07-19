@@ -10,14 +10,15 @@ public sealed class LoggingExceptionAlertSink : IExceptionAlertSink
 
     public LoggingExceptionAlertSink(ILogger<LoggingExceptionAlertSink> logger) => _logger = logger;
 
-    public Task NotifyAsync(Exception exception, string correlationId, string method, string path)
+    public Task NotifyAsync(string exceptionType, string correlationId, string method, string route)
     {
         _logger.LogCritical(
-            exception,
-            "Unhandled API exception alert. CorrelationId={CorrelationId} Method={Method} Path={Path}",
+            "Unhandled API exception alert. CorrelationId={CorrelationId} ExceptionType={ExceptionType} " +
+            "Method={Method} Route={Route}",
             correlationId,
+            exceptionType,
             method,
-            path);
+            route);
         return Task.CompletedTask;
     }
 }

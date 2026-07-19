@@ -3,19 +3,19 @@ using WordUp.Api.Observability;
 namespace WordUp.IntegrationTests;
 
 public sealed record CapturedExceptionAlert(
-    Exception Exception,
+    string ExceptionType,
     string CorrelationId,
     string Method,
-    string Path);
+    string Route);
 
 public sealed class CapturingExceptionAlertSink : IExceptionAlertSink
 {
     private readonly List<CapturedExceptionAlert> _alerts = new();
     public IReadOnlyList<CapturedExceptionAlert> Alerts => _alerts;
 
-    public Task NotifyAsync(Exception exception, string correlationId, string method, string path)
+    public Task NotifyAsync(string exceptionType, string correlationId, string method, string route)
     {
-        _alerts.Add(new CapturedExceptionAlert(exception, correlationId, method, path));
+        _alerts.Add(new CapturedExceptionAlert(exceptionType, correlationId, method, route));
         return Task.CompletedTask;
     }
 }

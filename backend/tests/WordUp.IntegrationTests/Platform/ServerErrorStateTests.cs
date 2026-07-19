@@ -30,6 +30,6 @@ public sealed class ServerErrorStateTests : IntegrationTestBase
         Assert.That(body, Does.Contain(correlationId));
         var alert = Factory.ExceptionAlerts.Alerts.Single();
         Assert.That(alert.CorrelationId, Is.EqualTo(correlationId));
-        Assert.That(alert.Exception, Is.TypeOf<InvalidOperationException>());
+        Assert.That(alert.ExceptionType, Is.EqualTo(nameof(InvalidOperationException)));
     }
 }

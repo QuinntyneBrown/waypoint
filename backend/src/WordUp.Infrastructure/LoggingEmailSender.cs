@@ -15,7 +15,7 @@ public sealed class LoggingEmailSender : IEmailSender
 
     public Task SendAsync(string toEmail, string subject, string body, CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Email queued to {Recipient}: {Subject}", toEmail, subject);
+        _logger.LogInformation("Email queued through the configured delivery channel.");
         return Task.CompletedTask;
     }
 }
