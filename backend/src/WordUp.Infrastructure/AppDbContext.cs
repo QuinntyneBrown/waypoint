@@ -63,6 +63,29 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<VolunteerSignup> VolunteerSignups => Set<VolunteerSignup>();
     public DbSet<DonationPledge> DonationPledges => Set<DonationPledge>();
 
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        EnsureAuditEntriesAreAppendOnly();
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    public override Task<int> SaveChangesAsync(
+        bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = default)
+    {
+        EnsureAuditEntriesAreAppendOnly();
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
+    private void EnsureAuditEntriesAreAppendOnly()
+    {
+        if (ChangeTracker.Entries<AuditEntry>()
+            .Any(entry => entry.State is EntityState.Modified or EntityState.Deleted))
+        {
+            throw new InvalidOperationException("Audit entries are append-only and cannot be changed or deleted.");
+        }
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -114,10 +137,15 @@ public class AppDbContext : DbContext, IAppDbContext
             b.HasKey(x => x.Id);
             b.HasIndex(x => x.At);
             b.HasIndex(x => x.ActorUserId);
+            b.HasIndex(x => x.SequenceNumber)
+                .IsUnique()
+                .HasFilter("[SequenceNumber] IS NOT NULL");
             b.Property(x => x.Action).HasMaxLength(128).IsRequired();
             b.Property(x => x.TargetType).HasMaxLength(128);
             b.Property(x => x.Source).HasMaxLength(512);
             b.Property(x => x.Details).HasMaxLength(2048);
+            b.Property(x => x.PreviousHash).HasMaxLength(64);
+            b.Property(x => x.IntegrityHash).HasMaxLength(64);
         });
 
         modelBuilder.Entity<YouthApplication>(b =>

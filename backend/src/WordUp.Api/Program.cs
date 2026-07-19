@@ -225,6 +225,10 @@ app.UseExceptionHandler(handler =>
 
         if (ex is AppException appEx)
         {
+            if (appEx.StatusCode == StatusCodes.Status403Forbidden)
+            {
+                await DeniedActionAudit.RecordAsync(context);
+            }
             context.Response.StatusCode = appEx.StatusCode;
             if (appEx is MediaConsentRequiredException)
             {

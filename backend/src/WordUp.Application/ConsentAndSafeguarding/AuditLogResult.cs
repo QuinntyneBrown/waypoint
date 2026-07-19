@@ -6,7 +6,8 @@ public record AuditLogResult(
     int PageSize,
     int Total,
     IReadOnlyList<AuditActorOption> Actors,
-    IReadOnlyList<string> Actions);
+    IReadOnlyList<string> Actions,
+    bool IntegrityValid);
 
 public record AuditActorOption(Guid Id, string Name);
 

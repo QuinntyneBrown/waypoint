@@ -44,6 +44,7 @@ test('an admin filters and pages the redacted audit trail then exports the curre
   await audit.goto();
 
   await expect(audit.heading).toBeVisible();
+  await expect(page.getByTestId('audit-integrity-warning')).toHaveCount(0);
   await audit.actionFilter.selectOption('CheckInLogged');
   await audit.applyFilters.click();
   const privateRow = audit.row('CheckInLogged');
@@ -81,4 +82,29 @@ test('an admin filters and pages the redacted audit trail then exports the curre
   await expect(page.getByRole('heading', { name: 'No activity for this filter' })).toBeVisible();
   await audit.clearFilters.click();
   await expect(audit.rows.first()).toBeVisible();
+});
+
+// Traces to: L2-CONSENT-003 AC3
+test('an admin is warned when audit-chain verification fails', async ({ page, request }) => {
+  const admin = await registerUser(request, 'ProgramAdministrator', 'audit-integrity-admin');
+  await new SignInPage(page).signIn(admin);
+  await page.route('**/api/audit?**', async (route) => {
+    await route.fulfill({
+      json: {
+        items: [],
+        page: 1,
+        pageSize: 10,
+        total: 0,
+        actors: [],
+        actions: [],
+        integrityValid: false,
+      },
+    });
+  });
+
+  await new AdminAuditLogPage(page).goto();
+
+  await expect(page.getByTestId('audit-integrity-warning')).toContainText(
+    'Audit integrity check failed',
+  );
 });

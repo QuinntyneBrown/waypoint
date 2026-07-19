@@ -40,6 +40,18 @@
       </div>
     }
 
+    @if (result(); as audit) {
+      @if (!audit.integrityValid) {
+        <div class="wu-alert wu-alert--error" role="alert" data-testid="audit-integrity-warning">
+          <div>
+            <div class="wu-alert__title">Audit integrity check failed</div>
+            One or more audit records may have been changed, removed, or inserted outside the
+            protected audit writer. Escalate this incident before relying on the log.
+          </div>
+        </div>
+      }
+    }
+
     <section class="wu-card wu-mb-4" aria-labelledby="audit-filters-heading">
       <div class="wu-card__body wu-stack">
         <div>

@@ -79,6 +79,11 @@ public sealed class WordUpAuthorizationResultHandler : IAuthorizationMiddlewareR
         AuthorizationPolicy policy,
         PolicyAuthorizationResult authorizeResult)
     {
+        if (authorizeResult.Forbidden)
+        {
+            await DeniedActionAudit.RecordAsync(context);
+        }
+
         if (authorizeResult.Forbidden
             && context.Items.ContainsKey(YouthParticipationAuthorizationHandler.ConsentRequiredItem))
         {

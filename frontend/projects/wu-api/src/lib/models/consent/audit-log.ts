@@ -23,6 +23,7 @@ export interface AuditLogPage {
   total: number;
   actors: AuditActorOption[];
   actions: string[];
+  integrityValid: boolean;
 }
 
 export interface AuditLogFilter {

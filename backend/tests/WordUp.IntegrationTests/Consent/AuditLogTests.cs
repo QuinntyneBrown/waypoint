@@ -23,7 +23,8 @@ public sealed class AuditLogTests : IntegrationTestBase
         int PageSize,
         int Total,
         IReadOnlyList<AuditActorDto> Actors,
-        IReadOnlyList<string> Actions);
+        IReadOnlyList<string> Actions,
+        bool IntegrityValid);
 
     private async Task<HttpResponseMessage> GetAsync(string url, string token)
     {

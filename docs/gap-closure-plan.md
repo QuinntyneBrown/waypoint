@@ -311,7 +311,11 @@ requirement conflicts early (they gate "done").
       token, reconciles youth and mentor threads/inboxes without duplicates, and tears down with the
       session. Recipient-scoped notifications merge into each role's live feed, reconcile from the
       server on reconnect without duplicates, and preserve server-authoritative read state.
-- [ ] **H15** Security audit coverage (denied actions, tamper-evidence) `L2-AUTH-009`, `L2-CONSENT-003`
+- [x] **H15** Security audit coverage (denied actions, tamper-evidence) `L2-AUTH-009`, `L2-CONSENT-003` —
+      authenticated endpoint-policy and application resource denials write actor/source-scoped events
+      without request bodies; every named mutation uses the same writer. Audit rows form a signed,
+      sequenced HMAC chain, EF rejects update/delete attempts, and the admin view verifies the entire
+      chain and raises an incident warning when an unsigned, changed, removed, or forged row is found.
 - [ ] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002`
 - [x] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004` —
       the standard organization, youth, cohort, attendance, and staff views now share date/cohort/
@@ -654,3 +658,12 @@ requirement conflicts early (they gate "done").
   submissions, and quiz attempts with role-correct deep links. The settings vocabulary exposes all
   keys. Fifty affected backend integrations, all 51 frontend units, the 426.89 kB production build,
   and the notification-settings browser acceptance pass.
+- 2026-07-19 — H15 done: every authenticated 403 now records the actor, endpoint, IP location, and
+  user agent from an isolated audit scope, covering both role-policy failures and resource/IDOR
+  denials without retaining query strings or request bodies. The existing application approval, role
+  change, lesson edit, attendance, check-in, badge award, sign-in, and account-deactivation producers
+  flow through a sequenced HMAC-SHA256 chain; EF blocks audit updates/deletes, a unique sequence guards
+  append order, and whole-chain verification exposes a prominent admin incident warning for legacy,
+  missing, changed, or forged records. All 225 backend integrations plus four unit tests, all 51
+  frontend units, the 426.89 kB production build, and both healthy/failed audit-integrity browser
+  scenarios pass.

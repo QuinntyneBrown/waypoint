@@ -8,8 +8,13 @@ public class AuditLogQueryHandler : IRequestHandler<AuditLogQuery, AuditLogResul
 {
     private const string Redacted = "[redacted]";
     private readonly IAppDbContext _db;
+    private readonly IAuditIntegrity _integrity;
 
-    public AuditLogQueryHandler(IAppDbContext db) => _db = db;
+    public AuditLogQueryHandler(IAppDbContext db, IAuditIntegrity integrity)
+    {
+        _db = db;
+        _integrity = integrity;
+    }
 
     public async Task<AuditLogResult> Handle(AuditLogQuery request, CancellationToken cancellationToken)
     {
@@ -22,6 +27,10 @@ public class AuditLogQueryHandler : IRequestHandler<AuditLogQuery, AuditLogResul
                 : request.To;
 
         var allEntries = _db.AuditEntries.AsNoTracking();
+        var integrityEntries = await allEntries
+            .OrderBy(entry => entry.SequenceNumber)
+            .ToListAsync(cancellationToken);
+        var integrityValid = _integrity.VerifyChain(integrityEntries);
         var actions = await allEntries
             .Select(entry => entry.Action)
             .Distinct()
@@ -94,6 +103,6 @@ public class AuditLogQueryHandler : IRequestHandler<AuditLogQuery, AuditLogResul
                 e.IsPrivate ? Redacted : e.Details))
             .ToList();
 
-        return new AuditLogResult(items, page, pageSize, total, actors, actions);
+        return new AuditLogResult(items, page, pageSize, total, actors, actions, integrityValid);
     }
 }

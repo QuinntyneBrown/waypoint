@@ -8,6 +8,9 @@ namespace WordUp.Domain.ConsentAndSafeguarding;
 public class AuditEntry
 {
     public Guid Id { get; set; } = Guid.NewGuid();
+    public long? SequenceNumber { get; set; }
+    public string? PreviousHash { get; set; }
+    public string? IntegrityHash { get; set; }
     public Guid? ActorUserId { get; set; }
     public string Action { get; set; } = string.Empty;
     public string? TargetType { get; set; }
