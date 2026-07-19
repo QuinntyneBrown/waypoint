@@ -62,6 +62,34 @@ public sealed class SubmissionTests : IntegrationTestBase
         return (youthId, auth!.AccessToken);
     }
 
+    private async Task<string> SeedAssignedMentorAsync(Guid youthId)
+    {
+        var email = $"mentor.{Guid.NewGuid():N}@example.com";
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+            var mentor = new User
+            {
+                Email = email,
+                DisplayName = "Assigned mentor",
+                Role = Roles.Mentor,
+                Status = UserStatus.Active,
+                PasswordHash = hasher.Hash("Passw0rd!"),
+            };
+            var youth = await db.Users.FindAsync(youthId) ?? throw new InvalidOperationException();
+            db.Users.Add(mentor);
+            youth.MentorId = mentor.Id;
+            await db.SaveChangesAsync();
+        }
+
+        var signIn = await Client.PostAsJsonAsync(
+            "/api/auth/sign-in", new { email, password = "Passw0rd!" });
+        signIn.EnsureSuccessStatusCode();
+        var auth = await signIn.Content.ReadFromJsonAsync<WordUp.Application.Authentication.Auth.AuthResult>();
+        return auth!.AccessToken;
+    }
+
     private async Task<(Guid youthId, string youthToken, string guardianToken)> SeedConsentedMinorAsync()
     {
         var suffix = Guid.NewGuid().ToString("N");
@@ -130,6 +158,24 @@ public sealed class SubmissionTests : IntegrationTestBase
             HttpMethod.Post,
             $"/api/me/assignments/{assignmentId}/uploads")
         { Content = content };
+        Authorize(request, token);
+        return await Client.SendAsync(request);
+    }
+
+    private async Task<HttpResponseMessage> UploadPdfAsync(
+        Guid assignmentId,
+        string token,
+        string fileName,
+        byte[] content)
+    {
+        var form = new MultipartFormDataContent();
+        var document = new ByteArrayContent(content);
+        document.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+        form.Add(document, "file", fileName);
+        var request = new HttpRequestMessage(
+            HttpMethod.Post,
+            $"/api/me/assignments/{assignmentId}/uploads")
+        { Content = form };
         Authorize(request, token);
         return await Client.SendAsync(request);
     }
@@ -352,6 +398,79 @@ public sealed class SubmissionTests : IntegrationTestBase
     }
 
     [Test]
+    [Property("Req", "L2-LEARN-006")]
+    [Property("Req", "L2-NFR-001")]
+    public async Task Pdf_evidence_is_sniffed_linked_to_the_submitted_copy_and_privately_served()
+    {
+        // Traces to: L2-LEARN-006 AC2/AC4, L2-NFR-001 AC4
+        var (ownerId, ownerToken) = await SeedYouthAsync();
+        var (_, otherYouthToken) = await SeedYouthAsync();
+        var assignedMentorToken = await SeedAssignedMentorAsync(ownerId);
+        var administratorToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var assignment = await SeedAssignmentAsync("file");
+
+        var disguised = await UploadPdfAsync(
+            assignment.Id,
+            ownerToken,
+            "evidence.pdf",
+            "<script>alert(1)</script>"u8.ToArray());
+        Assert.That(disguised.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+
+        var pdf = "%PDF-1.4\n1 0 obj\n<<>>\nendobj\ntrailer\n<<>>\n%%EOF"u8.ToArray();
+        var unusedResponse = await UploadPdfAsync(assignment.Id, ownerToken, "draft.pdf", pdf);
+        var selectedResponse = await UploadPdfAsync(assignment.Id, ownerToken, "evidence.pdf", pdf);
+        Assert.Multiple(() =>
+        {
+            Assert.That(unusedResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(selectedResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        });
+        var unused = await unusedResponse.Content.ReadFromJsonAsync<UploadDto>();
+        var selected = await selectedResponse.Content.ReadFromJsonAsync<UploadDto>();
+        Assert.That(selected!.Kind, Is.EqualTo("file"));
+
+        var submitted = await PostAsync(
+            $"/api/me/assignments/{assignment.Id}/submissions",
+            new { fileUploadId = selected.Id, isCodingProject = false, attest = true },
+            ownerToken);
+        Assert.That(submitted.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var result = await submitted.Content.ReadFromJsonAsync<SubmissionResultDto>();
+
+        var status = await GetAsync($"/api/me/submissions/{result!.Id}", ownerToken);
+        var submittedCopy = await status.Content.ReadFromJsonAsync<SubmissionStatusDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(submittedCopy!.File, Is.Not.Null);
+            Assert.That(submittedCopy.File!.FileName, Is.EqualTo("evidence.pdf"));
+            Assert.That(submittedCopy.File.Url, Is.EqualTo(selected.Url));
+        });
+        var staffReview = await GetAsync($"/api/mentor/submissions/{result.Id}", assignedMentorToken);
+        var reviewCopy = await staffReview.Content.ReadFromJsonAsync<SubmissionReviewDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(staffReview.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(reviewCopy!.File!.FileName, Is.EqualTo("evidence.pdf"));
+            Assert.That(reviewCopy.File.Url, Is.EqualTo(selected.Url));
+        });
+
+        var ownerDownload = await GetAsync(selected.Url, ownerToken);
+        Assert.Multiple(() =>
+        {
+            Assert.That(ownerDownload.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(ownerDownload.Content.Headers.ContentType!.MediaType, Is.EqualTo("application/pdf"));
+            Assert.That(ownerDownload.Headers.GetValues("X-Content-Type-Options").Single(), Is.EqualTo("nosniff"));
+            Assert.That(ownerDownload.Content.Headers.ContentDisposition!.FileNameStar, Is.EqualTo("evidence.pdf"));
+        });
+        Assert.That(await ownerDownload.Content.ReadAsByteArrayAsync(), Is.EqualTo(pdf));
+
+        var unusedAfterSubmit = await GetAsync(unused!.Url, ownerToken);
+        Assert.That(unusedAfterSubmit.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        Assert.That((await GetAsync(selected.Url, otherYouthToken)).StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+        Assert.That((await GetAsync(selected.Url, assignedMentorToken)).StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That((await GetAsync(selected.Url, administratorToken)).StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That((await Client.GetAsync(selected.Url)).StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+    }
+
+    [Test]
     [Property("Req", "L2-LEARN-007")]
     public async Task Submission_status_is_owner_only()
     {
@@ -395,9 +514,12 @@ public sealed class SubmissionTests : IntegrationTestBase
         string FileName,
         string ContentType,
         long SizeBytes,
-        string Url);
+        string Url,
+        string? Kind = null);
 
-    private sealed record SubmissionReviewDto(string? PhotoUrl);
+    private sealed record SubmissionReviewDto(
+        string? PhotoUrl,
+        SubmissionAttachmentDto? File = null);
 
     private sealed record TimelineDto(string Type, string Label, DateTime? At, bool Current);
 
@@ -414,5 +536,13 @@ public sealed class SubmissionTests : IntegrationTestBase
         int TotalPossible,
         DateTime SubmittedAt,
         DateTime? ReviewedAt,
-        List<TimelineDto> Timeline);
+        List<TimelineDto> Timeline,
+        SubmissionAttachmentDto? File = null);
+
+    private sealed record SubmissionAttachmentDto(
+        Guid Id,
+        string FileName,
+        string ContentType,
+        long SizeBytes,
+        string Url);
 }

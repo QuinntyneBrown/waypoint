@@ -12,7 +12,10 @@ public static class AssignmentUploadPolicy
 {
     public const int MaxBytes = 10 * 1024 * 1024;
 
-    internal static bool HasValidImageSignature(string contentType, byte[] content)
+    internal static SubmissionFileKind Kind(string contentType) =>
+        contentType == "application/pdf" ? SubmissionFileKind.File : SubmissionFileKind.Photo;
+
+    internal static bool HasValidSignature(string contentType, byte[] content)
     {
         if (contentType == "image/png")
         {
@@ -22,6 +25,12 @@ public static class AssignmentUploadPolicy
         if (contentType == "image/jpeg")
         {
             return content.Length >= 3 && content[0] == 0xff && content[1] == 0xd8 && content[2] == 0xff;
+        }
+        if (contentType == "application/pdf")
+        {
+            byte[] signature = [0x25, 0x50, 0x44, 0x46, 0x2d];
+            return content.Length >= signature.Length
+                && content.AsSpan(0, signature.Length).SequenceEqual(signature);
         }
         return false;
     }
@@ -38,7 +47,8 @@ public sealed record AssignmentUploadResult(
     string FileName,
     string ContentType,
     long SizeBytes,
-    string Url);
+    string Url,
+    string Kind);
 
 public sealed class StoreAssignmentUploadCommandValidator : AbstractValidator<StoreAssignmentUploadCommand>
 {
@@ -46,21 +56,22 @@ public sealed class StoreAssignmentUploadCommandValidator : AbstractValidator<St
     {
         RuleFor(item => item.FileName).NotEmpty().MaximumLength(255);
         RuleFor(item => item.Content).NotEmpty().Must(content => content.Length <= AssignmentUploadPolicy.MaxBytes)
-            .WithMessage("Image must be 10 MB or smaller.");
+            .WithMessage("File must be 10 MB or smaller.");
         RuleFor(item => item.ContentType)
-            .Must(contentType => contentType is "image/png" or "image/jpeg")
-            .WithMessage("Only JPG and PNG images are allowed.");
+            .Must(contentType => contentType is "image/png" or "image/jpeg" or "application/pdf")
+            .WithMessage("Only JPG, PNG, and PDF files are allowed.");
         RuleFor(item => item)
-            .Must(item => AssignmentUploadPolicy.HasValidImageSignature(item.ContentType, item.Content))
-            .WithMessage("The file content does not match a valid JPG or PNG image.");
+            .Must(item => AssignmentUploadPolicy.HasValidSignature(item.ContentType, item.Content))
+            .WithMessage("Choose a valid PDF, JPG, or PNG file whose content matches its type.");
         RuleFor(item => item)
             .Must(item =>
             {
                 var extension = Path.GetExtension(Path.GetFileName(item.FileName)).ToLowerInvariant();
                 return item.ContentType == "image/png" && extension == ".png"
-                    || item.ContentType == "image/jpeg" && extension is ".jpg" or ".jpeg";
+                    || item.ContentType == "image/jpeg" && extension is ".jpg" or ".jpeg"
+                    || item.ContentType == "application/pdf" && extension == ".pdf";
             })
-            .WithMessage("The filename extension does not match the image type.");
+            .WithMessage("The filename extension does not match the file type.");
     }
 }
 
@@ -85,11 +96,14 @@ public sealed class StoreAssignmentUploadCommandHandler
         var youthId = _currentUser.UserId ?? throw new ForbiddenException("Not signed in.");
         var assignment = await AssignmentAccessGuard.EnsureAccessibleAsync(
             _db, request.AssignmentId, youthId, cancellationToken);
-        if (!AssignmentAccessGuard.SubmissionTypes(assignment).Contains("photo"))
+        var kind = AssignmentUploadPolicy.Kind(request.ContentType);
+        var allowedType = kind == SubmissionFileKind.Photo ? "photo" : "file";
+        if (!AssignmentAccessGuard.SubmissionTypes(assignment).Contains(allowedType))
         {
-            throw new ForbiddenException("This assignment does not allow photo submissions.");
+            throw new ForbiddenException($"This assignment does not allow {allowedType} submissions.");
         }
-        if (!await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
+        if (kind == SubmissionFileKind.Photo
+            && !await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
                 _db,
                 youthId,
                 YouthMediaUse.IndividualPhotoOrVideo,
@@ -103,6 +117,7 @@ public sealed class StoreAssignmentUploadCommandHandler
         {
             OwnerUserId = youthId,
             AssignmentId = assignment.Id,
+            Kind = kind,
             OriginalFileName = Path.GetFileName(request.FileName),
             ContentType = request.ContentType,
             SizeBytes = request.Content.LongLength,
@@ -117,7 +132,8 @@ public sealed class StoreAssignmentUploadCommandHandler
             file.OriginalFileName,
             file.ContentType,
             file.SizeBytes,
-            $"/api/me/files/{file.Id}");
+            $"/api/submission-files/{file.Id}",
+            allowedType);
     }
 }
 
@@ -142,11 +158,28 @@ public sealed class SubmissionFileQueryHandler : IRequestHandler<SubmissionFileQ
         var file = await _db.StoredSubmissionFiles.AsNoTracking()
             .FirstOrDefaultAsync(item => item.Id == request.FileId, cancellationToken)
             ?? throw new NotFoundException("File not found.");
-        if (file.OwnerUserId != _currentUser.UserId)
+        var currentUserId = _currentUser.UserId ?? throw new ForbiddenException("Not signed in.");
+        var canRead = file.OwnerUserId == currentUserId;
+        if (!canRead && _currentUser.Role == Roles.ProgramAdministrator)
         {
-            throw new ForbiddenException("This file does not belong to you.");
+            canRead = await IsLinkedToSubmissionAsync(file.Id, cancellationToken);
         }
-        if (!await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
+        if (!canRead && _currentUser.Role == Roles.Mentor)
+        {
+            canRead = await (
+                from submission in _db.Submissions.AsNoTracking()
+                join youth in _db.Users.AsNoTracking() on submission.YouthUserId equals youth.Id
+                where (submission.PhotoUploadId == file.Id || submission.FileUploadId == file.Id)
+                    && youth.MentorId == currentUserId
+                select submission.Id)
+                .AnyAsync(cancellationToken);
+        }
+        if (!canRead)
+        {
+            throw new ForbiddenException("You cannot access this private submission file.");
+        }
+        if (file.Kind == SubmissionFileKind.Photo
+            && !await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
                 _db,
                 file.OwnerUserId,
                 YouthMediaUse.IndividualPhotoOrVideo,
@@ -157,4 +190,9 @@ public sealed class SubmissionFileQueryHandler : IRequestHandler<SubmissionFileQ
         }
         return new SubmissionFileView(file.OriginalFileName, file.ContentType, file.Content);
     }
+
+    private Task<bool> IsLinkedToSubmissionAsync(Guid fileId, CancellationToken cancellationToken) =>
+        _db.Submissions.AsNoTracking().AnyAsync(
+            item => item.PhotoUploadId == fileId || item.FileUploadId == fileId,
+            cancellationToken);
 }

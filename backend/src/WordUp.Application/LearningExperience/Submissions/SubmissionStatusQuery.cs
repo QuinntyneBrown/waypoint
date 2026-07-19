@@ -16,6 +16,7 @@ public record SubmissionStatusView(
     string? YouthNote,
     string? PhotoUrl,
     string? LinkUrl,
+    SubmissionAttachmentView? File,
     string? MentorComment,
     int? TotalAwarded,
     int TotalPossible,
@@ -24,6 +25,13 @@ public record SubmissionStatusView(
     IReadOnlyList<SubmissionTimelineItem> Timeline,
     IReadOnlyList<SubmissionRubricScore> Rubric,
     SubmissionBadgeView? EarnedBadge);
+
+public record SubmissionAttachmentView(
+    Guid Id,
+    string FileName,
+    string ContentType,
+    long SizeBytes,
+    string Url);
 
 public record SubmissionTimelineItem(string Type, string Label, DateTime? At, bool Current);
 public record SubmissionRubricScore(

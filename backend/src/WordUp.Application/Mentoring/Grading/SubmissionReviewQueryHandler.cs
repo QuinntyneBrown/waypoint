@@ -57,6 +57,19 @@ public sealed class SubmissionReviewQueryHandler : IRequestHandler<SubmissionRev
         {
             photoUrl = null;
         }
+        SubmissionReviewAttachment? file = null;
+        if (submission.FileUploadId is { } fileId)
+        {
+            file = await _db.StoredSubmissionFiles.AsNoTracking()
+                .Where(item => item.Id == fileId && item.Kind == SubmissionFileKind.File)
+                .Select(item => new SubmissionReviewAttachment(
+                    item.Id,
+                    item.OriginalFileName,
+                    item.ContentType,
+                    item.SizeBytes,
+                    $"/api/submission-files/{item.Id}"))
+                .FirstOrDefaultAsync(cancellationToken);
+        }
 
         return new SubmissionReviewView(
             submission.Id,
@@ -69,6 +82,7 @@ public sealed class SubmissionReviewQueryHandler : IRequestHandler<SubmissionRev
             submission.BodyText,
             photoUrl,
             submission.LinkUrl,
+            file,
             submission.YouthNote,
             submission.SubmittedAt,
             submission.MentorComment,

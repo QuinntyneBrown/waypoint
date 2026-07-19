@@ -249,6 +249,7 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.OriginalFileName).HasMaxLength(255).IsRequired();
             b.Property(x => x.ContentType).HasMaxLength(64).IsRequired();
             b.Property(x => x.Sha256).HasMaxLength(64).IsRequired();
+            b.Property(x => x.Kind).HasConversion<string>().HasMaxLength(16);
             b.HasIndex(x => new { x.OwnerUserId, x.AssignmentId });
         });
         modelBuilder.Entity<SubmissionTimelineEvent>(b =>

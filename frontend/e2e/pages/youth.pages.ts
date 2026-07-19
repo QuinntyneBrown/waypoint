@@ -342,6 +342,9 @@ export class YouthAssignmentPage extends BasePage {
   get photoInput() {
     return this.page.getByLabel(/evidence photo/i);
   }
+  get fileInput() {
+    return this.page.getByLabel(/evidence file/i);
+  }
   get attestation() {
     return this.page.getByRole('checkbox', { name: /this is my own work/i });
   }
@@ -359,6 +362,9 @@ export class YouthSubmissionStatusPage extends BasePage {
   }
   get reviseLink() {
     return this.page.getByRole('link', { name: /revise and resubmit/i });
+  }
+  get evidenceFileLink() {
+    return this.page.getByRole('link', { name: /download evidence\.pdf/i });
   }
 }
 

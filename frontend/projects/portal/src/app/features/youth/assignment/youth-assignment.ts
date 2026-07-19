@@ -23,7 +23,8 @@ export class YouthAssignmentPage {
   private readonly assignmentId = this.route.snapshot.paramMap.get('id') ?? '';
 
   protected readonly brief = signal<AssignmentBrief | undefined>(undefined);
-  protected readonly upload = signal<AssignmentUpload | undefined>(undefined);
+  protected readonly photoUpload = signal<AssignmentUpload | undefined>(undefined);
+  protected readonly fileUpload = signal<AssignmentUpload | undefined>(undefined);
   protected readonly statusMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly fileError = signal<string | null>(null);
@@ -61,14 +62,43 @@ export class YouthAssignmentPage {
 
     this.fileError.set(null);
     this.statusMessage.set('Uploading photo…');
-    this.api.uploadAssignmentPhoto(this.assignmentId, file).subscribe({
+    this.api.uploadAssignmentEvidence(this.assignmentId, file).subscribe({
       next: (upload) => {
-        this.upload.set(upload);
+        this.photoUpload.set(upload);
         this.statusMessage.set(`Photo ready: ${upload.fileName}`);
       },
       error: (error: unknown) => {
         this.statusMessage.set(null);
-        this.fileError.set(ApiError.from(error).title);
+        const apiError = ApiError.from(error);
+        this.fileError.set(apiError.fieldErrors[0]?.errorMessage ?? apiError.title);
+      },
+    });
+  }
+
+  protected fileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    const brief = this.brief();
+    if (!brief || file.type !== 'application/pdf' || !file.name.toLowerCase().endsWith('.pdf')) {
+      this.fileError.set('Choose a PDF file.');
+      return;
+    }
+    if (file.size > brief.maxUploadBytes) {
+      this.fileError.set('The file must be 10 MB or smaller.');
+      return;
+    }
+
+    this.fileError.set(null);
+    this.statusMessage.set('Uploading file…');
+    this.api.uploadAssignmentEvidence(this.assignmentId, file).subscribe({
+      next: (upload) => {
+        this.fileUpload.set(upload);
+        this.statusMessage.set(`File ready: ${upload.fileName}`);
+      },
+      error: (error: unknown) => {
+        this.statusMessage.set(null);
+        const apiError = ApiError.from(error);
+        this.fileError.set(apiError.fieldErrors[0]?.errorMessage ?? apiError.title);
       },
     });
   }
@@ -80,7 +110,12 @@ export class YouthAssignmentPage {
       this.form.markAllAsTouched();
       return;
     }
-    if (!value.bodyText.trim() && !value.linkUrl.trim() && !this.upload()) {
+    if (
+      !value.bodyText.trim() &&
+      !value.linkUrl.trim() &&
+      !this.photoUpload() &&
+      !this.fileUpload()
+    ) {
       this.errorMessage.set('Provide at least one of the allowed submission types.');
       return;
     }
@@ -96,8 +131,8 @@ export class YouthAssignmentPage {
     this.api
       .submitAssignment(this.assignmentId, {
         bodyText: value.bodyText.trim() || null,
-        photoUploadId: this.upload()?.id ?? null,
-        photoUrl: null,
+        photoUploadId: this.photoUpload()?.id ?? null,
+        fileUploadId: this.fileUpload()?.id ?? null,
         linkUrl: value.linkUrl.trim() || null,
         isCodingProject: false,
         youthNote: null,

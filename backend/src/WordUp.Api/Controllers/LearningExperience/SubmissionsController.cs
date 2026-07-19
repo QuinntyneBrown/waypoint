@@ -61,7 +61,7 @@ public class SubmissionsController : ControllerBase
                 assignmentId,
                 request.BodyText,
                 request.PhotoUploadId,
-                request.PhotoUrl,
+                request.FileUploadId,
                 request.LinkUrl,
                 request.IsCodingProject,
                 request.YouthNote,

@@ -147,7 +147,7 @@ export class LearningApi {
     );
   }
 
-  uploadAssignmentPhoto(assignmentId: string, file: File): Observable<AssignmentUpload> {
+  uploadAssignmentEvidence(assignmentId: string, file: File): Observable<AssignmentUpload> {
     const data = new FormData();
     data.append('file', file, file.name);
     return this.http.post<AssignmentUpload>(

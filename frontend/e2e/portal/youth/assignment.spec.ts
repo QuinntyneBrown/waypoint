@@ -169,3 +169,45 @@ test('individual evidence media follows granular guardian consent and later with
     page.getByText(/private evidence with current guardian media consent/i),
   ).toBeVisible();
 });
+
+// Traces to: L2-LEARN-006 AC2/AC4, L2-NFR-001 AC4
+test('youth submits a sniffed private PDF and downloads it from the submitted copy', async ({
+  page,
+  request,
+}) => {
+  const seeded = await seedYouthCurriculum(request);
+  await new SignInPage(page).signIn({
+    email: seeded.youthEmail,
+    password: seeded.youthPassword,
+  });
+  await page.goto(`/youth/assignments/${seeded.assignmentId}`);
+
+  const assignment = new YouthAssignmentPage(page);
+  await expect(assignment.heading).toHaveText(seeded.assignmentTitle);
+  await expect(page.getByText('File (PDF)', { exact: true })).toBeVisible();
+
+  await assignment.fileInput.setInputFiles({
+    name: 'evidence.pdf',
+    mimeType: 'application/pdf',
+    buffer: Buffer.from('<script>alert(1)</script>'),
+  });
+  await expect(page.getByRole('alert')).toContainText(/valid pdf/i);
+
+  await assignment.fileInput.setInputFiles({
+    name: 'evidence.pdf',
+    mimeType: 'application/pdf',
+    buffer: Buffer.from('%PDF-1.4\n1 0 obj\n<<>>\nendobj\ntrailer\n<<>>\n%%EOF'),
+  });
+  await expect(page.getByRole('status')).toContainText(/file ready: evidence\.pdf/i);
+  await assignment.responseText.fill('The supporting document is attached.');
+  await assignment.attestation.check();
+  page.once('dialog', async (dialog) => dialog.accept());
+  await assignment.submitButton.click();
+  await expect(page).toHaveURL(/\/youth\/submissions\/[^/]+$/);
+
+  const status = new YouthSubmissionStatusPage(page);
+  await expect(status.evidenceFileLink).toBeVisible();
+  const download = page.waitForEvent('download');
+  await status.evidenceFileLink.click();
+  expect((await download).suggestedFilename()).toBe('evidence.pdf');
+});

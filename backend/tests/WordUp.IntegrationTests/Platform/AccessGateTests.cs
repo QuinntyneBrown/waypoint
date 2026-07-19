@@ -84,7 +84,7 @@ public sealed class AccessGateTests : IntegrationTestBase
 
     [Test]
     [Property("Req", "L2-PLATFORM-011")]
-    public async Task A_youth_without_a_cohort_or_consent_is_not_permitted_to_participate()
+    public async Task A_guardianless_youth_without_a_cohort_is_not_consent_gated_but_cannot_participate()
     {
         // Traces to: L2-PLATFORM-011
         var youth = await SeedYouthAsync(cohortId: null);
@@ -93,7 +93,7 @@ public sealed class AccessGateTests : IntegrationTestBase
         var access = await GetAccessAsync(token);
 
         Assert.That(access.HasCohort, Is.False);
-        Assert.That(access.ConsentRequired, Is.True);
+        Assert.That(access.ConsentRequired, Is.False);
         Assert.That(access.ParticipationAllowed, Is.False);
     }
 

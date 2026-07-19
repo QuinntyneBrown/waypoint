@@ -1,25 +1,53 @@
-<wu-shell role="youth" active="curriculum" [userName]="auth.user()?.displayName ?? ''" (signOut)="auth.signOut()">
+<wu-shell
+  role="youth"
+  active="curriculum"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
   <div class="wu-container wu-container--narrow wu-page">
     <a class="wu-btn wu-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
-    @if (errorMessage(); as error) { <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p> }
-    @if (fileError(); as error) { <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p> }
-    @if (statusMessage(); as status) { <p class="wu-alert wu-alert--success" role="status">{{ status }}</p> }
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (fileError(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (statusMessage(); as status) {
+      <p class="wu-alert wu-alert--success" role="status">{{ status }}</p>
+    }
 
     @if (brief(); as view) {
       <div class="wu-page__head">
         <div class="wu-page__titles">
           <div class="wu-eyebrow">Assignment brief</div>
           <h1 class="wu-page__title">{{ view.title }}</h1>
-          @if (view.dueDate) { <p class="wu-page__sub">Due {{ view.dueDate | date: 'medium' }}</p> }
+          @if (view.dueDate) {
+            <p class="wu-page__sub">Due {{ view.dueDate | date: 'medium' }}</p>
+          }
         </div>
       </div>
-      <section class="wu-card"><div class="wu-card__body wu-stack"><h2>Task</h2><p>{{ view.taskDescription }}</p></div></section>
+      <section class="wu-card">
+        <div class="wu-card__body wu-stack">
+          <h2>Task</h2>
+          <p>{{ view.taskDescription }}</p>
+        </div>
+      </section>
       <section class="wu-card wu-card--greige">
         <div class="wu-card__body wu-stack">
           <h2>What you can submit</h2>
           <ul>
             @for (type of view.allowedSubmissionTypes; track type) {
-              <li>{{ type === 'text' ? 'Written response' : type === 'photo' ? 'Photo (JPG or PNG)' : type === 'link' ? 'Evidence link' : 'File' }}</li>
+              <li>
+                {{
+                  type === 'text'
+                    ? 'Written response'
+                    : type === 'photo'
+                      ? 'Photo (JPG or PNG)'
+                      : type === 'link'
+                        ? 'Evidence link'
+                        : 'File (PDF)'
+                }}
+              </li>
             }
           </ul>
         </div>
@@ -28,33 +56,86 @@
         <div class="wu-card__body wu-stack">
           <h2>Rubric preview</h2>
           @for (criterion of view.rubric; track criterion.id) {
-            <div class="wu-cluster wu-cluster--between"><span>{{ criterion.description }}</span><strong>{{ criterion.points }} points</strong></div>
+            <div class="wu-cluster wu-cluster--between">
+              <span>{{ criterion.description }}</span
+              ><strong>{{ criterion.points }} points</strong>
+            </div>
           }
         </div>
       </section>
 
       @if (view.existingSubmissionId) {
-        <a class="wu-btn wu-btn--primary wu-btn--block" [routerLink]="['/youth/submissions', view.existingSubmissionId]">View submitted work</a>
+        <a
+          class="wu-btn wu-btn--primary wu-btn--block"
+          [routerLink]="['/youth/submissions', view.existingSubmissionId]"
+          >View submitted work</a
+        >
       } @else {
         <form class="wu-stack" [formGroup]="form" (ngSubmit)="submit()">
           @if (view.allowedSubmissionTypes.includes('text')) {
-            <div class="wu-field"><label class="wu-field__label" for="assignment-text">Written response</label><textarea id="assignment-text" class="wu-input" formControlName="bodyText" rows="7"></textarea></div>
+            <div class="wu-field">
+              <label class="wu-field__label" for="assignment-text">Written response</label
+              ><textarea
+                id="assignment-text"
+                class="wu-input"
+                formControlName="bodyText"
+                rows="7"
+              ></textarea>
+            </div>
           }
           @if (view.allowedSubmissionTypes.includes('photo')) {
             <div class="wu-field">
               <label class="wu-field__label" for="assignment-photo">Evidence photo</label>
-              <input id="assignment-photo" class="wu-input" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" (change)="photoSelected($event)" />
+              <input
+                id="assignment-photo"
+                class="wu-input"
+                type="file"
+                accept="image/jpeg,image/png,.jpg,.jpeg,.png"
+                (change)="photoSelected($event)"
+              />
               <p class="wu-field__hint">JPG or PNG, up to 10 MB.</p>
             </div>
           }
-          @if (view.allowedSubmissionTypes.includes('link')) {
-            <div class="wu-field"><label class="wu-field__label" for="assignment-link">Evidence link</label><input id="assignment-link" class="wu-input" type="url" formControlName="linkUrl" /></div>
+          @if (view.allowedSubmissionTypes.includes('file')) {
+            <div class="wu-field">
+              <label class="wu-field__label" for="assignment-file">Evidence file</label>
+              <input
+                id="assignment-file"
+                class="wu-input"
+                type="file"
+                accept="application/pdf,.pdf"
+                (change)="fileSelected($event)"
+              />
+              <p class="wu-field__hint">PDF, up to 10 MB.</p>
+            </div>
           }
-          <label class="wu-card wu-card--greige"><span class="wu-card__body wu-cluster"><input type="checkbox" formControlName="attest" /><strong>This is my own work and the evidence is truthful.</strong></span></label>
-          @if (form.controls.attest.touched && form.controls.attest.hasError('required')) { <p class="wu-field__error">Confirm this is your own work before submitting.</p> }
-          <button class="wu-btn wu-btn--primary wu-btn--block" type="submit" [disabled]="saving() || statusMessage() === 'Uploading photo…'">Submit assignment</button>
+          @if (view.allowedSubmissionTypes.includes('link')) {
+            <div class="wu-field">
+              <label class="wu-field__label" for="assignment-link">Evidence link</label
+              ><input id="assignment-link" class="wu-input" type="url" formControlName="linkUrl" />
+            </div>
+          }
+          <label class="wu-card wu-card--greige"
+            ><span class="wu-card__body wu-cluster"
+              ><input type="checkbox" formControlName="attest" /><strong
+                >This is my own work and the evidence is truthful.</strong
+              ></span
+            ></label
+          >
+          @if (form.controls.attest.touched && form.controls.attest.hasError('required')) {
+            <p class="wu-field__error">Confirm this is your own work before submitting.</p>
+          }
+          <button
+            class="wu-btn wu-btn--primary wu-btn--block"
+            type="submit"
+            [disabled]="saving() || statusMessage()?.startsWith('Uploading')"
+          >
+            Submit assignment
+          </button>
         </form>
       }
-    } @else { <p class="wu-muted">Loading assignment…</p> }
+    } @else {
+      <p class="wu-muted">Loading assignment…</p>
+    }
   </div>
 </wu-shell>

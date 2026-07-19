@@ -8,7 +8,7 @@ public record SubmitAssignmentCommand(
     Guid AssignmentId,
     string? BodyText,
     Guid? PhotoUploadId,
-    string? PhotoUrl,
+    Guid? FileUploadId,
     string? LinkUrl,
     bool IsCodingProject,
     string? YouthNote,

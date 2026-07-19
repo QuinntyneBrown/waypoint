@@ -15,6 +15,7 @@ public sealed record SubmissionReviewView(
     string? BodyText,
     string? PhotoUrl,
     string? LinkUrl,
+    SubmissionReviewAttachment? File,
     string? YouthNote,
     DateTime SubmittedAt,
     string? MentorComment,
@@ -22,6 +23,13 @@ public sealed record SubmissionReviewView(
     int TotalPossible,
     bool GuardianNotified,
     IReadOnlyList<SubmissionReviewCriterion> Rubric);
+
+public sealed record SubmissionReviewAttachment(
+    Guid Id,
+    string FileName,
+    string ContentType,
+    long SizeBytes,
+    string Url);
 
 public sealed record SubmissionReviewCriterion(
     Guid CriterionId,

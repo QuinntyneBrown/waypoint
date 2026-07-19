@@ -10,6 +10,7 @@ public class Submission
     public string? BodyText { get; set; }
     public Guid? PhotoUploadId { get; set; }
     public string? PhotoUrl { get; set; }
+    public Guid? FileUploadId { get; set; }
     public string? LinkUrl { get; set; }
     public bool IsCodingProject { get; set; }
     public string? YouthNote { get; set; }

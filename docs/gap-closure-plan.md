@@ -262,12 +262,13 @@ requirement conflicts early (they gate "done").
       group-only consent is insufficient, media-only withdrawal immediately blocks the private file
       and removes its URL from Youth and staff projections, and guardianless adult Youth remain open.
 - [~] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`,
-      `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence uses private
-      DB-backed JPG/PNG storage and lesson media uses private DB-backed PDF/MP4 storage, both with
-      MIME/extension/signature/size checks plus authenticated no-sniff serving and removal. Profile
-      photos now use owned, replaceable 5 MB JPG/PNG storage across onboarding and settings, with
+      `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence uses purpose-aware
+      private DB-backed JPG/PNG/PDF storage with MIME/extension/signature/10 MB checks, owner-bound
+      submission linkage, unused-upload cleanup, and authenticated no-sniff serving to the Youth,
+      assigned mentor, or administrator. Lesson media uses private validated PDF/MP4 storage, and
+      profile photos use owned, replaceable 5 MB JPG/PNG storage across onboarding and settings with
       self/guardian/assigned-mentor/admin read scope and live minor media-consent enforcement.
-      Non-photo assignment files and support screenshots remain.
+      Support screenshots remain.
 - [x] **H6** Curriculum mutation lifecycle completion `L2-CURRIC-002..006` — lesson content
       and media update/removal, exact lesson/question ordering, typed quiz validation and short-answer
       scoring, assignment update/publish/fan-out, competency soft removal, and module/attendance/
@@ -608,3 +609,11 @@ requirement conflicts early (they gate "done").
   and uploads also recheck the individual-photo grant, including media-only withdrawal. Six profile/
   onboarding integrations, eight portal units, the 426.89 kB production build, and five combined
   onboarding/profile/password browser journeys pass; assignment files and support screenshots remain.
+- 2026-07-18 — H5 advanced: assignment authors can allow PDF evidence alongside text, link, and
+  photo submissions. Youth uploads now enforce the 10 MB cap plus PDF MIME, extension, and magic-byte
+  agreement; the selected private blob is linked to the immutable submitted copy while unused drafts
+  are deleted. Bearer-authenticated downloads use no-sniff headers and are limited to the owner,
+  assigned mentor, or administrator; Youth and mentor views fetch private photos/files as blobs, and
+  external assignment-photo URLs are no longer accepted. The complete backend inventory passes as
+  213 segmented integration tests plus four unit tests; all 51 frontend units, the 426.89 kB production
+  build, and five assignment/mentor-review browser journeys pass. Support screenshots remain.

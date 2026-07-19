@@ -3,7 +3,7 @@ namespace WordUp.Api.Contracts.LearningExperience;
 public record SubmitAssignmentRequest(
     string? BodyText,
     Guid? PhotoUploadId,
-    string? PhotoUrl,
+    Guid? FileUploadId,
     string? LinkUrl,
     bool IsCodingProject,
     string? YouthNote,

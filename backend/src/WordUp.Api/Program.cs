@@ -822,7 +822,7 @@ if (app.Environment.IsEnvironment("Testing"))
             ModuleId = firstModule.Id,
             Title = $"Neighbour Love Project {suffix}",
             TaskDescription = "Describe one practical act of neighbour-love and include evidence if you can.",
-            SubmissionTypes = "text,photo,link",
+            SubmissionTypes = "text,photo,link,file",
             DueDate = now.AddDays(7),
             AllowLate = true,
             RequireMentorApproval = true,

@@ -45,6 +45,15 @@
           @if (view.linkUrl) {
             <a [href]="view.linkUrl" target="_blank" rel="noopener">Open submitted evidence link</a>
           }
+          @if (view.file; as file) {
+            @if (fileUrl(); as url) {
+              <a class="wu-link" [href]="url" [download]="file.fileName"
+                >Download {{ file.fileName }}</a
+              >
+            } @else {
+              <p class="wu-muted" role="status">Preparing {{ file.fileName }}…</p>
+            }
+          }
         </div>
       </section>
       <section class="wu-card wu-card--greige">

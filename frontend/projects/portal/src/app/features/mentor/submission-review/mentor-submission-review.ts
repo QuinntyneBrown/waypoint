@@ -1,5 +1,12 @@
 import { DOCUMENT, DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, MentorApi, SubmissionReviewView } from '@wu/api';
 import { AuthStore } from '@wu/auth';
@@ -57,7 +64,7 @@ type Decision = 'approve' | 'request-revision' | 'save-draft';
     }
   `,
 })
-export class MentorSubmissionReviewPage {
+export class MentorSubmissionReviewPage implements OnDestroy {
   protected readonly auth = inject(AuthStore);
   private readonly api = inject(MentorApi);
   private readonly route = inject(ActivatedRoute);
@@ -65,7 +72,11 @@ export class MentorSubmissionReviewPage {
   private readonly document = inject(DOCUMENT);
 
   private readonly submissionId = this.route.snapshot.paramMap.get('id') ?? '';
+  private photoObjectUrl: string | undefined;
+  private fileObjectUrl: string | undefined;
   protected readonly review = signal<SubmissionReviewView | null>(null);
+  protected readonly photoUrl = signal<string | undefined>(undefined);
+  protected readonly fileUrl = signal<string | undefined>(undefined);
   protected readonly scores = signal<Record<string, number | null>>({});
   protected readonly comment = signal('');
   protected readonly guardianNotified = signal(true);
@@ -145,16 +156,43 @@ export class MentorSubmissionReviewPage {
       });
   }
 
+  ngOnDestroy(): void {
+    if (this.photoObjectUrl) this.document.defaultView?.URL.revokeObjectURL(this.photoObjectUrl);
+    if (this.fileObjectUrl) this.document.defaultView?.URL.revokeObjectURL(this.fileObjectUrl);
+  }
+
   private load(): void {
     this.api.submission(this.submissionId).subscribe({
       next: (review) => {
         this.review.set(review);
+        if (review.photoUrl) this.loadPhoto(review.photoUrl);
+        if (review.file) this.loadFile(review.file.url);
         this.scores.set(
           Object.fromEntries(
             review.rubric.map((criterion) => [criterion.criterionId, criterion.awardedPoints]),
           ),
         );
         this.comment.set(review.mentorComment ?? '');
+      },
+      error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
+    });
+  }
+
+  private loadPhoto(path: string): void {
+    this.api.submissionFile(path).subscribe({
+      next: (blob) => {
+        this.photoObjectUrl = this.document.defaultView?.URL.createObjectURL(blob);
+        this.photoUrl.set(this.photoObjectUrl);
+      },
+      error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
+    });
+  }
+
+  private loadFile(path: string): void {
+    this.api.submissionFile(path).subscribe({
+      next: (blob) => {
+        this.fileObjectUrl = this.document.defaultView?.URL.createObjectURL(blob);
+        this.fileUrl.set(this.fileObjectUrl);
       },
       error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
     });

@@ -29,17 +29,22 @@
             @if (item.bodyText) {
               <div class="submitted-body">{{ item.bodyText }}</div>
             }
-            @if (item.photoUrl) {
-              <img
-                class="evidence-image"
-                [src]="item.photoUrl"
-                alt="Evidence submitted by the youth"
-              />
+            @if (photoUrl(); as photo) {
+              <img class="evidence-image" [src]="photo" alt="Evidence submitted by the youth" />
             }
             @if (item.linkUrl) {
               <a class="wu-link" [href]="item.linkUrl" target="_blank" rel="noopener noreferrer"
                 >Open submitted link</a
               >
+            }
+            @if (item.file; as file) {
+              @if (fileUrl(); as url) {
+                <a class="wu-link" [href]="url" [download]="file.fileName"
+                  >Download {{ file.fileName }}</a
+                >
+              } @else {
+                <p class="wu-muted" role="status">Preparing {{ file.fileName }}…</p>
+              }
             }
             @if (item.youthNote) {
               <p><strong>Youth note:</strong> {{ item.youthNote }}</p>

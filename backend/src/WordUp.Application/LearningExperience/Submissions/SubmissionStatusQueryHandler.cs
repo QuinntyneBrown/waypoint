@@ -106,6 +106,19 @@ public class SubmissionStatusQueryHandler : IRequestHandler<SubmissionStatusQuer
         {
             photoUrl = null;
         }
+        SubmissionAttachmentView? file = null;
+        if (submission.FileUploadId is { } fileId)
+        {
+            file = await _db.StoredSubmissionFiles.AsNoTracking()
+                .Where(item => item.Id == fileId && item.Kind == SubmissionFileKind.File)
+                .Select(item => new SubmissionAttachmentView(
+                    item.Id,
+                    item.OriginalFileName,
+                    item.ContentType,
+                    item.SizeBytes,
+                    $"/api/submission-files/{item.Id}"))
+                .FirstOrDefaultAsync(cancellationToken);
+        }
 
         return new SubmissionStatusView(
             submission.Id,
@@ -117,6 +130,7 @@ public class SubmissionStatusQueryHandler : IRequestHandler<SubmissionStatusQuer
             submission.YouthNote,
             photoUrl,
             submission.LinkUrl,
+            file,
             submission.MentorComment,
             submission.TotalAwarded,
             assignment.TotalPoints,

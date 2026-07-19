@@ -53,6 +53,10 @@ export class MentorApi {
     );
   }
 
+  submissionFile(path: string): Observable<Blob> {
+    return this.http.get(`${this.base}${path}`, { responseType: 'blob' });
+  }
+
   gradeSubmission(id: string, request: GradeSubmissionRequest): Observable<void> {
     return this.http.post<void>(
       `${this.base}/api/mentor/submissions/${encodeURIComponent(id)}/grade`,

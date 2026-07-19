@@ -107,6 +107,7 @@ export interface SubmissionReviewView {
   bodyText: string | null;
   photoUrl: string | null;
   linkUrl: string | null;
+  file: SubmissionReviewAttachment | null;
   youthNote: string | null;
   submittedAt: string;
   mentorComment: string | null;
@@ -114,6 +115,14 @@ export interface SubmissionReviewView {
   totalPossible: number;
   guardianNotified: boolean;
   rubric: SubmissionReviewCriterion[];
+}
+
+export interface SubmissionReviewAttachment {
+  id: string;
+  fileName: string;
+  contentType: string;
+  sizeBytes: number;
+  url: string;
 }
 
 export interface SubmissionReviewCriterion {

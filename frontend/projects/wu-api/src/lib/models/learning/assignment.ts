@@ -24,12 +24,13 @@ export interface AssignmentUpload {
   contentType: string;
   sizeBytes: number;
   url: string;
+  kind: 'photo' | 'file';
 }
 
 export interface SubmitAssignmentInput {
   bodyText: string | null;
   photoUploadId: string | null;
-  photoUrl: string | null;
+  fileUploadId: string | null;
   linkUrl: string | null;
   isCodingProject: boolean;
   youthNote: string | null;
@@ -73,6 +74,7 @@ export interface YouthSubmissionStatus {
   youthNote: string | null;
   photoUrl: string | null;
   linkUrl: string | null;
+  file: SubmissionAttachment | null;
   mentorComment: string | null;
   totalAwarded: number | null;
   totalPossible: number;
@@ -81,4 +83,12 @@ export interface YouthSubmissionStatus {
   timeline: SubmissionTimelineItem[];
   rubric: SubmissionRubricScore[];
   earnedBadge: SubmissionBadge | null;
+}
+
+export interface SubmissionAttachment {
+  id: string;
+  fileName: string;
+  contentType: string;
+  sizeBytes: number;
+  url: string;
 }
