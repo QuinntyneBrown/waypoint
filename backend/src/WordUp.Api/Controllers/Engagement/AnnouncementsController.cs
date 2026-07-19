@@ -60,4 +60,12 @@ public class AnnouncementsController : ControllerBase
         var result = await _mediator.Send(new AnnouncementStatsQuery(id), cancellationToken);
         return Ok(result);
     }
+
+    [HttpGet("api/announcements/manage")]
+    [Authorize(Roles = Roles.ProgramAdministrator)]
+    public async Task<ActionResult<IReadOnlyList<ManagedAnnouncement>>> Manage(
+        CancellationToken cancellationToken)
+    {
+        return Ok(await _mediator.Send(new ManageAnnouncementsQuery(), cancellationToken));
+    }
 }

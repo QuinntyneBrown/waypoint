@@ -170,9 +170,127 @@ public sealed class AnnouncementTests : IntegrationTestBase
         Assert.That(stats.ReadRate, Is.EqualTo(0.5));
     }
 
+    [Test]
+    [Property("Req", "L2-ENGAGE-006")]
+    public async Task Staff_history_lists_sent_and_scheduled_announcements_with_targeting_and_stats()
+    {
+        // Traces to: L2-ENGAGE-006 AC1..3, L2-AUTH-010
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
+        var cohortId = await SeedCohortAsync();
+        await SeedUserAsync(Roles.Youth, cohortId);
+
+        var sentResponse = await SendAsync(HttpMethod.Post, "/api/announcements", body: new
+        {
+            title = "Cohort gathering",
+            message = "Meet in the studio at six.",
+            audienceScope = "cohort",
+            cohortId,
+            roleTargeting = "Youth",
+        }, token: adminToken);
+        var sent = await sentResponse.Content.ReadFromJsonAsync<AnnouncementResultDto>();
+
+        var scheduledResponse = await SendAsync(HttpMethod.Post, "/api/announcements", body: new
+        {
+            title = "Guardian briefing",
+            message = "Details arrive tomorrow.",
+            audienceScope = "org",
+            roleTargeting = "Guardians",
+            scheduledAt = DateTime.UtcNow.AddDays(1),
+        }, token: adminToken);
+        var scheduled = await scheduledResponse.Content.ReadFromJsonAsync<AnnouncementResultDto>();
+
+        var historyResponse = await SendAsync(HttpMethod.Get, "/api/announcements/manage", token: adminToken);
+        Assert.That(historyResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var history = await historyResponse.Content.ReadFromJsonAsync<List<ManagedAnnouncementDto>>();
+        var sentRow = history!.Single(item => item.Id == sent!.Id);
+        Assert.Multiple(() =>
+        {
+            Assert.That(sentRow.AudienceScope, Is.EqualTo("cohort"));
+            Assert.That(sentRow.CohortId, Is.EqualTo(cohortId));
+            Assert.That(sentRow.CohortName, Does.StartWith("Cohort "));
+            Assert.That(sentRow.RoleTargeting, Is.EqualTo("Youth"));
+            Assert.That(sentRow.SentAt, Is.Not.Null);
+            Assert.That(sentRow.Recipients, Is.EqualTo(1));
+            Assert.That(sentRow.Reads, Is.Zero);
+            Assert.That(sentRow.ReadRate, Is.Zero);
+        });
+        Assert.That(history.Single(item => item.Id == scheduled!.Id).SentAt, Is.Null);
+
+        var denied = await SendAsync(HttpMethod.Get, "/api/announcements/manage", token: youthToken);
+        Assert.That(denied.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+
+        var invalid = await SendAsync(HttpMethod.Post, "/api/announcements", body: new
+        {
+            title = "Missing cohort",
+            message = "This target is incomplete.",
+            audienceScope = "cohort",
+            roleTargeting = "Youth",
+        }, token: adminToken);
+        Assert.That(invalid.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
+    [Test]
+    [Property("Req", "L2-ENGAGE-006")]
+    public async Task A_due_schedule_activates_and_a_non_recipient_cannot_record_a_read()
+    {
+        // Traces to: L2-ENGAGE-006 AC2..4, L2-AUTH-010
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
+        var mentorToken = await CreateUserAndGetTokenAsync(Roles.Mentor);
+        var announcement = new Announcement
+        {
+            Title = "Due youth update",
+            Message = "This scheduled update is now ready.",
+            AudienceScope = "org",
+            RoleTargeting = "Youth",
+            ScheduledAt = DateTime.UtcNow.AddMinutes(-1),
+            SentAt = null,
+            CreatedAt = DateTime.UtcNow.AddHours(-1),
+        };
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            db.Announcements.Add(announcement);
+            await db.SaveChangesAsync();
+        }
+
+        var feed = await SendAsync(HttpMethod.Get, "/api/announcements", token: youthToken);
+        var views = await feed.Content.ReadFromJsonAsync<List<AnnouncementViewDto>>();
+        Assert.That(views!.Single(item => item.Id == announcement.Id).SentAt, Is.Not.Null);
+
+        var denied = await SendAsync(
+            HttpMethod.Post,
+            $"/api/announcements/{announcement.Id}/read",
+            token: mentorToken);
+        Assert.That(denied.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+
+        var statsResponse = await SendAsync(
+            HttpMethod.Get,
+            $"/api/announcements/{announcement.Id}/stats",
+            token: adminToken);
+        var stats = await statsResponse.Content.ReadFromJsonAsync<AnnouncementStatsDto>();
+        Assert.That(stats!.Reads, Is.Zero);
+    }
+
     private sealed record AnnouncementResultDto(Guid Id, DateTime? SentAt);
 
     private sealed record AnnouncementViewDto(Guid Id, string Title, string Message, DateTime? SentAt, bool Read);
 
     private sealed record AnnouncementStatsDto(int Recipients, int Reads, double ReadRate);
+
+    private sealed record ManagedAnnouncementDto(
+        Guid Id,
+        string Title,
+        string Message,
+        string AudienceScope,
+        Guid? CohortId,
+        string? CohortName,
+        string RoleTargeting,
+        DateTime? ScheduledAt,
+        DateTime? SentAt,
+        DateTime CreatedAt,
+        int Recipients,
+        int Reads,
+        double ReadRate);
 }

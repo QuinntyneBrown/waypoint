@@ -10,33 +10,22 @@ public class GuardianAnnouncementsQueryHandler
 {
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
+    private readonly IClock _clock;
 
-    public GuardianAnnouncementsQueryHandler(IAppDbContext db, ICurrentUser currentUser)
+    public GuardianAnnouncementsQueryHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock)
     {
         _db = db;
         _currentUser = currentUser;
+        _clock = clock;
     }
 
     public async Task<IReadOnlyList<GuardianAnnouncementView>> Handle(
         GuardianAnnouncementsQuery request, CancellationToken cancellationToken)
     {
         var guardianId = _currentUser.UserId!.Value;
-
-        // A guardian has no cohort of their own; cohort-scoped items resolve via the linked child(ren)
-        // (L2-GUARDIAN-002 AC1; guardian has no CohortId per L2-AUTH-010).
-        var childCohortIds = await _db.Users
-            .Where(u => u.GuardianUserId == guardianId && u.CohortId != null)
-            .Select(u => u.CohortId!.Value)
-            .ToListAsync(cancellationToken);
-
-        // Same role-targeting mapping as the main feed: Guardians / YouthGuardians / Everyone.
-        var allowedTargets = MyAnnouncementsQueryHandler.TargetsForRole(Roles.Guardian);
-
-        var announcements = await _db.Announcements
-            .Where(a => a.SentAt != null)
-            .Where(a => a.AudienceScope == "org"
-                || (a.AudienceScope == "cohort" && a.CohortId != null && childCohortIds.Contains(a.CohortId.Value)))
-            .Where(a => allowedTargets.Contains(a.RoleTargeting))
+        await AnnouncementAccess.ActivateDueAsync(_db, _clock, cancellationToken);
+        var query = await AnnouncementAccess.VisibleToAsync(_db, guardianId, cancellationToken);
+        var announcements = await query
             .OrderByDescending(a => a.SentAt)
             .ToListAsync(cancellationToken);
 

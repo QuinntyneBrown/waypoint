@@ -73,6 +73,7 @@ export {
   AdminCalendarPage,
   AdminAttendanceCapturePage,
   AdminAttendanceHistoryPage,
+  AdminAnnouncementsPage,
 } from './admin.pages';
 export {
   MentorCheckInsPage,

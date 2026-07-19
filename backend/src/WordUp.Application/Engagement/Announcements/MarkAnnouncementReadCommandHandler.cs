@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
+using WordUp.Application.Shared.Common;
 
 namespace WordUp.Application.Engagement.Announcements;
 
@@ -20,6 +21,12 @@ public class MarkAnnouncementReadCommandHandler : IRequestHandler<MarkAnnounceme
     public async Task Handle(MarkAnnouncementReadCommand request, CancellationToken cancellationToken)
     {
         var userId = _currentUser.UserId!.Value;
+        await AnnouncementAccess.ActivateDueAsync(_db, _clock, cancellationToken);
+        var visible = await AnnouncementAccess.VisibleToAsync(_db, userId, cancellationToken);
+        if (!await visible.AnyAsync(item => item.Id == request.AnnouncementId, cancellationToken))
+        {
+            throw new ForbiddenException();
+        }
 
         var alreadyRead = await _db.AnnouncementReads
             .AnyAsync(ar => ar.AnnouncementId == request.AnnouncementId && ar.UserId == userId, cancellationToken);

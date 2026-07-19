@@ -214,7 +214,10 @@ requirement conflicts early (they gate "done").
       now use the shared staff capture and history workspaces across the organization, with four-state
       marks, staff notes, bulk actions, live tallies, optimistic versions, private offline replay,
       cohort/date filters, session and youth rates/trends/flags, and exact-filter CSV/PDF exports.
-- [ ] **G11** Announcement administration `L2-ENGAGE-006`
+- [x] **G11** Announcement administration `L2-ENGAGE-006` — Program Administrators can compose
+      validated organization or cohort announcements for Youth, Youth + Guardians, Guardians,
+      Mentors, or Everyone; send immediately or schedule future delivery; and review sent/scheduled
+      history with authoritative recipient, read, and read-rate statistics across responsive layouts.
 - [ ] **G12** Reports hub + standard reports `L2-REPORT-001`
 - [~] **G13** Data export (PDF + targets) `L2-REPORT-003` — progress-board CSV/PDF exports use the
       selected cohort and track and are audited; the remaining export targets still need delivery.
@@ -505,3 +508,9 @@ requirement conflicts early (they gate "done").
   Organization-wide session and youth history preserves cohort/date filters, rates, trends, threshold
   flags, and exact-filter CSV/PDF downloads. Ten focused integrations, six portal units, the production
   build, and five combined admin/mentor desktop/mobile/offline browser scenarios pass.
+- 2026-07-18 — G11 done: admins can send or schedule validated organization/cohort announcements to
+  each supported role combination and review sent/scheduled history with exact recipient, read, and
+  read-rate statistics. One shared targeting boundary now activates due schedules, resolves youth,
+  guardian, mentor, volunteer, and admin cohort relationships, and rejects read writes from users
+  outside the audience. Seven adjacent backend integrations, six portal units, the production build,
+  and six combined admin/mobile/guardian/youth browser scenarios pass.

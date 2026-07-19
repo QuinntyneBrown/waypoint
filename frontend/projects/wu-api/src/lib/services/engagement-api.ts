@@ -3,6 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api-base-url';
 import {
+  AnnouncementResult,
+  ComposeAnnouncementRequest,
+  ManagedAnnouncement,
   AnnouncementView,
   NotificationView,
   SupportRequest,
@@ -147,6 +150,12 @@ export class AnnouncementsApi {
 
   mine(): Observable<AnnouncementView[]> {
     return this.http.get<AnnouncementView[]>(`${this.base}/api/announcements`);
+  }
+  compose(request: ComposeAnnouncementRequest): Observable<AnnouncementResult> {
+    return this.http.post<AnnouncementResult>(`${this.base}/api/announcements`, request);
+  }
+  manage(): Observable<ManagedAnnouncement[]> {
+    return this.http.get<ManagedAnnouncement[]>(`${this.base}/api/announcements/manage`);
   }
   markRead(id: string): Observable<void> {
     return this.http.post<void>(`${this.base}/api/announcements/${id}/read`, {});

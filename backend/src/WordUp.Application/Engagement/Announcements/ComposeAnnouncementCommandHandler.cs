@@ -1,5 +1,7 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using WordUp.Application.Shared.Abstractions;
+using WordUp.Application.Shared.Common;
 
 namespace WordUp.Application.Engagement.Announcements;
 
@@ -26,13 +28,19 @@ public class ComposeAnnouncementCommandHandler : IRequestHandler<ComposeAnnounce
     {
         var now = _clock.UtcNow;
 
+        if (request.CohortId is Guid cohortId
+            && !await _db.Cohorts.AsNoTracking().AnyAsync(item => item.Id == cohortId, cancellationToken))
+        {
+            throw new NotFoundException("Cohort not found.");
+        }
+
         // Send now when there is no future schedule; otherwise leave SentAt null until the scheduled time.
         DateTime? sentAt = request.ScheduledAt is null || request.ScheduledAt <= now ? now : null;
 
         var announcement = new Announcement
         {
-            Title = request.Title,
-            Message = request.Message,
+            Title = request.Title.Trim(),
+            Message = request.Message.Trim(),
             AudienceScope = request.AudienceScope,
             CohortId = request.CohortId,
             RoleTargeting = request.RoleTargeting,

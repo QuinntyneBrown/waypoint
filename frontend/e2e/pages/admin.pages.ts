@@ -602,3 +602,52 @@ export class AdminAttendanceHistoryPage extends BasePage {
     await this.page.goto(AdminAttendanceHistoryPage.path);
   }
 }
+
+/** Organization/cohort announcement composition, scheduling, and read statistics. */
+export class AdminAnnouncementsPage extends BasePage {
+  static readonly path = '/admin/announcements';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Announcement administration', exact: true });
+  }
+  get title() {
+    return this.page.getByLabel('Title', { exact: true });
+  }
+  get message() {
+    return this.page.getByLabel('Message', { exact: true });
+  }
+  get audience() {
+    return this.page.getByLabel('Audience', { exact: true });
+  }
+  get cohort() {
+    return this.page.getByLabel('Cohort', { exact: true });
+  }
+  get recipients() {
+    return this.page.getByLabel('Recipients', { exact: true });
+  }
+  get sendNow() {
+    return this.page.getByRole('radio', { name: 'Send now', exact: true });
+  }
+  get scheduleLater() {
+    return this.page.getByRole('radio', { name: 'Schedule for later', exact: true });
+  }
+  get scheduledAt() {
+    return this.page.getByLabel('Send date and time', { exact: true });
+  }
+  get submit() {
+    return this.page.getByRole('button', { name: /send announcement|schedule announcement/i });
+  }
+  get status() {
+    return this.page.getByRole('status');
+  }
+  get announcements() {
+    return this.page.getByTestId('admin-announcement');
+  }
+  announcement(title: string) {
+    return this.announcements.filter({ hasText: title });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(AdminAnnouncementsPage.path);
+  }
+}

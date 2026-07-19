@@ -426,6 +426,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'announcements',
+        title: 'Announcement administration · Word Up',
+        loadComponent: () =>
+          import('./features/admin/announcements/admin-announcements').then(
+            (module) => module.AdminAnnouncementsPage,
+          ),
+      },
+      {
         path: 'attendance',
         title: 'Attendance administration · Word Up',
         loadComponent: () =>

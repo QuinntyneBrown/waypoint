@@ -21,18 +21,8 @@ public class MarkAllAnnouncementsReadCommandHandler : IRequestHandler<MarkAllAnn
     public async Task Handle(MarkAllAnnouncementsReadCommand request, CancellationToken cancellationToken)
     {
         var userId = _currentUser.UserId!.Value;
-        var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken)
-            ?? throw new NotFoundException("User not found.");
-
-        // Same visibility rules as the feed (ENGAGE-006).
-        var query = _db.Announcements.Where(a => a.SentAt != null);
-        query = query.Where(a => a.AudienceScope == "org" || (a.AudienceScope == "cohort" && a.CohortId == user.CohortId));
-
-        if (user.Role != Roles.ProgramAdministrator)
-        {
-            var allowedTargets = MyAnnouncementsQueryHandler.TargetsForRole(user.Role);
-            query = query.Where(a => allowedTargets.Contains(a.RoleTargeting));
-        }
+        await AnnouncementAccess.ActivateDueAsync(_db, _clock, cancellationToken);
+        var query = await AnnouncementAccess.VisibleToAsync(_db, userId, cancellationToken);
 
         var visibleIds = await query.Select(a => a.Id).ToListAsync(cancellationToken);
 

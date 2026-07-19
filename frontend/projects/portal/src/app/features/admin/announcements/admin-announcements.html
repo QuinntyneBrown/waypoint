@@ -1,0 +1,208 @@
+<wu-shell
+  role="admin"
+  active="announcements"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Program administration</div>
+        <h1 class="wu-page__title">Announcement administration</h1>
+        <p class="wu-page__sub">
+          Send program or cohort updates and follow recipient read-through.
+        </p>
+      </div>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <div class="wu-alert wu-alert--error" role="alert">
+        <div>
+          <div class="wu-alert__title">{{ error }}</div>
+          Announcement information could not be loaded or saved.
+        </div>
+        <button class="wu-btn wu-btn--secondary" type="button" (click)="retry()">Retry</button>
+      </div>
+    }
+    @if (outcome(); as message) {
+      <p class="wu-alert wu-alert--success" role="status">{{ message }}</p>
+    }
+
+    <div class="announcement-layout">
+      <section class="wu-card" aria-labelledby="compose-announcement-heading">
+        <div class="wu-card__body wu-stack">
+          <div>
+            <h2 id="compose-announcement-heading">Compose announcement</h2>
+            <p class="wu-muted">Choose exactly who should receive this update.</p>
+          </div>
+          <form class="wu-stack" [formGroup]="form" (ngSubmit)="compose()">
+            <div class="wu-field">
+              <label class="wu-label" for="announcement-title">Title</label>
+              <input
+                class="wu-input"
+                id="announcement-title"
+                maxlength="200"
+                formControlName="title"
+              />
+              @if (form.controls.title.touched && form.controls.title.invalid) {
+                <p class="wu-error">Enter a title up to 200 characters.</p>
+              }
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="announcement-message">Message</label>
+              <textarea
+                class="wu-textarea"
+                id="announcement-message"
+                rows="6"
+                maxlength="4000"
+                formControlName="message"
+              ></textarea>
+              @if (form.controls.message.touched && form.controls.message.invalid) {
+                <p class="wu-error">Enter an announcement message.</p>
+              }
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="announcement-audience">Audience</label>
+              <select class="wu-select" id="announcement-audience" formControlName="audienceScope">
+                <option value="org">Organization</option>
+                <option value="cohort">Cohort</option>
+              </select>
+            </div>
+            @if (isCohort()) {
+              <div class="wu-field">
+                <label class="wu-label" for="announcement-cohort">Cohort</label>
+                <select class="wu-select" id="announcement-cohort" formControlName="cohortId">
+                  <option value="">Choose a cohort</option>
+                  @for (cohort of cohorts(); track cohort.id) {
+                    <option [value]="cohort.id">{{ cohort.name }}</option>
+                  }
+                </select>
+                @if (targetError(); as message) {
+                  <p class="wu-error">{{ message }}</p>
+                }
+              </div>
+            }
+            <div class="wu-field">
+              <label class="wu-label" for="announcement-recipients">Recipients</label>
+              <select
+                class="wu-select"
+                id="announcement-recipients"
+                formControlName="roleTargeting"
+              >
+                <option value="Youth">Youth</option>
+                <option value="YouthGuardians">Youth + guardians</option>
+                <option value="Guardians">Guardians</option>
+                <option value="Mentors">Mentors</option>
+                <option value="Everyone">Everyone</option>
+              </select>
+            </div>
+            <fieldset class="announcement-options">
+              <legend class="wu-label">Delivery</legend>
+              <label class="announcement-option">
+                <input type="radio" value="now" formControlName="delivery" />
+                <span>Send now</span>
+              </label>
+              <label class="announcement-option">
+                <input type="radio" value="scheduled" formControlName="delivery" />
+                <span>Schedule for later</span>
+              </label>
+            </fieldset>
+            @if (schedulesLater()) {
+              <div class="wu-field">
+                <label class="wu-label" for="announcement-scheduled-at">Send date and time</label>
+                <input
+                  class="wu-input"
+                  id="announcement-scheduled-at"
+                  type="datetime-local"
+                  formControlName="scheduledAt"
+                />
+                @if (scheduleError(); as message) {
+                  <p class="wu-error">{{ message }}</p>
+                }
+              </div>
+            }
+            <button
+              class="wu-btn wu-btn--primary announcement-submit"
+              type="submit"
+              [disabled]="saving()"
+            >
+              {{
+                saving()
+                  ? 'Saving…'
+                  : schedulesLater()
+                    ? 'Schedule announcement'
+                    : 'Send announcement'
+              }}
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section aria-labelledby="announcement-history-heading">
+        <div class="wu-page__head">
+          <div class="wu-page__titles">
+            <h2 id="announcement-history-heading">Sent and scheduled</h2>
+            <p class="wu-muted">Read statistics refresh from authoritative recipient records.</p>
+          </div>
+        </div>
+
+        @if (announcements() === undefined) {
+          <p class="wu-muted">Loading announcements…</p>
+        } @else if (announcements()!.length === 0) {
+          <div class="wu-empty">
+            <div class="wu-empty__icon"><wu-icon name="bell" /></div>
+            <h3 class="wu-empty__title">No announcements yet</h3>
+            <p class="wu-empty__text">Sent and scheduled updates will appear here.</p>
+          </div>
+        } @else {
+          <ol class="announcement-list wu-stack">
+            @for (announcement of announcements(); track announcement.id) {
+              <li class="wu-card announcement-item" data-testid="admin-announcement">
+                <div class="wu-card__body wu-stack wu-stack--sm">
+                  <div class="wu-cluster wu-cluster--between">
+                    <h3 class="wu-card__title">{{ announcement.title }}</h3>
+                    <span
+                      class="wu-badge"
+                      [class.wu-badge--lime]="announcement.sentAt"
+                      [class.wu-badge--info]="!announcement.sentAt"
+                    >
+                      {{ announcement.sentAt ? 'Sent' : 'Scheduled' }}
+                    </span>
+                  </div>
+                  <p>{{ announcement.message }}</p>
+                  <div class="announcement-meta">
+                    <span class="wu-badge wu-badge--neutral">
+                      {{ announcement.cohortName ?? 'Organization' }}
+                    </span>
+                    <span class="wu-badge wu-badge--neutral">
+                      {{ roleLabel(announcement.roleTargeting) }}
+                    </span>
+                    <span class="wu-muted">
+                      @if (announcement.sentAt) {
+                        Sent {{ announcement.sentAt | date: 'MMM d, y, h:mm a' }}
+                      } @else {
+                        Scheduled {{ announcement.scheduledAt | date: 'MMM d, y, h:mm a' }}
+                      }
+                    </span>
+                  </div>
+                  <div class="announcement-stats">
+                    <div class="announcement-stat">
+                      <strong
+                        >{{ announcement.reads }} of {{ announcement.recipients }} read</strong
+                      >
+                      <span class="wu-muted">Recipient opens</span>
+                    </div>
+                    <div class="announcement-stat">
+                      <strong>{{ announcement.readRate | percent: '1.0-0' }} read</strong>
+                      <span class="wu-muted">Aggregate read rate</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            }
+          </ol>
+        }
+      </section>
+    </div>
+  </div>
+</wu-shell>
