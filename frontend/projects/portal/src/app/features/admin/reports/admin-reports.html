@@ -1,0 +1,505 @@
+<wu-shell
+  role="admin"
+  active="reports"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Program insight</div>
+        <h1 class="wu-page__title">Reports hub</h1>
+        <p class="wu-page__sub">
+          Explore organization, youth, cohort, attendance, and staff activity from one filtered
+          view.
+        </p>
+      </div>
+    </div>
+
+    @if (errorMessage(); as error) {
+      <div class="wu-alert wu-alert--error" role="alert">
+        <div>
+          <div class="wu-alert__title">{{ error }}</div>
+          Report data could not be loaded.
+        </div>
+        <button class="wu-btn wu-btn--secondary" type="button" (click)="retry()">Retry</button>
+      </div>
+    }
+
+    <section class="wu-card" aria-labelledby="report-filters-heading">
+      <div class="wu-card__body wu-stack">
+        <div>
+          <h2 id="report-filters-heading">Report filters</h2>
+          <p class="wu-muted">Every overview and staff metric uses this exact scope.</p>
+        </div>
+        <form class="report-filters" [formGroup]="filterForm" (ngSubmit)="applyFilters()">
+          <div class="wu-field">
+            <label class="wu-label" for="report-from">Date from</label>
+            <input class="wu-input" id="report-from" type="date" formControlName="from" />
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="report-to">Date to</label>
+            <input class="wu-input" id="report-to" type="date" formControlName="to" />
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="report-cohort">Report cohort</label>
+            <select class="wu-select" id="report-cohort" formControlName="cohortId">
+              <option value="">All cohorts</option>
+              @for (cohort of options()?.cohorts ?? []; track cohort.id) {
+                <option [value]="cohort.id">{{ cohort.name }}</option>
+              }
+            </select>
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="report-track">Report track</label>
+            <select class="wu-select" id="report-track" formControlName="trackId">
+              <option value="">All tracks</option>
+              @for (track of options()?.tracks ?? []; track track.id) {
+                <option [value]="track.id">{{ track.name }}</option>
+              }
+            </select>
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="report-mentor">Report mentor</label>
+            <select class="wu-select" id="report-mentor" formControlName="mentorId">
+              <option value="">All mentors</option>
+              @for (mentor of options()?.mentors ?? []; track mentor.id) {
+                <option [value]="mentor.id">{{ mentor.name }}</option>
+              }
+            </select>
+          </div>
+          <button class="wu-btn wu-btn--primary" type="submit">Apply report filters</button>
+        </form>
+        @if (dateError(); as message) {
+          <p class="wu-error" role="alert">{{ message }}</p>
+        }
+        @if (hub(); as summary) {
+          <div class="report-meta">
+            <span data-testid="report-updated-at">
+              Updated {{ summary.generatedAt | date: 'MMM d, y, h:mm a' }}
+            </span>
+            <span data-testid="report-record-count">
+              {{ summary.recordCount }} youth record{{ summary.recordCount === 1 ? '' : 's' }}
+            </span>
+          </div>
+        }
+      </div>
+    </section>
+
+    <div class="report-tabs" role="tablist" aria-label="Report views">
+      <button
+        class="wu-btn"
+        [class.wu-btn--primary]="view() === 'overview'"
+        [class.wu-btn--secondary]="view() !== 'overview'"
+        type="button"
+        role="tab"
+        [attr.aria-selected]="view() === 'overview'"
+        (click)="selectView('overview')"
+      >
+        Overview
+      </button>
+      <button
+        class="wu-btn"
+        [class.wu-btn--primary]="view() === 'youth'"
+        [class.wu-btn--secondary]="view() !== 'youth'"
+        type="button"
+        role="tab"
+        [attr.aria-selected]="view() === 'youth'"
+        (click)="selectView('youth')"
+      >
+        Youth report
+      </button>
+      <button
+        class="wu-btn"
+        [class.wu-btn--primary]="view() === 'cohort'"
+        [class.wu-btn--secondary]="view() !== 'cohort'"
+        type="button"
+        role="tab"
+        [attr.aria-selected]="view() === 'cohort'"
+        (click)="selectView('cohort')"
+      >
+        Cohort report
+      </button>
+      <button
+        class="wu-btn"
+        [class.wu-btn--primary]="view() === 'staff'"
+        [class.wu-btn--secondary]="view() !== 'staff'"
+        type="button"
+        role="tab"
+        [attr.aria-selected]="view() === 'staff'"
+        (click)="selectView('staff')"
+      >
+        Staff activity
+      </button>
+    </div>
+
+    @if (hub() === undefined) {
+      <p class="wu-muted">Loading report data…</p>
+    } @else if (view() === 'overview') {
+      <section class="wu-stack" data-testid="reports-overview" role="tabpanel">
+        @if (hub()!.recordCount === 0) {
+          <div class="wu-empty">
+            <div class="wu-empty__icon"><wu-icon name="bar-chart" /></div>
+            <h2 class="wu-empty__title">No report data for these filters</h2>
+            <p class="wu-empty__text">Change the date or program filters and try again.</p>
+          </div>
+        } @else {
+          <div class="report-kpis">
+            <article class="wu-card report-kpi">
+              <div class="wu-card__body">
+                <strong>{{ hub()!.kpis.activeYouth }}</strong
+                ><span>Active youth</span>
+              </div>
+            </article>
+            <article class="wu-card report-kpi">
+              <div class="wu-card__body">
+                <strong>{{ hub()!.kpis.avgCompletion | percent: '1.0-0' }}</strong
+                ><span>Average completion</span>
+              </div>
+            </article>
+            <article class="wu-card report-kpi">
+              <div class="wu-card__body">
+                <strong>{{ hub()!.kpis.attendanceRate | percent: '1.0-0' }}</strong
+                ><span>Attendance</span>
+              </div>
+            </article>
+            <article class="wu-card report-kpi">
+              <div class="wu-card__body">
+                <strong>{{ hub()!.kpis.retentionRate | percent: '1.0-0' }}</strong
+                ><span>Retention</span>
+              </div>
+            </article>
+            <article class="wu-card report-kpi">
+              <div class="wu-card__body">
+                <strong>{{ hub()!.kpis.cohorts }}</strong
+                ><span>Cohorts</span>
+              </div>
+            </article>
+            <article class="wu-card report-kpi">
+              <div class="wu-card__body">
+                <strong>{{ hub()!.kpis.activeMentors }}</strong
+                ><span>Active mentors</span>
+              </div>
+            </article>
+          </div>
+          <div class="report-grid">
+            <section class="wu-card report-card" aria-labelledby="attendance-chart-heading">
+              <div class="wu-card__body wu-stack">
+                <h2 id="attendance-chart-heading">Attendance breakdown</h2>
+                <div class="report-stat-line">
+                  <span>Present {{ hub()!.attendance.present }}</span>
+                  <span>Late {{ hub()!.attendance.late }}</span>
+                  <span>Excused {{ hub()!.attendance.excused }}</span>
+                  <span>Absent {{ hub()!.attendance.absent }}</span>
+                </div>
+              </div>
+            </section>
+            <section
+              class="wu-card report-card"
+              style="grid-column: span 2"
+              aria-labelledby="cohort-chart-heading"
+            >
+              <div class="wu-card__body wu-stack">
+                <h2 id="cohort-chart-heading">Cohort completion</h2>
+                @for (cohort of hub()!.cohorts; track cohort.cohortId) {
+                  <div class="report-chart-row">
+                    <span>{{ cohort.cohortName }}</span>
+                    <div class="report-bar" aria-hidden="true">
+                      <span [style.width.%]="cohort.completionRate * 100"></span>
+                    </div>
+                    <strong>{{ cohort.completionRate | percent: '1.0-0' }}</strong>
+                  </div>
+                }
+              </div>
+            </section>
+          </div>
+        }
+      </section>
+    } @else if (view() === 'youth') {
+      <section class="wu-stack" role="tabpanel">
+        <form class="wu-card report-selector" [formGroup]="youthForm" (ngSubmit)="generateYouth()">
+          <div class="wu-card__body report-grid">
+            <div class="wu-field">
+              <label class="wu-label" for="report-youth">Youth</label>
+              <select class="wu-select" id="report-youth" formControlName="youthId">
+                <option value="">Choose a youth</option>
+                @for (person of options()?.youth ?? []; track person.id) {
+                  <option [value]="person.id">{{ person.name }}</option>
+                }
+              </select>
+            </div>
+            <button class="wu-btn wu-btn--primary" type="submit" [disabled]="loadingDetail()">
+              Generate youth report
+            </button>
+          </div>
+        </form>
+        @if (youthReport(); as report) {
+          <article class="wu-stack" data-testid="youth-report">
+            <div>
+              <h2>{{ report.youthName }}</h2>
+              <p class="wu-muted">{{ report.cohortName }} · Mentor {{ report.mentorName }}</p>
+            </div>
+            <div class="report-rings">
+              <div class="wu-card report-card">
+                <div class="wu-card__body wu-stack wu-stack--sm">
+                  <div
+                    class="report-ring"
+                    [style.--report-value]="report.completionRate * 100 + '%'"
+                  >
+                    <strong>{{ report.completionRate | percent: '1.0-0' }}</strong>
+                  </div>
+                  <span>Curriculum progress</span>
+                </div>
+              </div>
+              <div class="wu-card report-card">
+                <div class="wu-card__body wu-stack wu-stack--sm">
+                  <div class="report-ring" [style.--report-value]="report.avgQuizScore + '%'">
+                    <strong>{{ report.avgQuizScore | number: '1.0-0' }}%</strong>
+                  </div>
+                  <span>Average quiz score</span>
+                </div>
+              </div>
+              <div class="wu-card report-card">
+                <div class="wu-card__body wu-stack wu-stack--sm">
+                  <div
+                    class="report-ring"
+                    [style.--report-value]="report.attendance.rate * 100 + '%'"
+                  >
+                    <strong>{{ report.attendance.rate | percent: '1.0-0' }}</strong>
+                  </div>
+                  <span>Attendance rate</span>
+                </div>
+              </div>
+            </div>
+            <div class="report-grid">
+              <section class="wu-card report-card">
+                <div class="wu-card__body wu-stack">
+                  <h3>Module completion</h3>
+                  @for (module of report.modules; track module.moduleId) {
+                    <div>
+                      <strong>{{ module.name }}</strong>
+                      <p>
+                        {{ module.completionRate | percent: '1.0-0' }} complete ·
+                        {{ module.completedLessons }} of {{ module.totalLessons }} lessons
+                      </p>
+                    </div>
+                  }
+                </div>
+              </section>
+              <section class="wu-card report-card">
+                <div class="wu-card__body wu-stack">
+                  <h3>Quiz scores</h3>
+                  @for (quiz of report.quizScores; track $index) {
+                    <div>
+                      <strong>{{ quiz.title }}</strong>
+                      <p>{{ quiz.score }}%</p>
+                    </div>
+                  } @empty {
+                    <p class="wu-muted">No quiz scores in this period.</p>
+                  }
+                </div>
+              </section>
+              <section class="wu-card report-card">
+                <div class="wu-card__body wu-stack">
+                  <h3>Attendance</h3>
+                  <div class="report-stat-line">
+                    <span>Present {{ report.attendance.present }}</span
+                    ><span>Late {{ report.attendance.late }}</span
+                    ><span>Excused {{ report.attendance.excused }}</span
+                    ><span>Absent {{ report.attendance.absent }}</span>
+                  </div>
+                </div>
+              </section>
+              <section class="wu-card report-card">
+                <div class="wu-card__body wu-stack">
+                  <h3>Mentor-assessed competencies</h3>
+                  @for (competency of report.competencies; track competency.competencyId) {
+                    <div>
+                      <strong>{{ competency.name }}</strong>
+                      <p>{{ competency.level }}</p>
+                    </div>
+                  } @empty {
+                    <p class="wu-muted">No assessments in this period.</p>
+                  }
+                </div>
+              </section>
+              <section class="wu-card report-card">
+                <div class="wu-card__body wu-stack">
+                  <h3>Mentor notes summary</h3>
+                  <strong>{{ checkInLabel(report.mentorNotes.checkIns) }}</strong>
+                  @if (report.mentorNotes.latestAt) {
+                    <p>
+                      Latest {{ report.mentorNotes.latestAt | date: 'MMM d, y' }} ·
+                      {{ report.mentorNotes.latestEngagement ?? 'No engagement label' }}
+                    </p>
+                  }
+                  <p class="wu-muted">Private note details are not included in this summary.</p>
+                </div>
+              </section>
+              <section class="wu-card report-card">
+                <div class="wu-card__body wu-stack">
+                  <h3>Badges</h3>
+                  @for (badge of report.badgeAwards; track badge.badgeId) {
+                    <div>
+                      <strong>{{ badge.name }}</strong>
+                      <p>Earned {{ badge.awardedAt | date: 'MMM d, y' }}</p>
+                    </div>
+                  } @empty {
+                    <p class="wu-muted">No badges in this period.</p>
+                  }
+                </div>
+              </section>
+            </div>
+          </article>
+        }
+      </section>
+    } @else if (view() === 'cohort') {
+      <section class="wu-stack" role="tabpanel">
+        <form
+          class="wu-card report-selector"
+          [formGroup]="cohortForm"
+          (ngSubmit)="generateCohort()"
+        >
+          <div class="wu-card__body report-grid">
+            <div class="wu-field">
+              <label class="wu-label" for="cohort-report-selection">Cohort report selection</label
+              ><select class="wu-select" id="cohort-report-selection" formControlName="cohortId">
+                <option value="">Choose a cohort</option>
+                @for (cohort of options()?.cohorts ?? []; track cohort.id) {
+                  <option [value]="cohort.id">{{ cohort.name }}</option>
+                }
+              </select>
+            </div>
+            <div class="wu-field">
+              <label class="wu-label" for="cohort-comparison">Compare with</label
+              ><select class="wu-select" id="cohort-comparison" formControlName="compareCohortId">
+                <option value="">Program average / previous term</option>
+                @for (cohort of options()?.cohorts ?? []; track cohort.id) {
+                  <option [value]="cohort.id">{{ cohort.name }}</option>
+                }
+              </select>
+            </div>
+            <button class="wu-btn wu-btn--primary" type="submit" [disabled]="loadingDetail()">
+              Generate cohort report
+            </button>
+          </div>
+        </form>
+        @if (cohortReport(); as report) {
+          <article class="wu-stack" data-testid="cohort-report">
+            <div>
+              <h2>{{ report.cohortName }}</h2>
+              <p>
+                {{ report.enrolment }} enrolled · Active {{ report.statusActive }} · At risk
+                {{ report.statusAtRisk }}
+              </p>
+            </div>
+            <div class="report-kpis">
+              <article class="wu-card report-kpi">
+                <div class="wu-card__body">
+                  <strong>{{ report.avgCompletion | percent: '1.0-0' }}</strong
+                  ><span>Average completion</span>
+                </div>
+              </article>
+              <article class="wu-card report-kpi">
+                <div class="wu-card__body">
+                  <strong>{{ report.attendanceRate | percent: '1.0-0' }}</strong
+                  ><span>Attendance</span>
+                </div>
+              </article>
+              <article class="wu-card report-kpi">
+                <div class="wu-card__body">
+                  <strong>{{ report.retentionRate | percent: '1.0-0' }}</strong
+                  ><span>Retention</span>
+                </div>
+              </article>
+            </div>
+            <div class="report-grid">
+              <section class="wu-card report-card">
+                <div class="wu-card__body wu-stack">
+                  <h3>Module completion</h3>
+                  @for (module of report.modules; track module.moduleId) {
+                    <div>
+                      <strong>{{ module.name }}</strong>
+                      <p>{{ module.completionRate | percent: '1.0-0' }} complete</p>
+                    </div>
+                  }
+                </div>
+              </section>
+              <section class="wu-card report-card">
+                <div class="wu-card__body wu-stack">
+                  <h3>Youth summary</h3>
+                  @for (person of report.youth; track person.youthId) {
+                    <div>
+                      <strong>{{ person.youthName }}</strong>
+                      <p [class.report-status--risk]="person.status === 'At risk'">
+                        {{ person.status }} ·
+                        {{ person.completionRate | percent: '1.0-0' }} complete
+                      </p>
+                    </div>
+                  }
+                </div>
+              </section>
+              <section class="wu-card report-card">
+                <div class="wu-card__body wu-stack">
+                  <h3>Comparisons</h3>
+                  @for (comparison of report.comparisons; track comparison.label) {
+                    <div>
+                      <strong>{{ comparison.label }}</strong>
+                      <p>
+                        Completion {{ comparison.completionRate | percent: '1.0-0' }} · Attendance
+                        {{ comparison.attendanceRate | percent: '1.0-0' }} · Retention
+                        {{ comparison.retentionRate | percent: '1.0-0' }}
+                      </p>
+                    </div>
+                  }
+                </div>
+              </section>
+            </div>
+          </article>
+        }
+      </section>
+    } @else {
+      <section class="wu-stack" role="tabpanel">
+        <div>
+          <h2>Staff activity</h2>
+          <p class="wu-muted">
+            Caseload, check-ins, and reviews within the current report filters.
+          </p>
+        </div>
+        @if (hub()!.staff.length === 0) {
+          <div class="wu-empty">
+            <h3 class="wu-empty__title">No staff activity for these filters</h3>
+            <p class="wu-empty__text">Change the report scope and try again.</p>
+          </div>
+        } @else {
+          <div class="report-grid">
+            @for (mentor of hub()!.staff; track mentor.mentorId) {
+              <article class="wu-card report-card" data-testid="staff-activity-row">
+                <div class="wu-card__body wu-stack">
+                  <div>
+                    <h3>{{ mentor.mentorName }}</h3>
+                    <p class="wu-muted">{{ mentor.email }}</p>
+                  </div>
+                  <div class="report-stat-line">
+                    <span>Caseload {{ mentor.caseload }}</span
+                    ><span>Check-ins {{ mentor.checkIns }}</span
+                    ><span>Reviews {{ mentor.reviews }}</span>
+                  </div>
+                  <span
+                    class="wu-badge"
+                    [class.wu-badge--danger]="mentor.overloaded"
+                    [class.wu-badge--lime]="!mentor.overloaded"
+                    >{{ mentor.loadBalance }}</span
+                  >
+                  <p class="wu-muted">
+                    Target {{ mentor.targetMinimum }}–{{ mentor.targetMaximum }} youth
+                  </p>
+                </div>
+              </article>
+            }
+          </div>
+        }
+      </section>
+    }
+  </div>
+</wu-shell>

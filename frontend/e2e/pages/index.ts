@@ -74,6 +74,7 @@ export {
   AdminAttendanceCapturePage,
   AdminAttendanceHistoryPage,
   AdminAnnouncementsPage,
+  AdminReportsPage,
 } from './admin.pages';
 export {
   MentorCheckInsPage,

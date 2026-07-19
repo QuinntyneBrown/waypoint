@@ -386,6 +386,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'reports',
+        title: 'Reports hub · Word Up',
+        loadComponent: () =>
+          import('./features/admin/reports/admin-reports').then(
+            (module) => module.AdminReportsPage,
+          ),
+      },
+      {
         path: 'mentor-assignments',
         title: 'Mentor assignments · Word Up',
         loadComponent: () =>

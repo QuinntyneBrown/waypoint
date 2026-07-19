@@ -651,3 +651,82 @@ export class AdminAnnouncementsPage extends BasePage {
     await this.page.goto(AdminAnnouncementsPage.path);
   }
 }
+
+/** Filtered organization, youth, cohort, attendance, and staff reports. */
+export class AdminReportsPage extends BasePage {
+  static readonly path = '/admin/reports';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Reports hub', exact: true });
+  }
+  get from() {
+    return this.page.getByLabel('Date from', { exact: true });
+  }
+  get to() {
+    return this.page.getByLabel('Date to', { exact: true });
+  }
+  get cohortFilter() {
+    return this.page.getByLabel('Report cohort', { exact: true });
+  }
+  get trackFilter() {
+    return this.page.getByLabel('Report track', { exact: true });
+  }
+  get mentorFilter() {
+    return this.page.getByLabel('Report mentor', { exact: true });
+  }
+  get applyFilters() {
+    return this.page.getByRole('button', { name: 'Apply report filters', exact: true });
+  }
+  get updatedAt() {
+    return this.page.getByTestId('report-updated-at');
+  }
+  get recordCount() {
+    return this.page.getByTestId('report-record-count');
+  }
+  get overviewTab() {
+    return this.page.getByRole('tab', { name: 'Overview', exact: true });
+  }
+  get youthTab() {
+    return this.page.getByRole('tab', { name: 'Youth report', exact: true });
+  }
+  get cohortTab() {
+    return this.page.getByRole('tab', { name: 'Cohort report', exact: true });
+  }
+  get staffTab() {
+    return this.page.getByRole('tab', { name: 'Staff activity', exact: true });
+  }
+  get overview() {
+    return this.page.getByTestId('reports-overview');
+  }
+  get youth() {
+    return this.page.getByLabel('Youth', { exact: true });
+  }
+  get generateYouth() {
+    return this.page.getByRole('button', { name: 'Generate youth report', exact: true });
+  }
+  get youthReport() {
+    return this.page.getByTestId('youth-report');
+  }
+  get reportCohort() {
+    return this.page.getByLabel('Cohort report selection', { exact: true });
+  }
+  get compareCohort() {
+    return this.page.getByLabel('Compare with', { exact: true });
+  }
+  get generateCohort() {
+    return this.page.getByRole('button', { name: 'Generate cohort report', exact: true });
+  }
+  get cohortReport() {
+    return this.page.getByTestId('cohort-report');
+  }
+  get staffRows() {
+    return this.page.getByTestId('staff-activity-row');
+  }
+  staffRow(name: string) {
+    return this.staffRows.filter({ hasText: name });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(AdminReportsPage.path);
+  }
+}

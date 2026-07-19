@@ -218,7 +218,11 @@ requirement conflicts early (they gate "done").
       validated organization or cohort announcements for Youth, Youth + Guardians, Guardians,
       Mentors, or Everyone; send immediately or schedule future delivery; and review sent/scheduled
       history with authoritative recipient, read, and read-rate statistics across responsive layouts.
-- [ ] **G12** Reports hub + standard reports `L2-REPORT-001`
+- [x] **G12** Reports hub + standard reports `L2-REPORT-001` — the responsive reports hub now
+      applies one date/cohort/track/mentor scope to organization KPIs, attendance, cohort, and staff
+      charts with authoritative timestamps and record counts. Detailed youth and cohort reports add
+      curriculum, quiz, competency, attendance, badge, mentor-summary, status, retention, and
+      comparison views; empty data, global error recovery, and mentor ownership boundaries are tested.
 - [~] **G13** Data export (PDF + targets) `L2-REPORT-003` — progress-board CSV/PDF exports use the
       selected cohort and track and are audited; the remaining export targets still need delivery.
 - [ ] **G14** Roster import UI `L2-REPORT-004`
@@ -243,7 +247,11 @@ requirement conflicts early (they gate "done").
       and media update/removal, exact lesson/question ordering, typed quiz validation and short-answer
       scoring, assignment update/publish/fan-out, competency soft removal, and module/attendance/
       assignment automatic badge rules now have validated, audited, exact-once server lifecycles.
-- [~] **H7** Shared progress model/views `L2-ADMIN-004`, `L2-LEARN-009/010`, `L2-GUARDIAN-001`, `L2-REPORT-001` — curriculum and journey share one module completion/current-state snapshot, badge counts derive from authoritative progress records, and self-analytics now includes approved quiz, attendance, and latest competency histories; cross-role histories and report unification remain.
+- [~] **H7** Shared progress model/views `L2-ADMIN-004`, `L2-LEARN-009/010`, `L2-GUARDIAN-001`, `L2-REPORT-001` —
+      curriculum and journey share one module completion/current-state snapshot, badge counts derive
+      from authoritative progress records, and self-analytics includes approved quiz, attendance, and
+      latest competency histories. Admin and mentor reports now project those same records across
+      youth, cohort, and organization scopes; remaining guardian-facing cross-role histories remain.
 - [x] **H8** Grading outcomes (rubric validation, badges, notifications, live) `L2-MENTOR-003`, `L2-LEARN-007`, `L2-ENGAGE-008` — rubric IDs/ranges and complete final scores are server-validated,
       totals are server-computed, configured badges and youth-visible results are applied, and final
       outcomes publish durable user-scoped youth plus opt-in guardian notifications in real time.
@@ -271,10 +279,10 @@ requirement conflicts early (they gate "done").
 - [ ] **H15** Security audit coverage (denied actions, tamper-evidence) `L2-AUTH-009`, `L2-CONSENT-003`
 - [ ] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002`
 - [~] **H17** Report completeness (org/attendance, filters, PDF) `L2-REPORT-001/003`, `L2-ENGAGE-004`, `L2-ADMIN-004` —
-      scoped attendance reporting now supports cohort/date filters, session status/rates, youth
-      counts/trends/thresholds, and exact-filter CSV/PDF exports; staff activity now includes named
-      caseload, check-in, review, target-band, and overload metrics. Org reporting, cross-report
-      comparisons, and the remaining export targets still remain.
+      the standard organization, youth, cohort, attendance, and staff views now share date/cohort/
+      track/mentor filters, KPIs, named activity details, counts/timestamps, status and retention,
+      program/selected/previous comparisons, and mentor scope. Attendance and progress-board exports
+      already preserve their active filters; the remaining report export targets and PDF output remain.
 - [ ] **H18** Data-subject fulfillment + retention/anonymization `L2-NFR-003`
 - [ ] **H19** Unsaved-change framework `L2-NFR-007`
 - [ ] **H20** Logging/alerting (correlation ids, PII redaction) `L2-PLATFORM-008`, `L2-NFR-011`
@@ -514,3 +522,11 @@ requirement conflicts early (they gate "done").
   guardian, mentor, volunteer, and admin cohort relationships, and rejects read writes from users
   outside the audience. Seven adjacent backend integrations, six portal units, the production build,
   and six combined admin/mobile/guardian/youth browser scenarios pass.
+- 2026-07-18 — G12 done; H7 and H17 advanced: admins can apply one date/cohort/track/mentor scope to
+  organization KPIs, attendance and cohort charts, staff load, and full youth/cohort reports with
+  current record counts and generated timestamps. The detailed projections combine authoritative
+  lesson, quiz, attendance, competency, check-in, badge, flag, enrollment, and staffing data, including
+  program, selected-cohort, and previous-term comparisons without exposing private mentor-note text.
+  Mentor endpoints remain limited to assigned youth and cohorts; true empty data, shared 500 recovery,
+  and mobile reflow are covered. Nine reporting integrations, six portal units, the production build,
+  and three desktop/mobile browser scenarios pass.
