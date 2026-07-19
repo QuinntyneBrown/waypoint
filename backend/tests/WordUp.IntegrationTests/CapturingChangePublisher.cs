@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using WordUp.Application.Shared.Abstractions;
+using WordUp.Api.Realtime;
 
 namespace WordUp.IntegrationTests;
 
@@ -13,6 +14,10 @@ public sealed record CapturedChange(
 public sealed class CapturingChangePublisher : IChangePublisher
 {
     private readonly ConcurrentQueue<CapturedChange> _changes = new();
+    private readonly SignalRChangePublisher _inner;
+
+    public CapturingChangePublisher(SignalRChangePublisher inner) => _inner = inner;
+
     public IReadOnlyList<CapturedChange> Changes => _changes.ToArray();
 
     public Task PublishToUserAsync(
@@ -22,7 +27,7 @@ public sealed class CapturingChangePublisher : IChangePublisher
         CancellationToken cancellationToken = default)
     {
         _changes.Enqueue(new CapturedChange("user", userId, null, eventName, payload));
-        return Task.CompletedTask;
+        return _inner.PublishToUserAsync(userId, eventName, payload, cancellationToken);
     }
 
     public Task PublishToRoleAsync(
@@ -32,7 +37,7 @@ public sealed class CapturingChangePublisher : IChangePublisher
         CancellationToken cancellationToken = default)
     {
         _changes.Enqueue(new CapturedChange("role", null, role, eventName, payload));
-        return Task.CompletedTask;
+        return _inner.PublishToRoleAsync(role, eventName, payload, cancellationToken);
     }
 
     public Task PublishToCohortAsync(
@@ -42,6 +47,6 @@ public sealed class CapturingChangePublisher : IChangePublisher
         CancellationToken cancellationToken = default)
     {
         _changes.Enqueue(new CapturedChange("cohort", cohortId, null, eventName, payload));
-        return Task.CompletedTask;
+        return _inner.PublishToCohortAsync(cohortId, eventName, payload, cancellationToken);
     }
 }

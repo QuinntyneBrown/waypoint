@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Api.Observability;
+using WordUp.Api.Realtime;
 
 namespace WordUp.IntegrationTests;
 
@@ -71,6 +72,7 @@ public sealed class SqlServerWebAppFactory : WebApplicationFactory<Program>
             services.AddSingleton<IExceptionAlertSink>(sp =>
                 sp.GetRequiredService<CapturingExceptionAlertSink>());
             services.RemoveAll<IChangePublisher>();
+            services.AddSingleton<SignalRChangePublisher>();
             services.AddSingleton<CapturingChangePublisher>();
             services.AddSingleton<IChangePublisher>(sp =>
                 sp.GetRequiredService<CapturingChangePublisher>());
