@@ -2,6 +2,7 @@ using WordUp.Api.Contracts.PlatformServices;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WordUp.Application.PlatformServices.Files;
 using WordUp.Application.PlatformServices.Support;
 
 namespace WordUp.Api.Controllers.PlatformServices;
@@ -24,8 +25,39 @@ public class SupportController : ControllerBase
                 request.Category,
                 request.Description,
                 request.ReplyToEmail,
-                request.ScreenshotUrl),
+                request.ScreenshotFileId),
             cancellationToken);
         return Ok(result);
+    }
+
+    [HttpPost("api/support/screenshots")]
+    [RequestSizeLimit(SafeImageUploadPolicy.MaxBytes + 65536)]
+    public async Task<ActionResult<SupportScreenshotResult>> UploadScreenshot(
+        IFormFile file,
+        CancellationToken cancellationToken)
+    {
+        await using var stream = new MemoryStream();
+        await file.CopyToAsync(stream, cancellationToken);
+        return Ok(await _mediator.Send(
+            new StoreSupportScreenshotCommand(
+                file.FileName,
+                file.ContentType.ToLowerInvariant(),
+                stream.ToArray()),
+            cancellationToken));
+    }
+
+    [HttpGet("api/support/screenshots/{id:guid}")]
+    public async Task<IActionResult> Screenshot(Guid id, CancellationToken cancellationToken)
+    {
+        var screenshot = await _mediator.Send(new GetSupportScreenshotQuery(id), cancellationToken);
+        Response.Headers.XContentTypeOptions = "nosniff";
+        return File(screenshot.Content, screenshot.ContentType, screenshot.FileName);
+    }
+
+    [HttpDelete("api/support/screenshots/{id:guid}")]
+    public async Task<IActionResult> RemoveScreenshot(Guid id, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new RemoveSupportScreenshotCommand(id), cancellationToken);
+        return NoContent();
     }
 }

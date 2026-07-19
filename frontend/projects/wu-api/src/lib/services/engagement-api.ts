@@ -10,6 +10,7 @@ import {
   NotificationView,
   SupportRequest,
   SupportResult,
+  SupportScreenshot,
 } from '../models/platform/platform';
 import {
   BroadcastResult,
@@ -173,5 +174,15 @@ export class SupportApi {
 
   submit(body: SupportRequest): Observable<SupportResult> {
     return this.http.post<SupportResult>(`${this.base}/api/support`, body);
+  }
+
+  uploadScreenshot(file: File): Observable<SupportScreenshot> {
+    const form = new FormData();
+    form.append('file', file, file.name);
+    return this.http.post<SupportScreenshot>(`${this.base}/api/support/screenshots`, form);
+  }
+
+  removeScreenshot(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.base}/api/support/screenshots/${encodeURIComponent(id)}`);
   }
 }

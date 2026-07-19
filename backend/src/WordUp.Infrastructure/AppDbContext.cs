@@ -372,7 +372,6 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Category).HasMaxLength(64).IsRequired();
             b.Property(x => x.Description).HasMaxLength(4000).IsRequired();
             b.Property(x => x.ReplyToEmail).HasMaxLength(256).IsRequired();
-            b.Property(x => x.ScreenshotUrl).HasMaxLength(512);
             b.HasIndex(x => x.CreatedAt);
         });
         modelBuilder.Entity<StoredUserFile>(b =>

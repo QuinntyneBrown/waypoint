@@ -23,6 +23,15 @@
           <div>{{ errorMessage() }}</div>
         </div>
       }
+      @if (fileError(); as error) {
+        <div class="wu-alert wu-alert--error" role="alert">
+          <wu-icon name="alert-circle" iconClass="wu-alert__icon" />
+          <div>{{ error }}</div>
+        </div>
+      }
+      @if (statusMessage(); as status) {
+        <p class="wu-alert wu-alert--success" role="status">{{ status }}</p>
+      }
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="wu-stack">
         <div class="wu-field">
           <label class="wu-label" for="category">What’s this about?</label>
@@ -59,12 +68,40 @@
             <div class="wu-error-text">Enter a valid email address.</div>
           }
         </div>
+        <div class="wu-field">
+          <label class="wu-label" for="support-screenshot">Optional screenshot</label>
+          <input
+            class="wu-input"
+            id="support-screenshot"
+            type="file"
+            accept="image/jpeg,image/png,.jpg,.jpeg,.png"
+            (change)="screenshotSelected($event)"
+          />
+          <p class="wu-field__hint">JPG or PNG, up to 5 MB. Avoid including private information.</p>
+          @if (screenshotPreview(); as preview) {
+            <img
+              [src]="preview"
+              alt="Support screenshot preview"
+              style="display: block; max-width: 100%; max-height: 20rem"
+            />
+          }
+          @if (screenshot()) {
+            <button
+              class="wu-btn wu-btn--ghost"
+              type="button"
+              [disabled]="uploading()"
+              (click)="removeScreenshot()"
+            >
+              Remove screenshot
+            </button>
+          }
+        </div>
         <div>
           <button
             class="wu-btn wu-btn--primary"
             type="submit"
             [class.is-loading]="submitting()"
-            [disabled]="submitting()"
+            [disabled]="submitting() || uploading()"
           >
             Send message
           </button>

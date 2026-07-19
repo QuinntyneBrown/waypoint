@@ -8,6 +8,6 @@ public record SubmitSupportRequestCommand(
     string Category,
     string Description,
     string ReplyToEmail,
-    string? ScreenshotUrl) : IRequest<SupportRequestResult>;
+    Guid? ScreenshotFileId) : IRequest<SupportRequestResult>;
 
 public record SupportRequestResult(Guid Id);

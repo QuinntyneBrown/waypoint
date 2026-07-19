@@ -30,11 +30,19 @@ export interface SupportRequest {
   category: string;
   description: string;
   replyToEmail: string;
-  screenshotUrl?: string | null;
+  screenshotFileId: string | null;
 }
 
 export interface SupportResult {
   id: string;
+}
+
+export interface SupportScreenshot {
+  id: string;
+  fileName: string;
+  contentType: string;
+  sizeBytes: number;
+  url: string;
 }
 
 export const SUPPORT_CATEGORIES = [

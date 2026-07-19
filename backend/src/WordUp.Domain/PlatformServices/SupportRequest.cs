@@ -9,6 +9,6 @@ public class SupportRequest
     public string Category { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string ReplyToEmail { get; set; } = string.Empty;
-    public string? ScreenshotUrl { get; set; }
+    public Guid? ScreenshotFileId { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

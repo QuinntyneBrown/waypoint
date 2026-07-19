@@ -261,14 +261,16 @@ requirement conflicts early (they gate "done").
       caption grants. Individual assignment evidence is checked before storage and submission;
       group-only consent is insufficient, media-only withdrawal immediately blocks the private file
       and removes its URL from Youth and staff projections, and guardianless adult Youth remain open.
-- [~] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`,
+- [x] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`,
       `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence uses purpose-aware
       private DB-backed JPG/PNG/PDF storage with MIME/extension/signature/10 MB checks, owner-bound
       submission linkage, unused-upload cleanup, and authenticated no-sniff serving to the Youth,
       assigned mentor, or administrator. Lesson media uses private validated PDF/MP4 storage, and
       profile photos use owned, replaceable 5 MB JPG/PNG storage across onboarding and settings with
-      self/guardian/assigned-mentor/admin read scope and live minor media-consent enforcement.
-      Support screenshots remain.
+      self/guardian/assigned-mentor/admin read scope and live minor media-consent enforcement. Support
+      requests now link optional private 5 MB JPG/PNG screenshots with preview/removal, abandoned-draft
+      cleanup, owner access, and administrator access only after submission; external media URLs are
+      no longer accepted by any of these flows.
 - [x] **H6** Curriculum mutation lifecycle completion `L2-CURRIC-002..006` — lesson content
       and media update/removal, exact lesson/question ordering, typed quiz validation and short-answer
       scoring, assignment update/publish/fan-out, competency soft removal, and module/attendance/
@@ -617,3 +619,10 @@ requirement conflicts early (they gate "done").
   external assignment-photo URLs are no longer accepted. The complete backend inventory passes as
   213 segmented integration tests plus four unit tests; all 51 frontend units, the 426.89 kB production
   build, and five assignment/mentor-review browser journeys pass. Support screenshots remain.
+- 2026-07-18 — H5 done: the support form now accepts an optional locally previewed JPG/PNG screenshot
+  only after MIME, extension, 5 MB, and magic-byte validation. Uploads are private owner-bound blobs;
+  users can remove a draft, submitting links the selected file and deletes abandoned uploads, and a
+  linked copy cannot be detached from its recorded request. Administrators can retrieve evidence only
+  after submission, all serving is authenticated and no-sniff, and the support email identifies the
+  private evidence route. Nineteen Platform integrations, all 51 frontend units, the 426.89 kB
+  production build, and both support browser journeys pass.

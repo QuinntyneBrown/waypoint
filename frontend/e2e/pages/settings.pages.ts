@@ -139,6 +139,12 @@ export class SupportPage extends BasePage {
   get replyToEmail() {
     return this.page.getByLabel(/reply-to email/i);
   }
+  get screenshotInput() {
+    return this.page.getByLabel(/optional screenshot/i);
+  }
+  get removeScreenshotButton() {
+    return this.page.getByRole('button', { name: /remove screenshot/i });
+  }
   get sendButton() {
     return this.page.getByRole('button', { name: /send message/i });
   }
