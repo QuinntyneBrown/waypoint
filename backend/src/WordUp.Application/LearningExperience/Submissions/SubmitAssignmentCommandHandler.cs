@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.Results;
+using WordUp.Application.ConsentAndSafeguarding;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -57,6 +58,16 @@ public class SubmitAssignmentCommandHandler : IRequestHandler<SubmitAssignmentCo
             || link.Scheme is not ("http" or "https")))
             errors.Add(new("linkUrl", "Enter a valid HTTP or HTTPS link."));
         if (errors.Count > 0) throw new ValidationException(errors);
+
+        if (hasPhoto && !await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
+                _db,
+                youthId,
+                YouthMediaUse.IndividualPhotoOrVideo,
+                _clock.UtcNow,
+                cancellationToken))
+        {
+            throw new MediaConsentRequiredException();
+        }
 
         StoredSubmissionFile? photo = null;
         if (request.PhotoUploadId is { } photoId)

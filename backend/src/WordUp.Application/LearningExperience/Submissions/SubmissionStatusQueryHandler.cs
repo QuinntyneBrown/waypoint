@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using WordUp.Application.ConsentAndSafeguarding;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -10,11 +11,13 @@ public class SubmissionStatusQueryHandler : IRequestHandler<SubmissionStatusQuer
 {
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
+    private readonly IClock _clock;
 
-    public SubmissionStatusQueryHandler(IAppDbContext db, ICurrentUser currentUser)
+    public SubmissionStatusQueryHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock)
     {
         _db = db;
         _currentUser = currentUser;
+        _clock = clock;
     }
 
     public async Task<SubmissionStatusView> Handle(SubmissionStatusQuery request, CancellationToken cancellationToken)
@@ -92,6 +95,17 @@ public class SubmissionStatusQueryHandler : IRequestHandler<SubmissionStatusQuer
                 definition.Description,
                 award.AwardedAt))
             .FirstOrDefaultAsync(cancellationToken);
+        var photoUrl = submission.PhotoUrl;
+        if (photoUrl is not null
+            && !await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
+                _db,
+                submission.YouthUserId,
+                YouthMediaUse.IndividualPhotoOrVideo,
+                _clock.UtcNow,
+                cancellationToken))
+        {
+            photoUrl = null;
+        }
 
         return new SubmissionStatusView(
             submission.Id,
@@ -101,7 +115,7 @@ public class SubmissionStatusQueryHandler : IRequestHandler<SubmissionStatusQuer
             submission.IsCodingProject,
             submission.BodyText,
             submission.YouthNote,
-            submission.PhotoUrl,
+            photoUrl,
             submission.LinkUrl,
             submission.MentorComment,
             submission.TotalAwarded,

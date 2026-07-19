@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.ConsentAndSafeguarding;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -88,6 +89,15 @@ public sealed class StoreAssignmentUploadCommandHandler
         {
             throw new ForbiddenException("This assignment does not allow photo submissions.");
         }
+        if (!await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
+                _db,
+                youthId,
+                YouthMediaUse.IndividualPhotoOrVideo,
+                _clock.UtcNow,
+                cancellationToken))
+        {
+            throw new MediaConsentRequiredException();
+        }
 
         var file = new StoredSubmissionFile
         {
@@ -118,11 +128,13 @@ public sealed class SubmissionFileQueryHandler : IRequestHandler<SubmissionFileQ
 {
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
+    private readonly IClock _clock;
 
-    public SubmissionFileQueryHandler(IAppDbContext db, ICurrentUser currentUser)
+    public SubmissionFileQueryHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock)
     {
         _db = db;
         _currentUser = currentUser;
+        _clock = clock;
     }
 
     public async Task<SubmissionFileView> Handle(SubmissionFileQuery request, CancellationToken cancellationToken)
@@ -133,6 +145,15 @@ public sealed class SubmissionFileQueryHandler : IRequestHandler<SubmissionFileQ
         if (file.OwnerUserId != _currentUser.UserId)
         {
             throw new ForbiddenException("This file does not belong to you.");
+        }
+        if (!await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
+                _db,
+                file.OwnerUserId,
+                YouthMediaUse.IndividualPhotoOrVideo,
+                _clock.UtcNow,
+                cancellationToken))
+        {
+            throw new MediaConsentRequiredException();
         }
         return new SubmissionFileView(file.OriginalFileName, file.ContentType, file.Content);
     }

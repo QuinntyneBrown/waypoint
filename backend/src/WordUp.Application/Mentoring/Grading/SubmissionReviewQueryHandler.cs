@@ -1,6 +1,7 @@
 using System.Text.Json;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.ConsentAndSafeguarding;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -10,11 +11,13 @@ public sealed class SubmissionReviewQueryHandler : IRequestHandler<SubmissionRev
 {
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
+    private readonly IClock _clock;
 
-    public SubmissionReviewQueryHandler(IAppDbContext db, ICurrentUser currentUser)
+    public SubmissionReviewQueryHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock)
     {
         _db = db;
         _currentUser = currentUser;
+        _clock = clock;
     }
 
     public async Task<SubmissionReviewView> Handle(SubmissionReviewQuery request, CancellationToken cancellationToken)
@@ -43,6 +46,17 @@ public sealed class SubmissionReviewQueryHandler : IRequestHandler<SubmissionRev
                 scores.ContainsKey(item.Id) ? scores[item.Id] : null))
             .ToListAsync(cancellationToken);
         var totalPossible = rubric.Count == 0 ? assignment.TotalPoints : rubric.Sum(item => item.PossiblePoints);
+        var photoUrl = submission.PhotoUrl;
+        if (photoUrl is not null
+            && !await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
+                _db,
+                submission.YouthUserId,
+                YouthMediaUse.IndividualPhotoOrVideo,
+                _clock.UtcNow,
+                cancellationToken))
+        {
+            photoUrl = null;
+        }
 
         return new SubmissionReviewView(
             submission.Id,
@@ -53,7 +67,7 @@ public sealed class SubmissionReviewQueryHandler : IRequestHandler<SubmissionRev
             submission.Status.ToString(),
             submission.IsCodingProject,
             submission.BodyText,
-            submission.PhotoUrl,
+            photoUrl,
             submission.LinkUrl,
             submission.YouthNote,
             submission.SubmittedAt,

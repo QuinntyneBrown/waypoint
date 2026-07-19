@@ -256,7 +256,11 @@ requirement conflicts early (they gate "done").
       active-term identity, and the organization re-consent setting consistently to access, consent
       status, application decisions/listing, and administrative person records; new records capture
       the current term and policy-derived validity window.
-- [ ] **H4** Media-consent enforcement on youth media `L2-CONSENT-001/004`
+- [x] **H4** Media-consent enforcement on youth media `L2-CONSENT-001/004` — the shared
+      term-aware evaluator now distinguishes individual photo/video, group media, and first-name
+      caption grants. Individual assignment evidence is checked before storage and submission;
+      group-only consent is insufficient, media-only withdrawal immediately blocks the private file
+      and removes its URL from Youth and staff projections, and guardianless adult Youth remain open.
 - [~] **H5** Safe file/media storage (upload/sniff/limits/serve/remove) `L2-NFR-001`,
       `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence uses private
       DB-backed JPG/PNG storage and lesson media uses private DB-backed PDF/MP4 storage, both with
@@ -588,3 +592,10 @@ requirement conflicts early (they gate "done").
   form and transitions to consent-required, while re-consent immediately restores the same session.
   Thirty-six Consent/Learning integrations, eight portal units, the 426.84 kB production build, and
   eleven curriculum/lesson/quiz/assignment/coding/reflection/journey/progress browser journeys pass.
+- 2026-07-18 — H4 done: assignment evidence now applies one reusable granular media policy at upload,
+  submission, Youth/staff projection, and private-file retrieval. Group-only permission cannot grant
+  an individual photo; current all-photo/video permission enables it, and a guardian's later media-
+  only withdrawal hides the retained safeguarding record immediately without affecting the text
+  submission or participation session. Sixty-six adjacent Consent/Learning/Guardian/Mentoring
+  integrations, eight portal units, the 426.89 kB production build, and six combined Guardian,
+  participation-consent, and assignment-media browser journeys pass.

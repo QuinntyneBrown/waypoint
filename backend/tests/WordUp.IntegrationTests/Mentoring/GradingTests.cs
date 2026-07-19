@@ -80,6 +80,19 @@ public sealed class GradingTests : IntegrationTestBase
                 PasswordHash = hasher.Hash("Passw0rd!"),
             };
             db.Users.Add(youth);
+            db.GuardianConsents.Add(new GuardianConsent
+            {
+                YouthUserId = youth.Id,
+                GuardianUserId = guardian.Id,
+                GuardianName = guardian.DisplayName,
+                Relationship = "Parent",
+                ParticipationConsent = true,
+                Signature = guardian.DisplayName,
+                ReferenceId = $"GRADING-{Guid.NewGuid():N}",
+                SignedAt = DateTime.UtcNow.AddDays(-1),
+                ValidFrom = DateTime.UtcNow.AddDays(-1),
+                ValidUntil = DateTime.UtcNow.AddMonths(6),
+            });
             await db.SaveChangesAsync();
             youthId = youth.Id;
         }

@@ -28,6 +28,13 @@ public sealed class SubmissionTests : IntegrationTestBase
         return await Client.SendAsync(request);
     }
 
+    private async Task<HttpResponseMessage> PutAsync(string url, object body, string token)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Put, url) { Content = JsonContent.Create(body) };
+        Authorize(request, token);
+        return await Client.SendAsync(request);
+    }
+
     private async Task<(Guid youthId, string token)> SeedYouthAsync()
     {
         var email = $"youth.{Guid.NewGuid():N}@example.com";
@@ -53,6 +60,78 @@ public sealed class SubmissionTests : IntegrationTestBase
         signIn.EnsureSuccessStatusCode();
         var auth = await signIn.Content.ReadFromJsonAsync<WordUp.Application.Authentication.Auth.AuthResult>();
         return (youthId, auth!.AccessToken);
+    }
+
+    private async Task<(Guid youthId, string youthToken, string guardianToken)> SeedConsentedMinorAsync()
+    {
+        var suffix = Guid.NewGuid().ToString("N");
+        var guardianEmail = $"guardian.{suffix}@example.com";
+        var youthEmail = $"minor.{suffix}@example.com";
+        Guid youthId;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+            var guardian = new User
+            {
+                Email = guardianEmail,
+                DisplayName = "Guardian",
+                Role = Roles.Guardian,
+                Status = UserStatus.Active,
+                PasswordHash = hasher.Hash("Passw0rd!"),
+            };
+            var youth = new User
+            {
+                Email = youthEmail,
+                DisplayName = "Minor youth",
+                Role = Roles.Youth,
+                Status = UserStatus.Active,
+                PasswordHash = hasher.Hash("Passw0rd!"),
+                GuardianUserId = guardian.Id,
+            };
+            db.Users.AddRange(guardian, youth);
+            db.GuardianConsents.Add(new GuardianConsent
+            {
+                YouthUserId = youth.Id,
+                GuardianUserId = guardian.Id,
+                GuardianName = guardian.DisplayName,
+                Relationship = "Parent",
+                ParticipationConsent = true,
+                MediaConsent = true,
+                MediaGroupOnly = true,
+                Signature = guardian.DisplayName,
+                ReferenceId = $"MEDIA-{suffix[..8].ToUpperInvariant()}",
+                SignedAt = DateTime.UtcNow.AddDays(-1),
+                ValidFrom = DateTime.UtcNow.AddDays(-1),
+                ValidUntil = DateTime.UtcNow.AddMonths(6),
+            });
+            await db.SaveChangesAsync();
+            youthId = youth.Id;
+        }
+
+        var youthSignIn = await Client.PostAsJsonAsync(
+            "/api/auth/sign-in", new { email = youthEmail, password = "Passw0rd!" });
+        var guardianSignIn = await Client.PostAsJsonAsync(
+            "/api/auth/sign-in", new { email = guardianEmail, password = "Passw0rd!" });
+        var youthAuth = await youthSignIn.Content.ReadFromJsonAsync<WordUp.Application.Authentication.Auth.AuthResult>();
+        var guardianAuth = await guardianSignIn.Content.ReadFromJsonAsync<WordUp.Application.Authentication.Auth.AuthResult>();
+        return (youthId, youthAuth!.AccessToken, guardianAuth!.AccessToken);
+    }
+
+    private async Task<HttpResponseMessage> UploadPhotoAsync(Guid assignmentId, string token)
+    {
+        var png = Convert.FromBase64String(
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=");
+        var content = new MultipartFormDataContent();
+        var image = new ByteArrayContent(png);
+        image.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+        content.Add(image, "file", "evidence.png");
+        var request = new HttpRequestMessage(
+            HttpMethod.Post,
+            $"/api/me/assignments/{assignmentId}/uploads")
+        { Content = content };
+        Authorize(request, token);
+        return await Client.SendAsync(request);
     }
 
     private sealed record SeededAssignment(Guid Id, Guid CriterionId);
@@ -165,7 +244,8 @@ public sealed class SubmissionTests : IntegrationTestBase
         fake.Add(fakeBytes, "file", "evidence.png");
         var fakeRequest = new HttpRequestMessage(
             HttpMethod.Post,
-            $"/api/me/assignments/{assignment.Id}/uploads") { Content = fake };
+            $"/api/me/assignments/{assignment.Id}/uploads")
+        { Content = fake };
         Authorize(fakeRequest, ownerToken);
         var rejected = await Client.SendAsync(fakeRequest);
         Assert.That(rejected.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
@@ -178,7 +258,8 @@ public sealed class SubmissionTests : IntegrationTestBase
         valid.Add(image, "file", "my evidence.png");
         var uploadRequest = new HttpRequestMessage(
             HttpMethod.Post,
-            $"/api/me/assignments/{assignment.Id}/uploads") { Content = valid };
+            $"/api/me/assignments/{assignment.Id}/uploads")
+        { Content = valid };
         Authorize(uploadRequest, ownerToken);
         var uploaded = await Client.SendAsync(uploadRequest);
         Assert.That(uploaded.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -198,6 +279,76 @@ public sealed class SubmissionTests : IntegrationTestBase
         });
         var forbidden = await GetAsync($"/api/me/files/{file.Id}", otherToken);
         Assert.That(forbidden.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+    }
+
+    [Test]
+    [Property("Req", "L2-CONSENT-001")]
+    [Property("Req", "L2-CONSENT-004")]
+    public async Task Individual_photo_storage_and_use_follow_granular_media_consent_live()
+    {
+        // Traces to: L2-CONSENT-001 AC2/AC4, L2-CONSENT-004 AC3
+        var (youthId, youthToken, guardianToken) = await SeedConsentedMinorAsync();
+        var assignment = await SeedAssignmentAsync("photo");
+
+        var groupOnly = await UploadPhotoAsync(assignment.Id, youthToken);
+        Assert.Multiple(() =>
+        {
+            Assert.That(groupOnly.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+            Assert.That(groupOnly.Headers.GetValues("X-WordUp-State").Single(),
+                Is.EqualTo("media-consent-required"));
+        });
+
+        var permitIndividual = await PutAsync(
+            $"/api/guardian/children/{youthId}/media-consent",
+            new
+            {
+                mediaConsent = true,
+                mediaAllPhotosVideo = true,
+                mediaGroupOnly = false,
+                mediaFirstNameCaptions = false,
+            },
+            guardianToken);
+        Assert.That(permitIndividual.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var uploaded = await UploadPhotoAsync(assignment.Id, youthToken);
+        Assert.That(uploaded.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var file = await uploaded.Content.ReadFromJsonAsync<UploadDto>();
+        var submitted = await PostAsync(
+            $"/api/me/assignments/{assignment.Id}/submissions",
+            new { photoUploadId = file!.Id, isCodingProject = false, attest = true },
+            youthToken);
+        var submission = await submitted.Content.ReadFromJsonAsync<SubmissionResultDto>();
+        var visible = await GetAsync($"/api/me/submissions/{submission!.Id}", youthToken);
+        Assert.That((await visible.Content.ReadFromJsonAsync<SubmissionStatusDto>())!.PhotoUrl,
+            Is.EqualTo(file.Url));
+        var administratorToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var visibleToStaff = await GetAsync($"/api/mentor/submissions/{submission.Id}", administratorToken);
+        Assert.That((await visibleToStaff.Content.ReadFromJsonAsync<SubmissionReviewDto>())!.PhotoUrl,
+            Is.EqualTo(file.Url));
+
+        var revokeMedia = await PutAsync(
+            $"/api/guardian/children/{youthId}/media-consent",
+            new
+            {
+                mediaConsent = false,
+                mediaAllPhotosVideo = false,
+                mediaGroupOnly = false,
+                mediaFirstNameCaptions = false,
+            },
+            guardianToken);
+        Assert.That(revokeMedia.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var hidden = await GetAsync($"/api/me/submissions/{submission.Id}", youthToken);
+        Assert.That((await hidden.Content.ReadFromJsonAsync<SubmissionStatusDto>())!.PhotoUrl, Is.Null);
+        var hiddenFromStaff = await GetAsync($"/api/mentor/submissions/{submission.Id}", administratorToken);
+        Assert.That((await hiddenFromStaff.Content.ReadFromJsonAsync<SubmissionReviewDto>())!.PhotoUrl, Is.Null);
+        var deniedFile = await GetAsync(file.Url, youthToken);
+        Assert.Multiple(() =>
+        {
+            Assert.That(deniedFile.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+            Assert.That(deniedFile.Headers.GetValues("X-WordUp-State").Single(),
+                Is.EqualTo("media-consent-required"));
+        });
     }
 
     [Test]
@@ -245,6 +396,8 @@ public sealed class SubmissionTests : IntegrationTestBase
         string ContentType,
         long SizeBytes,
         string Url);
+
+    private sealed record SubmissionReviewDto(string? PhotoUrl);
 
     private sealed record TimelineDto(string Type, string Label, DateTime? At, bool Current);
 

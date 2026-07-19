@@ -226,6 +226,10 @@ app.UseExceptionHandler(handler =>
         if (ex is AppException appEx)
         {
             context.Response.StatusCode = appEx.StatusCode;
+            if (appEx is MediaConsentRequiredException)
+            {
+                context.Response.Headers["X-WordUp-State"] = "media-consent-required";
+            }
             await context.Response.WriteAsJsonAsync(new { title = appEx.Message });
             return;
         }
@@ -1091,6 +1095,8 @@ if (app.Environment.IsEnvironment("Testing"))
             GuardianName = guardian.DisplayName,
             Relationship = "Parent",
             ParticipationConsent = true,
+            MediaConsent = true,
+            MediaAllPhotosVideo = true,
             Signature = guardian.DisplayName,
             ReferenceId = $"CURRIC-{suffix.ToUpperInvariant()}",
             SignedAt = now.AddDays(-5),

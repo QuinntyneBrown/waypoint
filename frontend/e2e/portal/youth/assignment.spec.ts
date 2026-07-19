@@ -7,6 +7,15 @@ import {
 } from '../../pages';
 import { seedYouthCurriculum, signInApi } from '../../support/api';
 
+const evidencePng = {
+  name: 'evidence.png',
+  mimeType: 'image/png',
+  buffer: Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+    'base64',
+  ),
+};
+
 // Traces to: L2-LEARN-006, L2-LEARN-007, L2-NFR-001
 test('youth submits safe assignment evidence and follows revision through approval', async ({
   page,
@@ -37,14 +46,7 @@ test('youth submits safe assignment evidence and follows revision through approv
   });
   await expect(page.getByRole('alert')).toContainText(/jpg or png/i);
 
-  await assignment.photoInput.setInputFiles({
-    name: 'evidence.png',
-    mimeType: 'image/png',
-    buffer: Buffer.from(
-      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
-      'base64',
-    ),
-  });
+  await assignment.photoInput.setInputFiles(evidencePng);
   await expect(page.getByRole('status')).toContainText(/photo ready/i);
   await assignment.responseText.fill('I listened to a neighbour and helped carry their groceries.');
   await assignment.evidenceLink.fill('https://example.org/my-project');
@@ -109,4 +111,61 @@ test('youth submits safe assignment evidence and follows revision through approv
   await expect(page.getByText('9 of 10 points', { exact: true })).toBeVisible();
   await expect(page.getByText(seeded.assignmentBadgeName, { exact: true })).toBeVisible();
   await expect(page.getByText('Clear connection between scripture and action.')).toBeVisible();
+});
+
+// Traces to: L2-CONSENT-001 AC2/AC4, L2-CONSENT-004 AC3
+test('individual evidence media follows granular guardian consent and later withdrawal', async ({
+  page,
+  request,
+}) => {
+  const seeded = await seedYouthCurriculum(request);
+  const guardian = await signInApi(request, {
+    email: seeded.guardianEmail,
+    password: seeded.youthPassword,
+  });
+  const updateMediaConsent = async (allPhotosVideo: boolean, groupOnly: boolean) => {
+    const response = await request.put(`/api/guardian/children/${seeded.youthId}/media-consent`, {
+      headers: { Authorization: `Bearer ${guardian.accessToken}` },
+      data: {
+        mediaConsent: allPhotosVideo || groupOnly,
+        mediaAllPhotosVideo: allPhotosVideo,
+        mediaGroupOnly: groupOnly,
+        mediaFirstNameCaptions: false,
+      },
+    });
+    expect(response.ok(), await response.text()).toBeTruthy();
+  };
+
+  await updateMediaConsent(false, true);
+  await new SignInPage(page).signIn({
+    email: seeded.youthEmail,
+    password: seeded.youthPassword,
+  });
+  await page.goto(`/youth/assignments/${seeded.assignmentId}`);
+  const assignment = new YouthAssignmentPage(page);
+  await expect(assignment.heading).toHaveText(seeded.assignmentTitle);
+
+  await assignment.photoInput.setInputFiles(evidencePng);
+  await expect(page.getByRole('alert')).toContainText(
+    /guardian consent for individual photos or video is required/i,
+  );
+  await expect(page).toHaveURL(new RegExp(`/youth/assignments/${seeded.assignmentId}$`));
+
+  await updateMediaConsent(true, false);
+  await assignment.photoInput.setInputFiles([]);
+  await assignment.photoInput.setInputFiles(evidencePng);
+  await expect(page.getByRole('status')).toContainText(/photo ready/i);
+  await assignment.responseText.fill('Private evidence with current guardian media consent.');
+  await assignment.attestation.check();
+  page.once('dialog', async (dialog) => dialog.accept());
+  await assignment.submitButton.click();
+  await expect(page).toHaveURL(/\/youth\/submissions\/[^/]+$/);
+  await expect(page.getByRole('img', { name: /submitted evidence/i })).toBeVisible();
+
+  await updateMediaConsent(false, false);
+  await page.reload();
+  await expect(page.getByRole('img', { name: /submitted evidence/i })).toHaveCount(0);
+  await expect(
+    page.getByText(/private evidence with current guardian media consent/i),
+  ).toBeVisible();
 });

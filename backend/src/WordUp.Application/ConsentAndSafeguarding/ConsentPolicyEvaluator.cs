@@ -3,6 +3,13 @@ using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Application.ConsentAndSafeguarding;
 
+public enum YouthMediaUse
+{
+    IndividualPhotoOrVideo,
+    GroupPhotoOrVideo,
+    FirstNameCaption,
+}
+
 public sealed record ConsentPolicySnapshot(
     bool RequireReConsentEachTerm,
     bool RequireMediaConsent,
@@ -27,6 +34,22 @@ public sealed record ConsentPolicySnapshot(
         return consent.TermId == CurrentTermId
             || (consent.TermId is null
                 && string.Equals(consent.Term, CurrentTermName, StringComparison.Ordinal));
+    }
+
+    public bool IsMediaUseValid(GuardianConsent consent, YouthMediaUse use, DateTime now)
+    {
+        if (!IsParticipationValid(consent, now) || !consent.MediaConsent)
+        {
+            return false;
+        }
+
+        return use switch
+        {
+            YouthMediaUse.IndividualPhotoOrVideo => consent.MediaAllPhotosVideo,
+            YouthMediaUse.GroupPhotoOrVideo => consent.MediaAllPhotosVideo || consent.MediaGroupOnly,
+            YouthMediaUse.FirstNameCaption => consent.MediaFirstNameCaptions,
+            _ => false,
+        };
     }
 
     public DateTime ConsentValidUntil(DateTime now) =>
@@ -99,5 +122,37 @@ public static class ConsentPolicyEvaluator
             .ToListAsync(cancellationToken);
 
         return consents.Any(consent => policy.IsParticipationValid(consent, now));
+    }
+
+    public static async Task<bool> IsYouthMediaUseAllowedAsync(
+        IAppDbContext db,
+        Guid youthUserId,
+        YouthMediaUse use,
+        DateTime now,
+        CancellationToken cancellationToken)
+    {
+        var youth = await db.Users
+            .AsNoTracking()
+            .Where(user => user.Id == youthUserId && user.Role == Roles.Youth)
+            .Select(user => new { user.GuardianUserId })
+            .FirstOrDefaultAsync(cancellationToken);
+        if (youth is null)
+        {
+            return false;
+        }
+        if (youth.GuardianUserId is null)
+        {
+            // Guardianless Youth are treated as adults and control their own media.
+            return true;
+        }
+
+        var policy = await LoadAsync(db, now, cancellationToken);
+        var consent = await db.GuardianConsents
+            .AsNoTracking()
+            .Where(item => item.YouthUserId == youthUserId)
+            .OrderByDescending(item => item.SignedAt)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return consent is not null && policy.IsMediaUseValid(consent, use, now);
     }
 }

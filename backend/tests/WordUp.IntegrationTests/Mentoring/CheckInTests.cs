@@ -149,6 +149,19 @@ public sealed class CheckInTests : IntegrationTestBase
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             var storedYouth = await db.Users.FindAsync(youth.Id);
             storedYouth!.GuardianUserId = guardian.Id;
+            db.GuardianConsents.Add(new GuardianConsent
+            {
+                YouthUserId = youth.Id,
+                GuardianUserId = guardian.Id,
+                GuardianName = "Seed Guardian",
+                Relationship = "Parent",
+                ParticipationConsent = true,
+                Signature = "Seed Guardian",
+                ReferenceId = $"CHECKIN-{Guid.NewGuid():N}",
+                SignedAt = DateTime.UtcNow.AddDays(-1),
+                ValidFrom = DateTime.UtcNow.AddDays(-1),
+                ValidUntil = DateTime.UtcNow.AddMonths(6),
+            });
             await db.SaveChangesAsync();
         }
         var mentorToken = await SignInAsync(mentor.Email);

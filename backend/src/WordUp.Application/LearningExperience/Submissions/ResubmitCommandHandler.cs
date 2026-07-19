@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.ConsentAndSafeguarding;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -37,6 +38,17 @@ public class ResubmitCommandHandler : IRequestHandler<ResubmitCommand>
         if (submission.Status != SubmissionStatus.NeedsRevision)
         {
             throw new ConflictException("This submission is not awaiting revisions.");
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.PhotoUrl)
+            && !await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
+                _db,
+                submission.YouthUserId,
+                YouthMediaUse.IndividualPhotoOrVideo,
+                _clock.UtcNow,
+                cancellationToken))
+        {
+            throw new MediaConsentRequiredException();
         }
 
         if (request.BodyText is not null)
