@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WordUp.Application.ConsentAndSafeguarding;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -12,14 +13,20 @@ public class ResubmitCommandHandler : IRequestHandler<ResubmitCommand>
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly NotificationDeliveryService _notifications;
 
     public ResubmitCommandHandler(
-        IAppDbContext db, IClock clock, IAuditLogger audit, ICurrentUser currentUser)
+        IAppDbContext db,
+        IClock clock,
+        IAuditLogger audit,
+        ICurrentUser currentUser,
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
+        _notifications = notifications;
     }
 
     public async Task Handle(ResubmitCommand request, CancellationToken cancellationToken)
@@ -81,6 +88,22 @@ public class ResubmitCommandHandler : IRequestHandler<ResubmitCommand>
             Type = "Resubmitted",
             OccurredAt = submission.SubmittedAt,
         });
+        NotificationDeliveryPlan? approvalPlan = null;
+        var submitter = await _db.Users.AsNoTracking()
+            .Where(item => item.Id == submission.YouthUserId)
+            .Select(item => new { item.DisplayName, item.MentorId })
+            .SingleAsync(cancellationToken);
+        if (submitter.MentorId is { } mentorId)
+        {
+            approvalPlan = await _notifications.PrepareAsync(
+                mentorId,
+                "approval-needed",
+                "Revised assignment ready for review",
+                $"{submitter.DisplayName} resubmitted revised work.",
+                $"/mentor/reviews/submissions/{submission.Id}",
+                submission.SubmittedAt,
+                cancellationToken);
+        }
         try
         {
             await _db.SaveChangesAsync(cancellationToken);
@@ -89,6 +112,10 @@ public class ResubmitCommandHandler : IRequestHandler<ResubmitCommand>
         {
             throw new ConflictException(
                 "This submission changed after you opened it. Review the latest feedback before resubmitting.");
+        }
+        if (approvalPlan is not null)
+        {
+            await _notifications.DispatchAsync(approvalPlan, cancellationToken);
         }
 
         await _audit.LogAsync("SubmissionResubmitted", _currentUser.UserId, "Submission", submission.Id);

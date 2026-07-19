@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -14,20 +15,20 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
-    private readonly IChangePublisher _publisher;
+    private readonly NotificationDeliveryService _notifications;
 
     public GradeSubmissionCommandHandler(
         IAppDbContext db,
         IClock clock,
         IAuditLogger audit,
         ICurrentUser currentUser,
-        IChangePublisher publisher)
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
-        _publisher = publisher;
+        _notifications = notifications;
     }
 
     public async Task Handle(GradeSubmissionCommand request, CancellationToken cancellationToken)
@@ -81,7 +82,7 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
         var normalizedScores = scores.Count == 0 ? null : JsonSerializer.Serialize(scores);
         int? computedTotal = scores.Count == 0 ? null : scores.Values.Sum();
         var now = _clock.UtcNow;
-        var badgeNotifications = new List<Notification>();
+        var badgePlans = new List<NotificationDeliveryPlan>();
 
         switch (request.Decision)
         {
@@ -117,19 +118,16 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
                             AwardedByUserId = _currentUser.UserId,
                             AwardedAt = now,
                         });
-                        var badgeNotification = new Notification
-                        {
-                            UserId = youth.Id,
-                            EventKey = "badge-earned",
-                            Title = $"Badge earned: {badge.Name}",
-                            Body = string.IsNullOrWhiteSpace(badge.Description)
+                        badgePlans.Add(await _notifications.PrepareAsync(
+                            youth.Id,
+                            "badge-earned",
+                            $"Badge earned: {badge.Name}",
+                            string.IsNullOrWhiteSpace(badge.Description)
                                 ? "You earned a new badge."
                                 : badge.Description,
-                            LinkPath = "/youth/journey",
-                            CreatedAt = now,
-                        };
-                        _db.Notifications.Add(badgeNotification);
-                        badgeNotifications.Add(badgeNotification);
+                            "/youth/journey",
+                            now,
+                            cancellationToken));
                     }
                 }
                 break;
@@ -175,52 +173,39 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
 
         if (request.Decision is "approve" or "request-revision")
         {
-            var youthNotification = new Notification
+            var plans = new List<NotificationDeliveryPlan>
             {
-                UserId = youth.Id,
-                EventKey = "submission-status",
-                Title = request.Decision == "approve" ? "Assignment approved" : "Assignment needs revision",
-                Body = request.Decision == "approve"
-                    ? "Your mentor approved your assignment."
-                    : "Your mentor left revision feedback.",
-                LinkPath = $"/youth/submissions/{submission.Id}",
-                CreatedAt = now,
+                await _notifications.PrepareAsync(
+                    youth.Id,
+                    "work-graded",
+                    request.Decision == "approve" ? "Assignment approved" : "Assignment needs revision",
+                    request.Decision == "approve"
+                        ? "Your mentor approved your assignment."
+                        : "Your mentor left revision feedback.",
+                    $"/youth/submissions/{submission.Id}",
+                    now,
+                    cancellationToken),
             };
-            var notifications = new List<Notification> { youthNotification };
             if (request.GuardianNotified && youth.GuardianUserId is Guid guardianUserId)
             {
-                notifications.Add(new Notification
-                {
-                    UserId = guardianUserId,
-                    EventKey = "submission-status",
-                    Title = request.Decision == "approve"
+                plans.Add(await _notifications.PrepareAsync(
+                    guardianUserId,
+                    "work-graded",
+                    request.Decision == "approve"
                         ? $"{youth.DisplayName}'s assignment was approved"
                         : $"{youth.DisplayName}'s assignment needs revision",
-                    Body = request.Decision == "approve"
+                    request.Decision == "approve"
                         ? "Their mentor approved the submitted work."
                         : "Their mentor requested a revision and shared feedback.",
-                    LinkPath = "/guardian/progress",
-                    CreatedAt = now,
-                });
+                    "/guardian/progress",
+                    now,
+                    cancellationToken));
             }
 
-            _db.Notifications.AddRange(notifications);
             await _db.SaveChangesAsync(cancellationToken);
-            foreach (var notification in badgeNotifications.Concat(notifications))
+            foreach (var plan in badgePlans.Concat(plans))
             {
-                await _publisher.PublishToUserAsync(
-                    notification.UserId,
-                    "notification",
-                    new
-                    {
-                        id = notification.Id,
-                        eventKey = notification.EventKey,
-                        title = notification.Title,
-                        body = notification.Body,
-                        linkPath = notification.LinkPath,
-                        createdAt = notification.CreatedAt,
-                    },
-                    cancellationToken);
+                await _notifications.DispatchAsync(plan, cancellationToken);
             }
         }
 

@@ -73,6 +73,8 @@ public sealed class MentorMessagingTests : IntegrationTestBase
     }
 
     [Test]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
     public async Task Cohort_broadcast_fans_out_private_messages_live_notifications_and_an_audit()
     {
         var setup = await SeedAsync(optOutYouthTwo: true);
@@ -117,6 +119,13 @@ public sealed class MentorMessagingTests : IntegrationTestBase
                     && entry.TargetId == setup.CohortId
                     && entry.Details == "Recipients=2"),
                 Is.True);
+        });
+        var email = Factory.Emails.LastTo(setup.YouthTwoEmail);
+        Assert.Multiple(() =>
+        {
+            Assert.That(email, Is.Not.Null, "the email-only youth receives the broadcast notification");
+            Assert.That(email!.Subject, Does.Contain("new message").IgnoreCase);
+            Assert.That(email.Body, Does.Contain("/youth/messages"));
         });
     }
 
@@ -175,7 +184,7 @@ public sealed class MentorMessagingTests : IntegrationTestBase
                 UserId = youthTwo.Id,
                 EventKey = "mentor-messages",
                 InApp = false,
-                Email = false,
+                Email = true,
             });
         }
         await db.SaveChangesAsync();
@@ -186,6 +195,7 @@ public sealed class MentorMessagingTests : IntegrationTestBase
             youthOne.Id,
             youthOne.Email,
             youthTwo.Id,
+            youthTwo.Email,
             cohort.Id);
     }
 
@@ -236,5 +246,6 @@ public sealed class MentorMessagingTests : IntegrationTestBase
         Guid YouthOneId,
         string YouthOneEmail,
         Guid YouthTwoId,
+        string YouthTwoEmail,
         Guid CohortId);
 }

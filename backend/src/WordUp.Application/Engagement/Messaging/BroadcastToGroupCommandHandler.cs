@@ -1,6 +1,7 @@
 using System.Net;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -12,6 +13,7 @@ public class BroadcastToGroupCommandHandler : IRequestHandler<BroadcastToGroupCo
     private readonly ICurrentUser _currentUser;
     private readonly IClock _clock;
     private readonly IChangePublisher _publisher;
+    private readonly NotificationDeliveryService _notifications;
     private readonly IAuditLogger _audit;
 
     public BroadcastToGroupCommandHandler(
@@ -19,12 +21,14 @@ public class BroadcastToGroupCommandHandler : IRequestHandler<BroadcastToGroupCo
         ICurrentUser currentUser,
         IClock clock,
         IChangePublisher publisher,
+        NotificationDeliveryService notifications,
         IAuditLogger audit)
     {
         _db = db;
         _currentUser = currentUser;
         _clock = clock;
         _publisher = publisher;
+        _notifications = notifications;
         _audit = audit;
     }
 
@@ -50,15 +54,7 @@ public class BroadcastToGroupCommandHandler : IRequestHandler<BroadcastToGroupCo
         if (youths.Count == 0)
             throw new ForbiddenException("This cohort has no active youth assigned to you.");
 
-        var youthIds = youths.Select(youth => youth.Id).ToList();
-        var optedOut = await _db.NotificationPreferences.AsNoTracking()
-            .Where(preference => youthIds.Contains(preference.UserId)
-                && preference.EventKey == "mentor-messages"
-                && !preference.InApp)
-            .Select(preference => preference.UserId)
-            .ToListAsync(cancellationToken);
-        var optedOutSet = optedOut.ToHashSet();
-        var deliveries = new List<(Guid YouthId, Message Message, Notification? Notification)>();
+        var deliveries = new List<(Guid YouthId, Message Message, NotificationDeliveryPlan Plan)>();
 
         foreach (var youth in youths)
         {
@@ -71,22 +67,15 @@ public class BroadcastToGroupCommandHandler : IRequestHandler<BroadcastToGroupCo
                 SentAt = now,
             };
             _db.Messages.Add(message);
-
-            Notification? notification = null;
-            if (!optedOutSet.Contains(youth.Id))
-            {
-                notification = new Notification
-                {
-                    UserId = youth.Id,
-                    EventKey = "mentor-messages",
-                    Title = "New message",
-                    Body = "You have a new message from your mentor.",
-                    LinkPath = "/youth/messages",
-                    CreatedAt = now,
-                };
-                _db.Notifications.Add(notification);
-            }
-            deliveries.Add((youth.Id, message, notification));
+            var plan = await _notifications.PrepareAsync(
+                youth.Id,
+                "mentor-messages",
+                "New message",
+                "You have a new message from your mentor.",
+                "/youth/messages",
+                now,
+                cancellationToken);
+            deliveries.Add((youth.Id, message, plan));
         }
 
         await _db.SaveChangesAsync(cancellationToken);
@@ -113,21 +102,7 @@ public class BroadcastToGroupCommandHandler : IRequestHandler<BroadcastToGroupCo
                     readAt = delivery.Message.ReadAt,
                 },
                 cancellationToken);
-            if (delivery.Notification is not { } notification)
-                continue;
-            await _publisher.PublishToUserAsync(
-                delivery.YouthId,
-                "notification",
-                new
-                {
-                    id = notification.Id,
-                    eventKey = notification.EventKey,
-                    title = notification.Title,
-                    body = notification.Body,
-                    linkPath = notification.LinkPath,
-                    createdAt = notification.CreatedAt,
-                },
-                cancellationToken);
+            await _notifications.DispatchAsync(delivery.Plan, cancellationToken);
         }
 
         return new BroadcastResult(youths.Count);

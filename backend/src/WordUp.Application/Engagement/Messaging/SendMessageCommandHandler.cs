@@ -1,6 +1,7 @@
 using System.Net;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -12,13 +13,20 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Mes
     private readonly ICurrentUser _currentUser;
     private readonly IClock _clock;
     private readonly IChangePublisher _publisher;
+    private readonly NotificationDeliveryService _notifications;
 
-    public SendMessageCommandHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock, IChangePublisher publisher)
+    public SendMessageCommandHandler(
+        IAppDbContext db,
+        ICurrentUser currentUser,
+        IClock clock,
+        IChangePublisher publisher,
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _currentUser = currentUser;
         _clock = clock;
         _publisher = publisher;
+        _notifications = notifications;
     }
 
     public async Task<MessageResult> Handle(SendMessageCommand request, CancellationToken cancellationToken)
@@ -80,40 +88,16 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Mes
             },
             cancellationToken);
 
-        // In-app notification for the recipient, unless they have opted out of mentor messages.
-        var preference = await _db.NotificationPreferences
-            .FirstOrDefaultAsync(p => p.UserId == request.ToUserId && p.EventKey == "mentor-messages", cancellationToken);
-
-        if (preference is null || preference.InApp)
-        {
-            var notification = new Notification
-            {
-                UserId = request.ToUserId,
-                EventKey = "mentor-messages",
-                Title = "New message",
-                Body = "You have a new message.",
-                LinkPath = target.Role == Roles.Youth ? "/youth/messages" : "/mentor/messages",
-                CreatedAt = _clock.UtcNow,
-            };
-            _db.Notifications.Add(notification);
-            await _db.SaveChangesAsync(cancellationToken);
-
-            // Near-real-time delivery to the recipient's own group only; the payload carries just what
-            // the recipient may already see in their notification feed (L2-NFR-005).
-            await _publisher.PublishToUserAsync(
-                request.ToUserId,
-                "notification",
-                new
-                {
-                    id = notification.Id,
-                    eventKey = notification.EventKey,
-                    title = notification.Title,
-                    body = notification.Body,
-                    linkPath = notification.LinkPath,
-                    createdAt = notification.CreatedAt,
-                },
-                cancellationToken);
-        }
+        var notificationPlan = await _notifications.PrepareAsync(
+            request.ToUserId,
+            "mentor-messages",
+            "New message",
+            "You have a new message.",
+            target.Role == Roles.Youth ? "/youth/messages" : "/mentor/messages",
+            _clock.UtcNow,
+            cancellationToken);
+        await _db.SaveChangesAsync(cancellationToken);
+        await _notifications.DispatchAsync(notificationPlan, cancellationToken);
 
         return new MessageResult(message.Id);
     }

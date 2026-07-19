@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Application.Mentoring.QuizApproval;
@@ -7,8 +8,9 @@ namespace WordUp.Application.Mentoring.QuizApproval;
 /// passing score (L2-LEARN-005 AC2). Awards each matching badge to a youth at most once.</summary>
 internal static class QuizBadgeAwarder
 {
-    public static async Task<IReadOnlyList<Notification>> AwardForPassedQuizAsync(
+    public static async Task<IReadOnlyList<NotificationDeliveryPlan>> AwardForPassedQuizAsync(
         IAppDbContext db,
+        NotificationDeliveryService notifications,
         Guid quizId,
         Guid youthUserId,
         Guid? awardedByUserId,
@@ -44,7 +46,7 @@ internal static class QuizBadgeAwarder
                     && item.ArchivedAt == null)
                 .ToListAsync(cancellationToken));
         }
-        var notifications = new List<Notification>();
+        var deliveryPlans = new List<NotificationDeliveryPlan>();
         foreach (var badge in badges)
         {
             if (earnedBadgeIds.Contains(badge.Id)
@@ -61,22 +63,19 @@ internal static class QuizBadgeAwarder
                 AwardedByUserId = awardedByUserId,
                 AwardedAt = now,
             });
-            var notification = new Notification
-            {
-                UserId = youthUserId,
-                EventKey = "badge-earned",
-                Title = $"Badge earned: {badge.Name}",
-                Body = string.IsNullOrWhiteSpace(badge.Description)
+            deliveryPlans.Add(await notifications.PrepareAsync(
+                youthUserId,
+                "badge-earned",
+                $"Badge earned: {badge.Name}",
+                string.IsNullOrWhiteSpace(badge.Description)
                     ? "You earned a new badge."
                     : badge.Description,
-                LinkPath = "/youth/journey",
-                CreatedAt = now,
-            };
-            db.Notifications.Add(notification);
-            notifications.Add(notification);
+                "/youth/journey",
+                now,
+                cancellationToken));
         }
 
-        return notifications;
+        return deliveryPlans;
     }
 
     private static async Task<bool> ModuleIsCompleteAsync(
@@ -146,26 +145,14 @@ internal static class QuizBadgeAwarder
         return true;
     }
 
-    public static async Task PublishNotificationsAsync(
-        IChangePublisher publisher,
-        IEnumerable<Notification> notifications,
+    public static async Task DispatchNotificationsAsync(
+        NotificationDeliveryService notifications,
+        IEnumerable<NotificationDeliveryPlan> deliveryPlans,
         CancellationToken cancellationToken)
     {
-        foreach (var notification in notifications)
+        foreach (var plan in deliveryPlans)
         {
-            await publisher.PublishToUserAsync(
-                notification.UserId,
-                "notification",
-                new
-                {
-                    id = notification.Id,
-                    eventKey = notification.EventKey,
-                    title = notification.Title,
-                    body = notification.Body,
-                    linkPath = notification.LinkPath,
-                    createdAt = notification.CreatedAt,
-                },
-                cancellationToken);
+            await notifications.DispatchAsync(plan, cancellationToken);
         }
     }
 }

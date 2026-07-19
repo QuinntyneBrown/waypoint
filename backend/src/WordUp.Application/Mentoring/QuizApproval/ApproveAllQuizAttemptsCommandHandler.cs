@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -11,16 +12,20 @@ public class ApproveAllQuizAttemptsCommandHandler : IRequestHandler<ApproveAllQu
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
-    private readonly IChangePublisher _publisher;
+    private readonly NotificationDeliveryService _notifications;
 
     public ApproveAllQuizAttemptsCommandHandler(
-        IAppDbContext db, IClock clock, IAuditLogger audit, ICurrentUser currentUser, IChangePublisher publisher)
+        IAppDbContext db,
+        IClock clock,
+        IAuditLogger audit,
+        ICurrentUser currentUser,
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
-        _publisher = publisher;
+        _notifications = notifications;
     }
 
     public async Task<int> Handle(ApproveAllQuizAttemptsCommand request, CancellationToken cancellationToken)
@@ -57,7 +62,7 @@ public class ApproveAllQuizAttemptsCommandHandler : IRequestHandler<ApproveAllQu
             .Where(q => quizIds.Contains(q.Id))
             .ToDictionaryAsync(q => q.Id, cancellationToken);
 
-        var badgeNotifications = new List<Notification>();
+        var badgeNotifications = new List<NotificationDeliveryPlan>();
         foreach (var attempt in pending)
         {
             var approvedScore = attempt.AutoScore;
@@ -72,13 +77,13 @@ public class ApproveAllQuizAttemptsCommandHandler : IRequestHandler<ApproveAllQu
             if (passed)
             {
                 badgeNotifications.AddRange(await QuizBadgeAwarder.AwardForPassedQuizAsync(
-                    _db, attempt.QuizId, attempt.YouthUserId, currentUserId, now, cancellationToken));
+                    _db, _notifications, attempt.QuizId, attempt.YouthUserId, currentUserId, now, cancellationToken));
             }
         }
 
         await _db.SaveChangesAsync(cancellationToken);
-        await QuizBadgeAwarder.PublishNotificationsAsync(
-            _publisher,
+        await QuizBadgeAwarder.DispatchNotificationsAsync(
+            _notifications,
             badgeNotifications,
             cancellationToken);
 

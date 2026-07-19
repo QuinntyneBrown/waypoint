@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Authentication.Auth;
@@ -77,9 +78,11 @@ public sealed class RsvpTests : IntegrationTestBase
 
     [Test]
     [Property("Req", "L2-ENGAGE-005")]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
     public async Task Youth_rsvps_with_a_note_and_reminder_the_mentor_sees_it_and_re_rsvp_updates_in_place()
     {
-        // Traces to: L2-ENGAGE-005
+        // Traces to: L2-ENGAGE-005; L2-ENGAGE-008 AC1/AC4; L2-PLATFORM-003 AC2
         var mentor = await SeedUserAsync(Roles.Mentor);
         Guid cohortId;
         using (var scope = Factory.Services.CreateScope())
@@ -206,6 +209,11 @@ public sealed class RsvpTests : IntegrationTestBase
             Assert.That(reminders, Has.Count.EqualTo(1));
             Assert.That(reminders[0].LinkPath, Is.EqualTo("/youth/schedule"));
             Assert.That(remindersAgain, Has.Count.EqualTo(1), "a delivered schedule is consumed exactly once");
+            Assert.That(Factory.Changes.Changes.Count(item =>
+                item.Audience == "user"
+                && item.AudienceId == youth.Id
+                && item.EventName == "notification"
+                && JsonSerializer.Serialize(item.Payload).Contains("session-reminders")), Is.EqualTo(1));
         });
 
         var optedOutSessionId = await SeedSessionAsync(cohortId, daysFromNow: 4);
@@ -223,7 +231,7 @@ public sealed class RsvpTests : IntegrationTestBase
                 UserId = youth.Id,
                 EventKey = "session-reminders",
                 InApp = false,
-                Email = false,
+                Email = true,
             });
             var scheduled = preferenceDb.ScheduledNotifications.Single(item =>
                 item.UserId == youth.Id && item.DeliveredAt == null && item.CancelledAt == null);
@@ -234,7 +242,14 @@ public sealed class RsvpTests : IntegrationTestBase
         var optedOutFeed = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
         var optedOutReminders = (await optedOutFeed.Content.ReadFromJsonAsync<List<NotificationDto>>())!
             .Count(item => item.EventKey == "session-reminders");
-        Assert.That(optedOutReminders, Is.EqualTo(1), "in-app opt-out suppresses the later due reminder");
+        var reminderEmail = Factory.Emails.LastTo(youth.Email);
+        Assert.Multiple(() =>
+        {
+            Assert.That(optedOutReminders, Is.EqualTo(1), "in-app opt-out suppresses the later due reminder");
+            Assert.That(reminderEmail, Is.Not.Null, "the enabled email channel receives the due reminder");
+            Assert.That(reminderEmail!.Subject, Is.EqualTo("Session reminder"));
+            Assert.That(reminderEmail.Body, Does.Contain("/youth/schedule"));
+        });
     }
 
     private sealed record RsvpDto(Guid Id, Guid YouthUserId, string Response, string? Note, bool ReminderSet);

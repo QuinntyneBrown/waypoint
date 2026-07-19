@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Application.Mentoring.Flags;
@@ -17,17 +18,20 @@ public sealed class AtRiskEvaluator
     private readonly IAtRiskThresholds _thresholds;
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
+    private readonly NotificationDeliveryService _notifications;
 
     public AtRiskEvaluator(
         IAppDbContext db,
         IAtRiskThresholds thresholds,
         IClock clock,
-        IAuditLogger audit)
+        IAuditLogger audit,
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _thresholds = thresholds;
         _clock = clock;
         _audit = audit;
+        _notifications = notifications;
     }
 
     public async Task EvaluateAsync(
@@ -41,7 +45,13 @@ public sealed class AtRiskEvaluator
             .Where(user => youthIds.Contains(user.Id)
                 && user.Role == Roles.Youth
                 && user.Status == UserStatus.Active)
-            .Select(user => new YouthActivity(user.Id, user.CohortId, user.CreatedAt, user.LastSignInAt))
+            .Select(user => new YouthActivity(
+                user.Id,
+                user.CohortId,
+                user.MentorId,
+                user.DisplayName,
+                user.CreatedAt,
+                user.LastSignInAt))
             .ToListAsync(cancellationToken);
         if (youth.Count == 0) return;
 
@@ -60,6 +70,7 @@ public sealed class AtRiskEvaluator
 
         var now = _clock.UtcNow;
         var created = new List<Flag>();
+        var notificationPlans = new List<NotificationDeliveryPlan>();
         foreach (var person in youth)
         {
             var signals = SignalsFor(person, missedCounts, progressGaps, now);
@@ -122,9 +133,24 @@ public sealed class AtRiskEvaluator
             _db.Flags.Add(flag);
             allFlags.Add(flag);
             created.Add(flag);
+            if (person.MentorId is { } mentorId)
+            {
+                notificationPlans.Add(await _notifications.PrepareAsync(
+                    mentorId,
+                    "at-risk-alert",
+                    "Youth needs follow-up",
+                    $"{person.DisplayName} was automatically flagged: {reason}",
+                    "/mentor/flags",
+                    now,
+                    cancellationToken));
+            }
         }
 
         await _db.SaveChangesAsync(cancellationToken);
+        foreach (var plan in notificationPlans)
+        {
+            await _notifications.DispatchAsync(plan, cancellationToken);
+        }
         foreach (var flag in created)
         {
             await _audit.LogAsync(
@@ -268,6 +294,12 @@ public sealed class AtRiskEvaluator
         return gaps;
     }
 
-    private sealed record YouthActivity(Guid Id, Guid? CohortId, DateTime CreatedAt, DateTime? LastSignInAt);
+    private sealed record YouthActivity(
+        Guid Id,
+        Guid? CohortId,
+        Guid? MentorId,
+        string DisplayName,
+        DateTime CreatedAt,
+        DateTime? LastSignInAt);
     private sealed record RiskSignal(string Key, string Reason);
 }

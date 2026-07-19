@@ -311,7 +311,7 @@ public sealed class GradingTests : IntegrationTestBase
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             Assert.That(await db.Notifications.AnyAsync(item =>
                 item.UserId == youthId
-                && item.EventKey == "submission-status"
+                && item.EventKey == "work-graded"
                 && item.LinkPath == $"/youth/submissions/{submission.Id}"), Is.True);
             var guardianId = await db.Users
                 .Where(item => item.Id == youthId)
@@ -319,7 +319,7 @@ public sealed class GradingTests : IntegrationTestBase
                 .SingleAsync();
             Assert.That(await db.Notifications.AnyAsync(item =>
                 item.UserId == guardianId
-                && item.EventKey == "submission-status"), Is.False,
+                && item.EventKey == "work-graded"), Is.False,
                 "the guardian opted out of this outcome notification");
             Assert.That(await db.BadgeAwards.CountAsync(item =>
                 item.YouthUserId == youthId), Is.EqualTo(1));
@@ -351,10 +351,30 @@ public sealed class GradingTests : IntegrationTestBase
     [Test]
     [Property("Req", "L2-MENTOR-003")]
     [Property("Req", "L2-LEARN-007")]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
     public async Task Request_revision_requires_a_comment_and_the_youth_can_then_resubmit()
     {
-        var (_, mentorToken, youthId, youthToken) = await SeedMentorAndYouthAsync();
+        // Traces to: L2-MENTOR-003; L2-LEARN-007 AC3; L2-ENGAGE-008; L2-PLATFORM-003 AC2
+        var (mentorId, mentorToken, youthId, youthToken) = await SeedMentorAndYouthAsync();
         var submission = await SeedSubmissionAsync(youthId);
+        string mentorEmail;
+        using (var preferenceScope = Factory.Services.CreateScope())
+        {
+            var preferenceDb = preferenceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            mentorEmail = await preferenceDb.Users
+                .Where(item => item.Id == mentorId)
+                .Select(item => item.Email)
+                .SingleAsync();
+            preferenceDb.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = mentorId,
+                EventKey = "approval-needed",
+                InApp = false,
+                Email = true,
+            });
+            await preferenceDb.SaveChangesAsync();
+        }
         var reviewResponse = await GetAsync($"/api/mentor/submissions/{submission.Id}", mentorToken);
         var review = await reviewResponse.Content.ReadFromJsonAsync<MentorSubmissionDetailDto>();
 
@@ -391,7 +411,7 @@ public sealed class GradingTests : IntegrationTestBase
                 .SingleAsync();
             Assert.That(await db.Notifications.AnyAsync(item =>
                 item.UserId == guardianId
-                && item.EventKey == "submission-status"
+                && item.EventKey == "work-graded"
                 && item.LinkPath == "/guardian/progress"), Is.True);
         }
 
@@ -405,6 +425,18 @@ public sealed class GradingTests : IntegrationTestBase
             new { bodyText = "Now with scripture", expectedVersion = revView.Version },
             youthToken);
         Assert.That(resubmit.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+        var approvalEmail = Factory.Emails.LastTo(mentorEmail);
+        Assert.Multiple(() =>
+        {
+            Assert.That(approvalEmail, Is.Not.Null, "the assigned mentor receives the renewed review request");
+            Assert.That(approvalEmail!.Subject, Is.EqualTo("Revised assignment ready for review"));
+            Assert.That(approvalEmail.Body, Does.Contain($"/mentor/reviews/submissions/{submission.Id}"));
+            Assert.That(Factory.Changes.Changes.Any(item =>
+                item.Audience == "user"
+                && item.AudienceId == mentorId
+                && item.EventName == "notification"
+                && JsonSerializer.Serialize(item.Payload).Contains("approval-needed")), Is.False);
+        });
 
         var afterResubmit = await GetAsync($"/api/me/submissions/{submission.Id}", youthToken);
         var reView = await afterResubmit.Content.ReadFromJsonAsync<SubmissionStatusDto>();
@@ -418,14 +450,152 @@ public sealed class GradingTests : IntegrationTestBase
     }
 
     [Test]
+    [Property("Req", "L2-MENTOR-003")]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
+    public async Task Graded_work_uses_the_canonical_preference_for_in_app_and_email_delivery()
+    {
+        // Traces to: L2-MENTOR-003, L2-ENGAGE-008 AC1/AC4, L2-PLATFORM-003 AC2
+        var (_, mentorToken, youthId, _) = await SeedMentorAndYouthAsync();
+        var submission = await SeedSubmissionAsync(youthId);
+        string youthEmail;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            youthEmail = await db.Users
+                .Where(item => item.Id == youthId)
+                .Select(item => item.Email)
+                .SingleAsync();
+            db.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = youthId,
+                EventKey = "work-graded",
+                InApp = false,
+                Email = true,
+            });
+            await db.SaveChangesAsync();
+        }
+
+        var reviewResponse = await GetAsync($"/api/mentor/submissions/{submission.Id}", mentorToken);
+        var review = await reviewResponse.Content.ReadFromJsonAsync<MentorSubmissionDetailDto>();
+        var grade = await PostAsync(
+            $"/api/mentor/submissions/{submission.Id}/grade",
+            new
+            {
+                decision = "request-revision",
+                comment = "Please connect this reflection to scripture.",
+                guardianNotified = false,
+                expectedVersion = review!.Version,
+            },
+            mentorToken);
+        Assert.That(grade.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            Assert.Multiple(() =>
+            {
+                Assert.That(db.Notifications.Any(item =>
+                    item.UserId == youthId && item.EventKey == "work-graded"), Is.False);
+                Assert.That(db.Notifications.Any(item =>
+                    item.UserId == youthId && item.EventKey == "submission-status"), Is.False);
+                Assert.That(Factory.Changes.Changes.Any(item =>
+                    item.Audience == "user"
+                    && item.AudienceId == youthId
+                    && item.EventName == "notification"), Is.False);
+            });
+        }
+        var email = Factory.Emails.LastTo(youthEmail);
+        Assert.Multiple(() =>
+        {
+            Assert.That(email, Is.Not.Null);
+            Assert.That(email!.Subject, Does.Contain("needs revision").IgnoreCase);
+            Assert.That(email.Body, Does.Contain($"/youth/submissions/{submission.Id}"));
+        });
+    }
+
+    [Test]
+    [Property("Req", "L2-CURRIC-005")]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
+    public async Task Badge_earned_uses_its_preference_for_in_app_and_email_delivery()
+    {
+        // Traces to: L2-CURRIC-005, L2-ENGAGE-008 AC1/AC4, L2-PLATFORM-003 AC2
+        var (_, mentorToken, youthId, _) = await SeedMentorAndYouthAsync();
+        var submission = await SeedSubmissionAsync(youthId);
+        string youthEmail;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            youthEmail = await db.Users
+                .Where(item => item.Id == youthId)
+                .Select(item => item.Email)
+                .SingleAsync();
+            db.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = youthId,
+                EventKey = "badge-earned",
+                InApp = false,
+                Email = true,
+            });
+            await db.SaveChangesAsync();
+        }
+
+        var reviewResponse = await GetAsync($"/api/mentor/submissions/{submission.Id}", mentorToken);
+        var review = await reviewResponse.Content.ReadFromJsonAsync<MentorSubmissionDetailDto>();
+        var grade = await PostAsync(
+            $"/api/mentor/submissions/{submission.Id}/grade",
+            new
+            {
+                decision = "approve",
+                rubricScoresJson = JsonSerializer.Serialize(new Dictionary<string, int>
+                {
+                    [submission.CriterionId.ToString()] = 10,
+                }),
+                comment = "Excellent work.",
+                guardianNotified = false,
+                expectedVersion = review!.Version,
+            },
+            mentorToken);
+        Assert.That(grade.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            Assert.Multiple(() =>
+            {
+                Assert.That(db.BadgeAwards.Any(item =>
+                    item.YouthUserId == youthId), Is.True);
+                Assert.That(db.Notifications.Any(item =>
+                    item.UserId == youthId && item.EventKey == "badge-earned"), Is.False);
+                Assert.That(Factory.Changes.Changes.Any(item =>
+                    item.Audience == "user"
+                    && item.AudienceId == youthId
+                    && item.EventName == "notification"
+                    && JsonSerializer.Serialize(item.Payload).Contains("badge-earned")), Is.False);
+            });
+        }
+        var email = Factory.Emails.LastTo(youthEmail);
+        Assert.Multiple(() =>
+        {
+            Assert.That(email, Is.Not.Null);
+            Assert.That(email!.Subject, Does.Contain("badge earned").IgnoreCase);
+            Assert.That(email.Body, Does.Contain("/youth/journey"));
+        });
+    }
+
+    [Test]
     [Property("Req", "L2-CURRIC-005")]
     [Property("Req", "L2-MENTOR-004")]
     [Property("Req", "L2-LEARN-005")]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
     public async Task Approving_a_passing_quiz_attempt_records_the_score_and_awards_the_quiz_badge()
     {
         var (_, mentorToken, youthId, _) = await SeedMentorAndYouthAsync();
 
         Guid attemptId, badgeId, moduleBadgeId;
+        string youthEmail;
         using (var scope = Factory.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -480,10 +650,21 @@ public sealed class GradingTests : IntegrationTestBase
                 TargetRefId = module.Id,
             };
             db.Badges.AddRange(badge, moduleBadge);
+            db.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = youthId,
+                EventKey = "badge-earned",
+                InApp = false,
+                Email = true,
+            });
             await db.SaveChangesAsync();
             attemptId = attempt.Id;
             badgeId = badge.Id;
             moduleBadgeId = moduleBadge.Id;
+            youthEmail = await db.Users
+                .Where(item => item.Id == youthId)
+                .Select(item => item.Email)
+                .SingleAsync();
         }
 
         // Traces to: L2-MENTOR-004 (mentor approves the attempt)
@@ -508,14 +689,22 @@ public sealed class GradingTests : IntegrationTestBase
             var liveNotifications = Factory.Changes.Changes.Count(item =>
                 item.Audience == "user"
                 && item.AudienceId == youthId
-                && item.EventName == "notification");
+                && item.EventName == "notification"
+                && JsonSerializer.Serialize(item.Payload).Contains("badge-earned"));
+            var emails = Factory.Emails.AllTo(youthEmail);
             Assert.Multiple(() =>
             {
                 Assert.That(awards, Is.EquivalentTo(expectedBadgeIds),
                     "quiz approval awards both the quiz and newly completed module badges");
                 Assert.That(awards, Has.Count.EqualTo(2), "each badge is awarded exactly once");
-                Assert.That(notifications, Is.EqualTo(2), "each badge creates one durable notification");
-                Assert.That(liveNotifications, Is.EqualTo(2), "each badge notification is pushed live");
+                Assert.That(notifications, Is.Zero, "the disabled in-app channel is suppressed");
+                Assert.That(liveNotifications, Is.Zero, "the disabled in-app channel is not pushed live");
+                Assert.That(emails.Select(item => item.Subject), Is.EquivalentTo(new[]
+                {
+                    "Badge earned: Quiz Ace",
+                    "Badge earned: Quiz Module Finisher",
+                }));
+                Assert.That(emails.All(item => item.Body.Contains("/youth/journey")), Is.True);
             });
         }
     }

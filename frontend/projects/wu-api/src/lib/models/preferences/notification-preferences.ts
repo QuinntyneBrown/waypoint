@@ -13,7 +13,7 @@ export interface NotificationCategory {
 
 /**
  * Canonical notification categories and their onboarding defaults (L2-AUTH-011
- * AC3 / L2-PLATFORM-003): reminders and mentor messages on, announcements off.
+ * AC3 / L2-PLATFORM-003): actionable events on, announcements off.
  * Event keys are free strings on the backend; the frontend
  * owns this vocabulary.
  */
@@ -34,6 +34,26 @@ export const NOTIFICATION_CATEGORIES: readonly NotificationCategory[] = [
     description: 'A reminder before sessions you plan to attend.',
   },
   {
+    eventKey: 'work-graded',
+    label: 'Work graded',
+    description: 'When a mentor reviews your submitted work.',
+  },
+  {
+    eventKey: 'badge-earned',
+    label: 'Badges earned',
+    description: 'When you earn a new achievement badge.',
+  },
+  {
+    eventKey: 'at-risk-alert',
+    label: 'At-risk alerts',
+    description: 'When an assigned youth needs follow-up.',
+  },
+  {
+    eventKey: 'approval-needed',
+    label: 'Approval needed',
+    description: 'When submitted work is ready for your review.',
+  },
+  {
     eventKey: 'announcements',
     label: 'Announcements',
     description: 'Program-wide news and updates.',
@@ -45,5 +65,9 @@ export const NOTIFICATION_DEFAULTS: Readonly<Record<string, boolean>> = {
   'lesson-reminders': true,
   'mentor-messages': true,
   'session-reminders': true,
+  'work-graded': true,
+  'badge-earned': true,
+  'at-risk-alert': true,
+  'approval-needed': true,
   announcements: false,
 };

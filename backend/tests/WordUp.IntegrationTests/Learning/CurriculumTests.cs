@@ -491,13 +491,16 @@ public sealed class CurriculumTests : IntegrationTestBase
     [Test]
     [Property("Req", "L2-CURRIC-005")]
     [Property("Req", "L2-LEARN-002")]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
     public async Task Completing_the_last_lesson_awards_targeted_lesson_and_module_badges_once_with_notifications()
     {
-        // Traces to: L2-CURRIC-005 AC2-AC3; L2-LEARN-002 AC3
+        // Traces to: L2-CURRIC-005 AC2-AC3; L2-LEARN-002 AC3; L2-ENGAGE-008; L2-PLATFORM-003 AC2
         var seed = await SeedTrackAndYouthAsync();
         Guid finalLessonId;
         Guid lessonBadgeId;
         Guid moduleBadgeId;
+        string youthEmail;
         using (var scope = Factory.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -534,10 +537,21 @@ public sealed class CurriculumTests : IntegrationTestBase
             db.Modules.Add(module);
             db.Lessons.Add(lesson);
             db.Badges.AddRange(lessonBadge, moduleBadge);
+            db.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = seed.YouthId,
+                EventKey = "badge-earned",
+                InApp = false,
+                Email = true,
+            });
             await db.SaveChangesAsync();
             finalLessonId = lesson.Id;
             lessonBadgeId = lessonBadge.Id;
             moduleBadgeId = moduleBadge.Id;
+            youthEmail = await db.Users
+                .Where(item => item.Id == seed.YouthId)
+                .Select(item => item.Email)
+                .SingleAsync();
         }
 
         var first = await SendAsync(
@@ -570,14 +584,19 @@ public sealed class CurriculumTests : IntegrationTestBase
                 && item.AudienceId == seed.YouthId
                 && item.EventName == "notification")
             .ToList();
+        var emails = Factory.Emails.AllTo(youthEmail);
         Assert.Multiple(() =>
         {
             Assert.That(awards.Select(item => item.BadgeId), Is.EquivalentTo(expectedBadgeIds));
             Assert.That(awards, Has.Count.EqualTo(2), "each definition is awarded at most once");
-            Assert.That(notifications, Has.Count.EqualTo(2), "each new award creates one durable notification");
-            Assert.That(notifications.Select(item => item.Title),
-                Is.EquivalentTo(new[] { "Badge earned: Lesson Finisher", "Badge earned: Module Finisher" }));
-            Assert.That(liveNotifications, Has.Count.EqualTo(2), "each durable notification is pushed live");
+            Assert.That(notifications, Is.Empty, "the disabled in-app channel is suppressed");
+            Assert.That(liveNotifications, Is.Empty, "the disabled in-app channel is not pushed live");
+            Assert.That(emails.Select(item => item.Subject), Is.EquivalentTo(new[]
+            {
+                "Badge earned: Lesson Finisher",
+                "Badge earned: Module Finisher",
+            }));
+            Assert.That(emails.All(item => item.Body.Contains("/youth/journey")), Is.True);
         });
     }
 

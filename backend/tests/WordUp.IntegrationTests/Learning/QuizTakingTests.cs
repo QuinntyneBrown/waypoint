@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
+using WordUp.Application.Shared.Abstractions;
 using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests.Learning;
@@ -142,6 +143,49 @@ public sealed class QuizTakingTests : IntegrationTestBase
         return (await response.Content.ReadFromJsonAsync<AttemptViewDto>())!;
     }
 
+    private async Task<(User Mentor, User Youth, string YouthToken)> SeedMentoredYouthAsync()
+    {
+        var suffix = Guid.NewGuid().ToString("N");
+        var mentor = new User
+        {
+            Email = $"quiz.mentor.{suffix}@example.com",
+            DisplayName = "Quiz Mentor",
+            Role = Roles.Mentor,
+            Status = UserStatus.Active,
+        };
+        var youth = new User
+        {
+            Email = $"quiz.youth.{suffix}@example.com",
+            DisplayName = "Quiz Youth",
+            Role = Roles.Youth,
+            Status = UserStatus.Active,
+            MentorId = mentor.Id,
+        };
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+            mentor.PasswordHash = hasher.Hash("Passw0rd!");
+            youth.PasswordHash = hasher.Hash("Passw0rd!");
+            db.Users.AddRange(mentor, youth);
+            db.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = mentor.Id,
+                EventKey = "approval-needed",
+                InApp = false,
+                Email = true,
+            });
+            await db.SaveChangesAsync();
+        }
+
+        var signIn = await Client.PostAsJsonAsync(
+            "/api/auth/sign-in",
+            new { email = youth.Email, password = "Passw0rd!" });
+        signIn.EnsureSuccessStatusCode();
+        var auth = await signIn.Content.ReadFromJsonAsync<WordUp.Application.Authentication.Auth.AuthResult>();
+        return (mentor, youth, auth!.AccessToken);
+    }
+
     [Test]
     [Property("Req", "L2-LEARN-004")]
     public async Task Quiz_intro_and_in_progress_attempt_restore_saved_answers_and_position()
@@ -212,11 +256,13 @@ public sealed class QuizTakingTests : IntegrationTestBase
     [Test]
     [Property("Req", "L2-LEARN-004")]
     [Property("Req", "L2-LEARN-005")]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
     public async Task Submitting_correct_answers_is_pending_approval_and_hides_the_score()
     {
-        // Traces to: L2-LEARN-004, L2-LEARN-005
+        // Traces to: L2-LEARN-004, L2-LEARN-005, L2-ENGAGE-008, L2-PLATFORM-003 AC2
         var seed = SeedQuiz();
-        var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
+        var (mentor, _, youthToken) = await SeedMentoredYouthAsync();
 
         var attempt = await StartAsync(seed.QuizId, youthToken);
         var answers = JsonSerializer.Serialize(new Dictionary<string, int[]>
@@ -232,6 +278,22 @@ public sealed class QuizTakingTests : IntegrationTestBase
         Assert.That(result!.Status, Is.EqualTo("PendingApproval"));
         Assert.That(result.Score, Is.Null, "youth cannot see the score before mentor approval");
         Assert.That(result.Review, Is.Empty, "feedback is also withheld before approval");
+        var approvalEmail = Factory.Emails.LastTo(mentor.Email);
+        Assert.Multiple(() =>
+        {
+            Assert.That(approvalEmail, Is.Not.Null, "the assigned mentor receives the quiz review request");
+            Assert.That(approvalEmail!.Subject, Is.EqualTo("Quiz ready for review"));
+            Assert.That(approvalEmail.Body, Does.Contain($"/mentor/reviews/quizzes/{attempt.AttemptId}"));
+            Assert.That(Factory.Changes.Changes.Any(item =>
+                item.Audience == "user"
+                && item.AudienceId == mentor.Id
+                && item.EventName == "notification"
+                && JsonSerializer.Serialize(item.Payload).Contains("approval-needed")), Is.False);
+        });
+        using var notificationScope = Factory.Services.CreateScope();
+        var notificationDb = notificationScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.That(notificationDb.Notifications.Any(item =>
+            item.UserId == mentor.Id && item.EventKey == "approval-needed"), Is.False);
     }
 
     [Test]

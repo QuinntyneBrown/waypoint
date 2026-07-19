@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -11,20 +12,20 @@ public class ApproveQuizAttemptCommandHandler : IRequestHandler<ApproveQuizAttem
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
-    private readonly IChangePublisher _publisher;
+    private readonly NotificationDeliveryService _notifications;
 
     public ApproveQuizAttemptCommandHandler(
         IAppDbContext db,
         IClock clock,
         IAuditLogger audit,
         ICurrentUser currentUser,
-        IChangePublisher publisher)
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
-        _publisher = publisher;
+        _notifications = notifications;
     }
 
     public async Task Handle(ApproveQuizAttemptCommand request, CancellationToken cancellationToken)
@@ -65,16 +66,16 @@ public class ApproveQuizAttemptCommandHandler : IRequestHandler<ApproveQuizAttem
             .FirstOrDefaultAsync(q => q.Id == attempt.QuizId, cancellationToken);
         var passed = quiz is not null ? approvedScore >= quiz.PassMark : attempt.Passed;
 
-        IReadOnlyList<Notification> badgeNotifications = [];
+        IReadOnlyList<NotificationDeliveryPlan> badgeNotifications = [];
         if (passed)
         {
             badgeNotifications = await QuizBadgeAwarder.AwardForPassedQuizAsync(
-                _db, attempt.QuizId, attempt.YouthUserId, _currentUser.UserId, now, cancellationToken);
+                _db, _notifications, attempt.QuizId, attempt.YouthUserId, _currentUser.UserId, now, cancellationToken);
         }
 
         await _db.SaveChangesAsync(cancellationToken);
-        await QuizBadgeAwarder.PublishNotificationsAsync(
-            _publisher,
+        await QuizBadgeAwarder.DispatchNotificationsAsync(
+            _notifications,
             badgeNotifications,
             cancellationToken);
 

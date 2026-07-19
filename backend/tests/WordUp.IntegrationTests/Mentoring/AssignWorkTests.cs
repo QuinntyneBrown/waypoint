@@ -30,9 +30,11 @@ public sealed class AssignWorkTests : IntegrationTestBase
         Assignment Project);
 
     [Test]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
     public async Task Selected_youth_receive_journey_work_message_and_due_reminder()
     {
-        // Traces to: L2-MENTOR-008 AC1..AC4, L2-ENGAGE-008
+        // Traces to: L2-MENTOR-008 AC1..AC4, L2-ENGAGE-008, L2-PLATFORM-003 AC2
         var scenario = await SeedScenarioAsync();
         var mentorToken = await SignInAsync(scenario.Mentor.Email);
 
@@ -45,6 +47,7 @@ public sealed class AssignWorkTests : IntegrationTestBase
                     UserId = scenario.YouthB.Id,
                     EventKey = "mentor-messages",
                     InApp = false,
+                    Email = true,
                 },
                 new NotificationPreference
                 {
@@ -84,6 +87,14 @@ public sealed class AssignWorkTests : IntegrationTestBase
         Assert.That(assign.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var result = await assign.Content.ReadFromJsonAsync<AssignWorkResult>();
         Assert.That(result!.Created, Is.EqualTo(2));
+
+        var email = Factory.Emails.LastTo(scenario.YouthB.Email);
+        Assert.Multiple(() =>
+        {
+            Assert.That(email, Is.Not.Null, "the email-only youth receives the assigned-work message");
+            Assert.That(email!.Subject, Is.EqualTo("New assigned work"));
+            Assert.That(email.Body, Does.Contain("/youth/messages"));
+        });
 
         using (var scope = Factory.Services.CreateScope())
         {

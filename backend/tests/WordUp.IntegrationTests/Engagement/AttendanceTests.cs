@@ -178,12 +178,15 @@ public sealed class AttendanceTests : IntegrationTestBase
     [Test]
     [Property("Req", "L2-CURRIC-005")]
     [Property("Req", "L2-ENGAGE-002")]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
     public async Task Five_consecutive_attendances_award_the_streak_badge_once_with_notifications()
     {
-        // Traces to: L2-CURRIC-005 AC2; L2-ENGAGE-002 AC4
+        // Traces to: L2-CURRIC-005 AC2; L2-ENGAGE-002 AC4; L2-ENGAGE-008; L2-PLATFORM-003 AC2
         var token = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
         Guid youthId;
         Guid badgeId;
+        string youthEmail;
         List<Guid> sessionIds;
         using (var scope = Factory.Services.CreateScope())
         {
@@ -223,9 +226,17 @@ public sealed class AttendanceTests : IntegrationTestBase
             db.Users.Add(youth);
             db.Sessions.AddRange(sessions);
             db.Badges.Add(badge);
+            db.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = youth.Id,
+                EventKey = "badge-earned",
+                InApp = false,
+                Email = true,
+            });
             await db.SaveChangesAsync();
             youthId = youth.Id;
             badgeId = badge.Id;
+            youthEmail = youth.Email;
             sessionIds = sessions.Select(item => item.Id).ToList();
         }
 
@@ -252,12 +263,16 @@ public sealed class AttendanceTests : IntegrationTestBase
             Assert.That(verifyDb.BadgeAwards.Count(item =>
                 item.YouthUserId == youthId && item.BadgeId == badgeId), Is.EqualTo(1));
             Assert.That(verifyDb.Notifications.Count(item =>
-                item.UserId == youthId && item.EventKey == "badge-earned"), Is.EqualTo(1));
+                item.UserId == youthId && item.EventKey == "badge-earned"), Is.Zero);
             Assert.That(Factory.Changes.Changes.Count(item =>
                 item.Audience == "user"
                 && item.AudienceId == youthId
                 && item.EventName == "notification"
-                && JsonSerializer.Serialize(item.Payload).Contains("badge-earned")), Is.EqualTo(1));
+                && JsonSerializer.Serialize(item.Payload).Contains("badge-earned")), Is.Zero);
+            var email = Factory.Emails.LastTo(youthEmail);
+            Assert.That(email, Is.Not.Null);
+            Assert.That(email!.Subject, Is.EqualTo("Badge earned: Faithful Five"));
+            Assert.That(email.Body, Does.Contain("/youth/journey"));
         });
     }
 

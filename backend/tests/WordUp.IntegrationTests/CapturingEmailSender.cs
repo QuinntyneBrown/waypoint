@@ -19,4 +19,9 @@ public sealed class CapturingEmailSender : IEmailSender
 
     public SentEmail? LastTo(string email) =>
         _sent.ToArray().LastOrDefault(e => string.Equals(e.To, email, StringComparison.OrdinalIgnoreCase));
+
+    public IReadOnlyList<SentEmail> AllTo(string email) =>
+        _sent.ToArray()
+            .Where(e => string.Equals(e.To, email, StringComparison.OrdinalIgnoreCase))
+            .ToList();
 }

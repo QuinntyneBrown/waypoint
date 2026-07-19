@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Infrastructure;
@@ -62,9 +63,10 @@ public sealed class SubmissionTests : IntegrationTestBase
         return (youthId, auth!.AccessToken);
     }
 
-    private async Task<string> SeedAssignedMentorAsync(Guid youthId)
+    private async Task<(Guid Id, string Email, string Token)> SeedAssignedMentorAsync(Guid youthId)
     {
         var email = $"mentor.{Guid.NewGuid():N}@example.com";
+        Guid mentorId;
         using (var scope = Factory.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -81,13 +83,14 @@ public sealed class SubmissionTests : IntegrationTestBase
             db.Users.Add(mentor);
             youth.MentorId = mentor.Id;
             await db.SaveChangesAsync();
+            mentorId = mentor.Id;
         }
 
         var signIn = await Client.PostAsJsonAsync(
             "/api/auth/sign-in", new { email, password = "Passw0rd!" });
         signIn.EnsureSuccessStatusCode();
         var auth = await signIn.Content.ReadFromJsonAsync<WordUp.Application.Authentication.Auth.AuthResult>();
-        return auth!.AccessToken;
+        return (mentorId, email, auth!.AccessToken);
     }
 
     private async Task<(Guid youthId, string youthToken, string guardianToken)> SeedConsentedMinorAsync()
@@ -231,9 +234,25 @@ public sealed class SubmissionTests : IntegrationTestBase
 
     [Test]
     [Property("Req", "L2-LEARN-006")]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
     public async Task Submitting_without_attestation_is_rejected_and_with_attestation_succeeds()
     {
-        var (_, youthToken) = await SeedYouthAsync();
+        // Traces to: L2-LEARN-006; L2-ENGAGE-008; L2-PLATFORM-003 AC2
+        var (youthId, youthToken) = await SeedYouthAsync();
+        var mentor = await SeedAssignedMentorAsync(youthId);
+        using (var preferenceScope = Factory.Services.CreateScope())
+        {
+            var preferenceDb = preferenceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            preferenceDb.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = mentor.Id,
+                EventKey = "approval-needed",
+                InApp = false,
+                Email = true,
+            });
+            await preferenceDb.SaveChangesAsync();
+        }
         var assignment = await SeedAssignmentAsync();
 
         // Traces to: L2-LEARN-006 (attestation required)
@@ -247,9 +266,27 @@ public sealed class SubmissionTests : IntegrationTestBase
             $"/api/me/assignments/{assignment.Id}/submissions",
             new { bodyText = "My answer", isCodingProject = false, attest = true },
             youthToken);
-        Assert.That(ok.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(ok.StatusCode, Is.EqualTo(HttpStatusCode.OK), await ok.Content.ReadAsStringAsync());
 
         var created = await ok.Content.ReadFromJsonAsync<SubmissionResultDto>();
+        var approvalEmail = Factory.Emails.LastTo(mentor.Email);
+        Assert.Multiple(() =>
+        {
+            Assert.That(approvalEmail, Is.Not.Null, "the assigned mentor receives the review request");
+            Assert.That(approvalEmail!.Subject, Is.EqualTo("Assignment ready for review"));
+            Assert.That(approvalEmail.Body, Does.Contain($"/mentor/reviews/submissions/{created!.Id}"));
+            Assert.That(Factory.Changes.Changes.Any(item =>
+                item.Audience == "user"
+                && item.AudienceId == mentor.Id
+                && item.EventName == "notification"
+                && JsonSerializer.Serialize(item.Payload).Contains("approval-needed")), Is.False);
+        });
+        using (var notificationScope = Factory.Services.CreateScope())
+        {
+            var notificationDb = notificationScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            Assert.That(notificationDb.Notifications.Any(item =>
+                item.UserId == mentor.Id && item.EventKey == "approval-needed"), Is.False);
+        }
         var status = await GetAsync($"/api/me/submissions/{created!.Id}", youthToken);
         Assert.That(status.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var view = await status.Content.ReadFromJsonAsync<SubmissionStatusDto>();
@@ -405,7 +442,7 @@ public sealed class SubmissionTests : IntegrationTestBase
         // Traces to: L2-LEARN-006 AC2/AC4, L2-NFR-001 AC4
         var (ownerId, ownerToken) = await SeedYouthAsync();
         var (_, otherYouthToken) = await SeedYouthAsync();
-        var assignedMentorToken = await SeedAssignedMentorAsync(ownerId);
+        var assignedMentor = await SeedAssignedMentorAsync(ownerId);
         var administratorToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
         var assignment = await SeedAssignmentAsync("file");
 
@@ -443,7 +480,7 @@ public sealed class SubmissionTests : IntegrationTestBase
             Assert.That(submittedCopy.File!.FileName, Is.EqualTo("evidence.pdf"));
             Assert.That(submittedCopy.File.Url, Is.EqualTo(selected.Url));
         });
-        var staffReview = await GetAsync($"/api/mentor/submissions/{result.Id}", assignedMentorToken);
+        var staffReview = await GetAsync($"/api/mentor/submissions/{result.Id}", assignedMentor.Token);
         var reviewCopy = await staffReview.Content.ReadFromJsonAsync<SubmissionReviewDto>();
         Assert.Multiple(() =>
         {
@@ -465,7 +502,7 @@ public sealed class SubmissionTests : IntegrationTestBase
         var unusedAfterSubmit = await GetAsync(unused!.Url, ownerToken);
         Assert.That(unusedAfterSubmit.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         Assert.That((await GetAsync(selected.Url, otherYouthToken)).StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
-        Assert.That((await GetAsync(selected.Url, assignedMentorToken)).StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That((await GetAsync(selected.Url, assignedMentor.Token)).StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That((await GetAsync(selected.Url, administratorToken)).StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That((await Client.GetAsync(selected.Url)).StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
     }

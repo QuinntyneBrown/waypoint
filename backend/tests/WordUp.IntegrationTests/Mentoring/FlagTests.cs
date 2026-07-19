@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -102,9 +103,11 @@ public sealed class FlagTests : IntegrationTestBase
 
     [Test]
     [Property("Req", "L2-MENTOR-007")]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
     public async Task Automatic_signals_use_configured_thresholds_deduplicate_and_rearm_after_clearing()
     {
-        // Traces to: L2-MENTOR-007 AC1/AC3/AC4
+        // Traces to: L2-MENTOR-007 AC1/AC3/AC4; L2-ENGAGE-008; L2-PLATFORM-003 AC2
         var mentor = await SeedUserAsync(Roles.Mentor, "Risk Mentor");
         var director = await SeedUserAsync(Roles.ProgramAdministrator, "Program Director");
         var now = DateTime.UtcNow;
@@ -145,6 +148,13 @@ public sealed class FlagTests : IntegrationTestBase
             db.Modules.Add(module);
             db.Lessons.Add(lesson);
             db.Sessions.Add(session);
+            db.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = mentor.Id,
+                EventKey = "at-risk-alert",
+                InApp = false,
+                Email = true,
+            });
             await db.SaveChangesAsync();
         }
         var atRiskYouth = await SeedUserAsync(
@@ -216,6 +226,15 @@ public sealed class FlagTests : IntegrationTestBase
             Assert.That(automatic.Reasons.Single(), Does.Contain("Inactive for 8 days"));
             Assert.That(automatic.Reasons.Single(), Does.Contain("Missed 1 session"));
             Assert.That(automatic.Reasons.Single(), Does.Contain("below the cohort average"));
+            Assert.That(Factory.Changes.Changes.Any(item =>
+                item.Audience == "user"
+                && item.AudienceId == mentor.Id
+                && item.EventName == "notification"
+                && JsonSerializer.Serialize(item.Payload).Contains("at-risk-alert")), Is.False);
+            var email = Factory.Emails.LastTo(mentor.Email);
+            Assert.That(email, Is.Not.Null, "the assigned mentor receives the automatic risk alert");
+            Assert.That(email!.Subject, Is.EqualTo("Youth needs follow-up"));
+            Assert.That(email.Body, Does.Contain("/mentor/flags"));
         });
 
         await GetAsync("/api/mentor/flags", mentorToken);
@@ -234,6 +253,10 @@ public sealed class FlagTests : IntegrationTestBase
                     .Select(entry => entry.IsPrivate)
                     .SingleAsync(),
                 Is.True);
+            Assert.That(await db.Notifications.AnyAsync(item =>
+                item.UserId == mentor.Id && item.EventKey == "at-risk-alert"), Is.False);
+            Assert.That(Factory.Emails.AllTo(mentor.Email), Has.Count.EqualTo(1),
+                "re-evaluation does not duplicate an active risk alert");
         }
 
         var directorView = await GetAsync("/api/mentor/flags", directorToken);

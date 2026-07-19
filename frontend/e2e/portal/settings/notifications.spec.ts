@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { registerYouth } from '../../support/api';
 import { NotificationsSettingsPage, SignInPage } from '../../pages';
 
-// Traces to: L2-PLATFORM-003
+// Traces to: L2-ENGAGE-008, L2-PLATFORM-003
 test('notification preferences persist a toggled category across reloads', async ({
   page,
   request,
@@ -12,6 +12,11 @@ test('notification preferences persist a toggled category across reloads', async
 
   const notifications = new NotificationsSettingsPage(page);
   await notifications.goto();
+
+  for (const category of ['Work graded', 'Badges earned', 'At-risk alerts', 'Approval needed']) {
+    await expect(notifications.checkbox(`${category} in-app`)).toBeAttached();
+    await expect(notifications.checkbox(`${category} email`)).toBeAttached();
+  }
 
   const announce = notifications.checkbox('Announcements in-app');
   await expect(announce).not.toBeChecked(); // default off

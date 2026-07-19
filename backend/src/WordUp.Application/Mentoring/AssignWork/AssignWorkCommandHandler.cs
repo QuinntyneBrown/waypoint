@@ -1,6 +1,7 @@
 using System.Net;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -13,19 +14,22 @@ public class AssignWorkCommandHandler : IRequestHandler<AssignWorkCommand, Assig
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
     private readonly IChangePublisher _publisher;
+    private readonly NotificationDeliveryService _notifications;
 
     public AssignWorkCommandHandler(
         IAppDbContext db,
         IClock clock,
         IAuditLogger audit,
         ICurrentUser currentUser,
-        IChangePublisher publisher)
+        IChangePublisher publisher,
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
         _publisher = publisher;
+        _notifications = notifications;
     }
 
     public async Task<AssignWorkResult> Handle(AssignWorkCommand request, CancellationToken cancellationToken)
@@ -55,17 +59,8 @@ public class AssignWorkCommandHandler : IRequestHandler<AssignWorkCommand, Assig
         var reminderCadence = string.IsNullOrWhiteSpace(request.ReminderCadence)
             ? null
             : request.ReminderCadence.Trim().ToLowerInvariant();
-        var recipientIds = recipients.Select(recipient => recipient.Id).ToList();
-        var messageOptOutIds = messageBody is null
-            ? new HashSet<Guid>()
-            : (await _db.NotificationPreferences
-                .Where(preference => recipientIds.Contains(preference.UserId)
-                    && preference.EventKey == "mentor-messages"
-                    && !preference.InApp)
-                .Select(preference => preference.UserId)
-                .ToListAsync(cancellationToken)).ToHashSet();
         var messages = new List<Message>();
-        var notifications = new List<Notification>();
+        var notificationPlans = new List<NotificationDeliveryPlan>();
         foreach (var youth in recipients)
         {
             var work = new AssignedWork
@@ -111,20 +106,14 @@ public class AssignWorkCommandHandler : IRequestHandler<AssignWorkCommand, Assig
             };
             _db.Messages.Add(message);
             messages.Add(message);
-            if (!messageOptOutIds.Contains(youth.Id))
-            {
-                var notification = new Notification
-                {
-                    UserId = youth.Id,
-                    EventKey = "mentor-messages",
-                    Title = "New assigned work",
-                    Body = $"Your mentor assigned {item.Title} and sent you a message.",
-                    LinkPath = "/youth/messages",
-                    CreatedAt = now,
-                };
-                _db.Notifications.Add(notification);
-                notifications.Add(notification);
-            }
+            notificationPlans.Add(await _notifications.PrepareAsync(
+                youth.Id,
+                "mentor-messages",
+                "New assigned work",
+                $"Your mentor assigned {item.Title} and sent you a message.",
+                "/youth/messages",
+                now,
+                cancellationToken));
         }
 
         await _db.SaveChangesAsync(cancellationToken);
@@ -145,21 +134,9 @@ public class AssignWorkCommandHandler : IRequestHandler<AssignWorkCommand, Assig
                 },
                 cancellationToken);
         }
-        foreach (var notification in notifications)
+        foreach (var plan in notificationPlans)
         {
-            await _publisher.PublishToUserAsync(
-                notification.UserId,
-                "notification",
-                new
-                {
-                    id = notification.Id,
-                    eventKey = notification.EventKey,
-                    title = notification.Title,
-                    body = notification.Body,
-                    linkPath = notification.LinkPath,
-                    createdAt = notification.CreatedAt,
-                },
-                cancellationToken);
+            await _notifications.DispatchAsync(plan, cancellationToken);
         }
 
         await _audit.LogAsync(

@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -11,13 +12,20 @@ public class SubmitQuizAttemptCommandHandler : IRequestHandler<SubmitQuizAttempt
     private readonly ICurrentUser _currentUser;
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
+    private readonly NotificationDeliveryService _notifications;
 
-    public SubmitQuizAttemptCommandHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock, IAuditLogger audit)
+    public SubmitQuizAttemptCommandHandler(
+        IAppDbContext db,
+        ICurrentUser currentUser,
+        IClock clock,
+        IAuditLogger audit,
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _currentUser = currentUser;
         _clock = clock;
         _audit = audit;
+        _notifications = notifications;
     }
 
     public async Task<QuizResultView> Handle(SubmitQuizAttemptCommand request, CancellationToken cancellationToken)
@@ -61,10 +69,32 @@ public class SubmitQuizAttemptCommandHandler : IRequestHandler<SubmitQuizAttempt
         attempt.AutoScore = autoScore;
         attempt.Passed = autoScore >= quiz.PassMark;
         attempt.IsSubmitted = true;
-        attempt.SubmittedAt = _clock.UtcNow;
+        var now = _clock.UtcNow;
+        attempt.SubmittedAt = now;
         // ApprovedScore intentionally left null: a mentor must approve before the youth sees a score.
 
+        NotificationDeliveryPlan? approvalPlan = null;
+        var submitter = await _db.Users.AsNoTracking()
+            .Where(item => item.Id == attempt.YouthUserId)
+            .Select(item => new { item.DisplayName, item.MentorId })
+            .SingleAsync(cancellationToken);
+        if (submitter.MentorId is { } mentorId)
+        {
+            approvalPlan = await _notifications.PrepareAsync(
+                mentorId,
+                "approval-needed",
+                "Quiz ready for review",
+                $"{submitter.DisplayName} submitted a quiz attempt.",
+                $"/mentor/reviews/quizzes/{attempt.Id}",
+                now,
+                cancellationToken);
+        }
+
         await _db.SaveChangesAsync(cancellationToken);
+        if (approvalPlan is not null)
+        {
+            await _notifications.DispatchAsync(approvalPlan, cancellationToken);
+        }
         await _audit.LogAsync("QuizAttemptSubmitted", _currentUser.UserId, "QuizAttempt", attempt.Id);
 
         // The youth does not see the score until approved (L2-LEARN-005 AC3).

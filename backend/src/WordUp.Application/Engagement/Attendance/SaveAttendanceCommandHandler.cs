@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -13,20 +14,20 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
     private readonly IClock _clock;
     private readonly ICurrentUser _currentUser;
     private readonly IAuditLogger _audit;
-    private readonly IChangePublisher _publisher;
+    private readonly NotificationDeliveryService _notifications;
 
     public SaveAttendanceCommandHandler(
         IAppDbContext db,
         IClock clock,
         ICurrentUser currentUser,
         IAuditLogger audit,
-        IChangePublisher publisher)
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _clock = clock;
         _currentUser = currentUser;
         _audit = audit;
-        _publisher = publisher;
+        _notifications = notifications;
     }
 
     public async Task<AttendanceTally> Handle(SaveAttendanceCommand request, CancellationToken cancellationToken)
@@ -213,7 +214,7 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
         }
 
         var badgeIds = badges.Select(item => item.Id).ToList();
-        var notifications = new List<Notification>();
+        var notificationPlans = new List<NotificationDeliveryPlan>();
         foreach (var youthId in youthIds)
         {
             var statuses = await (
@@ -253,43 +254,28 @@ public class SaveAttendanceCommandHandler : IRequestHandler<SaveAttendanceComman
                     YouthUserId = youthId,
                     AwardedAt = now,
                 });
-                var notification = new Notification
-                {
-                    UserId = youthId,
-                    EventKey = "badge-earned",
-                    Title = $"Badge earned: {badge.Name}",
-                    Body = string.IsNullOrWhiteSpace(badge.Description)
+                notificationPlans.Add(await _notifications.PrepareAsync(
+                    youthId,
+                    "badge-earned",
+                    $"Badge earned: {badge.Name}",
+                    string.IsNullOrWhiteSpace(badge.Description)
                         ? "You earned a new badge."
                         : badge.Description,
-                    LinkPath = "/youth/journey",
-                    CreatedAt = now,
-                };
-                _db.Notifications.Add(notification);
-                notifications.Add(notification);
+                    "/youth/journey",
+                    now,
+                    cancellationToken));
             }
         }
 
-        if (notifications.Count == 0)
+        if (notificationPlans.Count == 0)
         {
             return;
         }
 
         await _db.SaveChangesAsync(cancellationToken);
-        foreach (var notification in notifications)
+        foreach (var plan in notificationPlans)
         {
-            await _publisher.PublishToUserAsync(
-                notification.UserId,
-                "notification",
-                new
-                {
-                    id = notification.Id,
-                    eventKey = notification.EventKey,
-                    title = notification.Title,
-                    body = notification.Body,
-                    linkPath = notification.LinkPath,
-                    createdAt = notification.CreatedAt,
-                },
-                cancellationToken);
+            await _notifications.DispatchAsync(plan, cancellationToken);
         }
     }
 

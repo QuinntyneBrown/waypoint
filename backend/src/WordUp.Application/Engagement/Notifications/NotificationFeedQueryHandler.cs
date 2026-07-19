@@ -9,12 +9,18 @@ public class NotificationFeedQueryHandler : IRequestHandler<NotificationFeedQuer
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
     private readonly IClock _clock;
+    private readonly NotificationDeliveryService _notifications;
 
-    public NotificationFeedQueryHandler(IAppDbContext db, ICurrentUser currentUser, IClock clock)
+    public NotificationFeedQueryHandler(
+        IAppDbContext db,
+        ICurrentUser currentUser,
+        IClock clock,
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _currentUser = currentUser;
         _clock = clock;
+        _notifications = notifications;
     }
 
     public async Task<IReadOnlyList<NotificationView>> Handle(NotificationFeedQuery request, CancellationToken cancellationToken)
@@ -30,31 +36,27 @@ public class NotificationFeedQueryHandler : IRequestHandler<NotificationFeedQuer
 
         if (due.Count > 0)
         {
-            var eventKeys = due.Select(item => item.EventKey).Distinct().ToList();
-            var preferences = await _db.NotificationPreferences
-                .Where(item => item.UserId == userId && eventKeys.Contains(item.EventKey))
-                .ToDictionaryAsync(item => item.EventKey, item => item.InApp, cancellationToken);
-
+            var deliveryPlans = new List<NotificationDeliveryPlan>();
             foreach (var scheduled in due)
             {
-                if (!preferences.TryGetValue(scheduled.EventKey, out var inApp) || inApp)
-                {
-                    _db.Notifications.Add(new Notification
-                    {
-                        UserId = userId,
-                        EventKey = scheduled.EventKey,
-                        Title = scheduled.Title,
-                        Body = scheduled.Body,
-                        LinkPath = scheduled.LinkPath,
-                        CreatedAt = now,
-                    });
-                }
+                deliveryPlans.Add(await _notifications.PrepareAsync(
+                    userId,
+                    scheduled.EventKey,
+                    scheduled.Title,
+                    scheduled.Body,
+                    scheduled.LinkPath,
+                    now,
+                    cancellationToken));
 
                 // Consume the schedule even when the user opted out, so it cannot be emitted later.
                 scheduled.DeliveredAt = now;
             }
 
             await _db.SaveChangesAsync(cancellationToken);
+            foreach (var plan in deliveryPlans)
+            {
+                await _notifications.DispatchAsync(plan, cancellationToken);
+            }
         }
 
         return await _db.Notifications

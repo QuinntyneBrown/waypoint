@@ -47,7 +47,11 @@ public sealed class NotificationTests : IntegrationTestBase
         return (user.Id, email);
     }
 
-    private async Task SeedNotificationPreferenceAsync(Guid userId, string eventKey, bool inApp)
+    private async Task SeedNotificationPreferenceAsync(
+        Guid userId,
+        string eventKey,
+        bool inApp,
+        bool email = false)
     {
         using var scope = Factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -56,7 +60,7 @@ public sealed class NotificationTests : IntegrationTestBase
             UserId = userId,
             EventKey = eventKey,
             InApp = inApp,
-            Email = false,
+            Email = email,
         });
         await db.SaveChangesAsync();
     }
@@ -115,6 +119,41 @@ public sealed class NotificationTests : IntegrationTestBase
         var feed = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
         var notifications = await feed.Content.ReadFromJsonAsync<List<NotificationDto>>();
         Assert.That(notifications!.Any(n => n.EventKey == "mentor-messages"), Is.False, "opting out of in-app mentor messages suppresses the notification");
+    }
+
+    [Test]
+    [Property("Req", "L2-ENGAGE-008")]
+    [Property("Req", "L2-PLATFORM-003")]
+    public async Task A_new_message_uses_email_when_enabled_and_in_app_is_disabled()
+    {
+        // Traces to: L2-ENGAGE-008 AC1/AC4, L2-PLATFORM-003 AC2
+        var mentor = await SeedUserAsync(Roles.Mentor);
+        var youth = await SeedUserAsync(Roles.Youth, mentorId: mentor.Id);
+        await SeedNotificationPreferenceAsync(
+            youth.Id,
+            "mentor-messages",
+            inApp: false,
+            email: true);
+        var mentorToken = await SignInAsync(mentor.Email);
+        var youthToken = await SignInAsync(youth.Email);
+
+        var send = await SendAsync(
+            HttpMethod.Post,
+            "/api/messages",
+            body: new { toUserId = youth.Id, body = "Email this safely." },
+            token: mentorToken);
+        Assert.That(send.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        var feed = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
+        var notifications = await feed.Content.ReadFromJsonAsync<List<NotificationDto>>();
+        Assert.That(notifications!.Any(item => item.EventKey == "mentor-messages"), Is.False);
+        var email = Factory.Emails.LastTo(youth.Email);
+        Assert.Multiple(() =>
+        {
+            Assert.That(email, Is.Not.Null);
+            Assert.That(email!.Subject, Does.Contain("new message").IgnoreCase);
+            Assert.That(email.Body, Does.Contain("/youth/messages"));
+        });
     }
 
     private sealed record NotificationDto(

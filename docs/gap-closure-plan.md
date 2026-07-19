@@ -300,11 +300,12 @@ requirement conflicts early (they gate "done").
       every grading and resubmission update requires that version, advances it on success, and rejects
       stale or database-raced writes with 409. Both editors retain their local draft and explicitly
       load the latest review/feedback before reconciling and retrying.
-- [~] **H13** Event/reminder generation + preference keys `L2-ENGAGE-005/008`, `L2-PLATFORM-003` —
-      session RSVP reminders now schedule, cancel, dispatch once, deep-link to the schedule, and obey
-      the canonical `session-reminders` in-app preference; assigned-work reminders now use
-      `lesson-reminders`, while direct, broadcast, and assignment-message notifications use the
-      matching `mentor-messages` key. Other required event generators and email delivery remain.
+- [x] **H13** Event/reminder generation + preference keys `L2-ENGAGE-005/008`, `L2-PLATFORM-003` —
+      graded work, earned badges, new messages, due-soon work, session reminders, automatic at-risk
+      flags, and review-ready assignment/quiz submissions now target the correct user with actionable
+      deep links and canonical event keys. One delivery boundary applies independent in-app and email
+      preferences, publishes enabled in-app events live, suppresses disabled channels, and consumes
+      scheduled reminders once; onboarding/settings expose every implemented event category.
 - [x] **H14** Frontend realtime client (`/hubs/realtime`) `L2-NFR-005`, `L2-ENGAGE-007/008` —
       one token-authenticated app-level connection starts after sign-in, reconnects with the current
       token, reconciles youth and mentor threads/inboxes without duplicates, and tears down with the
@@ -645,3 +646,11 @@ requirement conflicts early (they gate "done").
   the latest rubric or feedback for reconciliation before retry. Sixty-two Learning, Mentoring, and
   NonFunctional integrations, all 51 frontend units, the 426.89 kB production build, and all seven
   assignment/grading browser journeys pass.
+- 2026-07-19 — H13 done: one preference-aware delivery service now prepares durable notifications in
+  the caller's unit of work and sends enabled email/realtime channels only after persistence. Canonical
+  `work-graded`, `badge-earned`, `mentor-messages`, `lesson-reminders`, `session-reminders`,
+  `at-risk-alert`, and `approval-needed` producers cover grading, every automatic badge path, direct/
+  broadcast/assignment messages, once-only scheduled delivery, new automatic flags, initial/revised
+  submissions, and quiz attempts with role-correct deep links. The settings vocabulary exposes all
+  keys. Fifty affected backend integrations, all 51 frontend units, the 426.89 kB production build,
+  and the notification-settings browser acceptance pass.

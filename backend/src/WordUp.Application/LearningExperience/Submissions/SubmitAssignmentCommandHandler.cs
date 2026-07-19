@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.Results;
 using WordUp.Application.ConsentAndSafeguarding;
+using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 
@@ -14,14 +15,20 @@ public class SubmitAssignmentCommandHandler : IRequestHandler<SubmitAssignmentCo
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly NotificationDeliveryService _notifications;
 
     public SubmitAssignmentCommandHandler(
-        IAppDbContext db, IClock clock, IAuditLogger audit, ICurrentUser currentUser)
+        IAppDbContext db,
+        IClock clock,
+        IAuditLogger audit,
+        ICurrentUser currentUser,
+        NotificationDeliveryService notifications)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
+        _notifications = notifications;
     }
 
     public async Task<SubmissionResult> Handle(SubmitAssignmentCommand request, CancellationToken cancellationToken)
@@ -124,14 +131,36 @@ public class SubmitAssignmentCommandHandler : IRequestHandler<SubmitAssignmentCo
         var selectedIds = new[] { photo?.Id, file?.Id }
             .Where(item => item.HasValue)
             .Select(item => item!.Value)
-            .ToArray();
+            .ToList();
         var unusedUploads = await _db.StoredSubmissionFiles
             .Where(item => item.OwnerUserId == youthId
                 && item.AssignmentId == assignment.Id
                 && !selectedIds.Contains(item.Id))
             .ToListAsync(cancellationToken);
         _db.StoredSubmissionFiles.RemoveRange(unusedUploads);
+
+        NotificationDeliveryPlan? approvalPlan = null;
+        var submitter = await _db.Users.AsNoTracking()
+            .Where(item => item.Id == youthId)
+            .Select(item => new { item.DisplayName, item.MentorId })
+            .SingleAsync(cancellationToken);
+        if (submitter.MentorId is { } mentorId)
+        {
+            approvalPlan = await _notifications.PrepareAsync(
+                mentorId,
+                "approval-needed",
+                "Assignment ready for review",
+                $"{submitter.DisplayName} submitted {assignment.Title}.",
+                $"/mentor/reviews/submissions/{submission.Id}",
+                now,
+                cancellationToken);
+        }
+
         await _db.SaveChangesAsync(cancellationToken);
+        if (approvalPlan is not null)
+        {
+            await _notifications.DispatchAsync(approvalPlan, cancellationToken);
+        }
 
         await _audit.LogAsync("SubmissionCreated", youthId, "Submission", submission.Id);
 
