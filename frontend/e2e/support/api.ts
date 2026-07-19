@@ -42,6 +42,8 @@ export interface SeededGuardianFamily {
   upcomingTitle: string;
   sharedActionItems: string;
   privateSecret: string;
+  approvedQuizTitle: string;
+  competencyName: string;
 }
 
 export interface SeededYouthCurriculum {

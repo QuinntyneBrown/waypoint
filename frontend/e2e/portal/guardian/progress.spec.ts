@@ -25,6 +25,12 @@ test('a guardian sees only their linked child aggregate and explicitly shared ch
   await expect(progress.attendanceRows).toHaveCount(2);
   await expect(progress.attendanceRows.filter({ hasText: 'Present' })).toHaveCount(1);
   await expect(progress.attendanceRows.filter({ hasText: 'Absent' })).toHaveCount(1);
+  await expect(progress.quizOutcomes).toBeVisible();
+  await expect(progress.quizOutcomes).toContainText(family.approvedQuizTitle);
+  await expect(progress.quizOutcomes).toContainText(/80%.*passed/i);
+  await expect(progress.competencies).toBeVisible();
+  await expect(progress.competencies).toContainText(family.competencyName);
+  await expect(progress.competencies).toContainText(/proficient.*75%/i);
   await expect(progress.earnedBadges).toContainText(family.earnedBadgeName);
   await expect(progress.lockedBadges).toContainText(family.lockedBadgeName);
   await expect(progress.upcomingSessions).toContainText(family.upcomingTitle);

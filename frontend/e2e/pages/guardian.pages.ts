@@ -33,6 +33,12 @@ export class GuardianProgressPage extends BasePage {
   get attendanceRows() {
     return this.page.locator('[data-testid="guardian-attendance"]');
   }
+  get quizOutcomes() {
+    return this.page.getByTestId('guardian-quiz-outcomes');
+  }
+  get competencies() {
+    return this.page.getByTestId('guardian-competencies');
+  }
   get earnedBadges() {
     return this.page.getByTestId('guardian-earned-badges');
   }

@@ -21,6 +21,8 @@ public sealed class GuardianProgressTests : IntegrationTestBase
         List<ModuleStatusDto> Modules,
         AttendanceDto Attendance,
         List<AttendanceHistoryDto> AttendanceHistory,
+        List<QuizOutcomeDto>? QuizHistory,
+        List<CompetencyOutcomeDto>? Competencies,
         List<BadgeDto> EarnedBadges,
         List<BadgeDto> LockedBadges,
         List<UpcomingSessionDto> UpcomingSessions,
@@ -33,6 +35,22 @@ public sealed class GuardianProgressTests : IntegrationTestBase
 
     private sealed record AttendanceHistoryDto(
         Guid SessionId, string Title, DateTime StartsAt, string? Location, string Status);
+
+    private sealed record QuizOutcomeDto(
+        Guid AttemptId,
+        Guid QuizId,
+        string QuizTitle,
+        string ModuleName,
+        int Score,
+        bool Passed,
+        DateTime ApprovedAt);
+
+    private sealed record CompetencyOutcomeDto(
+        Guid CompetencyId,
+        string Name,
+        string Level,
+        int Percent,
+        DateTime AssessedAt);
 
     private sealed record BadgeDto(Guid BadgeId, string Name, string Icon, string? Description);
 
@@ -241,6 +259,111 @@ public sealed class GuardianProgressTests : IntegrationTestBase
         var children = await response.Content.ReadFromJsonAsync<List<ChildSummaryDto>>();
         Assert.That(children, Has.Count.EqualTo(1));
         Assert.That(children![0].ChildId, Is.EqualTo(childId));
+    }
+
+    [Test]
+    [Property("Req", "L2-GUARDIAN-001")]
+    [Property("Req", "L2-LEARN-010")]
+    public async Task Guardian_sees_approved_quiz_outcomes_and_latest_competency_without_private_detail()
+    {
+        // Traces to: L2-GUARDIAN-001 AC1/AC2, L2-LEARN-010 AC2/AC4
+        var guardian = await SeedGuardianAsync();
+        var childId = await SeedUserAsync(Roles.Youth, guardianUserId: guardian.Id);
+        var now = DateTime.UtcNow;
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var track = new Track
+            {
+                Name = "Family progress",
+                Key = $"family-{Guid.NewGuid():N}",
+                Status = PublishStatus.Published,
+            };
+            var module = new Module
+            {
+                TrackId = track.Id,
+                Name = "Family Leadership",
+                Order = 1,
+                Status = PublishStatus.Published,
+            };
+            var quiz = new Quiz { ModuleId = module.Id, PassMark = 70 };
+            var stage = new ProgressionStage { Name = "Leadership", Order = 1 };
+            var competency = new Competency
+            {
+                StageId = stage.Id,
+                Name = "Listening well",
+                Order = 1,
+            };
+            db.Tracks.Add(track);
+            db.Modules.Add(module);
+            db.Quizzes.Add(quiz);
+            db.ProgressionStages.Add(stage);
+            db.Competencies.Add(competency);
+            db.QuizAttempts.AddRange(
+                new QuizAttempt
+                {
+                    YouthUserId = childId,
+                    QuizId = quiz.Id,
+                    AttemptNumber = 1,
+                    IsSubmitted = true,
+                    AutoScore = 80,
+                    ApprovedScore = 80,
+                    ApprovedByUserId = guardian.Id,
+                    ApprovedAt = now.AddDays(-2),
+                    SubmittedAt = now.AddDays(-3),
+                    AnswersJson = "PRIVATE QUIZ ANSWER",
+                },
+                new QuizAttempt
+                {
+                    YouthUserId = childId,
+                    QuizId = quiz.Id,
+                    AttemptNumber = 2,
+                    IsSubmitted = true,
+                    AutoScore = 100,
+                    SubmittedAt = now,
+                    AnswersJson = "UNAPPROVED PRIVATE ANSWER",
+                });
+            db.CompetencyAssessments.AddRange(
+                new CompetencyAssessment
+                {
+                    YouthUserId = childId,
+                    CompetencyId = competency.Id,
+                    Level = CompetencyLevel.Developing,
+                    AssessedByUserId = guardian.Id,
+                    AssessedAt = now.AddDays(-7),
+                },
+                new CompetencyAssessment
+                {
+                    YouthUserId = childId,
+                    CompetencyId = competency.Id,
+                    Level = CompetencyLevel.Proficient,
+                    Notes = "PRIVATE ASSESSMENT NOTE",
+                    AssessedByUserId = guardian.Id,
+                    AssessedAt = now.AddDays(-1),
+                });
+            await db.SaveChangesAsync();
+        }
+
+        var response = await SendAsync(
+            HttpMethod.Get,
+            $"/api/guardian/children/{childId}/progress",
+            token: guardian.Token);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var view = await response.Content.ReadFromJsonAsync<ChildProgressViewDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(view!.QuizHistory, Has.Count.EqualTo(1), "unapproved outcomes stay hidden");
+            Assert.That(view.QuizHistory![0].QuizTitle, Is.EqualTo("Family Leadership quiz"));
+            Assert.That(view.QuizHistory[0].Score, Is.EqualTo(80));
+            Assert.That(view.QuizHistory[0].Passed, Is.True);
+            Assert.That(view.Competencies, Has.Count.EqualTo(1));
+            Assert.That(view.Competencies![0].Name, Is.EqualTo("Listening well"));
+            Assert.That(view.Competencies[0].Level, Is.EqualTo("Proficient"));
+            Assert.That(view.Competencies[0].Percent, Is.EqualTo(75));
+        });
+        var raw = await response.Content.ReadAsStringAsync();
+        Assert.That(raw, Does.Not.Contain("PRIVATE QUIZ ANSWER"));
+        Assert.That(raw, Does.Not.Contain("PRIVATE ASSESSMENT NOTE"));
     }
 
     [Test]

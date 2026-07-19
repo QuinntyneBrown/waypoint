@@ -32,7 +32,8 @@ public class ProgressQueryHandler : IRequestHandler<ProgressQuery, ProgressView>
             ? 0
             : (double)lessonsCompleted / trackLessonIds.Count * 100;
 
-        var quizHistory = await QuizHistoryAsync(youthId, cancellationToken);
+        var quizHistory = await ProgressEvidenceCalculator.QuizHistoryAsync(
+            _db, youthId, cancellationToken);
         var quizAverage = quizHistory.Count == 0 ? 0 : quizHistory.Average(item => item.Score);
         var attendanceHistory = await AttendanceHistoryAsync(youthId, cancellationToken);
         var rateRecords = attendanceHistory
@@ -40,7 +41,8 @@ public class ProgressQueryHandler : IRequestHandler<ProgressQuery, ProgressView>
             .ToList();
         var attended = rateRecords.Count(item => item.Status is "Present" or "Late");
         var attendanceRate = rateRecords.Count == 0 ? 0 : (double)attended / rateRecords.Count * 100;
-        var competencies = await CompetenciesAsync(youthId, cancellationToken);
+        var competencies = await ProgressEvidenceCalculator.CompetenciesAsync(
+            _db, youthId, cancellationToken);
         var sharedCheckIns = await _db.CheckIns.AsNoTracking()
             .Where(checkIn => checkIn.YouthUserId == youthId
                 && checkIn.Visibility == Visibility.SharedWithMentor)
@@ -85,61 +87,6 @@ public class ProgressQueryHandler : IRequestHandler<ProgressQuery, ProgressView>
             .ToListAsync(cancellationToken);
     }
 
-    private async Task<List<QuizHistoryItem>> QuizHistoryAsync(Guid youthId, CancellationToken cancellationToken)
-    {
-        var attempts = await _db.QuizAttempts.AsNoTracking()
-            .Where(item => item.YouthUserId == youthId
-                && item.IsSubmitted
-                && item.ApprovedScore != null
-                && item.ApprovedAt != null)
-            .OrderByDescending(item => item.ApprovedAt)
-            .ToListAsync(cancellationToken);
-        var quizIds = attempts.Select(item => item.QuizId).Distinct().ToList();
-        var quizzes = await _db.Quizzes.AsNoTracking()
-            .Where(item => quizIds.Contains(item.Id))
-            .ToListAsync(cancellationToken);
-        var moduleIds = quizzes
-            .Where(item => item.ModuleId != null)
-            .Select(item => item.ModuleId!.Value)
-            .Distinct()
-            .ToList();
-        var lessonIds = quizzes
-            .Where(item => item.LessonId != null)
-            .Select(item => item.LessonId!.Value)
-            .Distinct()
-            .ToList();
-        var lessons = await _db.Lessons.AsNoTracking()
-            .Where(item => lessonIds.Contains(item.Id))
-            .ToDictionaryAsync(item => item.Id, cancellationToken);
-        moduleIds.AddRange(lessons.Values.Select(item => item.ModuleId));
-        moduleIds = moduleIds.Distinct().ToList();
-        var modules = await _db.Modules.AsNoTracking()
-            .Where(item => moduleIds.Contains(item.Id))
-            .ToDictionaryAsync(item => item.Id, item => item.Name, cancellationToken);
-        var result = new List<QuizHistoryItem>();
-        foreach (var attempt in attempts)
-        {
-            var quiz = quizzes.FirstOrDefault(item => item.Id == attempt.QuizId);
-            if (quiz is null) continue;
-            var lesson = quiz.LessonId is { } lessonId ? lessons.GetValueOrDefault(lessonId) : null;
-            var moduleId = quiz.ModuleId ?? lesson?.ModuleId;
-            var moduleName = moduleId is { } resolvedModuleId
-                ? modules.GetValueOrDefault(resolvedModuleId, "Learning module")
-                : "Learning module";
-            var quizTitle = lesson is null ? $"{moduleName} quiz" : $"{lesson.Title} quiz";
-            var score = attempt.ApprovedScore!.Value;
-            result.Add(new(
-                attempt.Id,
-                quiz.Id,
-                quizTitle,
-                moduleName,
-                score,
-                score >= quiz.PassMark,
-                attempt.ApprovedAt!.Value));
-        }
-        return result;
-    }
-
     private async Task<List<AttendanceHistoryItem>> AttendanceHistoryAsync(
         Guid youthId,
         CancellationToken cancellationToken) =>
@@ -155,38 +102,4 @@ public class ProgressQueryHandler : IRequestHandler<ProgressQuery, ProgressView>
                 record.Status.ToString()))
             .ToListAsync(cancellationToken);
 
-    private async Task<List<CompetencyLevelDto>> CompetenciesAsync(
-        Guid youthId,
-        CancellationToken cancellationToken)
-    {
-        var assessments = await _db.CompetencyAssessments.AsNoTracking()
-            .Where(item => item.YouthUserId == youthId)
-            .ToListAsync(cancellationToken);
-        var latest = assessments
-            .GroupBy(item => item.CompetencyId)
-            .Select(group => group.OrderByDescending(item => item.AssessedAt).First())
-            .ToList();
-        var ids = latest.Select(item => item.CompetencyId).ToList();
-        var definitions = await _db.Competencies.AsNoTracking()
-            .Where(item => ids.Contains(item.Id) && item.ArchivedAt == null)
-            .ToDictionaryAsync(item => item.Id, item => item.Name, cancellationToken);
-        return latest
-            .Where(item => definitions.ContainsKey(item.CompetencyId))
-            .Select(item => new CompetencyLevelDto(
-                item.CompetencyId,
-                definitions[item.CompetencyId],
-                item.Level.ToString(),
-                PercentFor(item.Level),
-                item.AssessedAt))
-            .OrderBy(item => item.Name)
-            .ToList();
-    }
-
-    private static int PercentFor(CompetencyLevel level) => level switch
-    {
-        CompetencyLevel.Developing => 40,
-        CompetencyLevel.Proficient => 75,
-        CompetencyLevel.Mastered => 100,
-        _ => 0,
-    };
 }

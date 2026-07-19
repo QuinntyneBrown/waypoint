@@ -69,6 +69,10 @@ public class ChildProgressQueryHandler : IRequestHandler<ChildProgressQuery, Chi
                 row.Location,
                 row.Status.ToString()))
             .ToList();
+        var quizHistory = await ProgressEvidenceCalculator.QuizHistoryAsync(
+            _db, child.Id, cancellationToken);
+        var competencies = await ProgressEvidenceCalculator.CompetenciesAsync(
+            _db, child.Id, cancellationToken);
 
         // Earned vs locked badges: the active badge catalogue split by what the child already holds.
         var earnedSet = (await _db.BadgeAwards
@@ -128,6 +132,8 @@ public class ChildProgressQueryHandler : IRequestHandler<ChildProgressQuery, Chi
             modules,
             attendance,
             attendanceHistory,
+            quizHistory,
+            competencies,
             earned,
             locked,
             upcoming,

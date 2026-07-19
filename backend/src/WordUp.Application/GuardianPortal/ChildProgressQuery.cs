@@ -4,8 +4,9 @@ using WordUp.Application.LearningExperience.YouthCurriculum;
 namespace WordUp.Application.GuardianPortal;
 
 /// <summary>A guardian views their linked child's read-only aggregate: overall + per-module progress,
-/// attendance, earned/locked badges, and upcoming schedule. Never lesson content, quiz answers,
-/// private reflections, or mentor private notes (L2-GUARDIAN-001 AC1/AC2, L2-AUTH-010).</summary>
+/// attendance, approved quiz outcomes, latest competency levels, earned/locked badges, and upcoming
+/// schedule. Never lesson content, quiz answers, pending scores, private reflections, or mentor private
+/// notes (L2-GUARDIAN-001 AC1/AC2, L2-AUTH-010).</summary>
 public record ChildProgressQuery(Guid ChildId) : IRequest<ChildProgressView>;
 
 public record ChildProgressView(
@@ -15,6 +16,8 @@ public record ChildProgressView(
     IReadOnlyList<ModuleStatus> Modules,
     ChildAttendanceSummary Attendance,
     IReadOnlyList<ChildAttendanceItem> AttendanceHistory,
+    IReadOnlyList<QuizHistoryItem> QuizHistory,
+    IReadOnlyList<CompetencyLevelDto> Competencies,
     IReadOnlyList<ChildBadge> EarnedBadges,
     IReadOnlyList<ChildBadge> LockedBadges,
     IReadOnlyList<ChildUpcomingSession> UpcomingSessions,

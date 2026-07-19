@@ -31,6 +31,24 @@ export interface GuardianAttendanceItem {
   status: string;
 }
 
+export interface GuardianQuizOutcome {
+  attemptId: string;
+  quizId: string;
+  quizTitle: string;
+  moduleName: string;
+  score: number;
+  passed: boolean;
+  approvedAt: string;
+}
+
+export interface GuardianCompetencyOutcome {
+  competencyId: string;
+  name: string;
+  level: string;
+  percent: number;
+  assessedAt: string;
+}
+
 export interface GuardianBadge {
   badgeId: string;
   name: string;
@@ -64,6 +82,8 @@ export interface GuardianChildProgress {
   modules: GuardianModuleStatus[];
   attendance: GuardianAttendanceSummary;
   attendanceHistory: GuardianAttendanceItem[];
+  quizHistory: GuardianQuizOutcome[];
+  competencies: GuardianCompetencyOutcome[];
   earnedBadges: GuardianBadge[];
   lockedBadges: GuardianBadge[];
   upcomingSessions: GuardianUpcomingSession[];

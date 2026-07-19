@@ -56,6 +56,45 @@
         </section>
 
         <div class="wu-grid wu-grid--2">
+          <section class="wu-card" data-testid="guardian-quiz-outcomes">
+            <div class="wu-card__body wu-stack">
+              <h2 class="wu-card__title">Approved quiz outcomes</h2>
+              @for (quiz of progress.quizHistory; track quiz.attemptId) {
+                <div class="wu-listitem">
+                  <div class="wu-listitem__body">
+                    <div class="wu-listitem__title">{{ quiz.quizTitle }}</div>
+                    <div class="wu-listitem__meta">
+                      {{ quiz.score }}% · {{ quiz.passed ? 'Passed' : 'Keep going' }} ·
+                      {{ quiz.approvedAt | date: 'MMM d, y' }}
+                    </div>
+                  </div>
+                </div>
+              } @empty {
+                <p class="wu-muted">No approved quiz outcomes yet.</p>
+              }
+            </div>
+          </section>
+
+          <section class="wu-card" data-testid="guardian-competencies">
+            <div class="wu-card__body wu-stack">
+              <h2 class="wu-card__title">Leadership competencies</h2>
+              @for (competency of progress.competencies; track competency.competencyId) {
+                <div class="wu-listitem">
+                  <div class="wu-listitem__body">
+                    <div class="wu-listitem__title">{{ competency.name }}</div>
+                    <div class="wu-listitem__meta">
+                      {{ competency.level }} · {{ competency.percent }}%
+                    </div>
+                  </div>
+                </div>
+              } @empty {
+                <p class="wu-muted">No competency assessments yet.</p>
+              }
+            </div>
+          </section>
+        </div>
+
+        <div class="wu-grid wu-grid--2">
           <section class="wu-card" data-testid="guardian-earned-badges">
             <div class="wu-card__body wu-stack">
               <h2 class="wu-card__title">Earned badges</h2>

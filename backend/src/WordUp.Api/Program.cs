@@ -419,6 +419,8 @@ if (app.Environment.IsEnvironment("Testing"))
         var upcomingTitle = $"Family Showcase {suffix}";
         var sharedActionItems = $"Prepare the welcome reflection {suffix}";
         var privateSecret = $"PRIVATE CHECK-IN {suffix}";
+        var approvedQuizTitle = $"{moduleName} quiz";
+        var competencyName = $"Listening well {suffix}";
         const string childPassword = "Password123";
 
         var track = new Track
@@ -502,6 +504,22 @@ if (app.Environment.IsEnvironment("Testing"))
             Icon = "award",
             Description = "Complete the community module.",
         };
+        var quiz = new Quiz
+        {
+            ModuleId = module.Id,
+            PassMark = 70,
+        };
+        var progressionStage = new ProgressionStage
+        {
+            Name = $"Leadership {suffix}",
+            Order = 1,
+        };
+        var competency = new Competency
+        {
+            StageId = progressionStage.Id,
+            Name = competencyName,
+            Order = 1,
+        };
 
         db.Tracks.Add(track);
         db.Modules.Add(module);
@@ -535,6 +553,51 @@ if (app.Environment.IsEnvironment("Testing"))
                 RecordedAt = absentSession.StartsAt,
             });
         db.Badges.AddRange(earnedBadge, lockedBadge);
+        db.Quizzes.Add(quiz);
+        db.QuizAttempts.AddRange(
+            new QuizAttempt
+            {
+                YouthUserId = child.Id,
+                QuizId = quiz.Id,
+                AttemptNumber = 1,
+                IsSubmitted = true,
+                AutoScore = 80,
+                ApprovedScore = 80,
+                ApprovedByUserId = guardian.Id,
+                ApprovedAt = now.AddDays(-8),
+                SubmittedAt = now.AddDays(-9),
+                AnswersJson = privateSecret,
+            },
+            new QuizAttempt
+            {
+                YouthUserId = child.Id,
+                QuizId = quiz.Id,
+                AttemptNumber = 2,
+                IsSubmitted = true,
+                AutoScore = 100,
+                SubmittedAt = now.AddDays(-1),
+                AnswersJson = privateSecret,
+            });
+        db.ProgressionStages.Add(progressionStage);
+        db.Competencies.Add(competency);
+        db.CompetencyAssessments.AddRange(
+            new CompetencyAssessment
+            {
+                YouthUserId = child.Id,
+                CompetencyId = competency.Id,
+                Level = CompetencyLevel.Developing,
+                AssessedByUserId = guardian.Id,
+                AssessedAt = now.AddDays(-12),
+            },
+            new CompetencyAssessment
+            {
+                YouthUserId = child.Id,
+                CompetencyId = competency.Id,
+                Level = CompetencyLevel.Proficient,
+                Notes = privateSecret,
+                AssessedByUserId = guardian.Id,
+                AssessedAt = now.AddDays(-4),
+            });
         db.BadgeAwards.Add(new BadgeAward
         {
             BadgeId = earnedBadge.Id,
@@ -606,6 +669,8 @@ if (app.Environment.IsEnvironment("Testing"))
             upcomingTitle,
             sharedActionItems,
             privateSecret,
+            approvedQuizTitle,
+            competencyName,
         });
     });
 

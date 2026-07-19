@@ -275,11 +275,13 @@ requirement conflicts early (they gate "done").
       and media update/removal, exact lesson/question ordering, typed quiz validation and short-answer
       scoring, assignment update/publish/fan-out, competency soft removal, and module/attendance/
       assignment automatic badge rules now have validated, audited, exact-once server lifecycles.
-- [~] **H7** Shared progress model/views `L2-ADMIN-004`, `L2-LEARN-009/010`, `L2-GUARDIAN-001`, `L2-REPORT-001` —
+- [x] **H7** Shared progress model/views `L2-ADMIN-004`, `L2-LEARN-009/010`, `L2-GUARDIAN-001`, `L2-REPORT-001` —
       curriculum and journey share one module completion/current-state snapshot, badge counts derive
       from authoritative progress records, and self-analytics includes approved quiz, attendance, and
-      latest competency histories. Admin and mentor reports now project those same records across
-      youth, cohort, and organization scopes; remaining guardian-facing cross-role histories remain.
+      latest competency histories. One role-neutral outcome calculator projects approved quiz history
+      and latest competency levels to Youth and Guardian views, while pending attempts, quiz answers,
+      and private assessment notes remain excluded. Guardian attendance and shared check-ins plus Admin
+      and mentor youth/cohort/organization reports complete the cross-role histories.
 - [x] **H8** Grading outcomes (rubric validation, badges, notifications, live) `L2-MENTOR-003`, `L2-LEARN-007`, `L2-ENGAGE-008` — rubric IDs/ranges and complete final scores are server-validated,
       totals are server-computed, configured badges and youth-visible results are applied, and final
       outcomes publish durable user-scoped youth plus opt-in guardian notifications in real time.
@@ -626,3 +628,9 @@ requirement conflicts early (they gate "done").
   after submission, all serving is authenticated and no-sniff, and the support email identifies the
   private evidence route. Nineteen Platform integrations, all 51 frontend units, the 426.89 kB
   production build, and both support browser journeys pass.
+- 2026-07-19 — H7 done: Youth and Guardian progress now reuse one role-neutral projection for approved
+  quiz outcomes and each competency's latest assessed level. The Guardian view combines those safe
+  histories with its existing attendance and explicitly shared check-ins, while pending attempts,
+  answer content, and private mentor assessment notes stay excluded. Fifty-four adjacent Guardian,
+  Learning, and Reporting integrations, all 51 frontend units, the 426.89 kB production build, and
+  both populated and empty Guardian progress browser journeys pass.
