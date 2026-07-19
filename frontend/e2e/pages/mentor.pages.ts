@@ -177,6 +177,12 @@ export class MentorSubmissionReviewPage extends BasePage {
   get status() {
     return this.page.getByRole('status');
   }
+  get conflict() {
+    return this.page.getByTestId('submission-conflict');
+  }
+  get loadLatest() {
+    return this.page.getByRole('button', { name: /load latest review/i });
+  }
 }
 
 export class MentorQuizReviewPage extends BasePage {

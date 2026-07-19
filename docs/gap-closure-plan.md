@@ -295,7 +295,11 @@ requirement conflicts early (they gate "done").
 - [x] **H11** Attendance offline integrity protocol `L2-ENGAGE-003`, `L2-NFR-004/007` —
       owner-bound private queue, explicit durable idempotency receipts, automatic ordered replay,
       pending count, optimistic conflict choice, and route/browser unsaved-change warning.
-- [ ] **H12** Submission concurrency (version tokens) `L2-NFR-006`
+- [x] **H12** Submission concurrency (version tokens) `L2-NFR-006` — the shared Submission
+      aggregate exposes one provider-independent version to mentor review and Youth status clients;
+      every grading and resubmission update requires that version, advances it on success, and rejects
+      stale or database-raced writes with 409. Both editors retain their local draft and explicitly
+      load the latest review/feedback before reconciling and retrying.
 - [~] **H13** Event/reminder generation + preference keys `L2-ENGAGE-005/008`, `L2-PLATFORM-003` —
       session RSVP reminders now schedule, cancel, dispatch once, deep-link to the schedule, and obey
       the canonical `session-reminders` in-app preference; assigned-work reminders now use
@@ -634,3 +638,10 @@ requirement conflicts early (they gate "done").
   answer content, and private mentor assessment notes stay excluded. Fifty-four adjacent Guardian,
   Learning, and Reporting integrations, all 51 frontend units, the 426.89 kB production build, and
   both populated and empty Guardian progress browser journeys pass.
+- 2026-07-19 — H12 done: mentor grading drafts/final decisions and Youth resubmissions now read and
+  echo a required application-managed Submission version. Accepted mutations advance the token;
+  sequential stale edits and database concurrency races return 409 before side effects can overwrite
+  the winning review. Mentor and Youth conflict banners preserve local form work and explicitly load
+  the latest rubric or feedback for reconciliation before retry. Sixty-two Learning, Mentoring, and
+  NonFunctional integrations, all 51 frontend units, the 426.89 kB production build, and all seven
+  assignment/grading browser journeys pass.

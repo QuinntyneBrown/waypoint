@@ -72,3 +72,55 @@ test('revision requires feedback and defaults guardian notification on', async (
   await review.requestRevision.click();
   await expect(page).toHaveURL(/\/mentor\/reviews$/);
 });
+
+// Traces to: L2-NFR-006 (stale grading reconciliation preserves the local draft)
+test('mentor reconciles a stale grading draft without a silent overwrite', async ({
+  page,
+  request,
+}) => {
+  const seeded = await seedYouthCurriculum(request);
+  await new SignInPage(page).signIn({
+    email: seeded.mentorEmail,
+    password: seeded.mentorPassword,
+  });
+  await page.goto(`/mentor/reviews/submissions/${seeded.mentorReviewSubmissionId}`);
+  const review = new MentorSubmissionReviewPage(page);
+  await expect(review.heading).toHaveText(seeded.mentorReviewTitle);
+
+  const mentorAuth = await signInApi(request, {
+    email: seeded.mentorEmail,
+    password: seeded.mentorPassword,
+  });
+  const currentResponse = await request.get(
+    `/api/mentor/submissions/${seeded.mentorReviewSubmissionId}`,
+    { headers: { Authorization: `Bearer ${mentorAuth.accessToken}` } },
+  );
+  expect(currentResponse.ok(), await currentResponse.text()).toBeTruthy();
+  const current = (await currentResponse.json()) as { version: string };
+  expect(current.version).toBeTruthy();
+  const winningSave = await request.post(
+    `/api/mentor/submissions/${seeded.mentorReviewSubmissionId}/grade`,
+    {
+      headers: { Authorization: `Bearer ${mentorAuth.accessToken}` },
+      data: {
+        decision: 'save-draft',
+        rubricScoresJson: JSON.stringify({ [seeded.mentorReviewCriterionId]: 8 }),
+        comment: 'Feedback saved by another editor.',
+        guardianNotified: false,
+        expectedVersion: current.version,
+      },
+    },
+  );
+  expect(winningSave.ok(), await winningSave.text()).toBeTruthy();
+
+  await review.score(seeded.mentorReviewCriterion).fill('4');
+  await review.comment.fill('Keep this local draft while I reconcile.');
+  await review.saveDraft.click();
+
+  await expect(review.conflict).toContainText(/changed on the server/i);
+  await expect(review.score(seeded.mentorReviewCriterion)).toHaveValue('4');
+  await expect(review.comment).toHaveValue('Keep this local draft while I reconcile.');
+  await review.loadLatest.click();
+  await expect(review.score(seeded.mentorReviewCriterion)).toHaveValue('8');
+  await expect(review.comment).toHaveValue('Feedback saved by another editor.');
+});

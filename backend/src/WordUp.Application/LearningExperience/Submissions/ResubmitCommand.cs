@@ -8,4 +8,5 @@ public record ResubmitCommand(
     Guid Id,
     string? BodyText,
     string? PhotoUrl,
-    string? LinkUrl) : IRequest;
+    string? LinkUrl,
+    string? ExpectedVersion) : IRequest;

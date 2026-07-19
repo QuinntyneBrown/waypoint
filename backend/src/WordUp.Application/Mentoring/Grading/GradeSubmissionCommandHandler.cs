@@ -47,6 +47,14 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
             throw new ForbiddenException("This youth is not assigned to you.");
         }
 
+        if (request.ExpectedVersion is not null
+            && (!Guid.TryParse(request.ExpectedVersion, out var expectedVersion)
+                || expectedVersion != submission.ConcurrencyStamp))
+        {
+            throw new ConflictException(
+                "This submission changed after you opened it. Review the latest version before saving again.");
+        }
+
         var criteria = await _db.RubricCriteria
             .Where(item => item.AssignmentId == submission.AssignmentId)
             .ToListAsync(cancellationToken);
@@ -154,7 +162,16 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
                 throw new ConflictException("Unknown grading decision.");
         }
 
-        await _db.SaveChangesAsync(cancellationToken);
+        submission.ConcurrencyStamp = Guid.NewGuid();
+        try
+        {
+            await _db.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new ConflictException(
+                "This submission changed after you opened it. Review the latest version before saving again.");
+        }
 
         if (request.Decision is "approve" or "request-revision")
         {

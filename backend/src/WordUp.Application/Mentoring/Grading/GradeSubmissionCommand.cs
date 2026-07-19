@@ -10,4 +10,5 @@ public record GradeSubmissionCommand(
     string? RubricScoresJson,
     int? TotalAwarded,
     string? Comment,
-    bool GuardianNotified) : IRequest;
+    bool GuardianNotified,
+    string? ExpectedVersion) : IRequest;

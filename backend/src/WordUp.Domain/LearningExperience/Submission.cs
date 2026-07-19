@@ -25,4 +25,8 @@ public class Submission
 
     public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    /// <summary>Application-managed optimistic-concurrency token surfaced to submission editors
+    /// (L2-NFR-006). It is provider-independent and advances after every accepted update.</summary>
+    public Guid ConcurrencyStamp { get; set; } = Guid.NewGuid();
 }

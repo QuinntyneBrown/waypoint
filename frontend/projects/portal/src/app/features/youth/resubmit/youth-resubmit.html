@@ -1,15 +1,63 @@
-<wu-shell role="youth" active="curriculum" [userName]="auth.user()?.displayName ?? ''" (signOut)="auth.signOut()">
+<wu-shell
+  role="youth"
+  active="curriculum"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
   <div class="wu-container wu-container--narrow wu-page">
-    @if (errorMessage(); as error) { <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p> }
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (conflictMessage(); as conflict) {
+      <div
+        class="wu-alert wu-alert--warning wu-stack"
+        role="alert"
+        data-testid="submission-conflict"
+      >
+        <p>{{ conflict }}</p>
+        <div>
+          <button class="wu-btn wu-btn--secondary" type="button" (click)="reviewLatest()">
+            Review latest feedback
+          </button>
+        </div>
+      </div>
+    }
     @if (submission(); as view) {
-      <a class="wu-btn wu-btn--ghost" [routerLink]="['/youth/submissions', view.id]">Back to status</a>
-      <div class="wu-page__head"><div class="wu-page__titles"><div class="wu-eyebrow">Needs revision</div><h1 class="wu-page__title">Revise {{ view.assignmentTitle }}</h1></div></div>
-      @if (view.mentorComment) { <div class="wu-alert wu-alert--info"><strong>Mentor feedback</strong><p>{{ view.mentorComment }}</p></div> }
+      <a class="wu-btn wu-btn--ghost" [routerLink]="['/youth/submissions', view.id]"
+        >Back to status</a
+      >
+      <div class="wu-page__head">
+        <div class="wu-page__titles">
+          <div class="wu-eyebrow">Needs revision</div>
+          <h1 class="wu-page__title">Revise {{ view.assignmentTitle }}</h1>
+        </div>
+      </div>
+      @if (view.mentorComment) {
+        <div class="wu-alert wu-alert--info">
+          <strong>Mentor feedback</strong>
+          <p>{{ view.mentorComment }}</p>
+        </div>
+      }
       <form class="wu-stack" [formGroup]="form" (ngSubmit)="submit()">
-        <div class="wu-field"><label class="wu-field__label" for="revised-text">Revised response</label><textarea id="revised-text" class="wu-input" rows="8" formControlName="bodyText"></textarea></div>
-        <div class="wu-field"><label class="wu-field__label" for="revised-link">Evidence link</label><input id="revised-link" class="wu-input" type="url" formControlName="linkUrl" /></div>
-        <button class="wu-btn wu-btn--primary wu-btn--block" type="submit" [disabled]="saving()">Resubmit assignment</button>
+        <div class="wu-field">
+          <label class="wu-field__label" for="revised-text">Revised response</label
+          ><textarea
+            id="revised-text"
+            class="wu-input"
+            rows="8"
+            formControlName="bodyText"
+          ></textarea>
+        </div>
+        <div class="wu-field">
+          <label class="wu-field__label" for="revised-link">Evidence link</label
+          ><input id="revised-link" class="wu-input" type="url" formControlName="linkUrl" />
+        </div>
+        <button class="wu-btn wu-btn--primary wu-btn--block" type="submit" [disabled]="saving()">
+          Resubmit assignment
+        </button>
       </form>
-    } @else { <p class="wu-muted">Loading revision…</p> }
+    } @else {
+      <p class="wu-muted">Loading revision…</p>
+    }
   </div>
 </wu-shell>

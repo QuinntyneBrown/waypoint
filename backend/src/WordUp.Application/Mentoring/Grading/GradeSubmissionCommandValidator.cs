@@ -17,5 +17,10 @@ public class GradeSubmissionCommandValidator : AbstractValidator<GradeSubmission
             .NotEmpty()
             .When(x => x.Decision == "request-revision")
             .WithMessage("A comment is required when requesting revisions.");
+
+        RuleFor(x => x.ExpectedVersion)
+            .NotEmpty()
+            .Must(value => Guid.TryParse(value, out _))
+            .WithMessage("The submission version is required.");
     }
 }

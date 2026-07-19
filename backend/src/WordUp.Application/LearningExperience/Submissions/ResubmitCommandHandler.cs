@@ -34,6 +34,14 @@ public class ResubmitCommandHandler : IRequestHandler<ResubmitCommand>
             throw new ForbiddenException("You may only resubmit your own submissions.");
         }
 
+        if (request.ExpectedVersion is not null
+            && (!Guid.TryParse(request.ExpectedVersion, out var expectedVersion)
+                || expectedVersion != submission.ConcurrencyStamp))
+        {
+            throw new ConflictException(
+                "This submission changed after you opened it. Review the latest feedback before resubmitting.");
+        }
+
         // Only a submission that a mentor sent back may be resubmitted (L2-LEARN-007 AC3).
         if (submission.Status != SubmissionStatus.NeedsRevision)
         {
@@ -66,13 +74,22 @@ public class ResubmitCommandHandler : IRequestHandler<ResubmitCommand>
 
         submission.Status = SubmissionStatus.UnderReview;
         submission.SubmittedAt = _clock.UtcNow;
+        submission.ConcurrencyStamp = Guid.NewGuid();
         _db.SubmissionTimelineEvents.Add(new SubmissionTimelineEvent
         {
             SubmissionId = submission.Id,
             Type = "Resubmitted",
             OccurredAt = submission.SubmittedAt,
         });
-        await _db.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _db.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new ConflictException(
+                "This submission changed after you opened it. Review the latest feedback before resubmitting.");
+        }
 
         await _audit.LogAsync("SubmissionResubmitted", _currentUser.UserId, "Submission", submission.Id);
     }

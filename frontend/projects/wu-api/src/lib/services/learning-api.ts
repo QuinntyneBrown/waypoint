@@ -178,7 +178,12 @@ export class LearningApi {
 
   resubmitAssignment(
     submissionId: string,
-    input: { bodyText: string | null; photoUrl: string | null; linkUrl: string | null },
+    input: {
+      bodyText: string | null;
+      photoUrl: string | null;
+      linkUrl: string | null;
+      expectedVersion: string;
+    },
   ): Observable<void> {
     return this.http.post<void>(
       `${this.base}/api/me/submissions/${encodeURIComponent(submissionId)}/resubmit`,

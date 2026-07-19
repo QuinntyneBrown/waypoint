@@ -84,7 +84,13 @@ public class SubmissionsController : ControllerBase
         Guid id, [FromBody] ResubmitRequest request, CancellationToken cancellationToken)
     {
         await _mediator.Send(
-            new ResubmitCommand(id, request.BodyText, request.PhotoUrl, request.LinkUrl), cancellationToken);
+            new ResubmitCommand(
+                id,
+                request.BodyText,
+                request.PhotoUrl,
+                request.LinkUrl,
+                request.ExpectedVersion),
+            cancellationToken);
         return NoContent();
     }
 }

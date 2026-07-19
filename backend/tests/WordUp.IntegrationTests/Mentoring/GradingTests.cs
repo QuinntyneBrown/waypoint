@@ -107,6 +107,7 @@ public sealed class GradingTests : IntegrationTestBase
         string YouthName,
         string AssignmentTitle,
         string Status,
+        string Version,
         string? BodyText,
         string? PhotoUrl,
         string? LinkUrl,
@@ -216,6 +217,7 @@ public sealed class GradingTests : IntegrationTestBase
                 }),
                 totalAwarded = 11,
                 guardianNotified = true,
+                expectedVersion = detail!.Version,
             },
             mentorToken);
         Assert.That(outsideRange.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
@@ -228,6 +230,7 @@ public sealed class GradingTests : IntegrationTestBase
                 rubricScoresJson = JsonSerializer.Serialize(new Dictionary<string, int>()),
                 totalAwarded = 999,
                 guardianNotified = true,
+                expectedVersion = detail!.Version,
             },
             mentorToken);
         Assert.That(incompleteApproval.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
@@ -244,6 +247,7 @@ public sealed class GradingTests : IntegrationTestBase
                 totalAwarded = 999,
                 comment = "Draft feedback",
                 guardianNotified = true,
+                expectedVersion = detail!.Version,
             },
             mentorToken);
         Assert.That(draft.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
@@ -266,6 +270,8 @@ public sealed class GradingTests : IntegrationTestBase
     {
         var (_, mentorToken, youthId, youthToken) = await SeedMentorAndYouthAsync();
         var submission = await SeedSubmissionAsync(youthId);
+        var reviewResponse = await GetAsync($"/api/mentor/submissions/{submission.Id}", mentorToken);
+        var review = await reviewResponse.Content.ReadFromJsonAsync<MentorSubmissionDetailDto>();
 
         // Traces to: L2-MENTOR-003 (mentor approves -> Approved + points visible to youth)
         var grade = await PostAsync(
@@ -280,6 +286,7 @@ public sealed class GradingTests : IntegrationTestBase
                 totalAwarded = 9,
                 comment = "Great work",
                 guardianNotified = false,
+                expectedVersion = review!.Version,
             },
             mentorToken);
         Assert.That(
@@ -330,7 +337,13 @@ public sealed class GradingTests : IntegrationTestBase
         var otherSubmission = await SeedSubmissionAsync(youthId);
         var forbidden = await PostAsync(
             $"/api/mentor/submissions/{otherSubmission.Id}/grade",
-            new { decision = "approve", totalAwarded = 5, guardianNotified = false },
+            new
+            {
+                decision = "approve",
+                totalAwarded = 5,
+                guardianNotified = false,
+                expectedVersion = Guid.NewGuid().ToString(),
+            },
             strangerToken);
         Assert.That(forbidden.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
     }
@@ -342,17 +355,30 @@ public sealed class GradingTests : IntegrationTestBase
     {
         var (_, mentorToken, youthId, youthToken) = await SeedMentorAndYouthAsync();
         var submission = await SeedSubmissionAsync(youthId);
+        var reviewResponse = await GetAsync($"/api/mentor/submissions/{submission.Id}", mentorToken);
+        var review = await reviewResponse.Content.ReadFromJsonAsync<MentorSubmissionDetailDto>();
 
         // Traces to: L2-MENTOR-003 AC2 (request-revision without a comment -> 400)
         var noComment = await PostAsync(
             $"/api/mentor/submissions/{submission.Id}/grade",
-            new { decision = "request-revision", guardianNotified = true },
+            new
+            {
+                decision = "request-revision",
+                guardianNotified = true,
+                expectedVersion = review!.Version,
+            },
             mentorToken);
         Assert.That(noComment.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         var withComment = await PostAsync(
             $"/api/mentor/submissions/{submission.Id}/grade",
-            new { decision = "request-revision", comment = "Please add scripture.", guardianNotified = true },
+            new
+            {
+                decision = "request-revision",
+                comment = "Please add scripture.",
+                guardianNotified = true,
+                expectedVersion = review!.Version,
+            },
             mentorToken);
         Assert.That(withComment.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
@@ -376,7 +402,7 @@ public sealed class GradingTests : IntegrationTestBase
         // Traces to: L2-LEARN-007 AC3 (youth resubmits -> UnderReview)
         var resubmit = await PostAsync(
             $"/api/me/submissions/{submission.Id}/resubmit",
-            new { bodyText = "Now with scripture" },
+            new { bodyText = "Now with scripture", expectedVersion = revView.Version },
             youthToken);
         Assert.That(resubmit.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
@@ -685,6 +711,7 @@ public sealed class GradingTests : IntegrationTestBase
         Guid AssignmentId,
         string AssignmentTitle,
         string Status,
+        string Version,
         string? BodyText,
         string? PhotoUrl,
         string? LinkUrl,

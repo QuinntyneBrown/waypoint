@@ -5,4 +5,5 @@ public record GradeSubmissionRequest(
     string? RubricScoresJson,
     int? TotalAwarded,
     string? Comment,
-    bool GuardianNotified);
+    bool GuardianNotified,
+    string? ExpectedVersion);

@@ -69,11 +69,16 @@ test('youth submits safe assignment evidence and follows revision through approv
     email: seeded.mentorEmail,
     password: seeded.mentorPassword,
   });
+  const reviewBeforeRevision = await request.get(`/api/mentor/submissions/${submissionId}`, {
+    headers: { Authorization: `Bearer ${mentorAuth.accessToken}` },
+  });
+  const revisionVersion = ((await reviewBeforeRevision.json()) as { version: string }).version;
   const revision = await request.post(`/api/mentor/submissions/${submissionId}/grade`, {
     data: {
       decision: 'request-revision',
       comment: 'Add the scripture that guided your action.',
       guardianNotified: false,
+      expectedVersion: revisionVersion,
     },
     headers: { Authorization: `Bearer ${mentorAuth.accessToken}` },
   });
@@ -95,6 +100,10 @@ test('youth submits safe assignment evidence and follows revision through approv
   await expect(page.getByText('Needs revision', { exact: true })).toBeVisible();
   await expect(page.getByText('Resubmitted', { exact: true })).toBeVisible();
 
+  const reviewBeforeApproval = await request.get(`/api/mentor/submissions/${submissionId}`, {
+    headers: { Authorization: `Bearer ${mentorAuth.accessToken}` },
+  });
+  const approvalVersion = ((await reviewBeforeApproval.json()) as { version: string }).version;
   const approved = await request.post(`/api/mentor/submissions/${submissionId}/grade`, {
     data: {
       decision: 'approve',
@@ -102,6 +111,7 @@ test('youth submits safe assignment evidence and follows revision through approv
       totalAwarded: 9,
       comment: 'Clear connection between scripture and action.',
       guardianNotified: false,
+      expectedVersion: approvalVersion,
     },
     headers: { Authorization: `Bearer ${mentorAuth.accessToken}` },
   });
@@ -210,4 +220,77 @@ test('youth submits a sniffed private PDF and downloads it from the submitted co
   const download = page.waitForEvent('download');
   await status.evidenceFileLink.click();
   expect((await download).suggestedFilename()).toBe('evidence.pdf');
+});
+
+// Traces to: L2-NFR-006 (stale youth resubmission reconciliation preserves local work)
+test('youth reviews newer mentor feedback without losing a stale revision draft', async ({
+  page,
+  request,
+}) => {
+  const seeded = await seedYouthCurriculum(request);
+  const mentorAuth = await signInApi(request, {
+    email: seeded.mentorEmail,
+    password: seeded.mentorPassword,
+  });
+  const mentorHeaders = { Authorization: `Bearer ${mentorAuth.accessToken}` };
+  const initialReviewResponse = await request.get(
+    `/api/mentor/submissions/${seeded.mentorReviewSubmissionId}`,
+    { headers: mentorHeaders },
+  );
+  expect(initialReviewResponse.ok(), await initialReviewResponse.text()).toBeTruthy();
+  const initialReview = (await initialReviewResponse.json()) as { version: string };
+  const requestRevision = await request.post(
+    `/api/mentor/submissions/${seeded.mentorReviewSubmissionId}/grade`,
+    {
+      headers: mentorHeaders,
+      data: {
+        decision: 'request-revision',
+        comment: 'Initial feedback from your mentor.',
+        guardianNotified: false,
+        expectedVersion: initialReview.version,
+      },
+    },
+  );
+  expect(requestRevision.ok(), await requestRevision.text()).toBeTruthy();
+
+  await new SignInPage(page).signIn({
+    email: seeded.youthEmail,
+    password: seeded.youthPassword,
+  });
+  await page.goto(`/youth/submissions/${seeded.mentorReviewSubmissionId}/resubmit`);
+  const resubmit = new YouthResubmitPage(page);
+  await expect(resubmit.heading).toContainText(/revise/i);
+  await expect(page.getByText('Initial feedback from your mentor.')).toBeVisible();
+
+  const currentReviewResponse = await request.get(
+    `/api/mentor/submissions/${seeded.mentorReviewSubmissionId}`,
+    { headers: mentorHeaders },
+  );
+  const currentReview = (await currentReviewResponse.json()) as { version: string };
+  const newerFeedback = await request.post(
+    `/api/mentor/submissions/${seeded.mentorReviewSubmissionId}/grade`,
+    {
+      headers: mentorHeaders,
+      data: {
+        decision: 'save-draft',
+        comment: 'Newer feedback saved while you were revising.',
+        guardianNotified: false,
+        expectedVersion: currentReview.version,
+      },
+    },
+  );
+  expect(newerFeedback.ok(), await newerFeedback.text()).toBeTruthy();
+
+  await resubmit.responseText.fill('My local revision must survive the conflict.');
+  await resubmit.submitButton.click();
+  await expect(resubmit.conflict).toContainText(/changed on the server/i);
+  await expect(resubmit.responseText).toHaveValue('My local revision must survive the conflict.');
+
+  await resubmit.reviewLatest.click();
+  await expect(page.getByText('Newer feedback saved while you were revising.')).toBeVisible();
+  await expect(resubmit.responseText).toHaveValue('My local revision must survive the conflict.');
+  await resubmit.submitButton.click();
+  await expect(page).toHaveURL(
+    new RegExp(`/youth/submissions/${seeded.mentorReviewSubmissionId}$`),
+  );
 });

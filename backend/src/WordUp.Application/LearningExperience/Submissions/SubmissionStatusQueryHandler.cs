@@ -125,6 +125,7 @@ public class SubmissionStatusQueryHandler : IRequestHandler<SubmissionStatusQuer
             submission.AssignmentId,
             assignment.Title,
             submission.Status.ToString(),
+            submission.ConcurrencyStamp.ToString(),
             submission.IsCodingProject,
             submission.BodyText,
             submission.YouthNote,

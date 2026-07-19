@@ -22,6 +22,7 @@ export class YouthResubmitPage {
 
   protected readonly submission = signal<YouthSubmissionStatus | undefined>(undefined);
   protected readonly errorMessage = signal<string | null>(null);
+  protected readonly conflictMessage = signal<string | null>(null);
   protected readonly saving = signal(false);
   protected readonly form = this.fb.nonNullable.group({
     bodyText: ['', [Validators.required, Validators.maxLength(12000)]],
@@ -29,26 +30,60 @@ export class YouthResubmitPage {
   });
 
   constructor() {
-    this.api.submissionStatus(this.submissionId).subscribe({
-      next: (submission) => {
-        this.submission.set(submission);
-        this.form.setValue({ bodyText: submission.bodyText ?? '', linkUrl: submission.linkUrl ?? '' });
-      },
-      error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
-    });
+    this.load();
   }
 
   protected submit(): void {
-    if (this.form.invalid || this.saving()) { this.form.markAllAsTouched(); return; }
+    const submission = this.submission();
+    if (!submission || this.form.invalid || this.saving()) {
+      this.form.markAllAsTouched();
+      return;
+    }
     const value = this.form.getRawValue();
     this.saving.set(true);
-    this.api.resubmitAssignment(this.submissionId, {
-      bodyText: value.bodyText.trim(),
-      photoUrl: null,
-      linkUrl: value.linkUrl.trim() || null,
-    }).subscribe({
-      next: () => void this.router.navigate(['/youth/submissions', this.submissionId]),
-      error: (error: unknown) => { this.saving.set(false); this.errorMessage.set(ApiError.from(error).title); },
+    this.conflictMessage.set(null);
+    this.api
+      .resubmitAssignment(this.submissionId, {
+        bodyText: value.bodyText.trim(),
+        photoUrl: null,
+        linkUrl: value.linkUrl.trim() || null,
+        expectedVersion: submission.version,
+      })
+      .subscribe({
+        next: () => void this.router.navigate(['/youth/submissions', this.submissionId]),
+        error: (error: unknown) => {
+          this.saving.set(false);
+          const apiError = ApiError.from(error);
+          if (apiError.status === 409) {
+            this.conflictMessage.set(
+              'This submission changed on the server. Your revision is still here. Review the latest feedback before resubmitting.',
+            );
+          } else {
+            this.errorMessage.set(apiError.title);
+          }
+        },
+      });
+  }
+
+  protected reviewLatest(): void {
+    this.conflictMessage.set(null);
+    this.errorMessage.set(null);
+    this.load(true);
+  }
+
+  private load(preserveDraft = false): void {
+    this.api.submissionStatus(this.submissionId).subscribe({
+      next: (submission) => {
+        this.submission.set(submission);
+        if (!preserveDraft) {
+          this.form.setValue({
+            bodyText: submission.bodyText ?? '',
+            linkUrl: submission.linkUrl ?? '',
+          });
+        }
+        this.conflictMessage.set(null);
+      },
+      error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
     });
   }
 }

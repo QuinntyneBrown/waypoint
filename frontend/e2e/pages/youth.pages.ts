@@ -378,4 +378,10 @@ export class YouthResubmitPage extends BasePage {
   get submitButton() {
     return this.page.getByRole('button', { name: /resubmit assignment/i });
   }
+  get conflict() {
+    return this.page.getByTestId('submission-conflict');
+  }
+  get reviewLatest() {
+    return this.page.getByRole('button', { name: /review latest feedback/i });
+  }
 }

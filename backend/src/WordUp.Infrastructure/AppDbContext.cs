@@ -243,7 +243,11 @@ public class AppDbContext : DbContext, IAppDbContext
             b.HasIndex(x => new { x.YouthUserId, x.TrackId }).IsUnique());
         modelBuilder.Entity<LessonReadingState>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());
         modelBuilder.Entity<QuizAttempt>(b => b.HasIndex(x => new { x.YouthUserId, x.QuizId }));
-        modelBuilder.Entity<Submission>(b => b.HasIndex(x => new { x.YouthUserId, x.AssignmentId }));
+        modelBuilder.Entity<Submission>(b =>
+        {
+            b.HasIndex(x => new { x.YouthUserId, x.AssignmentId });
+            b.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
+        });
         modelBuilder.Entity<StoredSubmissionFile>(b =>
         {
             b.Property(x => x.OriginalFileName).HasMaxLength(255).IsRequired();

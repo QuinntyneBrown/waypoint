@@ -9,6 +9,20 @@
     @if (errorMessage(); as error) {
       <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
     }
+    @if (conflictMessage(); as conflict) {
+      <div
+        class="wu-alert wu-alert--warning wu-stack"
+        role="alert"
+        data-testid="submission-conflict"
+      >
+        <p>{{ conflict }}</p>
+        <div>
+          <button class="wu-btn wu-btn--secondary" type="button" (click)="loadLatest()">
+            Load latest review
+          </button>
+        </div>
+      </div>
+    }
     <p class="wu-sr-only" role="status">{{ statusMessage() }}</p>
     @if (review(); as item) {
       <div class="wu-page__head">

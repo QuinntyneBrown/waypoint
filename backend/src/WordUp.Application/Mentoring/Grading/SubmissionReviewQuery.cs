@@ -11,6 +11,7 @@ public sealed record SubmissionReviewView(
     string AssignmentTitle,
     string TaskDescription,
     string Status,
+    string Version,
     bool IsCodingProject,
     string? BodyText,
     string? PhotoUrl,

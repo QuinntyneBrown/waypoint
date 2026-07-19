@@ -103,6 +103,7 @@ export interface SubmissionReviewView {
   assignmentTitle: string;
   taskDescription: string;
   status: string;
+  version: string;
   isCodingProject: boolean;
   bodyText: string | null;
   photoUrl: string | null;
@@ -138,6 +139,7 @@ export interface GradeSubmissionRequest {
   totalAwarded: number | null;
   comment: string | null;
   guardianNotified: boolean;
+  expectedVersion: string;
 }
 
 export interface QuizAssessmentReview {

@@ -11,6 +11,7 @@ public record SubmissionStatusView(
     Guid AssignmentId,
     string AssignmentTitle,
     string Status,
+    string Version,
     bool IsCodingProject,
     string? BodyText,
     string? YouthNote,

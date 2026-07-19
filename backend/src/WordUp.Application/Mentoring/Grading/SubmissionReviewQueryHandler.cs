@@ -78,6 +78,7 @@ public sealed class SubmissionReviewQueryHandler : IRequestHandler<SubmissionRev
             assignment.Title,
             assignment.TaskDescription,
             submission.Status.ToString(),
+            submission.ConcurrencyStamp.ToString(),
             submission.IsCodingProject,
             submission.BodyText,
             photoUrl,

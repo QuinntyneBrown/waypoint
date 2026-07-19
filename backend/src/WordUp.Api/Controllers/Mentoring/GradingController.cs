@@ -33,7 +33,8 @@ public class GradingController : ControllerBase
                 request.RubricScoresJson,
                 request.TotalAwarded,
                 request.Comment,
-                request.GuardianNotified),
+                request.GuardianNotified,
+                request.ExpectedVersion),
             cancellationToken);
         return NoContent();
     }

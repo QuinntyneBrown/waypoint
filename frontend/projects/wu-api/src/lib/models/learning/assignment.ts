@@ -69,6 +69,7 @@ export interface YouthSubmissionStatus {
   assignmentId: string;
   assignmentTitle: string;
   status: string;
+  version: string;
   isCodingProject: boolean;
   bodyText: string | null;
   youthNote: string | null;

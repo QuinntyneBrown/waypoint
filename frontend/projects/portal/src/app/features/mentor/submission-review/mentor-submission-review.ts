@@ -83,6 +83,7 @@ export class MentorSubmissionReviewPage implements OnDestroy {
   protected readonly saving = signal(false);
   protected readonly statusMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
+  protected readonly conflictMessage = signal<string | null>(null);
   protected readonly total = computed(() =>
     Object.values(this.scores()).reduce<number>((sum, score) => sum + (score ?? 0), 0),
   );
@@ -139,21 +140,35 @@ export class MentorSubmissionReviewPage implements OnDestroy {
         totalAwarded: this.total(),
         comment: this.comment().trim() || null,
         guardianNotified: this.guardianNotified(),
+        expectedVersion: review.version,
       })
       .subscribe({
         next: () => {
           this.saving.set(false);
           if (decision === 'save-draft') {
-            this.statusMessage.set('Draft saved. The youth-visible status has not changed.');
+            this.load('Draft saved. The youth-visible status has not changed.');
           } else {
             void this.router.navigate(['/mentor/reviews']);
           }
         },
         error: (error: unknown) => {
           this.saving.set(false);
-          this.errorMessage.set(ApiError.from(error).title);
+          const apiError = ApiError.from(error);
+          if (apiError.status === 409) {
+            this.conflictMessage.set(
+              'This review changed on the server. Your scores and feedback are still here. Load the latest review to reconcile.',
+            );
+          } else {
+            this.errorMessage.set(apiError.title);
+          }
         },
       });
+  }
+
+  protected loadLatest(): void {
+    this.conflictMessage.set(null);
+    this.errorMessage.set(null);
+    this.load();
   }
 
   ngOnDestroy(): void {
@@ -161,7 +176,7 @@ export class MentorSubmissionReviewPage implements OnDestroy {
     if (this.fileObjectUrl) this.document.defaultView?.URL.revokeObjectURL(this.fileObjectUrl);
   }
 
-  private load(): void {
+  private load(successMessage?: string): void {
     this.api.submission(this.submissionId).subscribe({
       next: (review) => {
         this.review.set(review);
@@ -173,6 +188,16 @@ export class MentorSubmissionReviewPage implements OnDestroy {
           ),
         );
         this.comment.set(review.mentorComment ?? '');
+        if (
+          review.mentorComment !== null ||
+          review.totalAwarded !== null ||
+          review.status === 'Approved' ||
+          review.status === 'NeedsRevision'
+        ) {
+          this.guardianNotified.set(review.guardianNotified);
+        }
+        this.conflictMessage.set(null);
+        if (successMessage) this.statusMessage.set(successMessage);
       },
       error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
     });
