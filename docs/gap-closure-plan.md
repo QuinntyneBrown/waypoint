@@ -210,7 +210,10 @@ requirement conflicts early (they gate "done").
       Program Administrators organization-wide month, week, and agenda views with cohort filters,
       named time/location/mentor/cohort detail, role-correct attendance links, and a validated
       recurring-session form that materializes weekly rows only through the selected cohort term.
-- [ ] **G10** Attendance administration/history `L2-ENGAGE-002..004`
+- [x] **G10** Attendance administration/history `L2-ENGAGE-002..004` — Program Administrators
+      now use the shared staff capture and history workspaces across the organization, with four-state
+      marks, staff notes, bulk actions, live tallies, optimistic versions, private offline replay,
+      cohort/date filters, session and youth rates/trends/flags, and exact-filter CSV/PDF exports.
 - [ ] **G11** Announcement administration `L2-ENGAGE-006`
 - [ ] **G12** Reports hub + standard reports `L2-REPORT-001`
 - [~] **G13** Data export (PDF + targets) `L2-REPORT-003` — progress-board CSV/PDF exports use the
@@ -496,3 +499,9 @@ requirement conflicts early (they gate "done").
   existing server-authoritative term boundary and reports the exact generated count. Four adjacent
   scheduling/attendance integrations, six portal units, the production build, admin desktop/mobile
   acceptance, and the complete mentor calendar/attendance/export regression pass.
+- 2026-07-18 — G10 done: Program Administrators can capture and correct attendance on behalf of staff
+  from role-correct calendar/history links, including Present/Late/Excused/Absent marks, private
+  notes, bulk actions, live tallies, optimistic concurrency, and the shared private offline queue.
+  Organization-wide session and youth history preserves cohort/date filters, rates, trends, threshold
+  flags, and exact-filter CSV/PDF downloads. Ten focused integrations, six portal units, the production
+  build, and five combined admin/mentor desktop/mobile/offline browser scenarios pass.

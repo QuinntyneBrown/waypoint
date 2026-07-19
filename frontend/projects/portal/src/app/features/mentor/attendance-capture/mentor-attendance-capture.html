@@ -1,5 +1,5 @@
 <wu-shell
-  role="mentor"
+  [role]="shellRole()"
   active="attendance"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
@@ -17,8 +17,8 @@
         }
       </div>
       <div class="wu-cluster">
-        <a class="wu-btn wu-btn--ghost" routerLink="/mentor/calendar">Calendar</a>
-        <a class="wu-btn wu-btn--ghost" routerLink="/mentor/attendance">History</a>
+        <a class="wu-btn wu-btn--ghost" [routerLink]="calendarPath()">Calendar</a>
+        <a class="wu-btn wu-btn--ghost" [routerLink]="historyPath()">History</a>
       </div>
     </div>
 

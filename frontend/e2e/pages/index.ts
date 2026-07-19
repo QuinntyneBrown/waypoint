@@ -71,6 +71,8 @@ export {
   BadgeBuilderPage,
   ProgressionBuilderPage,
   AdminCalendarPage,
+  AdminAttendanceCapturePage,
+  AdminAttendanceHistoryPage,
 } from './admin.pages';
 export {
   MentorCheckInsPage,

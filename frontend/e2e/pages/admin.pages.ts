@@ -519,3 +519,86 @@ export class AdminCalendarPage extends BasePage {
     await this.page.goto(AdminCalendarPage.path);
   }
 }
+
+/** Director attendance capture with four-state marking and staff notes. */
+export class AdminAttendanceCapturePage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get rows() {
+    return this.page.getByTestId('mentor-attendance-row');
+  }
+  row(name: string) {
+    return this.rows.filter({ hasText: name });
+  }
+  statusButton(name: string, status: 'Present' | 'Late' | 'Excused' | 'Absent') {
+    return this.row(name).getByRole('button', { name: status, exact: true });
+  }
+  note(name: string) {
+    return this.row(name).getByLabel('Staff note for ' + name, { exact: true });
+  }
+  get markedTally() {
+    return this.page.getByTestId('mentor-marked-tally');
+  }
+  get allPresent() {
+    return this.page.getByRole('button', { name: 'All present', exact: true });
+  }
+  get clear() {
+    return this.page.getByRole('button', { name: 'Clear', exact: true });
+  }
+  get save() {
+    return this.page.getByRole('button', { name: 'Save attendance', exact: true });
+  }
+  get status() {
+    return this.page.getByRole('status');
+  }
+  get calendar() {
+    return this.page.getByRole('main').getByRole('link', { name: 'Calendar', exact: true });
+  }
+}
+
+/** Organization-wide attendance history, rates, filters, and exports. */
+export class AdminAttendanceHistoryPage extends BasePage {
+  static readonly path = '/admin/attendance';
+
+  get heading() {
+    return this.page.getByRole('heading', {
+      name: 'Attendance administration',
+      exact: true,
+    });
+  }
+  get sessionTab() {
+    return this.page.getByRole('tab', { name: 'By session', exact: true });
+  }
+  get youthTab() {
+    return this.page.getByRole('tab', { name: 'By youth', exact: true });
+  }
+  get cohort() {
+    return this.page.getByLabel('Cohort', { exact: true });
+  }
+  get from() {
+    return this.page.getByLabel('From', { exact: true });
+  }
+  get to() {
+    return this.page.getByLabel('To', { exact: true });
+  }
+  get applyFilters() {
+    return this.page.getByRole('button', { name: 'Apply filters', exact: true });
+  }
+  get sessionRows() {
+    return this.page.getByTestId('attendance-session-row');
+  }
+  get youthRows() {
+    return this.page.getByTestId('attendance-youth-row');
+  }
+  get exportCsv() {
+    return this.page.getByRole('button', { name: 'Export CSV', exact: true });
+  }
+  get exportPdf() {
+    return this.page.getByRole('button', { name: 'Export PDF', exact: true });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(AdminAttendanceHistoryPage.path);
+  }
+}

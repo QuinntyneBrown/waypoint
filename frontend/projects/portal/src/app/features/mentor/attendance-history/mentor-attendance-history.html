@@ -1,5 +1,5 @@
 <wu-shell
-  role="mentor"
+  [role]="shellRole()"
   active="attendance"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
@@ -7,11 +7,13 @@
   <div class="wu-container wu-page">
     <div class="wu-page__head">
       <div class="wu-page__titles">
-        <div class="wu-eyebrow">Mentoring</div>
-        <h1 class="wu-page__title">Attendance</h1>
+        <div class="wu-eyebrow">{{ isAdmin() ? 'Program administration' : 'Mentoring' }}</div>
+        <h1 class="wu-page__title">
+          {{ isAdmin() ? 'Attendance administration' : 'Attendance' }}
+        </h1>
         <p class="wu-page__sub">Review turnout by session or attendance patterns by youth.</p>
       </div>
-      <a class="wu-btn wu-btn--primary" routerLink="/mentor/calendar">Open calendar</a>
+      <a class="wu-btn wu-btn--primary" [routerLink]="calendarPath()">Open calendar</a>
     </div>
 
     @if (errorMessage(); as error) {
@@ -75,7 +77,7 @@
               [value]="cohortId()"
               (change)="cohortId.set($any($event.target).value)"
             >
-              <option value="">All my cohorts</option>
+              <option value="">{{ isAdmin() ? 'All cohorts' : 'All my cohorts' }}</option>
               @for (cohort of options()?.cohorts ?? []; track cohort.cohortId) {
                 <option [value]="cohort.cohortId">{{ cohort.name }}</option>
               }
@@ -147,7 +149,7 @@
                     <td>
                       <a
                         class="wu-btn wu-btn--ghost wu-btn--sm"
-                        [routerLink]="['/mentor/attendance', row.sessionId]"
+                        [routerLink]="[attendanceBase(), row.sessionId]"
                       >
                         {{ row.marked ? 'Edit' : 'Take attendance' }}
                       </a>

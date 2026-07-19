@@ -426,6 +426,23 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'attendance',
+        title: 'Attendance administration · Word Up',
+        loadComponent: () =>
+          import('./features/mentor/attendance-history/mentor-attendance-history').then(
+            (module) => module.MentorAttendanceHistoryPage,
+          ),
+      },
+      {
+        path: 'attendance/:sessionId',
+        title: 'Take attendance · Word Up',
+        canDeactivate: [unsavedChangesGuard],
+        loadComponent: () =>
+          import('./features/mentor/attendance-capture/mentor-attendance-capture').then(
+            (module) => module.MentorAttendanceCapturePage,
+          ),
+      },
+      {
         path: 'settings',
         title: 'Organization settings · Word Up',
         loadComponent: () =>

@@ -1,5 +1,5 @@
 import { DOCUMENT, DatePipe, PercentPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   ApiError,
@@ -9,7 +9,7 @@ import {
   YouthAttendanceSummary,
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { WuRole, WuShell } from '@wu/ui';
 import { forkJoin } from 'rxjs';
 
 type HistoryView = 'session' | 'youth';
@@ -84,6 +84,14 @@ export class MentorAttendanceHistoryPage {
   protected readonly exporting = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly statusMessage = signal<string | null>(null);
+  protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
+  protected readonly shellRole = computed<WuRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly calendarPath = computed(() =>
+    this.isAdmin() ? '/admin/calendar' : '/mentor/calendar',
+  );
+  protected readonly attendanceBase = computed(() =>
+    this.isAdmin() ? '/admin/attendance' : '/mentor/attendance',
+  );
 
   constructor() {
     this.api.sessionOptions().subscribe({

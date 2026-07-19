@@ -16,7 +16,7 @@ import {
   StaffSessionAttendance,
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { WuRole, WuShell } from '@wu/ui';
 import { AttendanceQueueService } from '../../volunteer/attendance/attendance-queue.service';
 
 // Traces to: L2-ENGAGE-002/003, L2-NFR-004/006/007/009/010
@@ -96,6 +96,14 @@ export class MentorAttendanceCapturePage {
   protected readonly saving = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   private readonly baseline = signal('');
+  protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
+  protected readonly shellRole = computed<WuRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly calendarPath = computed(() =>
+    this.isAdmin() ? '/admin/calendar' : '/mentor/calendar',
+  );
+  protected readonly historyPath = computed(() =>
+    this.isAdmin() ? '/admin/attendance' : '/mentor/attendance',
+  );
 
   protected readonly total = computed(() => this.rows().length);
   protected readonly marked = computed(() => this.rows().filter((row) => row.mark !== null).length);
