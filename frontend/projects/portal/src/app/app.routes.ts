@@ -402,6 +402,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'audit',
+        title: 'Audit log · Word Up',
+        loadComponent: () =>
+          import('./features/admin/audit/admin-audit-log').then(
+            (module) => module.AdminAuditLogPage,
+          ),
+      },
+      {
         path: 'mentor-assignments',
         title: 'Mentor assignments · Word Up',
         loadComponent: () =>

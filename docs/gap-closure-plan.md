@@ -232,7 +232,11 @@ requirement conflicts early (they gate "done").
       Ready/Duplicate/Missing consent/Invalid classifications before an explicit ready-only commit.
       Imports resolve named cohort/mentor/track relationships, remain idempotent by email, report all
       outcomes, and write a count-bearing audit record across responsive layouts.
-- [ ] **G15** Audit log UI `L2-CONSENT-003`
+- [x] **G15** Audit log UI `L2-CONSENT-003` — Program Administrators can inspect a newest-first,
+      paged audit trail with stable actor/action options and inclusive date filters, named actors,
+      source and target context, explicit private markers, and redacted safeguarding details. Empty,
+      loading, error/retry, responsive card-table, pagination, and exact-filter audited CSV export
+      states are covered; other roles remain denied by the authoritative audit policy.
 
 ## Phase H — Cross-cutting backend & platform
 
@@ -551,3 +555,10 @@ requirement conflicts early (they gate "done").
   named cohort/mentor/track associations and enrollments are applied, in-file/existing emails remain
   idempotent, and audit details preserve outcome counts. Four import integrations, six portal units,
   the production build, and three desktop/mobile/validation browser scenarios pass.
+- 2026-07-18 — G15 done: the admin audit workspace now resolves actor names, exposes stable user and
+  action choices, applies inclusive from/to dates before newest-first paging, and preserves source,
+  target, public detail, and private/redacted context without exposing safeguarding notes. The current
+  actor/action/date scope flows into the real audited CSV download; empty filters recover cleanly and
+  the card-table controls remain touch usable without horizontal overflow. Twenty-six adjacent
+  consent/reporting integrations, six portal units, the 423.57 kB production build, and two
+  desktop/mobile browser scenarios pass.

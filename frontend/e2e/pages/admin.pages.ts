@@ -782,3 +782,52 @@ export class AdminRosterImportPage extends BasePage {
     await this.page.goto(AdminRosterImportPage.path);
   }
 }
+
+/** Program-administrator audit inspection, filtering, paging, and export. */
+export class AdminAuditLogPage extends BasePage {
+  static readonly path = '/admin/audit';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Audit log', exact: true });
+  }
+  get userFilter() {
+    return this.page.getByLabel('Audit user', { exact: true });
+  }
+  get actionFilter() {
+    return this.page.getByLabel('Audit action', { exact: true });
+  }
+  get from() {
+    return this.page.getByLabel('Audit date from', { exact: true });
+  }
+  get to() {
+    return this.page.getByLabel('Audit date to', { exact: true });
+  }
+  get applyFilters() {
+    return this.page.getByRole('button', { name: 'Apply audit filters', exact: true });
+  }
+  get clearFilters() {
+    return this.page.getByRole('button', { name: 'Clear audit filters', exact: true }).first();
+  }
+  get exportCsv() {
+    return this.page.getByRole('button', { name: 'Export filtered audit log as CSV', exact: true });
+  }
+  get rows() {
+    return this.page.getByTestId('audit-row');
+  }
+  row(text: string) {
+    return this.rows.filter({ hasText: text });
+  }
+  get summary() {
+    return this.page.getByTestId('audit-page-summary');
+  }
+  get previousPage() {
+    return this.page.getByRole('button', { name: 'Previous audit page', exact: true });
+  }
+  get nextPage() {
+    return this.page.getByRole('button', { name: 'Next audit page', exact: true });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(AdminAuditLogPage.path);
+  }
+}

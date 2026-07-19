@@ -76,6 +76,7 @@ export {
   AdminAnnouncementsPage,
   AdminReportsPage,
   AdminRosterImportPage,
+  AdminAuditLogPage,
 } from './admin.pages';
 export {
   MentorCheckInsPage,

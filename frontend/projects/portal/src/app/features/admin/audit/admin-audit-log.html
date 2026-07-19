@@ -1,0 +1,202 @@
+<wu-shell
+  role="admin"
+  active="audit"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <div class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Youth safety</div>
+        <h1 class="wu-page__title">Audit log</h1>
+        <p class="wu-page__sub">
+          An append-only record of who did what and when, with safeguarding details kept private.
+        </p>
+      </div>
+      <div class="wu-page__actions">
+        <button
+          class="wu-btn wu-btn--secondary"
+          type="button"
+          aria-label="Export filtered audit log as CSV"
+          [disabled]="loading() || exporting()"
+          (click)="exportCsv()"
+        >
+          {{ exporting() ? 'Preparing CSV…' : 'Export CSV' }}
+        </button>
+      </div>
+    </div>
+
+    @if (exportStatus(); as status) {
+      <p class="wu-alert wu-alert--success" role="status">{{ status }}</p>
+    }
+
+    @if (errorMessage(); as error) {
+      <div class="wu-alert wu-alert--error" role="alert">
+        <div>
+          <div class="wu-alert__title">{{ error }}</div>
+          Audit activity could not be loaded.
+        </div>
+        <button class="wu-btn wu-btn--secondary" type="button" (click)="retry()">Retry</button>
+      </div>
+    }
+
+    <section class="wu-card wu-mb-4" aria-labelledby="audit-filters-heading">
+      <div class="wu-card__body wu-stack">
+        <div>
+          <h2 id="audit-filters-heading">Audit filters</h2>
+          <p class="wu-muted">
+            Filter the view and CSV export by user, action, or inclusive dates.
+          </p>
+        </div>
+        <form class="audit-filters" [formGroup]="filterForm" (ngSubmit)="applyFilters()">
+          <div class="wu-field wu-mb-0">
+            <label class="wu-label" for="audit-user">Audit user</label>
+            <select class="wu-select" id="audit-user" formControlName="actorUserId">
+              <option value="">All users</option>
+              @for (actor of result()?.actors ?? []; track actor.id) {
+                <option [value]="actor.id">{{ actor.name }}</option>
+              }
+            </select>
+          </div>
+          <div class="wu-field wu-mb-0">
+            <label class="wu-label" for="audit-action">Audit action</label>
+            <select class="wu-select" id="audit-action" formControlName="action">
+              <option value="">All actions</option>
+              @for (action of result()?.actions ?? []; track action) {
+                <option [value]="action">{{ actionLabel(action) }}</option>
+              }
+            </select>
+          </div>
+          <div class="wu-field wu-mb-0">
+            <label class="wu-label" for="audit-from">Audit date from</label>
+            <input class="wu-input" id="audit-from" type="date" formControlName="from" />
+          </div>
+          <div class="wu-field wu-mb-0">
+            <label class="wu-label" for="audit-to">Audit date to</label>
+            <input class="wu-input" id="audit-to" type="date" formControlName="to" />
+          </div>
+          <button
+            class="wu-btn wu-btn--primary"
+            type="submit"
+            aria-label="Apply audit filters"
+            [disabled]="loading()"
+          >
+            Apply filters
+          </button>
+          <button
+            class="wu-btn wu-btn--ghost"
+            type="button"
+            aria-label="Clear audit filters"
+            [disabled]="loading()"
+            (click)="clearFilters()"
+          >
+            Clear
+          </button>
+        </form>
+        @if (dateError(); as error) {
+          <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+        }
+      </div>
+    </section>
+
+    @if (loading() && !result()) {
+      <div class="wu-card" aria-label="Loading audit activity">
+        <div class="wu-card__body wu-stack">
+          <span class="wu-skeleton wu-skeleton--title"></span>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+          <span class="wu-skeleton wu-skeleton--block"></span>
+        </div>
+      </div>
+    } @else if (result(); as audit) {
+      @if (audit.items.length === 0) {
+        <div class="wu-card">
+          <div class="wu-empty">
+            <h2 class="wu-empty__title">No activity for this filter</h2>
+            <p class="wu-empty__text">
+              No audit events match the users, actions, or dates selected. Try widening the range.
+            </p>
+            <button
+              class="wu-btn wu-btn--secondary"
+              type="button"
+              aria-label="Clear audit filters"
+              (click)="clearFilters()"
+            >
+              Clear filters
+            </button>
+          </div>
+        </div>
+      } @else {
+        <div class="wu-card">
+          <div class="wu-table-wrap">
+            <table class="wu-table wu-table--cards">
+              <thead>
+                <tr>
+                  <th>Who</th>
+                  <th>Action</th>
+                  <th>Target and detail</th>
+                  <th>When</th>
+                  <th>Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of audit.items; track item.id) {
+                  <tr data-testid="audit-row">
+                    <td data-label="Who">
+                      <strong>{{ item.actorName }}</strong>
+                    </td>
+                    <td data-label="Action">
+                      <span class="wu-badge wu-badge--outline">{{ actionLabel(item.action) }}</span>
+                      <span class="wu-sr-only">{{ item.action }}</span>
+                    </td>
+                    <td data-label="Target and detail" class="audit-target">
+                      <div>{{ targetLabel(item.targetType, item.targetId) }}</div>
+                      @if (item.isPrivate) {
+                        <div class="audit-private">Private · {{ item.details }}</div>
+                      } @else if (item.details) {
+                        <div class="wu-muted audit-detail">{{ item.details }}</div>
+                      }
+                    </td>
+                    <td data-label="When">{{ item.at | date: 'medium' }}</td>
+                    <td data-label="Source" class="wu-muted audit-source">
+                      {{ item.source || 'Not captured' }}
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="audit-pagination wu-mt-4">
+          <p class="wu-muted" data-testid="audit-page-summary">
+            Page {{ audit.page }} of {{ pageCount() }} · Showing {{ firstShown() }}–{{
+              lastShown()
+            }}
+            of {{ audit.total }} events
+          </p>
+          <div class="audit-pagination__actions">
+            <button
+              class="wu-btn wu-btn--ghost"
+              type="button"
+              aria-label="Previous audit page"
+              [disabled]="audit.page <= 1 || loading()"
+              (click)="changePage(audit.page - 1)"
+            >
+              Previous
+            </button>
+            <button
+              class="wu-btn wu-btn--ghost"
+              type="button"
+              aria-label="Next audit page"
+              [disabled]="audit.page >= pageCount() || loading()"
+              (click)="changePage(audit.page + 1)"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</wu-shell>

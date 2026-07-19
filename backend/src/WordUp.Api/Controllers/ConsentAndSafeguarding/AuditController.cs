@@ -21,9 +21,13 @@ public class AuditController : ControllerBase
         [FromQuery] int pageSize = 50,
         [FromQuery] string? action = null,
         [FromQuery] Guid? actorUserId = null,
+        [FromQuery] DateTime? from = null,
+        [FromQuery] DateTime? to = null,
         CancellationToken cancellationToken = default)
     {
-        var result = await _mediator.Send(new AuditLogQuery(page, pageSize, action, actorUserId), cancellationToken);
+        var result = await _mediator.Send(
+            new AuditLogQuery(page, pageSize, action, actorUserId, from, to),
+            cancellationToken);
         return Ok(result);
     }
 }
