@@ -394,6 +394,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'import',
+        title: 'Import roster · Word Up',
+        loadComponent: () =>
+          import('./features/admin/import-roster/import-roster').then(
+            (module) => module.ImportRosterPage,
+          ),
+      },
+      {
         path: 'mentor-assignments',
         title: 'Mentor assignments · Word Up',
         loadComponent: () =>

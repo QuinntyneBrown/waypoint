@@ -736,3 +736,49 @@ export class AdminReportsPage extends BasePage {
     await this.page.goto(AdminReportsPage.path);
   }
 }
+
+/** Three-step CSV roster upload, mapping, validation preview, and ready-row import. */
+export class AdminRosterImportPage extends BasePage {
+  static readonly path = '/admin/import';
+
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Import roster', exact: true });
+  }
+  get fileInput() {
+    return this.page.getByLabel('Roster CSV', { exact: true });
+  }
+  get fileSummary() {
+    return this.page.getByTestId('import-file-summary');
+  }
+  get fileError() {
+    return this.page.getByRole('alert');
+  }
+  mapColumn(header: string) {
+    return this.page.getByLabel(`Map ${header}`, { exact: true });
+  }
+  get previewButton() {
+    return this.page.getByRole('button', { name: 'Preview roster', exact: true });
+  }
+  get previewSummary() {
+    return this.page.getByTestId('import-preview-summary');
+  }
+  previewRow(text: string) {
+    return this.page.getByTestId('import-preview-row').filter({ hasText: text });
+  }
+  get importReady() {
+    return this.page.getByRole('button', { name: /Import \d+ ready/ });
+  }
+  get confirmation() {
+    return this.page.getByRole('dialog', { name: 'Confirm roster import' });
+  }
+  get confirmImport() {
+    return this.page.getByRole('button', { name: 'Confirm import', exact: true });
+  }
+  get result() {
+    return this.page.getByTestId('import-result');
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto(AdminRosterImportPage.path);
+  }
+}

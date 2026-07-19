@@ -44,6 +44,13 @@ public sealed class ImportTests : IntegrationTestBase
         return email;
     }
 
+    private async Task<SeededImportFixture> SeedImportFixtureAsync()
+    {
+        var response = await Client.PostAsync("/api/_test/youth-curriculum", null);
+        response.EnsureSuccessStatusCode();
+        return (await response.Content.ReadFromJsonAsync<SeededImportFixture>())!;
+    }
+
     [Test]
     [Property("Req", "L2-REPORT-004")]
     public async Task Preview_classifies_ready_duplicate_and_needs_consent_rows()
@@ -110,7 +117,130 @@ public sealed class ImportTests : IntegrationTestBase
         Assert.That(audited, Is.True);
     }
 
-    private sealed record RosterPreviewDto(List<RosterPreviewRowDto> Rows, int Ready, int Duplicates, int NeedsConsent);
-    private sealed record RosterPreviewRowDto(int Line, string Name, string Email, string Cohort, string Status);
-    private sealed record RosterImportResultDto(int Imported, int SkippedDuplicates, int NeedsConsent);
+    [Test]
+    [Property("Req", "L2-REPORT-004")]
+    public async Task Preview_and_commit_classify_invalid_and_in_file_duplicate_rows_consistently()
+    {
+        // Traces to: L2-REPORT-004 AC2..5, L2-NFR-001, L2-CONSENT-003
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var fixture = await SeedImportFixtureAsync();
+        var readyEmail = $"import.valid.{Guid.NewGuid():N}@example.com";
+        var consentEmail = $"import.consent.{Guid.NewGuid():N}@example.com";
+        var csv =
+            "name,email,consent,cohort,mentor,track,ignored\n" +
+            $"Alice Ready,{readyEmail},yes,{fixture.CohortName},{fixture.MentorName},{fixture.PrimaryTrackName},=not-imported\n" +
+            $"Alice Again,{readyEmail},yes,{fixture.CohortName},{fixture.MentorName},{fixture.PrimaryTrackName},ignored\n" +
+            $"Broken Email,not-an-email,yes,{fixture.CohortName},{fixture.MentorName},{fixture.PrimaryTrackName},ignored\n" +
+            $"Consent Follow-up,{consentEmail},no,{fixture.CohortName},{fixture.MentorName},{fixture.PrimaryTrackName},ignored\n";
+        var mapping = new Dictionary<string, string>(Mapping)
+        {
+            ["cohort"] = "Cohort",
+            ["mentor"] = "Mentor",
+            ["track"] = "Track",
+            ["ignored"] = "Skip",
+        };
+
+        var previewResponse = await PostJsonAsync(
+            "/api/admin/import/preview",
+            new { csvContent = csv, columnMapping = mapping },
+            adminToken);
+        Assert.That(previewResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var preview = await previewResponse.Content.ReadFromJsonAsync<RosterPreviewDto>();
+        var readyRow = preview!.Rows.Single(item => item.Email == readyEmail && item.Status == "Ready");
+        Assert.Multiple(() =>
+        {
+            Assert.That(preview.Ready, Is.EqualTo(1));
+            Assert.That(preview.Duplicates, Is.EqualTo(1));
+            Assert.That(preview.NeedsConsent, Is.EqualTo(1));
+            Assert.That(preview.Invalid, Is.EqualTo(1));
+            Assert.That(preview.Rows.Single(item => item.Email == "not-an-email").Status, Is.EqualTo("Invalid"));
+            Assert.That(readyRow.Mentor, Is.EqualTo(fixture.MentorName));
+            Assert.That(readyRow.Track, Is.EqualTo(fixture.PrimaryTrackName));
+        });
+
+        var commitResponse = await PostJsonAsync(
+            "/api/admin/import",
+            new { csvContent = csv, columnMapping = mapping },
+            adminToken);
+        var result = await commitResponse.Content.ReadFromJsonAsync<RosterImportResultDto>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(result!.Imported, Is.EqualTo(1));
+            Assert.That(result.SkippedDuplicates, Is.EqualTo(1));
+            Assert.That(result.NeedsConsent, Is.EqualTo(1));
+            Assert.That(result.Invalid, Is.EqualTo(1));
+        });
+
+        using var scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.That(db.Users.Count(item => item.Email == readyEmail), Is.EqualTo(1));
+        Assert.That(db.Users.Any(item => item.Email == "not-an-email"), Is.False);
+        var imported = db.Users.Single(item => item.Email == readyEmail);
+        Assert.Multiple(() =>
+        {
+            Assert.That(imported.CohortId, Is.EqualTo(fixture.CohortId));
+            Assert.That(imported.MentorId, Is.EqualTo(fixture.MentorId));
+            Assert.That(db.YouthTrackEnrollments.Any(item =>
+                item.YouthUserId == imported.Id && item.TrackId == fixture.PrimaryTrackId), Is.True);
+        });
+    }
+
+    [Test]
+    [Property("Req", "L2-REPORT-004")]
+    public async Task Import_rejects_oversized_content_invalid_mappings_and_non_admin_callers()
+    {
+        // Traces to: L2-REPORT-004 AC1..2, L2-NFR-001, L2-AUTH-010
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+        var youthToken = await CreateUserAndGetTokenAsync(Roles.Youth);
+        var csv = "name,email\nAlice,alice@example.com\n";
+
+        var noEmail = await PostJsonAsync(
+            "/api/admin/import/preview",
+            new { csvContent = csv, columnMapping = new Dictionary<string, string> { ["name"] = "Name" } },
+            adminToken);
+        Assert.That(noEmail.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+
+        var unknownField = await PostJsonAsync(
+            "/api/admin/import/preview",
+            new { csvContent = csv, columnMapping = new Dictionary<string, string> { ["email"] = "Password" } },
+            adminToken);
+        Assert.That(unknownField.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+
+        var oversized = "name,email\n" + new string('a', 2 * 1024 * 1024) + ",alice@example.com\n";
+        var oversizedResponse = await PostJsonAsync(
+            "/api/admin/import/preview",
+            new { csvContent = oversized, columnMapping = Mapping },
+            adminToken);
+        Assert.That(oversizedResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+
+        var denied = await PostJsonAsync(
+            "/api/admin/import/preview",
+            new { csvContent = csv, columnMapping = Mapping },
+            youthToken);
+        Assert.That(denied.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+    }
+
+    private sealed record RosterPreviewDto(
+        List<RosterPreviewRowDto> Rows,
+        int Ready,
+        int Duplicates,
+        int NeedsConsent,
+        int Invalid);
+    private sealed record RosterPreviewRowDto(
+        int Line,
+        string Name,
+        string Email,
+        string Cohort,
+        string Mentor,
+        string Track,
+        string Status,
+        string? Message);
+    private sealed record RosterImportResultDto(int Imported, int SkippedDuplicates, int NeedsConsent, int Invalid);
+    private sealed record SeededImportFixture(
+        Guid CohortId,
+        string CohortName,
+        Guid MentorId,
+        string MentorName,
+        Guid PrimaryTrackId,
+        string PrimaryTrackName);
 }

@@ -227,7 +227,11 @@ requirement conflicts early (they gate "done").
       attendance, progress-board, and audit-log exports now provide real CSV/PDF files using the
       active filters and authoritative role/resource scope. Every export is audited, PDF output is
       valid, and formula-like CSV values are neutralized before spreadsheet delivery.
-- [ ] **G14** Roster import UI `L2-REPORT-004`
+- [x] **G14** Roster import UI `L2-REPORT-004` — admins now upload locally validated CSV files up
+      to 2 MB, see exact row/column counts, map or skip unique columns, and review authoritative
+      Ready/Duplicate/Missing consent/Invalid classifications before an explicit ready-only commit.
+      Imports resolve named cohort/mentor/track relationships, remain idempotent by email, report all
+      outcomes, and write a count-bearing audit record across responsive layouts.
 - [ ] **G15** Audit log UI `L2-CONSENT-003`
 
 ## Phase H — Cross-cutting backend & platform
@@ -540,3 +544,10 @@ requirement conflicts early (they gate "done").
   new targets in writing durable filter-aware audit records; the shared CSV boundary neutralizes
   formula-like cells. Twenty-one adjacent backend integrations, six portal units, the production
   build, and seven report/progress/attendance desktop/mobile browser scenarios pass.
+- 2026-07-18 — G14 done: admins can upload a CSV-only roster of at most 2 MB, see exact row/column
+  counts, auto-map common headers, explicitly remap Name/Email/Cohort/Mentor/Track/Status/Consent or
+  skip columns, and preview every row with Ready, Duplicate, Missing consent, or Invalid reasons and
+  totals. Preview and commit share one classifier, so only confirmed Ready rows create youth accounts;
+  named cohort/mentor/track associations and enrollments are applied, in-file/existing emails remain
+  idempotent, and audit details preserve outcome counts. Four import integrations, six portal units,
+  the production build, and three desktop/mobile/validation browser scenarios pass.
