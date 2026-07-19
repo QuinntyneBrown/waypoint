@@ -4,6 +4,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.RateLimiting;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.RateLimiting;
@@ -71,6 +73,7 @@ builder.Services.AddCors(options =>
         .WithOrigins("http://localhost:4200")
         .AllowAnyHeader()
         .AllowAnyMethod()
+        .WithExposedHeaders("X-WordUp-State")
         .AllowCredentials());
 });
 
@@ -143,6 +146,11 @@ builder.Services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationSc
 builder.Services.AddAuthorization(options =>
 {
     // L2-AUTH-009 permission matrix (role checks; resource scoping is enforced in handlers).
+    options.AddPolicy(Policies.YouthParticipation, policy =>
+    {
+        policy.RequireRole(Roles.Youth);
+        policy.AddRequirements(new YouthParticipationRequirement());
+    });
     options.AddPolicy(Policies.ManageUsers, p => p.RequireRole(Roles.ProgramAdministrator));
     options.AddPolicy(Policies.ApproveApplications, p => p.RequireRole(Roles.ProgramAdministrator));
     options.AddPolicy(Policies.EditCurriculum, p => p.RequireRole(Roles.ProgramAdministrator));
@@ -151,6 +159,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy(Policies.InviteUsers, p => p.RequireRole(Roles.ProgramAdministrator, Roles.Mentor));
     options.AddPolicy(Policies.RecordAttendance, p => p.RequireRole(Roles.ProgramAdministrator, Roles.Mentor, Roles.Volunteer));
 });
+builder.Services.AddScoped<IAuthorizationHandler, YouthParticipationAuthorizationHandler>();
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, WordUpAuthorizationResultHandler>();
 
 // Rate limiting on the auth surface (L2-AUTH-001 AC5 / L2-NFR-002). Disabled under test so the
 // acceptance suite is deterministic.

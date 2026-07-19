@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WordUp.Api.Authorization;
 using WordUp.Api.Contracts.LearningExperience;
 using WordUp.Application.LearningExperience.CodingLessons;
 using WordUp.Application.LearningExperience.Submissions;
@@ -8,7 +9,7 @@ using WordUp.Application.LearningExperience.Submissions;
 namespace WordUp.Api.Controllers.LearningExperience;
 
 [ApiController]
-[Authorize(Roles = Roles.Youth)]
+[Authorize(Policy = Policies.YouthParticipation)]
 [Route("api/me/coding-lessons")]
 public sealed class CodingLessonsController : ControllerBase
 {

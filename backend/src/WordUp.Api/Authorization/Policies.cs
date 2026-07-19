@@ -6,6 +6,7 @@ namespace WordUp.Api.Authorization;
 /// </summary>
 public static class Policies
 {
+    public const string YouthParticipation = "YouthParticipation";
     public const string ManageUsers = "ManageUsers";
     public const string ApproveApplications = "ApproveApplications";
     public const string EditCurriculum = "EditCurriculum";

@@ -1,4 +1,5 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { DOCUMENT } from '@angular/common';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
@@ -14,10 +15,22 @@ const stateRoute: Record<number, string> = {
 export const apiStateInterceptor: HttpInterceptorFn = (request, next) => {
   const router = inject(Router);
   const drafts = inject(FormDraftService);
+  const document = inject(DOCUMENT);
 
   return next(request).pipe(
     catchError((error: unknown) => {
       const status = (error as { status?: number })?.status;
+      const state = error instanceof HttpErrorResponse ? error.headers.get('X-WordUp-State') : null;
+      if (state === 'consent-required' && request.url.includes('/api/')) {
+        drafts.captureCurrentForm();
+        const window = document.defaultView;
+        if (window) {
+          window.location.assign('/consent-required');
+        } else {
+          void router.navigateByUrl('/consent-required');
+        }
+        return throwError(() => error);
+      }
       const route = status === undefined ? undefined : stateRoute[status];
       if (route && request.url.includes('/api/')) {
         if (status === 500) drafts.captureCurrentForm();

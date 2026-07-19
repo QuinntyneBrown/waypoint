@@ -2,13 +2,14 @@ using WordUp.Api.Contracts.LearningExperience;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WordUp.Api.Authorization;
 using WordUp.Application.LearningExperience.Submissions;
 
 namespace WordUp.Api.Controllers.LearningExperience;
 
 [ApiController]
 [Route("api/me")]
-[Authorize(Roles = Roles.Youth)]
+[Authorize(Policy = Policies.YouthParticipation)]
 public class SubmissionsController : ControllerBase
 {
     private readonly IMediator _mediator;

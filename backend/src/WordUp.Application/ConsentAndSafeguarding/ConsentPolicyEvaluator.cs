@@ -78,4 +78,26 @@ public static class ConsentPolicyEvaluator
                 ? DefaultStatement
                 : settings.ConsentStatement);
     }
+
+    public static async Task<bool> IsYouthParticipationAllowedAsync(
+        IAppDbContext db,
+        Guid youthUserId,
+        Guid? guardianUserId,
+        DateTime now,
+        CancellationToken cancellationToken)
+    {
+        // Youth without a linked guardian are treated as adults and are not consent-gated.
+        if (guardianUserId is null)
+        {
+            return true;
+        }
+
+        var policy = await LoadAsync(db, now, cancellationToken);
+        var consents = await db.GuardianConsents
+            .AsNoTracking()
+            .Where(consent => consent.YouthUserId == youthUserId)
+            .ToListAsync(cancellationToken);
+
+        return consents.Any(consent => policy.IsParticipationValid(consent, now));
+    }
 }

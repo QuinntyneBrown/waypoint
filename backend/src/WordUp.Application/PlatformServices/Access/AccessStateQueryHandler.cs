@@ -27,16 +27,13 @@ public class AccessStateQueryHandler : IRequestHandler<AccessStateQuery, AccessS
             ?? throw new NotFoundException("User not found.");
 
         var hasCohort = user.CohortId != null;
-        var policy = await ConsentPolicyEvaluator.LoadAsync(
+        var participationConsentAllowed = await ConsentPolicyEvaluator.IsYouthParticipationAllowedAsync(
             _db,
+            userId,
+            user.GuardianUserId,
             _clock.UtcNow,
             cancellationToken);
-        var consents = await _db.GuardianConsents
-            .AsNoTracking()
-            .Where(consent => consent.YouthUserId == userId)
-            .ToListAsync(cancellationToken);
-        var consentRequired = !consents.Any(consent =>
-            policy.IsParticipationValid(consent, _clock.UtcNow));
+        var consentRequired = !participationConsentAllowed;
         var participationAllowed = hasCohort && !consentRequired;
 
         return new AccessState(hasCohort, consentRequired, participationAllowed);

@@ -246,7 +246,11 @@ requirement conflicts early (they gate "done").
       guards for the authoritative expiry state, and carries the recovery route through sign-in.
       Reflection recovery restores text, mood, optional response, and sharing choice after its async
       editor loads; explicit sign-out still purges all Word Up session and draft storage.
-- [ ] **H2** Per-action consent enforcement in protected youth handlers `L2-CONSENT-002/004`
+- [x] **H2** Per-action consent enforcement in protected youth handlers `L2-CONSENT-002/004` —
+      every lesson, quiz, assignment, coding, reflection, journey, and progress request now applies
+      the shared participation policy before its handler runs. Linked minors without current consent
+      receive an authoritative consent-required state, withdrawal blocks the next action, and fresh
+      consent unblocks the same session; guardianless adult Youth remain outside the minor gate.
 - [x] **H3** Correct consent validity (flag/withdrawal/window/term/re-consent) `L2-CONSENT-001/002`, `L2-ADMIN-006` —
       one authoritative policy evaluator now applies participation choice, withdrawal, validity window,
       active-term identity, and the organization re-consent setting consistently to access, consent
@@ -577,3 +581,10 @@ requirement conflicts early (they gate "done").
   choice; another user cannot consume that draft, while explicit sign-out still purges all Word Up
   storage. Eight portal units, twenty auth-library units, the 426.57 kB production build, and four
   combined sign-out/expiry/reflection browser journeys pass.
+- 2026-07-18 — H2 done: one endpoint authorization policy now reuses the term-aware participation
+  evaluator across every protected Youth learning controller, including all reads, autosaves, and
+  completion/submission mutations. Missing, expired, wrong-term, or withdrawn consent returns a
+  consent-specific 403 state before application handlers run; the portal safely captures an active
+  form and transitions to consent-required, while re-consent immediately restores the same session.
+  Thirty-six Consent/Learning integrations, eight portal units, the 426.84 kB production build, and
+  eleven curriculum/lesson/quiz/assignment/coding/reflection/journey/progress browser journeys pass.

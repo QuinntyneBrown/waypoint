@@ -241,4 +241,59 @@ public sealed class ConsentTests : IntegrationTestBase
 
         Assert.That(request.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
+
+    [Test]
+    [Property("Req", "L2-CONSENT-002")]
+    public async Task Every_youth_learning_surface_rechecks_consent_and_the_same_session_unblocks()
+    {
+        // Traces to: L2-CONSENT-002 AC1/AC3/AC5, L2-CONSENT-004 AC1
+        var guardian = await SeedUserAsync(Roles.Guardian);
+        var youth = await SeedUserAsync(Roles.Youth, guardianUserId: guardian.Id);
+        var protectedUrls = new[]
+        {
+            "/api/me/curriculum",
+            $"/api/me/quizzes/{Guid.NewGuid()}",
+            $"/api/me/assignments/{Guid.NewGuid()}",
+            $"/api/me/coding-lessons/{Guid.NewGuid()}",
+            $"/api/me/reflections/lesson/{Guid.NewGuid()}",
+            "/api/me/journey",
+            "/api/me/progress",
+        };
+
+        foreach (var url in protectedUrls)
+        {
+            var denied = await GetAsync(url, youth.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(denied.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden), url);
+                Assert.That(denied.Headers.GetValues("X-WordUp-State").Single(),
+                    Is.EqualTo("consent-required"), url);
+            });
+        }
+
+        var capture = await PostAsync("/api/consent", ConsentBody(youth.Id), guardian.Token);
+        Assert.That(capture.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var receipt = await capture.Content.ReadFromJsonAsync<ConsentResultDto>();
+
+        var allowed = await GetAsync("/api/me/curriculum", youth.Token);
+        Assert.That(allowed.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        var withdrawal = await PostAsync(
+            $"/api/consent/{receipt!.ConsentId}/withdraw", new { }, guardian.Token);
+        Assert.That(withdrawal.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+        var deniedAfterWithdrawal = await GetAsync("/api/me/curriculum", youth.Token);
+        Assert.That(deniedAfterWithdrawal.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+    }
+
+    [Test]
+    [Property("Req", "L2-CONSENT-002")]
+    public async Task Guardianless_adult_youth_remains_allowed_on_learning_surfaces()
+    {
+        // Traces to: L2-CONSENT-002 (minor-only gate)
+        var adultYouth = await SeedUserAsync(Roles.Youth);
+
+        var response = await GetAsync("/api/me/curriculum", adultYouth.Token);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+    }
 }

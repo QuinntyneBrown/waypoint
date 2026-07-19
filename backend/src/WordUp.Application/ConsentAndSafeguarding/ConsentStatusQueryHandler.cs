@@ -23,20 +23,12 @@ public class ConsentStatusQueryHandler : IRequestHandler<ConsentStatusQuery, Con
         var youth = await _db.Users.FirstOrDefaultAsync(u => u.Id == _currentUser.UserId, cancellationToken)
             ?? throw new NotFoundException("User not found.");
 
-        // A youth with no guardian on record is treated as an adult and is not gated.
-        if (youth.GuardianUserId is null)
-        {
-            return new ConsentStatusResult(true);
-        }
-
-        // Minor: participation is allowed only while a valid guardian consent exists (server-side per-request gate).
-        var now = _clock.UtcNow;
-        var policy = await ConsentPolicyEvaluator.LoadAsync(_db, now, cancellationToken);
-        var consents = await _db.GuardianConsents
-            .Where(c => c.YouthUserId == youth.Id)
-            .ToListAsync(cancellationToken);
-
-        var allowed = consents.Any(consent => policy.IsParticipationValid(consent, now));
+        var allowed = await ConsentPolicyEvaluator.IsYouthParticipationAllowedAsync(
+            _db,
+            youth.Id,
+            youth.GuardianUserId,
+            _clock.UtcNow,
+            cancellationToken);
         return new ConsentStatusResult(allowed);
     }
 }
