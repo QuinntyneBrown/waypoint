@@ -87,6 +87,15 @@ export class ProfileSettingsPage extends BasePage {
   get pronouns() {
     return this.page.getByLabel('Pronouns');
   }
+  get photoInput() {
+    return this.page.getByLabel(/profile photo/i);
+  }
+  get photoPreview() {
+    return this.page.getByRole('img', { name: /profile photo preview/i });
+  }
+  get removePhotoButton() {
+    return this.page.getByRole('button', { name: /remove photo/i });
+  }
   get saveProfileButton() {
     return this.page.getByRole('button', { name: /save profile/i });
   }

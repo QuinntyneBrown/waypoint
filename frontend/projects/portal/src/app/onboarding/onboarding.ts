@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -6,6 +7,8 @@ import {
   NOTIFICATION_DEFAULTS,
   NotificationPreferencesApi,
   OnboardingApi,
+  ProfileApi,
+  ApiError,
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
 import { WuIcon } from '@wu/ui';
@@ -18,22 +21,28 @@ import { forkJoin, of, switchMap } from 'rxjs';
   imports: [ReactiveFormsModule, WuIcon],
   templateUrl: './onboarding.html',
 })
-export class Onboarding {
+export class Onboarding implements OnDestroy {
   private readonly fb = inject(FormBuilder);
   private readonly onboarding = inject(OnboardingApi);
   private readonly notifications = inject(NotificationPreferencesApi);
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
+  private readonly profileApi = inject(ProfileApi);
+  private readonly document = inject(DOCUMENT);
+  private photoObjectUrl: string | null = null;
 
   protected readonly categories = NOTIFICATION_CATEGORIES;
   protected readonly step = signal(1);
   protected readonly saving = signal(false);
   protected readonly placed = signal<boolean | null>(null);
+  protected readonly uploadingPhoto = signal(false);
+  protected readonly photoPreview = signal<string | null>(null);
+  protected readonly photoError = signal<string | null>(null);
+  protected readonly photoStatus = signal<string | null>(null);
 
   protected readonly profile = this.fb.nonNullable.group({
     displayName: ['', [Validators.required, Validators.maxLength(128)]],
     pronouns: ['', [Validators.maxLength(64)]],
-    photoUrl: ['', [Validators.maxLength(512)]],
   });
 
   /** In-app on/off per category; seeded from the onboarding defaults (ON/ON/OFF). */
@@ -48,6 +57,49 @@ export class Onboarding {
         this.placed.set(status.cohortId !== null);
       },
       error: () => this.placed.set(false),
+    });
+    this.profileApi.getProfile().subscribe({
+      next: (profile) => {
+        if (profile.photoUrl) this.loadPhoto(profile.photoUrl);
+      },
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.revokePhotoPreview();
+  }
+
+  protected photoSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    const extension = file.name.split('.').pop()?.toLowerCase();
+    if (
+      !['image/png', 'image/jpeg'].includes(file.type) ||
+      !['png', 'jpg', 'jpeg'].includes(extension ?? '')
+    ) {
+      this.photoError.set('Choose a JPG or PNG image.');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      this.photoError.set('Profile photo must be 5 MB or smaller.');
+      return;
+    }
+
+    this.uploadingPhoto.set(true);
+    this.photoError.set(null);
+    this.photoStatus.set('Uploading profile photo…');
+    this.profileApi.uploadPhoto(file).subscribe({
+      next: () => {
+        this.uploadingPhoto.set(false);
+        this.photoStatus.set('Profile photo ready.');
+        this.showPhotoBlob(file);
+      },
+      error: (error: unknown) => {
+        this.uploadingPhoto.set(false);
+        this.photoStatus.set(null);
+        const apiError = ApiError.from(error);
+        this.photoError.set(apiError.fieldErrors[0]?.errorMessage ?? apiError.title);
+      },
     });
   }
 
@@ -74,7 +126,7 @@ export class Onboarding {
       return;
     }
     this.saving.set(true);
-    const { displayName, pronouns, photoUrl } = this.profile.getRawValue();
+    const { displayName, pronouns } = this.profile.getRawValue();
     const saves = this.categories.map((c) =>
       this.notifications.save({
         eventKey: c.eventKey,
@@ -84,7 +136,7 @@ export class Onboarding {
     );
     // Persist notification choices, then mark onboarding complete.
     (saves.length ? forkJoin(saves) : of([]))
-      .pipe(switchMap(() => this.onboarding.complete({ displayName, pronouns, photoUrl })))
+      .pipe(switchMap(() => this.onboarding.complete({ displayName, pronouns })))
       .subscribe({
         next: () => void this.router.navigateByUrl('/youth/home'),
         error: () => {
@@ -100,5 +152,27 @@ export class Onboarding {
       next: () => void this.router.navigateByUrl('/youth/home'),
       error: () => void this.router.navigateByUrl('/youth/home'),
     });
+  }
+
+  private loadPhoto(path: string): void {
+    this.profileApi.photo(path).subscribe({
+      next: (blob) => this.showPhotoBlob(blob),
+      error: () => undefined,
+    });
+  }
+
+  private showPhotoBlob(blob: Blob): void {
+    const window = this.document.defaultView;
+    if (!window) return;
+    this.revokePhotoPreview();
+    this.photoObjectUrl = window.URL.createObjectURL(blob);
+    this.photoPreview.set(this.photoObjectUrl);
+  }
+
+  private revokePhotoPreview(): void {
+    if (this.photoObjectUrl) {
+      this.document.defaultView?.URL.revokeObjectURL(this.photoObjectUrl);
+      this.photoObjectUrl = null;
+    }
   }
 }

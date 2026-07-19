@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WordUp.Application.ConsentAndSafeguarding;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Shared.Common;
 using WordUp.Application.Mentoring.Flags;
@@ -11,15 +12,18 @@ public class YouthDetailQueryHandler : IRequestHandler<YouthDetailQuery, YouthDe
     private readonly IAppDbContext _db;
     private readonly ICurrentUser _currentUser;
     private readonly AtRiskEvaluator _atRiskEvaluator;
+    private readonly IClock _clock;
 
     public YouthDetailQueryHandler(
         IAppDbContext db,
         ICurrentUser currentUser,
-        AtRiskEvaluator atRiskEvaluator)
+        AtRiskEvaluator atRiskEvaluator,
+        IClock clock)
     {
         _db = db;
         _currentUser = currentUser;
         _atRiskEvaluator = atRiskEvaluator;
+        _clock = clock;
     }
 
     public async Task<YouthDetail> Handle(YouthDetailQuery request, CancellationToken cancellationToken)
@@ -169,13 +173,24 @@ public class YouthDetailQueryHandler : IRequestHandler<YouthDetailQuery, YouthDe
                     .Where(item => item.Id == flag.FlaggedByUserId)
                     .Select(item => item.DisplayName)
                     .FirstOrDefaultAsync(cancellationToken);
+        var photoUrl = youth.PhotoUrl;
+        if (photoUrl is not null
+            && !await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
+                _db,
+                youth.Id,
+                YouthMediaUse.IndividualPhotoOrVideo,
+                _clock.UtcNow,
+                cancellationToken))
+        {
+            photoUrl = null;
+        }
 
         return new YouthDetail(
             youth.Id,
             youth.DisplayName,
             youth.Email,
             youth.Pronouns,
-            youth.PhotoUrl,
+            photoUrl,
             youth.CohortId,
             cohort?.Name,
             youth.GuardianUserId,

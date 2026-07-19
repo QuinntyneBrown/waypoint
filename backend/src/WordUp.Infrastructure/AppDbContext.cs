@@ -57,6 +57,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<NotificationPreference> NotificationPreferences => Set<NotificationPreference>();
     public DbSet<DisplayPreference> DisplayPreferences => Set<DisplayPreference>();
     public DbSet<SupportRequest> SupportRequests => Set<SupportRequest>();
+    public DbSet<StoredUserFile> StoredUserFiles => Set<StoredUserFile>();
     public DbSet<GuardianProfile> GuardianProfiles => Set<GuardianProfile>();
     public DbSet<ContactRequest> ContactRequests => Set<ContactRequest>();
     public DbSet<VolunteerSignup> VolunteerSignups => Set<VolunteerSignup>();
@@ -372,6 +373,14 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.ReplyToEmail).HasMaxLength(256).IsRequired();
             b.Property(x => x.ScreenshotUrl).HasMaxLength(512);
             b.HasIndex(x => x.CreatedAt);
+        });
+        modelBuilder.Entity<StoredUserFile>(b =>
+        {
+            b.Property(x => x.Purpose).HasConversion<int>();
+            b.Property(x => x.OriginalFileName).HasMaxLength(255).IsRequired();
+            b.Property(x => x.ContentType).HasMaxLength(128).IsRequired();
+            b.Property(x => x.Sha256).HasMaxLength(64).IsRequired();
+            b.HasIndex(x => new { x.OwnerUserId, x.Purpose });
         });
 
         // Guardian portal + public site (M5)

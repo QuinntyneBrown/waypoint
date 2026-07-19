@@ -8,6 +8,5 @@ public class CompleteOnboardingCommandValidator : AbstractValidator<CompleteOnbo
     {
         RuleFor(x => x.DisplayName).NotEmpty().MaximumLength(128);
         RuleFor(x => x.Pronouns).MaximumLength(64);
-        RuleFor(x => x.PhotoUrl).MaximumLength(512);
     }
 }

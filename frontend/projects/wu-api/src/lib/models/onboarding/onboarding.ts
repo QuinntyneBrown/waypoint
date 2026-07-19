@@ -9,5 +9,4 @@ export interface OnboardingStatus {
 export interface CompleteOnboardingRequest {
   displayName: string;
   pronouns?: string | null;
-  photoUrl?: string | null;
 }

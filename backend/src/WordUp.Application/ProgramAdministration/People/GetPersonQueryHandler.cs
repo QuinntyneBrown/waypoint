@@ -151,6 +151,18 @@ public class GetPersonQueryHandler : IRequestHandler<GetPersonQuery, PersonDetai
                 BuildSafeSummary(item.Engagement, item.GoalsDiscussed, item.ActionItems),
                 item.NextFollowUp))
             .ToList();
+        var photoUrl = user.PhotoUrl;
+        if (photoUrl is not null
+            && user.Role == Roles.Youth
+            && !await ConsentPolicyEvaluator.IsYouthMediaUseAllowedAsync(
+                _db,
+                user.Id,
+                YouthMediaUse.IndividualPhotoOrVideo,
+                _clock.UtcNow,
+                cancellationToken))
+        {
+            photoUrl = null;
+        }
 
         return new PersonDetail(
             user.Id,
@@ -159,7 +171,7 @@ public class GetPersonQueryHandler : IRequestHandler<GetPersonQuery, PersonDetai
             user.Role,
             user.Status.ToString(),
             user.Pronouns,
-            user.PhotoUrl,
+            photoUrl,
             user.OnboardingCompleted,
             user.CreatedAt,
             user.LastSignInAt,

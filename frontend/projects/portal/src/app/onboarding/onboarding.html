@@ -45,10 +45,30 @@
           />
         </div>
         <div class="wu-field">
-          <label class="wu-label" for="photoUrl">Photo URL</label>
-          <input class="wu-input" id="photoUrl" formControlName="photoUrl" placeholder="Optional" />
-          <div class="wu-help">Add a link to a profile photo, or skip for now.</div>
+          <label class="wu-label" for="profilePhoto">Profile photo</label>
+          <input
+            class="wu-input"
+            id="profilePhoto"
+            type="file"
+            accept="image/jpeg,image/png,.jpg,.jpeg,.png"
+            [disabled]="uploadingPhoto()"
+            (change)="photoSelected($event)"
+          />
+          <div class="wu-help">Optional JPG or PNG, up to 5 MB. Stored privately.</div>
         </div>
+        @if (photoError(); as error) {
+          <div class="wu-alert wu-alert--error" role="alert">{{ error }}</div>
+        }
+        @if (photoStatus(); as status) {
+          <p class="wu-alert wu-alert--success" role="status">{{ status }}</p>
+        }
+        @if (photoPreview(); as photo) {
+          <img
+            [src]="photo"
+            alt="Profile photo preview"
+            style="width: 8rem; height: 8rem; object-fit: cover; border-radius: 50%"
+          />
+        }
       </form>
     }
 

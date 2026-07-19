@@ -10,6 +10,12 @@ export class OnboardingPage extends BasePage {
   get pronouns() {
     return this.page.getByLabel('Pronouns');
   }
+  get photoInput() {
+    return this.page.getByLabel(/profile photo/i);
+  }
+  get photoPreview() {
+    return this.page.getByRole('img', { name: /profile photo preview/i });
+  }
   get nextButton() {
     return this.page.getByRole('button', { name: /next/i });
   }

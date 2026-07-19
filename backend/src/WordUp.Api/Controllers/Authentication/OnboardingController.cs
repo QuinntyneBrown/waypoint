@@ -22,7 +22,7 @@ public class OnboardingController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Complete([FromBody] CompleteOnboardingRequest request, CancellationToken cancellationToken)
     {
-        await _mediator.Send(new CompleteOnboardingCommand(request.DisplayName, request.Pronouns, request.PhotoUrl), cancellationToken);
+        await _mediator.Send(new CompleteOnboardingCommand(request.DisplayName, request.Pronouns), cancellationToken);
         return NoContent();
     }
 

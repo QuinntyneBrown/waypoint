@@ -265,7 +265,9 @@ requirement conflicts early (they gate "done").
       `L2-CURRIC-002`, `L2-LEARN-006`, `L2-PLATFORM-002/005` — assignment evidence uses private
       DB-backed JPG/PNG storage and lesson media uses private DB-backed PDF/MP4 storage, both with
       MIME/extension/signature/size checks plus authenticated no-sniff serving and removal. Profile
-      photos, non-photo assignment files, and support screenshots remain.
+      photos now use owned, replaceable 5 MB JPG/PNG storage across onboarding and settings, with
+      self/guardian/assigned-mentor/admin read scope and live minor media-consent enforcement.
+      Non-photo assignment files and support screenshots remain.
 - [x] **H6** Curriculum mutation lifecycle completion `L2-CURRIC-002..006` — lesson content
       and media update/removal, exact lesson/question ordering, typed quiz validation and short-answer
       scoring, assignment update/publish/fan-out, competency soft removal, and module/attendance/
@@ -599,3 +601,10 @@ requirement conflicts early (they gate "done").
   submission or participation session. Sixty-six adjacent Consent/Learning/Guardian/Mentoring
   integrations, eight portal units, the 426.89 kB production build, and six combined Guardian,
   participation-consent, and assignment-media browser journeys pass.
+- 2026-07-18 — H5 advanced: onboarding and profile settings no longer accept external photo URLs.
+  They now validate JPG/PNG MIME, extension, size, and signature before storing one private owned
+  binary; replacement deletes the prior blob, removal deletes the active blob, and bearer-authenticated
+  serving is limited to self, linked guardian, assigned mentor, or administrator. Linked-minor reads
+  and uploads also recheck the individual-photo grant, including media-only withdrawal. Six profile/
+  onboarding integrations, eight portal units, the 426.89 kB production build, and five combined
+  onboarding/profile/password browser journeys pass; assignment files and support screenshots remain.

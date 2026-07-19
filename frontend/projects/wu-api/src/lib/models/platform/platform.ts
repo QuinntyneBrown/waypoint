@@ -2,7 +2,22 @@ export interface UpdateProfileRequest {
   displayName: string;
   email: string;
   pronouns?: string | null;
-  photoUrl?: string | null;
+}
+
+export interface MyProfile {
+  displayName: string;
+  email: string;
+  pronouns: string | null;
+  photoUrl: string | null;
+  hasPhoto: boolean;
+}
+
+export interface ProfilePhoto {
+  id: string;
+  fileName: string;
+  contentType: string;
+  sizeBytes: number;
+  url: string;
 }
 
 export interface ChangePasswordRequest {

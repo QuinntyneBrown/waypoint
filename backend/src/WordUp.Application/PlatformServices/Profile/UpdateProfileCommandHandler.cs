@@ -28,7 +28,6 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand>
         user.DisplayName = request.DisplayName;
         user.Email = request.Email;
         user.Pronouns = request.Pronouns;
-        user.PhotoUrl = request.PhotoUrl;
 
         await _db.SaveChangesAsync(cancellationToken);
         await _audit.LogAsync("ProfileUpdated", userId, "User", userId, cancellationToken: cancellationToken);

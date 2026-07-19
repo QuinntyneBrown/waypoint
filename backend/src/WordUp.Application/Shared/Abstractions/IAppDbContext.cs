@@ -64,6 +64,7 @@ public interface IAppDbContext
     DbSet<NotificationPreference> NotificationPreferences { get; }
     DbSet<DisplayPreference> DisplayPreferences { get; }
     DbSet<SupportRequest> SupportRequests { get; }
+    DbSet<StoredUserFile> StoredUserFiles { get; }
 
     // Guardian portal + public site (M5)
     DbSet<GuardianProfile> GuardianProfiles { get; }

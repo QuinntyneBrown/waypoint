@@ -7,5 +7,4 @@ namespace WordUp.Application.PlatformServices.Profile;
 public record UpdateProfileCommand(
     string DisplayName,
     string Email,
-    string? Pronouns,
-    string? PhotoUrl) : IRequest;
+    string? Pronouns) : IRequest;

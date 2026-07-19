@@ -28,7 +28,6 @@ public class CompleteOnboardingCommandHandler : IRequestHandler<CompleteOnboardi
         // they are not accepted from the request.
         user.DisplayName = request.DisplayName.Trim();
         user.Pronouns = string.IsNullOrWhiteSpace(request.Pronouns) ? null : request.Pronouns.Trim();
-        user.PhotoUrl = string.IsNullOrWhiteSpace(request.PhotoUrl) ? null : request.PhotoUrl.Trim();
         user.OnboardingCompleted = true;
 
         await _db.SaveChangesAsync(cancellationToken);

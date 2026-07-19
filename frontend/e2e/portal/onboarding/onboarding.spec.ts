@@ -13,6 +13,15 @@ test('a new youth completes the onboarding wizard and lands home', async ({ page
   // Step 1 — profile, display name prefilled from the account.
   await expect(onboarding.displayName).toHaveValue(creds.displayName);
   await onboarding.pronouns.fill('they/them');
+  await onboarding.photoInput.setInputFiles({
+    name: 'onboarding.png',
+    mimeType: 'image/png',
+    buffer: Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+      'base64',
+    ),
+  });
+  await expect(onboarding.photoPreview).toBeVisible();
   await onboarding.next();
 
   // Step 2 — cohort is read-only; a register-created youth is unplaced (no-cohort).
