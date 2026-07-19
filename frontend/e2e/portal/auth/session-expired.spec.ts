@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { registerYouth } from '../../support/api';
-import { SessionExpiredPage, SignInPage, YouthHomePage } from '../../pages';
+import { registerYouth, seedYouthCurriculum } from '../../support/api';
+import { SessionExpiredPage, SignInPage, YouthHomePage, YouthReflectionPage } from '../../pages';
 
 // Traces to: L2-AUTH-012
 test('refresh-token reuse revokes the family and forces the session-expired state', async ({
@@ -34,4 +34,85 @@ test('refresh-token reuse revokes the family and forces the session-expired stat
   // The draft survives the forced teardown (L2-PLATFORM-010 AC1 / L2-AUTH-007 AC2).
   const draft = await page.evaluate((k) => localStorage.getItem(k), draftKey);
   expect(draft).toBe('my unsaved reflection');
+});
+
+// Traces to: L2-AUTH-007, L2-PLATFORM-010, L2-NFR-007
+test('idle expiry revokes the session and restores the owner-bound reflection draft after sign-in', async ({
+  page,
+  request,
+}) => {
+  await page.clock.install();
+  const seeded = await seedYouthCurriculum(request);
+  await new SignInPage(page).signIn({
+    email: seeded.youthEmail,
+    password: seeded.youthPassword,
+  });
+  const reflectionUrl = `/youth/lessons/${seeded.secondLessonId}/reflection`;
+  await page.goto(reflectionUrl);
+
+  const reflection = new YouthReflectionPage(page);
+  const text = `Idle-safe reflection ${crypto.randomUUID()}`;
+  await reflection.reflectionText.fill(text);
+  await page.getByRole('radio', { name: 'Thoughtful' }).check();
+  await reflection.optionalResponse.fill('Return here after signing in again.');
+  await reflection.shareWithMentor.check();
+
+  await page.clock.fastForward(20 * 60 * 1000);
+  await page.keyboard.press('Shift');
+  await page.clock.fastForward(20 * 60 * 1000);
+  await expect(page).toHaveURL(new RegExp(`${reflectionUrl}$`));
+
+  const activeRefreshToken = await page.evaluate(() => {
+    const raw = sessionStorage.getItem('wu.session.v1') ?? localStorage.getItem('wu.session.v1');
+    return raw ? (JSON.parse(raw) as { refreshToken: string }).refreshToken : null;
+  });
+  expect(activeRefreshToken).not.toBeNull();
+
+  const signOutResponse = page.waitForResponse(
+    (response) => response.url().includes('/api/auth/sign-out') && response.status() === 204,
+    { timeout: 5_000 },
+  );
+  await page.clock.fastForward(11 * 60 * 1000);
+  await signOutResponse;
+
+  const expired = new SessionExpiredPage(page);
+  await expect(page).toHaveURL(SessionExpiredPage.urlPattern);
+  await expect(expired.heading).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => sessionStorage.getItem('wu.session.v1') ?? localStorage.getItem('wu.session.v1'),
+    ),
+  ).toBeNull();
+  const capturedDraft = await page.evaluate(() => {
+    const raw = sessionStorage.getItem('wu.transient-form-draft');
+    return raw
+      ? (JSON.parse(raw) as {
+          ownerUserId: string;
+          url: string;
+          fields: { key: string; value: string; checked?: boolean }[];
+        })
+      : null;
+  });
+  expect(capturedDraft?.ownerUserId).toBe(seeded.youthId);
+  expect(capturedDraft?.url).toBe(reflectionUrl);
+  expect(capturedDraft?.fields).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ key: 'mood', value: 'thoughtful', checked: true }),
+    ]),
+  );
+
+  const revoked = await request.post('/api/auth/refresh', {
+    data: { refreshToken: activeRefreshToken },
+  });
+  expect(revoked.status()).toBe(401);
+
+  await expired.signInAgainLink.click();
+  await expect(page).toHaveURL(/\/auth\/sign-in\?returnUrl=/);
+  await new SignInPage(page).submitCredentials(seeded.youthEmail, seeded.youthPassword);
+  await expect(page).toHaveURL(new RegExp(`${reflectionUrl}$`));
+  await expect(reflection.reflectionText).toHaveValue(text);
+  await expect(page.getByRole('radio', { name: 'Thoughtful' })).toBeChecked();
+  await expect(reflection.optionalResponse).toHaveValue('Return here after signing in again.');
+  await expect(reflection.shareWithMentor).toBeChecked();
+  await expect(page.getByRole('status')).toContainText(/draft restored after session expiry/i);
 });

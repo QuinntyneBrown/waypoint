@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthStore } from '@wu/auth';
 
 interface DraftField {
   key: string;
@@ -9,6 +10,7 @@ interface DraftField {
 }
 
 interface TransientFormDraft {
+  ownerUserId: string;
   url: string;
   fields: DraftField[];
 }
@@ -16,17 +18,19 @@ interface TransientFormDraft {
 const STORAGE_KEY = 'wu.transient-form-draft';
 
 /**
- * Captures ordinary form controls before an error-state navigation and restores them after retry.
+ * Captures ordinary form controls before error or expiry navigation and restores them after recovery.
  * Passwords and files are deliberately excluded. Feature-specific durable drafts remain separate.
  */
 @Injectable({ providedIn: 'root' })
 export class FormDraftService {
   private readonly document = inject(DOCUMENT);
   private readonly router = inject(Router);
+  private readonly auth = inject(AuthStore);
 
   captureCurrentForm(): void {
     const window = this.document.defaultView;
-    if (!window) return;
+    const ownerUserId = this.auth.user()?.userId;
+    if (!window || !ownerUserId) return;
 
     const controls = Array.from(
       this.document.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
@@ -40,7 +44,14 @@ export class FormDraftService {
       ) {
         return [];
       }
-      const key = control.name || control.id;
+      if (
+        control instanceof window.HTMLInputElement &&
+        control.type === 'radio' &&
+        !control.checked
+      ) {
+        return [];
+      }
+      const key = control.name || control.id || control.getAttribute('formcontrolname');
       if (!key) return [];
       return [
         {
@@ -55,7 +66,7 @@ export class FormDraftService {
     });
 
     if (fields.length > 0) {
-      const draft: TransientFormDraft = { url: this.router.url, fields };
+      const draft: TransientFormDraft = { ownerUserId, url: this.router.url, fields };
       window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
     }
   }
@@ -64,16 +75,31 @@ export class FormDraftService {
     return this.read()?.url ?? null;
   }
 
-  restoreAndClear(): void {
+  restoreAndClear(): boolean {
     const window = this.document.defaultView;
     const draft = this.read();
-    if (!window || !draft || draft.url !== this.router.url) return;
+    if (
+      !window ||
+      !draft ||
+      draft.url !== this.router.url ||
+      draft.ownerUserId !== this.auth.user()?.userId
+    ) {
+      return false;
+    }
 
+    let restored = 0;
     for (const field of draft.fields) {
       const escaped = window.CSS?.escape ? window.CSS.escape(field.key) : field.key;
-      const control = this.document.querySelector<
-        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-      >(`[name="${escaped}"], #${escaped}`);
+      const controls = Array.from(
+        this.document.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+          `[name="${escaped}"], #${escaped}, [formcontrolname="${escaped}"]`,
+        ),
+      );
+      const control = controls.find((candidate) =>
+        candidate instanceof window.HTMLInputElement && candidate.type === 'radio'
+          ? candidate.value === field.value
+          : true,
+      );
       if (!control) continue;
       control.value = field.value;
       if (control instanceof window.HTMLInputElement && field.checked !== undefined) {
@@ -81,9 +107,14 @@ export class FormDraftService {
       }
       control.dispatchEvent(new window.Event('input', { bubbles: true }));
       control.dispatchEvent(new window.Event('change', { bubbles: true }));
+      restored++;
     }
 
-    window.sessionStorage.removeItem(STORAGE_KEY);
+    if (restored > 0) {
+      window.sessionStorage.removeItem(STORAGE_KEY);
+      return true;
+    }
+    return false;
   }
 
   private read(): TransientFormDraft | null {

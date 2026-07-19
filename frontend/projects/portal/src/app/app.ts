@@ -5,6 +5,7 @@ import { SessionStore } from '@wu/auth';
 import { WuToastHost } from '@wu/ui';
 import { DisplayPreferencesService } from './settings/display-preferences.service';
 import { AttendanceQueueService } from './features/volunteer/attendance/attendance-queue.service';
+import { IdleSessionService } from './idle-session.service';
 import { RealtimeService } from './realtime.service';
 
 @Component({
@@ -24,6 +25,8 @@ export class App {
     void inject(AttendanceQueueService);
     // Keep one authenticated, auto-reconnecting hub connection for messages and notifications.
     void inject(RealtimeService);
+    // Enforce shared-device inactivity expiry and draft-preserving recovery app-wide.
+    void inject(IdleSessionService);
     // Re-apply saved display & accessibility preferences app-wide once a user is
     // authenticated (and again when a different user signs in).
     effect(() => {

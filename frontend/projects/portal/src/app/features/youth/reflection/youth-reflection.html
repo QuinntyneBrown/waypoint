@@ -41,7 +41,12 @@
             <div class="mood-options">
               @for (mood of ['Hopeful', 'Thoughtful', 'Unsure', 'Challenged']; track mood) {
                 <label class="mood-option">
-                  <input type="radio" formControlName="mood" [value]="mood.toLowerCase()" />
+                  <input
+                    type="radio"
+                    formControlName="mood"
+                    [value]="mood.toLowerCase()"
+                    [attr.value]="mood.toLowerCase()"
+                  />
                   <span>{{ mood }}</span>
                 </label>
               }
@@ -61,7 +66,9 @@
             maxlength="8000"
             aria-describedby="reflection-help reflection-error"
           ></textarea>
-          <p id="reflection-help" class="wu-field__hint">Required when you submit. Drafts can be unfinished.</p>
+          <p id="reflection-help" class="wu-field__hint">
+            Required when you submit. Drafts can be unfinished.
+          </p>
           @if (form.controls.text.touched && form.controls.text.hasError('required')) {
             <p id="reflection-error" class="wu-field__error">Reflection text is required.</p>
           }
@@ -85,8 +92,8 @@
               <strong>Share with my mentor</strong>
             </label>
             <p class="wu-muted">
-              Off by default. When it is off, this reflection is private to you. Turn it on only
-              if you want your assigned mentor to read it and respond during check-ins.
+              Off by default. When it is off, this reflection is private to you. Turn it on only if
+              you want your assigned mentor to read it and respond during check-ins.
             </p>
           </div>
         </section>

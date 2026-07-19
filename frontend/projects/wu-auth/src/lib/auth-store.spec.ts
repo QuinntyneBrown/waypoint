@@ -101,4 +101,52 @@ describe('AuthStore', () => {
     expect(store.expiredOnBoot()).toBe(true);
     expect(store.isAuthenticated()).toBe(false);
   });
+
+  it('inactivity expiry waits for server revocation before the hard local transition', () => {
+    store.set(authResult());
+    const forceExpire = vi.spyOn(auth, 'forceExpire').mockImplementation(() => {});
+
+    auth.expireForInactivity('/youth/lessons/lesson-1/reflection');
+    expect(forceExpire).not.toHaveBeenCalled();
+    http
+      .expectOne((request) => request.url.endsWith('/api/auth/sign-out'))
+      .flush(null, { status: 204, statusText: 'No Content' });
+
+    expect(forceExpire).toHaveBeenCalledWith('/youth/lessons/lesson-1/reflection', true);
+  });
+
+  it('inactivity expiry falls back to local teardown when revocation hangs', () => {
+    store.set(authResult());
+    const forceExpire = vi.spyOn(auth, 'forceExpire').mockImplementation(() => {});
+
+    auth.expireForInactivity('/youth/home');
+    const request = http.expectOne((item) => item.url.endsWith('/api/auth/sign-out'));
+    vi.advanceTimersByTime(1_999);
+    expect(forceExpire).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(1);
+    expect(forceExpire).toHaveBeenCalledWith('/youth/home', true);
+    expect(request.cancelled).toBe(true);
+    expect(forceExpire).toHaveBeenCalledOnce();
+  });
+
+  it('refreshes an expired bearer only to revoke the idle server session', () => {
+    store.set(authResult({ expiresAt: new Date(Date.now() - 1).toISOString() }));
+    persistence.write({
+      version: 1,
+      remember: false,
+      refreshToken: 'rt-idle',
+      user: { userId: 'u1', email: 'a@b.c', displayName: 'A B', role: 'Youth' },
+    });
+    const forceExpire = vi.spyOn(auth, 'forceExpire').mockImplementation(() => {});
+
+    auth.expireForInactivity('/youth/home');
+    http
+      .expectOne((request) => request.url.endsWith('/api/auth/refresh'))
+      .flush(authResult({ refreshToken: 'rt-rotated' }));
+    http
+      .expectOne((request) => request.url.endsWith('/api/auth/sign-out'))
+      .flush(null, { status: 204, statusText: 'No Content' });
+
+    expect(forceExpire).toHaveBeenCalledWith('/youth/home', true);
+  });
 });

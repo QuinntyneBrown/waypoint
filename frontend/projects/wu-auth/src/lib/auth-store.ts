@@ -2,7 +2,19 @@ import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiError, AuthApi, AuthResult } from '@wu/api';
-import { catchError, finalize, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
+import {
+  catchError,
+  finalize,
+  map,
+  Observable,
+  of,
+  shareReplay,
+  switchMap,
+  take,
+  tap,
+  throwError,
+  timeout,
+} from 'rxjs';
 import { SessionPersistence } from './session-persistence';
 import { SessionStore } from './session-store';
 
@@ -52,23 +64,41 @@ export class AuthStore {
     return this.refresh$;
   }
 
-  /** Explicit sign-out: best-effort revoke, purge ALL wu.* (drafts too), hard reload. */
+  /** Explicit sign-out: revoke, purge ALL wu.* (drafts too), then hard reload. */
   signOut(destination = '/auth/sign-in'): void {
-    if (this.store.accessToken()) {
-      this.api.signOut().subscribe({ next: () => {}, error: () => {} });
-    }
     this.clearTimer();
-    this.store.clear();
-    this.persistence.purgeAll();
-    this.doc.defaultView?.location.assign(destination);
+    this.revokeThen(() => {
+      this.store.clear();
+      this.persistence.purgeAll();
+      this.doc.defaultView?.location.assign(destination);
+    });
   }
 
   /** Forced expiry (refresh failed / family revoked): purge session but keep drafts. */
-  forceExpire(): void {
+  forceExpire(returnUrl?: string, hardTransition = false): void {
     this.clearTimer();
     this.store.clear();
     this.persistence.clearSession();
-    void this.router.navigateByUrl('/session-expired');
+    const destination = this.router.createUrlTree(['/session-expired'], {
+      queryParams: returnUrl ? { returnUrl } : undefined,
+    });
+    if (hardTransition && this.doc.defaultView) {
+      this.doc.defaultView.location.assign(destination.toString());
+    } else {
+      void this.router.navigateByUrl(destination);
+    }
+  }
+
+  /**
+   * Inactivity expiry revokes the server session while the bearer token is still available, then
+   * performs the draft-preserving local teardown. A short fallback ensures a disconnected device is
+   * never kept signed in locally.
+   */
+  expireForInactivity(returnUrl: string): void {
+    const recoveryUrl =
+      returnUrl.startsWith('/') && !returnUrl.startsWith('/auth/') ? returnUrl : undefined;
+    this.clearTimer();
+    this.revokeThen(() => this.forceExpire(recoveryUrl, true));
   }
 
   /**
@@ -121,5 +151,27 @@ export class AuthStore {
       clearTimeout(this.timer);
       this.timer = null;
     }
+  }
+
+  private revokeThen(teardown: () => void): void {
+    this.revokeSession()
+      .pipe(
+        timeout(2_000),
+        catchError(() => of(undefined)),
+        take(1),
+      )
+      .subscribe(() => teardown());
+  }
+
+  private revokeSession(): Observable<void> {
+    const token = this.store.accessToken();
+    const expiresAt = this.store.expiresAt();
+    if (token && (expiresAt === null || expiresAt > Date.now())) {
+      return this.api.signOut();
+    }
+    if (this.persistence.read()?.refreshToken) {
+      return this.refreshToken().pipe(switchMap(() => this.api.signOut()));
+    }
+    return of(undefined);
   }
 }

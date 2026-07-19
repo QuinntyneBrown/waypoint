@@ -7,6 +7,7 @@ import { AuthStore } from '@wu/auth';
 import { WuShell } from '@wu/ui';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
+import { FormDraftService } from '../../../form-draft.service';
 
 const OPTIONAL_PROMPT = 'One action I will take';
 
@@ -42,6 +43,7 @@ export class YouthReflectionPage implements UnsavedChangesAware {
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly doc = inject(DOCUMENT);
+  private readonly drafts = inject(FormDraftService);
   private readonly lessonId = this.route.snapshot.paramMap.get('id') ?? '';
 
   protected readonly editor = signal<ReflectionEditor | undefined>(undefined);
@@ -71,6 +73,12 @@ export class YouthReflectionPage implements UnsavedChangesAware {
             editor.reflection.isDraft ? 'Draft restored.' : 'Submitted reflection restored.',
           );
         }
+        setTimeout(() => {
+          if (this.drafts.restoreAndClear()) {
+            this.form.markAsDirty();
+            this.statusMessage.set('Draft restored after session expiry.');
+          }
+        });
       },
       error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
     });

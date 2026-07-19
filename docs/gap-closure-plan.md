@@ -240,7 +240,12 @@ requirement conflicts early (they gate "done").
 
 ## Phase H — Cross-cutting backend & platform
 
-- [ ] **H1** Idle expiry + draft recovery framework `L2-AUTH-007`, `L2-PLATFORM-010`, `L2-NFR-007`
+- [x] **H1** Idle expiry + draft recovery framework `L2-AUTH-007`, `L2-PLATFORM-010`, `L2-NFR-007` —
+      one app-wide 30-minute deliberate-activity timer now revokes the server session, falls back to
+      local teardown when disconnected, preserves owner-bound safe form fields, bypasses dirty-route
+      guards for the authoritative expiry state, and carries the recovery route through sign-in.
+      Reflection recovery restores text, mood, optional response, and sharing choice after its async
+      editor loads; explicit sign-out still purges all Word Up session and draft storage.
 - [ ] **H2** Per-action consent enforcement in protected youth handlers `L2-CONSENT-002/004`
 - [x] **H3** Correct consent validity (flag/withdrawal/window/term/re-consent) `L2-CONSENT-001/002`, `L2-ADMIN-006` —
       one authoritative policy evaluator now applies participation choice, withdrawal, validity window,
@@ -294,7 +299,9 @@ requirement conflicts early (they gate "done").
       program/selected/previous comparisons, and mentor scope. All standard reports plus attendance,
       progress-board, and audit-log data export through filtered, authorized, audited CSV/PDF files.
 - [ ] **H18** Data-subject fulfillment + retention/anonymization `L2-NFR-003`
-- [ ] **H19** Unsaved-change framework `L2-NFR-007`
+- [~] **H19** Unsaved-change framework `L2-NFR-007` — owner-bound safe-form capture/recovery,
+      reflection route/browser-close protection, and attendance queue/leave protection exist;
+      grading and curriculum-authoring editors still need reusable dirty-state adapters.
 - [ ] **H20** Logging/alerting (correlation ids, PII redaction) `L2-PLATFORM-008`, `L2-NFR-011`
 - [ ] **H21** Operational CLI + durable DB lifecycle/migrations `L2-NFR-011`
 - [ ] **H22** Performance budgets `L2-NFR-008`
@@ -562,3 +569,11 @@ requirement conflicts early (they gate "done").
   the card-table controls remain touch usable without horizontal overflow. Twenty-six adjacent
   consent/reporting integrations, six portal units, the 423.57 kB production build, and two
   desktop/mobile browser scenarios pass.
+- 2026-07-18 — H1 done; H19 advanced: authenticated browser activity now resets one exact 30-minute
+  idle boundary; expiry captures safe non-password/file form controls with the owner and route,
+  revokes the server session, uses a two-second disconnected fallback, clears the local session, and
+  hard-transitions past feature leave guards to the session-expired state. Re-authentication returns
+  the same user to the reflection editor and restores text, mood, optional response, and mentor-share
+  choice; another user cannot consume that draft, while explicit sign-out still purges all Word Up
+  storage. Eight portal units, twenty auth-library units, the 426.57 kB production build, and four
+  combined sign-out/expiry/reflection browser journeys pass.
