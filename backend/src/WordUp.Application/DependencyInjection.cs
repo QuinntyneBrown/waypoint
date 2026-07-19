@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Authentication.Auth;
 using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Mentoring.Flags;
+using WordUp.Application.PlatformServices.Privacy;
 using WordUp.Application.Shared.Behaviors;
 
 namespace WordUp.Application;
@@ -19,6 +20,7 @@ public static class ApplicationDependencyInjection
         services.AddScoped<ISessionIssuer, SessionIssuer>();
         services.AddScoped<AtRiskEvaluator>();
         services.AddScoped<NotificationDeliveryService>();
+        services.AddScoped<PersonalDataAnonymizer>();
         return services;
     }
 }

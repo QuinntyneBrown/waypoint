@@ -32,6 +32,7 @@ public class ReactivatePersonCommandHandler : IRequestHandler<ReactivatePersonCo
         }
 
         user.Status = UserStatus.Active;
+        user.DeactivatedAt = null;
         await _db.SaveChangesAsync(cancellationToken);
 
         await _audit.LogAsync("AccountReactivated", _currentUser.UserId, "User", user.Id);

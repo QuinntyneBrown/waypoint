@@ -26,6 +26,8 @@ public class User
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? LastSignInAt { get; set; }
+    public DateTime? DeactivatedAt { get; set; }
+    public DateTime? PersonalDataAnonymizedAt { get; set; }
 
     public bool IsLockedOut(DateTime utcNow) => LockoutEndsAt.HasValue && LockoutEndsAt.Value > utcNow;
 }

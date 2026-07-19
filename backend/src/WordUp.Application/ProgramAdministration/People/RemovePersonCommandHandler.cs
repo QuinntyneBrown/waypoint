@@ -16,17 +16,20 @@ public class RemovePersonCommandHandler : IRequestHandler<RemovePersonCommand>
     private readonly ISessionIssuer _sessions;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IClock _clock;
 
     public RemovePersonCommandHandler(
         IAppDbContext db,
         ISessionIssuer sessions,
         IAuditLogger audit,
-        ICurrentUser currentUser)
+        ICurrentUser currentUser,
+        IClock clock)
     {
         _db = db;
         _sessions = sessions;
         _audit = audit;
         _currentUser = currentUser;
+        _clock = clock;
     }
 
     public async Task Handle(RemovePersonCommand request, CancellationToken cancellationToken)
@@ -43,6 +46,7 @@ public class RemovePersonCommandHandler : IRequestHandler<RemovePersonCommand>
         }
 
         user.Status = UserStatus.Removed;
+        user.DeactivatedAt = _clock.UtcNow;
         await _db.SaveChangesAsync(cancellationToken);
 
         await _sessions.RevokeAllAsync(user.Id, cancellationToken);

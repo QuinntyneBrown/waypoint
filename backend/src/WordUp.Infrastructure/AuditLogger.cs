@@ -36,8 +36,7 @@ public sealed class AuditLogger : IAuditLogger
         var ctx = _http.HttpContext;
         var ip = ctx?.Connection.RemoteIpAddress?.ToString();
         var userAgent = ctx?.Request.Headers.UserAgent.ToString();
-        var source = $"ip={ip ?? "unknown"} | user-agent={
-            (string.IsNullOrWhiteSpace(userAgent) ? "unknown" : userAgent)}";
+        var source = $"ip={ip ?? "unknown"} | user-agent={(string.IsNullOrWhiteSpace(userAgent) ? "unknown" : userAgent)}";
 
         await WriteLock.WaitAsync(cancellationToken);
         try

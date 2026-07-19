@@ -65,6 +65,7 @@ public interface IAppDbContext
     DbSet<DisplayPreference> DisplayPreferences { get; }
     DbSet<SupportRequest> SupportRequests { get; }
     DbSet<StoredUserFile> StoredUserFiles { get; }
+    DbSet<DataSubjectRequest> DataSubjectRequests { get; }
 
     // Guardian portal + public site (M5)
     DbSet<GuardianProfile> GuardianProfiles { get; }

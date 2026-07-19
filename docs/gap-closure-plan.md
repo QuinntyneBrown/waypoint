@@ -325,7 +325,15 @@ requirement conflicts early (they gate "done").
       track/mentor filters, KPIs, named activity details, counts/timestamps, status and retention,
       program/selected/previous comparisons, and mentor scope. All standard reports plus attendance,
       progress-board, and audit-log data export through filtered, authorized, audited CSV/PDF files.
-- [ ] **H18** Data-subject fulfillment + retention/anonymization `L2-NFR-003`
+- [x] **H18** Data-subject fulfillment + retention/anonymization `L2-NFR-003` —
+      authenticated access, correction, removal, and consent-withdrawal requests now create encrypted,
+      trackable workflow records that administrators can discover and fulfil once with content-free,
+      tamper-evident audit evidence. Correction updates requested profile fields; withdrawal closes active
+      subject consent; removal revokes sessions and erases private content/files while retaining
+      pseudonymous attendance, progress, score, and status rows. A configurable retention run applies the
+      same anonymizer only to expired deactivated/removed accounts, preserving de-identified reports;
+      AES-GCM converters protect privacy requests, messages, check-ins, reflections, submissions,
+      attendance notes, support content, guardian contacts, and signatures at rest with tamper detection.
 - [~] **H19** Unsaved-change framework `L2-NFR-007` — owner-bound safe-form capture/recovery,
       reflection route/browser-close protection, and attendance queue/leave protection exist;
       grading and curriculum-authoring editors still need reusable dirty-state adapters.
@@ -678,3 +686,13 @@ requirement conflicts early (they gate "done").
   invitation route, and staff-triggered password resets; rejected calls return 429 with Retry-After.
   Nine dedicated Development/Production host acceptances, twenty-one adjacent security/auth tests,
   all 234 backend integrations, and all four backend unit tests pass.
+- 2026-07-19 — H18 done: self-service data-rights requests now receive a durable reference and move
+  through a restricted administrator queue to one-time access, correction, removal, or consent-
+  withdrawal fulfilment. Removal and configurable age-based retention share an idempotent anonymizer
+  that revokes sessions, deletes private files/tokens, redacts authored and safeguarding content, and
+  retains pseudonymous attendance/progress/outcome rows verified through the standard report aggregate.
+  Sensitive workflow, messaging, mentoring, learning, attendance, support, and guardian free-text fields use
+  versioned AES-GCM storage converters; legacy plaintext remains readable during migration and modified
+  values are encrypted with authenticated tamper detection. All 239 backend integrations plus four unit
+  tests, all 51 frontend units, the 426.89 kB portal and 339.30 kB public-site builds, and both portal
+  smoke journeys pass.

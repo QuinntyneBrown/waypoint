@@ -19,6 +19,10 @@ public static class InfrastructureDependencyInjection
             .Bind(configuration.GetSection("AuditIntegrity"))
             .ValidateDataAnnotations()
             .ValidateOnStart();
+        services.AddOptions<SensitiveDataOptions>()
+            .Bind(configuration.GetSection("SensitiveData"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
         var connectionString = configuration.GetConnectionString("Default");
 
@@ -38,6 +42,8 @@ public static class InfrastructureDependencyInjection
         services.AddSingleton<ISecureTokens, SecureTokens>();
         services.AddScoped<IAuditLogger, AuditLogger>();
         services.AddSingleton<IAuditIntegrity, HmacAuditIntegrity>();
+        services.AddSingleton<ISensitiveDataProtector, AesSensitiveDataProtector>();
+        services.AddSingleton<IDataRetentionPolicy, ConfigurationDataRetentionPolicy>();
         services.AddSingleton<IAtRiskThresholds, ConfigurationAtRiskThresholds>();
         services.AddScoped<IEmailSender, LoggingEmailSender>();
         services.AddHttpContextAccessor();

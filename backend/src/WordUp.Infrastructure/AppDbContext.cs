@@ -1,11 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Infrastructure;
 
 public class AppDbContext : DbContext, IAppDbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    private readonly ISensitiveDataProtector _sensitiveData;
+
+    public AppDbContext(
+        DbContextOptions<AppDbContext> options,
+        ISensitiveDataProtector sensitiveData) : base(options)
+    {
+        _sensitiveData = sensitiveData;
+    }
 
     public DbSet<User> Users => Set<User>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
@@ -58,6 +66,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<DisplayPreference> DisplayPreferences => Set<DisplayPreference>();
     public DbSet<SupportRequest> SupportRequests => Set<SupportRequest>();
     public DbSet<StoredUserFile> StoredUserFiles => Set<StoredUserFile>();
+    public DbSet<DataSubjectRequest> DataSubjectRequests => Set<DataSubjectRequest>();
     public DbSet<GuardianProfile> GuardianProfiles => Set<GuardianProfile>();
     public DbSet<ContactRequest> ContactRequests => Set<ContactRequest>();
     public DbSet<VolunteerSignup> VolunteerSignups => Set<VolunteerSignup>();
@@ -90,6 +99,13 @@ public class AppDbContext : DbContext, IAppDbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        var protectedText = new ValueConverter<string, string>(
+            value => _sensitiveData.Protect(value),
+            value => _sensitiveData.Unprotect(value));
+        var protectedNullableText = new ValueConverter<string?, string?>(
+            value => value == null ? null : _sensitiveData.Protect(value),
+            value => value == null ? null : _sensitiveData.Unprotect(value));
+
         modelBuilder.Entity<User>(b =>
         {
             b.HasKey(x => x.Id);
@@ -101,6 +117,18 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Status).HasConversion<int>();
             b.Property(x => x.Pronouns).HasMaxLength(64);
             b.Property(x => x.PhotoUrl).HasMaxLength(512);
+        });
+
+        modelBuilder.Entity<DataSubjectRequest>(b =>
+        {
+            b.HasKey(x => x.Id);
+            b.HasIndex(x => x.Reference).IsUnique();
+            b.HasIndex(x => new { x.Status, x.RequestedAt });
+            b.HasIndex(x => x.SubjectUserId);
+            b.Property(x => x.Reference).HasMaxLength(32).IsRequired();
+            b.Property(x => x.ActionType).HasMaxLength(32).IsRequired();
+            b.Property(x => x.Details).HasConversion(protectedNullableText).HasMaxLength(12000);
+            b.Property(x => x.ResolutionNote).HasConversion(protectedNullableText).HasMaxLength(12000);
         });
 
         modelBuilder.Entity<RefreshToken>(b =>
@@ -170,9 +198,9 @@ public class AppDbContext : DbContext, IAppDbContext
         {
             b.HasKey(x => x.Id);
             b.HasIndex(x => x.YouthUserId);
-            b.Property(x => x.GuardianName).HasMaxLength(128).IsRequired();
-            b.Property(x => x.Relationship).HasMaxLength(64).IsRequired();
-            b.Property(x => x.Signature).HasMaxLength(128).IsRequired();
+            b.Property(x => x.GuardianName).HasConversion(protectedText).HasMaxLength(512).IsRequired();
+            b.Property(x => x.Relationship).HasConversion(protectedText).HasMaxLength(256).IsRequired();
+            b.Property(x => x.Signature).HasConversion(protectedText).HasMaxLength(512).IsRequired();
             b.Property(x => x.Method).HasMaxLength(64).IsRequired();
             b.Property(x => x.ReferenceId).HasMaxLength(64).IsRequired();
             b.Property(x => x.Term).HasMaxLength(64);
@@ -274,6 +302,9 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<Submission>(b =>
         {
             b.HasIndex(x => new { x.YouthUserId, x.AssignmentId });
+            b.Property(x => x.BodyText).HasConversion(protectedNullableText);
+            b.Property(x => x.YouthNote).HasConversion(protectedNullableText).HasMaxLength(4000);
+            b.Property(x => x.MentorComment).HasConversion(protectedNullableText).HasMaxLength(12000);
             b.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
         });
         modelBuilder.Entity<StoredSubmissionFile>(b =>
@@ -289,12 +320,21 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Type).HasMaxLength(32).IsRequired();
             b.HasIndex(x => new { x.SubmissionId, x.OccurredAt });
         });
-        modelBuilder.Entity<ReflectionEntry>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }));
+        modelBuilder.Entity<ReflectionEntry>(b =>
+        {
+            b.HasIndex(x => new { x.YouthUserId, x.LessonId });
+            b.Property(x => x.Text).HasConversion(protectedNullableText).HasMaxLength(24000);
+            b.Property(x => x.Mood).HasConversion(protectedNullableText).HasMaxLength(256);
+            b.Property(x => x.SecondaryJson).HasConversion(protectedNullableText).HasMaxLength(12000);
+        });
         modelBuilder.Entity<CompetencyAssessment>(b => b.HasIndex(x => new { x.YouthUserId, x.CompetencyId }));
         modelBuilder.Entity<CheckIn>(b =>
         {
             b.HasIndex(x => x.YouthUserId);
             b.Property(x => x.Type).HasMaxLength(32).IsRequired();
+            b.Property(x => x.GoalsDiscussed).HasConversion(protectedNullableText);
+            b.Property(x => x.PrayerRequests).HasConversion(protectedNullableText);
+            b.Property(x => x.ActionItems).HasConversion(protectedNullableText);
         });
         modelBuilder.Entity<Flag>(b =>
         {
@@ -326,7 +366,7 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<AttendanceRecord>(b =>
         {
             b.HasIndex(x => new { x.SessionId, x.YouthUserId }).IsUnique();
-            b.Property(x => x.Note).HasMaxLength(1000);
+            b.Property(x => x.Note).HasConversion(protectedNullableText).HasMaxLength(4000);
             b.Property(x => x.Status).HasConversion<int>();
             b.Property(x => x.RowVersion).IsRowVersion();
         });
@@ -365,7 +405,7 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<Message>(b =>
         {
             b.Property(x => x.ThreadKey).HasMaxLength(80).IsRequired();
-            b.Property(x => x.Body).HasMaxLength(4000).IsRequired();
+            b.Property(x => x.Body).HasConversion(protectedText).HasMaxLength(12000).IsRequired();
             b.HasIndex(x => x.ThreadKey);
             b.HasIndex(x => x.RecipientId);
         });
@@ -402,8 +442,8 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<SupportRequest>(b =>
         {
             b.Property(x => x.Category).HasMaxLength(64).IsRequired();
-            b.Property(x => x.Description).HasMaxLength(4000).IsRequired();
-            b.Property(x => x.ReplyToEmail).HasMaxLength(256).IsRequired();
+            b.Property(x => x.Description).HasConversion(protectedText).HasMaxLength(12000).IsRequired();
+            b.Property(x => x.ReplyToEmail).HasConversion(protectedText).HasMaxLength(1024).IsRequired();
             b.HasIndex(x => x.CreatedAt);
         });
         modelBuilder.Entity<StoredUserFile>(b =>
@@ -418,10 +458,10 @@ public class AppDbContext : DbContext, IAppDbContext
         // Guardian portal + public site (M5)
         modelBuilder.Entity<GuardianProfile>(b =>
         {
-            b.Property(x => x.Relationship).HasMaxLength(64);
-            b.Property(x => x.Phone).HasMaxLength(32);
-            b.Property(x => x.EmergencyContactName).HasMaxLength(128);
-            b.Property(x => x.EmergencyContactPhone).HasMaxLength(32);
+            b.Property(x => x.Relationship).HasConversion(protectedNullableText).HasMaxLength(256);
+            b.Property(x => x.Phone).HasConversion(protectedNullableText).HasMaxLength(256);
+            b.Property(x => x.EmergencyContactName).HasConversion(protectedNullableText).HasMaxLength(512);
+            b.Property(x => x.EmergencyContactPhone).HasConversion(protectedNullableText).HasMaxLength(256);
             b.HasIndex(x => x.GuardianUserId).IsUnique();
         });
         modelBuilder.Entity<ContactRequest>(b =>
