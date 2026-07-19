@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  HostListener,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   ApiError,
@@ -13,6 +20,9 @@ import {
 import { AuthStore } from '@wu/auth';
 import { WuShell } from '@wu/ui';
 import { finalize, forkJoin, of, switchMap } from 'rxjs';
+import { EditorDraftService } from '../../../editor-draft.service';
+import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
+import { DraftSaveResult, UnsavedChangesService } from '../../../unsaved-changes.service';
 
 interface BadgeTarget {
   id: string;
@@ -28,11 +38,14 @@ interface BadgeTarget {
   templateUrl: './badge-builder.html',
   styleUrl: './curriculum-admin.css',
 })
-export class BadgeBuilderPage {
+export class BadgeBuilderPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
   private readonly api = inject(CurriculumAuthoringApi);
   private readonly peopleApi = inject(PeopleApi);
   private readonly fb = inject(FormBuilder);
+  private readonly drafts = inject(EditorDraftService);
+  private readonly unsavedChanges = inject(UnsavedChangesService);
+  private readonly draftKey = 'admin.badges';
 
   protected readonly badges = signal<BadgeDefinition[]>([]);
   protected readonly stages = signal<ProgressionStage[]>([]);
@@ -62,7 +75,19 @@ export class BadgeBuilderPage {
   });
 
   constructor() {
+    this.restoreDraft();
     this.load();
+  }
+
+  canDeactivate(): DraftSaveResult {
+    return this.unsavedChanges.confirmSaveOrStay(this.form.dirty, 'authoring', () =>
+      this.saveLocalDraft(true),
+    );
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  protected beforeUnload(event: BeforeUnloadEvent): void {
+    this.unsavedChanges.warnBeforeUnload(event, this.form.dirty, () => this.saveLocalDraft(false));
   }
 
   protected criteriaChanged(): void {
@@ -110,6 +135,7 @@ export class BadgeBuilderPage {
       .pipe(finalize(() => this.busy.set(false)))
       .subscribe({
         next: () => {
+          this.drafts.clear(this.draftKey);
           this.outcome.set('Badge definition saved.');
           this.form.reset({
             name: '',
@@ -265,5 +291,20 @@ export class BadgeBuilderPage {
   private clean(value: string): string | null {
     const cleaned = value.trim();
     return cleaned || null;
+  }
+
+  private saveLocalDraft(markPristine: boolean): boolean {
+    const saved = this.drafts.save(this.draftKey, this.form.getRawValue());
+    if (saved && markPristine) this.form.markAsPristine();
+    return saved;
+  }
+
+  private restoreDraft(): void {
+    const draft = this.drafts.take<ReturnType<typeof this.form.getRawValue>>(this.draftKey);
+    if (!draft) return;
+    this.form.reset(draft);
+    this.selectedRule.set(draft.autoRule);
+    this.form.markAsDirty();
+    this.outcome.set('Authoring draft restored.');
   }
 }

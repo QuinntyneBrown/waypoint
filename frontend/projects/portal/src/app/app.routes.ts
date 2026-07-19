@@ -310,6 +310,7 @@ export const routes: Routes = [
       {
         path: 'reviews/submissions/:id',
         title: 'Review submission · Word Up',
+        canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/mentor/submission-review/mentor-submission-review').then(
             (module) => module.MentorSubmissionReviewPage,
@@ -420,6 +421,7 @@ export const routes: Routes = [
       {
         path: 'tracks',
         title: 'Curriculum builder · Word Up',
+        canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/admin/curriculum/curriculum-builder').then(
             (module) => module.CurriculumBuilderPage,
@@ -428,6 +430,7 @@ export const routes: Routes = [
       {
         path: 'badges',
         title: 'Badge builder · Word Up',
+        canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/admin/curriculum/badge-builder').then(
             (module) => module.BadgeBuilderPage,
@@ -436,6 +439,7 @@ export const routes: Routes = [
       {
         path: 'progression',
         title: 'Progression framework · Word Up',
+        canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/admin/curriculum/progression-builder').then(
             (module) => module.ProgressionBuilderPage,

@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  HostListener,
   inject,
   OnDestroy,
   signal,
@@ -11,8 +12,17 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, MentorApi, SubmissionReviewView } from '@wu/api';
 import { AuthStore } from '@wu/auth';
 import { WuShell } from '@wu/ui';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
+import { DraftSaveResult, UnsavedChangesService } from '../../../unsaved-changes.service';
 
 type Decision = 'approve' | 'request-revision' | 'save-draft';
+
+interface GradingDraft {
+  scores: Record<string, number | null>;
+  comment: string;
+  guardianNotified: boolean;
+}
 
 // Traces to: L2-MENTOR-003, L2-LEARN-007, L2-ENGAGE-008
 @Component({
@@ -64,12 +74,13 @@ type Decision = 'approve' | 'request-revision' | 'save-draft';
     }
   `,
 })
-export class MentorSubmissionReviewPage implements OnDestroy {
+export class MentorSubmissionReviewPage implements OnDestroy, UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
   private readonly api = inject(MentorApi);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly document = inject(DOCUMENT);
+  private readonly unsavedChanges = inject(UnsavedChangesService);
 
   private readonly submissionId = this.route.snapshot.paramMap.get('id') ?? '';
   private photoObjectUrl: string | undefined;
@@ -84,9 +95,14 @@ export class MentorSubmissionReviewPage implements OnDestroy {
   protected readonly statusMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly conflictMessage = signal<string | null>(null);
+  private readonly savedDraft = signal<GradingDraft | null>(null);
   protected readonly total = computed(() =>
     Object.values(this.scores()).reduce<number>((sum, score) => sum + (score ?? 0), 0),
   );
+  protected readonly dirty = computed(() => {
+    const saved = this.savedDraft();
+    return saved !== null && JSON.stringify(this.snapshot()) !== JSON.stringify(saved);
+  });
 
   constructor() {
     this.load();
@@ -134,17 +150,11 @@ export class MentorSubmissionReviewPage implements OnDestroy {
     this.saving.set(true);
     this.errorMessage.set(null);
     this.api
-      .gradeSubmission(this.submissionId, {
-        decision,
-        rubricScoresJson: Object.keys(scoreMap).length ? JSON.stringify(scoreMap) : null,
-        totalAwarded: this.total(),
-        comment: this.comment().trim() || null,
-        guardianNotified: this.guardianNotified(),
-        expectedVersion: review.version,
-      })
+      .gradeSubmission(this.submissionId, this.gradeRequest(decision, review.version, scoreMap))
       .subscribe({
         next: () => {
           this.saving.set(false);
+          this.savedDraft.set(this.snapshot());
           if (decision === 'save-draft') {
             this.load('Draft saved. The youth-visible status has not changed.');
           } else {
@@ -163,6 +173,17 @@ export class MentorSubmissionReviewPage implements OnDestroy {
           }
         },
       });
+  }
+
+  canDeactivate(): DraftSaveResult {
+    return this.unsavedChanges.confirmSaveOrStay(this.dirty(), 'grading', () =>
+      this.saveDraftForNavigation(),
+    );
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  protected beforeUnload(event: BeforeUnloadEvent): void {
+    this.unsavedChanges.warnBeforeUnload(event, this.dirty());
   }
 
   protected loadLatest(): void {
@@ -196,6 +217,7 @@ export class MentorSubmissionReviewPage implements OnDestroy {
         ) {
           this.guardianNotified.set(review.guardianNotified);
         }
+        this.savedDraft.set(this.snapshot());
         this.conflictMessage.set(null);
         if (successMessage) this.statusMessage.set(successMessage);
       },
@@ -221,5 +243,49 @@ export class MentorSubmissionReviewPage implements OnDestroy {
       },
       error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
     });
+  }
+
+  private saveDraftForNavigation(): Observable<boolean> {
+    const review = this.review();
+    if (!review || this.saving()) return of(false);
+    const scoreMap = Object.fromEntries(
+      Object.entries(this.scores()).filter((entry): entry is [string, number] => entry[1] != null),
+    );
+    this.saving.set(true);
+    this.errorMessage.set(null);
+    return this.api
+      .gradeSubmission(this.submissionId, this.gradeRequest('save-draft', review.version, scoreMap))
+      .pipe(
+        tap(() => {
+          this.saving.set(false);
+          this.savedDraft.set(this.snapshot());
+          this.statusMessage.set('Draft saved. The youth-visible status has not changed.');
+        }),
+        map(() => true),
+        catchError((error: unknown) => {
+          this.saving.set(false);
+          this.errorMessage.set(ApiError.from(error).title);
+          return of(false);
+        }),
+      );
+  }
+
+  private gradeRequest(decision: Decision, version: string, scoreMap: Record<string, number>) {
+    return {
+      decision,
+      rubricScoresJson: Object.keys(scoreMap).length ? JSON.stringify(scoreMap) : null,
+      totalAwarded: this.total(),
+      comment: this.comment().trim() || null,
+      guardianNotified: this.guardianNotified(),
+      expectedVersion: version,
+    };
+  }
+
+  private snapshot(): GradingDraft {
+    return {
+      scores: this.scores(),
+      comment: this.comment(),
+      guardianNotified: this.guardianNotified(),
+    };
   }
 }

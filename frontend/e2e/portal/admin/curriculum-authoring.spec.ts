@@ -159,3 +159,61 @@ test('an admin edits ordered stages and removes competencies', async ({ page, re
   await updated.getByRole('button', { name: 'Remove competency' }).click();
   await expect(updated).not.toContainText('Reads Scripture ' + suffix);
 });
+
+// Traces to: L2-NFR-007
+test('an admin saves an owner-bound authoring draft while leaving and restores it', async ({
+  page,
+  request,
+}) => {
+  await seedYouthCurriculum(request);
+  const admin = await registerUser(request, 'ProgramAdministrator', 'authoring-draft');
+  await new SignInPage(page).signIn(admin);
+  const badges = new BadgeBuilderPage(page);
+  await badges.goto();
+  await expect(badges.heading).toBeVisible();
+
+  const draftName = 'Unsaved badge ' + crypto.randomUUID().slice(0, 8);
+  await badges.name.fill(draftName);
+  await badges.icon.fill('star');
+  let prompt = '';
+  page.once('dialog', async (dialog) => {
+    prompt = dialog.message();
+    await dialog.accept();
+  });
+  await page.getByRole('link', { name: 'Progression', exact: true }).click();
+
+  expect(prompt).toMatch(/save.*authoring.*draft.*cancel/i);
+  await expect(page).toHaveURL(/\/admin\/progression$/);
+  await page.getByRole('link', { name: 'Badges', exact: true }).click();
+  await expect(badges.name).toHaveValue(draftName);
+  await expect(badges.icon).toHaveValue('star');
+  await expect(page.getByTestId('badge-outcome')).toContainText(/draft restored/i);
+});
+
+// Traces to: L2-NFR-007
+test('an admin restores the active multi-form curriculum editor after leaving', async ({
+  page,
+  request,
+}) => {
+  const seeded = await seedYouthCurriculum(request);
+  const admin = await registerUser(request, 'ProgramAdministrator', 'curriculum-draft');
+  await new SignInPage(page).signIn(admin);
+  const builder = new CurriculumBuilderPage(page);
+  await builder.goto();
+  await builder.trackSelect.selectOption(seeded.primaryTrackId);
+  await expect(builder.module(seeded.firstModuleName)).toBeVisible();
+
+  const draftName = 'Draft module ' + crypto.randomUUID().slice(0, 8);
+  await page.getByLabel('Module name').fill(draftName);
+  await page.getByLabel('Module description').fill('Restore this unsaved module description.');
+  page.once('dialog', async (dialog) => dialog.accept());
+  await page.getByRole('link', { name: 'Badges', exact: true }).click();
+  await expect(page).toHaveURL(/\/admin\/badges$/);
+
+  await page.getByRole('link', { name: 'Curriculum', exact: true }).click();
+  await expect(page.getByLabel('Module name')).toHaveValue(draftName);
+  await expect(page.getByLabel('Module description')).toHaveValue(
+    'Restore this unsaved module description.',
+  );
+  await expect(builder.outcome).toContainText(/draft restored/i);
+});

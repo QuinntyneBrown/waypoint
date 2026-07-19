@@ -124,3 +124,34 @@ test('mentor reconciles a stale grading draft without a silent overwrite', async
   await expect(review.score(seeded.mentorReviewCriterion)).toHaveValue('8');
   await expect(review.comment).toHaveValue('Feedback saved by another editor.');
 });
+
+// Traces to: L2-NFR-007
+test('mentor saves an unsaved grading draft while leaving and restores it on return', async ({
+  page,
+  request,
+}) => {
+  const seeded = await seedYouthCurriculum(request);
+  await new SignInPage(page).signIn({
+    email: seeded.mentorEmail,
+    password: seeded.mentorPassword,
+  });
+  const reviewUrl = `/mentor/reviews/submissions/${seeded.mentorReviewSubmissionId}`;
+  await page.goto(reviewUrl);
+  const review = new MentorSubmissionReviewPage(page);
+  await expect(review.heading).toHaveText(seeded.mentorReviewTitle);
+
+  await review.score(seeded.mentorReviewCriterion).fill('6');
+  await review.comment.fill('Keep this draft when I leave the editor.');
+  let prompt = '';
+  page.once('dialog', async (dialog) => {
+    prompt = dialog.message();
+    await dialog.accept();
+  });
+  await page.getByRole('link', { name: 'Back to reviews' }).click();
+
+  expect(prompt).toMatch(/save.*grading.*draft.*cancel/i);
+  await expect(page).toHaveURL(/\/mentor\/reviews$/);
+  await page.goto(reviewUrl);
+  await expect(review.score(seeded.mentorReviewCriterion)).toHaveValue('6');
+  await expect(review.comment).toHaveValue('Keep this draft when I leave the editor.');
+});

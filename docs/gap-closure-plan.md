@@ -334,9 +334,10 @@ requirement conflicts early (they gate "done").
       same anonymizer only to expired deactivated/removed accounts, preserving de-identified reports;
       AES-GCM converters protect privacy requests, messages, check-ins, reflections, submissions,
       attendance notes, support content, guardian contacts, and signatures at rest with tamper detection.
-- [~] **H19** Unsaved-change framework `L2-NFR-007` — owner-bound safe-form capture/recovery,
-      reflection route/browser-close protection, and attendance queue/leave protection exist;
-      grading and curriculum-authoring editors still need reusable dirty-state adapters.
+- [x] **H19** Unsaved-change framework `L2-NFR-007` — one reusable route/browser-close adapter now
+      protects reflection, mentor/volunteer attendance, grading, badge, progression, and multi-form
+      curriculum editors. Navigation offers save-draft or stay; synchronous owner-bound local drafts
+      and grading/reflection server drafts restore on return without exposing another user's work.
 - [ ] **H20** Logging/alerting (correlation ids, PII redaction) `L2-PLATFORM-008`, `L2-NFR-011`
 - [ ] **H21** Operational CLI + durable DB lifecycle/migrations `L2-NFR-011`
 - [ ] **H22** Performance budgets `L2-NFR-008`
@@ -696,3 +697,11 @@ requirement conflicts early (they gate "done").
   values are encrypted with authenticated tamper detection. All 239 backend integrations plus four unit
   tests, all 51 frontend units, the 426.89 kB portal and 339.30 kB public-site builds, and both portal
   smoke journeys pass.
+- 2026-07-19 — H19 done: a shared dirty-state adapter now gives reflection, mentor/volunteer
+  attendance, grading, badge, progression, and every curriculum sub-editor consistent route and
+  browser-close protection. Confirmed navigation saves either the existing server draft or a
+  synchronous owner-bound local draft; cancelling stays on the editor, return restores once, and
+  another account cannot consume the data. Curriculum selection also ignores stale workspace
+  responses so concurrent loads cannot overwrite the active editor. All 54 frontend units, the
+  426.96 kB production portal build, and sixteen adjacent grading, authoring, reflection, and
+  attendance browser scenarios pass.

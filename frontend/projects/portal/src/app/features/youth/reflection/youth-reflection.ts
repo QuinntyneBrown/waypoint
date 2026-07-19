@@ -1,4 +1,3 @@
-import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -8,6 +7,7 @@ import { WuShell } from '@wu/ui';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
 import { FormDraftService } from '../../../form-draft.service';
+import { DraftSaveResult, UnsavedChangesService } from '../../../unsaved-changes.service';
 
 const OPTIONAL_PROMPT = 'One action I will take';
 
@@ -42,8 +42,8 @@ export class YouthReflectionPage implements UnsavedChangesAware {
   private readonly api = inject(LearningApi);
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
-  private readonly doc = inject(DOCUMENT);
   private readonly drafts = inject(FormDraftService);
+  private readonly unsavedChanges = inject(UnsavedChangesService);
   private readonly lessonId = this.route.snapshot.paramMap.get('id') ?? '';
 
   protected readonly editor = signal<ReflectionEditor | undefined>(undefined);
@@ -97,24 +97,18 @@ export class YouthReflectionPage implements UnsavedChangesAware {
     this.persist(false).subscribe();
   }
 
-  canDeactivate(): boolean | Observable<boolean> {
-    if (!this.form.dirty) return true;
-    const shouldSave = this.doc.defaultView?.confirm(
-      'Save your reflection as a draft before leaving? Select OK to save a draft, or Cancel to stay.',
-    );
-    if (!shouldSave) return false;
-
-    return this.persist(true).pipe(
-      map(() => true),
-      catchError(() => of(false)),
+  canDeactivate(): DraftSaveResult {
+    return this.unsavedChanges.confirmSaveOrStay(this.form.dirty, 'reflection', () =>
+      this.persist(true).pipe(
+        map(() => true),
+        catchError(() => of(false)),
+      ),
     );
   }
 
   @HostListener('window:beforeunload', ['$event'])
   protected beforeUnload(event: BeforeUnloadEvent): void {
-    if (!this.form.dirty) return;
-    event.preventDefault();
-    event.returnValue = '';
+    this.unsavedChanges.warnBeforeUnload(event, this.form.dirty);
   }
 
   private persist(isDraft: boolean): Observable<unknown> {

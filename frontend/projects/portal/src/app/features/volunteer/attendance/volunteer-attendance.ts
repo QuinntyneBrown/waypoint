@@ -1,4 +1,3 @@
-import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,6 +10,9 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, VolunteerApi, VolunteerRosterEntry } from '@wu/api';
 import { AuthStore } from '@wu/auth';
 import { WuShell } from '@wu/ui';
+import { EditorDraftService } from '../../../editor-draft.service';
+import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
+import { DraftSaveResult, UnsavedChangesService } from '../../../unsaved-changes.service';
 import { AttendanceQueueService } from './attendance-queue.service';
 
 type VolunteerMark = 'Present' | 'Absent' | null;
@@ -78,14 +80,16 @@ interface AttendanceRow extends VolunteerRosterEntry {
     `,
   ],
 })
-export class VolunteerAttendance {
+export class VolunteerAttendance implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
   protected readonly queue = inject(AttendanceQueueService);
   private readonly api = inject(VolunteerApi);
   private readonly route = inject(ActivatedRoute);
-  private readonly doc = inject(DOCUMENT);
+  private readonly drafts = inject(EditorDraftService);
+  private readonly unsavedChanges = inject(UnsavedChangesService);
 
   protected readonly sessionId = this.route.snapshot.paramMap.get('sessionId') ?? '';
+  private readonly draftKey = `volunteer-attendance.${this.sessionId}`;
   private readonly baseline = signal('');
   protected readonly rows = signal<AttendanceRow[] | undefined>(undefined);
   protected readonly saving = signal(false);
@@ -139,6 +143,7 @@ export class VolunteerAttendance {
       })
       .subscribe({
         next: (outcome) => {
+          this.drafts.clear(this.draftKey);
           this.baseline.set(this.snapshot(rows));
           this.saving.set(false);
           if (outcome.kind === 'saved') this.loadRoster(false);
@@ -167,26 +172,28 @@ export class VolunteerAttendance {
     this.loadRoster();
   }
 
-  canDeactivate(): boolean {
-    if (!this.dirty()) return true;
-    return (
-      this.doc.defaultView?.confirm(
-        'You have unsaved attendance changes. Leave this page and discard them?',
-      ) ?? false
+  canDeactivate(): DraftSaveResult {
+    return this.unsavedChanges.confirmSaveOrStay(this.dirty(), 'attendance', () =>
+      this.saveLocalDraft(true),
     );
   }
 
   @HostListener('window:beforeunload', ['$event'])
   protected beforeUnload(event: BeforeUnloadEvent): void {
-    if (!this.dirty()) return;
-    event.preventDefault();
-    event.returnValue = '';
+    this.unsavedChanges.warnBeforeUnload(event, this.dirty(), () => this.saveLocalDraft(false));
   }
 
   private loadRoster(resetBaseline = true): void {
     this.api.roster(this.sessionId).subscribe({
       next: (rows) => {
-        this.rows.set(rows);
+        const localDraft = resetBaseline ? this.drafts.take<AttendanceRow[]>(this.draftKey) : null;
+        const restored = localDraft
+          ? rows.map((row) => {
+              const saved = localDraft.find((item) => item.youthUserId === row.youthUserId);
+              return saved ? { ...row, mark: saved.mark, version: saved.version } : row;
+            })
+          : rows;
+        this.rows.set(restored);
         if (resetBaseline || !this.baseline()) this.baseline.set(this.snapshot(rows));
       },
       error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
@@ -195,5 +202,13 @@ export class VolunteerAttendance {
 
   private snapshot(rows: AttendanceRow[]): string {
     return JSON.stringify(rows.map((row) => [row.youthUserId, row.mark]));
+  }
+
+  private saveLocalDraft(markPristine: boolean): boolean {
+    const rows = this.rows();
+    if (!rows) return true;
+    const saved = this.drafts.save(this.draftKey, rows);
+    if (saved && markPristine) this.baseline.set(this.snapshot(rows));
+    return saved;
   }
 }

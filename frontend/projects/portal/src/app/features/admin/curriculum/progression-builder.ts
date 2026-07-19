@@ -1,9 +1,24 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiError, CurriculumAuthoringApi, ProgressionCompetency, ProgressionStage } from '@wu/api';
 import { AuthStore } from '@wu/auth';
 import { WuShell } from '@wu/ui';
 import { finalize, Observable } from 'rxjs';
+import { EditorDraftService } from '../../../editor-draft.service';
+import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
+import { DraftSaveResult, UnsavedChangesService } from '../../../unsaved-changes.service';
+
+type ProgressionAuthoringDraft =
+  | {
+      kind: 'stage';
+      editingStageId: string | null;
+      value: { name: string; description: string };
+    }
+  | {
+      kind: 'competency';
+      stageId: string;
+      value: { name: string };
+    };
 
 // Traces to: L2-CURRIC-006, L2-NFR-001, L2-NFR-009, L2-NFR-010
 @Component({
@@ -13,10 +28,13 @@ import { finalize, Observable } from 'rxjs';
   templateUrl: './progression-builder.html',
   styleUrl: './curriculum-admin.css',
 })
-export class ProgressionBuilderPage {
+export class ProgressionBuilderPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
   private readonly api = inject(CurriculumAuthoringApi);
   private readonly fb = inject(FormBuilder);
+  private readonly drafts = inject(EditorDraftService);
+  private readonly unsavedChanges = inject(UnsavedChangesService);
+  private readonly draftKey = 'admin.progression';
 
   protected readonly stages = signal<ProgressionStage[]>([]);
   protected readonly loading = signal(true);
@@ -36,7 +54,19 @@ export class ProgressionBuilderPage {
   });
 
   constructor() {
+    this.restoreDraft();
     this.load();
+  }
+
+  canDeactivate(): DraftSaveResult {
+    return this.unsavedChanges.confirmSaveOrStay(this.isDirty(), 'authoring', () =>
+      this.saveLocalDraft(true),
+    );
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  protected beforeUnload(event: BeforeUnloadEvent): void {
+    this.unsavedChanges.warnBeforeUnload(event, this.isDirty(), () => this.saveLocalDraft(false));
   }
 
   protected openStage(stage?: ProgressionStage): void {
@@ -73,6 +103,7 @@ export class ProgressionBuilderPage {
         });
     operation.pipe(finalize(() => this.busy.set(false))).subscribe({
       next: () => {
+        this.drafts.clear(this.draftKey);
         this.outcome.set(editingId ? 'Stage updated.' : 'Stage added.');
         this.closeStage();
         this.loadStages();
@@ -121,6 +152,7 @@ export class ProgressionBuilderPage {
       .pipe(finalize(() => this.busy.set(false)))
       .subscribe({
         next: () => {
+          this.drafts.clear(this.draftKey);
           this.outcome.set('Competency added.');
           this.closeCompetency();
           this.loadStages();
@@ -181,5 +213,52 @@ export class ProgressionBuilderPage {
   private clean(value: string): string | null {
     const cleaned = value.trim();
     return cleaned || null;
+  }
+
+  private isDirty(): boolean {
+    return (
+      (this.stageDialogOpen() && this.stageForm.dirty) ||
+      (this.competencyStageId() !== null && this.competencyForm.dirty)
+    );
+  }
+
+  private saveLocalDraft(markPristine: boolean): boolean {
+    let draft: ProgressionAuthoringDraft | null = null;
+    if (this.stageDialogOpen() && this.stageForm.dirty) {
+      draft = {
+        kind: 'stage',
+        editingStageId: this.editingStageId(),
+        value: this.stageForm.getRawValue(),
+      };
+    } else if (this.competencyStageId() && this.competencyForm.dirty) {
+      draft = {
+        kind: 'competency',
+        stageId: this.competencyStageId()!,
+        value: this.competencyForm.getRawValue(),
+      };
+    }
+    if (!draft) return true;
+    const saved = this.drafts.save(this.draftKey, draft);
+    if (saved && markPristine) {
+      this.stageForm.markAsPristine();
+      this.competencyForm.markAsPristine();
+    }
+    return saved;
+  }
+
+  private restoreDraft(): void {
+    const draft = this.drafts.take<ProgressionAuthoringDraft>(this.draftKey);
+    if (!draft) return;
+    if (draft.kind === 'stage') {
+      this.editingStageId.set(draft.editingStageId);
+      this.stageForm.reset(draft.value);
+      this.stageForm.markAsDirty();
+      this.stageDialogOpen.set(true);
+    } else {
+      this.competencyForm.reset(draft.value);
+      this.competencyForm.markAsDirty();
+      this.competencyStageId.set(draft.stageId);
+    }
+    this.outcome.set('Authoring draft restored.');
   }
 }

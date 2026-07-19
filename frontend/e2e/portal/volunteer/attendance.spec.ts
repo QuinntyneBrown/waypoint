@@ -141,12 +141,18 @@ test('an offline attendance conflict is explicit and can be deterministically re
   expect(saved.every((entry) => entry.mark === 'Present')).toBeTruthy();
 });
 
-test('unsaved attendance warns before route navigation', async ({ page, request }) => {
+// Traces to: L2-NFR-007
+test('unsaved attendance can stay in place or save a local draft for return', async ({
+  page,
+  request,
+}) => {
   const volunteer = await registerUser(request, 'Volunteer', 'vol-unsaved');
   const seeded = await seedVolunteerSession(request, volunteer.userId);
 
   await new SignInPage(page).signIn(volunteer);
   await new VolunteerTodayPage(page).takeAttendanceLink.click();
+  await expect(page).toHaveURL(VolunteerAttendancePage.urlPattern);
+  const attendanceUrl = page.url();
   const attendance = new VolunteerAttendancePage(page);
   await attendance.markAbsent(seeded.youth[0].name);
 
@@ -156,4 +162,16 @@ test('unsaved attendance warns before route navigation', async ({ page, request 
   });
   await page.getByRole('link', { name: /back to today/i }).click();
   await expect(page).toHaveURL(VolunteerAttendancePage.urlPattern);
+
+  page.once('dialog', async (dialog) => {
+    expect(dialog.message()).toMatch(/save.*attendance.*draft.*cancel/i);
+    await dialog.accept();
+  });
+  await page.getByRole('link', { name: /back to today/i }).click();
+  await expect(page).toHaveURL(VolunteerTodayPage.urlPattern);
+
+  await page.goto(attendanceUrl);
+  await expect(
+    attendance.rowFor(seeded.youth[0].name).getByRole('button', { name: /absent/i }),
+  ).toHaveAttribute('aria-pressed', 'true');
 });

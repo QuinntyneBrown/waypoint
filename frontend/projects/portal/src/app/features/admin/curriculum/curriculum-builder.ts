@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   ApiError,
@@ -19,6 +19,77 @@ import {
 import { AuthStore } from '@wu/auth';
 import { WuShell } from '@wu/ui';
 import { finalize, Observable } from 'rxjs';
+import { EditorDraftService } from '../../../editor-draft.service';
+import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
+import { DraftSaveResult, UnsavedChangesService } from '../../../unsaved-changes.service';
+
+interface CurriculumAuthoringDraft {
+  selectedTrackId: string;
+  track?: {
+    value: { name: string; key: string; description: string };
+  };
+  module?: {
+    editingId: string | null;
+    value: {
+      name: string;
+      description: string;
+      scriptureAnchor: string;
+      prerequisiteModuleId: string;
+    };
+  };
+  lesson?: {
+    moduleId: string;
+    editingId: string | null;
+    value: {
+      title: string;
+      scriptureReference: string;
+      estimatedMinutes: number | null;
+      learningObjectives: string;
+      teachingBody: string;
+      reflectionPrompts: string;
+      leaderGuideNotes: string;
+    };
+  };
+  quiz?: {
+    moduleId: string | null;
+    quizId: string | null;
+    dirty: boolean;
+    value: {
+      passMark: number;
+      attemptsAllowed: number;
+      feedbackMode: string;
+      shuffle: boolean;
+      requiredToCompleteModule: boolean;
+    };
+  };
+  question?: {
+    quizId: string;
+    value: {
+      text: string;
+      type: SaveQuestion['type'];
+      options: string;
+      correctIndexes: string;
+      correctAnswers: string;
+    };
+  };
+  assignment?: {
+    moduleId: string;
+    editingId: string | null;
+    value: {
+      title: string;
+      taskDescription: string;
+      textResponse: boolean;
+      photoUpload: boolean;
+      link: boolean;
+      fileUpload: boolean;
+      dueDate: string;
+      gracePeriodDays: number;
+      allowLate: boolean;
+      requireMentorApproval: boolean;
+      rubric: { description: string; points: number }[];
+    };
+  };
+}
 
 // Traces to: L2-CURRIC-001..004, L2-NFR-001, L2-NFR-009, L2-NFR-010
 @Component({
@@ -28,10 +99,15 @@ import { finalize, Observable } from 'rxjs';
   templateUrl: './curriculum-builder.html',
   styleUrl: './curriculum-builder.css',
 })
-export class CurriculumBuilderPage {
+export class CurriculumBuilderPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
   private readonly api = inject(CurriculumAuthoringApi);
   private readonly fb = inject(FormBuilder);
+  private readonly drafts = inject(EditorDraftService);
+  private readonly unsavedChanges = inject(UnsavedChangesService);
+  private readonly draftKey = 'admin.curriculum';
+  private pendingDraft: CurriculumAuthoringDraft | null = null;
+  private workspaceRequest = 0;
 
   protected readonly tracks = signal<TrackSummary[]>([]);
   protected readonly workspace = signal<TrackWorkspace | null>(null);
@@ -98,7 +174,19 @@ export class CurriculumBuilderPage {
   });
 
   constructor() {
-    this.loadTracks();
+    this.pendingDraft = this.drafts.take<CurriculumAuthoringDraft>(this.draftKey);
+    this.loadTracks(this.pendingDraft?.selectedTrackId);
+  }
+
+  canDeactivate(): DraftSaveResult {
+    return this.unsavedChanges.confirmSaveOrStay(this.isDirty(), 'authoring', () =>
+      this.saveLocalDraft(true),
+    );
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  protected beforeUnload(event: BeforeUnloadEvent): void {
+    this.unsavedChanges.warnBeforeUnload(event, this.isDirty(), () => this.saveLocalDraft(false));
   }
 
   protected get rubric(): FormArray {
@@ -133,6 +221,7 @@ export class CurriculumBuilderPage {
       .pipe(finalize(() => this.busy.set(false)))
       .subscribe({
         next: (result) => {
+          this.drafts.clear(this.draftKey);
           this.trackDialogOpen.set(false);
           this.outcome.set('Track created.');
           this.loadTracks(result.id);
@@ -160,6 +249,7 @@ export class CurriculumBuilderPage {
       ? this.api.updateModule(editingId, request)
       : this.api.createModule(request);
     this.run(operation, editingId ? 'Module updated.' : 'Module added.', () => {
+      this.drafts.clear(this.draftKey);
       this.cancelModuleEdit();
       this.loadWorkspace(trackId);
     });
@@ -253,6 +343,7 @@ export class CurriculumBuilderPage {
       ? this.api.updateLesson(editingId, request)
       : this.api.createLesson(request);
     this.run(operation, editingId ? 'Lesson updated.' : 'Lesson created.', () => {
+      this.drafts.clear(this.draftKey);
       this.closeLesson();
       this.reload();
     });
@@ -321,6 +412,7 @@ export class CurriculumBuilderPage {
       .pipe(finalize(() => this.busy.set(false)))
       .subscribe({
         next: (result) => {
+          this.drafts.clear(this.draftKey);
           this.closeQuizDialog();
           this.outcome.set('Quiz created. Add its questions below.');
           this.loadWorkspace(this.selectedTrackId());
@@ -354,6 +446,7 @@ export class CurriculumBuilderPage {
       this.api.updateQuiz(quiz.id, this.quizRequest(quiz.moduleId, quiz.lessonId)),
       'Quiz settings saved.',
       () => {
+        this.drafts.clear(this.draftKey);
         this.openQuiz(quiz.id);
         this.reload();
       },
@@ -378,6 +471,7 @@ export class CurriculumBuilderPage {
       correctAnswers: this.lines(value.correctAnswers),
     };
     this.run(this.api.addQuestion(quiz.id, request), 'Question added.', () => {
+      this.drafts.clear(this.draftKey);
       this.questionForm.reset({
         text: '',
         type: 'MultipleChoice',
@@ -484,6 +578,7 @@ export class CurriculumBuilderPage {
       ? this.api.updateAssignment(editingId, request)
       : this.api.createAssignment(request);
     this.run(operation, editingId ? 'Assignment updated.' : 'Assignment created.', () => {
+      this.drafts.clear(this.draftKey);
       this.closeAssignment();
       this.reload();
     });
@@ -517,6 +612,7 @@ export class CurriculumBuilderPage {
         } else {
           this.workspace.set(null);
           this.loading.set(false);
+          this.restorePendingDraft();
         }
       },
       error: (error: unknown) => {
@@ -528,13 +624,24 @@ export class CurriculumBuilderPage {
 
   private loadWorkspace(id: string): void {
     if (!id) return;
+    const request = ++this.workspaceRequest;
     this.loading.set(true);
     this.api
       .track(id)
-      .pipe(finalize(() => this.loading.set(false)))
+      .pipe(
+        finalize(() => {
+          if (request === this.workspaceRequest) this.loading.set(false);
+        }),
+      )
       .subscribe({
-        next: (workspace) => this.workspace.set(workspace),
-        error: (error: unknown) => this.fail(error),
+        next: (workspace) => {
+          if (request !== this.workspaceRequest) return;
+          this.workspace.set(workspace);
+          this.restorePendingDraft();
+        },
+        error: (error: unknown) => {
+          if (request === this.workspaceRequest) this.fail(error);
+        },
       });
   }
 
@@ -600,6 +707,139 @@ export class CurriculumBuilderPage {
       gracePeriodDays: 0,
       allowLate: true,
       requireMentorApproval: true,
+    });
+  }
+
+  private isDirty(): boolean {
+    return (
+      (this.trackDialogOpen() && this.trackForm.dirty) ||
+      this.moduleForm.dirty ||
+      (this.lessonModuleId() !== null && this.lessonForm.dirty) ||
+      ((this.quizModuleId() !== null || this.selectedQuiz() !== null) && this.quizForm.dirty) ||
+      (this.selectedQuiz() !== null && this.questionForm.dirty) ||
+      (this.assignmentModuleId() !== null && this.assignmentForm.dirty)
+    );
+  }
+
+  private saveLocalDraft(markPristine: boolean): boolean {
+    const draft: CurriculumAuthoringDraft = { selectedTrackId: this.selectedTrackId() };
+    if (this.trackDialogOpen() && this.trackForm.dirty) {
+      draft.track = { value: this.trackForm.getRawValue() };
+    }
+    if (this.moduleForm.dirty) {
+      draft.module = {
+        editingId: this.editingModuleId(),
+        value: this.moduleForm.getRawValue(),
+      };
+    }
+    if (this.lessonModuleId() && this.lessonForm.dirty) {
+      draft.lesson = {
+        moduleId: this.lessonModuleId()!,
+        editingId: this.editingLessonId(),
+        value: this.lessonForm.getRawValue(),
+      };
+    }
+    const selectedQuiz = this.selectedQuiz();
+    if ((this.quizModuleId() || selectedQuiz) && (this.quizForm.dirty || this.questionForm.dirty)) {
+      draft.quiz = {
+        moduleId: this.quizModuleId(),
+        quizId: selectedQuiz?.id ?? null,
+        dirty: this.quizForm.dirty,
+        value: this.quizForm.getRawValue(),
+      };
+      if (selectedQuiz && this.questionForm.dirty) {
+        draft.question = {
+          quizId: selectedQuiz.id,
+          value: this.questionForm.getRawValue(),
+        };
+      }
+    }
+    if (this.assignmentModuleId() && this.assignmentForm.dirty) {
+      draft.assignment = {
+        moduleId: this.assignmentModuleId()!,
+        editingId: this.editingAssignmentId(),
+        value: this.assignmentForm.getRawValue(),
+      };
+    }
+    const saved = this.drafts.save(this.draftKey, draft);
+    if (saved && markPristine) {
+      this.trackForm.markAsPristine();
+      this.moduleForm.markAsPristine();
+      this.lessonForm.markAsPristine();
+      this.quizForm.markAsPristine();
+      this.questionForm.markAsPristine();
+      this.assignmentForm.markAsPristine();
+    }
+    return saved;
+  }
+
+  private restorePendingDraft(): void {
+    const draft = this.pendingDraft;
+    const workspace = this.workspace();
+    if (!draft) return;
+    if (draft.selectedTrackId && workspace?.id !== draft.selectedTrackId) {
+      this.pendingDraft = null;
+      this.outcome.set(
+        'The saved authoring draft could not be restored because its track is unavailable.',
+      );
+      return;
+    }
+    this.pendingDraft = null;
+
+    if (draft.track) {
+      this.trackForm.reset(draft.track.value);
+      this.trackForm.markAsDirty();
+      this.trackDialogOpen.set(true);
+    }
+    if (!draft.selectedTrackId) {
+      this.outcome.set('Authoring draft restored.');
+      return;
+    }
+    if (draft.module) {
+      this.editingModuleId.set(draft.module.editingId);
+      this.moduleForm.reset(draft.module.value);
+      this.moduleForm.markAsDirty();
+    }
+    if (draft.lesson) {
+      this.lessonModuleId.set(draft.lesson.moduleId);
+      this.editingLessonId.set(draft.lesson.editingId);
+      this.lessonForm.reset(draft.lesson.value);
+      this.lessonForm.markAsDirty();
+    }
+    if (draft.quiz) this.restoreQuizDraft(draft);
+    if (draft.assignment) {
+      this.assignmentModuleId.set(draft.assignment.moduleId);
+      this.editingAssignmentId.set(draft.assignment.editingId);
+      this.rubric.clear();
+      for (const criterion of draft.assignment.value.rubric) {
+        this.rubric.push(this.rubricRow(criterion.description, criterion.points));
+      }
+      if (this.rubric.length === 0) this.rubric.push(this.rubricRow());
+      this.assignmentForm.reset(draft.assignment.value);
+      this.assignmentForm.markAsDirty();
+    }
+    this.outcome.set('Authoring draft restored.');
+  }
+
+  private restoreQuizDraft(draft: CurriculumAuthoringDraft): void {
+    const quizDraft = draft.quiz!;
+    if (!quizDraft.quizId) {
+      this.quizModuleId.set(quizDraft.moduleId);
+      this.quizForm.reset(quizDraft.value);
+      this.quizForm.markAsDirty();
+      return;
+    }
+    this.api.quiz(quizDraft.quizId).subscribe({
+      next: (quiz) => {
+        this.selectedQuiz.set(quiz);
+        this.quizForm.reset(quizDraft.value);
+        if (quizDraft.dirty) this.quizForm.markAsDirty();
+        if (draft.question) {
+          this.questionForm.reset(draft.question.value);
+          this.questionForm.markAsDirty();
+        }
+      },
+      error: (error: unknown) => this.fail(error),
     });
   }
 

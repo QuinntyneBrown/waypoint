@@ -1,4 +1,4 @@
-import { DOCUMENT, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,6 +17,9 @@ import {
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
 import { WuRole, WuShell } from '@wu/ui';
+import { EditorDraftService } from '../../../editor-draft.service';
+import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
+import { DraftSaveResult, UnsavedChangesService } from '../../../unsaved-changes.service';
 import { AttendanceQueueService } from '../../volunteer/attendance/attendance-queue.service';
 
 // Traces to: L2-ENGAGE-002/003, L2-NFR-004/006/007/009/010
@@ -82,14 +85,16 @@ import { AttendanceQueueService } from '../../volunteer/attendance/attendance-qu
     }
   `,
 })
-export class MentorAttendanceCapturePage {
+export class MentorAttendanceCapturePage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
   protected readonly queue = inject(AttendanceQueueService);
   private readonly api = inject(StaffOperationsApi);
   private readonly route = inject(ActivatedRoute);
-  private readonly doc = inject(DOCUMENT);
+  private readonly drafts = inject(EditorDraftService);
+  private readonly unsavedChanges = inject(UnsavedChangesService);
 
   protected readonly sessionId = this.route.snapshot.paramMap.get('sessionId') ?? '';
+  private readonly draftKey = `staff-attendance.${this.sessionId}`;
   protected readonly statuses: AttendanceStatus[] = ['Present', 'Late', 'Excused', 'Absent'];
   protected readonly session = signal<StaffSessionAttendance | undefined>(undefined);
   protected readonly rows = signal<StaffAttendanceRosterEntry[]>([]);
@@ -154,6 +159,7 @@ export class MentorAttendanceCapturePage {
       })
       .subscribe({
         next: (outcome) => {
+          this.drafts.clear(this.draftKey);
           this.baseline.set(this.snapshot(rows));
           this.saving.set(false);
           if (outcome.kind === 'saved') this.loadRoster(false);
@@ -182,27 +188,33 @@ export class MentorAttendanceCapturePage {
     this.loadRoster();
   }
 
-  canDeactivate(): boolean {
-    if (!this.dirty()) return true;
-    return (
-      this.doc.defaultView?.confirm(
-        'You have unsaved attendance changes. Leave this page and discard them?',
-      ) ?? false
+  canDeactivate(): DraftSaveResult {
+    return this.unsavedChanges.confirmSaveOrStay(this.dirty(), 'attendance', () =>
+      this.saveLocalDraft(true),
     );
   }
 
   @HostListener('window:beforeunload', ['$event'])
   protected beforeUnload(event: BeforeUnloadEvent): void {
-    if (!this.dirty()) return;
-    event.preventDefault();
-    event.returnValue = '';
+    this.unsavedChanges.warnBeforeUnload(event, this.dirty(), () => this.saveLocalDraft(false));
   }
 
   private loadRoster(resetBaseline = true): void {
     this.api.attendanceRoster(this.sessionId).subscribe({
       next: (session) => {
         this.session.set(session);
-        this.rows.set(session.roster);
+        const localDraft = resetBaseline
+          ? this.drafts.take<StaffAttendanceRosterEntry[]>(this.draftKey)
+          : null;
+        const rows = localDraft
+          ? session.roster.map((row) => {
+              const saved = localDraft.find((item) => item.youthUserId === row.youthUserId);
+              return saved
+                ? { ...row, mark: saved.mark, note: saved.note, version: saved.version }
+                : row;
+            })
+          : session.roster;
+        this.rows.set(rows);
         if (resetBaseline || !this.baseline()) this.baseline.set(this.snapshot(session.roster));
       },
       error: (error: unknown) => this.errorMessage.set(ApiError.from(error).title),
@@ -211,6 +223,13 @@ export class MentorAttendanceCapturePage {
 
   private count(status: AttendanceStatus): number {
     return this.rows().filter((row) => row.mark === status).length;
+  }
+
+  private saveLocalDraft(markPristine: boolean): boolean {
+    const rows = this.rows();
+    const saved = this.drafts.save(this.draftKey, rows);
+    if (saved && markPristine) this.baseline.set(this.snapshot(rows));
+    return saved;
   }
 
   private snapshot(rows: StaffAttendanceRosterEntry[]): string {
