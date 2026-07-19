@@ -36,6 +36,7 @@ public static class InfrastructureDependencyInjection
         }
 
         services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<AppDbContext>());
+        services.AddScoped<IDatabaseLifecycle, DatabaseLifecycle>();
         services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
         services.AddScoped<IJwtTokenIssuer, JwtTokenIssuer>();
         services.AddSingleton<IClock, SystemClock>();

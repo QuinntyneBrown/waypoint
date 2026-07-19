@@ -2,7 +2,11 @@ using System.Net;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests.NonFunctional;
 
@@ -178,9 +182,12 @@ public sealed class TransportSecurityTests
             {
                 var values = new Dictionary<string, string?>
                 {
-                    ["ConnectionStrings:Default"] = "InMemory",
+                    ["ConnectionStrings:Default"] = _environment == "Production"
+                        ? "Server=production;Database=WordUp;User Id=wordup;Password=not-used-by-test;TrustServerCertificate=True"
+                        : "InMemory",
                     ["Jwt:SigningKey"] = "wordup-transport-tests-signing-key-32chars-min!!",
                     ["AuditIntegrity:SigningKey"] = "wordup-transport-tests-audit-key-32chars-minimum!!",
+                    ["SensitiveData:EncryptionKey"] = "wordup-transport-tests-encryption-key-32chars!!",
                     ["Security:SensitiveRateLimit:PermitLimit"] = _permitLimit.ToString(),
                     ["Security:SensitiveRateLimit:WindowSeconds"] = "60",
                 };
@@ -190,6 +197,18 @@ public sealed class TransportSecurityTests
                 }
                 configuration.AddInMemoryCollection(values);
             });
+            builder.ConfigureTestServices(services =>
+            {
+                services.RemoveAll<IDatabaseLifecycle>();
+                services.AddSingleton<IDatabaseLifecycle, NoOpDatabaseLifecycle>();
+            });
         }
+    }
+
+    private sealed class NoOpDatabaseLifecycle : IDatabaseLifecycle
+    {
+        public Task MigrateAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+
+        public Task ResetAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
     }
 }

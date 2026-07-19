@@ -217,6 +217,7 @@ if (!builder.Environment.IsEnvironment("Testing"))
 }
 
 var app = builder.Build();
+InfrastructureStartupValidator.Validate(app.Configuration, app.Environment.EnvironmentName);
 
 // Establish one validated correlation id before any response or exception path is handled.
 app.UseMiddleware<CorrelationIdMiddleware>();
@@ -1349,6 +1350,11 @@ if (app.Environment.IsEnvironment("Testing"))
             cohort.TermEnd,
         });
     });
+}
+
+await using (var migrationScope = app.Services.CreateAsyncScope())
+{
+    await migrationScope.ServiceProvider.GetRequiredService<IDatabaseLifecycle>().MigrateAsync();
 }
 
 app.Run();
