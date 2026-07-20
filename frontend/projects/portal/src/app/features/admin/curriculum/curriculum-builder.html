@@ -534,8 +534,14 @@
   </main>
 
   @if (trackDialogOpen()) {
-    <div class="dialog-backdrop">
-      <section class="dialog-panel" role="dialog" aria-modal="true" aria-label="Create track">
+    <div class="dialog-backdrop" (click)="trackDialogOpen.set(false)">
+      <section
+        class="dialog-panel"
+        wuAccessibleDialog
+        aria-label="Create track"
+        (click)="$event.stopPropagation()"
+        (wuDialogEscape)="trackDialogOpen.set(false)"
+      >
         <h2>Create track</h2>
         <form class="wu-stack" [formGroup]="trackForm" (ngSubmit)="createTrack()">
           <div class="wu-field">
@@ -569,12 +575,13 @@
   }
 
   @if (lessonModuleId()) {
-    <div class="dialog-backdrop">
+    <div class="dialog-backdrop" (click)="closeLesson()">
       <section
         class="dialog-panel dialog-panel--wide"
-        role="dialog"
-        aria-modal="true"
+        wuAccessibleDialog
         [attr.aria-label]="editingLessonId() ? 'Edit lesson' : 'Add lesson'"
+        (click)="$event.stopPropagation()"
+        (wuDialogEscape)="closeLesson()"
       >
         <h2>{{ editingLessonId() ? 'Edit lesson' : 'Add lesson' }}</h2>
         <form class="dialog-grid" [formGroup]="lessonForm" (ngSubmit)="saveLesson()">
@@ -646,8 +653,14 @@
   }
 
   @if (quizModuleId()) {
-    <div class="dialog-backdrop">
-      <section class="dialog-panel" role="dialog" aria-modal="true" aria-label="Add quiz">
+    <div class="dialog-backdrop" (click)="closeQuizDialog()">
+      <section
+        class="dialog-panel"
+        wuAccessibleDialog
+        aria-label="Add quiz"
+        (click)="$event.stopPropagation()"
+        (wuDialogEscape)="closeQuizDialog()"
+      >
         <h2>Add quiz</h2>
         <form class="wu-stack" [formGroup]="quizForm" (ngSubmit)="createQuiz()">
           <div class="wu-field">
@@ -693,12 +706,13 @@
   }
 
   @if (assignmentModuleId()) {
-    <div class="dialog-backdrop">
+    <div class="dialog-backdrop" (click)="closeAssignment()">
       <section
         class="dialog-panel dialog-panel--wide"
-        role="dialog"
-        aria-modal="true"
+        wuAccessibleDialog
         [attr.aria-label]="editingAssignmentId() ? 'Edit assignment' : 'Add assignment'"
+        (click)="$event.stopPropagation()"
+        (wuDialogEscape)="closeAssignment()"
       >
         <h2>{{ editingAssignmentId() ? 'Edit assignment' : 'Add assignment' }}</h2>
         <form class="dialog-grid" [formGroup]="assignmentForm" (ngSubmit)="saveAssignment()">

@@ -8,6 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { ApiError, SUPPORT_CATEGORIES, SupportApi, SupportScreenshot } from '@wu/api';
 import { AuthStore } from '@wu/auth';
 import { WuIcon, WuShell } from '@wu/ui';
@@ -17,7 +18,7 @@ import { shellRole } from '../shell-role';
 @Component({
   selector: 'wu-support',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, ReactiveFormsModule, WuIcon],
+  imports: [WuShell, ReactiveFormsModule, RouterLink, WuIcon],
   templateUrl: './support.html',
 })
 export class Support implements OnDestroy {

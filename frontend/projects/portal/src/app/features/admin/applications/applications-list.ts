@@ -17,7 +17,7 @@ import {
   ApplicationSummary,
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
 import { Observable } from 'rxjs';
 
 type Decision = 'approve' | 'decline';
@@ -26,7 +26,7 @@ type Decision = 'approve' | 'decline';
 @Component({
   selector: 'wu-applications-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, DatePipe, ReactiveFormsModule],
+  imports: [WuShell, WuIcon, WuAccessibleDialog, DatePipe, ReactiveFormsModule],
   templateUrl: './applications-list.html',
   styles: `
     .application-name {

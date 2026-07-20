@@ -20,11 +20,27 @@ public class RevokeInvitationCommandHandler : IRequestHandler<RevokeInvitationCo
 
     public async Task Handle(RevokeInvitationCommand request, CancellationToken cancellationToken)
     {
-        var invitation = await _db.Invitations.FirstOrDefaultAsync(i => i.Id == request.InvitationId, cancellationToken)
-            ?? throw new NotFoundException("Invitation not found.");
+        var invitation = await InvitationScope.LoadManagedAsync(
+            _db,
+            _currentUser,
+            request.InvitationId,
+            cancellationToken);
+
+        if (invitation.Status != InvitationStatus.Pending)
+        {
+            throw new ConflictException("Only pending invitations can be revoked.");
+        }
 
         invitation.Status = InvitationStatus.Revoked;
-        await _db.SaveChangesAsync(cancellationToken);
+        invitation.ConcurrencyStamp = Guid.NewGuid();
+        try
+        {
+            await _db.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new ConflictException("This invitation changed before it could be revoked.");
+        }
         await _audit.LogAsync("InvitationRevoked", _currentUser.UserId, "Invitation", invitation.Id);
     }
 }

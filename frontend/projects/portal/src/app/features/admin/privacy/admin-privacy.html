@@ -1,0 +1,433 @@
+<wu-shell
+  role="admin"
+  active="privacy"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <header class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">System</div>
+        <h1 class="wu-page__title">Privacy requests</h1>
+        <p class="wu-page__sub">Review and fulfil trackable data-subject requests.</p>
+      </div>
+      <div class="wu-field">
+        <label class="wu-label" for="privacy-status">Status</label>
+        <select
+          class="wu-select"
+          id="privacy-status"
+          [value]="status()"
+          (change)="filterChanged($event)"
+        >
+          <option value="">All requests</option>
+          <option value="Pending">Pending</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+    </header>
+
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (statusMessage(); as message) {
+      <p class="wu-alert wu-alert--success" role="status">{{ message }}</p>
+    }
+
+    <div class="privacy-layout">
+      <section class="wu-card">
+        <div class="wu-card__body">
+          <h2 class="wu-card__title">Requests</h2>
+          @if (loading()) {
+            <p class="wu-muted" role="status">Loading privacy requests…</p>
+          } @else {
+            @for (item of items(); track item.id) {
+              <article class="privacy-row" data-testid="privacy-request">
+                <div class="wu-cluster wu-cluster--between">
+                  <div>
+                    <h3 class="wu-card__title">{{ item.actionType }}</h3>
+                    <div class="privacy-meta wu-muted wu-text-sm">
+                      <span>{{ item.subjectName }} · {{ item.subjectEmail }}</span>
+                      <span>{{ item.reference }} · {{ item.requestedAt | date: 'medium' }}</span>
+                    </div>
+                  </div>
+                  <span class="wu-badge" [class.wu-badge--lime]="item.status === 'Completed'">{{
+                    item.status
+                  }}</span>
+                </div>
+                @if (item.details) {
+                  <p class="wu-mt-3">{{ item.details }}</p>
+                }
+                @if (item.actionType === 'correction' && item.correction) {
+                  <p class="wu-muted">
+                    Requested values · Name: {{ item.correction.displayName || 'unchanged' }} ·
+                    Email: {{ item.correction.email || 'unchanged' }} · Pronouns:
+                    {{
+                      item.correction.clearPronouns
+                        ? 'remove saved pronouns'
+                        : item.correction.pronouns || 'unchanged'
+                    }}
+                  </p>
+                }
+                @if (item.resolutionNote) {
+                  <p class="wu-muted">Resolution: {{ item.resolutionNote }}</p>
+                }
+                @if (item.status !== 'Completed') {
+                  <button
+                    class="wu-btn wu-btn--secondary wu-mt-3"
+                    type="button"
+                    (click)="review(item)"
+                  >
+                    Review request
+                  </button>
+                }
+              </article>
+            } @empty {
+              <div class="wu-empty">
+                <div class="wu-empty__icon"><wu-icon name="shield" /></div>
+                <h3 class="wu-empty__title">
+                  No {{ status().toLocaleLowerCase() || '' }} requests
+                </h3>
+                <p class="wu-empty__text">Requests will appear here when users submit them.</p>
+              </div>
+            }
+            <div class="wu-cluster wu-cluster--between wu-mt-4">
+              <button
+                class="wu-btn wu-btn--ghost"
+                type="button"
+                [disabled]="page() <= 1"
+                (click)="previous()"
+              >
+                Previous
+              </button>
+              <span class="wu-muted">Page {{ page() }} · {{ total() }} total</span>
+              <button
+                class="wu-btn wu-btn--ghost"
+                type="button"
+                [disabled]="page() * 25 >= total()"
+                (click)="next()"
+              >
+                Next
+              </button>
+            </div>
+          }
+        </div>
+      </section>
+
+      <aside class="wu-card">
+        <div class="wu-card__body">
+          @if (selected(); as item) {
+            <h2 class="wu-card__title">Fulfil {{ item.reference }}</h2>
+            <p class="wu-muted wu-mb-4">
+              Apply only verified corrections. Removal and consent workflows are completed by the
+              server while preserving required de-identified records.
+            </p>
+            <form class="wu-stack" [formGroup]="form" (ngSubmit)="fulfill()">
+              @if (item.actionType === 'correction') {
+                <div class="wu-field">
+                  <label class="wu-label" for="fulfil-name">Corrected name</label
+                  ><input class="wu-input" id="fulfil-name" formControlName="displayName" />
+                </div>
+                <div class="wu-field">
+                  <label class="wu-label" for="fulfil-email">Corrected email</label
+                  ><input class="wu-input" id="fulfil-email" type="email" formControlName="email" />
+                </div>
+                <div class="wu-field">
+                  <label class="wu-label" for="fulfil-pronouns">Corrected pronouns</label
+                  ><input
+                    class="wu-input"
+                    id="fulfil-pronouns"
+                    formControlName="pronouns"
+                    [disabled]="form.controls.clearPronouns.value"
+                  />
+                </div>
+                <div class="wu-field">
+                  <label class="wu-check" for="fulfil-clear-pronouns">
+                    <input
+                      id="fulfil-clear-pronouns"
+                      type="checkbox"
+                      formControlName="clearPronouns"
+                      (change)="clearPronounsChanged()"
+                    />
+                    <span class="wu-check__box"><wu-icon name="check" /></span>
+                    <span>Remove saved pronouns</span>
+                  </label>
+                </div>
+              }
+              <fieldset
+                class="verified-records wu-stack"
+                aria-describedby="verified-records-intro ownership-warning verified-record-count"
+              >
+                <legend>Verified legacy public records (optional)</legend>
+                <p id="verified-records-intro" class="wu-muted">
+                  Add only record IDs whose ownership you verified independently. Separate GUIDs
+                  with commas or new lines. Empty categories are not submitted.
+                </p>
+                <div class="wu-alert wu-alert--warning" id="ownership-warning" role="note">
+                  <wu-icon class="wu-alert__icon" name="alert-triangle" />
+                  <div>
+                    <div class="wu-alert__title">High-risk ownership link</div>
+                    Linking a public submission can expose or remove another person's information.
+                    Verify every reference using evidence outside the submitted contact details. An
+                    email-address match alone never establishes ownership.
+                  </div>
+                </div>
+
+                <div class="verified-records__grid">
+                  <div
+                    class="wu-field"
+                    [class.is-error]="referenceInvalid(form.controls.verifiedContactRequestIds)"
+                  >
+                    <label class="wu-label" for="verified-contact-requests"
+                      >Contact request IDs</label
+                    >
+                    <textarea
+                      class="wu-textarea"
+                      id="verified-contact-requests"
+                      rows="3"
+                      autocomplete="off"
+                      spellcheck="false"
+                      formControlName="verifiedContactRequestIds"
+                      [attr.aria-invalid]="
+                        referenceInvalid(form.controls.verifiedContactRequestIds) ? 'true' : null
+                      "
+                      [attr.aria-describedby]="
+                        referenceInvalid(form.controls.verifiedContactRequestIds)
+                          ? 'verified-contact-help verified-contact-error'
+                          : 'verified-contact-help'
+                      "
+                    ></textarea>
+                    <p class="wu-help" id="verified-contact-help">
+                      References from the public contact form.
+                    </p>
+                    @if (referenceInvalid(form.controls.verifiedContactRequestIds)) {
+                      <p class="verified-error" id="verified-contact-error" role="alert">
+                        {{ invalidReferenceMessage(form.controls.verifiedContactRequestIds) }}
+                      </p>
+                    }
+                  </div>
+
+                  <div
+                    class="wu-field"
+                    [class.is-error]="referenceInvalid(form.controls.verifiedVolunteerSignupIds)"
+                  >
+                    <label class="wu-label" for="verified-volunteer-signups"
+                      >Volunteer signup IDs</label
+                    >
+                    <textarea
+                      class="wu-textarea"
+                      id="verified-volunteer-signups"
+                      rows="3"
+                      autocomplete="off"
+                      spellcheck="false"
+                      formControlName="verifiedVolunteerSignupIds"
+                      [attr.aria-invalid]="
+                        referenceInvalid(form.controls.verifiedVolunteerSignupIds) ? 'true' : null
+                      "
+                      [attr.aria-describedby]="
+                        referenceInvalid(form.controls.verifiedVolunteerSignupIds)
+                          ? 'verified-volunteer-help verified-volunteer-error'
+                          : 'verified-volunteer-help'
+                      "
+                    ></textarea>
+                    <p class="wu-help" id="verified-volunteer-help">
+                      References from the public volunteer form.
+                    </p>
+                    @if (referenceInvalid(form.controls.verifiedVolunteerSignupIds)) {
+                      <p class="verified-error" id="verified-volunteer-error" role="alert">
+                        {{ invalidReferenceMessage(form.controls.verifiedVolunteerSignupIds) }}
+                      </p>
+                    }
+                  </div>
+
+                  <div
+                    class="wu-field"
+                    [class.is-error]="referenceInvalid(form.controls.verifiedDonationPledgeIds)"
+                  >
+                    <label class="wu-label" for="verified-donation-pledges"
+                      >Donation pledge IDs</label
+                    >
+                    <textarea
+                      class="wu-textarea"
+                      id="verified-donation-pledges"
+                      rows="3"
+                      autocomplete="off"
+                      spellcheck="false"
+                      formControlName="verifiedDonationPledgeIds"
+                      [attr.aria-invalid]="
+                        referenceInvalid(form.controls.verifiedDonationPledgeIds) ? 'true' : null
+                      "
+                      [attr.aria-describedby]="
+                        referenceInvalid(form.controls.verifiedDonationPledgeIds)
+                          ? 'verified-donation-help verified-donation-error'
+                          : 'verified-donation-help'
+                      "
+                    ></textarea>
+                    <p class="wu-help" id="verified-donation-help">
+                      References from the public donation pledge form.
+                    </p>
+                    @if (referenceInvalid(form.controls.verifiedDonationPledgeIds)) {
+                      <p class="verified-error" id="verified-donation-error" role="alert">
+                        {{ invalidReferenceMessage(form.controls.verifiedDonationPledgeIds) }}
+                      </p>
+                    }
+                  </div>
+
+                  <div
+                    class="wu-field"
+                    [class.is-error]="
+                      referenceInvalid(form.controls.verifiedApplicantApplicationIds) ||
+                      applicationOwnershipConflict()
+                    "
+                  >
+                    <label class="wu-label" for="verified-applicant-applications"
+                      >Application IDs owned as applicant</label
+                    >
+                    <textarea
+                      class="wu-textarea"
+                      id="verified-applicant-applications"
+                      rows="3"
+                      autocomplete="off"
+                      spellcheck="false"
+                      formControlName="verifiedApplicantApplicationIds"
+                      [attr.aria-invalid]="
+                        referenceInvalid(form.controls.verifiedApplicantApplicationIds) ||
+                        applicationOwnershipConflict()
+                          ? 'true'
+                          : null
+                      "
+                      [attr.aria-describedby]="
+                        referenceInvalid(form.controls.verifiedApplicantApplicationIds)
+                          ? 'verified-applicant-help verified-applicant-error application-ownership-error'
+                          : 'verified-applicant-help application-ownership-error'
+                      "
+                    ></textarea>
+                    <p class="wu-help" id="verified-applicant-help">
+                      Applications submitted by this person as the applicant.
+                    </p>
+                    @if (referenceInvalid(form.controls.verifiedApplicantApplicationIds)) {
+                      <p class="verified-error" id="verified-applicant-error" role="alert">
+                        {{ invalidReferenceMessage(form.controls.verifiedApplicantApplicationIds) }}
+                      </p>
+                    }
+                  </div>
+
+                  <div
+                    class="wu-field"
+                    [class.is-error]="
+                      referenceInvalid(form.controls.verifiedGuardianApplicationIds) ||
+                      applicationOwnershipConflict()
+                    "
+                  >
+                    <label class="wu-label" for="verified-guardian-applications"
+                      >Application IDs owned as guardian</label
+                    >
+                    <textarea
+                      class="wu-textarea"
+                      id="verified-guardian-applications"
+                      rows="3"
+                      autocomplete="off"
+                      spellcheck="false"
+                      formControlName="verifiedGuardianApplicationIds"
+                      [attr.aria-invalid]="
+                        referenceInvalid(form.controls.verifiedGuardianApplicationIds) ||
+                        applicationOwnershipConflict()
+                          ? 'true'
+                          : null
+                      "
+                      [attr.aria-describedby]="
+                        referenceInvalid(form.controls.verifiedGuardianApplicationIds)
+                          ? 'verified-guardian-help verified-guardian-error application-ownership-error'
+                          : 'verified-guardian-help application-ownership-error'
+                      "
+                    ></textarea>
+                    <p class="wu-help" id="verified-guardian-help">
+                      Applications submitted or managed by this person as guardian.
+                    </p>
+                    @if (referenceInvalid(form.controls.verifiedGuardianApplicationIds)) {
+                      <p class="verified-error" id="verified-guardian-error" role="alert">
+                        {{ invalidReferenceMessage(form.controls.verifiedGuardianApplicationIds) }}
+                      </p>
+                    }
+                  </div>
+                </div>
+
+                <p
+                  class="verified-error"
+                  id="application-ownership-error"
+                  role="alert"
+                  [hidden]="!applicationOwnershipConflict()"
+                >
+                  The same application cannot be linked as both applicant-owned and guardian-owned.
+                  Choose the verified relationship.
+                </p>
+
+                <p class="wu-muted" id="verified-record-count">
+                  {{ verifiedRecordCount() }} of 200 unique record references selected.
+                </p>
+                @if (form.touched && form.hasError('verifiedRecordLimit')) {
+                  <p class="verified-error" role="alert">
+                    No more than 200 verified records can be linked in one request.
+                  </p>
+                }
+
+                <div class="verified-attestation" [class.is-error]="attestationInvalid()">
+                  <label class="wu-check" for="verified-ownership-attestation">
+                    <input
+                      id="verified-ownership-attestation"
+                      type="checkbox"
+                      formControlName="verifiedOwnershipAttested"
+                      [attr.aria-required]="verifiedRecordCount() > 0 ? 'true' : null"
+                      [attr.aria-invalid]="attestationInvalid() ? 'true' : null"
+                      [attr.aria-describedby]="
+                        attestationInvalid()
+                          ? 'ownership-warning ownership-attestation-help ownership-attestation-error'
+                          : 'ownership-warning ownership-attestation-help'
+                      "
+                    />
+                    <span class="wu-check__box"><wu-icon name="check" /></span>
+                    <span>
+                      <strong>I attest that I independently verified ownership.</strong><br />
+                      I verified that this person owns every referenced record using evidence beyond
+                      an email-address match.
+                    </span>
+                  </label>
+                  <p class="wu-help" id="ownership-attestation-help">
+                    Required whenever any legacy record ID is supplied. This decision is audited.
+                  </p>
+                  @if (attestationInvalid()) {
+                    <p class="verified-error" id="ownership-attestation-error" role="alert">
+                      Explicitly attest verified ownership before linking these records.
+                    </p>
+                  }
+                </div>
+              </fieldset>
+              <div class="wu-field">
+                <label class="wu-label" for="resolution-note">Resolution note</label>
+                <textarea
+                  class="wu-textarea"
+                  id="resolution-note"
+                  rows="4"
+                  formControlName="resolutionNote"
+                ></textarea>
+              </div>
+              <div class="wu-cluster">
+                <button class="wu-btn wu-btn--primary" type="submit" [disabled]="submitting()">
+                  {{ submitting() ? 'Completing…' : 'Complete request' }}
+                </button>
+                <button class="wu-btn wu-btn--ghost" type="button" (click)="selected.set(null)">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          } @else {
+            <div class="wu-empty">
+              <div class="wu-empty__icon"><wu-icon name="clipboard-check" /></div>
+              <h2 class="wu-empty__title">Choose a pending request</h2>
+              <p class="wu-empty__text">Its safe fulfilment controls will appear here.</p>
+            </div>
+          }
+        </div>
+      </aside>
+    </div>
+  </div>
+</wu-shell>

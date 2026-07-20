@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Application.Authentication.Auth;
 using WordUp.Application.Mentoring.Flags;
+using WordUp.Application.PlatformServices.Privacy;
 using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests.Mentoring;
@@ -99,6 +100,159 @@ public sealed class FlagTests : IntegrationTestBase
         var afterResolve = await GetAsync("/api/mentor/flags", token);
         var stillAtRisk = await afterResolve.Content.ReadFromJsonAsync<List<AtRiskYouth>>();
         Assert.That(stillAtRisk!.Select(a => a.YouthId), Does.Not.Contain(scenario.YouthA));
+    }
+
+    [Test]
+    public async Task Flag_free_text_never_enters_the_append_only_audit_and_is_erased_on_removal()
+    {
+        var scenario = await SeedMentorWithYouthAsync();
+        var token = await SignInAsync(scenario.MentorEmail);
+        var reasonSentinel = $"PRIVATE-FLAG-REASON-{Guid.NewGuid():N}";
+
+        var raise = await PostAsync(
+            $"/api/mentor/youth/{scenario.YouthA}/flag",
+            new { reason = reasonSentinel },
+            token);
+        Assert.That(raise.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        using var scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var flag = await db.Flags.SingleAsync(item =>
+            item.YouthUserId == scenario.YouthA && item.ResolvedAt == null);
+        var raisedAudit = await db.AuditEntries.SingleAsync(item => item.Action == "YouthFlagged");
+        Assert.Multiple(() =>
+        {
+            Assert.That(raisedAudit.TargetType, Is.EqualTo("Flag"));
+            Assert.That(raisedAudit.TargetId, Is.EqualTo(flag.Id));
+            Assert.That(raisedAudit.Details, Is.EqualTo("category=manual"));
+            Assert.That(raisedAudit.Details, Does.Not.Contain(reasonSentinel));
+        });
+
+        var youth = await db.Users.SingleAsync(item => item.Id == scenario.YouthA);
+        await scope.ServiceProvider.GetRequiredService<PersonalDataAnonymizer>()
+            .AnonymizeAsync(youth, DateTime.UtcNow, CancellationToken.None);
+        await db.SaveChangesAsync();
+        db.ChangeTracker.Clear();
+
+        var erasedFlag = await db.Flags.SingleAsync(item => item.Id == flag.Id);
+        var relatedAuditEntries = await db.AuditEntries.AsNoTracking()
+            .Where(item => item.TargetId == flag.Id || item.TargetId == scenario.YouthA)
+            .ToListAsync();
+        var auditText = relatedAuditEntries
+            .Select(item => (item.Details ?? string.Empty) + " " + (item.Source ?? string.Empty))
+            .ToList();
+        Assert.Multiple(() =>
+        {
+            Assert.That(erasedFlag.Reason, Is.EqualTo("[removed]"));
+            Assert.That(auditText.Any(item => item.Contains(reasonSentinel, StringComparison.Ordinal)), Is.False);
+        });
+    }
+
+    [Test]
+    public async Task Cross_account_risk_delivery_is_content_free_and_subject_linked_email_is_purged()
+    {
+        var youthNameSentinel = $"PRIVATE-YOUTH-NAME-{Guid.NewGuid():N}";
+        var mentor = await SeedUserAsync(Roles.Mentor, "Risk delivery mentor");
+        var youth = await SeedUserAsync(
+            Roles.Youth,
+            youthNameSentinel,
+            mentorId: mentor.Id,
+            lastSignInAt: DateTime.UtcNow.AddDays(-13));
+        Guid notificationId;
+        Guid scheduledId;
+        string reasonSentinel;
+
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+            configuration[ConfigurationAtRiskThresholds.InactiveDaysKey] = "7";
+            configuration[ConfigurationAtRiskThresholds.MissedSessionsKey] = "99";
+            configuration[ConfigurationAtRiskThresholds.ProgressGapKey] = "100";
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            db.NotificationPreferences.Add(new NotificationPreference
+            {
+                UserId = mentor.Id,
+                EventKey = "at-risk-alert",
+                InApp = true,
+                Email = true,
+            });
+            await db.SaveChangesAsync();
+
+            await using (var evaluationTransaction = await db.Database.BeginTransactionAsync())
+            {
+                await scope.ServiceProvider.GetRequiredService<AtRiskEvaluator>()
+                    .EvaluateAsync(new[] { youth.Id });
+                await evaluationTransaction.CommitAsync();
+            }
+            var notification = await db.Notifications.SingleAsync(item =>
+                item.UserId == mentor.Id && item.EventKey == "at-risk-alert");
+            notificationId = notification.Id;
+            reasonSentinel = (await db.Flags.SingleAsync(item => item.YouthUserId == youth.Id)).Reason;
+            var capturedEmail = Factory.Emails.LastTo(mentor.Email)!;
+            Assert.Multiple(() =>
+            {
+                Assert.That(notification.Title + notification.Body, Does.Not.Contain(youthNameSentinel));
+                Assert.That(notification.Title + notification.Body, Does.Not.Contain(reasonSentinel));
+                Assert.That(capturedEmail.Subject + capturedEmail.Body, Does.Not.Contain(youthNameSentinel));
+                Assert.That(capturedEmail.Subject + capturedEmail.Body, Does.Not.Contain(reasonSentinel));
+                Assert.That(capturedEmail.SubjectUserId, Is.EqualTo(youth.Id));
+            });
+
+            var scheduled = new ScheduledNotification
+            {
+                UserId = mentor.Id,
+                EventKey = "at-risk-follow-up",
+                Title = notification.Title,
+                Body = notification.Body,
+                LinkPath = notification.LinkPath,
+                SourceType = "at-risk-flag",
+                SourceId = Guid.NewGuid(),
+                DeliverAt = DateTime.UtcNow.AddDays(1),
+            };
+            db.ScheduledNotifications.Add(scheduled);
+            scheduledId = scheduled.Id;
+            await db.SaveChangesAsync();
+
+            var outbox = new OutboxEmailSender(
+                db,
+                scope.ServiceProvider.GetRequiredService<IClock>(),
+                scope.ServiceProvider.GetRequiredService<IUserPrivacyLock>());
+            await using var privacyTransaction = await db.Database.BeginTransactionAsync();
+            await outbox.SendAsync(
+                mentor.Email,
+                capturedEmail.Subject,
+                capturedEmail.Body,
+                subjectUserId: youth.Id);
+            await privacyTransaction.CommitAsync();
+
+            var trackedYouth = await db.Users.SingleAsync(item => item.Id == youth.Id);
+            await scope.ServiceProvider.GetRequiredService<PersonalDataAnonymizer>()
+                .AnonymizeAsync(trackedYouth, DateTime.UtcNow, CancellationToken.None);
+            await db.SaveChangesAsync();
+        }
+
+        using var verifyScope = Factory.Services.CreateScope();
+        var verify = verifyScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var retainedNotification = await verify.Notifications.FindAsync(notificationId);
+        var retainedScheduled = await verify.ScheduledNotifications.FindAsync(scheduledId);
+        var subjectLinkedEmails = await verify.OutboundEmails.AsNoTracking()
+            .Where(item => item.SubjectUserId == youth.Id)
+            .ToListAsync();
+        var retainedText = new[]
+            {
+                (retainedNotification?.Title ?? string.Empty) + " " + (retainedNotification?.Body ?? string.Empty),
+                (retainedScheduled?.Title ?? string.Empty) + " " + (retainedScheduled?.Body ?? string.Empty),
+            }
+            .Concat(subjectLinkedEmails.Select(item => item.Subject + " " + item.Body))
+            .ToList();
+        Assert.Multiple(() =>
+        {
+            Assert.That(retainedNotification, Is.Not.Null);
+            Assert.That(retainedScheduled, Is.Not.Null);
+            Assert.That(verify.OutboundEmails.Any(item => item.SubjectUserId == youth.Id), Is.False);
+            Assert.That(retainedText.Any(item => item.Contains(youthNameSentinel, StringComparison.Ordinal)), Is.False);
+            Assert.That(retainedText.Any(item => item.Contains(reasonSentinel, StringComparison.Ordinal)), Is.False);
+        });
     }
 
     [Test]

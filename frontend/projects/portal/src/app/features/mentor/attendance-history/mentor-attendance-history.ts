@@ -84,6 +84,7 @@ export class MentorAttendanceHistoryPage {
   protected readonly exporting = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly statusMessage = signal<string | null>(null);
+  private loadSequence = 0;
   protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
   protected readonly shellRole = computed<WuRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
   protected readonly calendarPath = computed(() =>
@@ -108,6 +109,7 @@ export class MentorAttendanceHistoryPage {
   }
 
   protected load(): void {
+    const sequence = ++this.loadSequence;
     this.loading.set(true);
     this.errorMessage.set(null);
     const filter = this.filter();
@@ -116,11 +118,14 @@ export class MentorAttendanceHistoryPage {
       youth: this.api.youthHistory(filter),
     }).subscribe({
       next: ({ sessions, youth }) => {
+        if (sequence !== this.loadSequence) return;
         this.sessions.set(sessions);
         this.youth.set(youth);
         this.loading.set(false);
       },
-      error: (error: unknown) => this.fail(error),
+      error: (error: unknown) => {
+        if (sequence === this.loadSequence) this.fail(error);
+      },
     });
   }
 

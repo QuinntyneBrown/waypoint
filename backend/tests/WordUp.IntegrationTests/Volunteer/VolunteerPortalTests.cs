@@ -189,10 +189,10 @@ public sealed class VolunteerPortalTests : IntegrationTestBase
 
         // Names are present and sorted; marks reflect current attendance (null when unmarked).
         var expectedNames = youth.Select(y => y.Name).OrderBy(n => n, StringComparer.Ordinal).ToList();
-        Assert.That(roster.Select(r => r.Name), Is.EqualTo(expectedNames));
-        var marked = roster.Single(r => r.YouthUserId == youth[0].Id);
+        Assert.That(roster!.Select(r => r.Name), Is.EqualTo(expectedNames));
+        var marked = roster!.Single(r => r.YouthUserId == youth[0].Id);
         Assert.That(marked.Mark, Is.EqualTo("Present"));
-        Assert.That(roster.Where(r => r.YouthUserId != youth[0].Id).All(r => r.Mark is null), Is.True);
+        Assert.That(roster!.Where(r => r.YouthUserId != youth[0].Id).All(r => r.Mark is null), Is.True);
 
         // No progress / at-risk / flag / note / safeguarding fields are exposed (AC2).
         var raw = await response.Content.ReadAsStringAsync();
@@ -284,7 +284,7 @@ public sealed class VolunteerPortalTests : IntegrationTestBase
         var schedule = await response.Content.ReadFromJsonAsync<List<ScheduleItemDto>>();
         Assert.That(schedule, Is.Not.Null);
         Assert.That(schedule!.Select(s => s.SessionId), Is.EqualTo(new[] { soonerId, laterId }));
-        Assert.That(schedule.All(s => s.Status == "upcoming"), Is.True);
+        Assert.That(schedule!.All(s => s.Status == "upcoming"), Is.True);
     }
 
     [Test]

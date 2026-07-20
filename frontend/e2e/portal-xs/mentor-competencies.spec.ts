@@ -12,16 +12,16 @@ test('competency assessment reflows and saves by keyboard on mobile', async ({ p
   await page.goto(`/mentor/youth/${seeded.youthId}/competencies`);
 
   const tracker = new MentorCompetencyPage(page);
-  await tracker.level(seeded.mentorCompetencyName).focus();
+  await tracker.levelById(seeded.mentorCompetencyId).focus();
   await page.keyboard.press('End');
-  await expect(tracker.level(seeded.mentorCompetencyName)).toHaveValue('Mastered');
-  await tracker.notes(seeded.mentorCompetencyName).focus();
+  await expect(tracker.levelById(seeded.mentorCompetencyId)).toHaveValue('Mastered');
+  await tracker.notesById(seeded.mentorCompetencyId).focus();
   await page.keyboard.type('Assessed from a phone-sized viewport.');
-  await tracker.save(seeded.mentorCompetencyName).focus();
+  await tracker.saveById(seeded.mentorCompetencyId).focus();
   await page.keyboard.press('Enter');
   await expect(tracker.status).toContainText(`Saved ${seeded.mentorCompetencyName}`);
   expect(
-    (await tracker.save(seeded.mentorCompetencyName).boundingBox())?.height ?? 0,
+    (await tracker.saveById(seeded.mentorCompetencyId).boundingBox())?.height ?? 0,
   ).toBeGreaterThanOrEqual(44);
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),

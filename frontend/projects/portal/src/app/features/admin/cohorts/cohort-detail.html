@@ -133,12 +133,11 @@
   @if (editOpen()) {
     <div
       class="wu-modal wu-modal--sm is-open"
-      role="dialog"
-      aria-modal="true"
+      wuAccessibleDialog
       aria-labelledby="edit-cohort-heading"
-      (keydown.escape)="closeEdit()"
+      (wuDialogEscape)="closeEdit()"
     >
-      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__scrim" (click)="closeEdit()"></div>
       <div class="wu-modal__panel">
         <div class="wu-modal__header">
           <div>

@@ -31,13 +31,16 @@ namespace WordUp.Infrastructure.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("ApplicantUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("CohortId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CohortInterest")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -46,38 +49,41 @@ namespace WordUp.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DecisionNote")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("GuardianEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("GuardianName")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("GuardianPhone")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<Guid?>("GuardianUserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
 
                     b.Property<Guid?>("MentorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Neighbourhood")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<bool>("ParticipationConsentAck")
                         .HasColumnType("bit");
@@ -92,20 +98,26 @@ namespace WordUp.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TrackInterest")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("WhoIsFilling")
                         .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("WhyInterested")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicantUserId");
+
+                    b.HasIndex("CreatedYouthUserId");
+
+                    b.HasIndex("GuardianUserId");
 
                     b.HasIndex("Status");
 
@@ -124,6 +136,10 @@ namespace WordUp.Infrastructure.Migrations
                     b.Property<Guid?>("CohortId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -140,6 +156,9 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<Guid?>("MentorId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ReplacementRequestedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -332,8 +351,8 @@ namespace WordUp.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Details")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IntegrityHash")
                         .HasMaxLength(64)
@@ -350,8 +369,8 @@ namespace WordUp.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Source")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<Guid?>("TargetId")
                         .HasColumnType("uniqueidentifier");
@@ -467,8 +486,8 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<string>("Destination")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("datetime2");
@@ -1160,8 +1179,8 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -1178,15 +1197,22 @@ namespace WordUp.Infrastructure.Migrations
                     b.Property<DateTime?>("ReadAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("ScheduledNotificationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ScheduledNotificationId")
+                        .IsUnique()
+                        .HasFilter("[ScheduledNotificationId] IS NOT NULL");
 
                     b.HasIndex("UserId", "ReadAt");
 
@@ -1199,10 +1225,13 @@ namespace WordUp.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("AttemptCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CancelledAt")
                         .HasColumnType("datetime2");
@@ -1221,9 +1250,25 @@ namespace WordUp.Infrastructure.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<DateTime?>("LastAttemptAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastErrorCode")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<Guid?>("LeaseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("LeaseUntil")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LinkPath")
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
+
+                    b.Property<DateTime?>("NextAttemptAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("SourceId")
                         .HasColumnType("uniqueidentifier");
@@ -1235,8 +1280,8 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -1314,8 +1359,8 @@ namespace WordUp.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Note")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(8000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ReminderSet")
                         .HasColumnType("bit");
@@ -1415,7 +1460,6 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(50000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CompletedAt")
@@ -1622,8 +1666,8 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<string>("OriginalFileName")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<Guid>("OwnerUserId")
                         .HasColumnType("uniqueidentifier");
@@ -1790,8 +1834,8 @@ namespace WordUp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("Message")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
+                        .HasMaxLength(24000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReminderCadence")
                         .HasMaxLength(32)
@@ -1896,8 +1940,8 @@ namespace WordUp.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AutomaticReason")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AutomaticSignalKeys")
                         .HasMaxLength(128)
@@ -1917,12 +1961,12 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<string>("Reason")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResolutionReason")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
 
                     b.Property<DateTime?>("ResolvedAt")
                         .HasColumnType("datetime2");
@@ -1956,6 +2000,10 @@ namespace WordUp.Infrastructure.Migrations
                     b.Property<Guid?>("CompletedByUserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Details")
                         .HasMaxLength(12000)
                         .HasColumnType("nvarchar(max)");
@@ -1967,6 +2015,21 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<DateTime>("RequestedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("RequestedClearPronouns")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RequestedDisplayName")
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestedEmail")
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestedPronouns")
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResolutionNote")
                         .HasMaxLength(12000)
@@ -2054,6 +2117,83 @@ namespace WordUp.Infrastructure.Migrations
                     b.ToTable("NotificationPreferences");
                 });
 
+            modelBuilder.Entity("WordUp.Domain.PlatformServices.OutboundEmail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AttemptCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AvailableAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasMaxLength(40000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IdempotencyKey")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsPrivacyRemovalConfirmation")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastAttemptAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastErrorCode")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<Guid?>("LeaseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("LeaseUntil")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("PurgeAfterDelivery")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("RecipientUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SubjectUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ToEmail")
+                        .IsRequired()
+                        .HasMaxLength(12000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdempotencyKey")
+                        .IsUnique()
+                        .HasFilter("[IdempotencyKey] IS NOT NULL");
+
+                    b.HasIndex("RecipientUserId");
+
+                    b.HasIndex("SubjectUserId");
+
+                    b.HasIndex("SentAt", "AvailableAt", "LeaseUntil");
+
+                    b.ToTable("OutboundEmails");
+                });
+
             modelBuilder.Entity("WordUp.Domain.PlatformServices.StoredUserFile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2074,8 +2214,8 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<string>("OriginalFileName")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<Guid>("OwnerUserId")
                         .HasColumnType("uniqueidentifier");
@@ -2271,27 +2411,32 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
+                        .HasMaxLength(24000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<Guid?>("OwnerUserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Topic")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedAt");
+
+                    b.HasIndex("OwnerUserId");
 
                     b.ToTable("ContactRequests");
                 });
@@ -2307,13 +2452,13 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.Property<string>("DonorName")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("Frequency")
                         .IsRequired()
@@ -2323,9 +2468,12 @@ namespace WordUp.Infrastructure.Migrations
                     b.Property<decimal?>("MonthlyAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<Guid?>("OwnerUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ProviderReference")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("Tier")
                         .IsRequired()
@@ -2335,6 +2483,8 @@ namespace WordUp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedAt");
+
+                    b.HasIndex("OwnerUserId");
 
                     b.ToTable("DonationPledges");
                 });
@@ -2346,25 +2496,28 @@ namespace WordUp.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AreasOfInterest")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<Guid?>("OwnerUserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Phone")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
 
                     b.Property<bool>("ScreeningConsentAck")
                         .HasColumnType("bit");
@@ -2373,7 +2526,59 @@ namespace WordUp.Infrastructure.Migrations
 
                     b.HasIndex("CreatedAt");
 
+                    b.HasIndex("OwnerUserId");
+
                     b.ToTable("VolunteerSignups");
+                });
+
+            modelBuilder.Entity("WordUp.Domain.ApplicationIntake.YouthApplication", b =>
+                {
+                    b.HasOne("WordUp.Domain.Authentication.User", null)
+                        .WithMany()
+                        .HasForeignKey("ApplicantUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("WordUp.Domain.Authentication.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedYouthUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("WordUp.Domain.Authentication.User", null)
+                        .WithMany()
+                        .HasForeignKey("GuardianUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("WordUp.Domain.PlatformServices.OutboundEmail", b =>
+                {
+                    b.HasOne("WordUp.Domain.Authentication.User", null)
+                        .WithMany()
+                        .HasForeignKey("RecipientUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("WordUp.Domain.PublicSite.ContactRequest", b =>
+                {
+                    b.HasOne("WordUp.Domain.Authentication.User", null)
+                        .WithMany()
+                        .HasForeignKey("OwnerUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("WordUp.Domain.PublicSite.DonationPledge", b =>
+                {
+                    b.HasOne("WordUp.Domain.Authentication.User", null)
+                        .WithMany()
+                        .HasForeignKey("OwnerUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("WordUp.Domain.PublicSite.VolunteerSignup", b =>
+                {
+                    b.HasOne("WordUp.Domain.Authentication.User", null)
+                        .WithMany()
+                        .HasForeignKey("OwnerUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
 using MediatR;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Application.ApplicationIntake;
 
@@ -15,4 +16,4 @@ public record SubmitApplicationCommand(
     string? GuardianEmail,
     string? GuardianPhone,
     bool ParticipationConsentAck,
-    bool PrivacyAck) : IRequest<SubmitApplicationResult>;
+    bool PrivacyAck) : IRequest<SubmitApplicationResult>, IAtomicRequest;

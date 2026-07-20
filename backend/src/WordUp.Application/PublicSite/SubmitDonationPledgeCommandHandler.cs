@@ -1,6 +1,7 @@
 using System.Net;
 using MediatR;
 using WordUp.Application.Shared.Abstractions;
+using WordUp.Application.Shared.Security;
 
 namespace WordUp.Application.PublicSite;
 
@@ -9,20 +10,29 @@ public class SubmitDonationPledgeCommandHandler : IRequestHandler<SubmitDonation
     private readonly IAppDbContext _db;
     private readonly IClock _clock;
     private readonly IAuditLogger _audit;
+    private readonly AuthenticatedPrivacyWriteGuard _privacyWriteGuard;
 
-    public SubmitDonationPledgeCommandHandler(IAppDbContext db, IClock clock, IAuditLogger audit)
+    public SubmitDonationPledgeCommandHandler(
+        IAppDbContext db,
+        IClock clock,
+        IAuditLogger audit,
+        AuthenticatedPrivacyWriteGuard privacyWriteGuard)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
+        _privacyWriteGuard = privacyWriteGuard;
     }
 
     public async Task<SubmitDonationPledgeResult> Handle(SubmitDonationPledgeCommand request, CancellationToken cancellationToken)
     {
+        var authenticatedAuthorId = await _privacyWriteGuard.AcquireAuthorAsync(cancellationToken);
+
         // Persist ONLY the pledge intent + an optional opaque provider reference — never any card/PAN data
         // (L2-PUB-003 AC3). Free-text is HTML-encoded before persistence (L2-NFR-001).
         var pledge = new DonationPledge
         {
+            OwnerUserId = authenticatedAuthorId,
             DonorName = WebUtility.HtmlEncode(request.DonorName.Trim()),
             Email = request.Email.Trim().ToLowerInvariant(),
             Tier = WebUtility.HtmlEncode(request.Tier.Trim()),
@@ -35,7 +45,11 @@ public class SubmitDonationPledgeCommandHandler : IRequestHandler<SubmitDonation
         _db.DonationPledges.Add(pledge);
         await _db.SaveChangesAsync(cancellationToken);
 
-        await _audit.LogAsync("DonationPledgeSubmitted", null, "DonationPledge", pledge.Id);
+        await _audit.LogAsync(
+            "DonationPledgeSubmitted",
+            pledge.OwnerUserId,
+            "DonationPledge",
+            pledge.Id);
 
         return new SubmitDonationPledgeResult(
             pledge.Id,

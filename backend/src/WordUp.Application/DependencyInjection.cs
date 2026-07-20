@@ -6,6 +6,7 @@ using WordUp.Application.Engagement.Notifications;
 using WordUp.Application.Mentoring.Flags;
 using WordUp.Application.PlatformServices.Privacy;
 using WordUp.Application.Shared.Behaviors;
+using WordUp.Application.Shared.Security;
 
 namespace WordUp.Application;
 
@@ -21,6 +22,7 @@ public static class ApplicationDependencyInjection
         services.AddScoped<AtRiskEvaluator>();
         services.AddScoped<NotificationDeliveryService>();
         services.AddScoped<PersonalDataAnonymizer>();
+        services.AddScoped<AuthenticatedPrivacyWriteGuard>();
         return services;
     }
 }

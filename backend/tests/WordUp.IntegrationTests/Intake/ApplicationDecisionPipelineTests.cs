@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Authentication.Auth;
+using WordUp.Application.Shared.Abstractions;
 using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests.Intake;
@@ -167,6 +168,99 @@ public sealed class ApplicationDecisionPipelineTests : IntegrationTestBase
             Is.Not.Null);
     }
 
+    [Test]
+    public async Task Approval_links_the_guardian_mailbox_and_new_youth_content_subject()
+    {
+        var placement = await SeedPlacementAsync();
+        var guardian = await SeedAndSignInAsync(Roles.Guardian);
+        var submission = await SendAsync(
+            HttpMethod.Post,
+            "/api/applications",
+            new
+            {
+                firstName = "Linked",
+                lastName = "Applicant",
+                age = 18,
+                whoIsFilling = "guardian",
+                neighbourhood = "Rexdale",
+                cohortInterest = "Saturday cohort",
+                whyInterested = "I want to grow in leadership.",
+                trackInterest = "Leadership",
+                guardianName = "Linked Guardian",
+                guardianEmail = guardian.User.Email,
+                guardianPhone = "4165550199",
+                participationConsentAck = true,
+                privacyAck = true,
+            },
+            guardian.Token);
+        submission.EnsureSuccessStatusCode();
+        var applicationId = (await submission.Content.ReadFromJsonAsync<SubmitResultDto>())!
+            .ApplicationId;
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+
+        var approval = await SendAsync(
+            HttpMethod.Post,
+            $"/api/applications/{applicationId}/approve",
+            new
+            {
+                cohortId = placement.CohortId,
+                mentorId = placement.MentorId,
+            },
+            adminToken);
+        approval.EnsureSuccessStatusCode();
+        var youthId = (await approval.Content.ReadFromJsonAsync<ApproveResultDto>())!.YouthUserId;
+
+        var email = Factory.Emails.LastTo(guardian.User.Email);
+        Assert.Multiple(() =>
+        {
+            Assert.That(email, Is.Not.Null);
+            Assert.That(email!.RecipientUserId, Is.EqualTo(guardian.User.Id));
+            Assert.That(email.SubjectUserId, Is.EqualTo(youthId));
+        });
+    }
+
+    [Test]
+    public async Task Decline_to_a_linked_self_applicant_uses_the_account_as_recipient_and_subject()
+    {
+        var applicant = await SeedAndSignInAsync(Roles.Youth);
+        var submission = await SendAsync(
+            HttpMethod.Post,
+            "/api/applications",
+            new
+            {
+                firstName = "Linked",
+                lastName = "Self Applicant",
+                age = 18,
+                whoIsFilling = "self",
+                neighbourhood = "Rexdale",
+                cohortInterest = "Saturday cohort",
+                whyInterested = "I want to grow in leadership.",
+                trackInterest = "Leadership",
+                participationConsentAck = true,
+                privacyAck = true,
+            },
+            applicant.Token);
+        submission.EnsureSuccessStatusCode();
+        var applicationId = (await submission.Content.ReadFromJsonAsync<SubmitResultDto>())!
+            .ApplicationId;
+        var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
+
+        var decline = await SendAsync(
+            HttpMethod.Post,
+            $"/api/applications/{applicationId}/decline",
+            new { decisionNote = "No place is available this term." },
+            adminToken);
+        Assert.That(decline.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+        var email = Factory.Emails.LastTo(applicant.User.Email);
+        Assert.Multiple(() =>
+        {
+            Assert.That(email, Is.Not.Null);
+            Assert.That(email!.RecipientUserId, Is.EqualTo(applicant.User.Id));
+            Assert.That(email.SubjectUserId, Is.EqualTo(applicant.User.Id));
+        });
+    }
+
     private async Task<Placement> SeedPlacementAsync()
     {
         using var scope = Factory.Services.CreateScope();
@@ -230,6 +324,33 @@ public sealed class ApplicationDecisionPipelineTests : IntegrationTestBase
         });
         response.EnsureSuccessStatusCode();
         return (await response.Content.ReadFromJsonAsync<SubmitResultDto>())!.ApplicationId;
+    }
+
+    private async Task<(User User, string Token)> SeedAndSignInAsync(string role)
+    {
+        const string password = "Passw0rd!";
+        var user = new User
+        {
+            Email = $"decision.{Guid.NewGuid():N}@example.com",
+            DisplayName = "Decision recipient",
+            Role = role,
+            Status = UserStatus.Active,
+        };
+        using (var scope = Factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            user.PasswordHash = scope.ServiceProvider.GetRequiredService<IPasswordHasher>()
+                .Hash(password);
+            db.Users.Add(user);
+            await db.SaveChangesAsync();
+        }
+
+        var response = await Client.PostAsJsonAsync(
+            "/api/auth/sign-in",
+            new { email = user.Email, password });
+        response.EnsureSuccessStatusCode();
+        var auth = await response.Content.ReadFromJsonAsync<AuthResult>();
+        return (user, auth!.AccessToken);
     }
 
     private async Task<HttpResponseMessage> SendAsync(

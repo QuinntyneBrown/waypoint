@@ -23,6 +23,12 @@ export class LandingPage extends BasePage {
   get applyCta() {
     return this.page.getByRole('link', { name: 'Apply', exact: true }).first();
   }
+  impactStat(label: string) {
+    return this.page
+      .locator('.wu-statcard')
+      .filter({ hasText: label })
+      .locator('.wu-statcard__value');
+  }
 
   /** Returns the navigation response so specs can assert the status code. */
   goto() {
@@ -60,7 +66,9 @@ export class AboutPage extends BasePage {
   }
 
   cohort(name: string) {
-    return this.page.getByRole('heading', { name, exact: true });
+    return this.page.getByRole('article').filter({
+      has: this.page.getByRole('heading', { name, exact: true }),
+    });
   }
 }
 
@@ -187,7 +195,8 @@ export class ContactPage extends BasePage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto(ContactPage.path);
+    // Wait for hydration so a fast submit cannot fall through to native form navigation.
+    await this.page.goto(ContactPage.path, { waitUntil: 'networkidle' });
   }
 }
 
@@ -221,7 +230,8 @@ export class GetInvolvedPage extends BasePage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto(GetInvolvedPage.path);
+    // Wait for hydration so form input is reflected in Angular's reactive state.
+    await this.page.goto(GetInvolvedPage.path, { waitUntil: 'networkidle' });
   }
 
   /** Toggle the screening-consent acknowledgement via its custom checkbox. */

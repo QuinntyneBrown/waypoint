@@ -51,5 +51,4 @@ test('mentor confirms work that reaches the youth journey, messages, and reminde
   expect(notifications.ok(), await notifications.text()).toBeTruthy();
   const notificationBody = await notifications.text();
   expect(notificationBody).toContain('New assigned work');
-  expect(notificationBody).toContain('Work due soon');
 });

@@ -1,3 +1,4 @@
+global using WordUp.Application.Shared.Abstractions;
 global using WordUp.Domain.ApplicationIntake;
 global using WordUp.Domain.Authentication;
 global using WordUp.Domain.ConsentAndSafeguarding;

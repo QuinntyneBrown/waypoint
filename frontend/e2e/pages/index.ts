@@ -18,6 +18,7 @@ export {
   ResetPasswordPage,
   ResetLinkInvalidPage,
   SessionExpiredPage,
+  InviteAcceptPage,
 } from './auth.pages';
 export { OnboardingPage } from './onboarding.page';
 export {
@@ -25,6 +26,8 @@ export {
   NotificationsSettingsPage,
   ProfileSettingsPage,
   SupportPage,
+  HelpPage,
+  PrivacySettingsPage,
 } from './settings.pages';
 export {
   YouthAnnouncementsPage,
@@ -77,6 +80,9 @@ export {
   AdminReportsPage,
   AdminRosterImportPage,
   AdminAuditLogPage,
+  AdminDashboardPage,
+  InvitationsPage,
+  AdminPrivacyPage,
 } from './admin.pages';
 export {
   MentorCheckInsPage,

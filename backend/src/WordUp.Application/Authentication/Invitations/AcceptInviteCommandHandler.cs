@@ -13,6 +13,7 @@ public class AcceptInviteCommandHandler : IRequestHandler<AcceptInviteCommand, A
     private readonly IClock _clock;
     private readonly ISessionIssuer _session;
     private readonly IAuditLogger _audit;
+    private readonly IDatabaseErrorClassifier _databaseErrors;
 
     public AcceptInviteCommandHandler(
         IAppDbContext db,
@@ -20,7 +21,8 @@ public class AcceptInviteCommandHandler : IRequestHandler<AcceptInviteCommand, A
         IPasswordHasher hasher,
         IClock clock,
         ISessionIssuer session,
-        IAuditLogger audit)
+        IAuditLogger audit,
+        IDatabaseErrorClassifier databaseErrors)
     {
         _db = db;
         _tokens = tokens;
@@ -28,6 +30,7 @@ public class AcceptInviteCommandHandler : IRequestHandler<AcceptInviteCommand, A
         _clock = clock;
         _session = session;
         _audit = audit;
+        _databaseErrors = databaseErrors;
     }
 
     public async Task<AuthResult> Handle(AcceptInviteCommand request, CancellationToken cancellationToken)
@@ -42,25 +45,52 @@ public class AcceptInviteCommandHandler : IRequestHandler<AcceptInviteCommand, A
             throw new InvitationInvalidException();
         }
 
-        var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == invitation.Email, cancellationToken);
-        if (user is null)
+        // An account may have been provisioned after this invitation was issued. Never let an
+        // invitation become a credential-reset or role-escalation path for that existing account.
+        if (await InvitationAccountGuard.AccountExistsAsync(_db, invitation.Email, cancellationToken))
         {
-            user = new User { Email = invitation.Email, CreatedAt = now };
-            _db.Users.Add(user);
+            throw new InvitationInvalidException();
         }
 
-        user.DisplayName = request.DisplayName.Trim();
-        user.PasswordHash = _hasher.Hash(request.Password);
-        user.Role = invitation.Role;
-        user.CohortId = invitation.CohortId;
-        user.MentorId = invitation.MentorId;
-        user.Status = UserStatus.Active;
-        user.OnboardingCompleted = false;
-
+        // Claim the single-use token before staging the account. A losing concurrent request then
+        // cannot leave a partially inserted account even on providers without unique-index support.
         invitation.Status = InvitationStatus.Accepted;
         invitation.AcceptedAt = now;
+        invitation.ConcurrencyStamp = Guid.NewGuid();
 
-        await _db.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _db.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new InvitationInvalidException();
+        }
+
+        var user = new User
+        {
+            Email = invitation.Email,
+            DisplayName = request.DisplayName.Trim(),
+            PasswordHash = _hasher.Hash(request.Password),
+            Role = invitation.Role,
+            CohortId = invitation.CohortId,
+            MentorId = invitation.MentorId,
+            Status = UserStatus.Active,
+            OnboardingCompleted = false,
+            CreatedAt = now,
+        };
+        _db.Users.Add(user);
+        try
+        {
+            await _db.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateException exception) when (
+            _databaseErrors.IsUniqueConstraintViolation(exception, "IX_Users_Email"))
+        {
+            // An account created between the ownership check and this insert wins the unique-email
+            // race. The invitation must never be allowed to mutate it or issue a session for it.
+            throw new InvitationInvalidException();
+        }
         await _audit.LogAsync("InvitationAccepted", user.Id, "Invitation", invitation.Id);
 
         return await _session.IssueAsync(user, cancellationToken);

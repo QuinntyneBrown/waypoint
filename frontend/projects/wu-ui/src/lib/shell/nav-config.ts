@@ -54,6 +54,7 @@ export const WU_NAV: Record<WuRole, WuRoleNav> = {
     items: [
       { key: 'dashboard', label: 'Dashboard', icon: 'grid', path: '/mentor/dashboard' },
       { key: 'my-youth', label: 'My Youth', icon: 'users', path: '/mentor/my-youth' },
+      { key: 'invitations', label: 'Invitations', icon: 'mail', path: '/mentor/invitations' },
       { key: 'check-ins', label: 'Check-ins', icon: 'clipboard-check', path: '/mentor/check-ins' },
       { key: 'reviews', label: 'Reviews', icon: 'file-text', path: '/mentor/reviews' },
       { key: 'attendance', label: 'Attendance', icon: 'user-check', path: '/mentor/attendance' },
@@ -107,6 +108,7 @@ export const WU_NAV: Record<WuRole, WuRoleNav> = {
       { group: 'System' },
       { key: 'settings', label: 'Settings', icon: 'settings', path: '/admin/settings' },
       { key: 'audit', label: 'Audit Log', icon: 'activity', path: '/admin/audit' },
+      { key: 'privacy', label: 'Privacy requests', icon: 'shield', path: '/admin/privacy' },
     ],
   },
   guardian: {

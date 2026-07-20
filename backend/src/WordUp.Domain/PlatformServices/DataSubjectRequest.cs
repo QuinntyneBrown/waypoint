@@ -14,6 +14,11 @@ public sealed class DataSubjectRequest
     public Guid SubjectUserId { get; set; }
     public string ActionType { get; set; } = string.Empty;
     public string? Details { get; set; }
+    public string? RequestedDisplayName { get; set; }
+    public string? RequestedEmail { get; set; }
+    public string? RequestedPronouns { get; set; }
+    public bool RequestedClearPronouns { get; set; }
+    public Guid ConcurrencyStamp { get; set; } = Guid.NewGuid();
     public DataSubjectRequestStatus Status { get; set; } = DataSubjectRequestStatus.Pending;
     public DateTime RequestedAt { get; set; } = DateTime.UtcNow;
     public Guid? CompletedByUserId { get; set; }

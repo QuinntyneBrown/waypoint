@@ -76,7 +76,9 @@ public class CaptureConsentCommandHandler : IRequestHandler<CaptureConsentComman
                 $"Reference: {consent.ReferenceId}. Participation consent: {(consent.ParticipationConsent ? "yes" : "no")}. " +
                 $"Media consent: {(consent.MediaConsent ? "yes" : "no")}. Valid until {consent.ValidUntil:yyyy-MM-dd}." +
                 ContactSentence(policy.ContactEmail),
-                cancellationToken);
+                cancellationToken,
+                subjectUserId: youth.Id,
+                recipientUserId: guardian.Id);
         }
 
         await _audit.LogAsync("GuardianConsentCaptured", _currentUser.UserId, "GuardianConsent", consent.Id,

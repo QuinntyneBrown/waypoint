@@ -6,6 +6,12 @@ import { unsavedChangesGuard } from './guards/unsaved-changes.guard';
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'auth/sign-in' },
   {
+    path: 'invite',
+    title: 'Accept invitation · Word Up',
+    loadComponent: () =>
+      import('./auth/invite-accept/invite-accept').then((module) => module.InviteAcceptPage),
+  },
+  {
     path: 'consent/respond',
     title: 'Guardian consent · Word Up',
     loadComponent: () =>
@@ -17,6 +23,12 @@ export const routes: Routes = [
     path: 'auth',
     canActivate: [guestGuard],
     children: [
+      {
+        path: 'invite',
+        title: 'Accept invitation · Word Up',
+        loadComponent: () =>
+          import('./auth/invite-accept/invite-accept').then((module) => module.InviteAcceptPage),
+      },
       {
         path: 'sign-in',
         title: 'Sign in · Word Up',
@@ -78,6 +90,7 @@ export const routes: Routes = [
     path: 'youth',
     canActivate: [authGuard, consentGuard],
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home',
         title: 'Home · Word Up',
@@ -220,6 +233,8 @@ export const routes: Routes = [
     path: 'mentor',
     canActivate: [authGuard],
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      { path: 'home', pathMatch: 'full', redirectTo: 'dashboard' },
       {
         path: 'dashboard',
         title: 'Mentor dashboard · Word Up',
@@ -234,6 +249,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/mentor/roster/mentor-roster').then(
             (module) => module.MentorRosterPage,
+          ),
+      },
+      {
+        path: 'invitations',
+        title: 'Invitations · Word Up',
+        loadComponent: () =>
+          import('./features/shared/invitations/invitations').then(
+            (module) => module.InvitationsPage,
           ),
       },
       {
@@ -346,6 +369,16 @@ export const routes: Routes = [
     path: 'admin',
     canActivate: [authGuard],
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      { path: 'home', pathMatch: 'full', redirectTo: 'dashboard' },
+      {
+        path: 'dashboard',
+        title: 'Director dashboard · Word Up',
+        loadComponent: () =>
+          import('./features/admin/dashboard/admin-dashboard').then(
+            (module) => module.AdminDashboardPage,
+          ),
+      },
       {
         path: 'people',
         title: 'People · Word Up',
@@ -363,6 +396,22 @@ export const routes: Routes = [
         title: 'Applications · Word Up',
         loadComponent: () =>
           import('./features/admin/applications/applications-list').then((m) => m.ApplicationsList),
+      },
+      {
+        path: 'invitations',
+        title: 'Invitations · Word Up',
+        loadComponent: () =>
+          import('./features/shared/invitations/invitations').then(
+            (module) => module.InvitationsPage,
+          ),
+      },
+      {
+        path: 'users-roles',
+        title: 'Users & roles · Word Up',
+        loadComponent: () =>
+          import('./features/admin/users-roles/users-roles').then(
+            (module) => module.UsersRolesPage,
+          ),
       },
       {
         path: 'cohorts',
@@ -410,6 +459,15 @@ export const routes: Routes = [
             (module) => module.AdminAuditLogPage,
           ),
       },
+      {
+        path: 'privacy',
+        title: 'Privacy requests · Word Up',
+        loadComponent: () =>
+          import('./features/admin/privacy/admin-privacy').then(
+            (module) => module.AdminPrivacyPage,
+          ),
+      },
+      { path: 'notifications', pathMatch: 'full', redirectTo: 'announcements' },
       {
         path: 'mentor-assignments',
         title: 'Mentor assignments · Word Up',
@@ -492,6 +550,7 @@ export const routes: Routes = [
     path: 'volunteer',
     canActivate: [authGuard],
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home',
         title: 'Today · Word Up',
@@ -506,6 +565,8 @@ export const routes: Routes = [
             (m) => m.VolunteerSchedule,
           ),
       },
+      { path: 'attendance', pathMatch: 'full', redirectTo: 'home' },
+      { path: 'notifications', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'attendance/:sessionId',
         title: 'Take attendance · Word Up',
@@ -521,6 +582,7 @@ export const routes: Routes = [
     path: 'guardian',
     canActivate: [authGuard],
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home',
         title: 'Guardian home · Word Up',
@@ -551,6 +613,7 @@ export const routes: Routes = [
             (module) => module.GuardianConsent,
           ),
       },
+      { path: 'notifications', pathMatch: 'full', redirectTo: 'announcements' },
     ],
   },
   {
@@ -578,7 +641,21 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./settings/display/settings-display').then((m) => m.SettingsDisplay),
       },
+      {
+        path: 'privacy',
+        title: 'Privacy & data rights · Word Up',
+        loadComponent: () =>
+          import('./settings/privacy/settings-privacy').then(
+            (module) => module.SettingsPrivacyPage,
+          ),
+      },
     ],
+  },
+  {
+    path: 'help',
+    title: 'Help center · Word Up',
+    canActivate: [authGuard],
+    loadComponent: () => import('./help/help').then((module) => module.HelpPage),
   },
   {
     path: 'support',

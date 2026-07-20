@@ -14,8 +14,9 @@ test('mentor dashboard and roster reflow with keyboard-sized controls on mobile'
   });
 
   const dashboard = new MentorDashboardPage(page);
-  await expect(dashboard.reviewItems).toContainText(seeded.mentorReviewTitle);
-  const reviewLink = dashboard.reviewItems.getByRole('link', { name: /review/i });
+  const reviewItem = dashboard.reviewItem(seeded.mentorReviewTitle);
+  await expect(reviewItem).toBeVisible();
+  const reviewLink = reviewItem.getByRole('link', { name: /review/i });
   expect((await reviewLink.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),

@@ -329,12 +329,11 @@
   @if (pendingAction(); as action) {
     <div
       class="wu-modal wu-modal--sm is-open"
-      role="dialog"
-      aria-modal="true"
+      wuAccessibleDialog
       [attr.aria-labelledby]="'person-action-' + action.kind"
-      (keydown.escape)="cancelAction()"
+      (wuDialogEscape)="cancelAction()"
     >
-      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__scrim" (click)="cancelAction()"></div>
       <div class="wu-modal__panel">
         <div class="wu-modal__header">
           <div>

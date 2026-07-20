@@ -13,7 +13,16 @@ public sealed class LoggingEmailSender : IEmailSender
 
     public LoggingEmailSender(ILogger<LoggingEmailSender> logger) => _logger = logger;
 
-    public Task SendAsync(string toEmail, string subject, string body, CancellationToken cancellationToken = default)
+    public Task SendAsync(
+        string toEmail,
+        string subject,
+        string body,
+        CancellationToken cancellationToken = default,
+        string? idempotencyKey = null,
+        Guid? subjectUserId = null,
+        bool purgeAfterDelivery = false,
+        Guid? recipientUserId = null,
+        bool isPrivacyRemovalConfirmation = false)
     {
         _logger.LogInformation("Email queued through the configured delivery channel.");
         return Task.CompletedTask;

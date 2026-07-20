@@ -4,14 +4,14 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ApiError, CohortOptions, CohortsApi, CohortSummary } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
 import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-003
 @Component({
   selector: 'wu-cohorts-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, RouterLink, DatePipe, ReactiveFormsModule],
+  imports: [WuShell, WuIcon, WuAccessibleDialog, RouterLink, DatePipe, ReactiveFormsModule],
   templateUrl: './cohorts-list.html',
   styles: `
     .cohort-grid {

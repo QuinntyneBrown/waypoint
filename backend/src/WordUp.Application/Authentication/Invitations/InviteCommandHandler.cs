@@ -12,6 +12,7 @@ public class InviteCommandHandler : IRequestHandler<InviteCommand, InviteResult>
     private readonly IEmailSender _email;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IApplicationLinkBuilder _links;
 
     public InviteCommandHandler(
         IAppDbContext db,
@@ -19,7 +20,8 @@ public class InviteCommandHandler : IRequestHandler<InviteCommand, InviteResult>
         IClock clock,
         IEmailSender email,
         IAuditLogger audit,
-        ICurrentUser currentUser)
+        ICurrentUser currentUser,
+        IApplicationLinkBuilder links)
     {
         _db = db;
         _tokens = tokens;
@@ -27,24 +29,30 @@ public class InviteCommandHandler : IRequestHandler<InviteCommand, InviteResult>
         _email = email;
         _audit = audit;
         _currentUser = currentUser;
+        _links = links;
     }
 
     public async Task<InviteResult> Handle(InviteCommand request, CancellationToken cancellationToken)
     {
-        // A mentor may only invite youth; a Program Administrator may invite any role (L2-AUTH-003 AC1/AC4).
-        if (_currentUser.Role == Roles.Mentor && request.Role != Roles.Youth)
-        {
-            throw new ForbiddenException("Mentors may only invite youth.");
-        }
+        var scope = await InvitationScope.ValidateAssignmentAsync(
+            _db,
+            _currentUser,
+            request.Role,
+            request.CohortId,
+            request.MentorId,
+            cancellationToken);
+
+        var email = InvitationAccountGuard.NormalizeEmail(request.Email);
+        await InvitationAccountGuard.EnsureAvailableAsync(_db, email, cancellationToken);
 
         var (raw, hash) = _tokens.Create();
         var now = _clock.UtcNow;
         var invitation = new Invitation
         {
-            Email = request.Email.Trim().ToLowerInvariant(),
+            Email = email,
             Role = request.Role,
-            CohortId = request.CohortId,
-            MentorId = request.MentorId,
+            CohortId = scope.CohortId,
+            MentorId = scope.MentorId,
             TokenHash = hash,
             Status = InvitationStatus.Pending,
             CreatedAt = now,
@@ -55,7 +63,7 @@ public class InviteCommandHandler : IRequestHandler<InviteCommand, InviteResult>
         _db.Invitations.Add(invitation);
         await _db.SaveChangesAsync(cancellationToken);
 
-        await InvitationEmail.SendAsync(_email, invitation.Email, raw, cancellationToken);
+        await InvitationEmail.SendAsync(_email, _links, invitation.Email, raw, cancellationToken);
         await _audit.LogAsync("InvitationCreated", _currentUser.UserId, "Invitation", invitation.Id);
 
         return new InviteResult(invitation.Id);

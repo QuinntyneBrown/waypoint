@@ -1,0 +1,65 @@
+<wu-shell
+  [role]="role()"
+  active=""
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <header class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">Help center</div>
+        <h1 class="wu-page__title">How can we help?</h1>
+        <p class="wu-page__sub">Search answers written for your Word Up role.</p>
+      </div>
+    </header>
+
+    <div class="help-search wu-mb-6">
+      <wu-icon name="search" />
+      <label class="wu-sr-only" for="help-search">Search help</label>
+      <input
+        class="wu-input"
+        id="help-search"
+        type="search"
+        placeholder="Search lessons, attendance, privacy…"
+        [value]="query()"
+        (input)="search($event)"
+      />
+    </div>
+
+    @if (topics().length === 0) {
+      <div class="wu-empty" role="status">
+        <div class="wu-empty__icon"><wu-icon name="search" /></div>
+        <h2 class="wu-empty__title">No help articles found</h2>
+        <p class="wu-empty__text">Try a different word, or contact the support team.</p>
+      </div>
+    } @else {
+      <div class="help-grid">
+        @for (topic of topics(); track topic.title) {
+          <section class="wu-card">
+            <div class="wu-card__body">
+              <h2 class="wu-card__title help-topic__title">
+                <wu-icon [name]="topic.icon" />{{ topic.title }}
+              </h2>
+              @for (article of topic.articles; track article.question) {
+                <details class="help-answer">
+                  <summary>{{ article.question }}</summary>
+                  <p>{{ article.answer }}</p>
+                </details>
+              }
+            </div>
+          </section>
+        }
+      </div>
+    }
+
+    <aside class="wu-card wu-mt-6">
+      <div class="wu-card__body wu-cluster wu-cluster--between">
+        <div>
+          <h2 class="wu-card__title">Still need a hand?</h2>
+          <p class="wu-muted">Send a private request and the program team will follow up.</p>
+        </div>
+        <a class="wu-btn wu-btn--primary" routerLink="/support">Contact support</a>
+      </div>
+    </aside>
+  </div>
+</wu-shell>

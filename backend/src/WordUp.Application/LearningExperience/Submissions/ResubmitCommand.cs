@@ -9,4 +9,4 @@ public record ResubmitCommand(
     string? BodyText,
     string? PhotoUrl,
     string? LinkUrl,
-    string? ExpectedVersion) : IRequest;
+    string? ExpectedVersion) : IRequest, IAtomicOutboxRequest;

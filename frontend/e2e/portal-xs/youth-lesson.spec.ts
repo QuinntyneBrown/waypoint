@@ -18,9 +18,9 @@ test('the lesson reader stays readable and keyboard operable on a mobile viewpor
   const lesson = new YouthLessonPage(page);
   await expect(lesson.heading).toHaveText(seeded.secondLessonTitle);
   await expect(page.getByText(/full lesson text remains available/i)).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(
-    1,
-  );
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),
+  ).toBeLessThanOrEqual(1);
 
   for (const target of [lesson.largeTextButton, lesson.bookmarkButton, lesson.retryMediaButton]) {
     const box = await target.boundingBox();

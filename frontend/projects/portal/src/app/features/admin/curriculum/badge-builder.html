@@ -178,12 +178,13 @@
   </main>
 
   @if (awardBadge(); as badge) {
-    <div class="dialog-backdrop">
+    <div class="dialog-backdrop" (click)="awardBadge.set(null)">
       <section
         class="dialog-panel"
-        role="dialog"
-        aria-modal="true"
+        wuAccessibleDialog
         [attr.aria-label]="'Award ' + badge.name"
+        (click)="$event.stopPropagation()"
+        (wuDialogEscape)="awardBadge.set(null)"
       >
         <h2>Award {{ badge.name }}</h2>
         <form class="wu-stack" [formGroup]="awardForm" (ngSubmit)="confirmAward()">

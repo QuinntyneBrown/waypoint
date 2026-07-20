@@ -5,7 +5,7 @@ using WordUp.Application.Shared.Common;
 
 namespace WordUp.Application.PlatformServices.Privacy;
 
-public record RunRetentionCommand : IRequest<RetentionRunResult>;
+public record RunRetentionCommand : IRequest<RetentionRunResult>, IAtomicRequest;
 public record RetentionRunResult(int AnonymizedCount, DateTime Cutoff);
 
 public sealed class RunRetentionCommandHandler : IRequestHandler<RunRetentionCommand, RetentionRunResult>
@@ -16,6 +16,7 @@ public sealed class RunRetentionCommandHandler : IRequestHandler<RunRetentionCom
     private readonly IDataRetentionPolicy _policy;
     private readonly PersonalDataAnonymizer _anonymizer;
     private readonly IAuditLogger _audit;
+    private readonly IUserPrivacyLock _privacyLock;
 
     public RunRetentionCommandHandler(
         IAppDbContext db,
@@ -23,7 +24,8 @@ public sealed class RunRetentionCommandHandler : IRequestHandler<RunRetentionCom
         IClock clock,
         IDataRetentionPolicy policy,
         PersonalDataAnonymizer anonymizer,
-        IAuditLogger audit)
+        IAuditLogger audit,
+        IUserPrivacyLock privacyLock)
     {
         _db = db;
         _currentUser = currentUser;
@@ -31,6 +33,7 @@ public sealed class RunRetentionCommandHandler : IRequestHandler<RunRetentionCom
         _policy = policy;
         _anonymizer = anonymizer;
         _audit = audit;
+        _privacyLock = privacyLock;
     }
 
     public async Task<RetentionRunResult> Handle(
@@ -42,23 +45,34 @@ public sealed class RunRetentionCommandHandler : IRequestHandler<RunRetentionCom
 
         var now = _clock.UtcNow;
         var cutoff = now.AddDays(-_policy.DeactivatedUserRetentionDays);
-        var expired = await _db.Users
+        var expiredIds = await _db.Users.AsNoTracking()
             .Where(item => (item.Status == UserStatus.Deactivated || item.Status == UserStatus.Removed)
                 && item.PersonalDataAnonymizedAt == null
                 && (item.DeactivatedAt ?? item.LastSignInAt ?? item.CreatedAt) <= cutoff)
             .OrderBy(item => item.Id)
+            .Select(item => item.Id)
             .ToListAsync(cancellationToken);
-        foreach (var user in expired)
+        var anonymizedCount = 0;
+        foreach (var userId in expiredIds)
         {
+            await _privacyLock.AcquireAsync(userId, cancellationToken);
+            var user = await _db.Users.FirstOrDefaultAsync(
+                item => item.Id == userId
+                    && (item.Status == UserStatus.Deactivated || item.Status == UserStatus.Removed)
+                    && item.PersonalDataAnonymizedAt == null
+                    && (item.DeactivatedAt ?? item.LastSignInAt ?? item.CreatedAt) <= cutoff,
+                cancellationToken);
+            if (user is null) continue;
             await _anonymizer.AnonymizeAsync(user, now, cancellationToken);
+            anonymizedCount++;
         }
 
         await _audit.LogAsync(
             "RetentionAnonymizationRun",
             actorId,
             "User",
-            details: $"cutoff={cutoff:O}; anonymized={expired.Count}",
+            details: $"cutoff={cutoff:O}; anonymized={anonymizedCount}",
             cancellationToken: cancellationToken);
-        return new RetentionRunResult(expired.Count, cutoff);
+        return new RetentionRunResult(anonymizedCount, cutoff);
     }
 }

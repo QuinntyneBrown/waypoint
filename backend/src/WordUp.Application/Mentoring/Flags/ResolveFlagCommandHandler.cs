@@ -53,10 +53,10 @@ public class ResolveFlagCommandHandler : IRequestHandler<ResolveFlagCommand>
         await _audit.LogAsync(
             "YouthUnflagged",
             _currentUser.UserId,
-            "User",
-            youth.Id,
+            "Flag",
+            flag.Id,
             isPrivate: true,
-            details: request.ResolutionReason,
+            details: flag.IsAutomatic ? "category=automatic; outcome=resolved" : "category=manual; outcome=resolved",
             cancellationToken: cancellationToken);
         await _evaluator.EvaluateAsync(
             new[] { youth.Id },

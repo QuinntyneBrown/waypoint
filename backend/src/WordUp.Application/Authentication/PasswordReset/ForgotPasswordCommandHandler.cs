@@ -10,17 +10,20 @@ public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordComman
     private readonly ISecureTokens _tokens;
     private readonly IClock _clock;
     private readonly IEmailSender _email;
+    private readonly IApplicationLinkBuilder _links;
 
     public ForgotPasswordCommandHandler(
         IAppDbContext db,
         ISecureTokens tokens,
         IClock clock,
-        IEmailSender email)
+        IEmailSender email,
+        IApplicationLinkBuilder links)
     {
         _db = db;
         _tokens = tokens;
         _clock = clock;
         _email = email;
+        _links = links;
     }
 
     public async Task Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
@@ -49,7 +52,8 @@ public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordComman
         await _email.SendAsync(
             user.Email,
             "Reset your Word Up password",
-            $"We received a request to reset your Word Up password. Use this link: token={raw}",
-            cancellationToken);
+            $"We received a request to reset your Word Up password. Use this link: {_links.Portal($"/auth/reset-password?token={Uri.EscapeDataString(raw)}")}",
+            cancellationToken,
+            recipientUserId: user.Id);
     }
 }

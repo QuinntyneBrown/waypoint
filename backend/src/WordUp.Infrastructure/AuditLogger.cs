@@ -33,10 +33,9 @@ public sealed class AuditLogger : IAuditLogger
         string? details = null,
         CancellationToken cancellationToken = default)
     {
-        var ctx = _http.HttpContext;
-        var ip = ctx?.Connection.RemoteIpAddress?.ToString();
-        var userAgent = ctx?.Request.Headers.UserAgent.ToString();
-        var source = $"ip={ip ?? "unknown"} | user-agent={(string.IsNullOrWhiteSpace(userAgent) ? "unknown" : userAgent)}";
+        // The formatter retains only a coarse device class and masked peer-network location. It
+        // never copies a raw user-agent, host address, or untrusted forwarding header into the chain.
+        var source = AuditSourceFormatter.Format(_http.HttpContext);
 
         await WriteLock.WaitAsync(cancellationToken);
         try
@@ -68,4 +67,5 @@ public sealed class AuditLogger : IAuditLogger
             WriteLock.Release();
         }
     }
+
 }

@@ -59,7 +59,9 @@ public sealed class EmailConsentRecordCommandHandler : IRequestHandler<EmailCons
             $"Valid {consent.ValidFrom:yyyy-MM-dd} through {consent.ValidUntil:yyyy-MM-dd}. " +
             $"Status: {(consent.WithdrawnAt is null ? "active" : "withdrawn")}." +
             CaptureConsentCommandHandler.ContactSentence(policy.ContactEmail),
-            cancellationToken);
+            cancellationToken,
+            subjectUserId: consent.YouthUserId,
+            recipientUserId: guardian.Id);
 
         await _audit.LogAsync(
             "ConsentRecordCopyEmailed",

@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, PeopleApi, PersonDetail } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
 import { finalize, Observable } from 'rxjs';
 
 type PersonTab = 'profile' | 'guardian' | 'progress' | 'attendance' | 'notes' | 'account';
@@ -17,7 +17,7 @@ type LifecycleAction =
 @Component({
   selector: 'wu-person-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, RouterLink, DatePipe],
+  imports: [WuShell, WuIcon, WuAccessibleDialog, RouterLink, DatePipe],
   templateUrl: './person-detail.html',
   styles: `
     .record-tabs {

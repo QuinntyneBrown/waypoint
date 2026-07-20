@@ -1,0 +1,3 @@
+# Prettier emits LF. Pin the frontend tree so `npm run format:check` is reproducible
+# on Windows even when a contributor has core.autocrlf=true.
+frontend/** text eol=lf

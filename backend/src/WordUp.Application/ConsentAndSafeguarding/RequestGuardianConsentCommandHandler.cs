@@ -15,6 +15,7 @@ public sealed class RequestGuardianConsentCommandHandler
     private readonly IClock _clock;
     private readonly IEmailSender _email;
     private readonly IAuditLogger _audit;
+    private readonly IApplicationLinkBuilder _links;
 
     public RequestGuardianConsentCommandHandler(
         IAppDbContext db,
@@ -22,7 +23,8 @@ public sealed class RequestGuardianConsentCommandHandler
         ISecureTokens tokens,
         IClock clock,
         IEmailSender email,
-        IAuditLogger audit)
+        IAuditLogger audit,
+        IApplicationLinkBuilder links)
     {
         _db = db;
         _currentUser = currentUser;
@@ -30,6 +32,7 @@ public sealed class RequestGuardianConsentCommandHandler
         _clock = clock;
         _email = email;
         _audit = audit;
+        _links = links;
     }
 
     public async Task<ConsentDeliveryResult> Handle(
@@ -82,9 +85,11 @@ public sealed class RequestGuardianConsentCommandHandler
             guardian.Email,
             $"Consent requested for {youth.DisplayName}",
             $"{youth.DisplayName} needs your participation consent for Word Up. " +
-            $"Review and sign the secure form: /consent/respond?token={rawToken}. " +
+            $"Review and sign the secure form: {_links.Portal($"/consent/respond?token={Uri.EscapeDataString(rawToken)}")} " +
             $"This one-time link expires {consentRequest.ExpiresAt:yyyy-MM-dd}.",
-            cancellationToken);
+            cancellationToken,
+            subjectUserId: youth.Id,
+            recipientUserId: guardian.Id);
         await _audit.LogAsync(
             "GuardianConsentRequested",
             youth.Id,

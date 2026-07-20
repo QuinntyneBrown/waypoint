@@ -14,6 +14,7 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
     private readonly ICurrentUser _currentUser;
     private readonly IChangePublisher _publisher;
     private readonly NotificationDeliveryService _notifications;
+    private readonly IAfterCommitDispatcher _afterCommit;
 
     public CompleteLessonCommandHandler(
         IAppDbContext db,
@@ -21,7 +22,8 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
         IAuditLogger audit,
         ICurrentUser currentUser,
         IChangePublisher publisher,
-        NotificationDeliveryService notifications)
+        NotificationDeliveryService notifications,
+        IAfterCommitDispatcher afterCommit)
     {
         _db = db;
         _clock = clock;
@@ -29,6 +31,7 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
         _currentUser = currentUser;
         _publisher = publisher;
         _notifications = notifications;
+        _afterCommit = afterCommit;
     }
 
     public async Task Handle(CompleteLessonCommand request, CancellationToken cancellationToken)
@@ -120,10 +123,12 @@ public class CompleteLessonCommandHandler : IRequestHandler<CompleteLessonComman
             .FirstOrDefaultAsync(cancellationToken);
         if (cohortId is { } progressCohortId)
         {
-            await _publisher.PublishToRoleAsync(
-                Roles.ProgramAdministrator,
-                "progressChanged",
-                new { cohortId = progressCohortId, youthId },
+            await _afterCommit.DispatchBestEffortAsync(
+                callbackCancellationToken => _publisher.PublishToRoleAsync(
+                    Roles.ProgramAdministrator,
+                    "progressChanged",
+                    new { cohortId = progressCohortId, youthId },
+                    callbackCancellationToken),
                 cancellationToken);
         }
     }

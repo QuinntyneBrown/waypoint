@@ -235,12 +235,13 @@
   </div>
 
   @if (confirming() && preview(); as roster) {
-    <div class="import-dialog-backdrop">
+    <div class="import-dialog-backdrop" (click)="cancelConfirmation()">
       <div
         class="wu-card import-dialog"
-        role="dialog"
-        aria-modal="true"
+        wuAccessibleDialog
         aria-labelledby="confirm-import-title"
+        (click)="$event.stopPropagation()"
+        (wuDialogEscape)="cancelConfirmation()"
       >
         <div class="wu-card__header">
           <h2 class="wu-card__title" id="confirm-import-title">Confirm roster import</h2>
@@ -256,9 +257,9 @@
             Cancel
           </button>
           <button
-            #confirmButton
             class="wu-btn wu-btn--primary"
             type="button"
+            wuDialogInitialFocus
             [disabled]="loading()"
             (click)="confirmImport()"
           >

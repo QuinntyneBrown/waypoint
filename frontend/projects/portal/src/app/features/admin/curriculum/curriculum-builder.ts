@@ -17,7 +17,7 @@ import {
   TrackWorkspace,
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { WuAccessibleDialog, WuShell } from '@wu/ui';
 import { finalize, Observable } from 'rxjs';
 import { EditorDraftService } from '../../../editor-draft.service';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
@@ -95,7 +95,7 @@ interface CurriculumAuthoringDraft {
 @Component({
   selector: 'wu-curriculum-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, ReactiveFormsModule],
+  imports: [WuShell, WuAccessibleDialog, ReactiveFormsModule],
   templateUrl: './curriculum-builder.html',
   styleUrl: './curriculum-builder.css',
 })

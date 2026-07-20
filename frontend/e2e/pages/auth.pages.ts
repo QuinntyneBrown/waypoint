@@ -175,3 +175,31 @@ export class SessionExpiredPage extends BasePage {
     return this.page.getByRole('link', { name: /sign in again/i });
   }
 }
+
+/** `/auth/invite?token=…` — anonymous invitation acceptance and recovery. */
+export class InviteAcceptPage extends BasePage {
+  get heading() {
+    return this.page.getByRole('heading', { level: 1 });
+  }
+  get displayName() {
+    return this.page.getByLabel('Display name');
+  }
+  get password() {
+    return this.page.getByLabel('Create password');
+  }
+  get confirmPassword() {
+    return this.page.getByLabel('Confirm password');
+  }
+  get guidelines() {
+    return this.page.getByRole('checkbox', { name: /community guidelines/i });
+  }
+  get joinButton() {
+    return this.page.getByRole('button', { name: /join word up/i });
+  }
+  async agreeToGuidelines(): Promise<void> {
+    await this.page.locator('label.wu-check', { hasText: 'community guidelines' }).click();
+  }
+  async goto(token: string): Promise<void> {
+    await this.page.goto(`/auth/invite?token=${encodeURIComponent(token)}`);
+  }
+}

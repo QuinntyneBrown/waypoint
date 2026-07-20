@@ -7,4 +7,4 @@ public record ApproveApplicationCommand(
     Guid CohortId,
     Guid MentorId,
     string? TrackInterest,
-    string? DecisionNote) : IRequest<ApproveApplicationResult>;
+    string? DecisionNote) : IRequest<ApproveApplicationResult>, IAtomicOutboxRequest;

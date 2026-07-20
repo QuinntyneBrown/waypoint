@@ -10,7 +10,7 @@ public record AssignWorkCommand(
     Guid? CohortId,
     DateTime? DueDate,
     string? ReminderCadence,
-    string? Message) : IRequest<AssignWorkResult>;
+    string? Message) : IRequest<AssignWorkResult>, IAtomicOutboxRequest;
 
 public record AssignWorkResult(int Created);
 

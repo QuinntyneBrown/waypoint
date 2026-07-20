@@ -48,14 +48,20 @@ public class DeclineApplicationCommandHandler : IRequestHandler<DeclineApplicati
             "YouthApplication",
             application.Id,
             cancellationToken: cancellationToken);
-        if (!string.IsNullOrWhiteSpace(application.GuardianEmail))
+        var decisionRecipient = await ApplicationDecisionEmailRecipientResolver.ResolveAsync(
+            _db,
+            application,
+            cancellationToken);
+        if (decisionRecipient is not null)
         {
             await _email.SendAsync(
-                application.GuardianEmail,
+                decisionRecipient.Email,
                 "An update on your Word Up application",
                 $"We are unable to offer {application.FirstName} {application.LastName} a place " +
                 "at this time. Word Up staff can answer any questions about this decision.",
-                cancellationToken);
+                cancellationToken,
+                subjectUserId: application.ApplicantUserId,
+                recipientUserId: decisionRecipient.UserId);
         }
     }
 }

@@ -102,19 +102,39 @@ public sealed class AssignWorkTests : IntegrationTestBase
             var work = await db.AssignedWork
                 .Where(item => item.ItemId == scenario.Lesson.Id)
                 .ToListAsync();
+            var messages = await db.Messages
+                .Where(item =>
+                    item.SenderId == scenario.Mentor.Id
+                    && (item.RecipientId == scenario.YouthA.Id
+                        || item.RecipientId == scenario.YouthB.Id))
+                .ToListAsync();
+            var inAppNotifications = await db.Notifications
+                .Where(item =>
+                    item.EventKey == "mentor-messages"
+                    && (item.UserId == scenario.YouthA.Id
+                        || item.UserId == scenario.YouthB.Id))
+                .ToListAsync();
             Assert.Multiple(() =>
             {
                 Assert.That(work, Has.Count.EqualTo(2));
                 Assert.That(work.All(item => item.ReminderCadence == ReminderCadences.TwoDaysBefore), Is.True);
                 Assert.That(work.All(item => item.Message == message), Is.True);
-                Assert.That(db.Messages.Count(item => item.Body == message), Is.EqualTo(2));
+                Assert.That(
+                    messages.Select(item => item.Body),
+                    Is.EquivalentTo(new[] { message, message }));
                 Assert.That(db.ScheduledNotifications.Count(item =>
                     item.SourceType == "AssignedWork" && item.EventKey == "lesson-reminders"),
                     Is.EqualTo(2));
-                Assert.That(db.Notifications.Count(item =>
-                    item.EventKey == "mentor-messages" && item.Title == "New assigned work"),
-                    Is.EqualTo(1));
+                Assert.That(
+                    inAppNotifications.Select(item => item.Title),
+                    Is.EquivalentTo(new[] { "New assigned work" }));
             });
+
+            // Testing disables hosted workers, so invoke the same scoped processor explicitly.
+            Assert.That(
+                await scope.ServiceProvider.GetRequiredService<ScheduledNotificationProcessor>()
+                    .RunOnceAsync(),
+                Is.EqualTo(2));
         }
 
         var youthToken = await SignInAsync(scenario.YouthA.Email);
@@ -127,6 +147,7 @@ public sealed class AssignWorkTests : IntegrationTestBase
         });
         var thread = await SendAsync(HttpMethod.Get, "/api/me/messages", youthToken);
         Assert.That(await thread.Content.ReadAsStringAsync(), Does.Contain(message));
+        // Reading the feed does not dispatch scheduled work; it returns what the worker persisted.
         var notifications = await SendAsync(HttpMethod.Get, "/api/notifications", youthToken);
         var notificationBody = await notifications.Content.ReadAsStringAsync();
         Assert.Multiple(() =>
@@ -216,8 +237,19 @@ public sealed class AssignWorkTests : IntegrationTestBase
         var hash = hasher.Hash("Passw0rd!");
         var mentor = User(Roles.Mentor, "Assign Mentor", hash);
         var otherMentor = User(Roles.Mentor, "Other Mentor", hash);
-        var track = new Track { Name = "Assign track", Status = PublishStatus.Published };
-        var otherTrack = new Track { Name = "Other track", Status = PublishStatus.Published };
+        var keySuffix = Guid.NewGuid().ToString("N");
+        var track = new Track
+        {
+            Name = "Assign track",
+            Key = $"assign-track-{keySuffix}",
+            Status = PublishStatus.Published,
+        };
+        var otherTrack = new Track
+        {
+            Name = "Other track",
+            Key = $"other-track-{keySuffix}",
+            Status = PublishStatus.Published,
+        };
         var cohort = new Cohort
         {
             Name = "Assign cohort",

@@ -156,3 +156,40 @@ export class SupportPage extends BasePage {
     await this.page.goto(SupportPage.path);
   }
 }
+
+/** `/help` — searchable, role-aware self-service content. */
+export class HelpPage extends BasePage {
+  static readonly path = '/help';
+  get search() {
+    return this.page.getByLabel('Search help');
+  }
+  get heading() {
+    return this.page.getByRole('heading', { name: 'How can we help?', exact: true });
+  }
+  async goto(): Promise<void> {
+    await this.page.goto(HelpPage.path);
+  }
+}
+
+/** `/settings/privacy` — own-data view and trackable request form. */
+export class PrivacySettingsPage extends BasePage {
+  static readonly path = '/settings/privacy';
+  get action() {
+    return this.page.getByLabel('Request type');
+  }
+  get details() {
+    return this.page.getByLabel('Details');
+  }
+  get submitButton() {
+    return this.page.getByRole('button', { name: 'Submit request', exact: true });
+  }
+  get downloadButton() {
+    return this.page.getByRole('button', { name: /download complete data export/i });
+  }
+  get loadMoreButton() {
+    return this.page.getByRole('button', { name: 'Load more requests', exact: true });
+  }
+  async goto(): Promise<void> {
+    await this.page.goto(PrivacySettingsPage.path);
+  }
+}

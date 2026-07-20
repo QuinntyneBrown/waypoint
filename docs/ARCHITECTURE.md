@@ -54,7 +54,7 @@ Cross-cutting ports, pipeline behaviors, and application exceptions live under `
 
 ### Infrastructure (`WordUp.Infrastructure`)
 
-Infrastructure implements EF Core persistence, BCrypt password hashing, JWT issuance, secure opaque tokens, current-user access, audit logging, a development email logger, and the system clock.
+Infrastructure implements EF Core persistence, BCrypt password hashing, JWT issuance, secure opaque tokens, current-user access, audit logging, AES-GCM sensitive-field and uploaded-file protection, configurable SMTP through an encrypted durable email queue, leased email/scheduled-notification workers, retained/dead-envelope cleanup, post-commit best-effort SignalR dispatch, and the system clock. After schema migration, a key-aware lifecycle pass rewrites legacy plaintext sensitive columns before the API serves traffic and rejects ciphertext that cannot be authenticated. Atomic MediatR requests commit business state, audit rows, and email envelopes together; realtime callbacks are discarded on rollback. SQL Server transaction-owned per-user locks serialize privacy correction/removal with linked notification/email production and delivery, and conditional ownership updates prevent concurrent verified-record claims from overwriting one another. Testing replaces email transport with an in-process capture; Production validates HTTPS application URLs, encryption/signing keys, and SMTP configuration before serving.
 
 `ConnectionStrings:Default` selects the database provider:
 
@@ -92,11 +92,11 @@ Clients must treat the API result as authoritative. Hiding an action in a future
 
 The API issues short-lived JWT access tokens and opaque rotating refresh tokens. Refresh-token reuse revokes the token family. Passwords are hashed with BCrypt; invitation and password-reset tokens are stored as hashes. Sign-in failures are deliberately uniform to reduce account enumeration, and repeated failures lock the account according to the application policy.
 
-The system models youth applications, guardian information, consent, and audit records. These data classes are sensitive even when they are not credentials. Production deployment requires a separate privacy, security, retention, and safeguarding review; see [SECURITY.md](../SECURITY.md).
+The system models youth applications, guardian information, consent, safeguarding notes, uploaded evidence, transactional delivery records, and audit evidence. Sensitive strings and file bytes use randomized authenticated encryption at rest. Correction, export, and erasure follow indexed account-ownership, recipient-account, and data-subject IDs rather than inferring identity from an email address; an authenticated author establishes links at submission, while an administrator can attach anonymous records only after separately verifying ownership and explicitly attesting it. Removal redacts subject-authored content and deletes both account-directed and subject-linked cross-recipient email envelopes. The append-only audit chain stores opaque evidence and a data-minimized source: a canonical channel, coarse device class, and masked peer-network location (`/24` for IPv4 or `/48` for IPv6). It never copies raw IP addresses, user-agent strings, untrusted forwarding headers, or safeguarding prose into the chain. Production deployment still requires a separate privacy, security, retention, key-management, and safeguarding review; see [SECURITY.md](../SECURITY.md).
 
 ## Frontend and design reference
 
-`frontend/` is an Angular 21 workspace with two applications — `portal` (the authenticated SPA for all signed-in roles) and `public-site` (SSR/prerendered marketing + anonymous application intake) — over shared `wu-ui` (design system), `wu-api` (typed API client), and `wu-auth` (session, rotating-refresh, guards) libraries. Both apps consume the API through a same-origin dev-server proxy and preserve the server-authoritative permission and safeguarding model — guards and hidden nav are presentational only. The implemented scope is **Tier A**: surfaces provable end-to-end against today's API with a register-created Youth (auth, onboarding, consent gate, intake, settings/preferences, states); Admin/Mentor/Guardian/Volunteer surfaces are **Tier B**, deferred until those identities are API-reachable (see `docs/frontend-implementation-plan.md`). Acceptance coverage is a Playwright suite (real API + both apps), each spec traced to an L2 requirement; see [DECISIONS.md](DECISIONS.md) #9.
+`frontend/` is an Angular 21 workspace with two applications — `portal` (the authenticated SPA for all signed-in roles) and `public-site` (SSR/prerendered marketing + anonymous application intake) — over shared `wu-ui` (design system), `wu-api` (typed API client), and `wu-auth` (session, rotating-refresh, guards) libraries. Both apps consume the API through a same-origin dev-server proxy and preserve the server-authoritative permission and safeguarding model — guards and hidden nav are presentational only. The portal now implements youth, administrator, mentor, guardian, and volunteer routes; Testing-only HTTP fixtures provision each role for browser acceptance without exposing a production role-granting path. Acceptance coverage uses the real API and both apps, with specs traced to L2 requirements; see [DECISIONS.md](DECISIONS.md) #9 and the historical [frontend implementation plan](frontend-implementation-plan.md).
 
 The two apps have an explicit navigation boundary. Same-origin production defaults place the public
 site at `/` and the portal at `/portal`; deployments on separate origins replace each app's
@@ -111,7 +111,10 @@ same-origin.
 
 - **`WordUp.UnitTests`** — validators and isolated business rules
 - **`WordUp.IntegrationTests`** — full HTTP behaviour through `WebApplicationFactory` and a disposable SQL Server database
-- **Requirement traceability** — `scripts/check-traceability.mjs` validates that acceptance-test trace comments reference real L2 requirements
-- **GitHub Actions** — restores, builds, tests, and runs traceability against SQL Server on relevant pushes and pull requests
+- **Requirement traceability** — `scripts/check-traceability.mjs --strict` validates references and requires coverage for all in-scope L2 requirements
+- **Frontend quality** — production builds, unit tests, route-manifest validation, Playwright E2E, keyboard-dialog checks, XS–XL responsive checks, and axe WCAG checks
+- **Performance** — bounded payload integration tests, a throttled primary-Youth-screen interaction budget, and a SQL-backed fixed-arrival-rate gate with 50 distinct cohort-scoped users at 20 RPS
+- **Persistence compatibility** — a fresh-database migration smoke plus EF's pending-model-change gate before the full backend suite
+- **GitHub Actions** — restores, builds, tests, and runs backend, frontend, traceability, accessibility, and performance gates
 
 Integration tests default to LocalDB on Windows. CI and other environments override the server and authentication fragment through `WORDUP_TEST_SQLSERVER` and `WORDUP_TEST_SQLAUTH`.

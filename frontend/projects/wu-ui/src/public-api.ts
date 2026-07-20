@@ -12,3 +12,4 @@ export * from './lib/shell/wu-shell';
 export * from './lib/states/wu-state-page';
 export * from './lib/offline/offline.service';
 export * from './lib/deployment/deployment-urls';
+export * from './lib/dialog/wu-accessible-dialog';

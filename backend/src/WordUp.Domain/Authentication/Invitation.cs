@@ -17,6 +17,8 @@ public class Invitation
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public Guid? CreatedByUserId { get; set; }
     public DateTime? AcceptedAt { get; set; }
+    public DateTime? ReplacementRequestedAt { get; set; }
+    public Guid ConcurrencyStamp { get; set; } = Guid.NewGuid();
 
     public bool IsAcceptable(DateTime utcNow) =>
         Status == InvitationStatus.Pending && ExpiresAt > utcNow;

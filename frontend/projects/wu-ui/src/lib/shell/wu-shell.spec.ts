@@ -49,6 +49,12 @@ describe('WuShell', () => {
     expect(main?.textContent).toBe('home');
   });
 
+  it('does not expose the product role as an invalid ARIA role', async () => {
+    const fixture = await render();
+    const shell = fixture.nativeElement.querySelector('wu-shell') as HTMLElement;
+    expect(shell.getAttribute('role')).toBeNull();
+  });
+
   it('shows the mobile bottom nav for youth', async () => {
     const fixture = await render();
     expect(fixture.nativeElement.querySelectorAll('.wu-botnav__item').length).toBe(5);

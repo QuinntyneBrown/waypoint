@@ -1,0 +1,187 @@
+<wu-settings-shell heading="Privacy & data rights">
+  <p class="wu-page__sub wu-mb-6">
+    Review the account information Word Up stores and make a trackable request about it.
+  </p>
+
+  @if (errorMessage(); as error) {
+    <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+  }
+  @if (acknowledgement(); as request) {
+    <div class="wu-alert wu-alert--success" role="status">
+      Request received. Keep reference <strong>{{ request.reference }}</strong> for your records.
+    </div>
+  }
+
+  @if (loading()) {
+    <p class="wu-muted" role="status">Loading your privacy information…</p>
+  } @else {
+    <div class="privacy-grid">
+      <section class="wu-card">
+        <div class="wu-card__body">
+          <h2 class="wu-card__title">Your stored account data</h2>
+          <p class="wu-muted wu-mb-4">Placement identifiers are managed by program staff.</p>
+          @if (data(); as person) {
+            <dl class="privacy-data">
+              <div>
+                <dt>Name</dt>
+                <dd>{{ person.displayName }}</dd>
+              </div>
+              <div>
+                <dt>Email</dt>
+                <dd>{{ person.email }}</dd>
+              </div>
+              <div>
+                <dt>Role</dt>
+                <dd>{{ person.role }}</dd>
+              </div>
+              <div>
+                <dt>Account status</dt>
+                <dd>{{ person.status }}</dd>
+              </div>
+              <div>
+                <dt>Pronouns</dt>
+                <dd>{{ person.pronouns || 'Not provided' }}</dd>
+              </div>
+              <div>
+                <dt>Joined</dt>
+                <dd>{{ person.createdAt | date: 'mediumDate' }}</dd>
+              </div>
+              <div>
+                <dt>Cohort record</dt>
+                <dd>{{ person.cohortId || 'Not assigned' }}</dd>
+              </div>
+              <div>
+                <dt>Mentor record</dt>
+                <dd>{{ person.mentorId || 'Not assigned' }}</dd>
+              </div>
+            </dl>
+            <button
+              class="wu-btn wu-btn--secondary wu-mt-4"
+              type="button"
+              [disabled]="!canExport() || downloading()"
+              (click)="downloadPersonalData()"
+            >
+              {{ downloading() ? 'Preparing export…' : 'Download complete data export (JSON)' }}
+            </button>
+            @if (!canExport()) {
+              <p class="wu-muted wu-text-sm wu-mt-3">
+                Submit an access request. The complete export becomes available after program staff
+                verify and complete it.
+              </p>
+            }
+          }
+        </div>
+      </section>
+
+      <section class="wu-card">
+        <div class="wu-card__body">
+          <h2 class="wu-card__title">Make a data-rights request</h2>
+          <form class="wu-stack" [formGroup]="form" (ngSubmit)="submit()">
+            <div class="wu-field">
+              <label class="wu-label" for="privacy-action">Request type</label>
+              <select class="wu-select" id="privacy-action" formControlName="actionType">
+                <option value="access">Access a copy of my data</option>
+                <option value="correction">Correct my information</option>
+                <option value="removal">Remove my information</option>
+                <option value="consent-withdrawal">Withdraw consent</option>
+              </select>
+            </div>
+
+            @if (form.controls.actionType.value === 'correction') {
+              <div class="wu-field">
+                <label class="wu-label" for="privacy-name">Correct name</label>
+                <input class="wu-input" id="privacy-name" formControlName="displayName" />
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="privacy-email">Correct email</label>
+                <input class="wu-input" id="privacy-email" type="email" formControlName="email" />
+                @if (form.controls.email.touched && form.controls.email.invalid) {
+                  <p class="wu-error-text">Enter a valid email address.</p>
+                }
+              </div>
+              <div class="wu-field">
+                <label class="wu-label" for="privacy-pronouns">Correct pronouns</label>
+                <input
+                  class="wu-input"
+                  id="privacy-pronouns"
+                  formControlName="pronouns"
+                  [disabled]="form.controls.clearPronouns.value"
+                />
+              </div>
+              <div class="wu-field">
+                <label class="wu-check" for="privacy-clear-pronouns">
+                  <input
+                    id="privacy-clear-pronouns"
+                    type="checkbox"
+                    formControlName="clearPronouns"
+                    (change)="clearPronounsChanged()"
+                  />
+                  <span>Remove my saved pronouns</span>
+                </label>
+              </div>
+            }
+
+            <div class="wu-field">
+              <label class="wu-label" for="privacy-details">Details</label>
+              <textarea
+                class="wu-textarea"
+                id="privacy-details"
+                rows="4"
+                formControlName="details"
+                placeholder="Tell the program team what you need."
+              ></textarea>
+            </div>
+            <p class="wu-muted wu-text-sm">
+              Removal and consent requests may require follow-up so safeguarding and legal records
+              are handled correctly.
+            </p>
+            <button class="wu-btn wu-btn--primary" type="submit" [disabled]="submitting()">
+              {{ submitting() ? 'Sending…' : 'Submit request' }}
+            </button>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <section class="wu-card wu-mt-6">
+      <div class="wu-card__body">
+        <h2 class="wu-card__title">Your requests</h2>
+        @if (requestTotal() > 0) {
+          <p class="wu-muted wu-text-sm">
+            Showing {{ requests().length }} of {{ requestTotal() }} requests.
+          </p>
+        }
+        @for (request of requests(); track request.id) {
+          <article class="request-row">
+            <div class="wu-cluster wu-cluster--between">
+              <div>
+                <strong>{{ request.actionType }}</strong>
+                <p class="wu-muted">
+                  {{ request.reference }} · {{ request.requestedAt | date: 'medium' }}
+                </p>
+              </div>
+              <span class="wu-badge" [class.wu-badge--lime]="request.status === 'Completed'">
+                {{ request.status }}
+              </span>
+            </div>
+            @if (request.resolutionNote) {
+              <p>{{ request.resolutionNote }}</p>
+            }
+          </article>
+        } @empty {
+          <p class="wu-muted">You have not made any data-rights requests.</p>
+        }
+        @if (hasMoreRequests()) {
+          <button
+            class="wu-btn wu-btn--secondary wu-mt-3"
+            type="button"
+            [disabled]="loadingMore()"
+            (click)="loadMoreRequests()"
+          >
+            {{ loadingMore() ? 'Loading…' : 'Load more requests' }}
+          </button>
+        }
+      </div>
+    </section>
+  }
+</wu-settings-shell>

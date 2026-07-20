@@ -28,6 +28,10 @@ public class YouthApplication
     public string? DecisionNote { get; set; }
     public Guid? CohortId { get; set; }
     public Guid? MentorId { get; set; }
+    /// <summary>Authenticated applicant link; never inferred from submitted contact fields.</summary>
+    public Guid? ApplicantUserId { get; set; }
+    /// <summary>Authenticated guardian-author link; never inferred from a guardian email.</summary>
+    public Guid? GuardianUserId { get; set; }
     public Guid? CreatedYouthUserId { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

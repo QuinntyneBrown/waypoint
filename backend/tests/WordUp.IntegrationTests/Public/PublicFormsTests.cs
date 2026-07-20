@@ -3,8 +3,10 @@
 //            L2-NFR-001 (all public free-text sanitized server-side against stored XSS)
 using System.Net;
 using System.Net.Http.Json;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using WordUp.Application.Shared.Common;
 using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests.Public;
@@ -51,6 +53,29 @@ public sealed class PublicFormsTests : IntegrationTestBase
         Assert.That(row, Is.Not.Null);
         Assert.That(row!.Topic, Is.EqualTo("Partnership"));
         Assert.That(row.Email, Is.EqualTo("jordan@example.com"));
+        Assert.That(row.OwnerUserId, Is.Null);
+    }
+
+    [Test]
+    public async Task Authenticated_public_submission_records_explicit_account_ownership()
+    {
+        var token = await CreateUserAndGetTokenAsync(Roles.Youth);
+        var userId = Guid.Parse(new JwtSecurityTokenHandler().ReadJwtToken(token).Subject);
+
+        var response = await SendAsync(HttpMethod.Post, "/api/public/contact", body: new
+        {
+            name = "Authenticated author",
+            email = "shared-or-alternate@example.com",
+            topic = "Ownership",
+            message = "This record is linked by authentication, not by its submitted email.",
+        }, token: token);
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ContactResultDto>();
+
+        using var scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var row = await db.ContactRequests.FindAsync(result!.ContactRequestId);
+        Assert.That(row!.OwnerUserId, Is.EqualTo(userId));
     }
 
     // Traces to: L2-PUB-003 (AC1 malformed/missing input blocked with field-level errors)

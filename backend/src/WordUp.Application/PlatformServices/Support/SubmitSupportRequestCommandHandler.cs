@@ -82,7 +82,12 @@ public class SubmitSupportRequestCommandHandler : IRequestHandler<SubmitSupportR
             (screenshot is null ? "" : $"Screenshot: /api/support/screenshots/{screenshot.Id}\n") +
             "\n" +
             request.Description;
-        await _email.SendAsync(director, subject, body, cancellationToken);
+        await _email.SendAsync(
+            director,
+            subject,
+            body,
+            cancellationToken,
+            subjectUserId: userId);
 
         await _audit.LogAsync("SupportRequestSubmitted", _currentUser.UserId, "SupportRequest", support.Id, cancellationToken: cancellationToken);
 

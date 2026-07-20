@@ -66,6 +66,7 @@ public interface IAppDbContext
     DbSet<SupportRequest> SupportRequests { get; }
     DbSet<StoredUserFile> StoredUserFiles { get; }
     DbSet<DataSubjectRequest> DataSubjectRequests { get; }
+    DbSet<OutboundEmail> OutboundEmails { get; }
 
     // Guardian portal + public site (M5)
     DbSet<GuardianProfile> GuardianProfiles { get; }

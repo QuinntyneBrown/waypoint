@@ -76,12 +76,11 @@
   @if (createOpen()) {
     <div
       class="wu-modal wu-modal--lg is-open"
-      role="dialog"
-      aria-modal="true"
+      wuAccessibleDialog
       aria-labelledby="create-cohort-heading"
-      (keydown.escape)="closeCreate()"
+      (wuDialogEscape)="closeCreate()"
     >
-      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__scrim" (click)="closeCreate()"></div>
       <div class="wu-modal__panel">
         <div class="wu-modal__header">
           <div>

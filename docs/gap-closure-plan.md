@@ -56,11 +56,9 @@ requirement conflicts early (they gate "done").
 
 ## Phase C — Non-youth portal shell + Volunteer portal
 
-- [~] **C0 · Role portal routing** — real feature routes + shell for admin/mentor/guardian/
-      volunteer (today they fall through to 404 despite `roleHome()`). *Volunteer and Guardian
-      routes are live; Mentor dashboard/roster and the first Admin routes now land, and the shell
-      already renders every role via nav-config. Remaining Admin/Mentor destinations land as their
-      portal slices are built.*
+- [x] **C0 · Role portal routing** — every role home resolves to a real feature route, the shared
+      shell renders youth/admin/mentor/guardian/volunteer navigation, formerly dead base links use
+      deliberate redirects, and the route-manifest gate reports no unresolved navigation target.
 - [x] **C1 · Volunteer Today** — today's assigned session/logistics/count, no youth record data.
       `L2-VOLUNTEER-001`. Empty and populated states are E2E-verified.
 - [x] **C2 · Volunteer schedule** — upcoming assigned sessions/status + empty state.
@@ -313,9 +311,11 @@ requirement conflicts early (they gate "done").
       server on reconnect without duplicates, and preserve server-authoritative read state.
 - [x] **H15** Security audit coverage (denied actions, tamper-evidence) `L2-AUTH-009`, `L2-CONSENT-003` —
       authenticated endpoint-policy and application resource denials write actor/source-scoped events
-      without request bodies; every named mutation uses the same writer. Audit rows form a signed,
-      sequenced HMAC chain, EF rejects update/delete attempts, and the admin view verifies the entire
-      chain and raises an incident warning when an unsigned, changed, removed, or forged row is found.
+      with a canonical coarse device class and masked peer-network location, without raw IP addresses,
+      user-agent strings, forwarding headers, or request bodies; every named mutation uses the same
+      writer. Audit rows form a signed, sequenced HMAC chain, EF rejects update/delete attempts, and the
+      admin view verifies the entire chain and raises an incident warning when an unsigned, changed,
+      removed, or forged row is found.
 - [x] **H16** Transport/security config (TLS, CORS per env, rate limiting) `L2-AUTH-012`, `L2-NFR-002` —
       production rejects plain HTTP before credentials/tokens reach handlers and accepts only configured
       HTTPS CORS origins; Development has its own localhost policy. One configurable IP window covers
@@ -327,13 +327,20 @@ requirement conflicts early (they gate "done").
       progress-board, and audit-log data export through filtered, authorized, audited CSV/PDF files.
 - [x] **H18** Data-subject fulfillment + retention/anonymization `L2-NFR-003` —
       authenticated access, correction, removal, and consent-withdrawal requests now create encrypted,
-      trackable workflow records that administrators can discover and fulfil once with content-free,
+      trackable workflow records that administrators can discover and fulfil once with data-minimized,
       tamper-evident audit evidence. Correction updates requested profile fields; withdrawal closes active
       subject consent; removal revokes sessions and erases private content/files while retaining
       pseudonymous attendance, progress, score, and status rows. A configurable retention run applies the
       same anonymizer only to expired deactivated/removed accounts, preserving de-identified reports;
-      AES-GCM converters protect privacy requests, messages, check-ins, reflections, submissions,
-      attendance notes, support content, guardian contacts, and signatures at rest with tamper detection.
+      AES-GCM converters protect privacy requests, application/public intake, notifications, messages,
+      check-ins, quiz answers, coding work, flags, assigned work, reflections, submissions, attendance/
+      RSVP notes, support content, guardian contacts/signatures, audit context, and uploaded file bytes at
+      rest with tamper detection. A startup lifecycle pass encrypts legacy plaintext before serving;
+      explicit account-ownership/recipient/data-subject links, transaction-owned privacy locks,
+      content-free cross-account copy, and minimized audit context make correction, export, and
+      erasure cover bounded duplicates outside the account row without treating email equality as
+      proof of ownership. Authenticated submissions link directly; administrators can attach an
+      anonymous record only after separate verification and an atomic attested claim.
 - [x] **H19** Unsaved-change framework `L2-NFR-007` — one reusable route/browser-close adapter now
       protects reflection, mentor/volunteer attendance, grading, badge, progression, and multi-form
       curriculum editors. Navigation offers save-draft or stay; synchronous owner-bound local drafts
@@ -350,11 +357,26 @@ requirement conflicts early (they gate "done").
       guarded reset and idempotent seed; user, invitation, and cohort management; youth CSV import;
       youth/cohort exports; badge awards; and audited token issuance with deterministic operator
       attribution.
-- [ ] **H22** Performance budgets `L2-NFR-008`
-- [ ] **H23** Responsive coverage (XS–XL) for every new surface `L2-NFR-009`
-- [ ] **H24** Accessibility coverage (WCAG 2.1 AA) for every new surface `L2-NFR-010`
-- [ ] **H25** Help center (role-tailored FAQ) `L2-PLATFORM-005`
-- [ ] **H26** Privacy/data-rights request UI `L2-NFR-003`
+- [x] **H22** Performance budgets `L2-NFR-008` — the CI load profile runs against SQL Server
+      with 50 independently authenticated, consented Youth in 50 distinct cohorts at a fixed 20 RPS,
+      enforcing median/p95/error/throughput and bounded-payload budgets across home, curriculum,
+      progress, and schedule reads. A production-build Playwright gate applies network and CPU
+      throttling to the primary Youth screen and enforces a 3 s interactive and main-thread blocking
+      budget.
+- [x] **H23** Responsive coverage (XS–XL) for every new surface `L2-NFR-009` — the focused browser
+      matrix exercises 375, 768, 992, and 1200 px viewports, including role shells, new administrator
+      and account surfaces, breakpoint-specific dashboard grids, contained wide content, and
+      document-level overflow checks.
+- [x] **H24** Accessibility coverage (WCAG 2.1 AA) for every new surface `L2-NFR-010` — shared UI
+      unit tests and the same browser matrix enforce semantic navigation/landmarks, labelled and named
+      controls, usable tap targets/focus states, contrast fixes, and zero axe WCAG 2.1 A/AA violations.
+- [x] **H25** Help center (role-tailored FAQ) `L2-PLATFORM-005` — `/help` provides searchable,
+      role-filtered guidance and a support hand-off; unit and browser acceptance tests cover role
+      tailoring and search.
+- [x] **H26** Privacy/data-rights request UI `L2-NFR-003` — users can review their stored data,
+      submit typed requests, download an authenticated complete personal-data export after access
+      fulfilment, and page through acknowledgements/history; administrators can review and safely
+      fulfil the encrypted, concurrency-protected request queue with completion notices.
 
 > Note: H23/H24 (responsive + a11y) are satisfied incrementally **within** each UI slice,
 > not as a separate late pass — each new surface ships XS–XL + WCAG-verified.
@@ -680,9 +702,10 @@ requirement conflicts early (they gate "done").
   submissions, and quiz attempts with role-correct deep links. The settings vocabulary exposes all
   keys. Fifty affected backend integrations, all 51 frontend units, the 426.89 kB production build,
   and the notification-settings browser acceptance pass.
-- 2026-07-19 — H15 done: every authenticated 403 now records the actor, endpoint, IP location, and
-  user agent from an isolated audit scope, covering both role-policy failures and resource/IDOR
-  denials without retaining query strings or request bodies. The existing application approval, role
+- 2026-07-19 — H15 done: every authenticated 403 now records the actor, endpoint, coarse device class,
+  and masked `/24` IPv4 or `/48` IPv6 peer-network location from an isolated audit scope, covering both
+  role-policy failures and resource/IDOR denials without retaining raw IP addresses, user-agent strings,
+  forwarding headers, query strings, or request bodies. The existing application approval, role
   change, lesson edit, attendance, check-in, badge award, sign-in, and account-deactivation producers
   flow through a sequenced HMAC-SHA256 chain; EF blocks audit updates/deletes, a unique sequence guards
   append order, and whole-chain verification exposes a prominent admin incident warning for legacy,

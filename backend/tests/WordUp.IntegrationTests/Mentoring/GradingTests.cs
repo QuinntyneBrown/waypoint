@@ -808,10 +808,14 @@ public sealed class GradingTests : IntegrationTestBase
         using (var scope = Factory.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            Assert.That(await db.AuditEntries.AnyAsync(entry =>
-                entry.Action == "QuizApproved"
-                && entry.TargetId == attemptId
-                && entry.Details == "auto=0;override=75"), Is.True);
+            var auditDetails = (await db.AuditEntries
+                    .Where(entry =>
+                        entry.Action == "QuizApproved"
+                        && entry.TargetId == attemptId)
+                    .ToListAsync())
+                .Select(entry => entry.Details)
+                .ToList();
+            Assert.That(auditDetails, Is.EquivalentTo(new[] { "auto=0;override=75" }));
         }
     }
 

@@ -1,146 +1,191 @@
-<div align="center">
-
 # Word Up
 
-A youth leadership platform for helping young people grow as **leaders who love Jesus** through Bible study, mentoring, leadership development, and coding.
+Word Up is a youth leadership platform for Bible study, mentoring, leadership development, and coding.
 
 [![Backend CI](https://github.com/QuinntyneBrown/word-up/actions/workflows/backend.yml/badge.svg)](https://github.com/QuinntyneBrown/word-up/actions/workflows/backend.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-c6fb50.svg)](LICENSE)
-[![.NET 9](https://img.shields.io/badge/.NET-9-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
-[![Angular 21](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)](https://angular.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Code style: Prettier](https://img.shields.io/badge/code_style-Prettier-F7B93E?logo=prettier&logoColor=black)](https://prettier.io/)
-[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-1d8fb9.svg)](CONTRIBUTING.md)
+[![Frontend CI](https://github.com/QuinntyneBrown/word-up/actions/workflows/frontend.yml/badge.svg)](https://github.com/QuinntyneBrown/word-up/actions/workflows/frontend.yml)
+[![Performance](https://github.com/QuinntyneBrown/word-up/actions/workflows/performance.yml/badge.svg)](https://github.com/QuinntyneBrown/word-up/actions/workflows/performance.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-[Implementation plan](docs/implementation-plan.md) | [Architecture](docs/ARCHITECTURE.md) | [Requirements](docs/specs/README.md) | [Design mocks](docs/mocks/README.md) | [Contributing](CONTRIBUTING.md)
-</div>
+[Getting started](#getting-started) · [Documentation](#documentation) · [Contributing](#contributing) · [Support](SUPPORT.md)
 
-## About the project
+> [!WARNING]
+> Word Up remains a development project. Independent security, privacy, safeguarding, and accessibility reviews have not been completed, and no release is approved for production use or for storing real participant information. Use synthetic data only. See the current [implementation status](docs/implementation-plan.md) and [security policy](SECURITY.md).
 
-Word Up supports a Toronto youth program serving communities across Rexdale, Warden, and St. Clair. The product brings applications, safeguarding, cohort administration, learning, mentoring, attendance, communications, and progress reporting into one role-aware platform, replacing workflows currently spread across spreadsheets and manual follow-up.
+## Overview
 
-The repository is being built from an acceptance-testable requirements set. Its current implementation is an early full-stack foundation: a .NET 9 API vertical slice, an Angular 21 workspace awaiting its first application, and roughly 115 static HTML screens used as the interaction and visual reference. The backend currently covers identity and access, invitations, application intake, onboarding, password recovery, guardian consent, role policies, and audit records.
+Word Up is designed to bring youth applications, consent and safeguarding, cohort operations, learning, mentoring, attendance, communication, and reporting into one role-aware system. It serves youth, mentors, guardians, volunteers, program administrators, and public visitors.
 
-Word Up uses synthetic development and test data and has not completed an independent production security, privacy, safeguarding, or accessibility assessment. It is not ready to store real participant information or operate as a system of record. See the [implementation plan](docs/implementation-plan.md) for delivery status and sequencing.
+The repository contains a .NET 9 API and operational CLI, an Angular 21 authenticated portal and public SSR site, shared frontend libraries, SQL Server persistence, automated acceptance tests, and static interaction references. The product scope comes from the [product requirements](docs/PRD.md) and 88 in-scope, acceptance-testable requirements under [`docs/specs`](docs/specs/README.md).
 
-## Features
+## Capabilities
 
-- Email and password authentication with JWT access tokens and rotating refresh tokens
-- Account lockout, password recovery, invitation expiry, and role-based authorization policies
-- Youth application intake with administrator approval and decline flows
-- Guardian consent capture, withdrawal, status checks, and safeguarding gates
-- Resumable onboarding for invited participants and staff
-- Auditable sensitive actions with role-restricted, redacted audit-log access
-- A requirements corpus spanning 14 subsystems and 88 detailed acceptance-testable requirements
-- Automated requirement traceability checks for acceptance tests
-- Roughly 115 responsive, offline-capable HTML design mocks covering all product roles
-- An Angular 21 workspace reserved for the production web client
-
-See [docs/mocks](docs/mocks/README.md) for the FaithTech-styled interaction reference and [docs/specs](docs/specs/README.md) for the product requirements.
+- Public program content, youth applications, contact requests, volunteer sign-up, and donation pledges
+- Role-specific portal experiences for youth, mentors, guardians, volunteers, and program administrators
+- Bible, leadership, and coding curricula with lessons, reflections, quizzes, assignments, progression, and badges
+- Cohort, curriculum, schedule, attendance, mentoring, communication, and reporting workflows
+- Guardian consent, safeguarding gates, scoped authorization, privacy requests, and auditable sensitive actions
+- Invitations, password recovery, notifications, realtime updates, and durable email delivery
+- Responsive browser experiences with automated route, accessibility, performance, and requirements-traceability gates
 
 ## Getting started
 
 ### Prerequisites
 
-- [.NET SDK 9](https://dotnet.microsoft.com/) (pinned in [backend/global.json](backend/global.json))
-- [Node.js](https://nodejs.org/) 20 or later and npm
-- SQL Server for integration tests; LocalDB is the default on Windows, and environment variables can target another instance
+- [.NET SDK 9](https://dotnet.microsoft.com/) (selected by [`global.json`](global.json))
+- [Node.js](https://nodejs.org/) `^20.19.0`, `^22.12.0`, or `>=24.0.0`
+- npm 10.9.4
+- SQL Server only for integration tests or persistent local data; the default development setup uses an in-memory database
 
-### Local development
+### Set up the repository
 
 ```bash
 git clone https://github.com/QuinntyneBrown/word-up.git
 cd word-up
-
-# Run the API with its default in-memory development database
-dotnet run --project backend/src/WordUp.Api -e ASPNETCORE_ENVIRONMENT=Development --urls http://localhost:5099
-# Swagger: http://localhost:5099/swagger
-# Health:  http://localhost:5099/health
-
-# Install the Angular workspace dependencies
-cd frontend
-npm install
+dotnet restore backend/WordUp.sln
+npm --prefix frontend ci
 ```
 
-The Angular workspace does not yet define an application or runnable target. Until that vertical slice is built, open [`docs/mocks/index.html`](docs/mocks/index.html) directly in a browser to explore the product screens.
+### Run locally
 
-The API uses an in-memory database when `ConnectionStrings:Default` is `InMemory`. Supply a SQL Server connection string through configuration for persistent environments. Never commit secrets: the development `Jwt:SigningKey` is a placeholder and must be replaced through user secrets or environment-specific configuration before any non-local use.
+Start each process from the repository root in a separate terminal.
 
-## Technology
-
-| Area             | Technologies                                                                                      |
-| ---------------- | ------------------------------------------------------------------------------------------------- |
-| Backend          | .NET 9, ASP.NET Core, MediatR / CQS, FluentValidation                                             |
-| Persistence      | Entity Framework Core, SQL Server, in-memory development provider                                 |
-| Authentication   | JWT bearer tokens, rotating refresh tokens, BCrypt                                                |
-| Frontend         | Angular 21 workspace, RxJS, TypeScript 5                                                          |
-| Design reference | Static HTML, CSS, and JavaScript using the FaithTech design language                              |
-| Quality          | xUnit, `WebApplicationFactory`, GitHub Actions, requirements traceability, Prettier, EditorConfig |
-
-## Testing
+Terminal 1 — API:
 
 ```bash
-# Restore, build, and run the backend unit and integration tests
-dotnet test backend/WordUp.sln --configuration Release
-
-# Verify that test trace headers reference valid detailed requirements
-node scripts/check-traceability.mjs
+dotnet run --project backend/src/WordUp.Api --environment Development --urls http://127.0.0.1:5211
 ```
 
-Integration tests provision a disposable SQL Server database. They default to `(localdb)\MSSQLLocalDB`; set `WORDUP_TEST_SQLSERVER` and, when needed, `WORDUP_TEST_SQLAUTH` to use another instance. The Angular workspace has no project target yet, so frontend build and test commands will become available when the first application is generated.
+Terminal 2 — authenticated portal:
 
-## Project structure
+```bash
+npm --prefix frontend start
+```
+
+Terminal 3 — public site:
+
+```bash
+npm --prefix frontend run start:public
+```
+
+| Service              | Local URL                            |
+| -------------------- | ------------------------------------ |
+| Authenticated portal | `http://localhost:4200`              |
+| Public site          | `http://localhost:4201`              |
+| API documentation    | `http://127.0.0.1:5211/swagger`      |
+| Health checks        | `http://127.0.0.1:5211/health`       |
+| Readiness check      | `http://127.0.0.1:5211/health/ready` |
+
+Both web applications proxy `/api` and `/hubs` to the API. Development starts with an empty, process-local database and does not create demo accounts outside the `Testing` environment. This quick start lets you inspect the API, browse the public site, and reach the portal sign-in screen; it does not bootstrap an authenticated user. The HTML files under [`docs/mocks`](docs/mocks/README.md) are interaction references, not the running application.
+
+### Configuration
+
+Local defaults are defined in [`appsettings.json`](backend/src/WordUp.Api/appsettings.json). ASP.NET Core configuration keys use double underscores in environment variables; for example, `Jwt:SigningKey` becomes `Jwt__SigningKey`.
+
+| Configuration                                                        | Purpose                                                                                  |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `ConnectionStrings:Default`                                          | Uses `InMemory` locally; provide a SQL Server connection string for durable persistence. |
+| `Jwt:SigningKey`                                                     | Signs access tokens. Replace the development placeholder outside local use.              |
+| `AuditIntegrity:SigningKey`                                          | Protects audit-record integrity. Replace the development placeholder.                    |
+| `SensitiveData:EncryptionKey`                                        | Protects sensitive stored values. Replace the development placeholder.                   |
+| `ApplicationUrls:PortalBaseUrl`, `ApplicationUrls:PublicSiteBaseUrl` | Build absolute application links; production values must use HTTPS.                      |
+| `Smtp:*`                                                             | Configures SMTP delivery, TLS, sender identity, retry limits, and optional credentials.  |
+
+Production startup rejects the in-memory database, placeholder keys, non-HTTPS application URLs, and missing required SMTP settings. Keep secrets outside source control. See the [architecture guide](docs/ARCHITECTURE.md) and [CLI guide](backend/src/WordUp.Cli/README.md) for operational details.
+
+## Architecture
+
+| Area           | Implementation                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------- |
+| Backend        | ASP.NET Core on .NET 9, MediatR/CQS, FluentValidation, and SignalR                                |
+| Persistence    | Entity Framework Core with SQL Server and an in-memory development provider                       |
+| Authentication | JWT access tokens, rotating refresh tokens, BCrypt password hashing, and role-based policies      |
+| Frontend       | Angular 21 portal, Angular SSR public site, RxJS, and TypeScript                                  |
+| Quality        | NUnit, `WebApplicationFactory`, Vitest, Playwright, axe, load gates, and requirement traceability |
+
+The backend follows a Clean Architecture dependency direction: API → Application → Domain, with Infrastructure implementing Application ports. Read [the architecture documentation](docs/ARCHITECTURE.md) before changing module boundaries, persistence, authorization, or data flow.
+
+## Development and testing
+
+Run backend and requirements checks from the repository root:
+
+```bash
+dotnet tool restore
+dotnet restore backend/WordUp.sln
+dotnet build backend/WordUp.sln --configuration Release --no-restore
+dotnet ef migrations has-pending-model-changes --project backend/src/WordUp.Infrastructure --startup-project backend/src/WordUp.Api --configuration Release --no-build
+dotnet test backend/WordUp.sln --configuration Release --no-build
+node scripts/check-traceability.mjs --strict
+```
+
+Integration tests create disposable SQL Server databases. They use `(localdb)\MSSQLLocalDB` by default on Windows. On Linux or macOS, provision a reachable SQL Server and set `WORDUP_TEST_SQLSERVER` and `WORDUP_TEST_SQLAUTH`; the [backend CI workflow](.github/workflows/backend.yml) shows a known-good container and connection setup.
+
+Run frontend checks from `frontend/`:
+
+```bash
+cd frontend
+npm ci
+npm run format:check
+npm run quality:routes
+npm run build
+npm test -- --watch=false
+
+# Browser acceptance, responsive, accessibility, and interaction-performance gates
+npm run api:build
+npx playwright install chromium
+npm run e2e:ci
+npm run e2e:performance
+```
+
+`npm run api:build` creates the Debug API build expected by the Playwright web server on a clean checkout. The [backend](.github/workflows/backend.yml), [frontend](.github/workflows/frontend.yml), and [performance](.github/workflows/performance.yml) workflows define the authoritative CI gates, including the SQL-backed API load profile. See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and change-specific test expectations.
+
+## Repository layout
 
 ```text
 backend/
-  src/WordUp.Domain/               Entities and lifecycle state grouped by subsystem
-    <Subsystem>/                    Subsystem-owned domain types and namespaces
-  src/WordUp.Application/          Use cases grouped by subsystem, then feature
-    <Subsystem>/<Feature>/         Commands, queries, handlers, and validators
-    Shared/                         Cross-cutting ports, behaviors, and exceptions
-  src/WordUp.Infrastructure/       EF Core, tokens, hashing, email, and audit services
-  src/WordUp.Api/                  Policies, middleware, and composition root
-    Controllers/<Subsystem>/       HTTP controllers only
-    Contracts/<Subsystem>/         HTTP request contracts
-  tests/WordUp.UnitTests/          Isolated validation and domain-level tests
-  tests/WordUp.IntegrationTests/   Full HTTP tests over disposable SQL Server databases
-frontend/                          Angular 21 workspace; application implementation pending
+  src/                 Domain, Application, Infrastructure, API, and operational CLI
+  tests/               Unit and SQL-backed integration tests
+frontend/
+  projects/portal/     Authenticated role-aware application
+  projects/public-site/ SSR public site and intake experience
+  projects/wu-api/     Typed API client and models
+  projects/wu-auth/    Session state, guards, and authentication integration
+  projects/wu-ui/      Shared design system and application shell
+  e2e/                 Playwright acceptance and quality gates
 docs/
-  PRD.md                           Product requirements source
-  specs/                           L1/L2 subsystem requirements and acceptance criteria
-  implementation-plan.md           Delivery phases and current status
-  backend-implementation-plan.md   Detailed backend phase-one plan
-  mocks/                           Static product map, design system, and role-based screens
-scripts/
-  check-traceability.mjs           Requirement-to-test reference validator
+  specs/               L1/L2 requirements and acceptance criteria
+  detailed-designs/    Feature-level designs and diagrams
+  mocks/               Static interaction references
+scripts/               Traceability, documentation, and performance tooling
 ```
 
 ## Documentation
 
-| Document                                                           | Purpose                                                           |
-| ------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| [Implementation plan](docs/implementation-plan.md)                 | Delivery sequence, current status, and verification gates         |
-| [Backend implementation plan](docs/backend-implementation-plan.md) | Detailed plan for the initial API foundation                      |
-| [Architecture](docs/ARCHITECTURE.md)                               | System layers, request flow, persistence, and security boundaries |
-| [Architecture decisions](docs/DECISIONS.md)                        | Technical and product decisions worth recording                   |
-| [Product requirements](docs/PRD.md)                                | Product goals, users, scope, and constraints                      |
-| [Requirements specification](docs/specs/README.md)                 | L1/L2 requirement organization, IDs, and traceability rules       |
-| [Design mocks](docs/mocks/README.md)                               | Static FaithTech-styled interaction and visual reference          |
-| [Page-builder contract](docs/contract.md)                          | Shared HTML, CSS, and JavaScript conventions for mock screens     |
+| Document                                             | Purpose                                                           |
+| ---------------------------------------------------- | ----------------------------------------------------------------- |
+| [Implementation status](docs/implementation-plan.md) | Implemented boundary, verification commands, and release work     |
+| [Product requirements](docs/PRD.md)                  | Product goals, users, scope, and constraints                      |
+| [Requirements specification](docs/specs/README.md)   | Stable requirement IDs, acceptance criteria, and traceability     |
+| [Architecture](docs/ARCHITECTURE.md)                 | System layers, request flow, persistence, and security boundaries |
+| [Architecture decisions](docs/DECISIONS.md)          | Durable technical and product decisions                           |
+| [Frontend guide](frontend/README.md)                 | Angular applications, libraries, and frontend commands            |
+| [Operational CLI](backend/src/WordUp.Cli/README.md)  | CLI commands and production configuration                         |
+| [Design references](docs/mocks/README.md)            | Static product map and role-based interaction references          |
+| [Changelog](CHANGELOG.md)                            | Notable contributor-visible changes                               |
 
 ## Contributing
 
-Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow, branch conventions, quality gates, requirements traceability, and architecture boundaries. Participation is governed by the [Code of Conduct](CODE_OF_CONDUCT.md).
+Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, and open an issue before large features or changes involving schemas, authorization, consent, safeguarding, or participant data. All participants must follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
-The people who help build Word Up are recognized in [CONTRIBUTORS.md](CONTRIBUTORS.md), and notable changes are recorded in [CHANGELOG.md](CHANGELOG.md).
+Contributors are recognized in [CONTRIBUTORS.md](CONTRIBUTORS.md). Maintainer roles and decision making are documented in [GOVERNANCE.md](GOVERNANCE.md).
+
+## Support
+
+For usage questions and non-sensitive problems, read [SUPPORT.md](SUPPORT.md) and search the [existing issues](https://github.com/QuinntyneBrown/word-up/issues). Maintainers and contributors provide support on a best-effort basis without a service-level agreement.
 
 ## Security
 
-Do not report vulnerabilities in a public issue. Follow [SECURITY.md](SECURITY.md) to submit a private report. For usage questions and non-sensitive problems, see [SUPPORT.md](SUPPORT.md).
-
-## Governance
-
-Maintainer responsibilities, decision making, and the path to becoming a maintainer are described in [GOVERNANCE.md](GOVERNANCE.md).
+Do not report vulnerabilities in a public issue. Follow [SECURITY.md](SECURITY.md) for the project's private reporting path. The latest commit on `main` is the only supported code line; older commits, forks, and deployments are not supported.
 
 ## License
 

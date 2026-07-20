@@ -84,10 +84,11 @@ public class SubmitQuizAttemptCommandHandler : IRequestHandler<SubmitQuizAttempt
                 mentorId,
                 "approval-needed",
                 "Quiz ready for review",
-                $"{submitter.DisplayName} submitted a quiz attempt.",
+                "A participant submitted a quiz attempt.",
                 $"/mentor/reviews/quizzes/{attempt.Id}",
                 now,
-                cancellationToken);
+                cancellationToken,
+                subjectUserId: attempt.YouthUserId);
         }
 
         await _db.SaveChangesAsync(cancellationToken);

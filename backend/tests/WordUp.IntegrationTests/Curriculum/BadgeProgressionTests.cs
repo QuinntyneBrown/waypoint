@@ -302,7 +302,7 @@ public sealed class BadgeProgressionTests : IntegrationTestBase
         }, adminToken);
         Assert.That(partial.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
 
-        var completeOrder = initialStages
+        var completeOrder = initialStages!
             .Select(item => item.Id)
             .Where(id => id != firstStageId && id != secondStageId)
             .Prepend(firstStageId)
@@ -322,10 +322,10 @@ public sealed class BadgeProgressionTests : IntegrationTestBase
         {
             Assert.That(saved!.Take(2).Select(item => item.Id),
                 Is.EqualTo(new[] { secondStageId, firstStageId }));
-            Assert.That(saved.Single(item => item.Id == firstStageId).Name, Is.EqualTo("Explorer"));
-            Assert.That(saved.Single(item => item.Id == firstStageId).Description,
+            Assert.That(saved!.Single(item => item.Id == firstStageId).Name, Is.EqualTo("Explorer"));
+            Assert.That(saved!.Single(item => item.Id == firstStageId).Description,
                 Is.EqualTo("New to Scripture and community."));
-            Assert.That(saved.SelectMany(item => item.Competencies).Any(item => item.Id == removableId), Is.False);
+            Assert.That(saved!.SelectMany(item => item.Competencies).Any(item => item.Id == removableId), Is.False);
         });
 
         var youthId = SeedYouth(SubjectId(mentorToken));

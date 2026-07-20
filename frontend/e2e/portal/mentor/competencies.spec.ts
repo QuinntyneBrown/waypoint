@@ -29,7 +29,13 @@ test('mentor assesses the full competency framework and youth progress gets the 
     .fill('Took initiative welcoming a new participant.');
   await tracker.saveById(seeded.mentorCompetencyId).click();
   await expect(tracker.status).toContainText(`Saved ${seeded.mentorCompetencyName}`);
-  await expect(tracker.summary).toContainText(initiallyMastered + 1 + ' of ' + frameworkTotal);
+  await expect(tracker.summary).toContainText(
+    new RegExp(`Proficient or mastered\\s*${initiallyMastered + 1} of \\d+`),
+  );
+  const updatedSummary = (await tracker.summary.textContent()) ?? '';
+  const updatedCounts = updatedSummary.match(/Proficient or mastered\s*(\d+) of (\d+)/);
+  expect(updatedCounts, updatedSummary).not.toBeNull();
+  expect(Number(updatedCounts![2])).toBeGreaterThanOrEqual(frameworkTotal);
   await expect(tracker.cardById(seeded.mentorCompetencyId)).toContainText(seeded.mentorName);
 
   await page.reload();

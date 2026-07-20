@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  computed,
-  effect,
-  inject,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import {
   ApiError,
   AssignableWorkItem,
@@ -17,7 +8,7 @@ import {
   ReminderCadence,
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
 
 type TargetMode = 'individual' | 'cohort';
 
@@ -25,7 +16,7 @@ type TargetMode = 'individual' | 'cohort';
 @Component({
   selector: 'wu-mentor-assign-work',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon],
+  imports: [WuShell, WuIcon, WuAccessibleDialog],
   templateUrl: './mentor-assign-work.html',
   styles: `
     .assign-layout {
@@ -91,7 +82,6 @@ export class MentorAssignWorkPage {
   protected readonly saving = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly statusMessage = signal<string | null>(null);
-  private readonly cancelButton = viewChild<ElementRef<HTMLButtonElement>>('cancelButton');
 
   protected readonly filteredItems = computed(() =>
     (this.options()?.items ?? []).filter((item) => item.itemType === this.itemType()),
@@ -122,9 +112,6 @@ export class MentorAssignWorkPage {
   });
 
   constructor() {
-    effect(() => {
-      if (this.reviewing()) this.cancelButton()?.nativeElement.focus();
-    });
     this.api.assignWorkOptions().subscribe({
       next: (options) => {
         this.options.set(options);

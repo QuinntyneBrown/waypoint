@@ -226,12 +226,11 @@
   @if (reviewing()) {
     <div
       class="wu-modal wu-modal--sm is-open"
-      role="dialog"
-      aria-modal="true"
+      wuAccessibleDialog
       aria-labelledby="confirm-assign-heading"
-      (keydown.escape)="cancelReview()"
+      (wuDialogEscape)="cancelReview()"
     >
-      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__scrim" (click)="cancelReview()"></div>
       <div class="wu-modal__panel">
         <div class="wu-modal__header">
           <div>
@@ -263,7 +262,12 @@
           }
         </div>
         <div class="wu-modal__footer">
-          <button #cancelButton class="wu-btn wu-btn--ghost" type="button" (click)="cancelReview()">
+          <button
+            class="wu-btn wu-btn--ghost"
+            type="button"
+            wuDialogInitialFocus
+            (click)="cancelReview()"
+          >
             Cancel
           </button>
           <button

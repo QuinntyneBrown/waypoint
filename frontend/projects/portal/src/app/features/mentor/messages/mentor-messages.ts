@@ -19,7 +19,7 @@ import {
   MessagingApi,
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
 import { RealtimeService } from '../../../realtime.service';
 
 type MessageMode = 'thread' | 'broadcast';
@@ -28,7 +28,7 @@ type MessageMode = 'thread' | 'broadcast';
 @Component({
   selector: 'wu-mentor-messages',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, DatePipe, ReactiveFormsModule],
+  imports: [WuShell, WuIcon, WuAccessibleDialog, DatePipe, ReactiveFormsModule],
   templateUrl: './mentor-messages.html',
   styles: `
     .messages-layout {

@@ -88,7 +88,9 @@ public sealed class CaptureRequestedConsentCommandHandler
             $"Media consent: {(consent.MediaConsent ? "yes" : "no")}. " +
             $"Valid until {consent.ValidUntil:yyyy-MM-dd}." +
             CaptureConsentCommandHandler.ContactSentence(policy.ContactEmail),
-            cancellationToken);
+            cancellationToken,
+            subjectUserId: youth.Id,
+            recipientUserId: guardian.Id);
         await _audit.LogAsync(
             "GuardianConsentCaptured",
             guardian.Id,

@@ -47,6 +47,16 @@ public class RequestDataSubjectActionCommandHandler
             SubjectUserId = userId,
             ActionType = actionType,
             Details = encodedDetails,
+            RequestedDisplayName = string.IsNullOrWhiteSpace(request.Correction?.DisplayName)
+                ? null
+                : request.Correction.DisplayName.Trim(),
+            RequestedEmail = string.IsNullOrWhiteSpace(request.Correction?.Email)
+                ? null
+                : request.Correction.Email.Trim().ToLowerInvariant(),
+            RequestedPronouns = request.Correction?.Pronouns is null
+                ? null
+                : request.Correction.Pronouns.Trim(),
+            RequestedClearPronouns = request.Correction?.ClearPronouns == true,
             RequestedAt = recordedAt,
         };
         _db.DataSubjectRequests.Add(dataRequest);

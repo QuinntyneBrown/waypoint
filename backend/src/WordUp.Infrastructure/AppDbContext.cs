@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WordUp.Application.Shared.Abstractions;
 
@@ -13,6 +15,14 @@ public class AppDbContext : DbContext, IAppDbContext
         ISensitiveDataProtector sensitiveData) : base(options)
     {
         _sensitiveData = sensitiveData;
+    }
+
+    internal string SensitiveDataKeyIdentifier => _sensitiveData.KeyIdentifier;
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.ReplaceService<IModelCacheKeyFactory, SensitiveDataModelCacheKeyFactory>();
+        base.OnConfiguring(optionsBuilder);
     }
 
     public DbSet<User> Users => Set<User>();
@@ -67,6 +77,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<SupportRequest> SupportRequests => Set<SupportRequest>();
     public DbSet<StoredUserFile> StoredUserFiles => Set<StoredUserFile>();
     public DbSet<DataSubjectRequest> DataSubjectRequests => Set<DataSubjectRequest>();
+    public DbSet<OutboundEmail> OutboundEmails => Set<OutboundEmail>();
     public DbSet<GuardianProfile> GuardianProfiles => Set<GuardianProfile>();
     public DbSet<ContactRequest> ContactRequests => Set<ContactRequest>();
     public DbSet<VolunteerSignup> VolunteerSignups => Set<VolunteerSignup>();
@@ -105,6 +116,13 @@ public class AppDbContext : DbContext, IAppDbContext
         var protectedNullableText = new ValueConverter<string?, string?>(
             value => value == null ? null : _sensitiveData.Protect(value),
             value => value == null ? null : _sensitiveData.Unprotect(value));
+        var protectedBytes = new ValueConverter<byte[], byte[]>(
+            value => _sensitiveData.Protect(value),
+            value => _sensitiveData.Unprotect(value));
+        var protectedBytesComparer = new ValueComparer<byte[]>(
+            (left, right) => left != null && right != null && left.SequenceEqual(right),
+            value => value.Aggregate(0, (hash, item) => HashCode.Combine(hash, item)),
+            value => value.ToArray());
 
         modelBuilder.Entity<User>(b =>
         {
@@ -128,7 +146,27 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Reference).HasMaxLength(32).IsRequired();
             b.Property(x => x.ActionType).HasMaxLength(32).IsRequired();
             b.Property(x => x.Details).HasConversion(protectedNullableText).HasMaxLength(12000);
+            b.Property(x => x.RequestedDisplayName).HasConversion(protectedNullableText).HasMaxLength(12000);
+            b.Property(x => x.RequestedEmail).HasConversion(protectedNullableText).HasMaxLength(12000);
+            b.Property(x => x.RequestedPronouns).HasConversion(protectedNullableText).HasMaxLength(12000);
+            b.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
             b.Property(x => x.ResolutionNote).HasConversion(protectedNullableText).HasMaxLength(12000);
+        });
+
+        modelBuilder.Entity<OutboundEmail>(b =>
+        {
+            b.HasKey(x => x.Id);
+            b.Property(x => x.ToEmail).HasConversion(protectedText).HasMaxLength(12000).IsRequired();
+            b.Property(x => x.Subject).HasConversion(protectedText).HasMaxLength(12000).IsRequired();
+            b.Property(x => x.Body).HasConversion(protectedText).HasMaxLength(40000).IsRequired();
+            b.Property(x => x.IdempotencyKey).HasMaxLength(200);
+            b.Property(x => x.LastErrorCode).HasMaxLength(128);
+            b.HasIndex(x => x.IdempotencyKey).IsUnique();
+            b.HasIndex(x => x.RecipientUserId);
+            b.HasIndex(x => x.SubjectUserId);
+            b.HasIndex(x => new { x.SentAt, x.AvailableAt, x.LeaseUntil });
+            b.HasOne<User>().WithMany().HasForeignKey(x => x.RecipientUserId)
+                .OnDelete(DeleteBehavior.NoAction);
         });
 
         modelBuilder.Entity<RefreshToken>(b =>
@@ -150,6 +188,7 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Role).HasMaxLength(64).IsRequired();
             b.Property(x => x.TokenHash).HasMaxLength(512).IsRequired();
             b.Property(x => x.Status).HasConversion<int>();
+            b.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
         });
 
         modelBuilder.Entity<PasswordResetToken>(b =>
@@ -170,8 +209,8 @@ public class AppDbContext : DbContext, IAppDbContext
                 .HasFilter("[SequenceNumber] IS NOT NULL");
             b.Property(x => x.Action).HasMaxLength(128).IsRequired();
             b.Property(x => x.TargetType).HasMaxLength(128);
-            b.Property(x => x.Source).HasMaxLength(512);
-            b.Property(x => x.Details).HasMaxLength(2048);
+            b.Property(x => x.Source).HasConversion(protectedNullableText).HasMaxLength(2048);
+            b.Property(x => x.Details).HasConversion(protectedNullableText).HasMaxLength(12000);
             b.Property(x => x.PreviousHash).HasMaxLength(64);
             b.Property(x => x.IntegrityHash).HasMaxLength(64);
         });
@@ -180,18 +219,27 @@ public class AppDbContext : DbContext, IAppDbContext
         {
             b.HasKey(x => x.Id);
             b.HasIndex(x => x.Status);
-            b.Property(x => x.FirstName).HasMaxLength(128).IsRequired();
-            b.Property(x => x.LastName).HasMaxLength(128).IsRequired();
-            b.Property(x => x.WhoIsFilling).HasMaxLength(32).IsRequired();
-            b.Property(x => x.Neighbourhood).HasMaxLength(128).IsRequired();
-            b.Property(x => x.CohortInterest).HasMaxLength(256).IsRequired();
-            b.Property(x => x.WhyInterested).HasMaxLength(2000).IsRequired();
-            b.Property(x => x.TrackInterest).HasMaxLength(64);
-            b.Property(x => x.GuardianName).HasMaxLength(128);
-            b.Property(x => x.GuardianEmail).HasMaxLength(256);
-            b.Property(x => x.GuardianPhone).HasMaxLength(64);
-            b.Property(x => x.DecisionNote).HasMaxLength(2000);
+            b.HasIndex(x => x.ApplicantUserId);
+            b.HasIndex(x => x.GuardianUserId);
+            b.HasIndex(x => x.CreatedYouthUserId);
+            b.Property(x => x.FirstName).HasConversion(protectedText).HasMaxLength(1024).IsRequired();
+            b.Property(x => x.LastName).HasConversion(protectedText).HasMaxLength(1024).IsRequired();
+            b.Property(x => x.WhoIsFilling).HasConversion(protectedText).HasMaxLength(512).IsRequired();
+            b.Property(x => x.Neighbourhood).HasConversion(protectedText).HasMaxLength(2048).IsRequired();
+            b.Property(x => x.CohortInterest).HasConversion(protectedText).HasMaxLength(2048).IsRequired();
+            b.Property(x => x.WhyInterested).HasConversion(protectedText).HasMaxLength(12000).IsRequired();
+            b.Property(x => x.TrackInterest).HasConversion(protectedNullableText).HasMaxLength(2048);
+            b.Property(x => x.GuardianName).HasConversion(protectedNullableText).HasMaxLength(2048);
+            b.Property(x => x.GuardianEmail).HasConversion(protectedNullableText).HasMaxLength(2048);
+            b.Property(x => x.GuardianPhone).HasConversion(protectedNullableText).HasMaxLength(1024);
+            b.Property(x => x.DecisionNote).HasConversion(protectedNullableText).HasMaxLength(12000);
             b.Property(x => x.Status).HasConversion<int>();
+            b.HasOne<User>().WithMany().HasForeignKey(x => x.ApplicantUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+            b.HasOne<User>().WithMany().HasForeignKey(x => x.GuardianUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+            b.HasOne<User>().WithMany().HasForeignKey(x => x.CreatedYouthUserId)
+                .OnDelete(DeleteBehavior.NoAction);
         });
 
         modelBuilder.Entity<GuardianConsent>(b =>
@@ -291,14 +339,18 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<LessonProgress>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());
         modelBuilder.Entity<CodingLessonWorkspace>(b =>
         {
-            b.Property(x => x.Code).HasMaxLength(50000);
+            b.Property(x => x.Code).HasConversion(protectedText);
             b.Property(x => x.CheckedStepIdsJson).HasMaxLength(4000).IsRequired();
             b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique();
         });
         modelBuilder.Entity<YouthTrackEnrollment>(b =>
             b.HasIndex(x => new { x.YouthUserId, x.TrackId }).IsUnique());
         modelBuilder.Entity<LessonReadingState>(b => b.HasIndex(x => new { x.YouthUserId, x.LessonId }).IsUnique());
-        modelBuilder.Entity<QuizAttempt>(b => b.HasIndex(x => new { x.YouthUserId, x.QuizId }));
+        modelBuilder.Entity<QuizAttempt>(b =>
+        {
+            b.HasIndex(x => new { x.YouthUserId, x.QuizId });
+            b.Property(x => x.AnswersJson).HasConversion(protectedNullableText);
+        });
         modelBuilder.Entity<Submission>(b =>
         {
             b.HasIndex(x => new { x.YouthUserId, x.AssignmentId });
@@ -309,9 +361,13 @@ public class AppDbContext : DbContext, IAppDbContext
         });
         modelBuilder.Entity<StoredSubmissionFile>(b =>
         {
-            b.Property(x => x.OriginalFileName).HasMaxLength(255).IsRequired();
+            b.Property(x => x.OriginalFileName).HasConversion(protectedText).HasMaxLength(2048).IsRequired();
             b.Property(x => x.ContentType).HasMaxLength(64).IsRequired();
             b.Property(x => x.Sha256).HasMaxLength(64).IsRequired();
+            var content = b.Property(x => x.Content)
+                .HasConversion(protectedBytes)
+                .IsRequired();
+            content.Metadata.SetValueComparer(protectedBytesComparer);
             b.Property(x => x.Kind).HasConversion<string>().HasMaxLength(16);
             b.HasIndex(x => new { x.OwnerUserId, x.AssignmentId });
         });
@@ -327,7 +383,11 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Mood).HasConversion(protectedNullableText).HasMaxLength(256);
             b.Property(x => x.SecondaryJson).HasConversion(protectedNullableText).HasMaxLength(12000);
         });
-        modelBuilder.Entity<CompetencyAssessment>(b => b.HasIndex(x => new { x.YouthUserId, x.CompetencyId }));
+        modelBuilder.Entity<CompetencyAssessment>(b =>
+        {
+            b.HasIndex(x => new { x.YouthUserId, x.CompetencyId });
+            b.Property(x => x.Notes).HasConversion(protectedNullableText);
+        });
         modelBuilder.Entity<CheckIn>(b =>
         {
             b.HasIndex(x => x.YouthUserId);
@@ -341,17 +401,17 @@ public class AppDbContext : DbContext, IAppDbContext
             b.HasIndex(x => x.YouthUserId)
                 .HasFilter("[ResolvedAt] IS NULL")
                 .IsUnique();
-            b.Property(x => x.Reason).HasMaxLength(500).IsRequired();
-            b.Property(x => x.AutomaticReason).HasMaxLength(500);
+            b.Property(x => x.Reason).HasConversion(protectedText).HasMaxLength(12000).IsRequired();
+            b.Property(x => x.AutomaticReason).HasConversion(protectedNullableText).HasMaxLength(12000);
             b.Property(x => x.AutomaticSignalKeys).HasMaxLength(128);
-            b.Property(x => x.ResolutionReason).HasMaxLength(128);
+            b.Property(x => x.ResolutionReason).HasConversion(protectedNullableText).HasMaxLength(1024);
         });
         modelBuilder.Entity<AssignedWork>(b =>
         {
             b.HasIndex(x => x.YouthUserId);
             b.Property(x => x.ItemType).HasMaxLength(32).IsRequired();
             b.Property(x => x.ReminderCadence).HasMaxLength(32);
-            b.Property(x => x.Message).HasMaxLength(4000);
+            b.Property(x => x.Message).HasConversion(protectedNullableText).HasMaxLength(24000);
         });
 
         // Engagement & operations (M4)
@@ -377,7 +437,7 @@ public class AppDbContext : DbContext, IAppDbContext
             b.HasIndex(x => x.TokenHash).IsUnique();
             b.HasIndex(x => new { x.YouthUserId, x.UsedAt });
             b.Property(x => x.Channel).HasMaxLength(16).IsRequired();
-            b.Property(x => x.Destination).HasMaxLength(256).IsRequired();
+            b.Property(x => x.Destination).HasConversion(protectedText).HasMaxLength(2048).IsRequired();
             b.Property(x => x.TokenHash).HasMaxLength(512).IsRequired();
         });
         modelBuilder.Entity<AttendanceWriteReceipt>(b =>
@@ -390,7 +450,7 @@ public class AppDbContext : DbContext, IAppDbContext
         {
             b.HasIndex(x => new { x.SessionId, x.YouthUserId }).IsUnique();
             b.Property(x => x.Response).HasConversion<int>();
-            b.Property(x => x.Note).HasMaxLength(1000);
+            b.Property(x => x.Note).HasConversion(protectedNullableText).HasMaxLength(8000);
         });
         modelBuilder.Entity<Announcement>(b =>
         {
@@ -412,18 +472,20 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<Notification>(b =>
         {
             b.Property(x => x.EventKey).HasMaxLength(64).IsRequired();
-            b.Property(x => x.Title).HasMaxLength(200).IsRequired();
-            b.Property(x => x.Body).HasMaxLength(2000).IsRequired();
+            b.Property(x => x.Title).HasConversion(protectedText).HasMaxLength(2048).IsRequired();
+            b.Property(x => x.Body).HasConversion(protectedText).HasMaxLength(12000).IsRequired();
             b.Property(x => x.LinkPath).HasMaxLength(512);
             b.HasIndex(x => new { x.UserId, x.ReadAt });
+            b.HasIndex(x => x.ScheduledNotificationId).IsUnique();
         });
         modelBuilder.Entity<ScheduledNotification>(b =>
         {
             b.Property(x => x.EventKey).HasMaxLength(64).IsRequired();
-            b.Property(x => x.Title).HasMaxLength(200).IsRequired();
-            b.Property(x => x.Body).HasMaxLength(2000).IsRequired();
+            b.Property(x => x.Title).HasConversion(protectedText).HasMaxLength(2048).IsRequired();
+            b.Property(x => x.Body).HasConversion(protectedText).HasMaxLength(12000).IsRequired();
             b.Property(x => x.LinkPath).HasMaxLength(512);
             b.Property(x => x.SourceType).HasMaxLength(64).IsRequired();
+            b.Property(x => x.LastErrorCode).HasMaxLength(128);
             b.HasIndex(x => new { x.UserId, x.EventKey, x.SourceType, x.SourceId }).IsUnique();
             b.HasIndex(x => new { x.DeliveredAt, x.CancelledAt, x.DeliverAt });
         });
@@ -449,9 +511,13 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<StoredUserFile>(b =>
         {
             b.Property(x => x.Purpose).HasConversion<int>();
-            b.Property(x => x.OriginalFileName).HasMaxLength(255).IsRequired();
+            b.Property(x => x.OriginalFileName).HasConversion(protectedText).HasMaxLength(2048).IsRequired();
             b.Property(x => x.ContentType).HasMaxLength(128).IsRequired();
             b.Property(x => x.Sha256).HasMaxLength(64).IsRequired();
+            var content = b.Property(x => x.Content)
+                .HasConversion(protectedBytes)
+                .IsRequired();
+            content.Metadata.SetValueComparer(protectedBytesComparer);
             b.HasIndex(x => new { x.OwnerUserId, x.Purpose });
         });
 
@@ -466,29 +532,38 @@ public class AppDbContext : DbContext, IAppDbContext
         });
         modelBuilder.Entity<ContactRequest>(b =>
         {
-            b.Property(x => x.Name).HasMaxLength(128).IsRequired();
-            b.Property(x => x.Email).HasMaxLength(256).IsRequired();
-            b.Property(x => x.Topic).HasMaxLength(128).IsRequired();
-            b.Property(x => x.Message).HasMaxLength(4000).IsRequired();
+            b.Property(x => x.Name).HasConversion(protectedText).HasMaxLength(1024).IsRequired();
+            b.Property(x => x.Email).HasConversion(protectedText).HasMaxLength(2048).IsRequired();
+            b.Property(x => x.Topic).HasConversion(protectedText).HasMaxLength(1024).IsRequired();
+            b.Property(x => x.Message).HasConversion(protectedText).HasMaxLength(24000).IsRequired();
             b.HasIndex(x => x.CreatedAt);
+            b.HasIndex(x => x.OwnerUserId);
+            b.HasOne<User>().WithMany().HasForeignKey(x => x.OwnerUserId)
+                .OnDelete(DeleteBehavior.NoAction);
         });
         modelBuilder.Entity<VolunteerSignup>(b =>
         {
-            b.Property(x => x.Name).HasMaxLength(128).IsRequired();
-            b.Property(x => x.Email).HasMaxLength(256).IsRequired();
-            b.Property(x => x.Phone).HasMaxLength(32);
-            b.Property(x => x.AreasOfInterest).HasMaxLength(512);
+            b.Property(x => x.Name).HasConversion(protectedText).HasMaxLength(1024).IsRequired();
+            b.Property(x => x.Email).HasConversion(protectedText).HasMaxLength(2048).IsRequired();
+            b.Property(x => x.Phone).HasConversion(protectedNullableText).HasMaxLength(1024);
+            b.Property(x => x.AreasOfInterest).HasConversion(protectedNullableText).HasMaxLength(4000);
             b.HasIndex(x => x.CreatedAt);
+            b.HasIndex(x => x.OwnerUserId);
+            b.HasOne<User>().WithMany().HasForeignKey(x => x.OwnerUserId)
+                .OnDelete(DeleteBehavior.NoAction);
         });
         modelBuilder.Entity<DonationPledge>(b =>
         {
-            b.Property(x => x.DonorName).HasMaxLength(128).IsRequired();
-            b.Property(x => x.Email).HasMaxLength(256).IsRequired();
+            b.Property(x => x.DonorName).HasConversion(protectedText).HasMaxLength(1024).IsRequired();
+            b.Property(x => x.Email).HasConversion(protectedText).HasMaxLength(2048).IsRequired();
             b.Property(x => x.Tier).HasMaxLength(64).IsRequired();
             b.Property(x => x.MonthlyAmount).HasColumnType("decimal(18,2)");
             b.Property(x => x.Frequency).HasMaxLength(32).IsRequired();
-            b.Property(x => x.ProviderReference).HasMaxLength(256);
+            b.Property(x => x.ProviderReference).HasConversion(protectedNullableText).HasMaxLength(2048);
             b.HasIndex(x => x.CreatedAt);
+            b.HasIndex(x => x.OwnerUserId);
+            b.HasOne<User>().WithMany().HasForeignKey(x => x.OwnerUserId)
+                .OnDelete(DeleteBehavior.NoAction);
         });
     }
 }

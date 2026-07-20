@@ -24,7 +24,9 @@ test('landing, programs, and about render the authoritative public content paylo
   const landing = new LandingPage(page);
   await landing.goto();
   await expect(landing.journeyStep('Apply')).toBeVisible();
-  await expect(page.getByText('1', { exact: true }).first()).toBeVisible();
+  for (const label of ['Learning tracks', 'Cohorts', 'Published modules', 'Neighbourhoods']) {
+    await expect(landing.impactStat(label)).toHaveText(/^[1-9]\d*$/);
+  }
 
   const programs = new ProgramsPage(page);
   await programs.goto();
@@ -35,9 +37,10 @@ test('landing, programs, and about render the authoritative public content paylo
 
   const about = new AboutPage(page);
   await about.goto();
-  await expect(about.cohort(content.cohortName)).toBeVisible();
-  await expect(page.getByText(content.neighbourhood, { exact: true })).toBeVisible();
-  await expect(page.getByText(content.mentorName, { exact: true })).toBeVisible();
-  await expect(page.getByText('Upcoming', { exact: true })).toBeVisible();
-  await expect(page.getByText(/Sep 8, 2999.*Dec 15, 2999/i)).toBeVisible();
+  const cohort = about.cohort(content.cohortName);
+  await expect(cohort).toBeVisible();
+  await expect(cohort).toContainText(content.neighbourhood);
+  await expect(cohort).toContainText(content.mentorName);
+  await expect(cohort).toContainText('Upcoming');
+  await expect(cohort).toContainText(/Sep 8, 2999.*Dec 15, 2999/i);
 });

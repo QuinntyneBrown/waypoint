@@ -1,6 +1,6 @@
 # Frontend Structure — Angular Workspace
 
-Expected folder structure for the Word Up frontend (`frontend/`). The workspace is currently a bare Angular 21 workspace with **no application target** (`angular.json` has an empty `projects` map — see [DECISIONS.md](DECISIONS.md) #7). This document defines the target layout so that when application and library targets are generated, they land in an agreed shape.
+Implemented folder structure for the Word Up frontend (`frontend/`). The Angular 21 workspace contains the `portal` and `public-site` applications plus the `wu-ui`, `wu-api`, and `wu-auth` libraries described below (see [DECISIONS.md](DECISIONS.md) #9).
 
 Related docs: [ARCHITECTURE.md](ARCHITECTURE.md) (system boundary), [implementation-plan.md](implementation-plan.md) (delivery phases), [contract.md](contract.md) (design system + mock contract), [`specs/`](specs/README.md) (L1/L2 requirements).
 
@@ -10,14 +10,14 @@ Related docs: [ARCHITECTURE.md](ARCHITECTURE.md) (system boundary), [implementat
 
 **Yes — two applications, plus shared libraries.**
 
-| Project | Type | Purpose |
-|---|---|---|
-| `portal` | Application | The single **authenticated** SPA for all signed-in roles: Youth, Mentor, Program Administrator, Guardian, Volunteer. Role areas are lazy-loaded route groups, not separate apps. |
+| Project       | Type        | Purpose                                                                                                                                                                                         |
+| ------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `portal`      | Application | The single **authenticated** SPA for all signed-in roles: Youth, Mentor, Program Administrator, Guardian, Volunteer. Role areas are lazy-loaded route groups, not separate apps.                |
 | `public-site` | Application | The **unauthenticated** public website: program information, youth application/referral intake, contact, privacy, donation handoff. Server-side rendered / prerendered for SEO and performance. |
-| `wu-ui` | Library | The `wu-` design system as Angular components, plus design tokens and global styles. |
-| `wu-api` | Library | Typed API contracts (DTOs mirroring the backend records) and per-subsystem HTTP services for `/api/*`. |
-| `wu-auth` | Library | Session state, JWT access-token handling, refresh rotation, HTTP interceptor, functional route guards, role directives. |
-| `wu-realtime` | Library | SignalR `HubConnection` wrapper for near-real-time notifications and messages (L2-NFR-005). |
+| `wu-ui`       | Library     | The `wu-` design system as Angular components, plus design tokens and global styles.                                                                                                            |
+| `wu-api`      | Library     | Typed API contracts (DTOs mirroring the backend records) and per-subsystem HTTP services for `/api/*`.                                                                                          |
+| `wu-auth`     | Library     | Session state, JWT access-token handling, refresh rotation, HTTP interceptor, functional route guards, role directives.                                                                         |
+| `wu-realtime` | Library     | SignalR `HubConnection` wrapper for near-real-time notifications and messages (L2-NFR-005).                                                                                                     |
 
 ### Why two apps (and not one, and not one per role)
 
@@ -202,23 +202,23 @@ projects/wu-realtime/src/lib/
 
 ## Mock → project mapping
 
-| `docs/mocks/` | Lands in |
-|---|---|
-| `application-intake/` | `portal` → application-intake feature |
-| `authentication/` | `portal` → `app/auth/` and access administration |
-| `consent-and-safeguarding/` | `portal` → consent gates and safeguarding administration |
-| `curriculum-authoring/` | `portal` → curriculum-authoring features |
-| `engagement/` | `portal` → calendar, attendance, announcements, messages, and notifications |
-| `guardian-portal/` | `portal` → guardian features |
-| `learning-experience/` | `portal` → youth learning features |
-| `mentoring/` | `portal` → mentor features |
-| `non-functional/` | Cross-cutting quality references |
-| `platform-services/` | `wu-ui` state primitives + `portal` settings, help, and system states |
-| `program-administration/` | `portal` → people, cohort, and organization features |
-| `public-site/` | `public-site` features |
-| `reporting-and-data/` | `portal` → reporting and import features |
-| `volunteer-portal/` | `portal` → volunteer features |
-| `assets/`, `styleguide.html` | `wu-ui` styles/tokens (visual reference) |
+| `docs/mocks/`                | Lands in                                                                    |
+| ---------------------------- | --------------------------------------------------------------------------- |
+| `application-intake/`        | `portal` → application-intake feature                                       |
+| `authentication/`            | `portal` → `app/auth/` and access administration                            |
+| `consent-and-safeguarding/`  | `portal` → consent gates and safeguarding administration                    |
+| `curriculum-authoring/`      | `portal` → curriculum-authoring features                                    |
+| `engagement/`                | `portal` → calendar, attendance, announcements, messages, and notifications |
+| `guardian-portal/`           | `portal` → guardian features                                                |
+| `learning-experience/`       | `portal` → youth learning features                                          |
+| `mentoring/`                 | `portal` → mentor features                                                  |
+| `non-functional/`            | Cross-cutting quality references                                            |
+| `platform-services/`         | `wu-ui` state primitives + `portal` settings, help, and system states       |
+| `program-administration/`    | `portal` → people, cohort, and organization features                        |
+| `public-site/`               | `public-site` features                                                      |
+| `reporting-and-data/`        | `portal` → reporting and import features                                    |
+| `volunteer-portal/`          | `portal` → volunteer features                                               |
+| `assets/`, `styleguide.html` | `wu-ui` styles/tokens (visual reference)                                    |
 
 ---
 

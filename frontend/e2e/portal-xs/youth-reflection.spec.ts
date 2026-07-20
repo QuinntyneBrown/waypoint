@@ -16,9 +16,9 @@ test('the reflection editor stays contained and keyboard operable on a mobile vi
 
   const reflection = new YouthReflectionPage(page);
   await expect(reflection.heading).toContainText(seeded.secondLessonTitle);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(
-    1,
-  );
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),
+  ).toBeLessThanOrEqual(1);
   await expect(reflection.shareWithMentor).not.toBeChecked();
 
   for (const target of [reflection.saveDraftButton, reflection.submitButton]) {

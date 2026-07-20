@@ -8,7 +8,14 @@ namespace WordUp.Api.TestSupport;
 /// </summary>
 public sealed class TestingEmailSender : IEmailSender
 {
-    public sealed record SentEmail(string To, string Subject, string Body);
+    public sealed record SentEmail(
+        string To,
+        string Subject,
+        string Body,
+        Guid? SubjectUserId,
+        bool PurgeAfterDelivery,
+        Guid? RecipientUserId,
+        bool IsPrivacyRemovalConfirmation);
 
     private readonly ConcurrentQueue<SentEmail> _sent = new();
 
@@ -16,9 +23,21 @@ public sealed class TestingEmailSender : IEmailSender
         string toEmail,
         string subject,
         string body,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        string? idempotencyKey = null,
+        Guid? subjectUserId = null,
+        bool purgeAfterDelivery = false,
+        Guid? recipientUserId = null,
+        bool isPrivacyRemovalConfirmation = false)
     {
-        _sent.Enqueue(new SentEmail(toEmail, subject, body));
+        _sent.Enqueue(new SentEmail(
+            toEmail,
+            subject,
+            body,
+            subjectUserId,
+            purgeAfterDelivery,
+            recipientUserId,
+            isPrivacyRemovalConfirmation));
         return Task.CompletedTask;
     }
 

@@ -114,6 +114,54 @@ public sealed class DataSubjectRequestTests : IntegrationTestBase
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
     }
 
+    [Test]
+    public async Task Null_action_type_returns_validation_problem_instead_of_throwing()
+    {
+        var (_, token) = await SeedUserAndSignInAsync(Roles.Youth);
+
+        var response = await SendAsync(
+            HttpMethod.Post,
+            "/api/me/data-requests",
+            body: new { actionType = (string?)null, details = "invalid request" },
+            token: token);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
+    [Test]
+    [Property("Req", "L2-CONSENT-003")]
+    public async Task Audit_source_keeps_coarse_device_and_location_without_a_long_raw_user_agent()
+    {
+        var (userId, token) = await SeedUserAndSignInAsync(Roles.Youth);
+        var headerSentinel = $"PRIVATE-UA-{Guid.NewGuid():N}";
+        var rawUserAgent =
+            $"Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Mobile Safari "
+            + headerSentinel
+            + new string('x', 4096);
+        using var request = new HttpRequestMessage(HttpMethod.Post, "/api/me/data-requests")
+        {
+            Content = JsonContent.Create(new { actionType = "access", details = "Source test" }),
+        };
+        Authorize(request, token);
+        request.Headers.TryAddWithoutValidation("User-Agent", rawUserAgent);
+
+        using var response = await Client.SendAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        using var scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var audit = db.AuditEntries.Single(item =>
+            item.Action == "DataSubjectRequest:access" && item.ActorUserId == userId);
+        Assert.Multiple(() =>
+        {
+            Assert.That(audit.Source, Does.StartWith("channel=api;device=mobile;location="));
+            Assert.That(audit.Source, Does.Not.Contain(headerSentinel));
+            Assert.That(audit.Source, Does.Not.Contain(rawUserAgent));
+            Assert.That(audit.Source, Does.Not.Contain("iPhone"));
+            Assert.That(audit.Details, Does.Not.Contain(headerSentinel));
+        });
+    }
+
     private sealed record AuthResultDto(string AccessToken);
 
     private sealed record DataSubjectRequestResultDto(string Reference, string ActionType, DateTime RecordedAt);

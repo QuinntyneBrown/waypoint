@@ -103,6 +103,13 @@ public sealed class MentorMessagingTests : IntegrationTestBase
         var broadcastMessages = await db.Messages
             .Where(message => message.SenderId == setup.MentorId)
             .ToListAsync();
+        var broadcastAuditDetails = (await db.AuditEntries
+                .Where(entry =>
+                    entry.Action == "MentorMessageBroadcast"
+                    && entry.TargetId == setup.CohortId)
+                .ToListAsync())
+            .Select(entry => entry.Details)
+            .ToList();
         Assert.Multiple(() =>
         {
             Assert.That(
@@ -113,12 +120,7 @@ public sealed class MentorMessagingTests : IntegrationTestBase
                 db.Notifications.Count(item => item.EventKey == "mentor-messages"),
                 Is.EqualTo(1),
                 "the opted-out youth still receives the message but no in-app notification");
-            Assert.That(
-                db.AuditEntries.Any(entry =>
-                    entry.Action == "MentorMessageBroadcast"
-                    && entry.TargetId == setup.CohortId
-                    && entry.Details == "Recipients=2"),
-                Is.True);
+            Assert.That(broadcastAuditDetails, Is.EquivalentTo(new[] { "Recipients=2" }));
         });
         var email = Factory.Emails.LastTo(setup.YouthTwoEmail);
         Assert.Multiple(() =>

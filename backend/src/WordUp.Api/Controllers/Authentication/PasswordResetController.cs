@@ -16,7 +16,7 @@ public class PasswordResetController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("request")]
-    public async Task<IActionResult> Request([FromBody] ForgotPasswordRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> RequestReset([FromBody] ForgotPasswordRequest request, CancellationToken cancellationToken)
     {
         await _mediator.Send(new ForgotPasswordCommand(request.Email), cancellationToken);
         return NoContent();

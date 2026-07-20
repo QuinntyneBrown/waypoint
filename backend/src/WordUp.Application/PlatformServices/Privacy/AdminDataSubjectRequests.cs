@@ -21,6 +21,7 @@ public record AdminDataSubjectRequestItem(
     string SubjectEmail,
     string ActionType,
     string? Details,
+    DataSubjectCorrection? Correction,
     string Status,
     DateTime RequestedAt,
     DateTime? CompletedAt,
@@ -72,6 +73,13 @@ public sealed class AdminDataSubjectRequestsQueryHandler
                 subject?.Email ?? "unavailable",
                 item.ActionType,
                 item.Details,
+                item.ActionType == "correction"
+                    ? new DataSubjectCorrection(
+                        item.RequestedDisplayName,
+                        item.RequestedEmail,
+                        item.RequestedPronouns,
+                        item.RequestedClearPronouns)
+                    : null,
                 item.Status.ToString(),
                 item.RequestedAt,
                 item.CompletedAt,

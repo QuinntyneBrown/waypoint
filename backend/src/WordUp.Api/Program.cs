@@ -49,6 +49,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 // Near-real-time delivery hub + its Application-facing port (L2-NFR-005).
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<RealtimeConnectionRegistry>();
 builder.Services.AddSingleton<IChangePublisher, SignalRChangePublisher>();
 
 // Liveness (/health, no checks) + readiness (/health/ready, DB reachability) — L2-NFR-011 AC1.
@@ -317,7 +318,12 @@ if (!app.Environment.IsEnvironment("Testing"))
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.MapHub<RealtimeHub>("/hubs/realtime");
+app.MapHub<RealtimeHub>("/hubs/realtime", options =>
+{
+    // Stop long-lived transports at JWT expiry; the publisher also rejects an expired registry
+    // snapshot so no passive event can leak during disconnect propagation.
+    options.CloseOnAuthenticationExpiration = true;
+});
 
 // Liveness: process is up (no dependency checks). Readiness: dependencies (DB) reachable. L2-NFR-011 AC1.
 app.MapHealthChecks("/health", new HealthCheckOptions { Predicate = _ => false });

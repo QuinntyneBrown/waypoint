@@ -22,13 +22,14 @@ import { shellRole } from '../shell-role';
           <h1 class="wu-page__title">{{ heading() }}</h1>
         </div>
       </div>
-      <div class="wu-tabs wu-mb-6" role="tablist">
+      <nav class="wu-tabs wu-mb-6" aria-label="Settings">
         <a class="wu-tab" routerLink="/settings/profile" routerLinkActive="is-active">Profile</a>
         <a class="wu-tab" routerLink="/settings/notifications" routerLinkActive="is-active">
           Notifications
         </a>
         <a class="wu-tab" routerLink="/settings/display" routerLinkActive="is-active">Display</a>
-      </div>
+        <a class="wu-tab" routerLink="/settings/privacy" routerLinkActive="is-active">Privacy</a>
+      </nav>
       <ng-content />
     </div>
   </wu-shell>`,

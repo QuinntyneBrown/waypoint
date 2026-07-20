@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WordUp.Application.Shared.Abstractions;
 using WordUp.Api.Observability;
 using WordUp.Api.Realtime;
+using WordUp.Infrastructure;
 
 namespace WordUp.IntegrationTests;
 
@@ -60,11 +63,12 @@ public sealed class SqlServerWebAppFactory : WebApplicationFactory<Program>
         });
         builder.ConfigureTestServices(services =>
         {
-            // NOTE: CLAUDE.md mandates a real SQL Server / LocalDB (one throwaway DB per fixture). This
-            // environment's LocalDB native runtime fails to load (SQLUserInstance.dll — architecture
-            // mismatch), so the app's default "InMemory" provider is what actually runs here. When a
-            // working SQL Server/LocalDB (or Testcontainers) is available, force it by swapping the
-            // DbContext registration to UseSqlServer(ConnectionString) in this block.
+            services.RemoveAll<AppDbContext>();
+            services.RemoveAll<DbContextOptions<AppDbContext>>();
+            services.RemoveAll<IDbContextOptionsConfiguration<AppDbContext>>();
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(ConnectionString));
+
             services.RemoveAll<IEmailSender>();
             services.AddSingleton<CapturingEmailSender>();
             services.AddSingleton<IEmailSender>(sp => sp.GetRequiredService<CapturingEmailSender>());

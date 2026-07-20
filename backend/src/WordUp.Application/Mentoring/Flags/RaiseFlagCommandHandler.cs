@@ -61,10 +61,10 @@ public class RaiseFlagCommandHandler : IRequestHandler<RaiseFlagCommand>
         await _audit.LogAsync(
             "YouthFlagged",
             _currentUser.UserId,
-            "User",
-            youth.Id,
+            "Flag",
+            flag.Id,
             isPrivate: true,
-            details: request.Reason,
+            details: "category=manual",
             cancellationToken: cancellationToken);
     }
 }

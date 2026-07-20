@@ -1,0 +1,182 @@
+<wu-shell
+  role="admin"
+  active="users-roles"
+  [userName]="auth.user()?.displayName ?? ''"
+  (signOut)="auth.signOut()"
+>
+  <div class="wu-container wu-page">
+    <header class="wu-page__head">
+      <div class="wu-page__titles">
+        <div class="wu-eyebrow">People</div>
+        <h1 class="wu-page__title">Users &amp; roles</h1>
+        <p class="wu-page__sub">Review active accounts and change access deliberately.</p>
+      </div>
+      <a class="wu-btn wu-btn--primary" routerLink="/admin/invitations"
+        ><wu-icon name="user-plus" />Invitations</a
+      >
+    </header>
+
+    <div class="wu-alert wu-alert--info">
+      Staff roles can access other people’s records. Every role change takes effect immediately and
+      is audit logged.
+    </div>
+    @if (errorMessage(); as error) {
+      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+    }
+    @if (statusMessage(); as message) {
+      <p class="wu-alert wu-alert--success" role="status">{{ message }}</p>
+    }
+
+    <section class="wu-card">
+      <div class="wu-card__body">
+        <div class="users-filters wu-mb-5">
+          <div class="wu-field">
+            <label class="wu-label" for="users-search">Search users</label>
+            <input
+              class="wu-input"
+              id="users-search"
+              type="search"
+              [value]="search()"
+              (input)="searchChanged($event)"
+              (keyup.enter)="applySearch()"
+            />
+          </div>
+          <div class="wu-field">
+            <label class="wu-label" for="users-role-filter">Current role</label>
+            <select
+              class="wu-select"
+              id="users-role-filter"
+              [value]="roleFilter()"
+              (change)="roleFilterChanged($event)"
+            >
+              <option value="">All roles</option>
+              @for (role of roles; track role) {
+                <option [value]="role">{{ role }}</option>
+              }
+            </select>
+          </div>
+          <button class="wu-btn wu-btn--secondary" type="button" (click)="applySearch()">
+            Search
+          </button>
+        </div>
+
+        @if (loading()) {
+          <p class="wu-muted" role="status">Loading users and roles…</p>
+        } @else {
+          <div class="wu-table-wrap">
+            <table class="wu-table wu-table--cards">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Status</th>
+                  <th>Placement</th>
+                  <th>Last active</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (person of people(); track person.id) {
+                  <tr data-testid="user-role-row">
+                    <td data-label="User">
+                      <div class="user-cell">
+                        <wu-avatar [name]="person.displayName" size="sm" /><span
+                          ><a [routerLink]="['/admin/people', person.id]"
+                            ><strong>{{ person.displayName }}</strong></a
+                          ><br /><span class="wu-muted wu-text-sm">{{ person.email }}</span></span
+                        >
+                      </div>
+                    </td>
+                    <td data-label="Status">
+                      <span class="wu-badge" [class.wu-badge--lime]="person.status === 'Active'">{{
+                        person.status
+                      }}</span>
+                    </td>
+                    <td data-label="Placement">
+                      {{ person.cohortId ? 'Cohort assigned' : 'Not placed' }}
+                    </td>
+                    <td data-label="Last active">
+                      {{ person.lastActive ? (person.lastActive | date: 'mediumDate') : 'Never' }}
+                    </td>
+                    <td data-label="Role">
+                      <div class="role-action">
+                        <label class="wu-sr-only" [for]="'role-' + person.id"
+                          >Role for {{ person.displayName }}</label
+                        >
+                        <select
+                          class="wu-select"
+                          [id]="'role-' + person.id"
+                          [value]="selectedRoles()[person.id]"
+                          (change)="selectedRoleChanged(person, $event)"
+                        >
+                          @for (role of roles; track role) {
+                            <option [value]="role">{{ role }}</option>
+                          }
+                        </select>
+                        @if (confirmId() === person.id) {
+                          <span>Apply now?</span>
+                          <button
+                            class="wu-btn wu-btn--danger wu-btn--sm"
+                            type="button"
+                            [disabled]="savingId() === person.id"
+                            (click)="changeRole(person)"
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            class="wu-btn wu-btn--ghost wu-btn--sm"
+                            type="button"
+                            (click)="confirmId.set(null)"
+                          >
+                            Cancel
+                          </button>
+                        } @else {
+                          <button
+                            class="wu-btn wu-btn--ghost wu-btn--sm"
+                            type="button"
+                            [disabled]="selectedRoles()[person.id] === person.role"
+                            (click)="requestRoleChange(person)"
+                          >
+                            Change
+                          </button>
+                        }
+                      </div>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="5">
+                      <div class="wu-empty">
+                        <div class="wu-empty__icon"><wu-icon name="users" /></div>
+                        <h2 class="wu-empty__title">No users found</h2>
+                        <p class="wu-empty__text">Change the filters or invite someone new.</p>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          <div class="wu-cluster wu-cluster--between wu-mt-4">
+            <button
+              class="wu-btn wu-btn--ghost"
+              type="button"
+              [disabled]="page() <= 1"
+              (click)="previous()"
+            >
+              Previous
+            </button>
+            <span class="wu-muted">Page {{ page() }} · {{ total() }} total</span>
+            <button
+              class="wu-btn wu-btn--ghost"
+              type="button"
+              [disabled]="page() * 25 >= total()"
+              (click)="next()"
+            >
+              Next
+            </button>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+</wu-shell>

@@ -1,64 +1,20 @@
-# WuAuth
+# @wu/auth
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+`@wu/auth` provides Word Up's Angular session state, persistence, HTTP interceptor, role navigation, guards, and authentication providers.
 
-## Code scaffolding
+The built package imports `@wu/api` at runtime and declares the matching `@wu/api` version as a peer dependency. Consumers must install both packages together, along with the declared Angular peers.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+From `frontend/`, build and test it with:
 
 ```bash
-ng generate --help
+npm run packages:build
+npx ng test wu-auth
 ```
 
-## Building
-
-To build the library, run:
+The ordered package build creates `dist/wu-api` before `dist/wu-auth`. The package check then validates generated metadata, entry points, tarball contents, and the declared `@wu/auth -> @wu/api` dependency:
 
 ```bash
-ng build wu-auth
+npm run packages:check
 ```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
-
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-
-   ```bash
-   cd dist/wu-auth
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The repository does not publish packages automatically. Publishing requires an approved registry, version, and access policy; validate the built artifact before publishing `dist/wu-auth`.

@@ -14,6 +14,7 @@ public class ResendInvitationCommandHandler : IRequestHandler<ResendInvitationCo
     private readonly IEmailSender _email;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IApplicationLinkBuilder _links;
 
     public ResendInvitationCommandHandler(
         IAppDbContext db,
@@ -21,7 +22,8 @@ public class ResendInvitationCommandHandler : IRequestHandler<ResendInvitationCo
         IClock clock,
         IEmailSender email,
         IAuditLogger audit,
-        ICurrentUser currentUser)
+        ICurrentUser currentUser,
+        IApplicationLinkBuilder links)
     {
         _db = db;
         _tokens = tokens;
@@ -29,24 +31,38 @@ public class ResendInvitationCommandHandler : IRequestHandler<ResendInvitationCo
         _email = email;
         _audit = audit;
         _currentUser = currentUser;
+        _links = links;
     }
 
     public async Task Handle(ResendInvitationCommand request, CancellationToken cancellationToken)
     {
-        var invitation = await _db.Invitations.FirstOrDefaultAsync(i => i.Id == request.InvitationId, cancellationToken)
-            ?? throw new NotFoundException("Invitation not found.");
+        var invitation = await InvitationScope.LoadManagedAsync(
+            _db,
+            _currentUser,
+            request.InvitationId,
+            cancellationToken);
 
         if (invitation.Status != InvitationStatus.Pending)
         {
             throw new InvitationInvalidException("Only pending invitations can be resent.");
         }
 
+        await InvitationAccountGuard.EnsureAvailableAsync(_db, invitation.Email, cancellationToken);
+
         var (raw, hash) = _tokens.Create();
         invitation.TokenHash = hash;
         invitation.ExpiresAt = _clock.UtcNow.AddDays(InvitationPolicy.ExpiryDays);
-        await _db.SaveChangesAsync(cancellationToken);
+        invitation.ConcurrencyStamp = Guid.NewGuid();
+        try
+        {
+            await _db.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new InvitationInvalidException("This invitation changed before it could be resent.");
+        }
 
-        await InvitationEmail.SendAsync(_email, invitation.Email, raw, cancellationToken);
+        await InvitationEmail.SendAsync(_email, _links, invitation.Email, raw, cancellationToken);
         await _audit.LogAsync("InvitationResent", _currentUser.UserId, "Invitation", invitation.Id);
     }
 }

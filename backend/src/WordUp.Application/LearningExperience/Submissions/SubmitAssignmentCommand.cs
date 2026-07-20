@@ -12,4 +12,4 @@ public record SubmitAssignmentCommand(
     string? LinkUrl,
     bool IsCodingProject,
     string? YouthNote,
-    bool Attest) : IRequest<SubmissionResult>;
+    bool Attest) : IRequest<SubmissionResult>, IAtomicOutboxRequest;

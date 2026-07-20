@@ -1,4 +1,5 @@
 using MediatR;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Application.PublicSite;
 
@@ -12,4 +13,4 @@ public record SubmitVolunteerSignupCommand(
     string Email,
     string? Phone,
     string? AreasOfInterest,
-    bool ScreeningConsentAck) : IRequest<SubmitVolunteerSignupResult>;
+    bool ScreeningConsentAck) : IRequest<SubmitVolunteerSignupResult>, IAtomicRequest;

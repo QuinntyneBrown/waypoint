@@ -15,6 +15,7 @@ public class BroadcastToGroupCommandHandler : IRequestHandler<BroadcastToGroupCo
     private readonly IChangePublisher _publisher;
     private readonly NotificationDeliveryService _notifications;
     private readonly IAuditLogger _audit;
+    private readonly IAfterCommitDispatcher _afterCommit;
 
     public BroadcastToGroupCommandHandler(
         IAppDbContext db,
@@ -22,7 +23,8 @@ public class BroadcastToGroupCommandHandler : IRequestHandler<BroadcastToGroupCo
         IClock clock,
         IChangePublisher publisher,
         NotificationDeliveryService notifications,
-        IAuditLogger audit)
+        IAuditLogger audit,
+        IAfterCommitDispatcher afterCommit)
     {
         _db = db;
         _currentUser = currentUser;
@@ -30,6 +32,7 @@ public class BroadcastToGroupCommandHandler : IRequestHandler<BroadcastToGroupCo
         _publisher = publisher;
         _notifications = notifications;
         _audit = audit;
+        _afterCommit = afterCommit;
     }
 
     public async Task<BroadcastResult> Handle(BroadcastToGroupCommand request, CancellationToken cancellationToken)
@@ -89,18 +92,20 @@ public class BroadcastToGroupCommandHandler : IRequestHandler<BroadcastToGroupCo
 
         foreach (var delivery in deliveries)
         {
-            await _publisher.PublishToUserAsync(
-                delivery.YouthId,
-                "message",
-                new
-                {
-                    id = delivery.Message.Id,
-                    senderId = delivery.Message.SenderId,
-                    recipientId = delivery.Message.RecipientId,
-                    body = plainBody,
-                    sentAt = delivery.Message.SentAt,
-                    readAt = delivery.Message.ReadAt,
-                },
+            await _afterCommit.DispatchBestEffortAsync(
+                callbackCancellationToken => _publisher.PublishToUserAsync(
+                    delivery.YouthId,
+                    "message",
+                    new
+                    {
+                        id = delivery.Message.Id,
+                        senderId = delivery.Message.SenderId,
+                        recipientId = delivery.Message.RecipientId,
+                        body = plainBody,
+                        sentAt = delivery.Message.SentAt,
+                        readAt = delivery.Message.ReadAt,
+                    },
+                    callbackCancellationToken),
                 cancellationToken);
             await _notifications.DispatchAsync(delivery.Plan, cancellationToken);
         }

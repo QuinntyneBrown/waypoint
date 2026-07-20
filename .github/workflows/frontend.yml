@@ -3,18 +3,22 @@ name: frontend
 on:
   push:
     paths:
-      - 'frontend/**'
-      - 'backend/src/**'
-      - 'docs/specs/**'
-      - 'scripts/**'
-      - '.github/workflows/frontend.yml'
+      - "frontend/**"
+      - "backend/src/**"
+      - "backend/global.json"
+      - "global.json"
+      - "docs/specs/**"
+      - "scripts/**"
+      - ".github/workflows/frontend.yml"
   pull_request:
     paths:
-      - 'frontend/**'
-      - 'backend/src/**'
-      - 'docs/specs/**'
-      - 'scripts/**'
-      - '.github/workflows/frontend.yml'
+      - "frontend/**"
+      - "backend/src/**"
+      - "backend/global.json"
+      - "global.json"
+      - "docs/specs/**"
+      - "scripts/**"
+      - ".github/workflows/frontend.yml"
 
 defaults:
   run:
@@ -30,11 +34,15 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
+      - name: Use repository npm version
+        run: npm install --global npm@10.9.4
       - run: npm ci
-      - run: npx prettier --check .
-      - run: npx ng build portal
-      - run: npx ng build public-site
-      - run: npx ng test
+      - name: Route and navigation manifest
+        run: npm run quality:routes
+      - run: npm run format:check
+      - name: Build applications and verify shared packages
+        run: npm run build
+      - run: npm test
 
   e2e:
     runs-on: ubuntu-latest
@@ -42,7 +50,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9
+          dotnet-version: "9.0.x"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -51,11 +59,16 @@ jobs:
       - name: Build backend
         run: dotnet build backend/WordUp.sln
         working-directory: .
+      - name: Use repository npm version
+        run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npx playwright test
+      - name: E2E, responsive breakpoint, and WCAG 2.1 AA gates
+        run: npm run e2e:ci
+      - name: Isolated Chromebook-class youth performance gate
+        run: npm run e2e:performance
       - name: Traceability gate
-        run: node scripts/check-traceability.mjs
+        run: node scripts/check-traceability.mjs --strict
         working-directory: .
       - uses: actions/upload-artifact@v4
         if: failure()

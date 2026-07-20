@@ -831,3 +831,45 @@ export class AdminAuditLogPage extends BasePage {
     await this.page.goto(AdminAuditLogPage.path);
   }
 }
+
+/** `/admin/dashboard` — the report-backed director home. */
+export class AdminDashboardPage extends BasePage {
+  static readonly path = '/admin/dashboard';
+  get heading() {
+    return this.page.getByRole('heading', { name: /welcome back/i });
+  }
+  get summary() {
+    return this.page.getByLabel('Program summary');
+  }
+  async goto(): Promise<void> {
+    await this.page.goto(AdminDashboardPage.path);
+  }
+}
+
+/** Shared `/admin/invitations` management surface. */
+export class InvitationsPage extends BasePage {
+  static readonly path = '/admin/invitations';
+  get emails() {
+    return this.page.getByLabel('Email addresses');
+  }
+  get sendButton() {
+    return this.page.getByRole('button', { name: /send invitation/i });
+  }
+  get rows() {
+    return this.page.getByTestId('invitation-row');
+  }
+  async goto(path = InvitationsPage.path): Promise<void> {
+    await this.page.goto(path);
+  }
+}
+
+/** `/admin/privacy` — administrator data-subject request queue. */
+export class AdminPrivacyPage extends BasePage {
+  static readonly path = '/admin/privacy';
+  get heading() {
+    return this.page.getByRole('heading', { name: 'Privacy requests', exact: true });
+  }
+  async goto(): Promise<void> {
+    await this.page.goto(AdminPrivacyPage.path);
+  }
+}

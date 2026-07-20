@@ -194,8 +194,11 @@ public sealed class RsvpTests : IntegrationTestBase
                 item.UserId == youth.Id && item.CancelledAt == null && item.DeliveredAt == null);
             scheduled.DeliverAt = DateTime.UtcNow.AddMinutes(-1);
             await dueDb.SaveChangesAsync();
+            var processor = dueScope.ServiceProvider.GetRequiredService<ScheduledNotificationProcessor>();
+            Assert.That(await processor.RunOnceAsync(), Is.EqualTo(1));
         }
 
+        // Feed reads are projections only; the independent worker has already delivered the due row.
         var notificationFeed = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
         var notificationFeedAgain = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
         var reminders = (await notificationFeed.Content.ReadFromJsonAsync<List<NotificationDto>>())!
@@ -237,8 +240,13 @@ public sealed class RsvpTests : IntegrationTestBase
                 item.UserId == youth.Id && item.DeliveredAt == null && item.CancelledAt == null);
             scheduled.DeliverAt = DateTime.UtcNow.AddMinutes(-1);
             await preferenceDb.SaveChangesAsync();
+            Assert.That(
+                await preferenceScope.ServiceProvider.GetRequiredService<ScheduledNotificationProcessor>()
+                    .RunOnceAsync(),
+                Is.EqualTo(1));
         }
 
+        // The feed reflects channel preferences after the independent worker has run.
         var optedOutFeed = await SendAsync(HttpMethod.Get, "/api/notifications", token: youthToken);
         var optedOutReminders = (await optedOutFeed.Content.ReadFromJsonAsync<List<NotificationDto>>())!
             .Count(item => item.EventKey == "session-reminders");

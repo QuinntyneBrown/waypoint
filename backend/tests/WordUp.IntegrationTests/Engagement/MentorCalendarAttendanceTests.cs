@@ -52,12 +52,12 @@ public sealed class MentorCalendarAttendanceTests : IntegrationTestBase
         Assert.Multiple(() =>
         {
             Assert.That(sessions!.Select(item => item.Id), Does.Contain(scenario.Session.Id));
-            Assert.That(sessions.Select(item => item.Id), Does.Not.Contain(scenario.OtherSession.Id));
-            Assert.That(sessions.Single(item => item.Id == scenario.Session.Id).CohortName,
+            Assert.That(sessions!.Select(item => item.Id), Does.Not.Contain(scenario.OtherSession.Id));
+            Assert.That(sessions!.Single(item => item.Id == scenario.Session.Id).CohortName,
                 Is.EqualTo(scenario.Cohort.Name));
-            Assert.That(sessions.Single(item => item.Id == scenario.Session.Id).MentorName,
+            Assert.That(sessions!.Single(item => item.Id == scenario.Session.Id).MentorName,
                 Is.EqualTo(scenario.Mentor.DisplayName));
-            Assert.That(sessions.Single(item => item.Id == scenario.Session.Id).RosterCount,
+            Assert.That(sessions!.Single(item => item.Id == scenario.Session.Id).RosterCount,
                 Is.EqualTo(2));
         });
 
@@ -207,9 +207,9 @@ public sealed class MentorCalendarAttendanceTests : IntegrationTestBase
         {
             Assert.That(youthRows!.Select(item => item.YouthUserId),
                 Is.EquivalentTo(new[] { scenario.YouthA.Id, scenario.YouthB.Id }));
-            Assert.That(youthRows.Single(item => item.YouthUserId == scenario.YouthB.Id).Late,
+            Assert.That(youthRows!.Single(item => item.YouthUserId == scenario.YouthB.Id).Late,
                 Is.EqualTo(1));
-            Assert.That(youthRows.All(item => item.DisplayName.StartsWith("Calendar Youth")), Is.True);
+            Assert.That(youthRows!.All(item => item.DisplayName.StartsWith("Calendar Youth")), Is.True);
         });
 
         var forbiddenYouth = await SendAsync(

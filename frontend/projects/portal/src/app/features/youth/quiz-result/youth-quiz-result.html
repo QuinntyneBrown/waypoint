@@ -30,7 +30,9 @@
           <div class="wu-card__body wu-stack">
             <div class="wu-eyebrow">Approved score</div>
             <p class="wu-page__title">{{ view.score }}%</p>
-            <p><strong>{{ view.passed ? 'Passed' : 'Not passed yet' }}</strong></p>
+            <p>
+              <strong>{{ view.passed ? 'Passed' : 'Not passed yet' }}</strong>
+            </p>
             <p class="wu-muted">Pass mark: {{ view.passMark }}%</p>
           </div>
         </section>
@@ -40,7 +42,9 @@
             <div class="wu-card__body wu-stack">
               <div class="wu-eyebrow">Badge earned</div>
               <h2 class="wu-card__title">{{ badge.name }}</h2>
-              @if (badge.description) { <p>{{ badge.description }}</p> }
+              @if (badge.description) {
+                <p>{{ badge.description }}</p>
+              }
             </div>
           </section>
         }
@@ -57,11 +61,18 @@
                   </p>
                   <ul class="wu-stack">
                     @for (option of question.options; track $index) {
-                      @if (selected(question.selectedIndexes, $index) || correct(question.correctIndexes, $index)) {
+                      @if (
+                        selected(question.selectedIndexes, $index) ||
+                        correct(question.correctIndexes, $index)
+                      ) {
                         <li>
                           {{ option }}
-                          @if (selected(question.selectedIndexes, $index)) { <span>— your answer</span> }
-                          @if (correct(question.correctIndexes, $index)) { <span>— correct answer</span> }
+                          @if (selected(question.selectedIndexes, $index)) {
+                            <span>— your answer</span>
+                          }
+                          @if (correct(question.correctIndexes, $index)) {
+                            <span>— correct answer</span>
+                          }
                         </li>
                       }
                     }
@@ -75,7 +86,11 @@
         }
 
         @if (view.canRetake) {
-          <button class="wu-btn wu-btn--primary wu-btn--block" type="button" (click)="retake(view.quizId)">
+          <button
+            class="wu-btn wu-btn--primary wu-btn--block"
+            type="button"
+            (click)="retake(view.quizId)"
+          >
             Retake quiz
           </button>
         }

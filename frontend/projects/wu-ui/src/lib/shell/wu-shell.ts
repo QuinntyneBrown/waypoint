@@ -25,6 +25,9 @@ import { isNavGroup, WU_NAV, WU_ROLE_LABEL, WuNavItem, WuRole } from './nav-conf
   imports: [RouterLink, WuIcon, WuAvatar],
   host: {
     class: 'wu-shell',
+    // `role` is the product-role input name, not an ARIA role. Static Angular
+    // inputs remain as host attributes unless explicitly removed.
+    '[attr.role]': 'null',
     '[class.wu-has-sidenav]': 'true',
     '[class.wu-has-botnav]': 'botItems().length > 0',
     '[class.is-nav-open]': 'navOpen()',

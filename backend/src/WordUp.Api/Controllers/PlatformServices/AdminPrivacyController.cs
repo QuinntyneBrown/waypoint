@@ -41,7 +41,14 @@ public sealed class AdminPrivacyController : ControllerBase
                 request.DisplayName,
                 request.Email,
                 request.Pronouns,
-                request.ResolutionNote),
+                request.ClearPronouns,
+                request.ResolutionNote,
+                request.VerifiedOwnershipAttested,
+                request.VerifiedContactRequestIds,
+                request.VerifiedVolunteerSignupIds,
+                request.VerifiedDonationPledgeIds,
+                request.VerifiedApplicantApplicationIds,
+                request.VerifiedGuardianApplicationIds),
             cancellationToken);
         return Ok(result);
     }

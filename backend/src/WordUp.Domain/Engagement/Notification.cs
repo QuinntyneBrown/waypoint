@@ -12,4 +12,5 @@ public class Notification
     public string? LinkPath { get; set; }
     public DateTime? ReadAt { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public Guid? ScheduledNotificationId { get; set; }
 }

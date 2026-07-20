@@ -14,19 +14,22 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Mes
     private readonly IClock _clock;
     private readonly IChangePublisher _publisher;
     private readonly NotificationDeliveryService _notifications;
+    private readonly IAfterCommitDispatcher _afterCommit;
 
     public SendMessageCommandHandler(
         IAppDbContext db,
         ICurrentUser currentUser,
         IClock clock,
         IChangePublisher publisher,
-        NotificationDeliveryService notifications)
+        NotificationDeliveryService notifications,
+        IAfterCommitDispatcher afterCommit)
     {
         _db = db;
         _currentUser = currentUser;
         _clock = clock;
         _publisher = publisher;
         _notifications = notifications;
+        _afterCommit = afterCommit;
     }
 
     public async Task<MessageResult> Handle(SendMessageCommand request, CancellationToken cancellationToken)
@@ -74,18 +77,20 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Mes
         _db.Messages.Add(message);
         await _db.SaveChangesAsync(cancellationToken);
 
-        await _publisher.PublishToUserAsync(
-            request.ToUserId,
-            "message",
-            new
-            {
-                id = message.Id,
-                senderId = message.SenderId,
-                recipientId = message.RecipientId,
-                body = request.Body,
-                sentAt = message.SentAt,
-                readAt = message.ReadAt,
-            },
+        await _afterCommit.DispatchBestEffortAsync(
+            callbackCancellationToken => _publisher.PublishToUserAsync(
+                request.ToUserId,
+                "message",
+                new
+                {
+                    id = message.Id,
+                    senderId = message.SenderId,
+                    recipientId = message.RecipientId,
+                    body = request.Body,
+                    sentAt = message.SentAt,
+                    readAt = message.ReadAt,
+                },
+                callbackCancellationToken),
             cancellationToken);
 
         var notificationPlan = await _notifications.PrepareAsync(

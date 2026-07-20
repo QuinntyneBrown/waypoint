@@ -99,7 +99,7 @@ public sealed class ExportTests : IntegrationTestBase
     [Property("Req", "L2-REPORT-003")]
     public async Task Admin_exports_each_filtered_standard_report_as_real_csv_or_pdf_files()
     {
-        // Traces to: L2-REPORT-003 AC1..4, L2-CONSENT-003
+        // Traces to: L2-REPORT-001 AC1..AC4; L2-REPORT-003 AC1..AC3; L2-CONSENT-003
         var included = await SeedReportFixtureAsync();
         var excluded = await SeedReportFixtureAsync();
         using (var scope = Factory.Services.CreateScope())
@@ -178,7 +178,7 @@ public sealed class ExportTests : IntegrationTestBase
     [Property("Req", "L2-REPORT-003")]
     public async Task Mentor_exports_are_resource_scoped_and_staff_exports_are_admin_only()
     {
-        // Traces to: L2-REPORT-003 AC5, L2-AUTH-010
+        // Traces to: L2-REPORT-003 AC3, L2-AUTH-010
         var mine = await SeedReportFixtureAsync();
         var other = await SeedReportFixtureAsync();
         var mentorToken = await SignInAsync(mine.MentorEmail, mine.MentorPassword);
@@ -217,7 +217,7 @@ public sealed class ExportTests : IntegrationTestBase
     [Property("Req", "L2-REPORT-003")]
     public async Task Audit_exports_apply_filters_in_csv_and_pdf_and_remain_admin_only()
     {
-        // Traces to: L2-REPORT-003 AC6, L2-AUTH-010, L2-CONSENT-003
+        // Traces to: L2-REPORT-003 AC1..AC3, L2-AUTH-010, L2-CONSENT-003
         var actor = Guid.NewGuid();
         var includedId = Guid.NewGuid();
         var excludedId = Guid.NewGuid();

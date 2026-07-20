@@ -45,6 +45,7 @@ test('an admin sends and schedules targeted announcements and tracks recipient r
   await expect(sent).toContainText('0 of 1 read');
 
   await page.getByRole('button', { name: 'Sign out', exact: true }).click();
+  await expect(page).toHaveURL(/\/auth\/sign-in/);
   await signIn.signIn({ email: seeded.youthEmail, password: seeded.youthPassword });
   await page.goto('/youth/announcements');
   const recipientCard = page.locator('.wu-card').filter({ hasText: sentTitle });
@@ -54,6 +55,7 @@ test('an admin sends and schedules targeted announcements and tracks recipient r
   await expect(recipientCard).not.toContainText('New');
 
   await page.getByRole('button', { name: 'Sign out', exact: true }).click();
+  await expect(page).toHaveURL(/\/auth\/sign-in/);
   await signIn.signIn(admin);
   await announcements.goto();
   await expect(announcements.announcement(sentTitle)).toContainText('1 of 1 read');

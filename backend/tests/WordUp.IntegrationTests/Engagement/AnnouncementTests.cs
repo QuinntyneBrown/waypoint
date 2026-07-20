@@ -215,7 +215,7 @@ public sealed class AnnouncementTests : IntegrationTestBase
             Assert.That(sentRow.Reads, Is.Zero);
             Assert.That(sentRow.ReadRate, Is.Zero);
         });
-        Assert.That(history.Single(item => item.Id == scheduled!.Id).SentAt, Is.Null);
+        Assert.That(history!.Single(item => item.Id == scheduled!.Id).SentAt, Is.Null);
 
         var denied = await SendAsync(HttpMethod.Get, "/api/announcements/manage", token: youthToken);
         Assert.That(denied.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));

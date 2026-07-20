@@ -11,4 +11,4 @@ public sealed record CaptureRequestedConsentCommand(
     bool MediaAllPhotosVideo,
     bool MediaGroupOnly,
     bool MediaFirstNameCaptions,
-    string Signature) : IRequest<ConsentResult>;
+    string Signature) : IRequest<ConsentResult>, IAtomicOutboxRequest;

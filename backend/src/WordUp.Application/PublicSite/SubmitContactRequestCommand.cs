@@ -1,4 +1,5 @@
 using MediatR;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Application.PublicSite;
 
@@ -10,4 +11,4 @@ public record SubmitContactRequestCommand(
     string Name,
     string Email,
     string Topic,
-    string Message) : IRequest<SubmitContactRequestResult>;
+    string Message) : IRequest<SubmitContactRequestResult>, IAtomicRequest;

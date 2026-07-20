@@ -46,6 +46,28 @@ public sealed class PersonalDataAnonymizer
             .ToListAsync(cancellationToken);
         _db.PasswordResetTokens.RemoveRange(resetTokens);
 
+        var privacyRequests = await _db.DataSubjectRequests
+            .Where(item => item.SubjectUserId == user.Id)
+            .ToListAsync(cancellationToken);
+        foreach (var item in privacyRequests)
+        {
+            // Preserve the durable right-request ledger while removing subject-authored and
+            // administrator-authored personal free text and requested correction values.
+            item.Details = null;
+            item.RequestedDisplayName = null;
+            item.RequestedEmail = null;
+            item.RequestedPronouns = null;
+            item.RequestedClearPronouns = false;
+            item.ResolutionNote = null;
+        }
+
+        // Recipient and content-subject links are distinct: remove both without inferring ownership
+        // from an encrypted address that another person might share or later acquire.
+        var personalEmails = await _db.OutboundEmails
+            .Where(item => item.SubjectUserId == user.Id || item.RecipientUserId == user.Id)
+            .ToListAsync(cancellationToken);
+        _db.OutboundEmails.RemoveRange(personalEmails);
+
         var privateFiles = await _db.StoredUserFiles
             .Where(item => item.OwnerUserId == user.Id)
             .ToListAsync(cancellationToken);
@@ -58,7 +80,7 @@ public sealed class PersonalDataAnonymizer
         var checkIns = await _db.CheckIns
             .Where(item => item.YouthUserId == user.Id || item.MentorUserId == user.Id)
             .ToListAsync(cancellationToken);
-        foreach (var item in checkIns)
+        foreach (var item in checkIns.Where(item => item.YouthUserId == user.Id))
         {
             item.Engagement = null;
             item.GoalsDiscussed = null;
@@ -69,12 +91,15 @@ public sealed class PersonalDataAnonymizer
         var messages = await _db.Messages
             .Where(item => item.SenderId == user.Id || item.RecipientId == user.Id)
             .ToListAsync(cancellationToken);
-        foreach (var item in messages) item.Body = Removed;
+        if (user.Role is Roles.Youth or Roles.Guardian)
+        {
+            foreach (var item in messages) item.Body = Removed;
+        }
 
         var attendance = await _db.AttendanceRecords
             .Where(item => item.YouthUserId == user.Id || item.RecordedByUserId == user.Id)
             .ToListAsync(cancellationToken);
-        foreach (var item in attendance) item.Note = null;
+        foreach (var item in attendance.Where(item => item.YouthUserId == user.Id)) item.Note = null;
 
         var reflections = await _db.Reflections
             .Where(item => item.YouthUserId == user.Id)
@@ -122,12 +147,12 @@ public sealed class PersonalDataAnonymizer
         var assessments = await _db.CompetencyAssessments
             .Where(item => item.YouthUserId == user.Id || item.AssessedByUserId == user.Id)
             .ToListAsync(cancellationToken);
-        foreach (var item in assessments) item.Notes = null;
+        foreach (var item in assessments.Where(item => item.YouthUserId == user.Id)) item.Notes = null;
 
         var flags = await _db.Flags
             .Where(item => item.YouthUserId == user.Id || item.FlaggedByUserId == user.Id)
             .ToListAsync(cancellationToken);
-        foreach (var item in flags)
+        foreach (var item in flags.Where(item => item.YouthUserId == user.Id))
         {
             item.Reason = Removed;
             item.AutomaticReason = null;
@@ -138,7 +163,7 @@ public sealed class PersonalDataAnonymizer
         var assignedWork = await _db.AssignedWork
             .Where(item => item.YouthUserId == user.Id || item.AssignedByUserId == user.Id)
             .ToListAsync(cancellationToken);
-        foreach (var item in assignedWork) item.Message = null;
+        foreach (var item in assignedWork.Where(item => item.YouthUserId == user.Id)) item.Message = null;
 
         var supportRequests = await _db.SupportRequests
             .Where(item => item.UserId == user.Id)
@@ -168,23 +193,36 @@ public sealed class PersonalDataAnonymizer
             item.Relationship = Removed;
             item.Signature = Removed;
             item.GuardianUserId = item.GuardianUserId == user.Id ? null : item.GuardianUserId;
-            item.WithdrawnAt ??= now;
+            if (item.YouthUserId == user.Id)
+            {
+                item.WithdrawnAt ??= now;
+            }
         }
 
         var applications = await _db.Applications
-            .Where(item => item.CreatedYouthUserId == user.Id || item.GuardianEmail == oldEmail)
+            .Where(item => item.CreatedYouthUserId == user.Id
+                || item.ApplicantUserId == user.Id
+                || item.GuardianUserId == user.Id)
             .ToListAsync(cancellationToken);
         foreach (var item in applications)
         {
-            item.FirstName = "Former";
-            item.LastName = "Participant";
-            item.WhoIsFilling = Removed;
-            item.Neighbourhood = Removed;
-            item.WhyInterested = Removed;
-            item.GuardianName = null;
-            item.GuardianEmail = null;
-            item.GuardianPhone = null;
-            item.DecisionNote = null;
+            if (item.CreatedYouthUserId == user.Id || item.ApplicantUserId == user.Id)
+            {
+                item.FirstName = "Former";
+                item.LastName = "Participant";
+                item.WhoIsFilling = Removed;
+                item.Neighbourhood = Removed;
+                item.CohortInterest = Removed;
+                item.WhyInterested = Removed;
+                item.TrackInterest = null;
+                item.DecisionNote = null;
+            }
+            if (item.GuardianUserId == user.Id)
+            {
+                item.GuardianName = null;
+                item.GuardianEmail = null;
+                item.GuardianPhone = null;
+            }
         }
 
         var invitations = await _db.Invitations
@@ -217,26 +255,29 @@ public sealed class PersonalDataAnonymizer
             .ToListAsync(cancellationToken);
         _db.AttendanceWriteReceipts.RemoveRange(attendanceReceipts);
 
-        await AnonymizePublicSubmissionsAsync(oldEmail, user.Email, cancellationToken);
+        await AnonymizePublicSubmissionsAsync(user.Id, user.Email, cancellationToken);
     }
 
     private async Task AnonymizePublicSubmissionsAsync(
-        string oldEmail,
+        Guid ownerUserId,
         string anonymizedEmail,
         CancellationToken cancellationToken)
     {
+        // Anonymous submissions are not account-owned merely because their address matches. Only an
+        // authenticated ownership link authorizes this automated account-rights workflow.
         var contacts = await _db.ContactRequests
-            .Where(item => item.Email == oldEmail)
+            .Where(item => item.OwnerUserId == ownerUserId)
             .ToListAsync(cancellationToken);
         foreach (var item in contacts)
         {
             item.Name = "Former participant";
             item.Email = anonymizedEmail;
+            item.Topic = Removed;
             item.Message = Removed;
         }
 
         var volunteers = await _db.VolunteerSignups
-            .Where(item => item.Email == oldEmail)
+            .Where(item => item.OwnerUserId == ownerUserId)
             .ToListAsync(cancellationToken);
         foreach (var item in volunteers)
         {
@@ -247,7 +288,7 @@ public sealed class PersonalDataAnonymizer
         }
 
         var donations = await _db.DonationPledges
-            .Where(item => item.Email == oldEmail)
+            .Where(item => item.OwnerUserId == ownerUserId)
             .ToListAsync(cancellationToken);
         foreach (var item in donations)
         {
@@ -256,4 +297,5 @@ public sealed class PersonalDataAnonymizer
             item.ProviderReference = null;
         }
     }
+
 }

@@ -14,6 +14,18 @@ import { defineConfig, devices } from '@playwright/test';
 
 const CI = !!process.env.CI;
 
+/**
+ * Focused NFR projects. Keeping the responsive/accessibility specs in their
+ * own directory avoids multiplying the full role-based acceptance suite by
+ * every supported breakpoint.
+ */
+const QUALITY_VIEWPORTS = [
+  { name: 'xs', width: 375, height: 812 },
+  { name: 'sm', width: 768, height: 900 },
+  { name: 'lg', width: 992, height: 900 },
+  { name: 'xl', width: 1200, height: 900 },
+] as const;
+
 // e2e-only signing key (>= 32 chars) — never a production secret.
 const E2E_SIGNING_KEY = 'e2e-only-signing-key-do-not-use-in-production-0123456789';
 
@@ -44,6 +56,27 @@ export default defineConfig({
       testDir: './e2e/portal-xs',
       use: { ...devices['Pixel 7'], baseURL: 'http://localhost:4200' },
     },
+    {
+      name: 'youth-performance',
+      testDir: './e2e/quality',
+      testMatch: 'youth-performance.spec.ts',
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'http://localhost:4200',
+        viewport: { width: 1365, height: 768 },
+      },
+    },
+    ...QUALITY_VIEWPORTS.map(({ name, width, height }) => ({
+      name: `quality-${name}-${width}`,
+      testDir: './e2e/quality',
+      testIgnore: 'youth-performance.spec.ts',
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'http://localhost:4200',
+        viewport: { width, height },
+      },
+      metadata: { breakpoint: name, viewportWidth: width },
+    })),
   ],
   webServer: [
     {
@@ -59,7 +92,7 @@ export default defineConfig({
       },
     },
     {
-      command: 'npx ng serve portal --port 4200',
+      command: 'npx ng serve portal --configuration production --port 4200',
       url: 'http://localhost:4200',
       timeout: 180_000,
       reuseExistingServer: !CI,

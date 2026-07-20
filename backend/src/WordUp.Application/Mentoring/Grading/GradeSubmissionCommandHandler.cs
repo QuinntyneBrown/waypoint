@@ -184,7 +184,8 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
                         : "Your mentor left revision feedback.",
                     $"/youth/submissions/{submission.Id}",
                     now,
-                    cancellationToken),
+                    cancellationToken,
+                    subjectUserId: youth.Id),
             };
             if (request.GuardianNotified && youth.GuardianUserId is Guid guardianUserId)
             {
@@ -192,14 +193,15 @@ public class GradeSubmissionCommandHandler : IRequestHandler<GradeSubmissionComm
                     guardianUserId,
                     "work-graded",
                     request.Decision == "approve"
-                        ? $"{youth.DisplayName}'s assignment was approved"
-                        : $"{youth.DisplayName}'s assignment needs revision",
+                        ? "Your child's assignment was approved"
+                        : "Your child's assignment needs revision",
                     request.Decision == "approve"
                         ? "Their mentor approved the submitted work."
                         : "Their mentor requested a revision and shared feedback.",
                     "/guardian/progress",
                     now,
-                    cancellationToken));
+                    cancellationToken,
+                    subjectUserId: youth.Id));
             }
 
             await _db.SaveChangesAsync(cancellationToken);

@@ -120,8 +120,8 @@ public sealed class SessionSchedulingTests : IntegrationTestBase
 
         var sessions = await response.Content.ReadFromJsonAsync<List<SessionViewDto>>();
         Assert.That(sessions!.All(s => s.CohortId == cohortA), Is.True);
-        Assert.That(sessions.Any(s => s.Title == "Cohort A kickoff"), Is.True);
-        Assert.That(sessions.Any(s => s.Title == "Cohort B kickoff"), Is.False);
+        Assert.That(sessions!.Any(s => s.Title == "Cohort A kickoff"), Is.True);
+        Assert.That(sessions!.Any(s => s.Title == "Cohort B kickoff"), Is.False);
     }
 
     private sealed record CreateSessionResultDto(Guid FirstSessionId, int GeneratedCount);

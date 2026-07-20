@@ -55,6 +55,25 @@ describe('AuthStore', () => {
     expect(sessionStorage.getItem('wu.session.v1')).not.toBeNull();
   });
 
+  it('acceptInvitation adopts the activated account session without long-lived persistence', () => {
+    auth
+      .acceptInvitation({
+        token: 'invite-token',
+        displayName: 'Invited Youth',
+        password: 'Password123',
+        agreeToGuidelines: true,
+      })
+      .subscribe();
+    const request = http.expectOne((item) => item.url.endsWith('/api/invitations/accept'));
+    expect(request.request.body).toMatchObject({ token: 'invite-token' });
+    request.flush(authResult({ displayName: 'Invited Youth' }));
+
+    expect(store.isAuthenticated()).toBe(true);
+    expect(store.user()?.displayName).toBe('Invited Youth');
+    expect(sessionStorage.getItem('wu.session.v1')).not.toBeNull();
+    expect(localStorage.getItem('wu.session.v1')).toBeNull();
+  });
+
   it('refreshToken is single-flight: concurrent callers share one HTTP call', () => {
     persistence.write({
       version: 1,

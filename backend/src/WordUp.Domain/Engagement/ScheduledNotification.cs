@@ -14,5 +14,11 @@ public class ScheduledNotification
     public DateTime DeliverAt { get; set; }
     public DateTime? DeliveredAt { get; set; }
     public DateTime? CancelledAt { get; set; }
+    public int AttemptCount { get; set; }
+    public DateTime? LastAttemptAt { get; set; }
+    public DateTime? NextAttemptAt { get; set; }
+    public Guid? LeaseId { get; set; }
+    public DateTime? LeaseUntil { get; set; }
+    public string? LastErrorCode { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

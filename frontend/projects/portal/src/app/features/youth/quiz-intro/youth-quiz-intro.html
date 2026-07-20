@@ -15,15 +15,33 @@
         <div class="wu-page__titles">
           <div class="wu-eyebrow">Knowledge check</div>
           <h1 class="wu-page__title">{{ view.title }}</h1>
-          <p class="wu-page__sub">Attempt {{ view.currentAttemptNumber }} of {{ view.attemptsAllowed }}</p>
+          <p class="wu-page__sub">
+            Attempt {{ view.currentAttemptNumber }} of {{ view.attemptsAllowed }}
+          </p>
         </div>
       </div>
 
       <div class="quiz-facts">
-        <div class="wu-card"><div class="wu-card__body"><strong>{{ view.questionCount }} questions</strong></div></div>
-        <div class="wu-card"><div class="wu-card__body"><strong>{{ view.estimatedMinutes }} minutes</strong></div></div>
-        <div class="wu-card"><div class="wu-card__body"><strong>{{ view.passMark }}% pass mark</strong></div></div>
-        <div class="wu-card"><div class="wu-card__body"><strong>{{ view.attemptsRemaining }} attempts remaining</strong></div></div>
+        <div class="wu-card">
+          <div class="wu-card__body">
+            <strong>{{ view.questionCount }} questions</strong>
+          </div>
+        </div>
+        <div class="wu-card">
+          <div class="wu-card__body">
+            <strong>{{ view.estimatedMinutes }} minutes</strong>
+          </div>
+        </div>
+        <div class="wu-card">
+          <div class="wu-card__body">
+            <strong>{{ view.passMark }}% pass mark</strong>
+          </div>
+        </div>
+        <div class="wu-card">
+          <div class="wu-card__body">
+            <strong>{{ view.attemptsRemaining }} attempts remaining</strong>
+          </div>
+        </div>
       </div>
 
       @if (view.badgeReward; as badge) {
@@ -31,7 +49,9 @@
           <div class="wu-card__body wu-stack">
             <div class="wu-eyebrow">Badge reward</div>
             <h2 class="wu-card__title">{{ badge.name }}</h2>
-            @if (badge.description) { <p>{{ badge.description }}</p> }
+            @if (badge.description) {
+              <p>{{ badge.description }}</p>
+            }
           </div>
         </section>
       }

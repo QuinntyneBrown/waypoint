@@ -1,59 +1,87 @@
-# Frontend
+# Word Up frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+This Angular 21 workspace contains two applications and three shared libraries:
 
-## Development server
+- `portal`: the authenticated role-aware application
+- `public-site`: the SSR public site and intake experience
+- `@wu/api`: typed API models, services, and error handling
+- `@wu/auth`: session state, guards, and authentication integration
+- `@wu/ui`: the shared design system and application shell
 
-To start a local development server, run:
+## Prerequisites
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Use Node.js `^20.19.0`, `^22.12.0`, or `>=24.0.0` and npm 10.9.4. From this directory, install the locked dependencies with:
 
 ```bash
-ng generate component component-name
+npm ci
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Local development
+
+Run the API from one terminal:
 
 ```bash
-ng generate --help
+npm run api
 ```
 
-## Building
-
-To build the project run:
+Run the portal at `http://localhost:4200` from another:
 
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+The public site can run concurrently at `http://localhost:4201`:
 
 ```bash
-ng test
+npm run start:public
 ```
 
-## Running end-to-end tests
+Both applications proxy `/api` and `/hubs` to `http://127.0.0.1:5211`.
 
-For end-to-end (e2e) testing, run:
+## Build and package verification
+
+The root build is deliberately ordered: it builds `@wu/api`, `@wu/auth`, and `@wu/ui`, then the portal and public site, then verifies the generated package metadata, entry points, tarball contents, and cross-package imports.
 
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+The narrower commands are available when needed:
 
-## Additional Resources
+```bash
+npm run packages:build
+npm run apps:build
+npm run packages:check
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+`npm run packages:check` expects current library output under `dist/`; it performs an `npm pack --dry-run` for each package without publishing anything.
+
+## Tests and quality gates
+
+Angular unit tests use Vitest:
+
+```bash
+npm test
+npx ng test portal
+npx ng test public-site
+npx ng test wu-api
+npx ng test wu-auth
+npx ng test wu-ui
+```
+
+Browser acceptance, responsive, accessibility, and Chromebook-class interaction gates use Playwright:
+
+```bash
+npx playwright install chromium
+npm run e2e:ci
+npm run e2e:performance
+```
+
+Run formatting and route-manifest checks with:
+
+```bash
+npm run format:check
+npm run quality:routes
+```
+
+See the repository [README](../README.md) and [contribution guide](../CONTRIBUTING.md) for backend, SQL Server, traceability, and full release-gate instructions.

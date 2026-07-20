@@ -29,6 +29,9 @@ export class MentorDashboardPage extends BasePage {
   get reviewItems() {
     return this.page.getByTestId('mentor-review-item');
   }
+  reviewItem(title: string) {
+    return this.reviewItems.filter({ hasText: title });
+  }
   get viewAllYouth() {
     return this.page.getByRole('link', { name: /view all youth/i });
   }

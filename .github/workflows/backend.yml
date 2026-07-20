@@ -2,9 +2,26 @@ name: backend
 
 on:
   push:
-    paths: ['backend/**', 'docs/specs/**', 'scripts/**', '.github/workflows/backend.yml']
+    paths:
+      [
+        "backend/**",
+        ".config/dotnet-tools.json",
+        "global.json",
+        "docs/specs/**",
+        "scripts/**",
+        ".github/workflows/backend.yml",
+      ]
   pull_request:
-    paths: ['backend/**', 'docs/specs/**', 'scripts/**', '.github/workflows/backend.yml']
+    paths:
+      [
+        "backend/**",
+        ".config/dotnet-tools.json",
+        "global.json",
+        "docs/specs/**",
+        "scripts/**",
+        ".github/workflows/backend.yml",
+      ]
+  workflow_dispatch:
 
 jobs:
   build-test:
@@ -13,25 +30,40 @@ jobs:
       sqlserver:
         image: mcr.microsoft.com/mssql/server:2022-latest
         env:
-          ACCEPT_EULA: 'Y'
-          MSSQL_SA_PASSWORD: 'Your_password123!'
-        ports: ['1433:1433']
+          ACCEPT_EULA: "Y"
+          MSSQL_SA_PASSWORD: "Your_password123!"
+        ports: ["1433:1433"]
         options: >-
           --health-cmd "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P Your_password123! -Q 'SELECT 1'"
           --health-interval 10s --health-timeout 5s --health-retries 10
     env:
-      WORDUP_TEST_SQLSERVER: 'localhost'
-      WORDUP_TEST_SQLAUTH: 'User Id=sa;Password=Your_password123!'
+      WORDUP_TEST_SQLSERVER: "localhost"
+      WORDUP_TEST_SQLAUTH: "User Id=sa;Password=Your_password123!"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: "9.0.x"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify stable SDK selection
+        working-directory: backend
+        run: dotnet --version
       - name: Restore
         run: dotnet restore backend/WordUp.sln
+      - name: Restore repository tools
+        run: dotnet tool restore
       - name: Build
         run: dotnet build backend/WordUp.sln --no-restore --configuration Release
+      - name: Verify migrations match the model
+        run: >-
+          dotnet ef migrations has-pending-model-changes
+          --project backend/src/WordUp.Infrastructure
+          --startup-project backend/src/WordUp.Api
+          --configuration Release
+          --no-build
       - name: Test (unit + integration)
         run: dotnet test backend/WordUp.sln --no-build --configuration Release --logger "trx;LogFileName=test.trx"
       - name: Requirement traceability gate
-        run: node scripts/check-traceability.mjs
+        run: node scripts/check-traceability.mjs --strict

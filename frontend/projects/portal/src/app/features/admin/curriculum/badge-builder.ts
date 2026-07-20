@@ -18,7 +18,7 @@ import {
   TrackWorkspace,
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { WuAccessibleDialog, WuShell } from '@wu/ui';
 import { finalize, forkJoin, of, switchMap } from 'rxjs';
 import { EditorDraftService } from '../../../editor-draft.service';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
@@ -34,7 +34,7 @@ interface BadgeTarget {
 @Component({
   selector: 'wu-badge-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, ReactiveFormsModule],
+  imports: [WuShell, WuAccessibleDialog, ReactiveFormsModule],
   templateUrl: './badge-builder.html',
   styleUrl: './curriculum-admin.css',
 })

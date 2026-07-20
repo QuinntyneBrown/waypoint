@@ -3,7 +3,8 @@ using MediatR;
 namespace WordUp.Application.Mentoring.Flags;
 
 /// <summary>A mentor resolves (clears) an active at-risk flag (L2-MENTOR-007 AC3/AC4).</summary>
-public record ResolveFlagCommand(Guid FlagId, string ResolutionReason) : IRequest;
+public record ResolveFlagCommand(Guid FlagId, string ResolutionReason)
+    : IRequest, IAtomicOutboxRequest;
 
 public static class FlagResolutionReasons
 {

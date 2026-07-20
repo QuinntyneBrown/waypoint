@@ -1,0 +1,97 @@
+name: performance
+
+on:
+  push:
+    paths:
+      - "backend/**"
+      - "global.json"
+      - "scripts/performance/**"
+      - ".github/workflows/performance.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - "global.json"
+      - "scripts/performance/**"
+      - ".github/workflows/performance.yml"
+  workflow_dispatch:
+
+jobs:
+  api-load:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: "Y"
+          MSSQL_SA_PASSWORD: "Your_password123!"
+        ports: ["1433:1433"]
+        options: >-
+          --health-cmd "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P Your_password123! -Q 'SELECT 1'"
+          --health-interval 10s --health-timeout 5s --health-retries 10
+    env:
+      ASPNETCORE_ENVIRONMENT: Testing
+      ConnectionStrings__Default: "Server=localhost,1433;Database=WordUpPerformance;User Id=sa;Password=Your_password123!;Encrypt=False;TrustServerCertificate=True"
+      Jwt__SigningKey: performance-only-signing-key-do-not-use-outside-ci-0123456789
+      WORDUP_TEST_SQLSERVER: localhost
+      WORDUP_TEST_SQLAUTH: "User Id=sa;Password=Your_password123!"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build API and performance contracts
+        run: dotnet build backend/WordUp.sln --configuration Release
+      - name: Verify bounded list payloads
+        run: >-
+          dotnet test backend/tests/WordUp.IntegrationTests/WordUp.IntegrationTests.csproj
+          --configuration Release --no-build
+          --filter "TestCategory=Performance"
+      - name: Start API
+        shell: bash
+        run: |
+          dotnet run --project backend/src/WordUp.Api --configuration Release --no-build --urls http://127.0.0.1:5211 > api-performance.log 2>&1 &
+          echo $! > api-performance.pid
+          for attempt in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:5211/health/ready > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat api-performance.log
+          exit 1
+      - name: Run 50-user / 20-RPS performance gate
+        env:
+          PERF_VIRTUAL_USERS: 50
+          PERF_REQUIRE_UNIQUE_USERS: true
+          PERF_SEED_COHORTS: true
+          PERF_REQUIRE_COHORTS: true
+          PERF_SEED_CONCURRENCY: 5
+          PERF_SETUP_TIMEOUT_MS: 120000
+          PERF_PATHS: /api/me/home,/api/me/curriculum,/api/me/progress,/api/me/schedule
+          PERF_REQUESTS_PER_SECOND: 20
+          PERF_DURATION_SECONDS: 60
+          PERF_P50_MS: 300
+          PERF_P95_MS: 800
+          PERF_MAX_ERROR_RATE: 0.01
+          PERF_REPORT_PATH: performance-results/api-load.json
+        run: node scripts/performance/api-load.mjs
+      - name: Upload performance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-results
+          path: |
+            performance-results
+            api-performance.log
+          if-no-files-found: warn
+      - name: Stop API
+        if: always()
+        shell: bash
+        run: |
+          if test -f api-performance.pid; then
+            kill "$(cat api-performance.pid)" || true
+          fi

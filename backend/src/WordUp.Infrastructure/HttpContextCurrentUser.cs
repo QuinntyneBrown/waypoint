@@ -27,5 +27,14 @@ public class HttpContextCurrentUser : ICurrentUser
 
     public string? Role => _accessor.HttpContext?.User?.FindFirst(ClaimTypes.Role)?.Value;
 
+    public int? SessionVersion
+    {
+        get
+        {
+            var value = _accessor.HttpContext?.User?.FindFirst("session_version")?.Value;
+            return int.TryParse(value, out var version) ? version : null;
+        }
+    }
+
     public bool IsAuthenticated => _accessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
 }

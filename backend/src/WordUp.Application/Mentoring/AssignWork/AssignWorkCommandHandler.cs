@@ -15,6 +15,7 @@ public class AssignWorkCommandHandler : IRequestHandler<AssignWorkCommand, Assig
     private readonly ICurrentUser _currentUser;
     private readonly IChangePublisher _publisher;
     private readonly NotificationDeliveryService _notifications;
+    private readonly IAfterCommitDispatcher _afterCommit;
 
     public AssignWorkCommandHandler(
         IAppDbContext db,
@@ -22,7 +23,8 @@ public class AssignWorkCommandHandler : IRequestHandler<AssignWorkCommand, Assig
         IAuditLogger audit,
         ICurrentUser currentUser,
         IChangePublisher publisher,
-        NotificationDeliveryService notifications)
+        NotificationDeliveryService notifications,
+        IAfterCommitDispatcher afterCommit)
     {
         _db = db;
         _clock = clock;
@@ -30,6 +32,7 @@ public class AssignWorkCommandHandler : IRequestHandler<AssignWorkCommand, Assig
         _currentUser = currentUser;
         _publisher = publisher;
         _notifications = notifications;
+        _afterCommit = afterCommit;
     }
 
     public async Task<AssignWorkResult> Handle(AssignWorkCommand request, CancellationToken cancellationToken)
@@ -120,18 +123,20 @@ public class AssignWorkCommandHandler : IRequestHandler<AssignWorkCommand, Assig
 
         foreach (var message in messages)
         {
-            await _publisher.PublishToUserAsync(
-                message.RecipientId,
-                "message",
-                new
-                {
-                    id = message.Id,
-                    senderId = message.SenderId,
-                    recipientId = message.RecipientId,
-                    body = messageBody,
-                    sentAt = message.SentAt,
-                    readAt = message.ReadAt,
-                },
+            await _afterCommit.DispatchBestEffortAsync(
+                callbackCancellationToken => _publisher.PublishToUserAsync(
+                    message.RecipientId,
+                    "message",
+                    new
+                    {
+                        id = message.Id,
+                        senderId = message.SenderId,
+                        recipientId = message.RecipientId,
+                        body = messageBody,
+                        sentAt = message.SentAt,
+                        readAt = message.ReadAt,
+                    },
+                    callbackCancellationToken),
                 cancellationToken);
         }
         foreach (var plan in notificationPlans)

@@ -107,12 +107,13 @@
   </main>
 
   @if (stageDialogOpen()) {
-    <div class="dialog-backdrop">
+    <div class="dialog-backdrop" (click)="closeStage()">
       <section
         class="dialog-panel"
-        role="dialog"
-        aria-modal="true"
+        wuAccessibleDialog
         [attr.aria-label]="editingStageId() ? 'Edit stage' : 'Add stage'"
+        (click)="$event.stopPropagation()"
+        (wuDialogEscape)="closeStage()"
       >
         <h2>{{ editingStageId() ? 'Edit stage' : 'Add stage' }}</h2>
         <form class="wu-stack" [formGroup]="stageForm" (ngSubmit)="saveStage()">
@@ -143,8 +144,14 @@
   }
 
   @if (competencyStageId()) {
-    <div class="dialog-backdrop">
-      <section class="dialog-panel" role="dialog" aria-modal="true" aria-label="Add competency">
+    <div class="dialog-backdrop" (click)="closeCompetency()">
+      <section
+        class="dialog-panel"
+        wuAccessibleDialog
+        aria-label="Add competency"
+        (click)="$event.stopPropagation()"
+        (wuDialogEscape)="closeCompetency()"
+      >
         <h2>Add competency</h2>
         <form class="wu-stack" [formGroup]="competencyForm" (ngSubmit)="addCompetency()">
           <div class="wu-field">

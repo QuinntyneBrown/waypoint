@@ -236,12 +236,11 @@
   @if (reviewingBroadcast()) {
     <div
       class="wu-modal wu-modal--sm is-open"
-      role="dialog"
-      aria-modal="true"
+      wuAccessibleDialog
       aria-labelledby="confirm-broadcast-heading"
-      (keydown.escape)="reviewingBroadcast.set(false)"
+      (wuDialogEscape)="reviewingBroadcast.set(false)"
     >
-      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__scrim" (click)="reviewingBroadcast.set(false)"></div>
       <div class="wu-modal__panel">
         <div class="wu-modal__header">
           <div>

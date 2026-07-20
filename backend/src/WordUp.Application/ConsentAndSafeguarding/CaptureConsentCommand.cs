@@ -12,4 +12,4 @@ public record CaptureConsentCommand(
     bool MediaGroupOnly,
     bool MediaFirstNameCaptions,
     string Signature,
-    string? Term) : IRequest<ConsentResult>;
+    string? Term) : IRequest<ConsentResult>, IAtomicOutboxRequest;

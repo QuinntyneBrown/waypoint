@@ -150,10 +150,11 @@ public class SubmitAssignmentCommandHandler : IRequestHandler<SubmitAssignmentCo
                 mentorId,
                 "approval-needed",
                 "Assignment ready for review",
-                $"{submitter.DisplayName} submitted {assignment.Title}.",
+                "A participant submitted an assignment.",
                 $"/mentor/reviews/submissions/{submission.Id}",
                 now,
-                cancellationToken);
+                cancellationToken,
+                subjectUserId: youthId);
         }
 
         await _db.SaveChangesAsync(cancellationToken);

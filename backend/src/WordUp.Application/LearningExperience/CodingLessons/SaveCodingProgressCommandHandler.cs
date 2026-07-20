@@ -16,19 +16,22 @@ public sealed class SaveCodingProgressCommandHandler : IRequestHandler<SaveCodin
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
     private readonly IChangePublisher _publisher;
+    private readonly IAfterCommitDispatcher _afterCommit;
 
     public SaveCodingProgressCommandHandler(
         IAppDbContext db,
         IClock clock,
         IAuditLogger audit,
         ICurrentUser currentUser,
-        IChangePublisher publisher)
+        IChangePublisher publisher,
+        IAfterCommitDispatcher afterCommit)
     {
         _db = db;
         _clock = clock;
         _audit = audit;
         _currentUser = currentUser;
         _publisher = publisher;
+        _afterCommit = afterCommit;
     }
 
     public async Task<CodingProgressResult> Handle(SaveCodingProgressCommand request, CancellationToken cancellationToken)
@@ -94,10 +97,12 @@ public sealed class SaveCodingProgressCommandHandler : IRequestHandler<SaveCodin
             .FirstOrDefaultAsync(cancellationToken);
         if (cohortId is { } progressCohortId)
         {
-            await _publisher.PublishToRoleAsync(
-                Roles.ProgramAdministrator,
-                "progressChanged",
-                new { cohortId = progressCohortId, youthId },
+            await _afterCommit.DispatchBestEffortAsync(
+                callbackCancellationToken => _publisher.PublishToRoleAsync(
+                    Roles.ProgramAdministrator,
+                    "progressChanged",
+                    new { cohortId = progressCohortId, youthId },
+                    callbackCancellationToken),
                 cancellationToken);
         }
 

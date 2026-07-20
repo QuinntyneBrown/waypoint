@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  HostListener,
-  effect,
-  inject,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   ApiError,
@@ -18,7 +9,7 @@ import {
   RosterPreview,
 } from '@wu/api';
 import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
 import { finalize } from 'rxjs/operators';
 
 interface ImportColumn {
@@ -31,7 +22,7 @@ interface ImportColumn {
 @Component({
   selector: 'wu-import-roster',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, FormsModule],
+  imports: [WuShell, WuIcon, WuAccessibleDialog, FormsModule],
   templateUrl: './import-roster.html',
   styles: `
     .import-columns,
@@ -133,7 +124,6 @@ interface ImportColumn {
 export class ImportRosterPage {
   protected readonly auth = inject(AuthStore);
   private readonly api = inject(DataTransferApi);
-  private readonly confirmButton = viewChild<ElementRef<HTMLButtonElement>>('confirmButton');
 
   protected readonly fields: ReadonlyArray<{ value: RosterField; label: string }> = [
     { value: 'Name', label: 'Name' },
@@ -155,14 +145,6 @@ export class ImportRosterPage {
   protected readonly confirming = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   private readonly csvContent = signal('');
-
-  constructor() {
-    effect(() => {
-      if (this.confirming()) {
-        queueMicrotask(() => this.confirmButton()?.nativeElement.focus());
-      }
-    });
-  }
 
   protected async chooseFile(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;
@@ -287,11 +269,6 @@ export class ImportRosterPage {
   protected removeFile(input: HTMLInputElement): void {
     input.value = '';
     this.resetState();
-  }
-
-  @HostListener('document:keydown.escape')
-  protected escape(): void {
-    if (this.confirming()) this.cancelConfirmation();
   }
 
   private request(): RosterImportRequest {

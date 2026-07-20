@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WordUp.Application.Authentication.Auth;
 using WordUp.Application.Shared.Abstractions;
@@ -60,12 +61,15 @@ public sealed class SecurityAuditCoverageTests : IntegrationTestBase
         string url,
         string token,
         object? body = null,
-        string? userAgent = null)
+        string? userAgent = null,
+        string? forwardedFor = null)
     {
         var request = new HttpRequestMessage(method, url);
         Authorize(request, token);
         if (body is not null) request.Content = JsonContent.Create(body);
         if (userAgent is not null) request.Headers.UserAgent.ParseAdd(userAgent);
+        if (forwardedFor is not null)
+            request.Headers.TryAddWithoutValidation("X-Forwarded-For", forwardedFor);
         return await Client.SendAsync(request);
     }
 
@@ -74,6 +78,9 @@ public sealed class SecurityAuditCoverageTests : IntegrationTestBase
     [Property("Req", "L2-CONSENT-003")]
     public async Task Authenticated_policy_and_resource_denials_are_audited_with_actor_action_and_source()
     {
+        const string auditUserAgent =
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AuditAcceptance/1.0";
+        const string untrustedForwardedFor = "203.0.113.42";
         var (_, adminToken) = await SeedUserAsync(Roles.ProgramAdministrator, "Audit Director");
         var (youth, youthToken) = await SeedUserAsync(Roles.Youth, "Denied Youth");
         var (mentor, mentorToken) = await SeedUserAsync(Roles.Mentor, "Denied Mentor");
@@ -83,13 +90,15 @@ public sealed class SecurityAuditCoverageTests : IntegrationTestBase
             HttpMethod.Get,
             "/api/audit",
             youthToken,
-            userAgent: "AuditAcceptance/1.0");
+            userAgent: auditUserAgent,
+            forwardedFor: untrustedForwardedFor);
         var resourceDenied = await SendAsync(
             HttpMethod.Post,
             $"/api/mentor/youth/{otherYouth.Id}/flag",
             mentorToken,
             new { reason = "Must not be persisted" },
-            "AuditAcceptance/1.0");
+            auditUserAgent,
+            untrustedForwardedFor);
         Assert.Multiple(() =>
         {
             Assert.That(policyDenied.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
@@ -102,9 +111,10 @@ public sealed class SecurityAuditCoverageTests : IntegrationTestBase
             adminToken);
         var page = await response.Content.ReadFromJsonAsync<AuditPageDto>();
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var sources = page!.Items.Select(item => item.Source ?? string.Empty).ToArray();
         Assert.Multiple(() =>
         {
-            Assert.That(page!.Items, Has.Count.EqualTo(2));
+            Assert.That(page.Items, Has.Count.EqualTo(2));
             Assert.That(page.Items.Select(item => item.ActorUserId),
                 Is.EquivalentTo(new Guid?[] { youth.Id, mentor.Id }));
             Assert.That(page.Items.All(item => item.TargetType == "Endpoint"), Is.True);
@@ -113,9 +123,18 @@ public sealed class SecurityAuditCoverageTests : IntegrationTestBase
                 "GET /api/audit",
                 $"POST /api/mentor/youth/{otherYouth.Id}/flag",
             }));
-            Assert.That(page.Items.All(item => item.Source?.Contains("ip=") == true), Is.True);
-            Assert.That(page.Items.All(item =>
-                item.Source?.Contains("user-agent=AuditAcceptance/1.0") == true), Is.True);
+            Assert.That(sources.All(source => source.StartsWith(
+                "channel=api;device=desktop;location=",
+                StringComparison.Ordinal)), Is.True,
+                "HTTP audit entries include the required coarse device and network context");
+            Assert.That(sources.All(source =>
+                !source.Contains("ip=", StringComparison.OrdinalIgnoreCase)), Is.True);
+            Assert.That(sources.All(source =>
+                !source.Contains("user-agent=", StringComparison.OrdinalIgnoreCase)), Is.True);
+            Assert.That(sources.All(source =>
+                !source.Contains("AuditAcceptance/1.0", StringComparison.Ordinal)), Is.True);
+            Assert.That(sources.All(source =>
+                !source.Contains(untrustedForwardedFor, StringComparison.Ordinal)), Is.True);
         });
     }
 
@@ -144,23 +163,35 @@ public sealed class SecurityAuditCoverageTests : IntegrationTestBase
             Assert.ThrowsAsync<InvalidOperationException>(async () => await db.SaveChangesAsync());
         }
 
-        using (var scope = Factory.Services.CreateScope())
+        var forgedEntryId = Guid.NewGuid();
+        try
         {
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            db.AuditEntries.Add(new AuditEntry
+            using (var scope = Factory.Services.CreateScope())
             {
-                SequenceNumber = long.MaxValue,
-                PreviousHash = "FORGED-PREVIOUS-HASH",
-                IntegrityHash = "FORGED-INTEGRITY-HASH",
-                Action = "ForgedAuditEntry",
-                At = DateTime.UtcNow,
-                Source = "ip=unknown | user-agent=forged",
-            });
-            await db.SaveChangesAsync();
-        }
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                db.AuditEntries.Add(new AuditEntry
+                {
+                    Id = forgedEntryId,
+                    SequenceNumber = long.MaxValue,
+                    PreviousHash = "FORGED-PREVIOUS-HASH",
+                    IntegrityHash = "FORGED-INTEGRITY-HASH",
+                    Action = "ForgedAuditEntry",
+                    At = DateTime.UtcNow,
+                    Source = "channel=api;device=unknown;location=unknown",
+                });
+                await db.SaveChangesAsync();
+            }
 
-        var forgedResponse = await SendAsync(HttpMethod.Get, "/api/audit?page=1&pageSize=200", adminToken);
-        var afterForgery = await forgedResponse.Content.ReadFromJsonAsync<AuditPageDto>();
-        Assert.That(afterForgery!.IntegrityValid, Is.False, "a forged append breaks integrity verification");
+            var forgedResponse = await SendAsync(HttpMethod.Get, "/api/audit?page=1&pageSize=200", adminToken);
+            var afterForgery = await forgedResponse.Content.ReadFromJsonAsync<AuditPageDto>();
+            Assert.That(afterForgery!.IntegrityValid, Is.False, "a forged append breaks integrity verification");
+        }
+        finally
+        {
+            using var cleanupScope = Factory.Services.CreateScope();
+            var cleanup = cleanupScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            await cleanup.Database.ExecuteSqlInterpolatedAsync(
+                $"DELETE FROM [AuditEntries] WHERE [Id] = {forgedEntryId}");
+        }
     }
 }

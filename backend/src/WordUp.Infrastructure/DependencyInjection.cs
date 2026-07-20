@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,14 @@ public static class InfrastructureDependencyInjection
             .Bind(configuration.GetSection("SensitiveData"))
             .ValidateDataAnnotations()
             .ValidateOnStart();
+        services.AddOptions<ApplicationUrlOptions>()
+            .Bind(configuration.GetSection("ApplicationUrls"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        services.AddOptions<SmtpOptions>()
+            .Bind(configuration.GetSection("Smtp"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
         var connectionString = configuration.GetConnectionString("Default");
 
@@ -36,6 +45,14 @@ public static class InfrastructureDependencyInjection
         }
 
         services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<AppDbContext>());
+        services.AddScoped<IUserPrivacyLock, SqlServerUserPrivacyLock>();
+        services.AddScoped<IVerifiedRecordOwnershipClaimer, VerifiedRecordOwnershipClaimer>();
+        services.AddScoped<AfterCommitDispatcher>();
+        services.AddScoped<IAfterCommitDispatcher>(sp =>
+            sp.GetRequiredService<AfterCommitDispatcher>());
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AtomicOutboxBehavior<,>));
+        services.AddSingleton<IDatabaseErrorClassifier, SqlServerDatabaseErrorClassifier>();
+        services.AddScoped<SensitiveDataBackfill>();
         services.AddScoped<IDatabaseLifecycle, DatabaseLifecycle>();
         services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
         services.AddScoped<IJwtTokenIssuer, JwtTokenIssuer>();
@@ -46,7 +63,15 @@ public static class InfrastructureDependencyInjection
         services.AddSingleton<ISensitiveDataProtector, AesSensitiveDataProtector>();
         services.AddSingleton<IDataRetentionPolicy, ConfigurationDataRetentionPolicy>();
         services.AddSingleton<IAtRiskThresholds, ConfigurationAtRiskThresholds>();
-        services.AddScoped<IEmailSender, LoggingEmailSender>();
+        services.AddSingleton<IApplicationLinkBuilder, ApplicationLinkBuilder>();
+        services.AddScoped<IEmailSender, OutboxEmailSender>();
+        services.AddScoped<OutboundEmailProcessor>();
+        services.AddScoped<IOutboundEmailProcessorRunner>(sp =>
+            sp.GetRequiredService<OutboundEmailProcessor>());
+        services.AddScoped<ScheduledNotificationProcessor>();
+        services.AddSingleton<ISmtpEmailTransport, SmtpEmailTransport>();
+        services.AddHostedService<OutboundEmailWorker>();
+        services.AddHostedService<ScheduledNotificationWorker>();
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUser, HttpContextCurrentUser>();
 

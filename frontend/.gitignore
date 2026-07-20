@@ -44,6 +44,7 @@ __screenshots__/
 /test-results
 /blob-report
 /playwright/.cache
+/.codex-tmp/
 
 # System files
 .DS_Store

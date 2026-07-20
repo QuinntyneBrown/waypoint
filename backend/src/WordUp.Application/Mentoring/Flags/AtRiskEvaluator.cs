@@ -139,10 +139,11 @@ public sealed class AtRiskEvaluator
                     mentorId,
                     "at-risk-alert",
                     "Youth needs follow-up",
-                    $"{person.DisplayName} was automatically flagged: {reason}",
+                    "A participant needs follow-up based on automated safeguarding signals.",
                     "/mentor/flags",
                     now,
-                    cancellationToken));
+                    cancellationToken,
+                    subjectUserId: person.Id));
             }
         }
 
@@ -155,10 +156,10 @@ public sealed class AtRiskEvaluator
         {
             await _audit.LogAsync(
                 "YouthAutomaticallyFlagged",
-                targetType: "User",
-                targetId: flag.YouthUserId,
+                targetType: "Flag",
+                targetId: flag.Id,
                 isPrivate: true,
-                details: flag.Reason,
+                details: "category=automatic",
                 cancellationToken: cancellationToken);
         }
     }

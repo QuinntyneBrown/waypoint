@@ -17,6 +17,7 @@ public class SendPasswordResetForPersonCommandHandler : IRequestHandler<SendPass
     private readonly IEmailSender _email;
     private readonly IAuditLogger _audit;
     private readonly ICurrentUser _currentUser;
+    private readonly IApplicationLinkBuilder _links;
 
     public SendPasswordResetForPersonCommandHandler(
         IAppDbContext db,
@@ -24,7 +25,8 @@ public class SendPasswordResetForPersonCommandHandler : IRequestHandler<SendPass
         IClock clock,
         IEmailSender email,
         IAuditLogger audit,
-        ICurrentUser currentUser)
+        ICurrentUser currentUser,
+        IApplicationLinkBuilder links)
     {
         _db = db;
         _tokens = tokens;
@@ -32,6 +34,7 @@ public class SendPasswordResetForPersonCommandHandler : IRequestHandler<SendPass
         _email = email;
         _audit = audit;
         _currentUser = currentUser;
+        _links = links;
     }
 
     public async Task Handle(SendPasswordResetForPersonCommand request, CancellationToken cancellationToken)
@@ -58,8 +61,9 @@ public class SendPasswordResetForPersonCommandHandler : IRequestHandler<SendPass
         await _email.SendAsync(
             user.Email,
             "Reset your Word Up password",
-            $"An administrator has initiated a password reset for your Word Up account. Use this link: token={raw}",
-            cancellationToken);
+            $"An administrator has initiated a password reset for your Word Up account. Use this link: {_links.Portal($"/auth/reset-password?token={Uri.EscapeDataString(raw)}")}",
+            cancellationToken,
+            recipientUserId: user.Id);
 
         await _audit.LogAsync("PasswordResetSent", _currentUser.UserId, "User", user.Id);
     }

@@ -1,5 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { SignInPage, YouthQuizAttemptPage, YouthQuizIntroPage, YouthQuizResultPage } from '../pages';
+import {
+  SignInPage,
+  YouthQuizAttemptPage,
+  YouthQuizIntroPage,
+  YouthQuizResultPage,
+} from '../pages';
 import { seedYouthCurriculum, signInApi } from '../support/api';
 
 // Traces to: L2-LEARN-004, L2-LEARN-005, L2-NFR-009, L2-NFR-010
@@ -24,9 +29,9 @@ test('quiz intro, attempt, and result stay contained and keyboard operable on mo
 
   const intro = new YouthQuizIntroPage(page);
   await expect(intro.heading).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(
-    1,
-  );
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),
+  ).toBeLessThanOrEqual(1);
   expect((await intro.startButton.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
   await intro.startButton.focus();
   await page.keyboard.press('Enter');
@@ -69,9 +74,9 @@ test('quiz intro, attempt, and result stay contained and keyboard operable on mo
 
   const result = new YouthQuizResultPage(page);
   await expect(page.getByText(/waiting for mentor approval/i)).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(
-    1,
-  );
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),
+  ).toBeLessThanOrEqual(1);
   const mentorAuth = await signInApi(request, {
     email: seeded.mentorEmail,
     password: seeded.mentorPassword,
@@ -84,8 +89,8 @@ test('quiz intro, attempt, and result stay contained and keyboard operable on mo
   await page.reload();
 
   await expect(page.getByText(seeded.quizBadgeName, { exact: true })).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(
-    1,
-  );
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),
+  ).toBeLessThanOrEqual(1);
   expect((await result.retakeButton.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
 });

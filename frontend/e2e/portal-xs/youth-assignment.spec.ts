@@ -16,9 +16,9 @@ test('assignment brief, submission, and status stay contained and keyboard opera
 
   const assignment = new YouthAssignmentPage(page);
   await expect(assignment.heading).toHaveText(seeded.assignmentTitle);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(
-    1,
-  );
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),
+  ).toBeLessThanOrEqual(1);
   expect((await assignment.submitButton.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
 
   await assignment.responseText.focus();
@@ -33,7 +33,7 @@ test('assignment brief, submission, and status stay contained and keyboard opera
   const status = new YouthSubmissionStatusPage(page);
   await expect(status.status).toHaveText('Submitted');
   await expect(page.getByText(/helped a neighbour/i)).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(
-    1,
-  );
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),
+  ).toBeLessThanOrEqual(1);
 });

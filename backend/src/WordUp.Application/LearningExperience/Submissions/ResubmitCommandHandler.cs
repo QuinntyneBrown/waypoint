@@ -99,10 +99,11 @@ public class ResubmitCommandHandler : IRequestHandler<ResubmitCommand>
                 mentorId,
                 "approval-needed",
                 "Revised assignment ready for review",
-                $"{submitter.DisplayName} resubmitted revised work.",
+                "A participant resubmitted revised work.",
                 $"/mentor/reviews/submissions/{submission.Id}",
                 submission.SubmittedAt,
-                cancellationToken);
+                cancellationToken,
+                subjectUserId: submission.YouthUserId);
         }
         try
         {

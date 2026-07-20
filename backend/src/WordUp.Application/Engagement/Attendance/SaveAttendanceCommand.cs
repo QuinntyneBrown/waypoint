@@ -6,7 +6,7 @@ public record SaveAttendanceCommand(
     Guid SessionId,
     IReadOnlyList<AttendanceMark> Marks,
     string? IdempotencyKey = null)
-    : IRequest<AttendanceTally>;
+    : IRequest<AttendanceTally>, IAtomicOutboxRequest;
 
 // ExpectedVersion (base64 RowVersion from a prior read) is optional; when supplied it is checked
 // against the stored row so a stale save is rejected with 409 instead of silently overwriting

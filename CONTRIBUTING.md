@@ -13,19 +13,25 @@ By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Development setup
 
+Use the .NET and Node.js versions documented in the [README](README.md). Install frontend dependencies with the repository-pinned npm 10.9.4. Run the API and each Angular application in its own terminal:
+
 ```bash
 git clone https://github.com/QuinntyneBrown/word-up.git
 cd word-up
 
-# Backend
-dotnet run --project backend/src/WordUp.Api --urls http://localhost:5099
+# Terminal 1: API
+dotnet run --project backend/src/WordUp.Api --environment Development --urls http://127.0.0.1:5211
 
-# Angular workspace dependencies
+# Terminal 2: authenticated portal at http://localhost:4200
 cd frontend
-npm install
+npm ci
+npm start
+
+# Terminal 3, from frontend/: public site at http://localhost:4201
+npm run start:public
 ```
 
-See the [README](README.md) for prerequisites, current project status, and persistence configuration. The Angular workspace does not yet define a runnable application target; the static product reference lives in [`docs/mocks`](docs/mocks/README.md).
+Both applications proxy API and SignalR traffic to port 5211. See the [README](README.md) for persistence configuration and the [frontend guide](frontend/README.md) for project-specific commands. The static product reference remains in [`docs/mocks`](docs/mocks/README.md).
 
 ## Development workflow
 
@@ -49,12 +55,21 @@ dotnet build backend/WordUp.sln --configuration Release
 dotnet test backend/WordUp.sln --configuration Release --no-build
 
 # Requirement references
-node scripts/check-traceability.mjs
+node scripts/check-traceability.mjs --strict
+
+# Frontend (run from frontend/)
+npm ci
+npm run format:check
+npm run quality:routes
+npm run build
+npm test
+npm run e2e:ci
+npm run e2e:performance
 ```
 
 Integration tests require SQL Server. They use `(localdb)\MSSQLLocalDB` by default; override the target with `WORDUP_TEST_SQLSERVER` and `WORDUP_TEST_SQLAUTH` when necessary.
 
-The frontend workspace has no application target yet. Once an application is introduced, its build, unit-test, accessibility, and end-to-end commands become required gates for relevant changes.
+`npm run build` builds the three shared libraries in dependency order, builds both applications, and validates the generated package metadata and tarball contents. Run the Playwright gates relevant to a UI change; changes to Youth interaction performance must include the isolated performance project.
 
 ## Requirements traceability
 
@@ -71,13 +86,13 @@ Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) before changing module boundar
 - Domain and Application code must not depend on ASP.NET Core transport concerns.
 - Commands and queries flow through MediatR handlers; controllers remain thin.
 - Authentication, authorization, consent, and participant scoping are enforced on the server and covered by tests.
-- Database changes require a forward migration once persistent production storage is introduced and, where relevant, an architecture-decision update.
+- Database changes require a forward migration and, where relevant, an architecture-decision update.
 
 ## Frontend and mock contributions
 
 - Treat [`docs/mocks`](docs/mocks/README.md) as the current interaction and visual reference, not as production application code.
 - Follow [`docs/contract.md`](docs/contract.md) when changing mock pages so shared navigation, CSS classes, accessibility patterns, and JavaScript APIs remain consistent.
-- Keep the future Angular client aligned with the server contract and L2 requirements; do not implement client-only authorization or safeguarding rules.
+- Keep both Angular applications and the shared libraries aligned with the server contract and L2 requirements; do not implement client-only authorization or safeguarding rules.
 - Test narrow/mobile layouts, keyboard operation, focus, loading, empty, error, offline, and permission-denied states for UI changes.
 
 ## Commits and pull requests

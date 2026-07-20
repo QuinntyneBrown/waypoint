@@ -1,0 +1,35 @@
+{
+  "portalRoutesSource": "projects/portal/src/app/app.routes.ts",
+  "publicRoutesSource": "projects/public-site/src/app/app.routes.ts",
+  "navigationSource": "projects/wu-ui/src/lib/shell/nav-config.ts",
+  "requiredPortalRoutes": [
+    "/auth/sign-in",
+    "/invite",
+    "/auth/invite",
+    "/youth/home",
+    "/mentor/dashboard",
+    "/mentor/invitations",
+    "/admin/dashboard",
+    "/admin/people",
+    "/admin/invitations",
+    "/admin/users-roles",
+    "/admin/privacy",
+    "/guardian/home",
+    "/volunteer/home",
+    "/settings/profile",
+    "/settings/privacy",
+    "/help",
+    "/support"
+  ],
+  "requiredPublicRoutes": [
+    "/",
+    "/programs",
+    "/about",
+    "/apply",
+    "/get-involved",
+    "/donate",
+    "/contact",
+    "/privacy"
+  ],
+  "allowedUnresolvedNavigation": []
+}

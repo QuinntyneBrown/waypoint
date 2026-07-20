@@ -11,13 +11,25 @@ public interface IDatabaseLifecycle
 public sealed class DatabaseLifecycle : IDatabaseLifecycle
 {
     private readonly AppDbContext _db;
+    private readonly SensitiveDataBackfill _sensitiveDataBackfill;
 
-    public DatabaseLifecycle(AppDbContext db) => _db = db;
+    public DatabaseLifecycle(AppDbContext db, SensitiveDataBackfill sensitiveDataBackfill)
+    {
+        _db = db;
+        _sensitiveDataBackfill = sensitiveDataBackfill;
+    }
 
-    public Task MigrateAsync(CancellationToken cancellationToken = default) =>
-        _db.Database.IsRelational()
-            ? _db.Database.MigrateAsync(cancellationToken)
-            : _db.Database.EnsureCreatedAsync(cancellationToken);
+    public async Task MigrateAsync(CancellationToken cancellationToken = default)
+    {
+        if (_db.Database.IsRelational())
+        {
+            await _db.Database.MigrateAsync(cancellationToken);
+            await _sensitiveDataBackfill.RunAsync(cancellationToken);
+            return;
+        }
+
+        await _db.Database.EnsureCreatedAsync(cancellationToken);
+    }
 
     public async Task ResetAsync(CancellationToken cancellationToken = default)
     {

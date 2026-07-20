@@ -1,4 +1,5 @@
 using MediatR;
+using WordUp.Application.Shared.Abstractions;
 
 namespace WordUp.Application.PublicSite;
 
@@ -13,4 +14,4 @@ public record SubmitDonationPledgeCommand(
     string Tier,
     decimal? MonthlyAmount,
     string? Frequency,
-    string? ProviderReference) : IRequest<SubmitDonationPledgeResult>;
+    string? ProviderReference) : IRequest<SubmitDonationPledgeResult>, IAtomicRequest;

@@ -105,12 +105,11 @@
   @if (reviewing(); as application) {
     <div
       class="wu-modal wu-modal--lg is-open"
-      role="dialog"
-      aria-modal="true"
+      wuAccessibleDialog
       aria-labelledby="review-application-heading"
-      (keydown.escape)="closeReview()"
+      (wuDialogEscape)="closeReview()"
     >
-      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__scrim" (click)="closeReview()"></div>
       <div class="wu-modal__panel">
         <div class="wu-modal__header">
           <div>
@@ -272,12 +271,11 @@
   @if (decision(); as pendingDecision) {
     <div
       class="wu-modal wu-modal--sm is-open"
-      role="dialog"
-      aria-modal="true"
+      wuAccessibleDialog
       [attr.aria-labelledby]="pendingDecision + '-application-heading'"
-      (keydown.escape)="cancelDecision()"
+      (wuDialogEscape)="cancelDecision()"
     >
-      <div class="wu-modal__scrim"></div>
+      <div class="wu-modal__scrim" (click)="cancelDecision()"></div>
       <div class="wu-modal__panel">
         <div class="wu-modal__header">
           <div>

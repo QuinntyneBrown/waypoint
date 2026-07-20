@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiError, AuthApi, AuthResult } from '@wu/api';
+import { AcceptInvitationRequest, ApiError, AuthApi, AuthResult, InvitationsApi } from '@wu/api';
 import {
   catchError,
   finalize,
@@ -30,6 +30,7 @@ const MIN_REFRESH_DELAY_MS = 5_000;
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
   private readonly api = inject(AuthApi);
+  private readonly invitations = inject(InvitationsApi);
   private readonly store = inject(SessionStore);
   private readonly persistence = inject(SessionPersistence);
   private readonly router = inject(Router);
@@ -44,6 +45,10 @@ export class AuthStore {
 
   signIn(email: string, password: string, remember: boolean): Observable<AuthResult> {
     return this.api.signIn({ email, password }).pipe(tap((auth) => this.adopt(auth, remember)));
+  }
+
+  acceptInvitation(request: AcceptInvitationRequest): Observable<AuthResult> {
+    return this.invitations.accept(request).pipe(tap((auth) => this.adopt(auth, false)));
   }
 
   /**

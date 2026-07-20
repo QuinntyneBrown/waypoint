@@ -10,6 +10,7 @@ using WordUp.Infrastructure;
 namespace WordUp.IntegrationTests.NonFunctional;
 
 [TestFixture]
+[Category("Performance")]
 [Property("Req", "L2-NFR-008")]
 public sealed class PagingTests : IntegrationTestBase
 {
@@ -48,7 +49,7 @@ public sealed class PagingTests : IntegrationTestBase
     [Property("Req", "L2-NFR-008")]
     public async Task People_list_is_server_side_paged_so_the_payload_is_bounded_by_page_size()
     {
-        // Traces to: L2-NFR-008
+        // Traces to: L2-NFR-008 AC2
         var adminToken = await CreateUserAndGetTokenAsync(Roles.ProgramAdministrator);
 
         // Seed more people than fit on a single small page so the total exceeds one page.

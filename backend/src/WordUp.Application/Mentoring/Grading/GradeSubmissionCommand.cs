@@ -11,4 +11,4 @@ public record GradeSubmissionCommand(
     int? TotalAwarded,
     string? Comment,
     bool GuardianNotified,
-    string? ExpectedVersion) : IRequest;
+    string? ExpectedVersion) : IRequest, IAtomicOutboxRequest;

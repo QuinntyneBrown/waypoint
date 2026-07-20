@@ -8,6 +8,6 @@ public record SubmitSupportRequestCommand(
     string Category,
     string Description,
     string ReplyToEmail,
-    Guid? ScreenshotFileId) : IRequest<SupportRequestResult>;
+    Guid? ScreenshotFileId) : IRequest<SupportRequestResult>, IAtomicOutboxRequest;
 
 public record SupportRequestResult(Guid Id);

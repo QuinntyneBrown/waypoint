@@ -135,14 +135,20 @@ public class ApproveApplicationCommandHandler : IRequestHandler<ApproveApplicati
             "YouthApplication",
             application.Id,
             cancellationToken: cancellationToken);
-        if (!string.IsNullOrWhiteSpace(application.GuardianEmail))
+        var decisionRecipient = await ApplicationDecisionEmailRecipientResolver.ResolveAsync(
+            _db,
+            application,
+            cancellationToken);
+        if (decisionRecipient is not null)
         {
             await _email.SendAsync(
-                application.GuardianEmail,
+                decisionRecipient.Email,
                 "Your Word Up application was approved",
                 $"{youth.DisplayName} has been approved for {cohort.Name} with {mentor.DisplayName}. " +
                 "Word Up staff will follow up with account access details.",
-                cancellationToken);
+                cancellationToken,
+                subjectUserId: youth.Id,
+                recipientUserId: decisionRecipient.UserId);
         }
 
         return new ApproveApplicationResult(youth.Id, "Approved");
