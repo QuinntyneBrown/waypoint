@@ -343,10 +343,13 @@ requirement conflicts early (they gate "done").
       method, route template, status, and duration while excluding headers, query/body values, and raw
       URLs. Unhandled errors and critical alerts retain only safe operational context and exception type;
       framework duplicate exceptions, email recipients, subjects, tokens, and PII are not logged.
-- [~] **H21** Operational CLI + durable DB lifecycle/migrations `L2-NFR-011` — production now
-      rejects missing/in-memory connection strings and placeholder secrets before serving, applies
-      pending migrations once during startup, and has an initial SQL Server migration plus reusable
-      migrate/reset lifecycle service. The operational `wu` command surface remains in progress.
+- [x] **H21** Operational CLI + durable DB lifecycle/migrations `L2-NFR-011` — production rejects
+      missing/in-memory connection strings and placeholder secrets before serving, applies pending
+      migrations once during startup, and has an initial SQL Server migration plus reusable lifecycle
+      service. The packable `wu` tool reuses application validation/handlers for database migrate,
+      guarded reset and idempotent seed; user, invitation, and cohort management; youth CSV import;
+      youth/cohort exports; badge awards; and audited token issuance with deterministic operator
+      attribution.
 - [ ] **H22** Performance budgets `L2-NFR-008`
 - [ ] **H23** Responsive coverage (XS–XL) for every new surface `L2-NFR-009`
 - [ ] **H24** Accessibility coverage (WCAG 2.1 AA) for every new surface `L2-NFR-010`

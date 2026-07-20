@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\WordUp.Api\WordUp.Api.csproj" />
+    <ProjectReference Include="..\..\src\WordUp.Cli\WordUp.Cli.csproj" />
     <ProjectReference Include="..\..\src\WordUp.Infrastructure\WordUp.Infrastructure.csproj" />
   </ItemGroup>
 

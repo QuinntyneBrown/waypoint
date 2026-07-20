@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordUp.UnitTests", "tests\W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordUp.IntegrationTests", "tests\WordUp.IntegrationTests\WordUp.IntegrationTests.csproj", "{F78A718A-0014-4280-A5BC-1CC6A880AA59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordUp.Cli", "src\WordUp.Cli\WordUp.Cli.csproj", "{514A683E-B4BA-435A-9715-48728625FB37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,18 @@ Global
 		{F78A718A-0014-4280-A5BC-1CC6A880AA59}.Release|x64.Build.0 = Release|Any CPU
 		{F78A718A-0014-4280-A5BC-1CC6A880AA59}.Release|x86.ActiveCfg = Release|Any CPU
 		{F78A718A-0014-4280-A5BC-1CC6A880AA59}.Release|x86.Build.0 = Release|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Debug|x64.Build.0 = Debug|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Debug|x86.Build.0 = Debug|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Release|x64.ActiveCfg = Release|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Release|x64.Build.0 = Release|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Release|x86.ActiveCfg = Release|Any CPU
+		{514A683E-B4BA-435A-9715-48728625FB37}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

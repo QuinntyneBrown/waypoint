@@ -6,7 +6,7 @@ Word Up is a youth-leadership software system for program intake, learning, ment
 
 The Operate and observe the system feature slice refines `L2-NFR-011` into one independently deliverable interaction. The system shall expose health checks, structured logging, and an admin CLI (operational tooling — an out-of-band ops interface, not product scope).
 
-A platform operator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
+A platform operator starts this feature interaction through the out-of-band `wu` command-line tool. The tool composes the same application and infrastructure layers as the API, attributes state changes to an active Program Administrator, and presents structured command results on standard output.
 
 The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
@@ -14,7 +14,7 @@ The Word Up software system is the entity of interest (EoI). This focused archit
 
 ### Vertical slice boundary
 
-The feature spans WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+The feature spans the WordUp API, CLI, application, and infrastructure projects. The API owns health and request telemetry; the CLI owns operational parsing and presentation. Both use the same application handlers, validation pipeline, domain rules, audit path, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 ### Components and types
 
@@ -22,26 +22,25 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`NotFound`](../../../../frontend/projects/portal/src/app/states/not-found/not-found.ts)<br>[`NotFound`](../../../../frontend/projects/public-site/src/app/features/not-found/not-found.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `NonFunctionalApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | `NonFunctionalController` *(planned boundary)* | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | `OperateAndObserveSystemCommand` *(planned boundary)*<br>`OperateAndObserveSystemCommandHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | `OperateAndObserveSystemState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`SecurityHeadersMiddleware`](../../../../backend/src/WordUp.Api/Middleware/SecurityHeadersMiddleware.cs)<br>[`CorrelationIdMiddleware`](../../../../backend/src/WordUp.Api/Middleware/CorrelationIdMiddleware.cs)<br>[`MaintenanceMiddleware`](../../../../backend/src/WordUp.Api/Middleware/MaintenanceMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| Operational transport | [`CliApplication`](../../../../backend/src/WordUp.Cli/CliApplication.cs)<br>[`Program`](../../../../backend/src/WordUp.Cli/Program.cs) | Defines typed `wu` commands, composes the generic host, selects an operator, and maps safe results/errors to stdout/stderr. |
+| API transport | [`Program`](../../../../backend/src/WordUp.Api/Program.cs)<br>[`RequestLoggingMiddleware`](../../../../backend/src/WordUp.Api/Observability/RequestLoggingMiddleware.cs) | Exposes health endpoints, validates production configuration, applies migrations before serving, and emits redacted structured telemetry. |
+| Application slice | [`CreateOperationalUserCommand`](../../../../backend/src/WordUp.Application/OperationalAdministration/CreateOperationalUserCommand.cs)<br>[`ListInvitationsQuery`](../../../../backend/src/WordUp.Application/OperationalAdministration/ListInvitationsQuery.cs)<br>[`IssueOperationalTokenQuery`](../../../../backend/src/WordUp.Application/OperationalAdministration/IssueOperationalTokenQuery.cs) | Adds operational use cases where no API command already exists; all other CLI leaves send the existing application command/query through MediatR. |
+| Infrastructure and shared ports | [`DatabaseLifecycle`](../../../../backend/src/WordUp.Infrastructure/DatabaseLifecycle.cs)<br>[`InfrastructureStartupValidator`](../../../../backend/src/WordUp.Infrastructure/InfrastructureStartupValidator.cs)<br>[`AppDbContext`](../../../../backend/src/WordUp.Infrastructure/AppDbContext.cs) | Supplies durable migration/reset behavior, fail-fast production configuration validation, persistence, audit, email, hashing, and token adapters. |
 
 ### Functions and data flow
 
-- `NotFound.submit()` starts the browser interaction and maintains presentation state.
-- `NonFunctionalApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
-- `NonFunctionalController.PostAsync()` applies transport policy and constructs `OperateAndObserveSystemCommand`.
-- `OperateAndObserveSystemCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `OperateAndObserveSystemState`, and returns a typed result.
+- `Program.Main()` composes `AddApplication()` and `AddInfrastructure()` through a generic host after production configuration validation.
+- `CliApplication.RunAsync()` parses typed arguments/options and invokes the selected leaf command.
+- The CLI selects an active Program Administrator (or the explicit `--actor`) before sending application requests through `ISender`.
+- Existing and operational application handlers load authorized state through `IAppDbContext`, apply validation and domain rules, and return typed results.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.
+- `DatabaseLifecycle.MigrateAsync()` applies pending EF Core migrations; API startup completes this step before accepting requests.
 
 ### Behavior
 
-1. **Entry.** A platform operator starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-NFR-011`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
-3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
+1. **Entry.** A platform operator runs a typed `wu` command. Help and version output require no production configuration.
+2. **Processing.** Destructive reset requires `--confirm RESET`; other state-changing commands resolve an active Program Administrator for audit attribution and send the corresponding request through the shared validation/application pipeline.
+3. **Result.** The handler commits an audited state change when applicable. The CLI returns JSON, a generated report path, or a concise status line and a deterministic exit code. Production API startup separately validates durable configuration and applies pending migrations before serving.
 
 ## Requirements
 
