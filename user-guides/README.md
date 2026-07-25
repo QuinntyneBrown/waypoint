@@ -11,9 +11,15 @@ elsewhere (see [`docs/`](../docs/), [`docs/specs/`](../docs/specs/README.md), an
 The guide deploys on its own, independently of the applications. A failing application build never
 blocks the documentation, and a broken page never blocks the application.
 
+**Published at <https://calm-meadow-033758b0f.7.azurestaticapps.net>** — every push to `main` that
+touches this folder republishes it.
+
 ---
 
 ## How to open it
+
+**On the web.** <https://calm-meadow-033758b0f.7.azurestaticapps.net> serves the current `main`.
+This is the only place the response headers below are actually enforced.
 
 **Directly from disk.** Every page is plain HTML with no build step, no bundler, and no network
 request, so it works over `file://`:
@@ -194,10 +200,31 @@ is relaxed.
 
 - **`quality`** — the asset verifier, then dependency restore, `format:check`, `validate`, and the
   smoke suite, in that order.
-- **`deploy`** — on a push to the default branch, publishes this folder as a static site **with no
-  build step**. If `AZURE_STATIC_WEB_APPS_API_TOKEN` is absent the job emits a warning and skips
-  rather than failing, so a fork or an unconfigured repository is never failed for a secret it was
-  never given.
+- **`deploy`** — on a push to the default branch, or on a manual run, publishes this folder as a
+  static site **with no build step**. If `AZURE_STATIC_WEB_APPS_API_TOKEN` is absent the job emits a
+  warning and skips rather than failing, so a fork or an unconfigured repository is never failed for
+  a secret it was never given.
+
+The target is an Azure Static Web App on the Free plan:
+
+|                |                                                       |
+| -------------- | ----------------------------------------------------- |
+| URL            | <https://calm-meadow-033758b0f.7.azurestaticapps.net> |
+| Resource       | `word-up-user-guides`                                 |
+| Resource group | `word-up-rg` (East US 2)                              |
+| Plan           | Free                                                  |
+| Secret         | `AZURE_STATIC_WEB_APPS_API_TOKEN` (repository secret) |
+
+The app is deliberately **not** linked to GitHub on the Azure side. Linking it would make Azure
+generate its own workflow file that competes with `user-guides.yml`; instead the deployment token is
+held as a repository secret and this workflow is the only thing that publishes. To republish without
+a commit, run the **user-guides** workflow manually from the Actions tab. To rotate the token:
+
+```bash
+az staticwebapp secrets reset-api-key --name word-up-user-guides --resource-group word-up-rg
+az staticwebapp secrets list --name word-up-user-guides --resource-group word-up-rg \
+  --query properties.apiKey -o tsv | gh secret set AZURE_STATIC_WEB_APPS_API_TOKEN --repo QuinntyneBrown/word-up
+```
 
 `staticwebapp.config.json` sets the routing, the MIME types, and these response headers:
 

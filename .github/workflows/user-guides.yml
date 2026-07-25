@@ -65,7 +65,12 @@ jobs:
 
   deploy:
     # Publishes the folder as-is. There is no build step to run.
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # workflow_dispatch is included so the site can be republished by hand
+    # (for example after the deployment secret is first added) without needing
+    # an empty commit.
+    if: >-
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+      && github.ref == 'refs/heads/main'
     needs: quality
     runs-on: ubuntu-latest
     steps:
