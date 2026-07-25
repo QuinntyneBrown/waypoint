@@ -1,0 +1,1213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="The five Word Up roles, the eight permission policies behind them, the full capability matrix, the consent gate on youth participation, and the exact message you get when a request is refused."
+    />
+    <title>Roles and permissions — Word Up User Guide</title>
+    <link rel="stylesheet" href="../assets/vendor/core.css" />
+    <link rel="stylesheet" href="../assets/vendor/a11y.css" />
+    <link rel="stylesheet" href="../assets/guide.css" />
+    <script defer src="../assets/guide.js"></script>
+  </head>
+  <body data-category="Reference" data-page="reference/roles-and-permissions">
+    <a class="ug-skip" href="#main-content">Skip to content</a>
+
+    <div class="ug-app">
+      <header data-ug-header></header>
+
+      <aside class="ug-sidebar" aria-label="Guide contents">
+        <p class="ug-sidebar__head">
+          <span>Guide contents</span>
+          <span class="ug-sidebar__count"
+            ><span data-ug-pagecount>21</span> pages</span
+          >
+        </p>
+        <nav data-ug-nav aria-label="Guide pages"></nav>
+      </aside>
+
+      <main id="main-content">
+        <div class="ug-page">
+          <nav data-ug-breadcrumbs aria-label="Breadcrumb"></nav>
+
+          <header class="ug-hero">
+            <p class="ug-hero__eyebrow">Reference / 17</p>
+            <h1>Roles and permissions</h1>
+            <p class="ug-hero__lede">
+              Word Up decides what you can do in two passes: your role opens a
+              door, and then a scope rule decides which records behind that door
+              are yours. This page gives both — the five roles, the eight
+              policies, the complete capability matrix, and the exact wording of
+              every refusal you can meet.
+            </p>
+            <div class="ug-hero__meta">
+              <span class="wu-badge wu-badge--outline">Everyone</span>
+              <span class="ug-stamp">WU-UG-17</span>
+            </div>
+          </header>
+
+          <nav data-ug-toc aria-label="On this page"></nav>
+
+          <section class="ug-section" id="the-five-roles">
+            <h2>The five roles</h2>
+            <p>
+              Every account holds exactly one role, and it never holds two. The
+              values below are the ones actually stored, which is what you will
+              see in an export, an invitation, or an audit entry.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Stored value</th>
+                    <th scope="col">Shown in the account menu as</th>
+                    <th scope="col">What the role is for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>Youth</code></th>
+                    <td><strong>Youth Leader</strong></td>
+                    <td>
+                      A young person in the program. Works through lessons,
+                      writes reflections, takes quizzes, submits assignments,
+                      and talks to their mentor. Sees their own records and
+                      nobody else's.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Mentor</code></th>
+                    <td><strong>Mentor</strong></td>
+                    <td>
+                      Carries a caseload. Reviews and grades submitted work,
+                      approves quiz scores, logs check-ins, sets competency
+                      levels, raises and resolves at-risk flags, assigns work,
+                      schedules sessions and takes attendance.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>ProgramAdministrator</code></th>
+                    <td><strong>Director</strong></td>
+                    <td>
+                      Runs the program. The only role that can manage people and
+                      accounts, decide applications, author curriculum, import
+                      and export data, handle privacy requests, and read the
+                      audit log.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Guardian</code></th>
+                    <td><strong>Guardian</strong></td>
+                    <td>
+                      A parent or carer. Gives and withdraws consent for their
+                      own children, and follows the progress those children have
+                      chosen to share.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Volunteer</code></th>
+                    <td><strong>Volunteer</strong></td>
+                    <td>
+                      Helps at sessions. Sees the names on a session they were
+                      assigned to and marks who turned up. Nothing else.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Two words that are not roles</h3>
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Lead Mentor</p>
+                <p class="ug-defs__desc">
+                  A <strong>per-cohort designation</strong>, not a sixth role.
+                  Every cohort names one lead mentor and may have supporting
+                  mentors alongside; the same person can lead one cohort and
+                  support another. The stored role is still <code>Mentor</code>,
+                  and being a lead grants no extra permission anywhere else in
+                  the product. The same mentor cannot be both lead and
+                  supporting on one cohort —
+                  <strong
+                    >The lead mentor cannot also be a supporting mentor.</strong
+                  >
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Public</p>
+                <p class="ug-defs__desc">
+                  Not a stored role at all. "Public" simply means a visitor who
+                  is not signed in. There is no public account, no public
+                  password, and nothing to assign. The public site, the four
+                  public forms, the invitation-accept page and the guardian
+                  consent link are the only things reachable without signing in.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="ug-section" id="the-eight-policies">
+            <h2>The eight policies</h2>
+            <p>
+              Word Up does not scatter role checks through the product. It names
+              eight permissions, decides once which roles hold each, and then
+              every screen and endpoint asks for a permission by name. If you
+              want to know whether you can do something, find the policy.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Policy</th>
+                    <th scope="col">Held by</th>
+                    <th scope="col">Opens</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>YouthParticipation</code></th>
+                    <td>
+                      <span class="wu-badge wu-badge--outline">Youth</span> —
+                      <strong>and</strong> a valid guardian participation
+                      consent
+                    </td>
+                    <td>
+                      Lessons, the curriculum, the journey, quizzes,
+                      reflections, assignments and submissions, coding lessons,
+                      and My progress
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>ManageUsers</code></th>
+                    <td>
+                      <span class="wu-badge wu-badge--outline"
+                        >Program Administrator</span
+                      >
+                    </td>
+                    <td>
+                      People and roles, cohorts, mentor assignments,
+                      organisation settings and terms, and privacy request
+                      fulfilment
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>ApproveApplications</code></th>
+                    <td>
+                      <span class="wu-badge wu-badge--outline"
+                        >Program Administrator</span
+                      >
+                    </td>
+                    <td>
+                      The application queue, and the approve and decline
+                      decisions
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>EditCurriculum</code></th>
+                    <td>
+                      <span class="wu-badge wu-badge--outline"
+                        >Program Administrator</span
+                      >
+                    </td>
+                    <td>
+                      Tracks, modules, lessons and lesson media, quizzes and
+                      questions, assignments and rubrics, badges, and the
+                      progression model
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>ImportExportData</code></th>
+                    <td>
+                      <span class="wu-badge wu-badge--outline"
+                        >Program Administrator</span
+                      >
+                    </td>
+                    <td>Roster import — both the preview and the commit</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>ViewAuditLog</code></th>
+                    <td>
+                      <span class="wu-badge wu-badge--outline"
+                        >Program Administrator</span
+                      >
+                    </td>
+                    <td>The audit log and its CSV and PDF exports</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>InviteUsers</code></th>
+                    <td>
+                      <span class="wu-badge wu-badge--outline"
+                        >Program Administrator</span
+                      >
+                      <span class="wu-badge wu-badge--outline">Mentor</span>
+                    </td>
+                    <td>
+                      Creating, listing, resending and revoking invitations,
+                      singly or in bulk
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>RecordAttendance</code></th>
+                    <td>
+                      <span class="wu-badge wu-badge--outline"
+                        >Program Administrator</span
+                      >
+                      <span class="wu-badge wu-badge--outline">Mentor</span>
+                      <span class="wu-badge wu-badge--outline">Volunteer</span>
+                    </td>
+                    <td>Saving an attendance register</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wu-alert wu-alert--info">
+              <p>
+                Six of the eight are administrator-only. That is the shape of
+                the product: mentors get exactly two shared permissions —
+                inviting people and taking a register — and everything else they
+                do is scoped to their own caseload rather than granted by a
+                policy.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="the-matrix">
+            <h2>The matrix</h2>
+            <p>
+              What each role can actually do, by area. <strong>Yes</strong>
+              means the role is allowed in; it does not mean the role sees
+              everything there. Read this together with
+              <a href="#scoping">Scope: which records are yours</a> below, which
+              is what narrows a mentor to their own youth and a guardian to
+              their own children.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Capability area</th>
+                    <th scope="col">Youth</th>
+                    <th scope="col">Mentor</th>
+                    <th scope="col">Program Administrator</th>
+                    <th scope="col">Guardian</th>
+                    <th scope="col">Volunteer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Public site and the four public forms</th>
+                    <td colspan="5">
+                      No account needed — anyone, signed in or not
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Accept an invitation, use a consent link
+                    </th>
+                    <td colspan="5">
+                      No account needed — the link itself is the credential
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Sign in, sign out, own profile and password
+                    </th>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Own notification and display preferences
+                    </th>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Own privacy requests, own data export, support requests
+                    </th>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Notifications and announcements, read</th>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Lessons, curriculum, journey, reflections, coding lessons
+                    </th>
+                    <td>Yes — consent-gated</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Take quizzes, submit and resubmit assignments, My progress
+                    </th>
+                    <td>Yes — consent-gated</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Own schedule and RSVP, onboarding</th>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Messages</th>
+                    <td>Own threads</td>
+                    <td>Own threads, plus broadcast to a cohort</td>
+                    <td>Own threads</td>
+                    <td>Own threads</td>
+                    <td>Own threads</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Mentor dashboard, my youth, youth record, review queue
+                    </th>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Grade submissions, approve quiz attempts, read shared
+                      reflections
+                    </th>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Check-ins, competency levels, at-risk flags, assign work
+                    </th>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Award a badge</th>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Create and list sessions, see who RSVP'd
+                    </th>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Save an attendance register</th>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>Present / Absent only</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Attendance history, rosters and attendance export
+                    </th>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Compose an announcement</th>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Manage all announcements</th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Invitations — create, bulk, resend, revoke
+                    </th>
+                    <td>No</td>
+                    <td>Youth only, to self</td>
+                    <td>Yes, any role</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Applications queue and decisions</th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      People, roles, deactivate, reactivate, remove, send reset
+                    </th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Cohorts, mentor assignments, org settings, terms, tracks
+                      on/off
+                    </th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Curriculum authoring — tracks, modules, lessons, quizzes,
+                      assignments, badges, progression
+                    </th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Reports: youth, cohort, overview, hub, export
+                    </th>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Staff activity report</th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Roster import — preview and commit</th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Audit log and its exports</th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Fulfil someone else's privacy request, run retention
+                    </th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Give or withdraw consent, guardian contact and media
+                      permissions
+                    </th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A child's progress, consent record and guardian news
+                    </th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Ask for a consent link, check own consent status
+                    </th>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Volunteer Today, session roster and schedule
+                    </th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Program Administrators appear in the volunteer row because they
+              share the volunteer screens for operational cover. They do
+              <em>not</em> appear in the youth learning rows: an administrator
+              cannot take a quiz or write a reflection on somebody's behalf, and
+              no role can.
+            </p>
+          </section>
+
+          <section class="ug-section" id="the-consent-gate">
+            <h2>The consent gate on youth participation</h2>
+            <p>
+              <code>YouthParticipation</code> is the only policy that asks a
+              second question after the role check. Being a
+              <code>Youth</code> is necessary but not sufficient: Word Up also
+              checks, on every single request, that a valid guardian
+              participation consent exists.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                Two checks, in this order, every request
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Signed in?</li>
+                  <li>Role is Youth?</li>
+                  <li>Guardian linked?</li>
+                  <li>Consent valid right now?</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Answer "no" at step three and you are let straight through —
+                that is the guardianless case. Answer "no" at step four and the
+                request is refused with
+                <strong>Guardian participation consent is required.</strong>
+              </p>
+            </figure>
+
+            <div class="wu-alert wu-alert--info">
+              <p class="wu-alert__title">
+                A youth with no linked guardian is not consent-gated
+              </p>
+              <p>
+                If no guardian account is linked to the young person's record,
+                Word Up treats them as an adult: participation is allowed
+                without any consent record, and they control their own media
+                permissions. The gate exists for minors with a guardian on file,
+                not for every account that happens to hold the
+                <code>Youth</code> role.
+              </p>
+            </div>
+
+            <p>
+              A consent refusal is not an ordinary refusal, and the product does
+              not treat it like one. The response carries
+              <code>X-WordUp-State: consent-required</code>, and instead of the
+              generic <strong>Error 403</strong> page the young person is taken
+              to <strong>A guardian needs to sign off</strong>, which offers
+              <strong>Notify my guardian</strong>,
+              <strong>My guardian can sign now</strong> and
+              <strong>Sign out</strong>. The fix is a signature, not a different
+              account.
+            </p>
+
+            <p>
+              Media consent works the same way but on top: it is only ever valid
+              while participation consent is valid, and it is refused with
+              <strong
+                >Guardian consent for individual photos or video is
+                required.</strong
+              >
+              and <code>X-WordUp-State: media-consent-required</code>. What
+              makes a consent record valid at a given moment is set out in
+              <a href="lifecycles-and-evidence.html#guardian-consent"
+                >Guardian consent validity</a
+              >.
+            </p>
+          </section>
+
+          <section class="ug-section" id="scoping">
+            <h2>Scope: which records are yours</h2>
+            <p>
+              Passing the role gate gets you into an area. It does not give you
+              everything in it. A second layer of rules decides which records
+              inside that area belong to you, and it is enforced when the
+              request is handled — not in the navigation, so you cannot get
+              round it by typing a different address.
+            </p>
+
+            <h3>Mentors — only their assigned youth and cohorts</h3>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Rule</th>
+                    <th scope="col">Message when it refuses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      A mentor may only open, grade, flag, check in on, or set
+                      competencies for a young person assigned to them
+                    </th>
+                    <td><strong>This youth is not assigned to you.</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A mentor may only work with cohorts they are on
+                    </th>
+                    <td>
+                      <strong>This cohort is not assigned to you.</strong>,
+                      <strong
+                        >That cohort is outside your assignment scope.</strong
+                      >, <strong>This cohort is outside your scope.</strong>, or
+                      <strong
+                        >This cohort has no active youth assigned to
+                        you.</strong
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A mentor may only invite young people — never another
+                      mentor, guardian, volunteer or administrator
+                    </th>
+                    <td><strong>Mentors may only invite youth.</strong></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A mentor may only assign an invitation to themselves as
+                      the mentor
+                    </th>
+                    <td>
+                      <strong
+                        >Mentors may only assign invitations to
+                        themselves.</strong
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A mentor may only schedule sessions they will run
+                    </th>
+                    <td>
+                      <strong
+                        >Mentors may only schedule sessions assigned to
+                        themselves.</strong
+                      >
+                      and
+                      <strong>This session is not in your cohort.</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A mentor may only report on and award badges to their own
+                      youth
+                    </th>
+                    <td>
+                      <strong
+                        >Mentors can only report on their assigned
+                        youth.</strong
+                      >
+                      and
+                      <strong
+                        >Mentors may award badges only to their assigned
+                        youth.</strong
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A mentor may only message and assign work to their own
+                      youth, and only work already in their journey
+                    </th>
+                    <td>
+                      <strong
+                        >One or more recipients are not assigned to you.</strong
+                      >
+                      and
+                      <strong
+                        >The selected work is not in every recipient's
+                        journey.</strong
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      The staff activity report is not a mentor report
+                    </th>
+                    <td>
+                      <strong
+                        >Staff activity exports are limited to Program
+                        Administrators.</strong
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Guardians — only their own children</h3>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Rule</th>
+                    <th scope="col">Message when it refuses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      A guardian sees progress, attendance and consent only for
+                      children linked to them
+                    </th>
+                    <td>
+                      <strong
+                        >You may only view your own child's information.</strong
+                      >
+                      or <strong>Child not found.</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A guardian may only sign for their own child
+                    </th>
+                    <td>
+                      <strong
+                        >You may only provide consent for your own
+                        child.</strong
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A guardian may only withdraw a consent they gave
+                    </th>
+                    <td>
+                      <strong>You may only withdraw your own consent.</strong>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              A guardian never sees private reflections, quiz answers, or any
+              other family — regardless of what their own child shares.
+            </p>
+
+            <h3>Volunteers — assigned sessions, two statuses, no notes</h3>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Rule</th>
+                    <th scope="col">Message when it refuses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      A volunteer only reaches a session they were assigned to
+                    </th>
+                    <td>
+                      <strong>This session is not assigned to you.</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A volunteer may mark only Present or Absent — never Late
+                      or Excused
+                    </th>
+                    <td>
+                      <strong
+                        >Volunteers may only mark youth Present or
+                        Absent.</strong
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A volunteer may not write a note about a young person
+                    </th>
+                    <td>
+                      <strong>Volunteers may not add youth notes.</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A volunteer may not mark somebody who is not on the roster
+                    </th>
+                    <td>
+                      <strong
+                        >One or more youth are outside this session's
+                        roster.</strong
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The <strong>Attendance</strong> item in the volunteer sidebar
+                and bottom navigation redirects to <strong>Today</strong>; it
+                does not open a roster. Reach a roster from
+                <strong>Today</strong> → <strong>Take attendance</strong>.
+              </p>
+            </div>
+
+            <h3>Youth — only their own records</h3>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Rule</th>
+                    <th scope="col">Message when it refuses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      Submissions belong to the person who made them
+                    </th>
+                    <td>
+                      <strong>You may only view your own submissions.</strong>,
+                      <strong
+                        >You may only resubmit your own submissions.</strong
+                      >, and
+                      <strong
+                        >You cannot access this private submission file.</strong
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">So do reflections and quiz attempts</th>
+                    <td>
+                      <strong>This reflection does not belong to you.</strong>
+                      and
+                      <strong>This attempt does not belong to you.</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      You only reach curriculum on a track you are enrolled in
+                    </th>
+                    <td>
+                      <strong>You are not enrolled in this track.</strong>,
+                      <strong>This lesson is locked.</strong>,
+                      <strong>This quiz is locked.</strong>, and
+                      <strong>This assignment is not available to you.</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Your consent record is yours to ask about
+                    </th>
+                    <td>
+                      <strong
+                        >You may only request your own consent record.</strong
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Conversations, photos and uploads are private to their
+                      participants and owners
+                    </th>
+                    <td>
+                      <strong
+                        >You are not a participant in this conversation.</strong
+                      >,
+                      <strong
+                        >You are not permitted to message this user.</strong
+                      >, <strong>You cannot view this profile photo.</strong>,
+                      <strong
+                        >This support screenshot does not belong to you.</strong
+                      >, and
+                      <strong>This media is not available to your role.</strong>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Administrators are scoped too</h3>
+            <p>
+              The one place the widest role is deliberately narrowed is its own
+              account. An administrator cannot delete themselves —
+              <strong>You cannot remove your own account.</strong> — and a
+              removal that needs a second pair of eyes is refused with
+              <strong
+                >Another administrator must approve your removal
+                request.</strong
+              >
+              That is the only protection against a single account being able to
+              erase the person holding it.
+            </p>
+          </section>
+
+          <section class="ug-section" id="when-you-are-denied">
+            <h2>What happens when you are denied</h2>
+            <p>
+              A refusal is always a <strong>403</strong>. What you see depends
+              on which kind it was.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Kind of refusal</th>
+                    <th scope="col">What you see</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Your role does not hold the policy</th>
+                    <td>
+                      The <strong>Error 403</strong> page, headed
+                      <strong>You don’t have access to that</strong>, reading
+                      <strong
+                        >This area is for a different role. If you think this is
+                        a mistake, switch to the right account or head back to
+                        your home.</strong
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      The role is right but the record is not yours
+                    </th>
+                    <td>
+                      The specific scope message from the tables above, shown
+                      where you were working rather than as a whole page.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Guardian participation consent is missing
+                    </th>
+                    <td>
+                      <strong>A guardian needs to sign off</strong> — not the
+                      403 page. See
+                      <a href="#the-consent-gate">The consent gate</a>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">The account has been deactivated</th>
+                    <td>
+                      <strong>This account is inactive</strong>, with
+                      <strong
+                        >Your account isn’t active right now. Please contact
+                        your program director to restore access.</strong
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wu-alert wu-alert--info">
+              <p class="wu-alert__title">Every denial is written down</p>
+              <p>
+                Every 403, of every kind, writes a
+                <code>ProtectedActionDenied</code> entry to the audit log naming
+                who was refused and which method and path they asked for. That
+                is deliberate: a pattern of refusals is exactly the sort of
+                thing a safeguarding review wants to be able to see. It also
+                means there is no way to probe the product quietly.
+              </p>
+            </div>
+
+            <p>
+              Two things a refusal is <em>not</em>. It is not a 404 — Word Up
+              tells you that you are not allowed rather than pretending the
+              thing does not exist. And it is not a bug report: if you believe
+              you should have access, the fix is a role change or an assignment
+              by a Program Administrator, not a retry.
+            </p>
+          </section>
+
+          <section class="ug-section" id="changing-someones-role">
+            <h2>Changing someone's role</h2>
+            <p>
+              A Program Administrator changes a role from the person's record.
+              Three things happen, in this order, and none of them is delayed.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                What a role change does, immediately
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>The stored role changes</li>
+                  <li>Every session for that person is revoked</li>
+                  <li>A RoleChanged audit entry is written</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Because the sessions are revoked, the person is signed out
+                everywhere and must sign in again. There is no grace period and
+                no "next time you sign in" — the old permissions stop the moment
+                the change is saved.
+              </p>
+            </figure>
+
+            <p>
+              The audit entry records the move as
+              <code>previous -&gt; new</code>, so the history of who held which
+              role and when is reconstructible. Rules around the change:
+            </p>
+            <ul>
+              <li>
+                Only the five stored roles are accepted — anything else gives
+                <strong>Unknown role.</strong>
+              </li>
+              <li>
+                A removed person's role cannot be changed —
+                <strong>A removed person's role cannot be changed.</strong>
+              </li>
+              <li>
+                Setting the role a person already holds does nothing at all: no
+                session revocation, no audit entry.
+              </li>
+              <li>
+                Nothing the person created moves with them. Work they submitted,
+                notes they wrote and registers they took stay attached to them
+                under the old role.
+              </li>
+            </ul>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">
+                Changing a role is not a way to hand over a caseload
+              </p>
+              <p>
+                Turning a mentor into a volunteer does not reassign their youth
+                — it just stops them reaching them. Reassign the caseload from
+                <strong>Mentor Assignments</strong> first, then change the role.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="where-to-look-next">
+            <h2>Where to look next</h2>
+            <ul class="ug-cards">
+              <li>
+                <a class="ug-card" href="messages-and-error-codes.html">
+                  <span class="ug-card__kicker">Reference</span>
+                  <span class="ug-card__title">Messages and error codes</span>
+                  <span class="ug-card__desc"
+                    >Every status Word Up can return and every fixed message,
+                    including the ones on this page in context.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a class="ug-card" href="lifecycles-and-evidence.html">
+                  <span class="ug-card__kicker">Reference</span>
+                  <span class="ug-card__title"
+                    >Lifecycles and the evidence they leave</span
+                  >
+                  <span class="ug-card__desc"
+                    >What the audit log records, and the state machines behind
+                    every conflict message.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a
+                  class="ug-card"
+                  href="../advanced/privacy-consent-and-audit.html"
+                >
+                  <span class="ug-card__kicker">Advanced</span>
+                  <span class="ug-card__title"
+                    >Privacy, consent and the audit trail</span
+                  >
+                  <span class="ug-card__desc"
+                    >Why the consent gate exists, and how privacy requests and
+                    retention are handled.</span
+                  >
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <nav data-ug-pager aria-label="Previous and next page"></nav>
+        </div>
+      </main>
+
+      <footer data-ug-status></footer>
+    </div>
+  </body>
+</html>

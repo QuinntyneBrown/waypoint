@@ -1,0 +1,1025 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="How a mentor uses the caseload roster, the youth record, check-ins and their sharing decision, at-risk flags, competency levels and assigning work."
+    />
+    <title>Keep track of your youth — Word Up User Guide</title>
+    <link rel="stylesheet" href="../assets/vendor/core.css" />
+    <link rel="stylesheet" href="../assets/vendor/a11y.css" />
+    <link rel="stylesheet" href="../assets/guide.css" />
+    <script defer src="../assets/guide.js"></script>
+  </head>
+  <body data-category="Mentor" data-page="mentor/roster-check-ins-and-flags">
+    <a class="ug-skip" href="#main-content">Skip to content</a>
+
+    <div class="ug-app">
+      <header data-ug-header></header>
+
+      <aside class="ug-sidebar" aria-label="Guide contents">
+        <p class="ug-sidebar__head">
+          <span>Guide contents</span>
+          <span class="ug-sidebar__count"
+            ><span data-ug-pagecount>21</span> pages</span
+          >
+        </p>
+        <nav data-ug-nav aria-label="Guide pages"></nav>
+      </aside>
+
+      <main id="main-content">
+        <div class="ug-page">
+          <nav data-ug-breadcrumbs aria-label="Breadcrumb"></nav>
+
+          <header class="ug-hero">
+            <p class="ug-hero__eyebrow">Mentor / 09</p>
+            <h1>Keep track of your youth</h1>
+            <p class="ug-hero__lede">
+              Grading tells you how the work is going. This page is about the
+              young people behind it: finding them on your roster, reading their
+              record, writing up a conversation, deciding whether that write-up
+              stays private, raising and clearing an at-risk flag, recording
+              competency levels, and putting the next piece of work in front of
+              them.
+            </p>
+            <div class="ug-hero__meta">
+              <span class="wu-badge wu-badge--outline">Mentor</span>
+              <span class="ug-stamp">WU-UG-09</span>
+            </div>
+          </header>
+
+          <nav data-ug-toc aria-label="On this page"></nav>
+
+          <section class="ug-section" id="your-caseload-and-its-boundary">
+            <h2>Your caseload, and where it ends</h2>
+            <p>
+              Everything on this page is scoped to the young people assigned to
+              you. That scope is not a filter you can widen — it is enforced on
+              every request, and Word Up refuses anything outside it with
+              <strong>This youth is not assigned to you.</strong>
+            </p>
+            <p>The same rule applies whichever way you arrive:</p>
+            <ul>
+              <li>Opening a youth record by pasting or guessing an address.</li>
+              <li>Logging a check-in against someone else's youth.</li>
+              <li>Raising or clearing a flag on someone else's youth.</li>
+              <li>Setting a competency level for someone else's youth.</li>
+              <li>
+                Assigning work to a list that includes someone else's youth —
+                which is refused as
+                <strong>One or more recipients are not assigned to you.</strong>
+              </li>
+            </ul>
+            <p>
+              If you believe a young person should be on your caseload and is
+              not, a program administrator has to reassign them. There is
+              nothing you can do from a mentor account to change it. See
+              <a href="../reference/roles-and-permissions.html"
+                >Roles and permissions</a
+              >
+              for who can do what.
+            </p>
+          </section>
+
+          <section class="ug-section" id="the-roster">
+            <h2>The roster: My youth</h2>
+            <p>
+              Choose <strong>My Youth</strong> in the sidebar. The page carries
+              the eyebrow <strong>Your caseload</strong>, the heading
+              <strong>My youth</strong>, and the line
+              <strong>Search and filter youth assigned to you.</strong> While it
+              loads you will see <strong>Loading your roster…</strong>
+            </p>
+
+            <h3>Narrowing the list</h3>
+            <p>
+              Two controls sit above the table. On the left,
+              <strong>Search youth</strong> is a search box showing
+              <strong>Search by name…</strong> until you type in it. It matches
+              on name only, and it filters as you type after a short pause — you
+              do not press anything to run it.
+            </p>
+            <p>
+              On the right sits a row of four filter pills. Exactly one is
+              active at a time.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Pill</th>
+                    <th scope="col">Shows</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">All</th>
+                    <td>
+                      Your whole caseload. This is the starting state every time
+                      you open the page.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">On track</th>
+                    <td>Youth without an active at-risk flag.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">At risk</th>
+                    <td>
+                      Youth carrying an active at-risk flag, whether it was
+                      raised automatically or by a person.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">New</th>
+                    <td>
+                      Recently added youth. These also carry a
+                      <strong>New</strong> badge beside their name in the table.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Search and pill combine. Searching for a name while
+              <strong>At risk</strong> is active shows only matching youth who
+              are also flagged, which is easy to mistake for someone having
+              vanished.
+            </p>
+
+            <div class="ug-expect">
+              <span class="ug-expect__head">What you should see</span>
+              <p>
+                With no matches, the table is replaced by
+                <strong>No youth match that filter</strong> and the line
+                <strong
+                  >Try another status or clear your search to see your
+                  roster.</strong
+                >
+                A <strong>Clear filters</strong> button underneath resets the
+                search box and returns the pill to <strong>All</strong> in one
+                go.
+              </p>
+            </div>
+
+            <h3>Reading the table</h3>
+            <p>The table has five columns.</p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Column</th>
+                    <th scope="col">What it holds</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Youth</th>
+                    <td>
+                      The name, as a link into their record, plus a
+                      <strong>New</strong> badge where it applies.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Cohort</th>
+                    <td>
+                      Their cohort, or <strong>Not assigned</strong> if they are
+                      not in one yet.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Progress</th>
+                    <td>
+                      A progress bar and the same figure as a whole percentage.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Last active</th>
+                    <td>
+                      The date they were last active. This is the figure the
+                      inactivity signal watches.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Status</th>
+                    <td>
+                      Their status word, shown in the error colour when they are
+                      at risk.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="ug-section" id="the-youth-record">
+            <h2>The youth record</h2>
+            <p>
+              Choosing a name opens that young person's record. Above the
+              heading sits <strong>Back to My youth</strong>; the eyebrow is
+              their cohort, or <strong>Cohort not assigned</strong>; the heading
+              is their name; and beneath it the line
+              <strong>Mentor-only coaching record</strong> — which is the plain
+              statement that this screen is for you, not for them.
+            </p>
+            <p>
+              If they are currently flagged, a red banner sits directly under
+              the heading, reading <strong>At risk:</strong> followed by the
+              reason, and then who flagged them and when.
+            </p>
+
+            <h3>The six tabs</h3>
+            <p>
+              A strip of tabs runs across the record, labelled
+              <strong>Youth record sections</strong> for assistive technology.
+              One panel shows at a time, and <strong>Profile</strong> is
+              selected when you arrive.
+            </p>
+
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Profile</p>
+                <p class="ug-defs__desc">
+                  Two panels side by side. <strong>Profile</strong> gives
+                  <strong>Email</strong>, <strong>Pronouns</strong> and
+                  <strong>Cohort</strong>, showing
+                  <strong>Not provided</strong> or
+                  <strong>Not assigned</strong> where there is nothing.
+                  <strong>Guardian contact</strong> gives the guardian's
+                  <strong>Name</strong>, <strong>Email</strong>,
+                  <strong>Phone</strong> and
+                  <strong>Emergency contact</strong> — or the single line
+                  <strong>No guardian contact is linked.</strong> Note that
+                  Profile is one tab holding two panels, so the record has seven
+                  named panels across six tabs.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Progress</p>
+                <p class="ug-defs__desc">
+                  Completed lessons out of total lessons, written as
+                  <strong>7 of 20 lessons complete</strong>, with a progress
+                  bar.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Attendance</p>
+                <p class="ug-defs__desc">
+                  Each session with its recorded status and date, or
+                  <strong>No attendance recorded.</strong>
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Check-ins</p>
+                <p class="ug-defs__desc">
+                  A <strong>Log or view check-ins</strong> button that opens the
+                  check-ins page already filtered to this young person, then a
+                  short list of past check-ins showing type, whether each is
+                  private or shared, and its date. Empty, it reads
+                  <strong>No check-ins recorded.</strong>
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Submissions</p>
+                <p class="ug-defs__desc">
+                  Each submission as a link straight into its review, with its
+                  status and date. Empty, it reads
+                  <strong>No submissions yet.</strong> Reviewing is covered in
+                  <a href="review-and-grade.html"
+                    >Review and grade submitted work</a
+                  >.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Competencies</p>
+                <p class="ug-defs__desc">
+                  An <strong>Open competency tracker</strong> button and a
+                  summary of current levels and notes, or
+                  <strong>No competency assessments yet.</strong>
+                </p>
+              </div>
+            </div>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The tab strip on this record does not respond to arrow keys.
+                Left and right arrows, <kbd class="ug-kbd">Home</kbd> and
+                <kbd class="ug-kbd">End</kbd> do nothing here. Move between the
+                tabs with <kbd class="ug-kbd">Tab</kbd> and activate one with
+                <kbd class="ug-kbd">Enter</kbd> or
+                <kbd class="ug-kbd">Space</kbd>. Only the youth
+                <strong>My progress</strong> tabs support arrow keys.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="logging-a-check-in">
+            <h2>Logging a check-in</h2>
+            <p>
+              A <strong>check-in</strong> is your written record of a
+              conversation with a young person. Choose
+              <strong>Check-ins</strong> in the sidebar, or
+              <strong>Log or view check-ins</strong> from their record — the
+              second route pre-selects them for you, in both the form and the
+              history filter.
+            </p>
+            <p>
+              The page carries the eyebrow <strong>Mentor journal</strong>, the
+              heading <strong>Check-ins</strong>, and the line
+              <strong
+                >Record conversations, actions, and planned follow-up.</strong
+              >
+              The form, headed <strong>Log check-in</strong>, is on the left;
+              <strong>Check-in history</strong> is on the right.
+            </p>
+
+            <ol class="ug-steps">
+              <li>
+                <span class="ug-step__title"
+                  >Choose the young person and the date
+                  <span class="wu-badge wu-badge--outline ug-step__persona"
+                    >Mentor</span
+                  ></span
+                >
+                <p>
+                  <strong>Youth</strong> is a dropdown starting at
+                  <strong>Choose youth</strong>, listing only your caseload. If
+                  you have exactly one youth assigned, they are chosen for you.
+                  <strong>Date</strong> defaults to today; change it when you
+                  are writing up an earlier conversation.
+                </p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    Saving without choosing anyone is refused with
+                    <strong>Choose a youth before saving the check-in.</strong>
+                    Clearing the date is refused with
+                    <strong>Choose a check-in date.</strong>
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="ug-step__title">Pick the type</span>
+                <p>
+                  <strong>Type</strong> offers three options:
+                  <strong>1:1</strong> for a face-to-face conversation,
+                  <strong>Call</strong> for a phone or video call, and
+                  <strong>Session</strong> for something noted during a group
+                  session. The type is what you filter the history by later, so
+                  it is worth getting right.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Write the four note fields</span>
+                <p>
+                  All four are optional, and each holds up to 2,000 characters.
+                </p>
+                <div class="ug-defs">
+                  <div class="ug-defs__row">
+                    <p class="ug-defs__term">Engagement / mood</p>
+                    <p class="ug-defs__desc">
+                      How they seemed and how engaged they were.
+                    </p>
+                  </div>
+                  <div class="ug-defs__row">
+                    <p class="ug-defs__term">Goals discussed</p>
+                    <p class="ug-defs__desc">
+                      What the two of you agreed they are working towards.
+                    </p>
+                  </div>
+                  <div class="ug-defs__row">
+                    <p class="ug-defs__term">Prayer requests</p>
+                    <p class="ug-defs__desc">
+                      What they asked to be prayed for. The field carries its
+                      own help text:
+                      <strong
+                        >Private unless you explicitly enable sharing
+                        below.</strong
+                      >
+                      Read the next section before you rely on that.
+                    </p>
+                  </div>
+                  <div class="ug-defs__row">
+                    <p class="ug-defs__term">Action items</p>
+                    <p class="ug-defs__desc">
+                      What either of you agreed to do before next time.
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <span class="ug-step__title">Set the next follow-up</span>
+                <p>
+                  <strong>Next follow-up</strong> is a date. It is a note to
+                  yourself about when to come back to this young person.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Record the guardian contact</span>
+                <p>
+                  <strong>Guardian was informed</strong> is a separate checkbox
+                  at the foot of the form. It records that you told the
+                  guardian; it does not send them anything and it does not share
+                  the check-in with anybody. Each saved check-in reports its
+                  state as either <strong>Guardian was informed.</strong> or
+                  <strong>Guardian was not marked informed.</strong>
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Save</span>
+                <p>Choose <strong>Save check-in</strong>.</p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    The status line reads <strong>Check-in saved.</strong>, the
+                    note fields and both checkboxes clear ready for the next
+                    entry, and the history on the right reloads filtered to the
+                    young person you just wrote about.
+                  </p>
+                </div>
+              </li>
+            </ol>
+
+            <h3>Reading the history</h3>
+            <p>
+              <strong>Check-in history</strong> has two dropdowns above it —
+              <strong>Filter by youth</strong>, which starts at
+              <strong>All youth</strong>, and <strong>Filter by type</strong>,
+              which starts at <strong>All types</strong>. Each entry is a card
+              headed with the young person's name, then the type and date, with
+              a badge on the right saying whether it is private or shared.
+              Inside, your notes appear under short labels:
+              <strong>Engagement:</strong>, <strong>Goals:</strong>,
+              <strong>Prayer:</strong>, <strong>Actions:</strong> and
+              <strong>Follow-up:</strong>, with empty fields simply left out.
+            </p>
+
+            <div class="ug-expect">
+              <span class="ug-expect__head">What you should see</span>
+              <p>
+                With no entries matching, the column shows
+                <strong>No matching check-ins</strong> and
+                <strong>Adjust the youth or type filter.</strong> While it is
+                fetching, it shows <strong>Loading check-in history…</strong>
+              </p>
+            </div>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                Screen-reader status text is visible on this page, so a bare
+                sentence such as <strong>Check-in saved.</strong> appears as
+                ordinary text near the top after you save. The same happens on
+                the at-risk screen. Nothing is wrong; it is a confirmation that
+                should have been announced rather than shown.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="the-sharing-decision">
+            <h2>The sharing decision, and what it exposes</h2>
+            <p>
+              A check-in is a private mentor note by default. One checkbox
+              changes that:
+              <strong>Share this check-in with the youth and guardian</strong>.
+              It starts unticked, and it resets to unticked after every save, so
+              sharing is always a fresh decision rather than a setting you can
+              forget you left on.
+            </p>
+            <p>Tick it and a callout appears immediately underneath:</p>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p>
+                <strong
+                  >All entered fields, including prayer requests, will be
+                  visible to the youth and their linked guardian.</strong
+                >
+              </p>
+            </div>
+
+            <p>
+              Take that sentence at face value. There is no per-field sharing.
+              You cannot share the goals and hold back the prayer requests, and
+              you cannot share with the young person but not their guardian.
+              Sharing is all of it, to both of them.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                Who can read a check-in, by the state of one checkbox
+              </figcaption>
+              <div class="ug-figure__body">
+                <div class="ug-tablewrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Sharing</th>
+                        <th scope="col">Badge on the card</th>
+                        <th scope="col">Who can read it</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row" class="ug-nowrap">Left unticked</th>
+                        <td class="ug-nowrap">Private mentor note</td>
+                        <td>
+                          You, and program administrators. Not the young person.
+                          Not their guardian.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="ug-nowrap">Ticked</th>
+                        <td class="ug-nowrap">Shared</td>
+                        <td>
+                          You, program administrators, the young person, and
+                          their linked guardian — every field you filled in.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <p class="ug-figure__caption">
+                The badge on each history card tells you which of the two a past
+                check-in is, at a glance. A guardian sees shared check-ins under
+                <strong>Shared mentor updates</strong> on their progress screen.
+              </p>
+            </figure>
+
+            <p>
+              Because prayer requests are frequently the most sensitive thing on
+              the form, the practical advice is simple: write the private
+              record, and if there is something the family should see, share a
+              separate check-in that contains only that. Two entries are cheap.
+              An unintended disclosure is not.
+            </p>
+
+            <div class="wu-alert wu-alert--info">
+              <p>
+                <strong
+                  >Safeguarding concerns do not belong in a shared note.</strong
+                >
+                Use a private check-in and an at-risk flag, and follow your
+                organisation's own escalation route. Everything a mentor writes
+                is visible to program administrators either way.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="at-risk-flags">
+            <h2>At-risk flags</h2>
+            <p>
+              Choose <strong>At-risk</strong> in the sidebar. The page carries
+              the eyebrow <strong>Safeguarding follow-up</strong>, the heading
+              <strong>At-risk youth</strong>, and the line
+              <strong
+                >Review inactivity, missed-session, and cohort-progress signals,
+                then record your action.</strong
+              >
+              While it works, it shows
+              <strong>Evaluating at-risk signals…</strong>
+            </p>
+
+            <h3>Flags Word Up raises for you</h3>
+            <p>
+              Three signals are evaluated automatically. Each has a threshold
+              set for your organisation, and each writes its own reason onto the
+              flag:
+            </p>
+            <ul>
+              <li>
+                <strong>Inactivity</strong> — the young person has not signed in
+                for longer than the threshold. The reason names the days elapsed
+                and the threshold.
+              </li>
+              <li>
+                <strong>Missed sessions</strong> — they have been marked absent
+                at least as many times as the threshold allows. The reason names
+                the count and the threshold.
+              </li>
+              <li>
+                <strong>Progress gap</strong> — their progress has fallen
+                further below their cohort's average than the threshold permits.
+                The reason names the gap and the threshold.
+              </li>
+            </ul>
+            <p>
+              A card raised this way carries the eyebrow
+              <strong>Automatic signal</strong>. Where more than one signal is
+              firing, all of them are listed on the card.
+            </p>
+
+            <h3>Raising a flag yourself</h3>
+            <p>
+              The card at the top of the page is
+              <strong>Raise a manual flag</strong>, with the note
+              <strong
+                >Use this when a concern is not captured by an automatic
+                signal.</strong
+              >
+              It has two fields — <strong>Youth</strong>, starting at
+              <strong>Choose youth</strong>, and <strong>Reason</strong>, up to
+              1,000 characters — and the button <strong>Raise flag</strong>.
+            </p>
+
+            <div class="ug-expect">
+              <span class="ug-expect__head">What you should see</span>
+              <p>
+                Leaving either field empty is refused with
+                <strong
+                  >Choose a youth and enter a reason before raising a
+                  flag.</strong
+                >
+                On success the reason box clears and the list reloads with a new
+                card carrying the eyebrow
+                <strong>Mentor-raised concern</strong>.
+              </p>
+            </div>
+
+            <div class="wu-alert wu-alert--info">
+              <p>
+                <strong>One active flag per young person.</strong> If they
+                already have one, raising another is refused with
+                <strong>This youth already has an active at-risk flag.</strong>
+                Resolve the existing flag first, or add what you have learned as
+                a check-in instead. Re-entering exactly the same reason as the
+                existing flag is treated as a no-op rather than an error.
+              </p>
+            </div>
+
+            <h3>Acting on a flag</h3>
+            <p>
+              Under <strong>Active flags</strong> — with a badge counting them —
+              each card shows the young person's name, who flagged them and
+              when, an <strong>At risk</strong> badge, and the reasons as a
+              list. Four buttons sit underneath.
+            </p>
+
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">View youth</p>
+                <p class="ug-defs__desc">Opens their record.</p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Log check-in</p>
+                <p class="ug-defs__desc">
+                  Opens the check-ins page with them already selected.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Message</p>
+                <p class="ug-defs__desc">
+                  Opens a message box inside the card, labelled
+                  <strong>Message</strong> followed by their name. Write up to
+                  4,000 characters and choose <strong>Send message</strong>, or
+                  <strong>Cancel</strong> to close it. An empty message is
+                  refused with <strong>Enter a message before sending.</strong>
+                  It goes to their normal mentor message thread.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Unflag</p>
+                <p class="ug-defs__desc">
+                  Starts clearing the flag, described next.
+                </p>
+              </div>
+            </div>
+
+            <h3>Clearing a flag</h3>
+            <p>
+              Choosing <strong>Unflag</strong> opens a small panel inside the
+              card reading
+              <strong>Confirm this flag can be removed.</strong> You must pick a
+              <strong>Resolution reason</strong> from four options, and the
+              reason you choose is recorded permanently.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Use it when</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">Reconnected</th>
+                    <td>
+                      You have re-established contact and the concern has eased.
+                      This is the default.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">Handed to director</th>
+                    <td>
+                      The concern is now with a program administrator. Clearing
+                      the flag does not hand it over on its own — do that
+                      separately.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">Left program</th>
+                    <td>The young person is no longer participating.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">Flagged in error</th>
+                    <td>
+                      The flag should not have been raised. Use this honestly —
+                      it is the only reason that says nothing happened.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Choose <strong>Confirm unflag</strong> to clear it, or
+              <strong>Keep flag</strong> to back out with the flag untouched.
+              After clearing, the list reloads without that card, and the young
+              person stops matching the <strong>At risk</strong> pill on your
+              roster.
+            </p>
+
+            <div class="wu-alert wu-alert--info">
+              <p>
+                A resolved automatic signal stays suppressed while the situation
+                that caused it holds, so clearing a flag is durable — it will
+                not simply reappear the next time signals are evaluated. A
+                genuinely new or different signal can raise a fresh flag.
+              </p>
+            </div>
+
+            <div class="ug-expect">
+              <span class="ug-expect__head">What you should see</span>
+              <p>
+                With nobody flagged, the page shows
+                <strong>No active flags</strong> and the line
+                <strong
+                  >No assigned youth currently need at-risk follow-up.</strong
+                >
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="competencies">
+            <h2>Recording competency levels</h2>
+            <p>
+              Competencies are the leadership skills your program tracks
+              separately from curriculum progress. Reach them from a youth
+              record with <strong>Open competency tracker</strong>.
+            </p>
+            <p>
+              The page carries the eyebrow
+              <strong>Mentor assessment</strong>, the young person's name
+              followed by <strong>competencies</strong> as the heading, and the
+              line
+              <strong
+                >Record the latest observed level and supporting notes for each
+                competency.</strong
+              >
+              <strong>Back to youth record</strong> returns you.
+            </p>
+            <p>Three figures sit across the top:</p>
+            <ul>
+              <li>
+                <strong>Proficient or mastered</strong> — how many competencies
+                have reached the top two levels, out of the total.
+              </li>
+              <li>
+                <strong>Framework coverage</strong> — how many competencies
+                exist in total.
+              </li>
+              <li>
+                <strong>Current stage</strong> — the stage they are working
+                through and how complete it is, or
+                <strong>Not configured</strong> if no progression has been set
+                up.
+              </li>
+            </ul>
+
+            <p>
+              Below that, one card per competency shows its stage, its name, and
+              a badge with the current level. Each card has a level dropdown and
+              a notes box holding up to 2,000 characters, then
+              <strong>Save assessment</strong>. Under the notes, either
+              <strong>Latest:</strong> with who last assessed it and when, or
+              <strong>Not assessed yet.</strong>
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Level</th>
+                    <th scope="col">What it says</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">Not started</th>
+                    <td>Nothing observed yet. Every competency begins here.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">Developing</th>
+                    <td>Beginning to show it, with support.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">Proficient</th>
+                    <td>Doing it reliably on their own.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">Mastered</th>
+                    <td>Doing it well enough to help someone else do it.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Levels move in either direction — nothing stops you recording a
+              drop — and each card saves on its own. Guardians see the current
+              level for each competency on their progress screen, so write the
+              notes accordingly.
+            </p>
+
+            <div class="ug-expect">
+              <span class="ug-expect__head">What you should see</span>
+              <p>
+                Where no framework has been configured, the page reads
+                <strong>No competencies configured</strong> with the line
+                <strong
+                  >A program administrator can add the progression
+                  framework.</strong
+                >
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="assigning-work">
+            <h2>Assigning work</h2>
+            <p>
+              <strong>Assign work</strong> sits under the
+              <strong>Program</strong> group in your sidebar. The page carries
+              the eyebrow <strong>Curriculum</strong>, the heading
+              <strong>Assign work</strong>, and the line
+              <strong
+                >Add a published lesson, module, or project to individual
+                journeys or a whole cohort.</strong
+              >
+            </p>
+
+            <div class="wu-alert wu-alert--info">
+              <p>
+                <strong>Only published content can be assigned.</strong> Items
+                still in draft or in review do not appear in the lists here at
+                all. If something you expect is missing, it has not been
+                published yet — ask a program administrator.
+              </p>
+            </div>
+
+            <ol class="ug-steps">
+              <li>
+                <span class="ug-step__title"
+                  >Choose what you are assigning</span
+                >
+                <p>
+                  <strong>What are you assigning?</strong> offers three kinds:
+                  <strong>Lesson</strong>, <strong>Module</strong> and
+                  <strong>Project / assignment</strong>. Your choice filters the
+                  <strong>Item</strong> dropdown underneath it. With nothing
+                  published of that kind, the help text reads
+                  <strong>No published</strong> followed by the kind and
+                  <strong>items are available.</strong>, and the
+                  <strong>Review &amp; assign</strong> button is disabled.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Choose who it is for</span>
+                <p>
+                  <strong>Who is this for?</strong> gives two choices.
+                  <strong>Selected youth</strong> lists your caseload as
+                  checkboxes, each showing their cohort and an
+                  <strong>At risk</strong> badge where it applies — tick as many
+                  as you need. <strong>Whole cohort</strong> replaces the list
+                  with a <strong>Cohort</strong> dropdown starting at
+                  <strong>Choose cohort</strong>, where each cohort shows its
+                  youth count in brackets.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title"
+                  >Set the due date and reminder</span
+                >
+                <p>
+                  <strong>Due date</strong> is a date.
+                  <strong>Reminder</strong> offers <strong>No reminder</strong>,
+                  <strong>1 day before due</strong> and
+                  <strong>2 days before due</strong>. A reminder is scheduled
+                  for each recipient separately.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title"
+                  >Add a message, if you want one</span
+                >
+                <p>
+                  <strong>Message to youth</strong> shows
+                  <strong>Add a personal note…</strong> until you type, holds up
+                  to 4,000 characters, and carries the help text
+                  <strong
+                    >Each recipient receives this in their mentor message
+                    thread.</strong
+                  >
+                  It is a real message in the thread they already use, not a
+                  system notice.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Check the summary</span>
+                <p>
+                  The <strong>Summary</strong> panel on the right keeps up as
+                  you work, showing <strong>Item</strong> (or
+                  <strong>Choose an item</strong>),
+                  <strong>Recipients</strong> as a count of youth, and
+                  <strong>Due</strong> (or <strong>Not set</strong>). Read the
+                  recipient count before going further — it is the easiest thing
+                  to get wrong.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Review, then assign</span>
+                <p>
+                  Choose <strong>Review &amp; assign</strong>. A dialog opens
+                  headed <strong>Assign</strong> with the item title, the due
+                  date beneath it, and a sentence saying how many journeys it
+                  will be added to. It also tells you if your message will be
+                  sent right away and if a reminder will be scheduled.
+                </p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    Two buttons: <strong>Cancel</strong>, and
+                    <strong>Assign to</strong> followed by the recipient count
+                    and <strong>youth</strong>. Pressing
+                    <kbd class="ug-kbd">Escape</kbd> closes the dialog without
+                    assigning anything, and so does clicking outside it.
+                  </p>
+                </div>
+              </li>
+            </ol>
+
+            <p>
+              If any recipient is not on your caseload, the whole assignment is
+              refused with
+              <strong>One or more recipients are not assigned to you.</strong>
+              and nothing is assigned to anyone.
+            </p>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                Some icons on the assign-work and check-ins screens render as
+                blank space rather than a symbol. The labels beside them are
+                correct, so read the words rather than looking for the picture.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="a-weekly-rhythm">
+            <h2>A workable weekly rhythm</h2>
+            <p>
+              Nothing forces an order on you, but these screens fit together in
+              one obvious way: <strong>Dashboard</strong>, then clear the review
+              queue, then <strong>At-risk</strong>, then check-ins, then
+              competencies, then <strong>Assign work</strong>. Reviews first,
+              because a young person waiting on a quiz score cannot see how they
+              did until you act. Flags next, because they are time-sensitive in
+              a way that a competency level is not.
+            </p>
+
+            <p>
+              For what each of these actions leaves behind in the record, see
+              <a href="../reference/lifecycles-and-evidence.html"
+                >Lifecycles and the evidence they leave</a
+              >. For what a guardian can and cannot see of any of it, see
+              <a href="../guardian/consent-and-progress.html"
+                >Give consent and follow progress</a
+              >.
+            </p>
+          </section>
+
+          <nav data-ug-pager aria-label="Previous and next page"></nav>
+        </div>
+      </main>
+
+      <footer data-ug-status></footer>
+    </div>
+  </body>
+</html>

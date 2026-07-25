@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="The five display and accessibility preferences, the eight notification categories, the keyboard shortcuts that genuinely exist, what screen readers are told, and an honest list of what accessibility support is still missing."
+    />
+    <title>Accessibility and display preferences — Word Up User Guide</title>
+    <link rel="stylesheet" href="../assets/vendor/core.css" />
+    <link rel="stylesheet" href="../assets/vendor/a11y.css" />
+    <link rel="stylesheet" href="../assets/guide.css" />
+    <script defer src="../assets/guide.js"></script>
+  </head>
+  <body
+    data-category="Reference"
+    data-page="reference/accessibility-and-display"
+  >
+    <a class="ug-skip" href="#main-content">Skip to content</a>
+
+    <div class="ug-app">
+      <header data-ug-header></header>
+
+      <aside class="ug-sidebar" aria-label="Guide contents">
+        <p class="ug-sidebar__head">
+          <span>Guide contents</span>
+          <span class="ug-sidebar__count"
+            ><span data-ug-pagecount>21</span> pages</span
+          >
+        </p>
+        <nav data-ug-nav aria-label="Guide pages"></nav>
+      </aside>
+
+      <main id="main-content">
+        <div class="ug-page">
+          <nav data-ug-breadcrumbs aria-label="Breadcrumb"></nav>
+
+          <header class="ug-hero">
+            <p class="ug-hero__eyebrow">Reference / 18</p>
+            <h1>Accessibility and display preferences</h1>
+            <p class="ug-hero__lede">
+              Word Up lets you change five things about how it looks and eight
+              things about how it contacts you, and those choices follow you to
+              any device you sign in on. This page covers all of them, the
+              keyboard behaviour that genuinely exists, what assistive
+              technology is told — and, plainly, where the current release falls
+              short.
+            </p>
+            <div class="ug-hero__meta">
+              <span class="wu-badge wu-badge--outline">Everyone</span>
+              <span class="ug-stamp">WU-UG-18</span>
+            </div>
+          </header>
+
+          <nav data-ug-toc aria-label="On this page"></nav>
+
+          <section class="ug-section" id="display-preferences">
+            <h2>Display and accessibility preferences</h2>
+            <p>
+              Open the account menu in the top bar, choose
+              <strong>Profile &amp; settings</strong>, then the
+              <strong>Display</strong> tab. The page is headed
+              <strong>Display &amp; accessibility</strong>. Everything on it is
+              available to every role — youth, mentor, program administrator,
+              guardian and volunteer alike.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Control</th>
+                    <th scope="col">Its sub-label</th>
+                    <th scope="col">What it actually changes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><strong>Text size</strong></th>
+                    <td>
+                      <strong>Changes preview instantly across the app.</strong>
+                    </td>
+                    <td>
+                      Scales body text between 90% and 150%. Everything sized
+                      relative to body text scales with it.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>High contrast</strong></th>
+                    <td><strong>Stronger borders and text.</strong></td>
+                    <td>
+                      Darkens borders and muted text so edges and secondary text
+                      separate more clearly from the background.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>Reduce motion</strong></th>
+                    <td>
+                      <strong>Minimise animations and transitions.</strong>
+                    </td>
+                    <td>
+                      Cuts animations and transitions to effectively nothing,
+                      and turns off smooth scrolling.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>Underline links</strong></th>
+                    <td>
+                      <strong>Always underline links for clarity.</strong>
+                    </td>
+                    <td>
+                      Underlines every link, everywhere, instead of relying on
+                      colour alone to mark them.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>Reading font</strong></th>
+                    <td><strong>Use a serif font for body text.</strong></td>
+                    <td>
+                      Switches body copy to a serif face. Some readers find
+                      serifs easier over long passages.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Text size in detail</h3>
+            <p>
+              Text size is not a slider. It is a pair of buttons —
+              <strong>A−</strong> and <strong>A+</strong>, labelled
+              <strong>Decrease text size</strong> and
+              <strong>Increase text size</strong> for assistive technology —
+              with the current value shown between them as a percentage. Each
+              press moves by <strong>10</strong>, and the range is
+              <strong>90% to 150%</strong>. Pressing past either end does
+              nothing; there is no wrap-around and no error.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                Every text size you can choose
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>90%</li>
+                  <li>100%</li>
+                  <li>110%</li>
+                  <li>120%</li>
+                  <li>130%</li>
+                  <li>140%</li>
+                  <li>150%</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Seven values, with 100% the default. The percentage readout is a
+                live region, so a screen reader announces the new value each
+                time you press either button.
+              </p>
+            </figure>
+
+            <h3>Previewing, then saving</h3>
+            <p>
+              Every control on this page previews immediately — the moment you
+              toggle a switch or press a text-size button, the whole application
+              redraws behind the settings page so you can judge the result in
+              context. Nothing is stored until you press
+              <strong>Save settings</strong>. A successful save shows the toast
+              <strong>Display settings saved.</strong>; a failed one shows
+              <strong>Couldn’t save your settings. Please try again.</strong>
+            </p>
+
+            <ol class="ug-steps">
+              <li>
+                <span class="ug-step__title">Open the Display tab</span>
+                <p>
+                  Account menu → <strong>Profile &amp; settings</strong> →
+                  <strong>Display</strong>.
+                </p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    A page headed
+                    <strong>Display &amp; accessibility</strong> with the
+                    eyebrow <strong>Settings</strong>, a row of tabs reading
+                    <strong>Profile</strong>, <strong>Notifications</strong>,
+                    <strong>Display</strong>, <strong>Privacy</strong>, and the
+                    five controls below.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="ug-step__title">Change what you want</span>
+                <p>
+                  Press <strong>A+</strong> or <strong>A−</strong>, and flip any
+                  of the four switches. Watch the page around you change as you
+                  go.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Press Save settings</span>
+                <p>
+                  Until you do, the preview is only in this browser tab and will
+                  be lost on reload.
+                </p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>The toast <strong>Display settings saved.</strong></p>
+                </div>
+              </li>
+            </ol>
+
+            <div class="wu-alert wu-alert--success">
+              <p class="wu-alert__title">Your settings follow you</p>
+              <p>
+                Display preferences are stored <strong>on the server</strong>,
+                against your account — not in this browser's storage. Sign in on
+                a different computer, a phone, or a shared device in the room,
+                and Word Up re-applies them as soon as you are signed in. There
+                is nothing to set up twice, and clearing your browser data does
+                not lose them.
+              </p>
+            </div>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The settings sidebar always highlights
+                <strong>Profile</strong>, even when you are on
+                <strong>Notifications</strong>, <strong>Display</strong> or
+                <strong>Privacy</strong>. The tabs above the content show where
+                you really are; trust those and ignore the sidebar highlight.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="no-theme">
+            <h2>There is no light or dark theme</h2>
+            <p>
+              This is worth saying plainly, because it is the setting people
+              look for first. <strong>Word Up has one appearance.</strong> There
+              is no light mode, no dark mode, no automatic switch that follows
+              your operating system, and no high-contrast <em>theme</em> beyond
+              the <strong>High contrast</strong> toggle described above. The
+              five preferences on the Display tab are the complete list of what
+              you can change about how Word Up looks.
+            </p>
+            <p>
+              This is a decision, not an omission or a bug. Asking for a dark
+              theme is a scope change rather than a fix.
+            </p>
+            <div class="wu-alert wu-alert--info">
+              <p>
+                <strong
+                  >The dark toggle in this guide's header is not a Word Up
+                  feature.</strong
+                >
+                This user guide is a separate static document with its own
+                chrome, and its light/dark switch belongs to the guide alone. It
+                has no effect on the product, and nothing like it exists inside
+                Word Up.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="notification-preferences">
+            <h2>Notification preferences</h2>
+            <p>
+              The <strong>Notifications</strong> tab, headed
+              <strong>Notifications</strong>, opens with
+              <strong
+                >Choose how you’d like to hear from Word Up. Changes save
+                automatically.</strong
+              >
+              — and it means it. There is no save button on this page. Each
+              checkbox writes as you tick it.
+            </p>
+
+            <p>
+              There are eight categories, each with two independent channels:
+              <strong>In-app</strong> (the bell and the notifications list) and
+              <strong>Email</strong>. Turning one off does not affect the other.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Description shown under it</th>
+                    <th scope="col">In-app default</th>
+                    <th scope="col">Email default</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><strong>Lesson reminders</strong></th>
+                    <td>
+                      <strong>Nudges to keep your journey moving.</strong>
+                    </td>
+                    <td>On</td>
+                    <td>Off</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>Mentor messages</strong></th>
+                    <td>
+                      <strong>When your mentor sends you a message.</strong>
+                    </td>
+                    <td>On</td>
+                    <td>Off</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>Session reminders</strong></th>
+                    <td>
+                      <strong
+                        >A reminder before sessions you plan to attend.</strong
+                      >
+                    </td>
+                    <td>On</td>
+                    <td>Off</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>Work graded</strong></th>
+                    <td>
+                      <strong
+                        >When a mentor reviews your submitted work.</strong
+                      >
+                    </td>
+                    <td>On</td>
+                    <td>Off</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>Badges earned</strong></th>
+                    <td>
+                      <strong>When you earn a new achievement badge.</strong>
+                    </td>
+                    <td>On</td>
+                    <td>Off</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>At-risk alerts</strong></th>
+                    <td>
+                      <strong>When an assigned youth needs follow-up.</strong>
+                    </td>
+                    <td>On</td>
+                    <td>Off</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>Approval needed</strong></th>
+                    <td>
+                      <strong
+                        >When submitted work is ready for your review.</strong
+                      >
+                    </td>
+                    <td>On</td>
+                    <td>Off</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>Announcements</strong></th>
+                    <td><strong>Program-wide news and updates.</strong></td>
+                    <td><strong>Off</strong></td>
+                    <td>Off</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              <strong
+                >Announcements is the one category that starts off.</strong
+              >
+              Every other in-app channel is on when your account is created,
+              because each of the other seven is about something that needs you
+              to act. Announcements are program-wide news, so they are opt-in.
+              Email starts off for all eight; turn on whichever ones you want by
+              post as well as on screen.
+            </p>
+
+            <p>
+              The list is the same for every role. Some categories will never
+              produce anything for you — a youth will not get
+              <strong>At-risk alerts</strong>, and a volunteer will not get
+              <strong>Work graded</strong> — but the switch is there either way.
+            </p>
+
+            <p>
+              Each tick saves on its own and confirms with the toast
+              <strong>Notification preferences saved.</strong> If a save fails
+              you get <strong>Couldn’t save that change.</strong> and should try
+              the tick again.
+            </p>
+
+            <div class="wu-alert wu-alert--info">
+              <p>
+                Notifications are <strong>in-app and email only</strong>. There
+                is no browser push channel, no SMS, and no quiet-hours
+                scheduling — if you want to stop hearing about something at
+                night, turn the category off.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="keyboard">
+            <h2>Keyboard behaviour</h2>
+            <p>
+              Word Up is built from ordinary links, buttons and form controls,
+              so <kbd class="ug-kbd">Tab</kbd>,
+              <kbd class="ug-kbd">Shift</kbd> + <kbd class="ug-kbd">Tab</kbd>,
+              <kbd class="ug-kbd">Enter</kbd> and
+              <kbd class="ug-kbd">Space</kbd> work throughout in the way you
+              would expect from any web page. Beyond that, there are exactly
+              three pieces of custom keyboard behaviour. There is no global
+              shortcut scheme and no command palette.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Keys</th>
+                    <th scope="col">Where they work</th>
+                    <th scope="col">What they do</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">
+                      <kbd class="ug-kbd">Ctrl</kbd> +
+                      <kbd class="ug-kbd">Enter</kbd>
+                    </th>
+                    <td>The message composer, for youth and for mentors</td>
+                    <td>
+                      Sends the message without reaching for the send button.
+                      The help text under the box says so:
+                      <strong>Ctrl + Enter also sends your message.</strong> for
+                      a youth, <strong>Ctrl + Enter also sends.</strong> for a
+                      mentor.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">
+                      <kbd class="ug-kbd">←</kbd> <kbd class="ug-kbd">→</kbd>
+                      <kbd class="ug-kbd">Home</kbd>
+                      <kbd class="ug-kbd">End</kbd>
+                    </th>
+                    <td>
+                      The tab strip on the youth <strong>My progress</strong>
+                      page — and nowhere else
+                    </td>
+                    <td>
+                      Left and right move to the neighbouring tab and wrap round
+                      the ends; Home goes to the first tab and End to the last.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="ug-nowrap">
+                      <kbd class="ug-kbd">Esc</kbd>
+                    </th>
+                    <td>Any dialog</td>
+                    <td>
+                      Closes the dialog and returns focus to whatever opened it.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Inside a dialog</h3>
+            <p>
+              Dialogs in Word Up are properly modal. When one opens, focus moves
+              into it — to the control the dialog nominates, or to its first
+              focusable control. <kbd class="ug-kbd">Tab</kbd> is
+              <strong>trapped</strong>: tabbing past the last control wraps to
+              the first, and shift-tabbing before the first wraps to the last,
+              so you cannot tab out into the page behind. Closing the dialog —
+              with <kbd class="ug-kbd">Esc</kbd>, a button, or anything else —
+              puts focus back on the control that opened it.
+            </p>
+            <p>
+              Only a few screens use a real dialog: the applications review
+              dialogs, and the roster-import confirmation. Most of what looks
+              like an overlay elsewhere is an ordinary page region.
+            </p>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                Three tab strips do <em>not</em> respond to arrow keys — the
+                mentor youth record, the administrator reports hub, and
+                attendance history. Only the youth
+                <strong>My progress</strong> tabs do. On those three, use
+                <kbd class="ug-kbd">Tab</kbd> to move between the tabs and
+                <kbd class="ug-kbd">Enter</kbd> to choose one.
+              </p>
+            </div>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The signed-in portal has <strong>no skip link</strong>. The
+                public site has one — <strong>Skip to content</strong> — but the
+                portal does not, so a keyboard user has to tab through the
+                header and the whole sidebar before reaching the page content on
+                every navigation. (This guide has one; the product does not.)
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="screen-readers">
+            <h2>What a screen reader is told</h2>
+            <p>
+              Word Up announces three kinds of change without you having to go
+              looking for them.
+            </p>
+
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Toasts</p>
+                <p class="ug-defs__desc">
+                  Every toast lands in a single shared region marked as a live
+                  region and labelled <strong>Notifications</strong>. It
+                  announces politely, so a toast waits for you to finish what
+                  you were reading rather than interrupting. This is how you
+                  hear <strong>Display settings saved.</strong> and its
+                  equivalents.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Progress and confirmation</p>
+                <p class="ug-defs__desc">
+                  Status lines that change while you work — the attendance save
+                  message, the guardian consent confirmation, the message-thread
+                  loading state, the text-size percentage — are marked as polite
+                  status regions, so their new text is read out when it appears.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Errors</p>
+                <p class="ug-defs__desc">
+                  Genuine error callouts are marked as alerts, which announce
+                  immediately rather than politely. Field-level validation
+                  messages appear next to their field and are associated with
+                  it, so they are read when you reach the field.
+                </p>
+              </div>
+            </div>
+
+            <p>
+              Beyond that: every navigation region carries its own label, so
+              they can be told apart — <strong>Main</strong> for the sidebar,
+              <strong>Primary</strong> for the mobile bottom bar,
+              <strong>Settings</strong> for the settings tabs. Icon-only buttons
+              in the top bar are labelled <strong>Notifications</strong>,
+              <strong>Account</strong> and <strong>Menu</strong>. Toggle
+              switches carry the same label as their visible heading, and the
+              text-size buttons are labelled
+              <strong>Decrease text size</strong> and
+              <strong>Increase text size</strong> rather than "A−" and "A+".
+            </p>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                Screen-reader-only status text is currently
+                <strong>visible on screen</strong>. Announcements that should be
+                invisible to sighted users render as ordinary text on mentor
+                reviews, submission review, quiz review, check-ins, flags,
+                attendance history, youth messages and youth notifications. It
+                is not an error and nothing is wrong with your account — the
+                text is doing its job, it is simply not hidden as it should be.
+              </p>
+            </div>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The three reading-size buttons on a lesson
+                <strong>all show the letter <code>A</code></strong
+                >. They are, in order, small, medium and large, but nothing on
+                screen distinguishes them — only their labels do, so a screen
+                reader can tell them apart and a sighted user cannot. Left to
+                right is smallest to largest.
+              </p>
+            </div>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The attendance status buttons have
+                <strong>no visual selected state</strong>.
+                <strong>Present</strong>, <strong>Late</strong>,
+                <strong>Excused</strong> and <strong>Absent</strong> look
+                identical whether or not you have chosen them; only assistive
+                technology reports the pressed state. Use the tally counts above
+                the list to confirm what you marked.
+              </p>
+            </div>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                Some icons render as blank space rather than a symbol. It
+                affects sign-in, forgot password, reset password, guardian
+                consent and guardian home, mentor assign-work and check-ins,
+                volunteer today and schedule, youth curriculum and home,
+                onboarding, and the guardian consent-link page. The buttons
+                still work and are still labelled; they just look empty.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="how-far-this-has-been-checked">
+            <h2>How far this has been checked</h2>
+            <p>Two things are true at once here, and both matter.</p>
+
+            <h3>What is tested automatically</h3>
+            <p>
+              The repository runs an automated accessibility check against
+              <strong>WCAG 2.1 level A and AA</strong> rules as part of its
+              browser test suite, and that suite is a gate in continuous
+              integration. A change that introduces a detectable violation on a
+              covered page does not merge. The same suite also asserts that no
+              page scrolls sideways at the document level, which is the usual
+              symptom of a layout that breaks at large text sizes.
+            </p>
+
+            <h3>What has not been done</h3>
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">No independent accessibility review</p>
+              <p>
+                <strong
+                  >No independent accessibility review has been
+                  completed.</strong
+                >
+                An automated rule set catches a real but limited slice of
+                problems — it cannot judge whether a label is meaningful,
+                whether a flow is usable with a screen reader end to end, or
+                whether the reading order makes sense. Nobody outside the
+                project has audited Word Up for accessibility, and the
+                limitations listed on this page are proof that automated
+                checking is not the same as being accessible.
+              </p>
+              <p>
+                More broadly: Word Up is a development project. No independent
+                security, privacy, safeguarding, or accessibility review has
+                been completed, and no release is approved for production use or
+                for storing real participant information. Use synthetic data
+                only.
+              </p>
+            </div>
+
+            <h3>If something here blocks you</h3>
+            <p>
+              Use <strong>Help</strong> in the account menu to raise a support
+              request. It asks for a category, a description, and a reply-to
+              email address, and you can attach a screenshot. Say which page you
+              were on and what you were trying to do — the preview limitations
+              above are known, but how much they cost you in practice is not.
+            </p>
+          </section>
+
+          <section class="ug-section" id="where-to-look-next">
+            <h2>Where to look next</h2>
+            <ul class="ug-cards">
+              <li>
+                <a class="ug-card" href="../start-here/the-word-up-window.html">
+                  <span class="ug-card__kicker">Start here</span>
+                  <span class="ug-card__title"
+                    >A tour of the Word Up window</span
+                  >
+                  <span class="ug-card__desc"
+                    >The named parts of the screen — top bar, sidebar, bottom
+                    nav, account menu — that the labels above refer to.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a class="ug-card" href="messages-and-error-codes.html">
+                  <span class="ug-card__kicker">Reference</span>
+                  <span class="ug-card__title">Messages and error codes</span>
+                  <span class="ug-card__desc"
+                    >Every message the alert and status regions above can
+                    announce, and what each one means.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a class="ug-card" href="../advanced/troubleshooting.html">
+                  <span class="ug-card__kicker">Advanced</span>
+                  <span class="ug-card__title">Troubleshooting by symptom</span>
+                  <span class="ug-card__desc"
+                    >Every preview limitation in the product, gathered in one
+                    place and indexed by what you can see.</span
+                  >
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <nav data-ug-pager aria-label="Previous and next page"></nav>
+        </div>
+      </main>
+
+      <footer data-ug-status></footer>
+    </div>
+  </body>
+</html>

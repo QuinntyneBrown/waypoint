@@ -1,0 +1,1704 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Every state machine in Word Up — applications, accounts, invitations, curriculum, submissions, quizzes, attendance, consent, flags and terms — with the legal moves, who can make them, and the audit record each one leaves."
+    />
+    <title>Lifecycles and the evidence they leave — Word Up User Guide</title>
+    <link rel="stylesheet" href="../assets/vendor/core.css" />
+    <link rel="stylesheet" href="../assets/vendor/a11y.css" />
+    <link rel="stylesheet" href="../assets/guide.css" />
+    <script defer src="../assets/guide.js"></script>
+  </head>
+  <body data-category="Reference" data-page="reference/lifecycles-and-evidence">
+    <a class="ug-skip" href="#main-content">Skip to content</a>
+
+    <div class="ug-app">
+      <header data-ug-header></header>
+
+      <aside class="ug-sidebar" aria-label="Guide contents">
+        <p class="ug-sidebar__head">
+          <span>Guide contents</span>
+          <span class="ug-sidebar__count"
+            ><span data-ug-pagecount>21</span> pages</span
+          >
+        </p>
+        <nav data-ug-nav aria-label="Guide pages"></nav>
+      </aside>
+
+      <main id="main-content">
+        <div class="ug-page">
+          <nav data-ug-breadcrumbs aria-label="Breadcrumb"></nav>
+
+          <header class="ug-hero">
+            <p class="ug-hero__eyebrow">Reference / 16</p>
+            <h1>Lifecycles and the evidence they leave</h1>
+            <p class="ug-hero__lede">
+              Almost everything in Word Up has a state, and states move along
+              fixed paths. This page draws every one of those paths: what each
+              state means, who is allowed to move it, where it can go next, and
+              the exact message you get when you try a move that is not allowed.
+              It closes with the evidence side — which actions write a permanent
+              audit record.
+            </p>
+            <div class="ug-hero__meta">
+              <span class="wu-badge wu-badge--outline">Everyone</span>
+              <span class="ug-stamp">WU-UG-16</span>
+            </div>
+          </header>
+
+          <nav data-ug-toc aria-label="On this page"></nav>
+
+          <section class="ug-section" id="how-to-read-a-lifecycle">
+            <h2>How to read a lifecycle here</h2>
+            <p>
+              Each section below has the same three parts. The
+              <strong>diagram</strong> shows the legal path from start to
+              finish. The <strong>table</strong> gives each state its meaning,
+              the role that can move it, and where it can go. The
+              <strong>guard</strong> is the message you get if you try to move
+              it somewhere it cannot go — every one of those arrives as a
+              <strong>409</strong>, which is the status that means "legal
+              action, wrong moment".
+            </p>
+            <p>
+              Two things are true of every lifecycle. Nothing skips a state, and
+              a state is never changed silently — the same action that moves a
+              state also writes the audit record described in
+              <a href="#the-evidence-trail">The evidence trail</a>.
+            </p>
+            <div class="wu-alert wu-alert--info">
+              <p>
+                The stored values are shown here exactly as they are stored,
+                because that is what an export or an audit entry contains. Where
+                the screen shows something different — <code>InReview</code> is
+                displayed as <strong>In review</strong>, for instance — both are
+                given.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="application-status">
+            <h2>Application status</h2>
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                From public form to a final decision
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>New</li>
+                  <li>InReview</li>
+                  <li>NeedsConsent</li>
+                  <li>Approved <em>or</em> Declined</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Approved and Declined are both final. There is no un-decide, no
+                re-open and no undo — which is why the decision screen asks you
+                to confirm.
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can move it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>New</code></th>
+                    <td>
+                      The public form was submitted and nobody has looked at it.
+                      No account exists.
+                    </td>
+                    <td>Program Administrator</td>
+                    <td>InReview, NeedsConsent, Approved, Declined</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <code>InReview</code> — <strong>In review</strong>
+                    </th>
+                    <td>Someone has picked it up and is working through it.</td>
+                    <td>Program Administrator</td>
+                    <td>NeedsConsent, Approved, Declined</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <code>NeedsConsent</code> — <strong>Needs consent</strong>
+                    </th>
+                    <td>
+                      The applicant is under 18 and no valid guardian consent
+                      exists yet. This is a waiting state, not a rejection.
+                    </td>
+                    <td>Program Administrator, once a guardian has signed</td>
+                    <td>Approved, Declined</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Approved</code></th>
+                    <td>
+                      Placed into a cohort with a mentor. An invitation is
+                      issued and the young person's account becomes Active when
+                      they accept.
+                    </td>
+                    <td class="ug-nowrap">Nobody — final</td>
+                    <td class="ug-nowrap">Nowhere</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Declined</code></th>
+                    <td>
+                      Turned down, with an optional decision note of up to 2000
+                      characters.
+                    </td>
+                    <td class="ug-nowrap">Nobody — final</td>
+                    <td class="ug-nowrap">Nowhere</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              The consent column beside the status is separate and shows
+              <strong>Not required</strong> (the applicant is 18),
+              <strong>Recorded</strong>, or <strong>Needs consent</strong>.
+            </p>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Trying to decide an application twice:
+                <strong>This application already has a final decision.</strong>
+                Declining an application whose youth account already exists:
+                <strong
+                  >A linked youth account must be resolved before
+                  declining.</strong
+                >
+                Approving when the placement is not available:
+                <strong>Choose an available cohort.</strong>,
+                <strong>The selected cohort's track is paused.</strong>,
+                <strong>Choose an active mentor.</strong>, or
+                <strong
+                  >The selected mentor is not assigned to this cohort.</strong
+                >
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="account-status">
+            <h2>Account status</h2>
+            <p>
+              Every person in Word Up has one of four account states. Three of
+              them can be moved back and forth. The fourth cannot be left.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                The one door that only opens one way
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Pending</li>
+                  <li>Active</li>
+                  <li>Deactivated (reversible)</li>
+                  <li>Removed — terminal</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Active and Deactivated swap freely in both directions. Removed
+                does not: it is the end of the line for that person's account,
+                permanently, for everybody.
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can move it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>Pending</code></th>
+                    <td>
+                      Invited but the invitation has not been accepted. The
+                      person cannot sign in.
+                    </td>
+                    <td>The invited person, by accepting</td>
+                    <td>Active</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Active</code></th>
+                    <td>
+                      A normal, usable account. Only Active accounts can be
+                      issued a session.
+                    </td>
+                    <td>Program Administrator</td>
+                    <td>Deactivated, Removed</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Deactivated</code></th>
+                    <td>
+                      Switched off. The password still works but sign-in is
+                      refused with
+                      <strong
+                        >This account is inactive. Please contact your program
+                        director.</strong
+                      >
+                      The record stays visible to administrators.
+                    </td>
+                    <td>Program Administrator</td>
+                    <td>Active, Removed</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Removed</code></th>
+                    <td>
+                      Permanently gone. The person disappears from the people
+                      list entirely.
+                    </td>
+                    <td class="ug-nowrap">Nobody — terminal</td>
+                    <td class="ug-nowrap">Nowhere</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">Removed cannot be undone</p>
+              <p>
+                Every route back is closed, individually and explicitly.
+                Reactivating gives
+                <strong
+                  >Removal is irreversible; this person cannot be
+                  reactivated.</strong
+                >
+                Deactivating gives
+                <strong>A removed person cannot be deactivated.</strong>
+                Changing the role gives
+                <strong>A removed person's role cannot be changed.</strong>
+                Sending a password reset gives
+                <strong
+                  >A removed person cannot receive a password reset.</strong
+                >
+                Removing again gives
+                <strong>This person has already been removed.</strong> Before
+                you remove anybody, be certain that deactivating is not what you
+                actually want.
+              </p>
+            </div>
+
+            <p>
+              Two more rules protect the removal path. You cannot remove
+              yourself —
+              <strong>You cannot remove your own account.</strong> — and a
+              removal that needs a second pair of eyes is refused with
+              <strong
+                >Another administrator must approve your removal
+                request.</strong
+              >
+              Issuing a session to a non-Active account is refused with
+              <strong>Tokens can be issued only for active users.</strong>
+            </p>
+
+            <p>
+              Changing somebody's role is not a status change, but it has the
+              same immediacy: the new role applies at once and
+              <strong>every existing session for that person is revoked</strong
+              >, so they are signed out of every device and must sign in again.
+            </p>
+          </section>
+
+          <section class="ug-section" id="invitation-status">
+            <h2>Invitation status</h2>
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                One link, one use, fourteen days
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Pending</li>
+                  <li>Accepted <em>or</em> Revoked</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Expiry is not a state. An invitation that runs out of time stays
+                Pending in the database but behaves as spent — which is why the
+                accept page has more outcomes than the record has states.
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can move it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>Pending</code></th>
+                    <td>Issued and not yet used. Valid for 14 days.</td>
+                    <td>
+                      The invited person (accept); a Program Administrator or
+                      the inviting Mentor (revoke, resend)
+                    </td>
+                    <td>Accepted, Revoked</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Accepted</code></th>
+                    <td>
+                      Used. The account exists and is Active. The link is dead.
+                    </td>
+                    <td class="ug-nowrap">Nobody — final</td>
+                    <td class="ug-nowrap">Nowhere</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Revoked</code></th>
+                    <td>Cancelled before use. The link is dead.</td>
+                    <td class="ug-nowrap">Nobody — final</td>
+                    <td class="ug-nowrap">Nowhere</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              The accept page reports five outcomes:
+              <strong>valid</strong> (proceed to set a password),
+              <strong>accepted</strong>, <strong>revoked</strong>,
+              <strong>expired</strong>, and <strong>invalid</strong> (the token
+              does not exist). The last four all give
+              <strong
+                >This invitation is no longer valid. Please request a new
+                invite.</strong
+              >
+              as a <strong>410</strong>. There is a
+              <strong>request a replacement</strong> action on that page so a
+              stranded invitee is not stuck.
+            </p>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Revoking anything but a pending invitation:
+                <strong>Only pending invitations can be revoked.</strong>
+                Two people revoking at once:
+                <strong
+                  >This invitation changed before it could be revoked.</strong
+                >
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="curriculum-publish-status">
+            <h2>Curriculum publish status</h2>
+            <p>
+              Tracks, modules, lessons, assignments and quizzes all share one
+              publish state. Unlike every other lifecycle on this page, this one
+              is not a one-way path: an author may move content between all
+              three states freely, including pulling published content back to
+              Draft.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                Three states, all reachable from each other
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Draft</li>
+                  <li>InReview</li>
+                  <li>Published</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Only <code>Published</code> content is visible to a young person
+                or assignable by a mentor. Moving something back to Draft hides
+                it again immediately — including from youth who were part way
+                through it.
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can move it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>Draft</code></th>
+                    <td>
+                      Being written. Invisible to youth, not assignable, not
+                      reportable.
+                    </td>
+                    <td>Program Administrator</td>
+                    <td>InReview, Published</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <code>InReview</code> — <strong>In review</strong>
+                    </th>
+                    <td>
+                      Finished and waiting for a second read. Still invisible to
+                      youth.
+                    </td>
+                    <td>Program Administrator</td>
+                    <td>Draft, Published</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Published</code></th>
+                    <td>
+                      Live. Visible to youth on an enabled track, assignable.
+                    </td>
+                    <td>Program Administrator</td>
+                    <td>Draft, InReview</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              A track has a second switch beside its publish state:
+              <strong>enabled</strong>. A disabled track is paused for new
+              enrolments and new assignments even while published, giving
+              <strong>This track is paused for new assignments.</strong> and
+              <strong>This cohort's track is paused for new enrolments.</strong>
+            </p>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Publishing an orphaned assignment:
+                <strong
+                  >Attach the assignment to a module or lesson before
+                  publishing.</strong
+                >
+                Editing structure while editing content:
+                <strong
+                  >A lesson cannot be moved to another module while editing
+                  it.</strong
+                >,
+                <strong
+                  >A module cannot be moved to another track while editing
+                  it.</strong
+                >,
+                <strong>An assignment cannot be moved while editing it.</strong
+                >,
+                <strong
+                  >A quiz cannot be moved while editing its settings.</strong
+                >
+                Editing an assignment that people have already answered:
+                <strong
+                  >An assignment with submissions can no longer be
+                  edited.</strong
+                >
+                Reordering with an incomplete list:
+                <strong
+                  >The lesson order must contain every active lesson exactly
+                  once.</strong
+                >,
+                <strong
+                  >The module order must contain every module exactly
+                  once.</strong
+                >,
+                <strong
+                  >The question order must contain every question exactly
+                  once.</strong
+                >
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="submission-status">
+            <h2>Submission status</h2>
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                The revision loop between a youth and their mentor
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Submitted</li>
+                  <li>NeedsRevision</li>
+                  <li>UnderReview</li>
+                  <li>Approved</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                The loop can run as many times as it needs to. A first
+                submission is <code>Submitted</code>; every resubmission after a
+                revision request is <code>UnderReview</code>. Both sit in the
+                mentor's review queue and look the same from there.
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can move it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>Submitted</code></th>
+                    <td>Handed in for the first time. Waiting for a mentor.</td>
+                    <td>Mentor or Program Administrator</td>
+                    <td>Approved, NeedsRevision</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>UnderReview</code></th>
+                    <td>
+                      Handed in again after a revision request. Waiting for a
+                      mentor.
+                    </td>
+                    <td>Mentor or Program Administrator</td>
+                    <td>Approved, NeedsRevision</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>NeedsRevision</code></th>
+                    <td>
+                      Sent back with a required comment saying what to fix. The
+                      ball is with the young person.
+                    </td>
+                    <td>The youth who owns it, by resubmitting</td>
+                    <td>UnderReview</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Approved</code></th>
+                    <td>
+                      Accepted, with a rubric total. This is what counts towards
+                      badges and reports.
+                    </td>
+                    <td class="ug-nowrap">Nobody — final</td>
+                    <td class="ug-nowrap">Nowhere</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              A mentor's third option, <strong>save-draft</strong>, deliberately
+              changes nothing the youth can see: it stores partial rubric scores
+              and a comment while leaving the status where it is.
+            </p>
+
+            <p>
+              Every submission carries a visible timeline built from four event
+              types: <code>Submitted</code>, <code>Resubmitted</code>,
+              <code>Approved</code>, <code>NeedsRevision</code>. Events are
+              appended, never rewritten, so the whole back and forth stays
+              readable afterwards.
+            </p>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Submitting twice:
+                <strong>This assignment has already been submitted.</strong>
+                Resubmitting something that was not sent back:
+                <strong>This submission is not awaiting revisions.</strong>
+                Resubmitting someone else's work:
+                <strong>You may only resubmit your own submissions.</strong>
+                Grading a stale copy:
+                <strong
+                  >This submission changed after you opened it. Review the
+                  latest version before saving again.</strong
+                >
+                — reload and grade the version you are actually looking at.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="lesson-progress">
+            <h2>Lesson progress</h2>
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                What reading a lesson records
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>NotStarted</li>
+                  <li>InProgress</li>
+                  <li>Completed</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Progress only moves forward. Nothing in the product takes a
+                lesson back to InProgress once it is Completed, and there is no
+                "mark as unread".
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can move it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>NotStarted</code></th>
+                    <td>Never opened. The default for everything.</td>
+                    <td>The youth, by opening the lesson</td>
+                    <td>InProgress, Completed</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>InProgress</code></th>
+                    <td>
+                      Opened and part read. Reading position and reading size
+                      are saved as you go, so you resume where you stopped.
+                    </td>
+                    <td>The youth</td>
+                    <td>Completed</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Completed</code></th>
+                    <td>
+                      Marked done. This is what feeds module completion, badge
+                      rules and every progress percentage in reports.
+                    </td>
+                    <td class="ug-nowrap">Nobody</td>
+                    <td class="ug-nowrap">Nowhere</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Coding lessons use the same three states, driven by a checklist
+              instead of a page position: once every step is ticked the lesson
+              is <code>Completed</code>, and saving progress afterwards never
+              drops it back to <code>InProgress</code>.
+            </p>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Reaching a lesson you have no right to see:
+                <strong>This lesson is locked.</strong>,
+                <strong>Published lesson not found.</strong>, or
+                <strong>You are not enrolled in this track.</strong>
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="quiz-attempts">
+            <h2>Quiz attempts</h2>
+            <p>
+              A quiz attempt has three moments rather than a status field, and
+              the middle one is the important one: the instant you submit, the
+              attempt becomes read-only for everybody, including you.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                Draft, then frozen, then approved
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Draft — answers editable</li>
+                  <li>Submitted — immutable</li>
+                  <li>Mentor-approved — score visible</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Between the second and third step the young person can see that
+                the attempt is in, but not what it scored. A quiz score becomes
+                visible to a youth only once a mentor approves it.
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Stage</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can move it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Draft</th>
+                    <td>
+                      Started and in progress. Answers and the current question
+                      are saved as you go, so you can close the tab and come
+                      back.
+                    </td>
+                    <td>The youth who started it</td>
+                    <td>Submitted</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Submitted</th>
+                    <td>
+                      Handed in. An automatic score and a pass/fail are computed
+                      and stored. <strong>The answers can never change.</strong>
+                    </td>
+                    <td>Mentor or Program Administrator</td>
+                    <td>Mentor-approved</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Mentor-approved</th>
+                    <td>
+                      A mentor has accepted the automatic score, or replaced it
+                      with an override between 0 and 100. This approved score is
+                      the one the youth sees and the one that counts.
+                    </td>
+                    <td class="ug-nowrap">Nobody — final</td>
+                    <td class="ug-nowrap">Nowhere</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              A quiz allows between 1 and 10 attempts. The score that counts is
+              the
+              <strong>best passing attempt within the attempt limit</strong>,
+              and running out gives <strong>No attempts remaining.</strong>
+            </p>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Answering an attempt you already handed in:
+                <strong>This attempt has already been submitted.</strong>
+                Approving something not yet handed in:
+                <strong>This quiz attempt has not been submitted.</strong>
+                Approving twice:
+                <strong>This quiz assessment has already been approved.</strong>
+                Opening someone else's attempt:
+                <strong>This attempt does not belong to you.</strong> Reaching a
+                quiz you are not entitled to:
+                <strong>This quiz is locked.</strong>
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="attendance">
+            <h2>Attendance</h2>
+            <p>
+              Attendance is not a progression — it is a value per person per
+              session, and it can be corrected as often as you like. What makes
+              it a lifecycle is the concurrency rule: two people cannot
+              overwrite each other's marks without one of them being told.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can set it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>Present</code></th>
+                    <td>At the session.</td>
+                    <td>Program Administrator, Mentor, Volunteer</td>
+                    <td>Any of the four</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Late</code></th>
+                    <td>Arrived after the start.</td>
+                    <td>Program Administrator, Mentor</td>
+                    <td>Any of the four</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Excused</code></th>
+                    <td>Away with notice.</td>
+                    <td>Program Administrator, Mentor</td>
+                    <td>Any of the four</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Absent</code></th>
+                    <td>Away without notice.</td>
+                    <td>Program Administrator, Mentor, Volunteer</td>
+                    <td>Any of the four</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Volunteers are limited to two of the four and may not write notes
+              about a young person. Attempting either gives
+              <strong>Volunteers may only mark youth Present or Absent.</strong>
+              or <strong>Volunteers may not add youth notes.</strong>
+            </p>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Someone else saved first:
+                <strong
+                  >This attendance record was changed by someone else. Reload
+                  and try again.</strong
+                >
+                A stale offline queue with a duplicate:
+                <strong
+                  >Each youth may appear only once in an attendance
+                  save.</strong
+                >
+                Marking somebody who is not on the list:
+                <strong
+                  >One or more youth are outside this session's roster.</strong
+                >
+                Taking a register for a session you were not given:
+                <strong>This session is not assigned to you.</strong>
+              </p>
+            </div>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The attendance status buttons have no visual selected state.
+                <strong>Present</strong>, <strong>Late</strong>,
+                <strong>Excused</strong> and <strong>Absent</strong> look
+                identical whether or not you have chosen them; only assistive
+                technology reports the pressed state. Use the tally counts above
+                the list to confirm what you actually marked.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="rsvp">
+            <h2>RSVP</h2>
+            <p>
+              A young person's answer to a scheduled session. Like attendance it
+              has no order — you can change your mind as often as you want,
+              until RSVPs close.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">Stored as</th>
+                    <th scope="col">Who can set it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Going</th>
+                    <td><code>Going</code>, sent as <code>going</code></td>
+                    <td>The youth</td>
+                    <td>Any of the three, while RSVPs are open</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Maybe</th>
+                    <td><code>Maybe</code>, sent as <code>maybe</code></td>
+                    <td>The youth</td>
+                    <td>Any of the three, while RSVPs are open</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Can't attend</th>
+                    <td><code>CantAttend</code>, sent as <code>cant</code></td>
+                    <td>The youth</td>
+                    <td>Any of the three, while RSVPs are open</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              An RSVP may carry a note of up to 1000 characters. There are no
+              capacity limits and no waitlist — an RSVP tells the mentor who is
+              planning to come and nothing more. Mentors and administrators can
+              read the responses for a session; an RSVP is never attendance, and
+              saying <strong>Going</strong> does not mark anybody Present.
+            </p>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guard</p>
+              <p>
+                Answering after the cut-off:
+                <strong>RSVPs are closed for this session.</strong>
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="guardian-consent">
+            <h2>Guardian consent validity</h2>
+            <p>
+              Consent is the one lifecycle with no status field at all. A
+              consent record is either valid right now or it is not, and Word Up
+              re-decides that on every request. Four conditions must
+              <em>all</em> hold at the moment of asking.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                What makes participation consent valid this second
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Participation granted</li>
+                  <li>Not withdrawn</li>
+                  <li>Within its date range</li>
+                  <li>Matches the current term</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Fail any one and the youth loses access to lessons, quizzes,
+                reflections, submissions and their journey, immediately, with
+                <strong>Guardian participation consent is required.</strong>
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Condition</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can change it</th>
+                    <th scope="col">What breaks it</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Participation granted</th>
+                    <td>
+                      The guardian ticked participation when signing. This is
+                      the one part of the form that cannot be left off —
+                      <strong>Participation consent is required.</strong>
+                    </td>
+                    <td>Guardian</td>
+                    <td>Nothing; it is fixed at signing</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Not withdrawn</th>
+                    <td>
+                      The guardian has not withdrawn it. Withdrawal is a
+                      timestamp on the record, not a deletion.
+                    </td>
+                    <td>Guardian</td>
+                    <td>The guardian withdrawing consent</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Within its date range</th>
+                    <td>
+                      Today is between the record's valid-from and valid-until
+                      dates.
+                    </td>
+                    <td class="ug-nowrap">Nobody — time</td>
+                    <td>The valid-until date passing</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Matches the current term</th>
+                    <td>
+                      If the organisation requires re-consent each term, the
+                      record must belong to the currently Active term.
+                    </td>
+                    <td>Program Administrator, via org settings and terms</td>
+                    <td>A new term becoming Active</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Media consent sits on top and is checked separately. It is only
+              ever valid while participation consent is valid, and it is
+              granular: individual photos and video, group photos and video, and
+              first-name captions are three independent permissions. Using an
+              individual photo without the matching permission gives
+              <strong
+                >Guardian consent for individual photos or video is
+                required.</strong
+              >
+            </p>
+
+            <div class="wu-alert wu-alert--info">
+              <p>
+                <strong>A youth with no linked guardian is not gated.</strong>
+                If no guardian account is linked to the young person's record,
+                Word Up treats them as an adult: participation is allowed and
+                they control their own media permissions. Consent gating exists
+                for minors with a guardian on file.
+              </p>
+            </div>
+
+            <p>
+              The full picture of what consent covers, how a guardian withdraws
+              it and what happens next is in
+              <a href="../advanced/privacy-consent-and-audit.html"
+                >Privacy, consent and the audit trail</a
+              >.
+            </p>
+          </section>
+
+          <section class="ug-section" id="at-risk-flags">
+            <h2>At-risk flags</h2>
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                Raised, then resolved with a stated reason
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Active</li>
+                  <li>Resolved, with a reason</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                A resolved flag is never deleted. The reason it was raised, who
+                raised it, when, and why it was closed all stay on the record —
+                which is the point of flagging in the first place.
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can move it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Active</th>
+                    <td>
+                      Raised and open. Visible to the program director. Raised
+                      either by a mentor with a written reason of up to 1000
+                      characters, or automatically from signals Word Up watches.
+                    </td>
+                    <td>Mentor or Program Administrator</td>
+                    <td>Resolved</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Resolved</th>
+                    <td>
+                      Closed with one of four stated reasons and a resolution
+                      time.
+                    </td>
+                    <td class="ug-nowrap">Nobody — final</td>
+                    <td class="ug-nowrap">Nowhere</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>The four resolution reasons, stored and displayed:</p>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Stored</th>
+                    <th scope="col">Shown</th>
+                    <th scope="col">Use it when</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>Reconnected</code></th>
+                    <td>Reconnected</td>
+                    <td>
+                      Contact was re-established and the concern has passed.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>HandedToDirector</code></th>
+                    <td>Handed to director</td>
+                    <td>The concern is now the program director's to carry.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>LeftProgram</code></th>
+                    <td>Left program</td>
+                    <td>The young person is no longer in the program.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>FlaggedInError</code></th>
+                    <td>Flagged in error</td>
+                    <td>The flag should not have been raised.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Raising a second flag on someone already flagged:
+                <strong>This youth already has an active at-risk flag.</strong>
+                Resolving twice: <strong>Flag is already resolved.</strong> An
+                unrecognised reason: <strong>Unknown resolution reason.</strong>
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="competency-levels">
+            <h2>Competency levels</h2>
+            <p>
+              A competency is a named skill inside a progression stage. Its
+              level is a mentor's judgement, and unlike lesson progress it can
+              move in either direction — a mentor who set it too high can set it
+              back.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                The four levels, in order
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>NotStarted</li>
+                  <li>Developing</li>
+                  <li>Proficient</li>
+                  <li>Mastered</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Each change may carry a note of up to 2000 characters saying
+                what the mentor observed.
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Level</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can set it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>NotStarted</code></th>
+                    <td>Not yet assessed. The default.</td>
+                    <td>Mentor or Program Administrator</td>
+                    <td>Any level</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Developing</code></th>
+                    <td>Showing the skill with support.</td>
+                    <td>Mentor or Program Administrator</td>
+                    <td>Any level</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Proficient</code></th>
+                    <td>Doing it reliably without help.</td>
+                    <td>Mentor or Program Administrator</td>
+                    <td>Any level</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Mastered</code></th>
+                    <td>Doing it well enough to help someone else do it.</td>
+                    <td>Mentor or Program Administrator</td>
+                    <td>Any level</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Setting a level for someone outside your caseload:
+                <strong>This youth is not assigned to you.</strong> A competency
+                that has been retired: <strong>Competency not found.</strong> —
+                archiving a competency does not erase the levels already
+                recorded against it.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="privacy-request-status">
+            <h2>Data-subject request status</h2>
+            <p>
+              A privacy request has two states and four kinds. Anyone signed in
+              can raise one about their own data; only a Program Administrator
+              can fulfil it.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                Raised, then fulfilled
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Pending</li>
+                  <li>Completed</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                There is no "rejected" state. A request that cannot be
+                automatically fulfilled is refused at the point of fulfilment
+                and stays Pending until it is handled.
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can move it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>Pending</code></th>
+                    <td>Raised and waiting.</td>
+                    <td>Program Administrator</td>
+                    <td>Completed</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Completed</code></th>
+                    <td>Fulfilled, with the time it was fulfilled recorded.</td>
+                    <td class="ug-nowrap">Nobody — final</td>
+                    <td class="ug-nowrap">Nowhere</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Kind</th>
+                    <th scope="col">What it asks for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>access</code></th>
+                    <td>A copy of everything held about the person.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>correction</code></th>
+                    <td>
+                      A change to display name, email or pronouns — at least one
+                      of them must be named.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>removal</code></th>
+                    <td>Deletion of the person's data.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>consent-withdrawal</code></th>
+                    <td>Withdrawal of a consent already given.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Fulfilling twice:
+                <strong
+                  >This data-subject request has already been fulfilled.</strong
+                >
+                A kind that cannot be actioned automatically:
+                <strong
+                  >This data-subject request type cannot be fulfilled.</strong
+                >
+                A correction that would change nothing:
+                <strong
+                  >A correction must change at least one profile field.</strong
+                >
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="term-status">
+            <h2>Term status</h2>
+            <p>
+              A term is the block of time a cohort runs for, and it is what
+              consent re-consent is measured against. Word Up allows
+              <strong>at most one Active term at a time</strong>, which is what
+              makes "the current term" a meaningful phrase everywhere else.
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                One term active at a time
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Upcoming</li>
+                  <li>Active</li>
+                  <li>Completed</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Activating a term while another is Active is refused. Complete
+                the old one first — that ordering is what stops two terms both
+                claiming to be "now".
+              </p>
+            </figure>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">What it means</th>
+                    <th scope="col">Who can move it</th>
+                    <th scope="col">Can go to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>Upcoming</code></th>
+                    <td>Planned, not started. The default for a new term.</td>
+                    <td>Program Administrator</td>
+                    <td>Active, Completed</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Active</code></th>
+                    <td>
+                      The current term. Must include today's date. At most one
+                      term may be here.
+                    </td>
+                    <td>Program Administrator</td>
+                    <td>Upcoming, Completed</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>Completed</code></th>
+                    <td>
+                      Finished. Consent records tied to it stop satisfying the
+                      re-consent rule once a different term becomes Active.
+                    </td>
+                    <td>Program Administrator</td>
+                    <td>Upcoming, Active</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">The guards</p>
+              <p>
+                Activating a term whose dates do not cover today:
+                <strong>An active term must include today's date.</strong> A
+                second active term:
+                <strong
+                  >Complete the current active term before activating
+                  another.</strong
+                >
+                A repeated name:
+                <strong>A term with this name already exists.</strong> Dates the
+                wrong way round:
+                <strong>The term end date must be after its start date.</strong>
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="the-evidence-trail">
+            <h2>The evidence trail</h2>
+            <p>
+              Every state change above leaves a record. The audit log is the one
+              place in Word Up where nothing can be edited or deleted — it only
+              ever grows, and each entry is chained to the one before it so that
+              tampering is detectable.
+            </p>
+
+            <h3>How the chain works</h3>
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                Why an audit entry cannot be quietly changed
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>Entry gets the next sequence number</li>
+                  <li>It stores the previous entry's hash</li>
+                  <li>Its own hash is computed and stored</li>
+                  <li>Reading the log re-verifies the whole chain</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                Change any entry and its hash no longer matches, and every entry
+                after it no longer links up. The audit log screen shows whether
+                the chain currently verifies.
+              </p>
+            </figure>
+
+            <p>Each entry records the same fields:</p>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Field</th>
+                    <th scope="col">What it holds</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Action</th>
+                    <td>
+                      What happened, e.g. <code>ApplicationApproved</code>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Actor</th>
+                    <td>Who did it.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Target</th>
+                    <td>The kind of thing and the specific record.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">At</th>
+                    <td>When, in UTC.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Source</th>
+                    <td>
+                      A coarse device class and a masked network location. Never
+                      a raw address or browser string.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Details</th>
+                    <td>
+                      A short description — but see the redaction rule below.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Sequence and hashes</th>
+                    <td>The chain position, the previous hash, and its own.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>What gets written</h3>
+            <p>
+              Every mutating administrative and safeguarding action leaves an
+              entry. A representative list, grouped the way this page is:
+            </p>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Area</th>
+                    <th scope="col">Actions recorded</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Applications</th>
+                    <td>
+                      <code>ApplicationSubmitted</code>,
+                      <code>ApplicationApproved</code>,
+                      <code>ApplicationDeclined</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Accounts and access</th>
+                    <td>
+                      <code>UserCreated</code>, <code>SignIn</code>,
+                      <code>SignOut</code>, <code>AccountLocked</code>,
+                      <code>AccountDeactivated</code>,
+                      <code>AccountReactivated</code>,
+                      <code>AccountRemoved</code>, <code>RoleChanged</code>,
+                      <code>PasswordChanged</code>, <code>PasswordReset</code>,
+                      <code>PasswordResetSent</code>,
+                      <code>OnboardingCompleted</code>,
+                      <code>OnboardingSkipped</code>,
+                      <code>ProfileUpdated</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Invitations</th>
+                    <td>
+                      <code>InvitationCreated</code>,
+                      <code>InvitationsBulkCreated</code>,
+                      <code>InvitationAccepted</code>,
+                      <code>InvitationResent</code>,
+                      <code>InvitationRevoked</code>,
+                      <code>InvitationReplacementRequested</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Consent and safeguarding</th>
+                    <td>
+                      <code>GuardianConsentRequested</code>,
+                      <code>GuardianConsentCaptured</code>,
+                      <code>GuardianConsentWithdrawn</code>,
+                      <code>GuardianMediaConsentUpdated</code>,
+                      <code>GuardianContactUpdated</code>,
+                      <code>ConsentRecordCopyEmailed</code>,
+                      <code>YouthFlagged</code>,
+                      <code>YouthAutomaticallyFlagged</code>,
+                      <code>YouthUnflagged</code>, <code>CheckInLogged</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Curriculum</th>
+                    <td>
+                      <code>TrackCreated</code>,
+                      <code>TrackPublishStateChanged</code>,
+                      <code>TrackEnabled</code>, <code>TrackDisabled</code>,
+                      <code>ModuleCreated</code>, <code>ModuleUpdated</code>,
+                      <code>ModulePublishStateChanged</code>,
+                      <code>ModulesReordered</code>, <code>LessonCreated</code>,
+                      <code>LessonUpdated</code>,
+                      <code>LessonPublishStateChanged</code>,
+                      <code>LessonsReordered</code>,
+                      <code>LessonArchived</code>,
+                      <code>LessonMediaAdded</code>,
+                      <code>LessonMediaRemoved</code>,
+                      <code>AssignmentUpdated</code>,
+                      <code>AssignmentPublishStateChanged</code>,
+                      <code>QuizUpdated</code>, <code>BadgeCreated</code>,
+                      <code>BadgeArchived</code>,
+                      <code>ProgressionStageCreated</code>,
+                      <code>ProgressionStageUpdated</code>,
+                      <code>ProgressionStagesReordered</code>,
+                      <code>CompetencyAdded</code>,
+                      <code>CompetencyArchived</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Learning and mentoring</th>
+                    <td>
+                      <code>LessonCompleted</code>,
+                      <code>CodingLessonProgressSaved</code>,
+                      <code>CodingLessonCompleted</code>,
+                      <code>ReflectionSaved</code>,
+                      <code>ReflectionUpdated</code>,
+                      <code>QuizAttemptStarted</code>,
+                      <code>QuizAttemptSubmitted</code>,
+                      <code>QuizApproved</code>, <code>QuizApprovedBulk</code>,
+                      <code>SubmissionCreated</code>,
+                      <code>SubmissionResubmitted</code>,
+                      <code>SubmissionGraded</code>,
+                      <code>CompetencyLevelSet</code>,
+                      <code>WorkAssigned</code>, <code>BadgeAwarded</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Program operations</th>
+                    <td>
+                      <code>CohortCreated</code>, <code>CohortUpdated</code>,
+                      <code>CohortYouthAdded</code>,
+                      <code>CohortMentorsAssigned</code>,
+                      <code>MentorAssigned</code>, <code>SessionCreated</code>,
+                      <code>AttendanceSaved</code>,
+                      <code>AnnouncementComposed</code>,
+                      <code>MentorMessageBroadcast</code>,
+                      <code>TermCreated</code>, <code>TermUpdated</code>,
+                      <code>OrgSettingsUpdated</code>,
+                      <code>RosterImported</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Privacy and data</th>
+                    <td>
+                      <code>DataExported</code>,
+                      <code>PersonalDataExportDownloaded</code>,
+                      <code>RetentionAnonymizationRun</code>,
+                      <code>SupportRequestSubmitted</code>,
+                      <code>SupportScreenshotUploaded</code>,
+                      <code>SupportScreenshotRemoved</code>,
+                      <code>ProfilePhotoUpdated</code>,
+                      <code>ProfilePhotoRemoved</code>,
+                      <code>OperationalTokenIssued</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Public forms</th>
+                    <td>
+                      <code>ContactRequestSubmitted</code>,
+                      <code>VolunteerSignupSubmitted</code>,
+                      <code>DonationPledgeSubmitted</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Refusals</th>
+                    <td>
+                      <code>ProtectedActionDenied</code> — written for
+                      <em>every</em> 403, whether it was a role refusal, a scope
+                      refusal, or a missing consent
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>What the log will not show you</h3>
+            <div class="wu-alert wu-alert--info">
+              <p>
+                Some entries are marked private, and their details are replaced
+                with <code>[redacted]</code> when the log is read or exported.
+                The content of a mentor's private check-in notes — including
+                prayer requests — is never written into the audit log in the
+                first place. The log records <em>that</em> a check-in was logged
+                and by whom, not what was said.
+              </p>
+            </div>
+
+            <h3>Who can read it</h3>
+            <p>
+              Only a <strong>Program Administrator</strong>. The audit log and
+              its CSV and PDF exports sit behind the
+              <code>ViewAuditLog</code> policy, which no other role holds — not
+              mentors, not guardians, not volunteers, and not youth. Reading it
+              is itself an ordinary administrative action; exporting it writes a
+              <code>DataExported</code> entry, so the log records its own
+              extraction.
+            </p>
+
+            <p>
+              What the log is for, how it fits with privacy requests and
+              retention, and how a guardian's consent history is reconstructed
+              from it are covered in
+              <a href="../advanced/privacy-consent-and-audit.html"
+                >Privacy, consent and the audit trail</a
+              >. For the refusal messages that produce
+              <code>ProtectedActionDenied</code> entries, see
+              <a href="roles-and-permissions.html">Roles and permissions</a>.
+            </p>
+          </section>
+
+          <nav data-ug-pager aria-label="Previous and next page"></nav>
+        </div>
+      </main>
+
+      <footer data-ug-status></footer>
+    </div>
+  </body>
+</html>

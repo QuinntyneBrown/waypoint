@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="How to schedule sessions, capture attendance online and offline, resolve sync conflicts, read the progress board and reports hub, send announcements, and import an existing roster from CSV."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Attendance, progress and reports — Word Up User Guide</title>
+    <link rel="stylesheet" href="../assets/vendor/core.css" />
+    <link rel="stylesheet" href="../assets/vendor/a11y.css" />
+    <link rel="stylesheet" href="../assets/guide.css" />
+    <script defer src="../assets/guide.js"></script>
+  </head>
+  <body
+    data-category="Program administrator"
+    data-page="administrator/attendance-and-reports"
+  >
+    <a class="ug-skip" href="#main-content">Skip to content</a>
+
+    <div class="ug-app">
+      <header data-ug-header></header>
+
+      <aside class="ug-sidebar" aria-label="Guide contents">
+        <p class="ug-sidebar__head">
+          <span>Guide contents</span>
+          <span class="ug-sidebar__count"
+            ><span data-ug-pagecount>21</span> pages</span
+          >
+        </p>
+        <nav data-ug-nav aria-label="Guide pages"></nav>
+      </aside>
+
+      <main id="main-content">
+        <div class="ug-page">
+          <nav data-ug-breadcrumbs aria-label="Breadcrumb"></nav>
+
+          <header class="ug-hero">
+            <p class="ug-hero__eyebrow">Program administrator / 12</p>
+            <h1>Attendance, the progress board and reports</h1>
+            <p class="ug-hero__lede">
+              This page is about running the program week to week and then
+              reading it back out: putting sessions on the calendar, marking who
+              turned up — including in a church basement with no signal —
+              watching progress build, and exporting the numbers. It ends with
+              roster import, the one way to bring an existing group into Word Up
+              in bulk.
+            </p>
+            <div class="ug-hero__meta">
+              <span class="wu-badge wu-badge--outline"
+                >Program Administrator</span
+              >
+              <span class="wu-badge wu-badge--outline">Mentor</span>
+              <span class="ug-stamp">WU-UG-12</span>
+            </div>
+          </header>
+
+          <nav data-ug-toc aria-label="On this page"></nav>
+
+          <section class="ug-section" id="scheduling-sessions">
+            <h2>Scheduling sessions</h2>
+            <p>
+              Choose <strong>Calendar</strong> in the
+              <strong>Program</strong> group. As a Program Administrator the
+              page is headed <strong>Program calendar</strong> with the line
+              <strong
+                >Schedule sessions across cohorts and open their attendance
+                rosters.</strong
+              >
+              A Mentor sees the same screen headed
+              <strong>Calendar</strong> with
+              <strong
+                >Schedule your cohort sessions and open their attendance
+                rosters.</strong
+              >
+            </p>
+            <p>
+              Three views sit under the date range: <strong>Month</strong>,
+              <strong>Week</strong> and <strong>Agenda</strong>. Month and week
+              draw a grid with each session as a link; agenda lists them as
+              cards with a button reading <strong>Take attendance</strong>, or
+              <strong>Edit attendance</strong> if attendance has already been
+              recorded. An empty agenda reads
+              <strong>No sessions in this agenda range.</strong>
+            </p>
+            <p>
+              Beside the views are <strong>Calendar cohort</strong> (defaulting
+              to <strong>All cohorts</strong>, or
+              <strong>All my cohorts</strong> for a Mentor) and three navigation
+              buttons, <strong>Previous</strong>, <strong>Today</strong> and
+              <strong>Next</strong>. Sessions with no venue show
+              <strong>Location TBD</strong>.
+            </p>
+
+            <h3>Creating a session</h3>
+            <p>
+              The <strong>New session</strong> panel sits to the right of the
+              calendar. It takes:
+            </p>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Field</th>
+                    <th scope="col">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Title</th>
+                    <td>Up to 200 characters. Required.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Cohort</th>
+                    <td>
+                      Starts at <strong>Choose cohort</strong>. Required, and it
+                      is what fixes the allowed date range.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Mentor</th>
+                    <td>Starts at <strong>Choose mentor</strong>. Required.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Date</th>
+                    <td>
+                      Clamped to the selected cohort's term — the date picker
+                      will not offer days outside it.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Time</th>
+                    <td>Required.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Minutes</th>
+                    <td>1 to 1440. Optional.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Location</th>
+                    <td>Up to 256 characters. Optional.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Repeat weekly through the cohort term</th>
+                    <td>
+                      A tick box. On, it creates one session per week from your
+                      start date through to the term end, inclusive, and never
+                      beyond it.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              <strong>Schedule session</strong> shows
+              <strong>Scheduling…</strong> and then reports either
+              <strong>Session scheduled.</strong> or
+              <strong
+                ><em>N</em> weekly sessions scheduled through the cohort
+                term.</strong
+              >
+            </p>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">
+                A session must sit inside its cohort's term
+              </p>
+              <p>
+                A session outside the cohort's start and end dates is refused
+                with
+                <strong>The session must fall within the cohort term.</strong>
+                The date picker already constrains you, so this normally only
+                bites when the cohort has no dates set, or when you are working
+                around the picker. Set the cohort's term first — see
+                <a href="cohorts-and-curriculum.html"
+                  >Cohorts, curriculum and settings</a
+                >.
+              </p>
+            </div>
+
+            <p>Two client-side checks fire before the request is even sent:</p>
+            <ul>
+              <li>
+                <strong
+                  >Complete the title, cohort, mentor, date, and time.</strong
+                >
+              </li>
+              <li><strong>Enter a valid date and time.</strong></li>
+            </ul>
+            <p>
+              Mentors are further restricted:
+              <strong
+                >Mentors may only schedule sessions assigned to
+                themselves.</strong
+              >
+              and
+              <strong>This cohort is not assigned to you.</strong>
+            </p>
+          </section>
+
+          <section class="ug-section" id="taking-attendance">
+            <h2>Taking attendance</h2>
+            <p>
+              Choosing a session anywhere on the calendar opens its roster. The
+              title is the session title, the eyebrow is the cohort, and the
+              subtitle is the full date, start time and location.
+              <strong>Calendar</strong> and <strong>History</strong> links sit
+              at the top right.
+            </p>
+
+            <h3>The tallies</h3>
+            <p>
+              Five counters run across the top:
+              <strong><em>n</em> of <em>N</em></strong> <strong>marked</strong>,
+              then <strong>present</strong>, <strong>late</strong>,
+              <strong>excused</strong> and <strong>absent</strong>. They update
+              live as you mark people, and they are the reliable way to check
+              your work.
+            </p>
+
+            <h3>Marking</h3>
+            <p>
+              Each young person is a row with four buttons —
+              <strong>Present</strong>, <strong>Late</strong>,
+              <strong>Excused</strong>, <strong>Absent</strong> — and a text
+              field labelled <strong>Staff note for <em>name</em></strong
+              >, up to 1000 characters. Two shortcuts sit above the list:
+              <strong>All present</strong> marks everybody present in one go,
+              and <strong>Clear</strong> unmarks everybody.
+            </p>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The four status buttons look identical whether or not they are
+                chosen — there is no highlight, no fill and no border change on
+                the one you picked. Only assistive technology reports the
+                choice, through <code>aria-pressed</code>. Use the tally counts
+                above the list to confirm what you actually marked; do not trust
+                the buttons to show you.
+              </p>
+            </div>
+
+            <p>
+              A line at the foot reads <strong>Unsaved changes</strong> or
+              <strong>Changes saved</strong>.
+              <strong>Save attendance</strong> stays disabled until
+              <em>every</em> young person on the roster is marked — a partial
+              roster cannot be saved. It shows <strong>Saving…</strong> while it
+              works and the page then reports
+              <strong>Attendance saved.</strong> An empty roster reads
+              <strong>No active youth are on this session roster.</strong>
+            </p>
+            <p>
+              Navigating away with unsaved marks asks
+              <strong
+                >You have unsaved attendance changes. Save your attendance draft
+                before leaving? Select OK to save the draft, or Cancel to
+                stay.</strong
+              >
+              Choosing OK stores your marks locally and restores them when you
+              return.
+            </p>
+
+            <div class="wu-alert wu-alert--info">
+              <p class="wu-alert__title">Volunteers see less of this screen</p>
+              <p>
+                A Volunteer taking attendance may mark only
+                <strong>Present</strong> or <strong>Absent</strong>, and may not
+                add notes about a young person at all. See
+                <a href="../volunteer/todays-session.html"
+                  >Run today's session</a
+                >.
+              </p>
+            </div>
+
+            <h3>When somebody else got there first</h3>
+            <p>
+              Attendance rows carry a version. If the roster changed on the
+              server since you loaded it, saving is refused rather than silently
+              overwriting:
+              <strong
+                >This attendance record was changed by someone else. Reload and
+                try again.</strong
+              >
+              On screen you see
+              <strong
+                >Attendance changed on the server. Your selections remain here;
+                review and reconcile them.</strong
+              >
+              — your marks are not thrown away. Reload, look at what changed,
+              and re-apply what is still right.
+            </p>
+          </section>
+
+          <section class="ug-section" id="taking-attendance-offline">
+            <h2>Taking attendance offline</h2>
+            <p>
+              Attendance is the one part of Word Up that works without a
+              connection, and it was built that way deliberately: rosters get
+              taken in basements, gyms and church halls.
+            </p>
+            <p>
+              When you are offline the app shows its standing banner —
+              <strong
+                >You’re offline — changes will save when you reconnect.</strong
+              >
+              — and <strong>Save attendance</strong> keeps working. Instead of
+              going to the server, your save is queued on the device and the
+              page reports
+              <strong
+                >Saved offline — <em>N</em> attendance updates waiting to
+                sync.</strong
+              >
+              A badge above the roster reads
+              <strong><em>N</em> pending sync</strong>.
+            </p>
+            <p>
+              When the connection comes back, the queue drains on its own. You
+              will see
+              <strong>Syncing <em>N</em> attendance updates…</strong> and then
+              <strong>All attendance changes synced.</strong> Nothing is asked
+              of you.
+            </p>
+
+            <h3>Resolving a sync conflict</h3>
+            <p>
+              One case does need you. If somebody edited the same session on the
+              server while you were offline, your queued change cannot simply be
+              applied. The page reports
+              <strong
+                >A queued attendance change conflicts with a newer server edit.
+                Review it before saving again.</strong
+              >
+              or, if the rest of the queue drained first,
+              <strong
+                >A queued attendance change needs review before it can
+                sync.</strong
+              >
+            </p>
+            <p>
+              An amber panel then appears on the session, and it gives you
+              exactly two ways out.
+            </p>
+
+            <ol class="ug-steps">
+              <li>
+                <span class="ug-step__title">Read the panel</span>
+                <p>
+                  It is headed
+                  <strong>Choose which attendance to keep</strong> and explains
+                  <strong
+                    >A newer server edit conflicts with your queued change.
+                    Review before choosing.</strong
+                  >
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Keep yours, or keep theirs</span>
+                <p>
+                  <strong>Apply my changes</strong> re-bases your queued marks
+                  onto the current server versions and pushes them, overwriting
+                  the other edit. The page reports
+                  <strong>Applying your reviewed attendance changes…</strong>
+                  while it works.
+                </p>
+                <p>
+                  <strong>Keep server attendance</strong> throws your queued
+                  change away and reloads what the server holds, reporting
+                  <strong
+                    >Kept the newer server attendance and removed the offline
+                    conflict.</strong
+                  >
+                </p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    Either way the amber panel disappears and the pending-sync
+                    badge drops. If it does not, the queue still holds something
+                    — check the message line under the roster.
+                  </p>
+                </div>
+              </li>
+            </ol>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Offline is attendance only</p>
+              <p>
+                Nothing else in Word Up works offline. There is no offline
+                lesson reading, reflection drafting, quiz taking or submission,
+                and the queue lives in this browser on this device — signing in
+                elsewhere will not find it.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="attendance-history">
+            <h2>Attendance history</h2>
+            <p>
+              Choose <strong>Attendance</strong> in the
+              <strong>Progress</strong> group. For you the page is headed
+              <strong>Attendance administration</strong> under the eyebrow
+              <strong>Program administration</strong>; a Mentor sees
+              <strong>Attendance</strong> under <strong>Mentoring</strong>. Both
+              read
+              <strong
+                >Review turnout by session or attendance patterns by
+                youth.</strong
+              >
+              An <strong>Open calendar</strong> button sits top right.
+            </p>
+            <p>
+              The card is headed <strong>Attendance history</strong> and has two
+              views, <strong>By session</strong> and <strong>By youth</strong>.
+              Both share the same three filters —
+              <strong>Cohort</strong> (defaulting to
+              <strong>All cohorts</strong>, or
+              <strong>All my cohorts</strong> for a Mentor),
+              <strong>From</strong> and <strong>To</strong> — applied with
+              <strong>Apply filters</strong>.
+            </p>
+
+            <h3>By session</h3>
+            <p>
+              Columns are <strong>Session</strong> (title and date/time),
+              <strong>Cohort</strong>, <strong>Present</strong>,
+              <strong>Marked</strong> (as <em>marked</em> /
+              <em>roster total</em>), <strong>Rate</strong>,
+              <strong>Status</strong> and <strong>Action</strong>. The status
+              pill is one of <strong>saved</strong> (green),
+              <strong>needs review</strong> (amber) or
+              <strong>low turnout</strong> (red). The action link reads
+              <strong>Edit</strong> if anything is marked and
+              <strong>Take attendance</strong> if nothing is. Empty, the table
+              reads <strong>No sessions match these filters.</strong>
+            </p>
+
+            <h3>By youth</h3>
+            <p>
+              Columns are <strong>Youth</strong>, <strong>Attended</strong> (as
+              <em>attended</em> / <em>total</em>), <strong>Late</strong>,
+              <strong>Excused</strong>, <strong>Absent</strong>,
+              <strong>Rate</strong> and <strong>Trend</strong>. Anyone below the
+              threshold carries a red <strong>Below 70%</strong> badge next to
+              their name — that is the signal to look at, and it is the same
+              threshold the at-risk work uses. Empty, the table reads
+              <strong>No youth match these filters.</strong>
+            </p>
+
+            <h3>Exporting</h3>
+            <p>
+              <strong>Export CSV</strong> and <strong>Export PDF</strong> sit at
+              the top right of the card and export the view you are looking at,
+              with the filters you have applied. There is no other export format
+              and no custom report builder.
+            </p>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The <strong>By session</strong> / <strong>By youth</strong> tab
+                strip does not respond to arrow keys. Use <kbd>Tab</kbd> to move
+                between the two tabs. The same applies to the reports hub tab
+                strip described below.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="the-progress-board">
+            <h2>The progress board</h2>
+            <p>
+              Choose <strong>Progress Board</strong>. The page is headed
+              <strong>Progress board</strong> under the eyebrow
+              <strong>Learning outcomes</strong>, with the line
+              <strong
+                >Every youth across every published module in the selected
+                track.</strong
+              >
+            </p>
+            <p>
+              Note the word <em>published</em>. Draft and in-review modules do
+              not appear here at all, because they do not exist for young
+              people. If a module is missing from the board, check its publish
+              state before you check anything else.
+            </p>
+            <p>
+              Two filters sit above the board — <strong>Cohort</strong> and
+              <strong>Track</strong> — with <strong>Refresh</strong>,
+              <strong>Export CSV</strong> and <strong>Export PDF</strong> beside
+              them. The export buttons read <strong>Exporting…</strong> while
+              they run and are disabled when there is nothing to export.
+            </p>
+
+            <h3>Live updates</h3>
+            <p>
+              A badge at the top right reads
+              <strong>Connecting live updates…</strong> and then turns green as
+              <strong>Live updates on</strong>. While it is green the board
+              updates itself as young people complete work — you do not need to
+              press <strong>Refresh</strong>. If it stays on
+              <strong>Connecting live updates…</strong>, the live channel has
+              not come up and <strong>Refresh</strong> is your fallback.
+            </p>
+
+            <h3>Reading the matrix</h3>
+            <p>
+              The first column is <strong>Youth</strong>, then one column per
+              published module, then <strong>Quiz average</strong> and
+              <strong>Overall</strong>. A footer row gives
+              <strong>Cohort average</strong> per module and overall. Each cell
+              shows that young person's state on that module.
+            </p>
+
+            <h3>The three empty states</h3>
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">No cohorts available</p>
+                <p class="ug-defs__desc">
+                  <strong
+                    >Create a cohort before opening the progress board.</strong
+                  >
+                  You have not built any cohorts yet.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">No published modules</p>
+                <p class="ug-defs__desc">
+                  <strong
+                    ><em>Track</em> has no published modules to show yet. Choose
+                    another track or publish curriculum content.</strong
+                  >
+                  The track exists but nothing in it is live.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">
+                  No youth are assigned to this cohort.
+                </p>
+                <p class="ug-defs__desc">
+                  The board is drawn, with modules, but the cohort is empty.
+                  Place some young people in it.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="ug-section" id="the-reports-hub">
+            <h2>The reports hub</h2>
+            <p>
+              Choose <strong>Reports</strong>. The page is headed
+              <strong>Reports hub</strong> under the eyebrow
+              <strong>Program insight</strong>, with the line
+              <strong
+                >Explore organization, youth, cohort, attendance, and staff
+                activity from one filtered view.</strong
+              >
+            </p>
+
+            <h3>The shared filters</h3>
+            <p>
+              One filter card governs the whole page:
+              <strong>Report filters</strong> —
+              <strong
+                >Every overview and staff metric uses this exact scope.</strong
+              >
+              It takes <strong>Date from</strong>, <strong>Date to</strong>,
+              <strong>Report cohort</strong> (<strong>All cohorts</strong>),
+              <strong>Report track</strong> (<strong>All tracks</strong>) and
+              <strong>Report mentor</strong> (<strong>All mentors</strong>),
+              applied with <strong>Apply report filters</strong>. A backwards
+              date range gives
+              <strong>Date to must be on or after date from.</strong>
+            </p>
+            <p>
+              Under the filters, two facts about what you are looking at:
+              <strong>Updated <em>date and time</em></strong> and
+              <strong><em>N</em> youth records</strong>. Quote the first when
+              you circulate an export, because reports are a snapshot, not a
+              live document.
+            </p>
+
+            <h3>The four views</h3>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Tab</th>
+                    <th scope="col">What it shows</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Overview</th>
+                    <td>
+                      Six KPI tiles — <strong>Active youth</strong>,
+                      <strong>Average completion</strong>,
+                      <strong>Attendance</strong>, <strong>Retention</strong>,
+                      <strong>Cohorts</strong> and
+                      <strong>Active mentors</strong> — then
+                      <strong>Attendance breakdown</strong> (present, late,
+                      excused, absent) and <strong>Cohort completion</strong> as
+                      a bar per cohort. With nothing in scope:
+                      <strong>No report data for these filters</strong> and
+                      <strong
+                        >Change the date or program filters and try
+                        again.</strong
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Youth report</th>
+                    <td>
+                      Pick somebody under <strong>Youth</strong> and choose
+                      <strong>Generate youth report</strong>. You get three
+                      rings — <strong>Curriculum progress</strong>,
+                      <strong>Average quiz score</strong> and
+                      <strong>Attendance rate</strong> — then
+                      <strong>Module completion</strong>,
+                      <strong>Quiz scores</strong>, <strong>Attendance</strong>,
+                      <strong>Mentor-assessed competencies</strong>,
+                      <strong>Mentor notes summary</strong> and
+                      <strong>Badges</strong>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Cohort report</th>
+                    <td>
+                      <strong>Cohort report selection</strong> plus an optional
+                      <strong>Compare with</strong>, which defaults to
+                      <strong>Program average / previous term</strong>. Then
+                      <strong>Generate cohort report</strong> gives enrolment
+                      and status counts, three KPIs,
+                      <strong>Module completion</strong>,
+                      <strong>Youth summary</strong> and
+                      <strong>Comparisons</strong>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Staff activity</th>
+                    <td>
+                      <strong
+                        >Caseload, check-ins, and reviews within the current
+                        report filters.</strong
+                      >
+                      One card per mentor with those three figures, their
+                      load-balance badge and their target band. Empty:
+                      <strong>No staff activity for these filters</strong> and
+                      <strong>Change the report scope and try again.</strong>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wu-alert wu-alert--info">
+              <p>
+                <strong>Staff activity is Program Administrator only.</strong>
+                Mentors can reach the reports hub and the youth and cohort
+                reports, but the staff-activity data is refused to them. It is
+                the one view on this page that is not shared.
+              </p>
+            </div>
+
+            <p>
+              The youth report deliberately stops short of the private material:
+              <strong
+                >Private note details are not included in this summary.</strong
+              >
+              You get how many check-ins happened and the latest engagement
+              label, never the content of a mentor's private notes or a young
+              person's prayer requests.
+            </p>
+
+            <h3>Exporting</h3>
+            <p>
+              <strong>Export CSV</strong> and <strong>Export PDF</strong> at the
+              top of the page export whichever view you are on, with the current
+              filters. They read <strong>Preparing CSV…</strong> or
+              <strong>Preparing PDF…</strong> while they run and confirm with
+              <strong
+                >CSV export prepared for the current report and filters.</strong
+              >
+            </p>
+          </section>
+
+          <section class="ug-section" id="announcements">
+            <h2>Announcements</h2>
+            <p>
+              Choose <strong>Announcements</strong> in the
+              <strong>Program</strong> group. The page is headed
+              <strong>Announcement administration</strong> with the line
+              <strong
+                >Send program or cohort updates and follow recipient
+                read-through.</strong
+              >
+            </p>
+            <p>
+              The left card is <strong>Compose announcement</strong> —
+              <strong>Choose exactly who should receive this update.</strong>
+              Two decisions decide who gets it, and they are independent.
+            </p>
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Audience</p>
+                <p class="ug-defs__desc">
+                  <strong>Organization</strong> or <strong>Cohort</strong>.
+                  Choosing <strong>Cohort</strong> reveals a picker starting at
+                  <strong>Choose a cohort</strong>; leaving it empty gives
+                  <strong>Choose a cohort for this audience.</strong>
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Recipients</p>
+                <p class="ug-defs__desc">
+                  <strong>Youth</strong>, <strong>Youth + guardians</strong>,
+                  <strong>Guardians</strong>, <strong>Mentors</strong> or
+                  <strong>Everyone</strong>. This narrows the audience by role,
+                  so <em>Cohort</em> plus <em>Guardians</em> reaches the
+                  guardians of one cohort and nobody else.
+                </p>
+              </div>
+            </div>
+            <p>
+              <strong>Title</strong> is up to 200 characters (<strong
+                >Enter a title up to 200 characters.</strong
+              >) and <strong>Message</strong> up to 4000 (<strong
+                >Enter an announcement message.</strong
+              >).
+            </p>
+
+            <h3>Sending now or later</h3>
+            <p>
+              <strong>Delivery</strong> is a choice between
+              <strong>Send now</strong> and <strong>Schedule for later</strong>.
+              Choosing the second reveals <strong>Send date and time</strong>,
+              which must be in the future —
+              <strong>Choose a send date and time in the future.</strong> The
+              button changes to match: <strong>Send announcement</strong> or
+              <strong>Schedule announcement</strong>, and
+              <strong>Saving…</strong> while it works. The outcome is
+              <strong><em>Title</em> was sent.</strong> or
+              <strong><em>Title</em> was scheduled.</strong>
+            </p>
+            <p>
+              The right-hand list is <strong>Sent and scheduled</strong> —
+              <strong
+                >Read statistics refresh from authoritative recipient
+                records.</strong
+              >
+              Each entry carries a <strong>Sent</strong> or
+              <strong>Scheduled</strong> badge, its audience and recipient group
+              as badges, the send or schedule time, and two figures:
+              <strong><em>n</em> of <em>N</em> read</strong> under
+              <strong>Recipient opens</strong>, and a percentage under
+              <strong>Aggregate read rate</strong>. Empty, it reads
+              <strong>No announcements yet</strong> with
+              <strong>Sent and scheduled updates will appear here.</strong>
+            </p>
+          </section>
+
+          <section class="ug-section" id="importing-a-roster">
+            <h2>Importing a roster</h2>
+            <p>
+              Choose <strong>Import Roster</strong>. The page is headed
+              <strong>Import roster</strong> under the eyebrow
+              <strong>People</strong>, with the line
+              <strong
+                >Bring an existing roster into Word Up in three reviewed steps:
+                upload, map, and import.</strong
+              >
+              A standing notice sets expectations:
+              <strong
+                >Export a Google Sheet as CSV first. The source sheet stays
+                untouched, and only rows marked Ready will create youth
+                accounts.</strong
+              >
+            </p>
+            <p>
+              There is no live connection to Google Sheets or anything else.
+              Import is a one-off CSV upload, reviewed before it commits.
+            </p>
+
+            <ol class="ug-steps">
+              <li>
+                <span class="ug-step__title">1 · Upload CSV</span>
+                <p>
+                  The field is <strong>Roster CSV</strong> and the rule is
+                  stated under it:
+                  <strong
+                    >CSV only, up to 2 MB. The file is validated before it is
+                    sent.</strong
+                  >
+                  Validation happens in your browser, so a bad file never leaves
+                  the machine.
+                </p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    A summary showing the file name, the row count, the column
+                    count and the size, with a
+                    <strong>Remove file</strong> button. If instead you get an
+                    error, it is one of these five:
+                  </p>
+                </div>
+                <ul>
+                  <li>
+                    <strong
+                      >Choose a .csv file. Other file types are not
+                      accepted.</strong
+                    >
+                  </li>
+                  <li>
+                    <strong>Choose a CSV file that is 2 MB or smaller.</strong>
+                  </li>
+                  <li>
+                    <strong>Choose a .csv file with a CSV content type.</strong>
+                  </li>
+                  <li>
+                    <strong
+                      >The CSV must contain a header row and at least one data
+                      row.</strong
+                    >
+                  </li>
+                  <li>
+                    <strong>Every CSV column header must be unique.</strong>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <span class="ug-step__title">2 · Map columns</span>
+                <p>
+                  <strong
+                    >CSV column → Word Up field. Leave unneeded columns as
+                    Skip.</strong
+                  >
+                  The table shows your <strong>CSV column</strong>, a
+                  <strong>Sample value</strong> from the data, and a
+                  <strong>Word Up field</strong> picker offering
+                  <strong>Name</strong>, <strong>Email</strong>,
+                  <strong>Cohort</strong>, <strong>Mentor</strong>,
+                  <strong>Track</strong>, <strong>Status</strong>,
+                  <strong>Consent</strong> and <strong>— Skip column —</strong>.
+                  Word Up guesses from your headers; check the guesses rather
+                  than trusting them.
+                </p>
+                <p>Two mapping rules are enforced before you can go on:</p>
+                <ul>
+                  <li>
+                    <strong
+                      >Map exactly one column to Email before
+                      previewing.</strong
+                    >
+                    Email is the identity; without it there is nothing to create
+                    an account against.
+                  </li>
+                  <li><strong>Map each Word Up field at most once.</strong></li>
+                </ul>
+                <p>
+                  <strong>Preview roster</strong> reads
+                  <strong>Checking rows…</strong> while it works.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">3 · Preview</span>
+                <p>
+                  <strong
+                    >Review every row before confirming the import.</strong
+                  >
+                  Four counts sit at the top:
+                </p>
+                <div class="ug-defs">
+                  <div class="ug-defs__row">
+                    <p class="ug-defs__term">ready</p>
+                    <p class="ug-defs__desc">
+                      Will create an account. This is the only count that does
+                      anything.
+                    </p>
+                  </div>
+                  <div class="ug-defs__row">
+                    <p class="ug-defs__term">needs consent</p>
+                    <p class="ug-defs__desc">
+                      A minor with no valid guardian consent record. Shown in
+                      the table as
+                      <strong>Missing consent</strong>.
+                    </p>
+                  </div>
+                  <div class="ug-defs__row">
+                    <p class="ug-defs__term">duplicates</p>
+                    <p class="ug-defs__desc">
+                      That email already belongs to somebody in Word Up.
+                    </p>
+                  </div>
+                  <div class="ug-defs__row">
+                    <p class="ug-defs__term">invalid</p>
+                    <p class="ug-defs__desc">
+                      The row cannot be read as a person.
+                    </p>
+                  </div>
+                </div>
+                <p>
+                  The table then lists every row with <strong>Name</strong>,
+                  <strong>Email</strong>, <strong>Cohort</strong>,
+                  <strong>Mentor</strong>, <strong>Track</strong> and its
+                  <strong>Import</strong> status, with a specific reason
+                  underneath where there is one. The button reads
+                  <strong>Import <em>N</em> ready people</strong> and is
+                  disabled when the ready count is zero.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Confirm</span>
+                <p>
+                  A dialog opens headed <strong>Confirm roster import</strong>,
+                  stating exactly what is about to happen:
+                  <strong
+                    >Only <em>N</em> ready rows will create an account.
+                    Duplicates, missing-consent rows, and invalid rows will
+                    remain unchanged.</strong
+                  >
+                  <strong>Cancel</strong> or <kbd>Escape</kbd> backs out;
+                  <strong>Confirm import</strong> proceeds, showing
+                  <strong>Importing…</strong>
+                </p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    A card under the eyebrow <strong>Roster saved</strong>,
+                    headed <strong>Import complete</strong>, with four figures —
+                    imported, duplicate skipped, needs consent, invalid — and a
+                    <strong>View people</strong> button. The imported figure
+                    should match the ready count you confirmed.
+                  </p>
+                </div>
+              </li>
+            </ol>
+
+            <div class="wu-alert wu-alert--info">
+              <p>
+                <strong>Only ready rows create accounts.</strong> Nothing else
+                in the file is touched, changed or partially applied. That means
+                a failed import is safe to retry: fix the source spreadsheet,
+                export again, and run the three steps a second time. The rows
+                that already imported will simply come back as duplicates.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="where-to-next">
+            <h2>Where to next</h2>
+            <ul class="ug-cards">
+              <li>
+                <a class="ug-card" href="../volunteer/todays-session.html">
+                  <span class="ug-card__kicker">Volunteer</span>
+                  <span class="ug-card__title">Run today's session</span>
+                  <span class="ug-card__desc"
+                    >The cut-down version of attendance capture that volunteers
+                    actually see.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a
+                  class="ug-card"
+                  href="../advanced/privacy-consent-and-audit.html"
+                >
+                  <span class="ug-card__kicker">Advanced</span>
+                  <span class="ug-card__title"
+                    >Privacy, consent and the audit trail</span
+                  >
+                  <span class="ug-card__desc"
+                    >What every export and import leaves behind, and how privacy
+                    requests work.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a class="ug-card" href="../advanced/troubleshooting.html">
+                  <span class="ug-card__kicker">Advanced</span>
+                  <span class="ug-card__title">Troubleshooting by symptom</span>
+                  <span class="ug-card__desc"
+                    >Every preview limitation in one list, starting from what
+                    you can see on screen.</span
+                  >
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <nav data-ug-pager aria-label="Previous and next page"></nav>
+        </div>
+      </main>
+
+      <footer data-ug-status></footer>
+    </div>
+  </body>
+</html>

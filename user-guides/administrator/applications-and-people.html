@@ -1,0 +1,1237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="How a Program Administrator reviews applications, records a placement decision, sends and manages invitations, and runs the people directory including role changes, deactivation and permanent removal."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Applications, invitations and people — Word Up User Guide</title>
+    <link rel="stylesheet" href="../assets/vendor/core.css" />
+    <link rel="stylesheet" href="../assets/vendor/a11y.css" />
+    <link rel="stylesheet" href="../assets/guide.css" />
+    <script defer src="../assets/guide.js"></script>
+  </head>
+  <body
+    data-category="Program administrator"
+    data-page="administrator/applications-and-people"
+  >
+    <a class="ug-skip" href="#main-content">Skip to content</a>
+
+    <div class="ug-app">
+      <header data-ug-header></header>
+
+      <aside class="ug-sidebar" aria-label="Guide contents">
+        <p class="ug-sidebar__head">
+          <span>Guide contents</span>
+          <span class="ug-sidebar__count"
+            ><span data-ug-pagecount>21</span> pages</span
+          >
+        </p>
+        <nav data-ug-nav aria-label="Guide pages"></nav>
+      </aside>
+
+      <main id="main-content">
+        <div class="ug-page">
+          <nav data-ug-breadcrumbs aria-label="Breadcrumb"></nav>
+
+          <header class="ug-hero">
+            <p class="ug-hero__eyebrow">Program administrator / 10</p>
+            <h1>Applications, invitations and people</h1>
+            <p class="ug-hero__lede">
+              This page covers the front door of the program: how an application
+              arrives, how you review it against guardian consent, how approving
+              one creates an account, and how you then invite, find, re-role,
+              deactivate or permanently remove the people in your program. Every
+              decision described here is written to the audit log.
+            </p>
+            <div class="ug-hero__meta">
+              <span class="wu-badge wu-badge--outline"
+                >Program Administrator</span
+              >
+              <span class="wu-badge wu-badge--outline">Mentor</span>
+              <span class="ug-stamp">WU-UG-10</span>
+            </div>
+          </header>
+
+          <nav data-ug-toc aria-label="On this page"></nav>
+
+          <section class="ug-section" id="what-this-page-assumes">
+            <h2>What this page assumes</h2>
+            <p>
+              You are signed in as a Program Administrator. In the sidebar you
+              have a
+              <strong>People</strong> group containing <strong>People</strong>,
+              <strong>Import Roster</strong>,
+              <strong>Mentor Assignments</strong>, <strong>Cohorts</strong>,
+              <strong>Applications</strong>, <strong>Invitations</strong> and
+              <strong>Users &amp; Roles</strong>. Almost everything on this page
+              lives in that group.
+            </p>
+            <p>
+              Mentors share one screen with you — <strong>Invitations</strong> —
+              but see a narrower version of it. Where that matters it is called
+              out.
+            </p>
+            <div class="wu-alert wu-alert--info">
+              <p>
+                <strong
+                  >Nothing here works without a cohort and a mentor.</strong
+                >
+                Approving an application requires you to name both. If you have
+                not created either yet, read
+                <a href="cohorts-and-curriculum.html"
+                  >Cohorts, curriculum and settings</a
+                >
+                first and come back.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="the-public-application-form">
+            <h2>The public application form</h2>
+            <p>
+              Applications reach you from the public site, at
+              <strong>Apply</strong>. No account is needed to fill it in, and
+              filling it in does not create one. The page is headed
+              <strong>Join a cohort</strong> and says
+              <strong>Open to young people aged 12–18.</strong>
+            </p>
+            <p>
+              The form captures the following. Fields marked required cannot be
+              left blank.
+            </p>
+
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Field</th>
+                    <th scope="col">Required</th>
+                    <th scope="col">What it holds</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Who’s filling this out?</th>
+                    <td class="ug-nowrap">Always answered</td>
+                    <td>
+                      One of <strong>I’m applying for myself</strong>,
+                      <strong>I’m a parent or guardian</strong> or
+                      <strong>I’m referring someone</strong>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Cohort you’re interested in</th>
+                    <td>Yes</td>
+                    <td>
+                      Free text, e.g. the placeholder
+                      <strong>For example, Regent Park autumn cohort</strong>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">First name / Last name</th>
+                    <td>Yes</td>
+                    <td>The young person's name, not the person typing.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Age</th>
+                    <td>Yes</td>
+                    <td>
+                      Must be 12 to 18 inclusive. Anything outside that range is
+                      rejected on the form.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Neighbourhood</th>
+                    <td>Yes</td>
+                    <td>
+                      Free text; it becomes a column in your applications list.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Track you’re most interested in</th>
+                    <td>No</td>
+                    <td>
+                      <strong>No preference yet</strong>,
+                      <strong>Bible &amp; Leadership</strong> or
+                      <strong>Coding for Kingdom</strong>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Why are you interested?</th>
+                    <td>Yes</td>
+                    <td>Long text. You see it in full during review.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Parent or guardian</th>
+                    <td class="ug-nowrap">If under 18</td>
+                    <td>
+                      A block headed <strong>Parent or guardian</strong> with
+                      the note
+                      <strong>Required for applicants under 18.</strong> It asks
+                      for <strong>Guardian name</strong>,
+                      <strong>Guardian email</strong> and
+                      <strong>Guardian phone</strong>, all required once it
+                      appears.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Acknowledgements</th>
+                    <td>Yes</td>
+                    <td>
+                      Two tick boxes:
+                      <strong
+                        >I confirm a parent or guardian consents to
+                        participation.</strong
+                      >
+                      and
+                      <strong>I’ve read the privacy notice.</strong>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Submitting shows <strong>Application received</strong> with the
+              text
+              <strong
+                >Thanks for applying to Word Up! We’ll review your application
+                and reach out with next steps. You don’t have an account yet —
+                we’ll set one up once you’re accepted into a cohort.</strong
+              >
+              That last sentence is literally true, and it is the single most
+              important thing to understand about intake.
+            </p>
+
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">A tick box is not consent</p>
+              <p>
+                The
+                <strong
+                  >I confirm a parent or guardian consents to
+                  participation</strong
+                >
+                box is an acknowledgement typed by whoever filled the form in.
+                It is <em>not</em> a guardian consent record and it will not let
+                you approve a minor. A real consent record has to be signed by
+                the guardian. See
+                <a href="../guardian/consent-and-progress.html"
+                  >Give consent and follow progress</a
+                >
+                for how that happens.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="the-applications-list">
+            <h2>The applications list</h2>
+            <p>
+              Choose <strong>Applications</strong> in the sidebar. The page is
+              headed <strong>Applications</strong> under the eyebrow
+              <strong>Intake</strong>, with the line
+              <strong
+                >Review consent, place applicants, and keep every decision
+                traceable.</strong
+              >
+            </p>
+            <p>
+              One control sits in the page header: a select labelled
+              <strong>Application status</strong>. Its options are, in order,
+              <strong>All statuses</strong>, <strong>New</strong>,
+              <strong>In review</strong>, <strong>Needs consent</strong>,
+              <strong>Approved</strong> and <strong>Declined</strong>. Changing
+              it reloads the table immediately; there is no apply button.
+            </p>
+            <p>
+              The table has seven columns: <strong>Applicant</strong>,
+              <strong>Age</strong>, <strong>Neighbourhood</strong>,
+              <strong>Track</strong>, <strong>Status</strong>,
+              <strong>Submitted</strong> and an unlabelled action column.
+            </p>
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">
+                  The <span class="ug-nowrap">Minor</span> badge
+                </p>
+                <p class="ug-defs__desc">
+                  A grey <strong>Minor</strong> badge appears next to the age of
+                  any applicant under 18. It is the signal that this application
+                  is consent-gated.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">The status pill</p>
+                <p class="ug-defs__desc">
+                  Colour-coded: <strong>Needs consent</strong> is amber,
+                  <strong>Approved</strong> is green,
+                  <strong>Declined</strong> is grey, and
+                  <strong>New</strong> and <strong>In review</strong> are plain.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Track</p>
+                <p class="ug-defs__desc">
+                  Shows the applicant's stated preference, or an em dash if they
+                  chose
+                  <strong>No preference yet</strong>. It is a preference, not a
+                  placement.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">
+                  <span class="ug-nowrap">Review</span>
+                </p>
+                <p class="ug-defs__desc">
+                  The button in the last column of every row. It is the only way
+                  into the review dialog. While the application loads you see
+                  <strong>Loading application…</strong>
+                </p>
+              </div>
+            </div>
+            <p>
+              If the filter matches nothing you get an empty state headed
+              <strong>No matching applications</strong> with the line
+              <strong
+                >New applications and referrals will appear here for
+                review.</strong
+              >
+            </p>
+
+            <figure class="ug-figure">
+              <figcaption class="ug-figure__head">
+                How an application moves
+              </figcaption>
+              <div class="ug-figure__body">
+                <ol class="ug-flow">
+                  <li>New</li>
+                  <li>In review</li>
+                  <li>Needs consent</li>
+                  <li>Approved</li>
+                </ol>
+              </div>
+              <p class="ug-figure__caption">
+                <strong>Declined</strong> is the other ending, reachable from
+                any of the first three states. <strong>Approved</strong> and
+                <strong>Declined</strong> are both final: once an application
+                reaches either, a second attempt is refused with
+                <strong>This application already has a final decision.</strong>
+                <strong>Needs consent</strong> is not a failure — it is the
+                system telling you a minor is waiting on a guardian signature.
+              </p>
+            </figure>
+          </section>
+
+          <section class="ug-section" id="reviewing-an-application">
+            <h2>Reviewing an application</h2>
+            <p>
+              Choosing <strong>Review</strong> opens a dialog headed
+              <strong>Review application</strong>, with the applicant's name,
+              age and application date underneath. It is a real dialog:
+              <kbd>Escape</kbd> closes it and returns focus to the
+              <strong>Review</strong> button you came from, and
+              <kbd>Tab</kbd> stays inside it until you leave.
+            </p>
+
+            <h3>The consent banner</h3>
+            <p>
+              The first thing in the dialog body is a consent banner, and which
+              one you get decides whether you can approve at all.
+            </p>
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Amber</p>
+                <p class="ug-defs__desc">
+                  <strong>Guardian participation consent required</strong> —
+                  <strong
+                    >This minor cannot be approved into active participation
+                    until a valid consent record is linked.</strong
+                  >
+                  The <strong>Approve</strong> button is disabled while this is
+                  showing.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Green</p>
+                <p class="ug-defs__desc">
+                  <strong>Guardian participation consent recorded</strong> —
+                  <strong
+                    >This application is eligible for a placement
+                    decision.</strong
+                  >
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">No banner</p>
+                <p class="ug-defs__desc">
+                  Consent is <strong>Not required</strong>. The applicant is 18,
+                  so there is nothing to gate. Approve as normal.
+                </p>
+              </div>
+            </div>
+
+            <h3>What the applicant told you</h3>
+            <p>
+              Below the banner, a read-only block labelled
+              <strong>Submitted application</strong> repeats the submission
+              under six eyebrows: <strong>Submitted by</strong>,
+              <strong>Neighbourhood</strong>, <strong>Cohort interest</strong>,
+              <strong>Acknowledgements</strong> (reading, for example,
+              <strong>Participation acknowledged · privacy acknowledged</strong
+              >), <strong>Why interested</strong>, and
+              <strong>Guardian / applicant contact</strong> if any contact
+              detail was given. Missing contact fields read
+              <strong>Name not provided</strong>,
+              <strong>Email not provided</strong> or
+              <strong>Phone not provided</strong> rather than disappearing.
+            </p>
+
+            <h3>The decision form</h3>
+            <ol class="ug-steps">
+              <li>
+                <span class="ug-step__title">Confirm the track</span>
+                <p>
+                  <strong>Interest track</strong> is a free-text box with
+                  suggestions drawn from your published tracks. It records
+                  intent; it does not place anyone. Placement comes from the
+                  cohort you pick next.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Choose the cohort</span>
+                <p>
+                  <strong>Assign cohort *</strong> starts at
+                  <strong>Choose a cohort</strong> and is required. Leave it and
+                  try to approve and the field shows
+                  <strong>Choose a cohort before approval.</strong>
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Choose the mentor</span>
+                <p>
+                  <strong>Assign mentor *</strong> starts at
+                  <strong>Choose a mentor</strong> and is also required; its
+                  error is
+                  <strong>Choose a mentor assigned to the cohort.</strong> The
+                  mentor list is filtered by the cohort you chose, so pick the
+                  cohort first. If you change the cohort afterwards and the
+                  mentor you had picked is not on the new cohort's team, the
+                  mentor field is cleared for you.
+                </p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    Only mentors attached to the selected cohort in the list. If
+                    a mentor you expect is missing, they are not on that
+                    cohort's team yet — add them under
+                    <strong>Mentor Assignments</strong>.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="ug-step__title"
+                  >Add a decision note if you want one</span
+                >
+                <p>
+                  <strong>Decision note</strong> is optional, up to 2000
+                  characters, and placeholder text tells you what it is for:
+                  <strong>Optional note kept on the applicant record.</strong>
+                  It is saved with either decision, approve or decline.
+                </p>
+              </li>
+            </ol>
+
+            <p>
+              If the application already carries a final decision the footer
+              changes: instead of
+              <strong>Decline</strong> and <strong>Approve</strong> you see the
+              status as a badge and a single <strong>Done</strong> button.
+            </p>
+          </section>
+
+          <section class="ug-section" id="approving-and-declining">
+            <h2>Approving and declining</h2>
+            <p>
+              Neither button acts immediately. Both open a small confirmation
+              dialog on top of the review dialog, and both confirmations can be
+              dismissed with
+              <strong>Cancel</strong> or <kbd>Escape</kbd>.
+            </p>
+
+            <h3>Approve</h3>
+            <p>
+              The confirmation is headed
+              <strong>Approve application?</strong> and reads
+              <strong
+                >Enrol this applicant in <em>cohort</em> with
+                <em>mentor</em>?</strong
+              >
+              followed by
+              <strong
+                >The applicant contact will receive an approval email.</strong
+              >
+              The action button is <strong>Confirm approval</strong>, and shows
+              <strong>Approving…</strong> while it runs.
+            </p>
+            <p>Confirming does five things at once:</p>
+            <ul>
+              <li>
+                Creates a <strong>Youth</strong> account with status
+                <strong>Active</strong> and no password yet, named from the
+                application's first and last name.
+              </li>
+              <li>
+                Sets that account's cohort and mentor to the ones you chose.
+              </li>
+              <li>Enrols the youth on the cohort's curriculum track.</li>
+              <li>
+                Moves the application to <strong>Approved</strong> and stamps it
+                with your decision note and the review time.
+              </li>
+              <li>
+                Emails the applicant contact, subject
+                <strong>Your Word Up application was approved</strong>, saying
+                the young person has been approved for that cohort with that
+                mentor and that
+                <strong
+                  >Word Up staff will follow up with account access
+                  details.</strong
+                >
+              </li>
+            </ul>
+            <p>
+              Back on the list you get a green line reading
+              <strong><em>Name</em> was approved and enrolled.</strong> The new
+              person appears immediately in <strong>People</strong>.
+            </p>
+            <div class="wu-alert wu-alert--info">
+              <p>
+                <strong
+                  >Approval creates the account; it does not hand over the
+                  keys.</strong
+                >
+                The approval email deliberately contains no sign-in link.
+                Getting the young person into the portal is a separate,
+                deliberate step — see
+                <a href="#the-account-lifecycle">The account lifecycle</a> for
+                <strong>Send password reset</strong>.
+              </p>
+            </div>
+            <p>Approval can still be refused. The messages you may see are:</p>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Message</th>
+                    <th scope="col">Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      This application already has a final decision.
+                    </th>
+                    <td>
+                      Somebody approved or declined it since you opened the
+                      dialog.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Guardian participation consent must be recorded before
+                      approval.
+                    </th>
+                    <td>
+                      The applicant is a minor with no valid consent record.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">The selected cohort's track is paused.</th>
+                    <td>
+                      The cohort's track has been disabled in organisation
+                      settings. Enable it, or choose a different cohort.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      The selected mentor is not assigned to this cohort.
+                    </th>
+                    <td>
+                      The mentor is neither the lead nor a supporting mentor on
+                      that cohort.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Choose an active mentor.</th>
+                    <td>The mentor's account is no longer active.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Decline</h3>
+            <p>
+              The confirmation is headed
+              <strong>Decline application?</strong> and asks
+              <strong
+                >Decline <em>Name</em> without creating an account?</strong
+              >
+              with the note
+              <strong
+                >The optional decision note remains on the application
+                record.</strong
+              >
+              The action button is <strong>Confirm decline</strong>, showing
+              <strong>Declining…</strong> while it runs, and the list then reads
+              <strong><em>Name</em>'s application was declined.</strong>
+            </p>
+            <p>
+              Declining creates nothing. No account, no invitation, no cohort
+              membership — only the application record changes, keeping the note
+              and the timestamp. Because
+              <strong>Declined</strong> is final, a declined applicant who
+              should have been accepted has to apply again.
+            </p>
+          </section>
+
+          <section class="ug-section" id="sending-invitations">
+            <h2>Sending invitations</h2>
+            <p>
+              An invitation is how somebody who does not yet have an account
+              gets one. Choose
+              <strong>Invitations</strong> in the sidebar. The page is headed
+              <strong>Invitations</strong> under the eyebrow
+              <strong>People</strong>, and for you it reads
+              <strong>Invite people by role and track every link.</strong>
+            </p>
+            <p>
+              The left-hand card is <strong>Send invitations</strong> with the
+              instruction
+              <strong
+                >Enter one email per line. Links expire after 14 days.</strong
+              >
+            </p>
+
+            <ol class="ug-steps">
+              <li>
+                <span class="ug-step__title"
+                  >Pick the role
+                  <span class="wu-badge wu-badge--outline ug-step__persona"
+                    >Program Administrator</span
+                  ></span
+                >
+                <p>
+                  <strong>Role</strong> offers all five stored roles:
+                  <strong>Youth</strong>, <strong>Mentor</strong>,
+                  <strong>ProgramAdministrator</strong>,
+                  <strong>Guardian</strong> and <strong>Volunteer</strong>. The
+                  invitation creates an account in exactly that role.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Optionally place them</span>
+                <p>
+                  <strong>Cohort (optional)</strong> defaults to
+                  <strong>No cohort yet</strong> and
+                  <strong>Mentor (optional)</strong> defaults to
+                  <strong>Assign later</strong>. Both are carried onto the
+                  account when the invitation is accepted, so filling them in
+                  now saves a placement step later.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Enter the addresses</span>
+                <p>
+                  <strong>Email addresses</strong> is a six-row box. One address
+                  per line; commas and semicolons work as separators too.
+                  Addresses are lower-cased and de-duplicated before sending.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Send</span>
+                <p>
+                  <strong>Send invitation</strong> shows
+                  <strong>Sending…</strong> while it works.
+                </p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    A green line reading <strong>Invitation sent.</strong> for a
+                    single address, or
+                    <strong><em>N</em> invitations sent.</strong> for several.
+                    The email box clears, the status filter snaps back to
+                    <strong>Pending</strong>, and the new rows appear on the
+                    right.
+                  </p>
+                </div>
+              </li>
+            </ol>
+
+            <p>Two things stop a send:</p>
+            <ul>
+              <li>
+                An empty box gives
+                <strong>Enter at least one email address.</strong> under the
+                field.
+              </li>
+              <li>
+                A malformed address gives
+                <strong>Enter one valid email address per line.</strong>
+                at the top of the page.
+              </li>
+              <li>
+                An address that already belongs to somebody gives
+                <strong
+                  >An account with this email address already exists.</strong
+                >
+                Invite people who are new; use
+                <a href="#the-person-record">the person record</a> for people
+                who are not.
+              </li>
+            </ul>
+
+            <div class="wu-alert wu-alert--info">
+              <p class="wu-alert__title">Mentors see a smaller form</p>
+              <p>
+                A Mentor opening the same page reads
+                <strong>Invite youth assigned to your mentoring scope.</strong>
+                and gets no role picker and no mentor picker — instead a notice
+                reading
+                <strong
+                  >Invitations you send create Youth accounts assigned to
+                  you.</strong
+                >
+                A Mentor may only invite <strong>Youth</strong> (<strong
+                  >Mentors may only invite youth.</strong
+                >), may only assign those invitations to themselves (<strong
+                  >Mentors may only assign invitations to themselves.</strong
+                >), and may only pick a cohort they are on (<strong
+                  >That cohort is outside your assignment scope.</strong
+                >). A Mentor's list shows only the invitations they created.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="managing-invitations">
+            <h2>Managing invitations</h2>
+            <p>
+              The right-hand card lists what you have sent. Filter it with
+              <strong>Search invitations</strong>,
+              <strong>Status</strong> (<strong>All</strong>,
+              <strong>Pending</strong>, <strong>Accepted</strong>,
+              <strong>Expired</strong>, <strong>Revoked</strong>) and — for
+              administrators only — <strong>Role</strong>. The status filter and
+              role filter apply as soon as you change them; the search box needs
+              <kbd>Enter</kbd> or the <strong>Apply search</strong> button. The
+              list opens filtered to <strong>Pending</strong>, not to
+              everything.
+            </p>
+            <p>
+              Columns are <strong>Email</strong> (with
+              <strong>by <em>name</em></strong> underneath, naming who sent it),
+              <strong>Role &amp; context</strong> (with the cohort and mentor,
+              or <strong>No cohort</strong> / <strong>No mentor</strong>),
+              <strong>Status</strong>, <strong>Expires</strong> and
+              <strong>Actions</strong>. Twenty five rows per page, with
+              <strong>Previous</strong> and <strong>Next</strong> and a
+              <strong>Page <em>n</em> · <em>N</em> total</strong> readout
+              between them.
+            </p>
+
+            <h3>How long a link lasts</h3>
+            <p>
+              Every invitation expires <strong>14 days</strong> after it is
+              created, and every link is single use. Once someone accepts, the
+              invitation becomes <strong>Accepted</strong> and can never be used
+              again.
+            </p>
+
+            <h3>Resend</h3>
+            <p>
+              <strong>Resend</strong> mints a brand-new token, resets the clock
+              to another 14 days, and emails the new link. The old link stops
+              working the moment you do this — so resending is also the way to
+              invalidate a link that went to the wrong inbox.
+            </p>
+            <p>Resend refuses in three cases:</p>
+            <ul>
+              <li>
+                <strong>Only pending invitations can be resent.</strong> — the
+                invitation has already been accepted or revoked.
+              </li>
+              <li>
+                <strong
+                  >An account with this email address already exists.</strong
+                >
+                — somebody signed up on that address in the meantime.
+              </li>
+              <li>
+                <strong
+                  >This invitation changed before it could be resent.</strong
+                >
+                — two people acted on the same row at once. Reload and look
+                again.
+              </li>
+            </ul>
+
+            <h3>Revoke</h3>
+            <p>
+              <strong>Revoke</strong> does not fire straight away. The row
+              switches to <strong>Revoke now?</strong> with
+              <strong>Confirm</strong> and <strong>Cancel</strong> beside it.
+              Confirming kills the link permanently and reports
+              <strong>The invitation for <em>address</em> was revoked.</strong>
+              Revoking is not reversible; to re-invite the same person, send a
+              fresh invitation.
+            </p>
+            <p>
+              A revoked or accepted invitation cannot be revoked again —
+              <strong>Only pending invitations can be revoked.</strong>
+            </p>
+            <p>
+              Rows that are neither pending nor expired show
+              <strong>No actions</strong> instead of buttons. An empty list
+              shows <strong>No invitations found</strong> with
+              <strong>Send an invitation or change the filters.</strong>
+            </p>
+          </section>
+
+          <section class="ug-section" id="the-people-directory">
+            <h2>The people directory</h2>
+            <p>
+              Choose <strong>People</strong>. The page is headed
+              <strong>People directory</strong> with the line
+              <strong>Search and filter everyone in the program.</strong> and an
+              <strong>Invite people</strong> button that jumps to Invitations.
+            </p>
+            <p>A filter card sits above the table:</p>
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Search people</p>
+                <p class="ug-defs__desc">
+                  Placeholder <strong>Name or email</strong>. It filters as you
+                  type — there is no search button — and resets you to page one.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Cohort</p>
+                <p class="ug-defs__desc">
+                  Defaults to <strong>All cohorts</strong>.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Role</p>
+                <p class="ug-defs__desc">
+                  A row of buttons rather than a menu:
+                  <strong>All roles</strong>, <strong>Youth</strong>,
+                  <strong>Mentor</strong>, <strong>Guardian</strong>,
+                  <strong>Volunteer</strong>, <strong>Administrator</strong>.
+                  Exactly one is active at a time and it is filled in solid.
+                </p>
+              </div>
+            </div>
+            <p>
+              The table shows <strong>Name</strong> (a link into the person
+              record), <strong>Email</strong>, <strong>Role</strong>,
+              <strong>Cohort</strong>, <strong>Status</strong> and
+              <strong>Last active</strong>. Ten rows per page, with
+              <strong>Previous</strong>, <strong>Next</strong> and a readout of
+              <strong
+                >Page <em>n</em> of <em>N</em> · <em>total</em> people</strong
+              >. If nothing matches you get
+              <strong>No people found</strong> with
+              <strong>No one matches the current directory filters.</strong> and
+              a <strong>Clear filters</strong> button.
+            </p>
+            <p>
+              <strong>Users &amp; Roles</strong> is a narrower view of the same
+              people, built for one job: re-roling in bulk. It is headed
+              <strong>Users &amp; roles</strong> with
+              <strong
+                >Review active accounts and change access deliberately.</strong
+              >
+              and carries a standing notice —
+              <strong
+                >Staff roles can access other people’s records. Every role
+                change takes effect immediately and is audit logged.</strong
+              >
+              Each row has its own role menu and a
+              <strong>Change</strong> button that turns into
+              <strong>Apply now?</strong> with <strong>Confirm</strong> and
+              <strong>Cancel</strong>. Confirming reports
+              <strong><em>Name</em> is now <em>Role</em>.</strong>
+            </p>
+          </section>
+
+          <section class="ug-section" id="the-person-record">
+            <h2>The person record</h2>
+            <p>
+              Selecting a name opens their record. The title is their display
+              name, the eyebrow reads
+              <strong><em>cohort</em> · <em>role</em></strong> (or
+              <strong>No cohort</strong>), the subtitle is
+              <strong>Program record and account lifecycle</strong>, and a
+              status pill sits on the right: green for <strong>Active</strong>,
+              amber for <strong>Pending</strong>, red for
+              <strong>Deactivated</strong> or <strong>Removed</strong>.
+            </p>
+            <p>Six tabs divide the record.</p>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Tab</th>
+                    <th scope="col">What is on it</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Profile</th>
+                    <td>
+                      <strong>Email</strong>, <strong>Pronouns</strong>,
+                      <strong>Cohort</strong>, <strong>Mentor</strong>,
+                      <strong>Onboarding</strong> (<strong>Complete</strong> or
+                      <strong>Not complete</strong>) and
+                      <strong>Joined</strong>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Guardian &amp; consent</th>
+                    <td>
+                      <strong>Guardian contact</strong> — name, relationship,
+                      email, phone and emergency contact — beside
+                      <strong>Consent</strong>, which shows a
+                      <strong>Valid</strong> or <strong>Not valid</strong> pill
+                      and then <strong>Participation</strong>,
+                      <strong>Media</strong>, <strong>Signed</strong> and
+                      <strong>Valid until</strong>. If no guardian is linked it
+                      reads <strong>No guardian contact is linked.</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Progress</th>
+                    <td>
+                      <strong><em>n</em> of <em>N</em> lessons complete</strong>
+                      with a progress bar and a percentage.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Attendance</th>
+                    <td>
+                      <strong><em>n</em> of <em>N</em> attended</strong> and a
+                      rate, then every session with its status. Empty, it reads
+                      <strong>No attendance recorded.</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Notes</th>
+                    <td>
+                      Check-in summaries, prefaced by
+                      <strong
+                        >Operational check-in summaries are shown here. Private
+                        prayer requests are never included.</strong
+                      >
+                      That exclusion is enforced, not a convention.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Account</th>
+                    <td>
+                      Status, role, <strong>Last active</strong> (or
+                      <strong>Never signed in</strong>) and
+                      <strong>Created</strong> — then the two action panels
+                      described below.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              A person whose status is <strong>Removed</strong> carries a
+              standing notice headed <strong>Historical record</strong>:
+              <strong
+                >This person was permanently removed from active use. Their
+                progress and attendance remain available for reporting, but
+                account access cannot be restored.</strong
+              >
+              No action panels are shown for them at all, only
+              <strong
+                >No account actions are available because permanent removal
+                cannot be reversed.</strong
+              >
+            </p>
+          </section>
+
+          <section class="ug-section" id="the-account-lifecycle">
+            <h2>Changing a role, resetting a password, deactivating</h2>
+            <p>
+              Everything here lives on the <strong>Account</strong> tab, in two
+              panels: <strong>Access and role</strong> and
+              <strong>Account lifecycle</strong>.
+            </p>
+
+            <h3>Change role</h3>
+            <p>
+              Pick a new value in <strong>Account role</strong> — the options
+              are <strong>Youth</strong>, <strong>Mentor</strong>,
+              <strong>Guardian</strong>, <strong>Volunteer</strong> and
+              <strong>Program administrator</strong> — then choose
+              <strong>Change role</strong>. The button is disabled until the
+              selection differs from the current role.
+            </p>
+            <p>
+              The confirmation is headed
+              <strong>Change account role?</strong> and asks
+              <strong
+                >Change this account from <em>old</em> to <em>new</em>?</strong
+              >
+              If the new role is a staff role — Mentor, Volunteer or Program
+              administrator — an amber warning follows:
+              <strong
+                >This staff role grants access to young people's records and
+                protected program data. The change takes effect immediately and
+                all current sessions will be revoked.</strong
+              >
+              For a non-staff role you get the same warning without the first
+              sentence. Confirm with
+              <strong>Confirm role change</strong>; the record then reports
+              <strong>Role changed to <em>Role</em>.</strong>
+            </p>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">A role change signs the person out</p>
+              <p>
+                Every current session for that account is revoked the instant
+                you confirm. Whatever they were doing on whatever device, they
+                are signed out and must sign in again. Do not do this
+                mid-session without telling them.
+              </p>
+            </div>
+
+            <h3>Send password reset</h3>
+            <p>
+              <strong>Send password reset</strong> emails a reset link to the
+              address on the record and reports
+              <strong>Password reset sent to <em>address</em>.</strong> This is
+              the normal way to give a newly approved applicant their first
+              sign-in, and the normal fix for somebody locked out after five
+              failed attempts.
+            </p>
+
+            <h3>Deactivate and reactivate</h3>
+            <p>
+              The <strong>Account lifecycle</strong> panel explains itself
+              before you press anything:
+              <strong
+                >Deactivation signs the person out and blocks sign-in while
+                retaining all records. It can be reversed.</strong
+              >
+            </p>
+            <p>
+              <strong>Deactivate account</strong> confirms with
+              <strong>Deactivate account?</strong> and the text
+              <strong
+                >This person will be signed out and unable to sign in. Progress,
+                attendance, notes, and reporting records will be retained. You
+                can reactivate the account later.</strong
+              >
+              The action button is <strong>Confirm deactivation</strong>, and
+              the outcome is
+              <strong
+                >Account deactivated. Existing sessions were revoked.</strong
+              >
+            </p>
+            <p>
+              A deactivated person's panel instead reads
+              <strong
+                >Reactivation restores sign-in eligibility, but previously
+                revoked sessions stay revoked.</strong
+              >
+              <strong>Reactivate account</strong> confirms with
+              <strong
+                >This person will be able to sign in again. Previously revoked
+                sessions remain invalid, so they must start a new
+                session.</strong
+              >
+              and reports
+              <strong>Account reactivated. A new sign-in is required.</strong>
+            </p>
+            <p>
+              Deactivation is the reversible option, and it is almost always the
+              one you want. A youth who has left for the summer, a mentor
+              between terms, a volunteer whose check has lapsed — deactivate.
+              Everything they did stays, everything they can do stops, and you
+              can undo it.
+            </p>
+          </section>
+
+          <section class="ug-section" id="removing-a-person">
+            <h2>Removing a person permanently</h2>
+
+            <div class="wu-alert wu-alert--error" role="alert">
+              <p class="wu-alert__title">Removal cannot be undone</p>
+              <p>
+                <strong
+                  >Removal is irreversible; this person cannot be
+                  reactivated.</strong
+                >
+                That is the exact message the system returns if anyone later
+                tries. There is no restore, no administrator override and no
+                command-line escape hatch. If you are not certain,
+                <a href="#the-account-lifecycle">deactivate</a> instead — it
+                achieves the same practical result and can be reversed.
+              </p>
+            </div>
+
+            <p>
+              <strong>Remove person</strong> is the red button at the bottom of
+              the <strong>Account lifecycle</strong> panel, in a bordered danger
+              area. Above it the panel states plainly:
+              <strong
+                >Permanent removal revokes access and removes the person from
+                active use. Progress and reporting records are retained, but
+                removal cannot be reversed.</strong
+              >
+            </p>
+
+            <ol class="ug-steps">
+              <li>
+                <span class="ug-step__title">Choose Remove person</span>
+                <p>
+                  A confirmation opens headed
+                  <strong>Permanently remove person?</strong> with a red
+                  callout:
+                  <strong
+                    >Permanent removal cannot be undone. Access will be revoked
+                    and the person will be removed from active use; progress and
+                    reporting records will be retained.</strong
+                  >
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Type the name</span>
+                <p>
+                  A field labelled
+                  <strong>Type <em>display name</em> to confirm</strong> must be
+                  filled in with that person's display name, exactly. The
+                  <strong>Permanently remove</strong> button stays disabled
+                  until it matches character for character. This is deliberate
+                  friction; do not paste past it without reading the name.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Confirm</span>
+                <p>Choose <strong>Permanently remove</strong>.</p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    A green line reading
+                    <strong
+                      ><em>Name</em> was removed. Access cannot be restored;
+                      reporting records were retained.</strong
+                    >
+                    The status pill turns red and reads
+                    <strong>Removed</strong>, the
+                    <strong>Historical record</strong> notice appears, and every
+                    action panel disappears.
+                  </p>
+                </div>
+              </li>
+            </ol>
+
+            <h3>What removal does and does not do</h3>
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Gone</p>
+                <p class="ug-defs__desc">
+                  Sign-in, all current sessions, and any place the person
+                  appears as someone you can act on. Their status becomes
+                  <strong>Removed</strong> permanently.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Kept</p>
+                <p class="ug-defs__desc">
+                  Progress, attendance and reporting records. Removal is not an
+                  erasure request. If somebody has asked for their data to be
+                  deleted, that is a privacy request and it follows a different
+                  path — see
+                  <a href="../advanced/privacy-consent-and-audit.html"
+                    >Privacy, consent and the audit trail</a
+                  >.
+                </p>
+              </div>
+            </div>
+
+            <h3>You cannot remove yourself</h3>
+            <p>
+              The <strong>Remove person</strong> button is not rendered at all
+              on your own record. The other lifecycle actions still are, so it
+              is entirely possible to deactivate your own account and lock
+              yourself out; if you are the only Program Administrator, do not.
+            </p>
+
+            <div class="wu-alert wu-alert--info">
+              <p>
+                Every action on this page — approval, decline, invitation, role
+                change, deactivation, removal — writes an entry to the audit
+                log, with who did it and when. You can read that log under
+                <strong>Audit Log</strong> in the <strong>System</strong> group.
+                Nothing here is quiet.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="where-to-next">
+            <h2>Where to next</h2>
+            <ul class="ug-cards">
+              <li>
+                <a class="ug-card" href="cohorts-and-curriculum.html">
+                  <span class="ug-card__kicker">Program administrator</span>
+                  <span class="ug-card__title"
+                    >Cohorts, curriculum and settings</span
+                  >
+                  <span class="ug-card__desc"
+                    >Create the cohorts and tracks that this page requires
+                    before you can approve anybody.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a
+                  class="ug-card"
+                  href="../reference/messages-and-error-codes.html"
+                >
+                  <span class="ug-card__kicker">Reference</span>
+                  <span class="ug-card__title">Messages and error codes</span>
+                  <span class="ug-card__desc"
+                    >Every refusal quoted above, in one alphabetical list, with
+                    the status code behind it.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a
+                  class="ug-card"
+                  href="../reference/roles-and-permissions.html"
+                >
+                  <span class="ug-card__kicker">Reference</span>
+                  <span class="ug-card__title">Roles and permissions</span>
+                  <span class="ug-card__desc"
+                    >What each of the five roles can reach, and which policy
+                    governs it.</span
+                  >
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <nav data-ug-pager aria-label="Previous and next page"></nav>
+        </div>
+      </main>
+
+      <footer data-ug-status></footer>
+    </div>
+  </body>
+</html>

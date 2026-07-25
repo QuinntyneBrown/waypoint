@@ -1,0 +1,1221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Symptom-first troubleshooting for Word Up: what you see on screen, why it happens and what to do — plus every known preview limitation and how to get help."
+    />
+    <title>Troubleshooting by symptom — Word Up User Guide</title>
+    <link rel="stylesheet" href="../assets/vendor/core.css" />
+    <link rel="stylesheet" href="../assets/vendor/a11y.css" />
+    <link rel="stylesheet" href="../assets/guide.css" />
+    <script defer src="../assets/guide.js"></script>
+  </head>
+  <body data-category="Advanced" data-page="advanced/troubleshooting">
+    <a class="ug-skip" href="#main-content">Skip to content</a>
+
+    <div class="ug-app">
+      <header data-ug-header></header>
+
+      <aside class="ug-sidebar" aria-label="Guide contents">
+        <p class="ug-sidebar__head">
+          <span>Guide contents</span>
+          <span class="ug-sidebar__count"
+            ><span data-ug-pagecount>21</span> pages</span
+          >
+        </p>
+        <nav data-ug-nav aria-label="Guide pages"></nav>
+      </aside>
+
+      <main id="main-content">
+        <div class="ug-page">
+          <nav data-ug-breadcrumbs aria-label="Breadcrumb"></nav>
+
+          <header class="ug-hero">
+            <p class="ug-hero__eyebrow">Advanced / 21</p>
+            <h1>Troubleshooting by symptom</h1>
+            <p class="ug-hero__lede">
+              Every heading on this page is something you can see on your own
+              screen, not something the system did behind it. Find the sentence
+              that matches what Word Up is telling you, and you will get the
+              reason and the fix. The last two sections list every known
+              limitation in this preview, and how to reach a person.
+            </p>
+            <div class="ug-hero__meta">
+              <span class="wu-badge wu-badge--outline">Everyone</span>
+              <span class="ug-stamp">WU-UG-21</span>
+            </div>
+          </header>
+
+          <nav data-ug-toc aria-label="On this page"></nav>
+
+          <section class="ug-section" id="how-to-use-this-page">
+            <h2>How to use this page</h2>
+            <p>
+              Word Up nearly always tells you what is wrong in words, on the
+              screen where it went wrong. Read that sentence first and match it
+              here — it is faster than guessing, and it is usually the whole
+              answer.
+            </p>
+            <p>
+              For a complete list of every message and its status code, see
+              <a href="../reference/messages-and-error-codes.html"
+                >Messages and error codes</a
+              >. This page covers what to actually do about them.
+            </p>
+            <div class="wu-alert wu-alert--info">
+              <p>
+                <strong>Two habits that solve most problems.</strong> First,
+                read the message rather than skipping it — almost every one
+                names the fix. Second, if you have to report something, include
+                the correlation identifier described in
+                <a href="#something-went-wrong-on-our-end"
+                  >Something went wrong on our end</a
+                >. Without it, nobody can find your request in the logs.
+              </p>
+            </div>
+          </section>
+
+          <section class="ug-section" id="signing-in-and-getting-access">
+            <h2>Signing in and getting access</h2>
+
+            <h3 id="email-or-password-is-wrong">
+              I can't sign in and it says my email or password is wrong
+            </h3>
+            <p>
+              <strong>What you see.</strong> A red alert on the sign-in screen
+              reading <strong>Invalid email or password.</strong>
+            </p>
+            <p>
+              <strong>Why it happens.</strong> The email and password do not
+              match an account. Word Up says the same thing whether the email is
+              unknown or the password is wrong — on purpose, so that the screen
+              cannot be used to discover whether somebody has an account.
+            </p>
+            <p>
+              <strong>What to do.</strong> Check the email address for a typo
+              first; it is the more common mistake. Passwords need at least 8
+              characters including at least one letter and one number, so if
+              yours is shorter than that you are not remembering the right one.
+              If you are still stuck, use <strong>Forgot password</strong>
+              rather than guessing again — each wrong attempt counts towards a
+              lockout.
+            </p>
+            <p>
+              If you have never set a password, you do not have an account yet.
+              An application is not an account: an account exists only once an
+              administrator approves your application and you accept the
+              invitation email.
+            </p>
+
+            <h3 id="account-temporarily-locked">
+              It says my account is temporarily locked
+            </h3>
+            <p>
+              <strong>What you see.</strong> Either the message
+              <strong
+                >This account is temporarily locked. Try again in about 15
+                minutes, or reset your password.</strong
+              >
+              or a full page headed
+              <strong>Too many sign-in attempts</strong> under the eyebrow
+              <strong>Account locked</strong>, reading
+              <strong
+                >This account is temporarily locked after several failed
+                attempts. Try again in about 15 minutes, or reset your
+                password.</strong
+              >
+            </p>
+            <p>
+              <strong>Why it happens.</strong> Five failed sign-in attempts in a
+              row lock the account for about fifteen minutes. This protects the
+              account from someone guessing at it.
+            </p>
+            <p>
+              <strong>What to do.</strong> Wait it out, or reset your password —
+              a successful reset gets you back in without waiting. Do not keep
+              trying: further attempts during the lock do not help. If you were
+              not the one attempting to sign in, tell your program
+              administrator, because someone else was.
+            </p>
+
+            <h3 id="account-is-inactive">It says my account is inactive</h3>
+            <p>
+              <strong>What you see.</strong> The message
+              <strong
+                >This account is inactive. Please contact your program
+                director.</strong
+              >
+              or the page <strong>This account is inactive</strong> under the
+              eyebrow <strong>Account inactive</strong>, reading
+              <strong
+                >Your account isn’t active right now. Please contact your
+                program director to restore access.</strong
+              >
+            </p>
+            <p>
+              <strong>Why it happens.</strong> An administrator has deactivated
+              the account. This is a deliberate act, usually when someone leaves
+              the program or a placement changes.
+            </p>
+            <p>
+              <strong>What to do.</strong> Contact your program administrator.
+              Only they can reactivate the account, and no amount of retrying or
+              password resetting will do it. Note that this is <em>not</em> the
+              same as removal: a deactivated account can be restored, whereas a
+              removed one cannot.
+            </p>
+
+            <h3 id="invitation-link-doesnt-work">
+              My invitation link doesn't work
+            </h3>
+            <p>
+              <strong>What you see.</strong> Instead of the join form, one of
+              four headings, always followed by the line
+              <strong
+                >For your security, invite links are single-use and expire after
+                14 days.</strong
+              >
+            </p>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Heading</th>
+                    <th scope="col">What happened</th>
+                    <th scope="col">What to do</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">This invite link has expired</th>
+                    <td>More than 14 days have passed since it was sent.</td>
+                    <td>Choose <strong>Request a new invite</strong>.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">This invite is no longer active</th>
+                    <td>
+                      An administrator revoked it, usually because something
+                      about the placement changed.
+                    </td>
+                    <td>
+                      Choose <strong>Request a new invite</strong>, then check
+                      with your program administrator that you should still be
+                      joining.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">This invite has already been used</th>
+                    <td>
+                      The account already exists. You see the extra line
+                      <strong
+                        >Your account already exists. Sign in with the password
+                        you created.</strong
+                      >
+                    </td>
+                    <td>
+                      Go to <strong>Back to sign in</strong>. If you do not know
+                      the password, reset it.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">This invite link is not valid</th>
+                    <td>
+                      The link is malformed or unknown — most often a link
+                      broken across two lines by an email client, or one that
+                      was copied incompletely.
+                    </td>
+                    <td>
+                      Copy the whole link again from the original email. If it
+                      still fails, request a new invite.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              <strong>What to expect after requesting.</strong> You get
+              <strong
+                >If a replacement can be sent, the person who invited you has
+                been notified.</strong
+              >
+              That wording is careful on purpose: it does not confirm whether an
+              invitation exists for your address, so the page cannot be used to
+              probe for accounts. Wait for a fresh email rather than requesting
+              repeatedly.
+            </p>
+
+            <h3 id="password-reset-link-doesnt-work">
+              My password reset link doesn't work
+            </h3>
+            <p>
+              <strong>What you see.</strong> A red alert on the
+              <strong>Set a new password</strong> screen reading
+              <strong>This reset link is invalid or has expired.</strong>
+            </p>
+            <p>
+              <strong>Why it happens.</strong> Reset links are single use and
+              time limited. Three things produce this message: the link expired,
+              it was already used, or it is not a link Word Up recognises. If
+              you requested several resets in a row, only the newest link works
+              — the earlier emails are already dead.
+            </p>
+            <p>
+              <strong>What to do.</strong> Start again from
+              <strong>Forgot password</strong> and use the newest email, opening
+              it in full rather than copying part of the address bar. Do not
+              request many resets in quick succession: password-reset endpoints
+              are rate limited at 20 requests per 60 seconds and you will lock
+              yourself out of the recovery path as well.
+            </p>
+
+            <h3 id="guardian-needs-to-sign-off">
+              It says a guardian needs to sign off
+            </h3>
+            <p>
+              <strong>What you see.</strong> A page headed
+              <strong>A guardian needs to sign off</strong> under the eyebrow
+              <strong>Consent needed</strong>, reading
+              <strong
+                >Before you can start lessons, a parent or guardian needs to
+                give participation consent. It only takes a minute — send them a
+                secure link, or have them sign now.</strong
+              >
+              with three buttons: <strong>Notify my guardian</strong>,
+              <strong>My guardian can sign now</strong> and
+              <strong>Sign out</strong>.
+            </p>
+            <p>
+              <strong>Why it happens.</strong> You are a young person with a
+              linked guardian, and there is no currently valid participation
+              consent. That covers four situations: consent was never given, it
+              was withdrawn, it expired, or a new term began while your
+              organisation requires re-consent each term.
+            </p>
+            <p>
+              <strong>What to do.</strong> If your guardian is with you, choose
+              <strong>My guardian can sign now</strong> and let them sign on
+              your device. Otherwise choose <strong>Notify my guardian</strong>,
+              which emails them a secure link, and check back once they have
+              signed. Access returns immediately after a valid consent is
+              recorded — there is no overnight wait.
+            </p>
+            <p>
+              This is a gate, not a bug, and nobody in the program can wave you
+              through it. If your guardian says they already signed, the likely
+              cause is a new term. See
+              <a href="privacy-consent-and-audit.html#consent-over-time"
+                >Consent over time</a
+              >.
+            </p>
+
+            <h3 id="signed-out-while-working">
+              I was signed out while I was working
+            </h3>
+            <p>
+              <strong>What you see.</strong> A page headed
+              <strong>You’ve been signed out</strong> under the eyebrow
+              <strong>Session expired</strong>, reading
+              <strong
+                >For your security we signed you out after a period of
+                inactivity. Any work in progress has been saved — sign in to
+                pick up where you left off.</strong
+              >
+            </p>
+            <p>
+              <strong>Why it happens.</strong> Thirty minutes without activity
+              signs you out. Reading counts as inactivity: a long lesson left
+              open on screen, or a form you walked away from mid-sentence, will
+              both trip it.
+            </p>
+            <p>
+              <strong>What to do.</strong> Choose
+              <strong>Sign in again</strong>. Word Up captures what you had
+              typed into ordinary form fields before it navigates you away, and
+              restores it after you sign back in, returning you to the page you
+              were on. Passwords and file selections are deliberately not
+              captured, so you will need to re-attach any file.
+            </p>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                There is no warning before this happens and no countdown — you
+                are simply signed out. Save long pieces of writing as you go.
+                See
+                <a href="#limitation-idle-signout"
+                  >Idle sign-out gives no warning</a
+                >.
+              </p>
+            </div>
+
+            <h3 id="dont-have-access-to-that-page">
+              It says I don't have access to that page
+            </h3>
+            <p>
+              <strong>What you see.</strong> A page headed
+              <strong>You don’t have access to that</strong> under the eyebrow
+              <strong>Error 403</strong>, reading
+              <strong
+                >This area is for a different role. If you think this is a
+                mistake, switch to the right account or head back to your
+                home.</strong
+              >
+            </p>
+            <p>
+              <strong>Why it happens.</strong> Your role does not permit that
+              screen. Word Up has five roles and each one sees a different
+              product — mentors cannot reach administration screens, volunteers
+              cannot reach mentoring ones, and only Program Administrators reach
+              the audit log and privacy requests.
+            </p>
+            <p>
+              <strong>What to do.</strong> Head back to your home and use the
+              sidebar rather than a saved link; bookmarks and pasted URLs from a
+              colleague with a different role are the usual cause. If you
+              genuinely need that area, ask a Program Administrator — a role
+              change takes effect at your next sign-in, because changing a role
+              ends existing sessions.
+            </p>
+            <p>
+              Be aware that refused attempts are recorded. Word Up writes an
+              audit entry naming you and the address you tried, so repeatedly
+              poking at an area you cannot reach is visible. That is a reason to
+              ask rather than retry, not a reason to worry about an honest
+              mistake.
+            </p>
+            <p>
+              See
+              <a href="../reference/roles-and-permissions.html"
+                >Roles and permissions</a
+              >
+              for exactly which role reaches what.
+            </p>
+
+            <h3 id="too-many-requests">It says too many requests</h3>
+            <p>
+              <strong>What you see.</strong>
+              <strong>Too many requests. Please try again later.</strong>
+            </p>
+            <p>
+              <strong>Why it happens.</strong> Sign-in, invitation and
+              password-reset endpoints accept 20 requests per 60 seconds from
+              one address. Beyond that, requests are rejected with a 429 until
+              the window resets. On a shared connection — a youth centre, a
+              school, a church hall — everybody counts towards the same limit,
+              so this can trip through no fault of yours.
+            </p>
+            <p>
+              <strong>What to do.</strong> Wait a minute and try once. The
+              response includes a <code>Retry-After</code> value telling a
+              client how long to wait. Repeatedly resubmitting only keeps the
+              window full. If a whole room hits this while signing in together,
+              stagger them rather than having everyone press the button at once.
+            </p>
+          </section>
+
+          <section class="ug-section" id="learning-and-submitting">
+            <h2>Learning and submitting</h2>
+
+            <h3 id="lesson-or-quiz-is-locked">My lesson or quiz is locked</h3>
+            <p>
+              <strong>What you see.</strong> On <strong>Curriculum</strong>, a
+              module or item showing the badge <strong>Locked</strong> instead
+              of a percentage or status, with an explanation of what unlocks it
+              underneath.
+            </p>
+            <p>
+              <strong>Why it happens.</strong> Curriculum runs in order, as the
+              page itself says:
+              <strong
+                >Follow your modules in order and see what unlocks next.</strong
+              >
+              An item stays locked until the work before it is complete. Content
+              that is still <strong>Draft</strong> or
+              <strong>In review</strong> is not visible to you at all — only
+              published content appears.
+            </p>
+            <p>
+              <strong>What to do.</strong> Read the unlock condition shown with
+              the locked item and finish that first. If the condition looks
+              already met, refresh the page: completion updates as you go, but a
+              page you have had open for a while can be stale. If it still will
+              not open, ask your mentor — they can see your progress record and
+              whether something is genuinely stuck.
+            </p>
+
+            <h3 id="used-all-quiz-attempts">I've used all my quiz attempts</h3>
+            <p>
+              <strong>What you see.</strong> The quiz will not start, and the
+              message is <strong>No attempts remaining.</strong> Above the quiz
+              you can see your position as <strong>Attempt</strong> followed by
+              a number <strong>of</strong> the total allowed.
+            </p>
+            <p>
+              <strong>Why it happens.</strong> Each quiz has an attempt limit
+              set when it was authored, and you have used them all.
+            </p>
+            <p>
+              <strong>What to do.</strong> Talk to your mentor. Your recorded
+              score is the best passing attempt within the limit, so earlier
+              attempts still count for you. There is no self-service way to
+              reset attempts — that is the point of a limit — and asking your
+              mentor is the correct path, not a workaround.
+            </p>
+            <p>
+              A related message,
+              <strong>This attempt has already been submitted.</strong>, means
+              something different: that one attempt is closed. Once you submit,
+              answers are locked and cannot be edited.
+            </p>
+
+            <h3 id="quiz-result-shows-no-score">
+              My quiz result doesn't show a score
+            </h3>
+            <p>
+              <strong>What you see.</strong> A card headed
+              <strong>Waiting for mentor approval</strong> reading
+              <strong
+                >Your answers are submitted and locked. Your score will appear
+                after review.</strong
+              >
+            </p>
+            <p>
+              <strong>Why it happens.</strong> This is working exactly as
+              designed. A quiz score is not visible to you until a mentor has
+              approved the assessment. Marking is not purely mechanical — short
+              answers need a human — and the design keeps a person in the loop
+              rather than handing a young person a bare number.
+            </p>
+            <p>
+              <strong>What to do.</strong> Nothing. There is no button to press
+              and nothing is broken. Once your mentor approves it, the same page
+              shows <strong>Approved score</strong> with your percentage,
+              whether you <strong>Passed</strong> or are
+              <strong>Not passed yet</strong>, the pass mark, and any badge you
+              earned. If it has been sitting for a long time, message your
+              mentor.
+            </p>
+
+            <h3 id="assignment-wont-submit">My assignment won't submit</h3>
+            <p>
+              <strong>What you see.</strong> Either the form refuses to send,
+              the message
+              <strong>Confirm this is your own work before submitting.</strong>,
+              or an upload that is rejected.
+            </p>
+            <p>
+              <strong>Why it happens.</strong> Three separate rules, and it is
+              usually the first.
+            </p>
+            <ul>
+              <li>
+                <strong>The attestation is required.</strong> You must tick
+                <strong
+                  >This is my own work and the evidence is truthful.</strong
+                >
+                — on a coding assignment the shorter
+                <strong>This is my own work.</strong> — before the form will
+                submit. It is not optional and there is no way past it.
+              </li>
+              <li>
+                <strong>Only the allowed kinds of evidence.</strong> Each
+                assignment lists what it accepts under
+                <strong>What you can submit</strong>, which can be any mix of
+                <strong>Written response</strong>,
+                <strong>Photo (JPG or PNG)</strong>,
+                <strong>File (PDF)</strong> and <strong>Evidence link</strong>.
+                Only the fields for the allowed kinds appear, so if you cannot
+                find a place to attach a file, that assignment does not accept
+                one.
+              </li>
+              <li>
+                <strong>Size and format limits.</strong> A photo must be JPG or
+                PNG, up to 10 MB. A file must be a PDF, up to 10 MB.
+              </li>
+            </ul>
+            <p>
+              <strong>What to do.</strong> Tick the attestation. Check your file
+              against the stated type and size — a photo straight from a modern
+              phone can exceed 10 MB, so scale it down. If the message is
+              <strong>This assignment has already been submitted.</strong> then
+              your work is already in; open
+              <strong>View submitted work</strong> to see it. If your mentor
+              asked for changes, use the resubmit path rather than submitting
+              again; a resubmission is refused with
+              <strong>This submission is not awaiting revisions.</strong> unless
+              the submission is genuinely in that state.
+            </p>
+
+            <h3 id="submission-changed-while-reviewing">
+              My submission changed while I was reviewing it
+            </h3>
+            <p>
+              <strong>What you see.</strong> When you save a grade:
+              <strong
+                >This submission changed after you opened it. Review the latest
+                version before saving again.</strong
+              >
+            </p>
+            <p>
+              <strong>Why it happens.</strong> The submission was modified
+              between the moment you opened it and the moment you saved —
+              usually the young person resubmitted, or another mentor graded it
+              first. Word Up refuses the save rather than letting your decision
+              silently overwrite work you have not seen.
+            </p>
+            <p>
+              <strong>What to do.</strong> Reload the submission and read it
+              again before deciding. Your feedback was written against the old
+              version, and it may no longer be fair or even relevant. If you and
+              another mentor are both working the same queue, agree who owns
+              which youth — see
+              <a href="../mentor/review-and-grade.html"
+                >Review and grade submitted work</a
+              >.
+            </p>
+          </section>
+
+          <section class="ug-section" id="attendance">
+            <h2>Attendance</h2>
+
+            <h3 id="attendance-wont-save">My attendance won't save</h3>
+            <p>
+              <strong>What you see.</strong> One of several notices above the
+              roster, depending on what is happening.
+            </p>
+            <div class="ug-tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Message</th>
+                    <th scope="col">What it means</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Attendance saved.</th>
+                    <td>Saved to the server. Nothing to do.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Saved offline — … attendance updates waiting to sync.
+                    </th>
+                    <td>
+                      You are offline. Your marks are held on the device and
+                      will send themselves when the connection returns. A pill
+                      reading <strong>… pending sync</strong> shows the count.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Syncing … attendance updates…</th>
+                    <td>The queue is sending now.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">All attendance changes synced.</th>
+                    <td>The queue is empty. You are done.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      A queued attendance change needs review before it can
+                      sync.
+                    </th>
+                    <td>
+                      Something in the queue conflicts and is waiting on your
+                      decision.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              <strong>Why it happens.</strong> Attendance is the one part of
+              Word Up that works offline, because a hall with poor signal is a
+              normal working condition. Marks are queued on the device and sent
+              when the connection comes back. A conflict occurs when someone
+              else saved that session on the server while you were offline.
+            </p>
+            <p>
+              <strong>What to do about a conflict.</strong> You get a choice
+              headed <strong>Choose which attendance to keep</strong>. For a
+              mentor the explanation is
+              <strong
+                >A newer server edit conflicts with your queued change. Review
+                before choosing.</strong
+              >; for a volunteer it is
+              <strong
+                >Someone saved this session after you went offline. Review the
+                current roster, then apply your queued selections or keep the
+                newer server attendance.</strong
+              >
+              Read the current roster first, then choose
+              <strong>Apply my changes</strong> to overwrite with your queued
+              marks, or <strong>Keep server attendance</strong> to discard yours
+              and accept theirs — which confirms with
+              <strong
+                >Kept the newer server attendance and removed the offline
+                conflict.</strong
+              >
+            </p>
+            <p>
+              Do not guess. If two people took the same register, the person who
+              was in the room should decide.
+            </p>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                You cannot tell by looking which attendance status is selected —
+                the buttons look identical whether or not you chose them. Use
+                the tally counts above the list to confirm what you marked. See
+                <a href="#limitation-attendance-buttons"
+                  >Attendance status buttons have no visual selected state</a
+                >.
+              </p>
+            </div>
+            <p>
+              Also remember that offline support stops at attendance. There is
+              no offline lesson reading, reflection drafting, quiz taking or
+              submission — if you lose connection during any of those, you will
+              see the <strong>No connection right now</strong> page instead.
+            </p>
+          </section>
+
+          <section class="ug-section" id="things-that-look-broken">
+            <h2>Things that look broken</h2>
+
+            <h3 id="page-says-maintenance">
+              The page says Word Up is down for maintenance
+            </h3>
+            <p>
+              <strong>What you see.</strong> A page headed
+              <strong>We’ll be right back</strong> under the eyebrow
+              <strong>Scheduled maintenance</strong>, reading
+              <strong
+                >Word Up is down for a short bit of maintenance. Nothing you’ve
+                done is lost — please check again shortly.</strong
+              >
+              A client talking to the API directly gets a 503 whose body reads
+              <strong>Word Up is down for scheduled maintenance.</strong> with
+              the detail
+              <strong
+                >Nothing you've done is lost. Please check again
+                shortly.</strong
+              >
+            </p>
+            <p>
+              <strong>Why it happens.</strong> An operator has deliberately put
+              Word Up into maintenance mode, usually to deploy an update.
+              Everything is refused while it is on.
+            </p>
+            <p>
+              <strong>What to do.</strong> Wait and try again — the response
+              asks clients to retry after two minutes. Nothing you had already
+              saved is affected. Anything you were part-way through typing was
+              not saved, so redo it once you are back in. If it persists for
+              much longer than a deployment should take, contact your program
+              administrator rather than assuming it will clear itself.
+            </p>
+
+            <h3 id="something-went-wrong-on-our-end">
+              Something went wrong on our end
+            </h3>
+            <p>
+              <strong>What you see.</strong> A page headed
+              <strong>Something went wrong</strong> under the eyebrow
+              <strong>Error 500</strong>, reading
+              <strong
+                >We hit a snag on our end — nothing you did caused it. Please
+                try again in a moment.</strong
+              >
+            </p>
+            <p>
+              <strong>Why it happens.</strong> An unexpected failure on the
+              server. The message is honest: it is not something you did, and
+              the page deliberately shows no technical detail — Word Up never
+              puts a stack trace in front of a user.
+            </p>
+            <p>
+              <strong>What to do — and how to report it usefully.</strong> Try
+              once more; some failures are transient. If it happens again,
+              report it, and include the
+              <strong>correlation identifier</strong>. Every response carries an
+              <code>X-Correlation-ID</code> header, and on a 500 the same value
+              comes back in the body as <code>correlationId</code>. It is the
+              single thing that lets someone find your exact request in the
+              server logs.
+            </p>
+            <ol class="ug-steps">
+              <li>
+                <span class="ug-step__title">Capture the identifier</span>
+                <p>
+                  Copy the correlation identifier if it is shown. If you cannot
+                  see it, take a screenshot of the whole window and note the
+                  time as precisely as you can — to the minute.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title">Note what you were doing</span>
+                <p>
+                  Which screen you were on, which button you pressed, and what
+                  you expected to happen. "Grading a submission for a youth in
+                  the Tuesday cohort, pressed Approve" is findable; "it broke"
+                  is not.
+                </p>
+              </li>
+              <li>
+                <span class="ug-step__title"
+                  >Send it through Contact support</span
+                >
+                <p>
+                  Use the form described in
+                  <a href="#getting-help">Getting help</a> and choose
+                  <strong>A technical problem</strong>.
+                </p>
+                <div class="ug-expect">
+                  <span class="ug-expect__head">What you should see</span>
+                  <p>
+                    A confirmation headed
+                    <strong>Thanks — we’ve got your message</strong> with the
+                    line
+                    <strong
+                      >Our team will follow up at the email you gave us. We
+                      usually reply within a couple of days.</strong
+                    >
+                  </p>
+                </div>
+              </li>
+            </ol>
+            <p>
+              Do not repeat the failing action many times hoping it will take.
+              If it is failing, each attempt adds another log entry to sift and
+              may compound the problem.
+            </p>
+
+            <h3 id="page-not-found">The page can't be found</h3>
+            <p>
+              <strong>What you see.</strong>
+              <strong>Page not found</strong> under the eyebrow
+              <strong>Error 404</strong>, reading
+              <strong
+                >The page you’re looking for moved or never existed. Let’s get
+                you back on track.</strong
+              >
+            </p>
+            <p>
+              <strong>Why it happens.</strong> The address does not match any
+              screen. Usually a stale bookmark, a mistyped address, or a link to
+              something that has since been removed.
+            </p>
+            <p>
+              <strong>What to do.</strong> Navigate from the sidebar instead of
+              from the address bar. If a link inside Word Up itself led you
+              here, that is worth reporting.
+            </p>
+
+            <h3 id="no-connection">It says I'm offline</h3>
+            <p>
+              <strong>What you see.</strong> The banner
+              <strong
+                >You’re offline — changes will save when you reconnect.</strong
+              >
+              across the top of the window, or a page headed
+              <strong>No connection right now</strong> under the eyebrow
+              <strong>You’re offline</strong>, reading
+              <strong
+                >Check your internet connection. Anything already loaded stays
+                available, and we’ll reconnect automatically.</strong
+              >
+            </p>
+            <p>
+              <strong>Why it happens.</strong> Your device has lost its network
+              connection.
+            </p>
+            <p>
+              <strong>What to do.</strong> Check the connection. You do not need
+              to reload — Word Up reconnects on its own. Anything already on
+              screen stays readable. Only attendance can be captured while
+              offline; everything else waits.
+            </p>
+          </section>
+
+          <section class="ug-section" id="known-preview-limitations">
+            <h2>Known preview limitations</h2>
+            <p>
+              These are known, verified and currently true. Each one is a
+              control that appears to work and does not, or an interface
+              behaviour that will mislead you. None of them is worth reporting —
+              they are already known — but each has a workaround, and knowing
+              them will save you a lot of confusion.
+            </p>
+
+            <h3 id="limitation-volunteer-attendance">
+              The volunteer Attendance nav item goes to Today
+            </h3>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                For volunteers, choosing <strong>Attendance</strong> in the
+                sidebar or the bottom navigation redirects you to
+                <strong>Today</strong>. It does not open a roster.
+              </p>
+            </div>
+            <p>
+              <strong>Workaround.</strong> Reach a roster from
+              <strong>Today</strong> by choosing
+              <strong>Take attendance</strong> on the session you are running.
+              See
+              <a href="../volunteer/todays-session.html">Run today's session</a
+              >.
+            </p>
+
+            <h3 id="limitation-notification-bell">
+              The notification bell does not reach notifications for some roles
+            </h3>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The bell in the top bar does not open a notifications page for
+                Program Administrators, Guardians or Volunteers. It redirects to
+                <strong>Announcements</strong> for administrators and guardians,
+                and to <strong>Today</strong> for volunteers. Youth and Mentors
+                do reach <strong>Notifications</strong>.
+              </p>
+            </div>
+            <p>
+              <strong>Workaround.</strong> If you are an administrator or
+              guardian, read <strong>Announcements</strong> directly from the
+              sidebar; that is where the content you were looking for lives
+              anyway. Email notifications, where you have them switched on, are
+              unaffected.
+            </p>
+
+            <h3 id="limitation-attendance-buttons">
+              Attendance status buttons have no visual selected state
+            </h3>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                <strong>Present</strong>, <strong>Late</strong>,
+                <strong>Excused</strong> and <strong>Absent</strong> look
+                identical whether or not you have chosen them. Only assistive
+                technology reports which is pressed.
+              </p>
+            </div>
+            <p>
+              <strong>Workaround.</strong> Use the tally counts above the list.
+              They update as you mark, so a register of twelve should end with
+              the four counts adding to twelve. Count before you save, every
+              time — this is the limitation most likely to produce a wrong
+              record.
+            </p>
+
+            <h3 id="limitation-blank-icons">
+              Some icons render as blank space
+            </h3>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                On several screens an icon renders as an empty gap rather than a
+                symbol. It affects sign-in, forgot password, reset password,
+                guardian consent and guardian home, mentor assign-work and
+                check-ins, volunteer today and schedule, youth curriculum and
+                home, onboarding, and the guardian consent-link page.
+              </p>
+            </div>
+            <p>
+              <strong>Workaround.</strong> Go by the text label beside the gap;
+              every control that is missing its icon still has its words.
+              Nothing is disabled — it is only the picture that is missing.
+            </p>
+
+            <h3 id="limitation-sr-only-text">
+              Screen-reader-only status text is visible
+            </h3>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                Status announcements meant only for screen readers render as
+                ordinary text. It affects mentor reviews, submission review,
+                quiz review, check-ins, flags, attendance history, youth
+                messages and youth notifications.
+              </p>
+            </div>
+            <p>
+              <strong>Workaround.</strong> Ignore the stray line. It duplicates
+              something already on the page and never carries information you
+              cannot see elsewhere.
+            </p>
+
+            <h3 id="limitation-settings-sidebar">
+              The settings sidebar always highlights Profile
+            </h3>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                Inside <strong>Profile &amp; settings</strong>, the sidebar
+                highlights <strong>Profile</strong> even when you are on
+                Notifications, Display or Privacy.
+              </p>
+            </div>
+            <p>
+              <strong>Workaround.</strong> Trust the tabs above the content and
+              the page heading, which do show where you really are. If the
+              heading reads <strong>Privacy &amp; data rights</strong>, you are
+              on the privacy page whatever the sidebar suggests.
+            </p>
+
+            <h3 id="limitation-tab-arrows">
+              Three tab strips do not respond to arrow keys
+            </h3>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                On the mentor youth record, the admin reports hub and attendance
+                history, arrow keys do not move between tabs. Arrow keys, Home
+                and End work only on the youth
+                <strong>My progress</strong> tab strip.
+              </p>
+            </div>
+            <p>
+              <strong>Workaround.</strong> Use <kbd>Tab</kbd> to move through
+              those three, and <kbd>Enter</kbd> or <kbd>Space</kbd> to activate.
+            </p>
+
+            <h3 id="limitation-reading-size">
+              The three lesson reading-size buttons all show the letter A
+            </h3>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                In a lesson, the three reading-size buttons are visually
+                identical — each shows the letter <strong>A</strong>. Only their
+                accessible labels distinguish them.
+              </p>
+            </div>
+            <p>
+              <strong>Workaround.</strong> They are, in order, small, medium and
+              large: left is smallest, right is largest. If you want a text-size
+              change that applies everywhere and persists, use
+              <strong>Text size</strong> under
+              <strong>Display &amp; accessibility</strong> instead — see
+              <a href="../reference/accessibility-and-display.html"
+                >Accessibility and display preferences</a
+              >.
+            </p>
+
+            <h3 id="limitation-no-skip-link">The portal has no skip link</h3>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                The signed-in portal has no <strong>Skip to content</strong>
+                link, so keyboard users must tab through the header and sidebar
+                to reach the main area on every page. The public site does have
+                one.
+              </p>
+            </div>
+            <p>
+              <strong>Workaround.</strong> If your browser or screen reader
+              offers landmark navigation, jump straight to the
+              <strong>main</strong> landmark. Otherwise, expect a run of tab
+              stops through the navigation first.
+            </p>
+
+            <h3 id="limitation-idle-signout">Idle sign-out gives no warning</h3>
+            <div class="wu-alert wu-alert--warning">
+              <p class="wu-alert__title">Preview limitation</p>
+              <p>
+                After 30 minutes of inactivity you are signed out with no
+                countdown and no chance to stay signed in.
+              </p>
+            </div>
+            <p>
+              <strong>Workaround.</strong> Save long pieces of writing as you go
+              rather than composing in one sitting. Word Up does capture what
+              you had typed into ordinary form fields and restores it after you
+              sign back in, but passwords and attached files are not captured.
+              See
+              <a href="#signed-out-while-working"
+                >I was signed out while I was working</a
+              >.
+            </p>
+          </section>
+
+          <section class="ug-section" id="getting-help">
+            <h2>Getting help</h2>
+            <p>
+              If nothing on this page matches, there are two places to go, and
+              they are both inside Word Up.
+            </p>
+
+            <h3>The Help centre</h3>
+            <p>
+              Open the account menu and choose <strong>Help</strong>. The page
+              is headed <strong>How can we help?</strong> under the eyebrow
+              <strong>Help center</strong>, with the line
+              <strong>Search answers written for your Word Up role.</strong>
+              The articles you see are filtered to your role, so a mentor and a
+              youth searching the same word get different answers.
+            </p>
+            <p>
+              Search using the box at the top. Answers open in place. If nothing
+              matches you get <strong>No help articles found</strong> with the
+              suggestion
+              <strong
+                >Try a different word, or contact the support team.</strong
+              >
+              At the foot of the page, <strong>Still need a hand?</strong> takes
+              you to the support form with <strong>Contact support</strong>.
+            </p>
+
+            <h3>The Contact support form</h3>
+            <p>
+              The form is headed <strong>Contact support</strong> and asks four
+              things. The first is <strong>What’s this about?</strong>, and the
+              categories are exactly:
+            </p>
+            <div class="ug-defs">
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Account &amp; sign-in</p>
+                <p class="ug-defs__desc">
+                  Lockouts, invitations, password resets, an inactive account —
+                  anything that stops you getting in.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">A technical problem</p>
+                <p class="ug-defs__desc">
+                  Something broke or behaved wrongly. Use this one for a 500,
+                  and include the correlation identifier.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">A question about the program</p>
+                <p class="ug-defs__desc">
+                  Cohorts, sessions, consent, expectations — questions for the
+                  people running Word Up rather than the software.
+                </p>
+              </div>
+              <div class="ug-defs__row">
+                <p class="ug-defs__term">Something else</p>
+                <p class="ug-defs__desc">
+                  Anything that fits none of the above.
+                </p>
+              </div>
+            </div>
+            <p>
+              Then <strong>How can we help?</strong> for the description — at
+              least 10 characters, or you get
+              <strong
+                >Please describe your issue (at least 10 characters).</strong
+              >
+              — a <strong>Reply-to email</strong>, and an
+              <strong>Optional screenshot</strong>. The screenshot must be
+              <strong>JPG or PNG, up to 5 MB.</strong> and carries the standing
+              caution
+              <strong>Avoid including private information.</strong> Choose
+              <strong>Send message</strong> when you are done.
+            </p>
+
+            <h3>What to include</h3>
+            <p>
+              A support request that answers these gets solved on the first
+              reply instead of the third.
+            </p>
+            <ul>
+              <li>
+                <strong>The exact words on screen.</strong> Quote the message
+                rather than paraphrasing it. "It says
+                <em>This reset link is invalid or has expired</em>" identifies
+                the problem instantly; "the link is broken" does not.
+              </li>
+              <li>
+                <strong>The correlation identifier</strong>, for anything that
+                produced an error page.
+              </li>
+              <li>
+                <strong>What you were trying to do</strong>, in one sentence,
+                and what you expected instead.
+              </li>
+              <li>
+                <strong>When it happened</strong>, to the minute if you can.
+              </li>
+              <li>
+                <strong>Which device and browser</strong>, and whether it also
+                happens on another one.
+              </li>
+              <li>
+                <strong>Whether it happens every time</strong> or only
+                sometimes.
+              </li>
+            </ul>
+            <p>
+              Leave out passwords — nobody supporting Word Up will ever ask for
+              one — and be careful about screenshots of another young person's
+              work, reflections or check-in notes. Crop the picture to the
+              problem.
+            </p>
+
+            <h3>Where else to look</h3>
+            <ul class="ug-cards">
+              <li>
+                <a
+                  class="ug-card"
+                  href="../reference/messages-and-error-codes.html"
+                >
+                  <span class="ug-card__kicker">Reference</span>
+                  <span class="ug-card__title">Messages and error codes</span>
+                  <span class="ug-card__desc"
+                    >Every message quoted on this page, with its status code and
+                    what causes it.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a
+                  class="ug-card"
+                  href="../reference/roles-and-permissions.html"
+                >
+                  <span class="ug-card__kicker">Reference</span>
+                  <span class="ug-card__title">Roles and permissions</span>
+                  <span class="ug-card__desc"
+                    >Why a screen is refused, role by role.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a
+                  class="ug-card"
+                  href="../reference/accessibility-and-display.html"
+                >
+                  <span class="ug-card__kicker">Reference</span>
+                  <span class="ug-card__title"
+                    >Accessibility and display preferences</span
+                  >
+                  <span class="ug-card__desc"
+                    >Text size, contrast, motion, links and reading font — saved
+                    to your account, not your browser.</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a class="ug-card" href="integration-contracts.html">
+                  <span class="ug-card__kicker">Advanced</span>
+                  <span class="ug-card__title">Integration contracts</span>
+                  <span class="ug-card__desc"
+                    >For operators: correlation identifiers, maintenance mode
+                    and the command line.</span
+                  >
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <nav data-ug-pager aria-label="Previous and next page"></nav>
+        </div>
+      </main>
+
+      <footer data-ug-status></footer>
+    </div>
+  </body>
+</html>

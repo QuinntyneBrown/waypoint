@@ -1,0 +1,98 @@
+name: user-guides
+
+# The user guide is a standalone static site with no build step. It is
+# deliberately independent of the application workflows in BOTH directions:
+# a failing application build must never block documentation, and a broken
+# guide page must never block the application.
+#
+# The path filter intentionally does not include a bare `scripts/**` — both
+# backend.yml and frontend.yml already watch that directory, and a broad filter
+# here would make every script change trigger three workflows.
+
+on:
+  push:
+    paths:
+      - "user-guides/**"
+      - "frontend/projects/wu-ui/src/styles/**"
+      - "scripts/verify-word-up-user-guide-assets.mjs"
+      - ".github/workflows/user-guides.yml"
+  pull_request:
+    paths:
+      - "user-guides/**"
+      - "frontend/projects/wu-ui/src/styles/**"
+      - "scripts/verify-word-up-user-guide-assets.mjs"
+      - ".github/workflows/user-guides.yml"
+  workflow_dispatch:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: user-guides
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Runs first: if the vendored stylesheets have drifted from the design
+      # system, nothing downstream is trustworthy.
+      - name: Vendored design-system asset gate
+        run: node scripts/verify-word-up-user-guide-assets.mjs
+        working-directory: .
+
+      # The guide pins its devDependencies and deliberately keeps no lockfile.
+      - name: Restore dependencies
+        run: npm install --no-package-lock
+
+      - run: npm run format:check
+
+      - run: npm run validate
+
+      - name: Install Chrome for the smoke suite
+        run: npx playwright install --with-deps chrome
+
+      - run: npm test
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: user-guides-playwright-report
+          path: user-guides/playwright-report
+          if-no-files-found: ignore
+
+  deploy:
+    # Publishes the folder as-is. There is no build step to run.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Deployment is optional. Without the token the job reports why it did
+      # nothing and succeeds, so a fork or an unconfigured repository is never
+      # failed for a secret it was never given.
+      - name: Check for the deployment secret
+        id: secret
+        env:
+          DEPLOY_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        run: |
+          if [ -z "$DEPLOY_TOKEN" ]; then
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=User guide not deployed::AZURE_STATIC_WEB_APPS_API_TOKEN is not set, so the user guide was built and verified but not published. Set the secret to enable deployment."
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish to Azure Static Web Apps
+        if: steps.secret.outputs.present == 'true'
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: upload
+          app_location: user-guides
+          output_location: ""
+          skip_app_build: true
+          skip_api_build: true
