@@ -185,6 +185,18 @@ public static class CliApplication
                 result.GetRequiredValue(setRoleUserId),
                 result.GetRequiredValue(newRole)));
 
+        var linkGuardian = new Command(
+            "link-guardian",
+            "Link an active guardian to an active youth");
+        var linkYouthId = RequiredArgument<Guid>("youth-id", "Youth user id");
+        var linkGuardianId = RequiredArgument<Guid>("guardian-id", "Guardian user id");
+        linkGuardian.Arguments.Add(linkYouthId);
+        linkGuardian.Arguments.Add(linkGuardianId);
+        SetSenderAction(linkGuardian, runtime, actor, result =>
+            new LinkGuardianCommand(
+                result.GetRequiredValue(linkYouthId),
+                result.GetRequiredValue(linkGuardianId)));
+
         var resetPassword = new Command(
             "reset-password",
             "Send the user a single-use password reset link");
@@ -202,6 +214,7 @@ public static class CliApplication
         group.Subcommands.Add(create);
         group.Subcommands.Add(list);
         group.Subcommands.Add(setRole);
+        group.Subcommands.Add(linkGuardian);
         group.Subcommands.Add(resetPassword);
         group.Subcommands.Add(deactivate);
         return group;

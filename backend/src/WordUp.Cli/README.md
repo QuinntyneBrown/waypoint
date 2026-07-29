@@ -21,3 +21,7 @@ deterministically. `wu db reset` is destructive and requires the exact option `-
 The command groups cover database lifecycle, users, invitations, cohorts, youth CSV import, youth and
 cohort report exports, manual badge awards, and audited access-token issuance. Use `wu <group> <command>
 --help` for typed arguments and options.
+
+`wu user link-guardian <youth-id> <guardian-id>` links an active Guardian account to an active Youth
+account — the relationship the guardian portal and the consent gate both read. Both accounts must
+already exist and be active; the action is audit-logged as `GuardianLinked` against the youth.
