@@ -215,8 +215,8 @@ curl "${AUTH[@]}" -X POST "$API/api/tracks/$TRACK/publish"  >/dev/null
 # 4 — staff accounts -------------------------------------------------------
 MENTOR=$($CLI user create --email grace@wordup.demo --password "$PW" \
   --display-name 'Grace Adeyemi' --role Mentor | jq -r .id)
-$CLI user create --email ruth@wordup.demo --password "$PW" \
-  --display-name 'Ruth Clarke' --role Guardian >/dev/null
+GUARDIAN=$($CLI user create --email ruth@wordup.demo --password "$PW" \
+  --display-name 'Ruth Clarke' --role Guardian | jq -r .id)
 $CLI user create --email sam@wordup.demo  --password "$PW" \
   --display-name 'Sam Whitfield' --role Volunteer >/dev/null
 
@@ -229,16 +229,22 @@ $CLI user create --email amara@wordup.demo --password "$PW" \
   --display-name 'Amara Bell'  --role Youth --cohort "$COHORT" --mentor "$MENTOR"
 $CLI user create --email david@wordup.demo --password "$PW" \
   --display-name 'David Osei'  --role Youth --cohort "$COHORT" --mentor "$MENTOR"
-$CLI user create --email imani@wordup.demo --password "$PW" \
-  --display-name 'Imani Clarke' --role Youth --cohort "$COHORT" --mentor "$MENTOR"
+IMANI=$($CLI user create --email imani@wordup.demo --password "$PW" \
+  --display-name 'Imani Clarke' --role Youth --cohort "$COHORT" --mentor "$MENTOR" | jq -r .id)
+
+# 7 — guardian linkage, deliberately WITHOUT a consent record --------------
+# This is the consent gate: Imani has a guardian on file and no consent, so she is
+# blocked until Ruth grants it live in §5. Audit-logged as GuardianLinked.
+$CLI user link-guardian "$IMANI" "$GUARDIAN"
 
 cat <<EOF
 
 Seeded.
-  track   $TRACK
-  module  $MODULE
-  cohort  $COHORT
-  mentor  $MENTOR
+  track    $TRACK
+  module   $MODULE
+  cohort   $COHORT
+  mentor   $MENTOR
+  guardian $GUARDIAN -> youth $IMANI
 Password for every persona: $PW
 EOF
 ```
@@ -248,8 +254,9 @@ packed tool (`PackAsTool`, command name `wu`). It is not in the repo's tool mani
 
 ### 4.6 Build the scenario states through the UI
 
-The script gives you a cohort of three identical youth. The *interesting* states are the ones you
-create by using the product — which also serves as your rehearsal. Do these in order, ~10 minutes:
+The script gives you a cohort of three youth who differ only in that Imani has a guardian on file.
+The *interesting* states are the ones you create by using the product — which also serves as your
+rehearsal. Do these in order, ~10 minutes:
 
 | # | Sign in as | Do this | Creates |
 |---|---|---|---|
@@ -257,13 +264,20 @@ create by using the product — which also serves as your rehearsal. Do these in
 | 2 | David | Open the quiz, answer wrong, **fail** it | The struggling youth with evidence |
 | 3 | Grace | Open David → raise a **risk flag**, log a **check-in** | The mentor's early-warning trail |
 | 4 | Grace | Schedule a **session** this week; mark David absent for a past one | Attendance history + something for Sam |
-| 5 | Pat | Link **Ruth** as Imani's guardian, **without** recording consent | The consent gate |
-| 6 | Amara | Start (don't finish) **lesson 2** | A live finish during the demo → badge |
+| 5 | Amara | Start (don't finish) **lesson 2** | A live finish during the demo → badge |
 
-> **Guardian linkage.** There is no CLI command for linking a guardian to a youth — do it through
-> the admin people screens. If the running build does not expose that link, fall back to the
-> **application intake** route (§6.2) with `whoIsFilling = "guardian"`, or demo the consent gate by
-> narrating the guardian portal instead of blocking Imani live.
+> **Guardian linkage.** The seed script already links Ruth to Imani with
+> `wu user link-guardian <youth-id> <guardian-id>` (§4.5, step 7) and records **no** consent — that
+> is what arms the consent gate. Both accounts must be **active**, the youth must have the Youth
+> role and the guardian the Guardian role, and the link is audit-logged as `GuardianLinked`, so it
+> shows up in Pat's audit view alongside Ruth's consent in §5. To link someone else on the fly
+> (`$CLI` as defined in §4.5):
+>
+> ```bash
+> IMANI=$($CLI user list --search imani@wordup.demo | jq -r '.items[0].id')
+> RUTH=$($CLI user list --search ruth@wordup.demo  | jq -r '.items[0].id')
+> $CLI user link-guardian "$IMANI" "$RUTH"
+> ```
 
 Then prepare the roster CSV for the extended demo (headers are fixed: `Name, Email, Cohort, Mentor,
 Track, Status, Consent`). Deliberately include **one duplicate email** and **one row with consent
@@ -374,6 +388,7 @@ These are the things that will actually bite you. Read this section before your 
 | **Cohort creation fails** | `wu cohort create` requires a **published** track id and an **active mentor** id. | The seed script publishes track, module, and lessons before creating the cohort. Keep that order. |
 | **Youth sees an empty curriculum** | Youth see only **published** modules and lessons, sourced from their cohort's track (plus any explicit track enrolments). | Confirm all three publish calls returned success and the youth has `--cohort` set. |
 | **Quiz question rejected** | `type` is a numeric enum (`1`–`4`); string values are not accepted. `feedbackMode` must be exactly `show-correct`, `score-only`, or `after-all-attempts`. | Use the values in the seed script verbatim. |
+| **Guardian link is refused** | `wu user link-guardian` requires an **active Youth** and an **active Guardian** — it exits `2` with "Choose an active youth for guardian linkage." or "Choose an active guardian." | Check both accounts exist with the right role (`wu user list --search <email>`) and are active. The ids are positional: **youth first, guardian second**. |
 | **Imported youth cannot sign in** | Roster import creates youth **records** with no password. | That's correct behaviour — say so. Signing-in personas come from `wu user create`. |
 | **Account switching eats the clock** | Five roles, one browser. | Separate browser profiles or windows, all pre-signed-in (§4.7). |
 | **Something breaks live** | It happens. | Say "that's a bug, and it's on the list" and move on. Have screenshots of the youth journey and the progress board in a folder as a hard fallback. Do **not** fall back to `docs/mocks/` — those are static references and a stakeholder will not know the difference until they ask a question you can't answer. |

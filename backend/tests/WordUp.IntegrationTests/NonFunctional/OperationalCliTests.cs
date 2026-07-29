@@ -26,7 +26,15 @@ public sealed class OperationalCliTests
         Assert.Multiple(() =>
         {
             AssertCommands(root, "db", "migrate", "seed", "reset");
-            AssertCommands(root, "user", "create", "list", "set-role", "reset-password", "deactivate");
+            AssertCommands(
+                root,
+                "user",
+                "create",
+                "list",
+                "set-role",
+                "link-guardian",
+                "reset-password",
+                "deactivate");
             AssertCommands(root, "invite", "create", "resend", "revoke", "list");
             AssertCommands(root, "cohort", "create", "assign-mentor", "add-youth", "progress");
             AssertCommands(root, "import", "youth");
@@ -138,6 +146,134 @@ public sealed class OperationalCliTests
             Assert.That(assertionDb.Users.Count(user => user.Email == "created@example.com"), Is.EqualTo(1));
             Assert.That(assertionDb.AuditEntries.Any(entry =>
                 entry.Action == "UserCreated" && entry.ActorUserId == admin.Id), Is.True);
+        });
+    }
+
+    [Test]
+    [Property("Req", "L2-NFR-011")]
+    public async Task Guardian_link_records_the_relationship_and_audits_the_operator()
+    {
+        // Traces to: L2-NFR-011 AC3
+        await using var services = BuildServices();
+        var admin = new User
+        {
+            Email = "link-operator@example.com",
+            DisplayName = "Link operator",
+            Role = Roles.ProgramAdministrator,
+            Status = UserStatus.Active,
+        };
+        var guardian = new User
+        {
+            Email = "guardian@example.com",
+            DisplayName = "Guardian",
+            Role = Roles.Guardian,
+            Status = UserStatus.Active,
+        };
+        var youth = new User
+        {
+            Email = "linked-youth@example.com",
+            DisplayName = "Linked youth",
+            Role = Roles.Youth,
+            Status = UserStatus.Active,
+        };
+        await using (var seedScope = services.CreateAsyncScope())
+        {
+            var db = seedScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            await db.Database.EnsureCreatedAsync();
+            db.Users.AddRange(admin, guardian, youth);
+            await db.SaveChangesAsync();
+        }
+        using var output = new StringWriter();
+        using var error = new StringWriter();
+
+        var exitCode = await CliApplication.RunAsync(
+            [
+                "user", "link-guardian",
+                youth.Id.ToString(),
+                guardian.Id.ToString(),
+                "--actor", admin.Id.ToString(),
+            ],
+            services,
+            output,
+            error);
+
+        await using var assertionScope = services.CreateAsyncScope();
+        var assertionDb = assertionScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(exitCode, Is.Zero, error.ToString());
+            Assert.That(
+                assertionDb.Users.Single(user => user.Id == youth.Id).GuardianUserId,
+                Is.EqualTo(guardian.Id));
+            Assert.That(assertionDb.AuditEntries.Any(entry =>
+                entry.Action == "GuardianLinked"
+                && entry.ActorUserId == admin.Id
+                && entry.TargetId == youth.Id
+                && entry.Details == guardian.Id.ToString()), Is.True);
+        });
+    }
+
+    [Test]
+    [Property("Req", "L2-NFR-011")]
+    public async Task Guardian_link_refuses_a_target_that_is_not_an_active_guardian()
+    {
+        // Traces to: L2-NFR-011 AC3
+        await using var services = BuildServices();
+        var admin = new User
+        {
+            Email = "link-refusal-operator@example.com",
+            DisplayName = "Link refusal operator",
+            Role = Roles.ProgramAdministrator,
+            Status = UserStatus.Active,
+        };
+        var mentor = new User
+        {
+            Email = "not-a-guardian@example.com",
+            DisplayName = "Mentor",
+            Role = Roles.Mentor,
+            Status = UserStatus.Active,
+        };
+        var youth = new User
+        {
+            Email = "unlinked-youth@example.com",
+            DisplayName = "Unlinked youth",
+            Role = Roles.Youth,
+            Status = UserStatus.Active,
+        };
+        await using (var seedScope = services.CreateAsyncScope())
+        {
+            var db = seedScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            await db.Database.EnsureCreatedAsync();
+            db.Users.AddRange(admin, mentor, youth);
+            await db.SaveChangesAsync();
+        }
+        using var output = new StringWriter();
+        using var error = new StringWriter();
+
+        var exitCode = await CliApplication.RunAsync(
+            [
+                "user", "link-guardian",
+                youth.Id.ToString(),
+                mentor.Id.ToString(),
+                "--actor", admin.Id.ToString(),
+            ],
+            services,
+            output,
+            error);
+
+        await using var assertionScope = services.CreateAsyncScope();
+        var assertionDb = assertionScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Assert.Multiple(() =>
+        {
+            Assert.That(exitCode, Is.EqualTo(2));
+            Assert.That(error.ToString(), Does.Contain("active guardian"));
+            Assert.That(
+                assertionDb.Users.Single(user => user.Id == youth.Id).GuardianUserId,
+                Is.Null);
+            Assert.That(
+                assertionDb.AuditEntries.Any(entry =>
+                    entry.Action == "GuardianLinked" && entry.TargetId == youth.Id),
+                Is.False);
         });
     }
 
