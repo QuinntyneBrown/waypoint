@@ -10,3 +10,23 @@ frontend/** text eol=lf
 # report drift that does not exist.
 user-guides/** text eol=lf
 scripts/verify-word-up-user-guide-assets.mjs text eol=lf
+
+# Binary assets must win over the `text eol=lf` path rules above (last match wins).
+# Those rules are directory-wide, so they also caught the fonts under
+# frontend/projects/*/public/fonts/. Marking a compressed font as text makes Git
+# rewrite any CR LF byte pair that happens to occur inside the font data on the way
+# into the index — silently corrupting the file by a byte and reporting a phantom
+# modification for a working copy that is byte-identical to HEAD.
+*.woff2 binary
+*.woff  binary
+*.ttf   binary
+*.otf   binary
+*.eot   binary
+*.ico   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.avif  binary
+*.pdf   binary
