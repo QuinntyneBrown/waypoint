@@ -16,8 +16,8 @@ By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 Use the .NET and Node.js versions documented in the [README](README.md). Install frontend dependencies with the repository-pinned npm 10.9.4. Run the API and each Angular application in its own terminal:
 
 ```bash
-git clone https://github.com/QuinntyneBrown/word-up.git
-cd word-up
+git clone https://github.com/QuinntyneBrown/waypoint.git
+cd waypoint
 
 # Terminal 1: API
 dotnet run --project backend/src/WordUp.Api --environment Development --urls http://127.0.0.1:5211

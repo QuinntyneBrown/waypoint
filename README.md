@@ -2,10 +2,10 @@
 
 Word Up is a youth leadership platform for Bible study, mentoring, leadership development, and coding.
 
-[![Backend CI](https://github.com/QuinntyneBrown/word-up/actions/workflows/backend.yml/badge.svg)](https://github.com/QuinntyneBrown/word-up/actions/workflows/backend.yml)
-[![Frontend CI](https://github.com/QuinntyneBrown/word-up/actions/workflows/frontend.yml/badge.svg)](https://github.com/QuinntyneBrown/word-up/actions/workflows/frontend.yml)
-[![Performance](https://github.com/QuinntyneBrown/word-up/actions/workflows/performance.yml/badge.svg)](https://github.com/QuinntyneBrown/word-up/actions/workflows/performance.yml)
-[![User guides](https://github.com/QuinntyneBrown/word-up/actions/workflows/user-guides.yml/badge.svg)](https://github.com/QuinntyneBrown/word-up/actions/workflows/user-guides.yml)
+[![Backend CI](https://github.com/QuinntyneBrown/waypoint/actions/workflows/backend.yml/badge.svg)](https://github.com/QuinntyneBrown/waypoint/actions/workflows/backend.yml)
+[![Frontend CI](https://github.com/QuinntyneBrown/waypoint/actions/workflows/frontend.yml/badge.svg)](https://github.com/QuinntyneBrown/waypoint/actions/workflows/frontend.yml)
+[![Performance](https://github.com/QuinntyneBrown/waypoint/actions/workflows/performance.yml/badge.svg)](https://github.com/QuinntyneBrown/waypoint/actions/workflows/performance.yml)
+[![User guides](https://github.com/QuinntyneBrown/waypoint/actions/workflows/user-guides.yml/badge.svg)](https://github.com/QuinntyneBrown/waypoint/actions/workflows/user-guides.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 [Getting started](#getting-started) · [Documentation](#documentation) · [Contributing](#contributing) · [Support](SUPPORT.md)
@@ -41,8 +41,8 @@ The repository contains a .NET 9 API and operational CLI, an Angular 21 authenti
 ### Set up the repository
 
 ```bash
-git clone https://github.com/QuinntyneBrown/word-up.git
-cd word-up
+git clone https://github.com/QuinntyneBrown/waypoint.git
+cd waypoint
 dotnet restore backend/WordUp.sln
 npm --prefix frontend ci
 ```
@@ -189,7 +189,7 @@ Contributors are recognized in [CONTRIBUTORS.md](CONTRIBUTORS.md). Maintainer ro
 
 ## Support
 
-For usage questions and non-sensitive problems, read [SUPPORT.md](SUPPORT.md) and search the [existing issues](https://github.com/QuinntyneBrown/word-up/issues). Maintainers and contributors provide support on a best-effort basis without a service-level agreement.
+For usage questions and non-sensitive problems, read [SUPPORT.md](SUPPORT.md) and search the [existing issues](https://github.com/QuinntyneBrown/waypoint/issues). Maintainers and contributors provide support on a best-effort basis without a service-level agreement.
 
 ## Security
 

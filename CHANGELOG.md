@@ -24,4 +24,4 @@ All notable changes to this project will be documented in this file. The format 
 - Roughly 115 FaithTech-styled HTML design mocks under `docs/mocks`
 - Backend CI and project community-health documentation
 
-The repository has not published a versioned release. Earlier development history is available in the [commit log](https://github.com/QuinntyneBrown/word-up/commits/main/).
+The repository has not published a versioned release. Earlier development history is available in the [commit log](https://github.com/QuinntyneBrown/waypoint/commits/main/).

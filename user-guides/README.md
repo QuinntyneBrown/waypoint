@@ -223,7 +223,7 @@ a commit, run the **user-guides** workflow manually from the Actions tab. To rot
 ```bash
 az staticwebapp secrets reset-api-key --name word-up-user-guides --resource-group word-up-rg
 az staticwebapp secrets list --name word-up-user-guides --resource-group word-up-rg \
-  --query properties.apiKey -o tsv | gh secret set AZURE_STATIC_WEB_APPS_API_TOKEN --repo QuinntyneBrown/word-up
+  --query properties.apiKey -o tsv | gh secret set AZURE_STATIC_WEB_APPS_API_TOKEN --repo QuinntyneBrown/waypoint
 ```
 
 `staticwebapp.config.json` sets the routing, the MIME types, and these response headers:

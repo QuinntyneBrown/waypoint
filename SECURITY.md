@@ -8,7 +8,7 @@ Word Up is under active development. Security fixes are applied to the latest co
 
 Do not disclose a suspected vulnerability in a public issue, discussion, pull request, or social channel.
 
-Use [GitHub private vulnerability reporting](https://github.com/QuinntyneBrown/word-up/security/advisories/new) to send the maintainers:
+Use [GitHub private vulnerability reporting](https://github.com/QuinntyneBrown/waypoint/security/advisories/new) to send the maintainers:
 
 - A description of the vulnerability and its potential impact
 - The affected endpoint, handler, dependency, or configuration
