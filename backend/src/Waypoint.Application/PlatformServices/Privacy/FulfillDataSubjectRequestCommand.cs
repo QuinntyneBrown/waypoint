@@ -161,11 +161,14 @@ public sealed class FulfillDataSubjectRequestCommandHandler
                 case "correction":
                     await ApplyCorrectionAsync(subject, request, command, cancellationToken);
                     // Pending bodies can contain arbitrary snapshots of the subject's old profile.
-                    // They cannot be safely rewritten after a correction, so discard them while the
-                    // subject lock excludes claimed SMTP delivery. Recipient-only envelopes remain
-                    // eligible and email corrections readdress those separately.
+                    // They cannot be safely rewritten after a correction, so discard those addressed
+                    // to anyone else while the subject lock excludes claimed SMTP delivery. Envelopes
+                    // addressed to the subject (recipient-only or about themselves) disclose nothing
+                    // to a third party; they remain eligible and email corrections readdress them.
                     var staleSubjectEmails = await _db.OutboundEmails
-                        .Where(item => item.SubjectUserId == subject.Id && item.SentAt == null)
+                        .Where(item => item.SubjectUserId == subject.Id
+                            && item.SentAt == null
+                            && (item.RecipientUserId == null || item.RecipientUserId != subject.Id))
                         .ToListAsync(cancellationToken);
                     _db.OutboundEmails.RemoveRange(staleSubjectEmails);
                     break;

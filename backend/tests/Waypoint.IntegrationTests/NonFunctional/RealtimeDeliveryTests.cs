@@ -140,7 +140,11 @@ public sealed class RealtimeDeliveryTests : IntegrationTestBase
     {
         var user = await SeedAndSignInAsync(Roles.Youth);
         var expiresAt = DateTime.UtcNow.AddSeconds(5);
-        var shortToken = IssueShortLivedToken(user.Id, Roles.Youth, expiresAt);
+        var shortToken = IssueShortLivedToken(
+            user.Id,
+            Roles.Youth,
+            await GetSessionVersionAsync(user.Id),
+            expiresAt);
         await using var connection = BuildHubConnection(shortToken);
         var received = Capture(connection, "token-expired");
         var closed = new TaskCompletionSource(
@@ -349,7 +353,24 @@ public sealed class RealtimeDeliveryTests : IntegrationTestBase
         return (first.Id, second.Id);
     }
 
-    private static string IssueShortLivedToken(Guid userId, string role, DateTime expiresAt)
+    private async Task<int> GetSessionVersionAsync(Guid userId)
+    {
+        using var scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var user = await db.Users.FindAsync(userId)
+            ?? throw new InvalidOperationException("Realtime test user was not found.");
+        return user.SessionVersion;
+    }
+
+    /// <summary>
+    /// Mints a token the way <c>JwtTokenIssuer</c> does, but with a caller-chosen expiry. The
+    /// session version must match the stored user or bearer validation rejects the token.
+    /// </summary>
+    private static string IssueShortLivedToken(
+        Guid userId,
+        string role,
+        int sessionVersion,
+        DateTime expiresAt)
     {
         const string signingKey = "waypoint-integration-tests-signing-key-32chars-min!!";
         var credentials = new SigningCredentials(
@@ -362,7 +383,7 @@ public sealed class RealtimeDeliveryTests : IntegrationTestBase
             [
                 new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
                 new Claim(ClaimTypes.Role, role),
-                new Claim("session_version", "0"),
+                new Claim("session_version", sessionVersion.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             ],
             notBefore: DateTime.UtcNow.AddMinutes(-1),
