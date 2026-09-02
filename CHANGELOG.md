@@ -23,5 +23,6 @@ All notable changes to this project will be documented in this file. The format 
 - Product requirements covering 14 subsystems and a requirement traceability gate
 - Roughly 115 FaithTech-styled HTML design mocks under `docs/mocks`
 - Backend CI and project community-health documentation
+- Plain-language picture explainer of the repository at `docs/waypoint-in-pictures.html`, linked from the README
 
 The repository has not published a versioned release. Earlier development history is available in the [commit log](https://github.com/QuinntyneBrown/waypoint/commits/main/).

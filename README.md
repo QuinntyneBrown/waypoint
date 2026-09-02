@@ -179,6 +179,7 @@ not do. Everything else below is for people building it.
 | [Frontend guide](frontend/README.md)                 | Angular applications, libraries, and frontend commands            |
 | [Operational CLI](backend/src/Waypoint.Cli/README.md)  | CLI commands and production configuration                         |
 | [Design references](docs/mocks/README.md)            | Static product map and role-based interaction references          |
+| [Waypoint in pictures](docs/waypoint-in-pictures.html) | Plain-language picture explainer of what the repository does and how it is built; open the file locally in a browser |
 | [Changelog](CHANGELOG.md)                            | Notable contributor-visible changes                               |
 
 ## Contributing

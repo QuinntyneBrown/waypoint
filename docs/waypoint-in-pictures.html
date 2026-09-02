@@ -1,0 +1,477 @@
+<title>Waypoint in Pictures</title>
+<link rel="stylesheet" href="mocks/assets/css/_fonts.css">
+<style>
+  :root{
+    --paper:#f5f0f0; --card:#ffffff; --ink:#16160c;
+    --muted:rgba(22,22,12,.62); --line:rgba(22,22,12,.16); --faint:rgba(22,22,12,.08);
+    --lime:#c6fb50; --lime-soft:rgba(198,251,80,.45);
+    --sky:#8adfff; --amber:#ffb300; --tomato:#f05228; --green:#2e8f2e;
+    --shadow:0 10px 30px rgba(22,22,12,.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#16160c; --card:#23231a; --ink:#f3efe8;
+      --muted:rgba(243,239,232,.66); --line:rgba(243,239,232,.18); --faint:rgba(243,239,232,.09);
+      --sky:#7fd3f2; --tomato:#ff6d47; --green:#5ed05e;
+      --shadow:0 10px 30px rgba(0,0,0,.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#16160c; --card:#23231a; --ink:#f3efe8;
+    --muted:rgba(243,239,232,.66); --line:rgba(243,239,232,.18); --faint:rgba(243,239,232,.09);
+    --sky:#7fd3f2; --tomato:#ff6d47; --green:#5ed05e;
+    --shadow:0 10px 30px rgba(0,0,0,.45);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Inter',system-ui,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    font-size:19px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:40px 20px 96px}
+
+  .cover{padding:32px 0 40px; display:grid; gap:18px}
+  .kicker{
+    display:inline-flex; align-items:center; gap:10px; width:max-content; max-width:100%;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:700; font-size:13px;
+    letter-spacing:.14em; text-transform:uppercase;
+    background:var(--lime); color:#16160c; padding:8px 14px; border-radius:100vw;
+  }
+  h1{
+    margin:0; font-family:'Fraunces',Georgia,'Times New Roman',serif;
+    font-weight:400;
+    font-size:clamp(46px,8vw,84px); line-height:.98; letter-spacing:-.015em; text-wrap:balance;
+  }
+  .cover p{margin:0; max-width:34ch; font-size:22px; color:var(--muted); text-wrap:balance}
+
+  .spread{display:grid; gap:22px; padding:52px 0; border-top:1px solid var(--line)}
+  .pic{margin:0; background:var(--card); border-radius:22px; padding:clamp(12px,3vw,28px); box-shadow:var(--shadow)}
+  .pic svg{display:block; width:100%; height:auto; color:var(--ink)}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+  h2{
+    margin:0; font-family:'Fraunces',Georgia,'Times New Roman',serif;
+    font-weight:400;
+    font-size:clamp(32px,5vw,46px); line-height:1.08; letter-spacing:-.01em; text-wrap:balance; max-width:22ch;
+  }
+  .spread p{margin:0; max-width:58ch}
+  .spread p + p{color:var(--muted)}
+  code{font-family:ui-monospace,'Cascadia Mono',Consolas,'Courier New',monospace; font-size:.92em; background:var(--faint); padding:2px 7px; border-radius:6px}
+
+  /* SVG vocabulary */
+  svg text{font-family:'Space Grotesk',system-ui,sans-serif; font-size:16px; font-weight:700; fill:currentColor}
+  svg .big{font-size:22px; font-weight:700}
+  svg .sm{font-size:14px; font-weight:500; fill:var(--muted)}
+  svg .mono{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace; font-weight:700}
+  svg .on-lime{fill:#16160c}
+  svg .on-ink{fill:var(--paper)}
+  svg .on-tomato{fill:#ffffff}
+  .f-paper{fill:var(--paper)} .f-card{fill:var(--card)} .f-ink{fill:var(--ink)} .f-faint{fill:var(--faint)}
+  .f-lime{fill:var(--lime)} .f-lime-soft{fill:var(--lime-soft)} .f-sky{fill:var(--sky)} .f-amber{fill:var(--amber)}
+  .f-tomato{fill:var(--tomato)} .f-green{fill:var(--green)} .f-muted{fill:var(--muted)}
+  .sprite{position:absolute; width:0; height:0; overflow:hidden}
+
+  /* folder map */
+  .folders{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px}
+  .folder{display:grid; grid-template-columns:44px 1fr; gap:12px; align-items:start; padding:14px 16px; border-radius:14px; background:var(--paper)}
+  .folder svg{width:44px; height:auto; color:var(--ink)}
+  .folder b{font-family:ui-monospace,'Cascadia Mono',Consolas,monospace; font-size:17px; display:block; margin-bottom:2px}
+  .folder span{font-size:16px; color:var(--muted); line-height:1.35; display:block}
+
+  footer{padding-top:28px; border-top:1px solid var(--line); font-size:15px; color:var(--muted); max-width:62ch}
+  a{color:inherit}
+  a:focus-visible{outline:3px solid var(--lime); outline-offset:2px}
+</style>
+
+<svg class="sprite" aria-hidden="true">
+  <symbol id="p" viewBox="0 0 40 64">
+    <circle cx="20" cy="13" r="11"/>
+    <path d="M6 64 V42 a14 14 0 0 1 28 0 V64 Z"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+
+<header class="cover">
+  <span class="kicker">Explain it simply · the Waypoint repo</span>
+  <h1>Waypoint in Pictures</h1>
+  <p>What this code does, told with big pictures and small words.</p>
+</header>
+
+<main>
+
+<!-- 1 · clubhouse -->
+<section class="spread">
+  <figure class="pic">
+    <svg viewBox="0 0 720 320" role="img" aria-label="A messy pile of spreadsheets, chat bubbles and paper becomes one Waypoint clubhouse">
+      <defs>
+        <marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker>
+      </defs>
+      <g transform="rotate(-7 130 130)">
+        <rect x="60" y="80" width="150" height="100" rx="6" class="f-card" stroke="currentColor" stroke-width="2.5"/>
+        <path d="M60 105 H210 M60 130 H210 M60 155 H210 M98 80 V180 M136 80 V180 M174 80 V180" stroke="currentColor" stroke-width="1.5" opacity=".45" fill="none"/>
+      </g>
+      <rect x="200" y="48" width="122" height="44" rx="22" class="f-sky"/>
+      <path d="M216 90 l-8 18 l26 -13 Z" class="f-sky"/>
+      <rect x="236" y="116" width="98" height="40" rx="20" class="f-sky" opacity=".65"/>
+      <g transform="rotate(6 190 235)">
+        <rect x="130" y="190" width="120" height="90" rx="4" class="f-card" stroke="currentColor" stroke-width="2.5"/>
+        <path d="M148 212 H232 M148 232 H232 M148 252 H208" stroke="currentColor" stroke-width="2.5" opacity=".45" fill="none"/>
+      </g>
+      <rect x="262" y="198" width="70" height="70" rx="3" class="f-amber" transform="rotate(-10 297 233)"/>
+      <text x="196" y="308" text-anchor="middle">spreadsheets · chats · paper</text>
+
+      <line x1="352" y1="168" x2="432" y2="168" stroke="currentColor" stroke-width="4" marker-end="url(#a1)"/>
+      <text x="394" y="152" text-anchor="middle" class="sm">becomes</text>
+
+      <rect x="490" y="150" width="200" height="130" rx="4" class="f-card" stroke="currentColor" stroke-width="3"/>
+      <polygon points="476,152 590,68 704,152" class="f-ink"/>
+      <rect x="540" y="160" width="100" height="26" rx="13" class="f-lime"/>
+      <text x="590" y="178" text-anchor="middle" class="on-lime" font-size="14">WAYPOINT</text>
+      <rect x="510" y="192" width="34" height="32" rx="3" class="f-sky" stroke="currentColor" stroke-width="2"/>
+      <rect x="636" y="192" width="34" height="32" rx="3" class="f-sky" stroke="currentColor" stroke-width="2"/>
+      <rect x="565" y="200" width="50" height="80" rx="3" class="f-lime" stroke="currentColor" stroke-width="3"/>
+      <circle cx="605" cy="242" r="3.5" class="f-ink"/>
+      <text x="590" y="308" text-anchor="middle">one place</text>
+    </svg>
+    <figcaption class="sr">Spreadsheets, chats and paper become one clubhouse.</figcaption>
+  </figure>
+  <h2>It's a clubhouse for a youth program.</h2>
+  <p>Waypoint is a program where young people study the Bible, learn to lead, and learn to code, with a mentor beside them.</p>
+  <p>This repo is the software that runs it. One place instead of a pile of spreadsheets and group chats.</p>
+</section>
+
+<!-- 2 · six doors -->
+<section class="spread">
+  <figure class="pic">
+    <svg viewBox="0 0 720 330" role="img" aria-label="One building with six doors, one each for youth, mentors, guardians, volunteers, staff and visitors">
+      <rect x="20" y="70" width="680" height="26" rx="4" class="f-ink"/>
+      <text x="360" y="89" text-anchor="middle" class="on-ink" font-size="15" letter-spacing="3">WAYPOINT</text>
+      <rect x="30" y="96" width="660" height="168" class="f-card" stroke="currentColor" stroke-width="3"/>
+      <line x1="10" y1="264" x2="710" y2="264" stroke="currentColor" stroke-width="3"/>
+
+      <g>
+        <rect x="57" y="118" width="56" height="34" rx="3" class="f-sky" stroke="currentColor" stroke-width="2"/>
+        <rect x="167" y="118" width="56" height="34" rx="3" class="f-sky" stroke="currentColor" stroke-width="2"/>
+        <rect x="277" y="118" width="56" height="34" rx="3" class="f-sky" stroke="currentColor" stroke-width="2"/>
+        <rect x="387" y="118" width="56" height="34" rx="3" class="f-sky" stroke="currentColor" stroke-width="2"/>
+        <rect x="497" y="118" width="56" height="34" rx="3" class="f-sky" stroke="currentColor" stroke-width="2"/>
+        <rect x="607" y="118" width="56" height="34" rx="3" class="f-sky" stroke="currentColor" stroke-width="2"/>
+      </g>
+
+      <g>
+        <rect x="57" y="172" width="56" height="92" rx="3" class="f-paper" stroke="currentColor" stroke-width="2.5"/>
+        <rect x="167" y="172" width="56" height="92" rx="3" class="f-paper" stroke="currentColor" stroke-width="2.5"/>
+        <rect x="277" y="172" width="56" height="92" rx="3" class="f-paper" stroke="currentColor" stroke-width="2.5"/>
+        <rect x="387" y="172" width="56" height="92" rx="3" class="f-paper" stroke="currentColor" stroke-width="2.5"/>
+        <rect x="497" y="172" width="56" height="92" rx="3" class="f-paper" stroke="currentColor" stroke-width="2.5"/>
+        <rect x="607" y="172" width="56" height="92" rx="3" class="f-lime" stroke="currentColor" stroke-width="2.5"/>
+      </g>
+      <g class="f-ink">
+        <circle cx="101" cy="216" r="3"/><rect x="99.5" y="216" width="3" height="8"/>
+        <circle cx="211" cy="216" r="3"/><rect x="209.5" y="216" width="3" height="8"/>
+        <circle cx="321" cy="216" r="3"/><rect x="319.5" y="216" width="3" height="8"/>
+        <circle cx="431" cy="216" r="3"/><rect x="429.5" y="216" width="3" height="8"/>
+        <circle cx="541" cy="216" r="3"/><rect x="539.5" y="216" width="3" height="8"/>
+      </g>
+      <text x="635" y="200" text-anchor="middle" class="on-lime" font-size="12">OPEN</text>
+
+      <g class="f-ink">
+        <use href="#p" x="69" y="212" width="32" height="52"/>
+        <use href="#p" x="179" y="212" width="32" height="52"/>
+        <use href="#p" x="289" y="212" width="32" height="52"/>
+        <use href="#p" x="399" y="212" width="32" height="52"/>
+        <use href="#p" x="509" y="212" width="32" height="52"/>
+        <use href="#p" x="619" y="212" width="32" height="52"/>
+      </g>
+
+      <g text-anchor="middle">
+        <text x="85" y="294">Youth</text>
+        <text x="195" y="294">Mentors</text>
+        <text x="305" y="294">Guardians</text>
+        <text x="415" y="294">Volunteers</text>
+        <text x="525" y="294">Staff</text>
+        <text x="635" y="294">Visitors</text>
+        <text x="85" y="316" class="sm">lessons</text>
+        <text x="195" y="316" class="sm">check-ins</text>
+        <text x="305" y="316" class="sm">progress, consent</text>
+        <text x="415" y="316" class="sm">their sessions</text>
+        <text x="525" y="316" class="sm">runs it all</text>
+        <text x="635" y="316" class="sm">no key needed</text>
+      </g>
+    </svg>
+    <figcaption class="sr">Six kinds of people each get their own door.</figcaption>
+  </figure>
+  <h2>Six kinds of people, six doors.</h2>
+  <p>Youth, mentors, guardians, volunteers, program staff, and visitors from the street.</p>
+  <p>Everyone gets their own door and only sees their own rooms. Visitors see the front pages without a key.</p>
+</section>
+
+<!-- 3 · the path -->
+<section class="spread">
+  <figure class="pic">
+    <svg viewBox="0 0 720 340" role="img" aria-label="A board-game path from Lesson to Quiz to Reflect to Badge, with a mentor checking in beside it">
+      <path d="M92 236 L270 118 L450 236 L628 118" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 18" opacity=".55"/>
+
+      <g class="f-ink"><use href="#p" x="22" y="180" width="30" height="48"/></g>
+
+      <rect x="32" y="208" width="120" height="56" rx="12" class="f-card" stroke="currentColor" stroke-width="3"/>
+      <rect x="46" y="222" width="12" height="28" rx="2" class="f-sky" stroke="currentColor" stroke-width="2"/>
+      <rect x="58" y="222" width="12" height="28" rx="2" class="f-card" stroke="currentColor" stroke-width="2"/>
+      <text x="112" y="243" text-anchor="middle">Lesson</text>
+
+      <rect x="210" y="90" width="120" height="56" rx="12" class="f-card" stroke="currentColor" stroke-width="3"/>
+      <circle cx="236" cy="118" r="14" class="f-sky" stroke="currentColor" stroke-width="2"/>
+      <text x="236" y="124" text-anchor="middle" font-size="18">?</text>
+      <text x="288" y="125" text-anchor="middle">Quiz</text>
+
+      <rect x="390" y="208" width="120" height="56" rx="12" class="f-card" stroke="currentColor" stroke-width="3"/>
+      <path d="M404 222 h30 a6 6 0 0 1 6 6 v12 a6 6 0 0 1 -6 6 h-16 l-8 8 v-8 h-6 a6 6 0 0 1 -6 -6 v-12 a6 6 0 0 1 6 -6 Z" class="f-sky" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <text x="472" y="243" text-anchor="middle">Reflect</text>
+
+      <rect x="568" y="90" width="120" height="56" rx="12" class="f-lime" stroke="currentColor" stroke-width="3"/>
+      <polygon points="596,101 601,113 614,114 604,122 607,135 596,128 585,135 588,122 578,114 591,113" class="f-amber" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <text x="650" y="125" text-anchor="middle" class="on-lime">Badge!</text>
+
+      <g>
+        <rect x="32" y="288" width="60" height="28" rx="14" class="f-lime-soft"/>
+        <text x="62" y="307" text-anchor="middle" font-size="14">Bible</text>
+        <rect x="100" y="288" width="104" height="28" rx="14" class="f-lime-soft"/>
+        <text x="152" y="307" text-anchor="middle" font-size="14">Leadership</text>
+        <rect x="212" y="288" width="78" height="28" rx="14" class="f-lime-soft"/>
+        <text x="251" y="307" text-anchor="middle" font-size="14">Coding</text>
+      </g>
+
+      <g class="f-ink"><use href="#p" x="580" y="212" width="40" height="64"/></g>
+      <rect x="614" y="228" width="36" height="46" rx="4" class="f-card" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M622 246 h20 M622 256 h20 M622 266 h12" stroke="currentColor" stroke-width="2" fill="none"/>
+      <text x="600" y="300" text-anchor="middle">Mentor</text>
+      <text x="600" y="320" text-anchor="middle" class="sm">checks in · takes attendance</text>
+    </svg>
+    <figcaption class="sr">Lessons lead to quizzes, reflections and badges, with a mentor checking in.</figcaption>
+  </figure>
+  <h2>Inside: lessons, check-ins, badges.</h2>
+  <p>A young person walks a path of Bible, leadership, and coding lessons. Quizzes and reflections along the way. Finish a track, earn a badge.</p>
+  <p>A mentor checks in and takes attendance. Staff set up the groups and the schedule.</p>
+</section>
+
+<!-- 4 · the gate -->
+<section class="spread">
+  <figure class="pic">
+    <svg viewBox="0 0 720 320" role="img" aria-label="A guardian holding a key stands before a locked gate; beyond it, a young person and the lesson path">
+      <g stroke="currentColor" stroke-width="3" fill="none">
+        <line x1="20" y1="150" x2="296" y2="150"/><line x1="20" y1="192" x2="296" y2="192"/>
+        <line x1="424" y1="150" x2="700" y2="150"/><line x1="424" y1="192" x2="700" y2="192"/>
+      </g>
+      <g stroke="currentColor" stroke-width="3" fill="none" opacity=".6">
+        <path d="M60 130 V240 M100 130 V240 M140 130 V240 M180 130 V240 M220 130 V240 M260 130 V240"/>
+        <path d="M460 130 V240 M500 130 V240 M540 130 V240 M580 130 V240 M620 130 V240 M660 130 V240"/>
+      </g>
+      <text x="150" y="112" text-anchor="middle" class="sm">safety rules · every sensitive action written down</text>
+
+      <rect x="290" y="112" width="12" height="136" rx="2" class="f-ink"/>
+      <rect x="418" y="112" width="12" height="136" rx="2" class="f-ink"/>
+      <rect x="302" y="124" width="116" height="112" rx="4" class="f-card" stroke="currentColor" stroke-width="3"/>
+      <path d="M322 124 V236 M342 124 V236 M378 124 V236 M398 124 V236" stroke="currentColor" stroke-width="3" fill="none"/>
+      <path d="M347 178 v-10 a13 13 0 0 1 26 0 v10" stroke="currentColor" stroke-width="4" fill="none"/>
+      <rect x="340" y="176" width="40" height="30" rx="5" class="f-lime" stroke="currentColor" stroke-width="3"/>
+      <circle cx="360" cy="190" r="3.5" class="f-ink"/>
+      <text x="360" y="272" text-anchor="middle" class="big">consent</text>
+
+      <g class="f-ink"><use href="#p" x="160" y="150" width="50" height="80"/></g>
+      <circle cx="238" cy="190" r="11" class="f-lime" stroke="currentColor" stroke-width="3"/>
+      <rect x="247" y="187" width="34" height="6" class="f-lime" stroke="currentColor" stroke-width="2"/>
+      <rect x="270" y="192" width="5" height="8" class="f-lime" stroke="currentColor" stroke-width="2"/>
+      <text x="190" y="262" text-anchor="middle">Guardian says yes</text>
+
+      <g class="f-ink"><use href="#p" x="486" y="172" width="36" height="58"/></g>
+      <path d="M540 214 L600 178 L660 214" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 14" opacity=".55"/>
+      <polygon points="600,150 605,162 618,163 608,171 611,184 600,177 589,184 592,171 582,163 595,162" class="f-amber" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <text x="590" y="262" text-anchor="middle">then the young person may enter</text>
+    </svg>
+    <figcaption class="sr">Guardian consent is the gate in front of everything.</figcaption>
+  </figure>
+  <h2>A gate a parent must open first.</h2>
+  <p>Before a young person can take part, a guardian has to say yes. That consent sits in front of everything.</p>
+  <p>Safety rules decide who may see whom, and every sensitive action is written down so it can be checked later.</p>
+</section>
+
+<!-- 5 · how it is built -->
+<section class="spread">
+  <figure class="pic">
+    <svg viewBox="0 0 720 340" role="img" aria-label="Two browser windows ask the API, which decides and remembers into a database; a small staff remote also talks to the API">
+      <defs>
+        <marker id="a5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker>
+      </defs>
+
+      <rect x="30" y="40" width="180" height="100" rx="10" class="f-card" stroke="currentColor" stroke-width="3"/>
+      <path d="M30 66 H210" stroke="currentColor" stroke-width="2"/>
+      <circle cx="46" cy="53" r="4" class="f-tomato"/><circle cx="60" cy="53" r="4" class="f-amber"/><circle cx="74" cy="53" r="4" class="f-green"/>
+      <text x="120" y="100" text-anchor="middle">Public site</text>
+      <text x="120" y="122" text-anchor="middle" class="sm">anyone can look</text>
+
+      <rect x="30" y="190" width="180" height="100" rx="10" class="f-card" stroke="currentColor" stroke-width="3"/>
+      <path d="M30 216 H210" stroke="currentColor" stroke-width="2"/>
+      <circle cx="46" cy="203" r="4" class="f-tomato"/><circle cx="60" cy="203" r="4" class="f-amber"/><circle cx="74" cy="203" r="4" class="f-green"/>
+      <text x="120" y="250" text-anchor="middle">Portal</text>
+      <text x="120" y="272" text-anchor="middle" class="sm">sign in first</text>
+      <text x="120" y="318" text-anchor="middle" class="sm mono">Angular</text>
+
+      <rect x="290" y="100" width="170" height="130" rx="14" class="f-lime" stroke="currentColor" stroke-width="3"/>
+      <text x="375" y="140" text-anchor="middle" class="big on-lime">API</text>
+      <text x="375" y="164" text-anchor="middle" class="on-lime">the brain</text>
+      <text x="375" y="186" text-anchor="middle" class="on-lime" font-size="13" font-weight="500">decides who may do what</text>
+      <text x="375" y="212" text-anchor="middle" class="on-lime mono" font-size="13">.NET 9</text>
+
+      <path d="M540 128 a75 14 0 0 0 150 0 V212 a75 14 0 0 1 -150 0 Z" class="f-sky" stroke="currentColor" stroke-width="3"/>
+      <ellipse cx="615" cy="128" rx="75" ry="14" class="f-sky" stroke="currentColor" stroke-width="3"/>
+      <text x="615" y="170" text-anchor="middle">Database</text>
+      <text x="615" y="192" text-anchor="middle" class="sm">the memory</text>
+      <text x="615" y="252" text-anchor="middle" class="sm mono">SQL Server</text>
+
+      <line x1="214" y1="92" x2="284" y2="130" stroke="currentColor" stroke-width="3" marker-end="url(#a5)"/>
+      <text x="236" y="98" text-anchor="middle" class="sm">asks</text>
+      <line x1="214" y1="226" x2="284" y2="186" stroke="currentColor" stroke-width="3" marker-end="url(#a5)"/>
+      <text x="236" y="222" text-anchor="middle" class="sm">asks</text>
+      <line x1="286" y1="212" x2="216" y2="252" stroke="currentColor" stroke-width="3" stroke-dasharray="6 5" marker-end="url(#a5)"/>
+      <text x="270" y="262" text-anchor="middle" class="sm">live updates</text>
+      <line x1="464" y1="165" x2="534" y2="165" stroke="currentColor" stroke-width="3" marker-end="url(#a5)"/>
+      <text x="499" y="152" text-anchor="middle" class="sm">remembers</text>
+
+      <rect x="290" y="276" width="170" height="48" rx="8" class="f-ink"/>
+      <text x="304" y="306" class="on-ink mono" font-size="18">&gt; way</text>
+      <text x="450" y="306" text-anchor="end" class="on-ink" font-size="13" font-weight="500">staff remote</text>
+      <line x1="375" y1="274" x2="375" y2="238" stroke="currentColor" stroke-width="3" marker-end="url(#a5)"/>
+      <text x="386" y="260" class="sm">commands</text>
+    </svg>
+    <figcaption class="sr">Screens ask the API, which decides and remembers into the database.</figcaption>
+  </figure>
+  <h2>Three pieces make the software.</h2>
+  <p>The screens people see: a public site for anyone, and a portal you sign in to. The brain that decides what is allowed. The memory that keeps it all.</p>
+  <p>There is also <code>way</code>, a little command-line remote for staff. Changes are pushed to the portal live.</p>
+</section>
+
+<!-- 6 · test first -->
+<section class="spread">
+  <figure class="pic">
+    <svg viewBox="0 0 720 300" role="img" aria-label="A rule becomes a failing test, then code is written until the test passes, then the next rule">
+      <defs>
+        <marker id="a6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker>
+      </defs>
+
+      <path d="M66 70 h56 l22 22 v78 h-78 Z" class="f-card" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M122 70 v22 h22" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M80 110 h50 M80 126 h50 M80 142 h34" stroke="currentColor" stroke-width="2.5" opacity=".5" fill="none"/>
+      <text x="105" y="200" text-anchor="middle">Rule</text>
+      <text x="105" y="222" text-anchor="middle" class="sm mono">L2-LEARN-001</text>
+
+      <path d="M262 70 h24 v40 l30 50 a10 10 0 0 1 -9 15 h-66 a10 10 0 0 1 -9 -15 l30 -50 Z" class="f-card" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M255 132 h38 l14 24 h-66 Z" class="f-tomato" opacity=".9"/>
+      <circle cx="304" cy="82" r="16" class="f-tomato"/>
+      <path d="M297 75 l14 14 M311 75 l-14 14" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+      <text x="274" y="200" text-anchor="middle">Test fails</text>
+      <text x="274" y="222" text-anchor="middle" class="sm">on purpose</text>
+
+      <rect x="396" y="78" width="100" height="84" rx="10" class="f-card" stroke="currentColor" stroke-width="3"/>
+      <text x="446" y="130" text-anchor="middle" class="mono" font-size="30">&lt;/&gt;</text>
+      <text x="446" y="200" text-anchor="middle">Write code</text>
+      <text x="446" y="222" text-anchor="middle" class="sm">just enough</text>
+
+      <path d="M608 70 h24 v40 l30 50 a10 10 0 0 1 -9 15 h-66 a10 10 0 0 1 -9 -15 l30 -50 Z" class="f-card" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M601 132 h38 l14 24 h-66 Z" class="f-green" opacity=".9"/>
+      <circle cx="650" cy="82" r="16" class="f-green"/>
+      <path d="M642 83 l6 6 l11 -12" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="620" y="200" text-anchor="middle">Test passes</text>
+      <text x="620" y="222" text-anchor="middle" class="sm">now it's done</text>
+
+      <g stroke="currentColor" stroke-width="3" marker-end="url(#a6)">
+        <line x1="156" y1="120" x2="222" y2="120"/>
+        <line x1="332" y1="120" x2="386" y2="120"/>
+        <line x1="506" y1="120" x2="558" y2="120"/>
+      </g>
+      <path d="M620 236 C 620 268, 105 268, 105 240" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="6 5" marker-end="url(#a6)"/>
+      <text x="362" y="248" text-anchor="middle" class="sm">next rule</text>
+      <rect x="150" y="270" width="420" height="24" rx="12" class="f-lime-soft"/>
+      <text x="360" y="287" text-anchor="middle" font-size="14">88 rules · each one has a test · no test, no merge</text>
+    </svg>
+    <figcaption class="sr">Every rule gets a failing test before code is written.</figcaption>
+  </figure>
+  <h2>Built test first, every time.</h2>
+  <p>Each thing the app must do is written down as a rule. For each rule, a test is written that fails. Then just enough code is added until the test passes.</p>
+  <p>A checker refuses new code if any rule is missing its test.</p>
+</section>
+
+<!-- 7 · folder map -->
+<section class="spread">
+  <figure class="pic">
+    <div class="folders">
+      <div class="folder">
+        <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M2 8 h16 l5 5 h23 v25 H2 Z" class="f-lime" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <div><b>backend/</b><span>The brain, the staff remote, and their tests.</span></div>
+      </div>
+      <div class="folder">
+        <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M2 8 h16 l5 5 h23 v25 H2 Z" class="f-sky" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <div><b>frontend/</b><span>The screens people use: portal, public site, shared parts.</span></div>
+      </div>
+      <div class="folder">
+        <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M2 8 h16 l5 5 h23 v25 H2 Z" class="f-amber" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <div><b>docs/</b><span>The plan, the 88 rules, and a drawing of every screen.</span></div>
+      </div>
+      <div class="folder">
+        <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M2 8 h16 l5 5 h23 v25 H2 Z" class="f-card" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <div><b>user-guides/</b><span>How-to pages for each kind of person.</span></div>
+      </div>
+      <div class="folder">
+        <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M2 8 h16 l5 5 h23 v25 H2 Z" class="f-card" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <div><b>scripts/</b><span>The checkers that guard the rules and speed.</span></div>
+      </div>
+    </div>
+    <figcaption class="sr">The five folders at the top of the repo and what each holds.</figcaption>
+  </figure>
+  <h2>What's in the box.</h2>
+  <p>Five folders. Brain, screens, plan, how-tos, checkers.</p>
+</section>
+
+<!-- 8 · not yet -->
+<section class="spread">
+  <figure class="pic">
+    <svg viewBox="0 0 720 320" role="img" aria-label="The clubhouse door carries a Not Open Yet sign; a checklist beside it shows four outside reviews still unticked">
+      <rect x="60" y="130" width="240" height="150" rx="4" class="f-card" stroke="currentColor" stroke-width="3"/>
+      <polygon points="44,132 180,40 316,132" class="f-ink"/>
+      <rect x="84" y="176" width="40" height="36" rx="3" class="f-sky" stroke="currentColor" stroke-width="2"/>
+      <rect x="236" y="176" width="40" height="36" rx="3" class="f-sky" stroke="currentColor" stroke-width="2"/>
+      <rect x="150" y="190" width="60" height="90" rx="3" class="f-lime" stroke="currentColor" stroke-width="3"/>
+      <path d="M180 190 v16" stroke="currentColor" stroke-width="2"/>
+      <rect x="126" y="206" width="108" height="50" rx="6" class="f-tomato" stroke="currentColor" stroke-width="2.5"/>
+      <text x="180" y="227" text-anchor="middle" class="on-tomato" font-size="14">NOT OPEN</text>
+      <text x="180" y="246" text-anchor="middle" class="on-tomato" font-size="14">YET</text>
+      <line x1="20" y1="280" x2="340" y2="280" stroke="currentColor" stroke-width="3"/>
+      <text x="180" y="308" text-anchor="middle" class="sm">practice data only, no real kids</text>
+
+      <rect x="400" y="52" width="290" height="236" rx="16" class="f-paper" stroke="currentColor" stroke-width="3"/>
+      <text x="424" y="90" class="big">Still needed</text>
+      <g stroke="currentColor" stroke-width="2.5" class="f-card">
+        <rect x="424" y="112" width="22" height="22" rx="5"/>
+        <rect x="424" y="152" width="22" height="22" rx="5"/>
+        <rect x="424" y="192" width="22" height="22" rx="5"/>
+        <rect x="424" y="232" width="22" height="22" rx="5"/>
+      </g>
+      <text x="460" y="129">Outside security review</text>
+      <text x="460" y="169">Outside privacy review</text>
+      <text x="460" y="209">Outside safeguarding review</text>
+      <text x="460" y="249">Outside accessibility review</text>
+    </svg>
+    <figcaption class="sr">The code is finished, but outside reviews are still needed before real use.</figcaption>
+  </figure>
+  <h2>Finished, but not open for real kids yet.</h2>
+  <p>The code does everything it was asked to do, and the checkers agree.</p>
+  <p>It has not had outside safety, privacy, and accessibility reviews. Until then it runs on pretend data only.</p>
+</section>
+
+</main>
+
+<footer>
+  Drawn from the repo's <code>README.md</code>, <code>docs/PRD.md</code>, and <code>docs/not-implemented.md</code>. Colours and type follow the FaithTech design tokens in <code>docs/mocks</code>.
+</footer>
+
+</div>
