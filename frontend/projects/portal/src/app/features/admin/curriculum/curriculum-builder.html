@@ -1,42 +1,42 @@
-<wu-shell
+<w-shell
   role="admin"
   active="tracks"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <main class="wu-container wu-page">
-    <header class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Program administration</div>
-        <h1 class="wu-page__title">Curriculum builder</h1>
-        <p class="wu-page__sub">
+  <main class="w-container w-page">
+    <header class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Program administration</div>
+        <h1 class="w-page__title">Curriculum builder</h1>
+        <p class="w-page__sub">
           Build tracks, ordered modules, lessons, assessments, and downloadable resources.
         </p>
       </div>
-      <button class="wu-btn wu-btn--primary" type="button" (click)="openTrackDialog()">
+      <button class="w-btn w-btn--primary" type="button" (click)="openTrackDialog()">
         New track
       </button>
     </header>
 
     @if (errorMessage(); as error) {
-      <div class="wu-alert wu-alert--error" role="alert">
+      <div class="w-alert w-alert--error" role="alert">
         <span>{{ error }}</span>
-        <button class="wu-btn wu-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p class="wu-alert wu-alert--success" data-testid="curriculum-outcome" role="status">
+      <p class="w-alert w-alert--success" data-testid="curriculum-outcome" role="status">
         {{ message }}
       </p>
     }
 
-    <section class="wu-card wu-mb-5">
-      <div class="wu-card__body toolbar">
-        <div class="wu-field track-picker">
-          <label class="wu-label" for="curriculum-track">Curriculum track</label>
+    <section class="w-card w-mb-5">
+      <div class="w-card__body toolbar">
+        <div class="w-field track-picker">
+          <label class="w-label" for="curriculum-track">Curriculum track</label>
           <select
             #trackSelect
-            class="wu-select"
+            class="w-select"
             id="curriculum-track"
             [value]="selectedTrackId()"
             (change)="selectTrack(trackSelect.value)"
@@ -50,12 +50,12 @@
         </div>
         @if (workspace(); as track) {
           <div class="track-meta">
-            <span class="wu-badge" [class.wu-badge--success]="track.status === 'Published'">
+            <span class="w-badge" [class.w-badge--success]="track.status === 'Published'">
               {{ track.status }}
             </span>
-            <span class="wu-muted">{{ track.modules.length }} modules</span>
+            <span class="w-muted">{{ track.modules.length }} modules</span>
             <button
-              class="wu-btn wu-btn--primary"
+              class="w-btn w-btn--primary"
               type="button"
               [disabled]="busy()"
               (click)="publishTrack()"
@@ -68,31 +68,31 @@
     </section>
 
     @if (loading()) {
-      <p class="wu-muted" role="status">Loading curriculum workspace…</p>
+      <p class="w-muted" role="status">Loading curriculum workspace…</p>
     } @else if (workspace(); as track) {
-      <section class="wu-card wu-mb-5" aria-labelledby="module-form-heading">
-        <form class="wu-card__body module-form" [formGroup]="moduleForm" (ngSubmit)="saveModule()">
+      <section class="w-card w-mb-5" aria-labelledby="module-form-heading">
+        <form class="w-card__body module-form" [formGroup]="moduleForm" (ngSubmit)="saveModule()">
           <div class="module-form__heading">
             <h2 id="module-form-heading">
               {{ editingModuleId() ? 'Edit module' : 'Add a module' }}
             </h2>
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="module-name">Module name</label>
-            <input class="wu-input" id="module-name" formControlName="name" />
+          <div class="w-field">
+            <label class="w-label" for="module-name">Module name</label>
+            <input class="w-input" id="module-name" formControlName="name" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="module-description">Module description</label>
-            <input class="wu-input" id="module-description" formControlName="description" />
+          <div class="w-field">
+            <label class="w-label" for="module-description">Module description</label>
+            <input class="w-input" id="module-description" formControlName="description" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="scripture-anchor">Scripture anchor</label>
-            <input class="wu-input" id="scripture-anchor" formControlName="scriptureAnchor" />
+          <div class="w-field">
+            <label class="w-label" for="scripture-anchor">Scripture anchor</label>
+            <input class="w-input" id="scripture-anchor" formControlName="scriptureAnchor" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="module-prerequisite">Module prerequisite</label>
+          <div class="w-field">
+            <label class="w-label" for="module-prerequisite">Module prerequisite</label>
             <select
-              class="wu-select"
+              class="w-select"
               id="module-prerequisite"
               formControlName="prerequisiteModuleId"
             >
@@ -104,12 +104,12 @@
               }
             </select>
           </div>
-          <div class="wu-actions module-form__actions">
-            <button class="wu-btn wu-btn--primary" type="submit" [disabled]="busy()">
+          <div class="w-actions module-form__actions">
+            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
               {{ editingModuleId() ? 'Save module' : 'Add module' }}
             </button>
             @if (editingModuleId()) {
-              <button class="wu-btn wu-btn--ghost" type="button" (click)="cancelModuleEdit()">
+              <button class="w-btn w-btn--ghost" type="button" (click)="cancelModuleEdit()">
                 Cancel edit
               </button>
             }
@@ -120,54 +120,54 @@
       <div class="module-list">
         @for (module of track.modules; track module.id; let moduleIndex = $index) {
           <article
-            class="wu-card curriculum-module"
+            class="w-card curriculum-module"
             data-testid="curriculum-module"
             [attr.data-module-id]="module.id"
           >
-            <div class="wu-card__body wu-stack">
+            <div class="w-card__body w-stack">
               <header class="item-head">
                 <div>
-                  <p class="wu-eyebrow">Module {{ moduleIndex + 1 }}</p>
+                  <p class="w-eyebrow">Module {{ moduleIndex + 1 }}</p>
                   <h2>{{ module.name }}</h2>
                   @if (module.description) {
                     <p>{{ module.description }}</p>
                   }
                   @if (module.scriptureAnchor) {
-                    <p class="wu-muted">Scripture: {{ module.scriptureAnchor }}</p>
+                    <p class="w-muted">Scripture: {{ module.scriptureAnchor }}</p>
                   }
                 </div>
-                <span class="wu-badge" [class.wu-badge--success]="module.status === 'Published'">
+                <span class="w-badge" [class.w-badge--success]="module.status === 'Published'">
                   {{ module.status }}
                 </span>
               </header>
 
-              <div class="wu-actions item-actions">
+              <div class="w-actions item-actions">
                 <button
-                  class="wu-btn wu-btn--secondary"
+                  class="w-btn w-btn--secondary"
                   type="button"
                   (click)="openLesson(module.id)"
                 >
                   Add lesson
                 </button>
                 <button
-                  class="wu-btn wu-btn--secondary"
+                  class="w-btn w-btn--secondary"
                   type="button"
                   (click)="openQuizDialog(module.id)"
                 >
                   Add quiz
                 </button>
                 <button
-                  class="wu-btn wu-btn--secondary"
+                  class="w-btn w-btn--secondary"
                   type="button"
                   (click)="openAssignment(module.id)"
                 >
                   Add assignment
                 </button>
-                <button class="wu-btn wu-btn--secondary" type="button" (click)="editModule(module)">
+                <button class="w-btn w-btn--secondary" type="button" (click)="editModule(module)">
                   Edit module
                 </button>
                 <button
-                  class="wu-btn wu-btn--ghost"
+                  class="w-btn w-btn--ghost"
                   type="button"
                   [disabled]="moduleIndex === 0 || busy()"
                   (click)="moveModule(module.id, -1)"
@@ -175,7 +175,7 @@
                   Move module up
                 </button>
                 <button
-                  class="wu-btn wu-btn--ghost"
+                  class="w-btn w-btn--ghost"
                   type="button"
                   [disabled]="moduleIndex === track.modules.length - 1 || busy()"
                   (click)="moveModule(module.id, 1)"
@@ -183,7 +183,7 @@
                   Move module down
                 </button>
                 <button
-                  class="wu-btn wu-btn--primary"
+                  class="w-btn w-btn--primary"
                   type="button"
                   [disabled]="busy()"
                   (click)="publishModule(module)"
@@ -204,14 +204,14 @@
                       <div class="item-head">
                         <div>
                           <strong>{{ lesson.title }}</strong>
-                          <div class="wu-muted">
+                          <div class="w-muted">
                             Lesson {{ lessonIndex + 1 }}
                             @if (lesson.estimatedMinutes) {
                               · {{ lesson.estimatedMinutes }} min
                             }
                           </div>
                         </div>
-                        <span class="wu-badge">{{ lesson.status }}</span>
+                        <span class="w-badge">{{ lesson.status }}</span>
                       </div>
                       <div class="media-list">
                         @for (media of lesson.media; track media.id) {
@@ -220,7 +220,7 @@
                               {{ media.fileName }}
                             </a>
                             <button
-                              class="wu-btn wu-btn--ghost wu-btn--sm"
+                              class="w-btn w-btn--ghost w-btn--sm"
                               type="button"
                               (click)="removeMedia(lesson.id, media.id)"
                             >
@@ -229,26 +229,26 @@
                           </div>
                         }
                       </div>
-                      <label class="wu-label" [for]="'lesson-media-' + lesson.id">
+                      <label class="w-label" [for]="'lesson-media-' + lesson.id">
                         Upload PDF or MP4
                       </label>
                       <input
-                        class="wu-input"
+                        class="w-input"
                         [id]="'lesson-media-' + lesson.id"
                         type="file"
                         accept="application/pdf,video/mp4"
                         (change)="uploadMedia(lesson, $event)"
                       />
-                      <div class="wu-actions">
+                      <div class="w-actions">
                         <button
-                          class="wu-btn wu-btn--secondary wu-btn--sm"
+                          class="w-btn w-btn--secondary w-btn--sm"
                           type="button"
                           (click)="openLesson(module.id, lesson)"
                         >
                           Edit lesson
                         </button>
                         <button
-                          class="wu-btn wu-btn--ghost wu-btn--sm"
+                          class="w-btn w-btn--ghost w-btn--sm"
                           type="button"
                           [disabled]="lessonIndex === 0"
                           (click)="moveLesson(module, lesson.id, -1)"
@@ -256,7 +256,7 @@
                           Move lesson up
                         </button>
                         <button
-                          class="wu-btn wu-btn--ghost wu-btn--sm"
+                          class="w-btn w-btn--ghost w-btn--sm"
                           type="button"
                           [disabled]="lessonIndex === module.lessons.length - 1"
                           (click)="moveLesson(module, lesson.id, 1)"
@@ -264,14 +264,14 @@
                           Move lesson down
                         </button>
                         <button
-                          class="wu-btn wu-btn--primary wu-btn--sm"
+                          class="w-btn w-btn--primary w-btn--sm"
                           type="button"
                           (click)="publishLesson(lesson)"
                         >
                           Publish lesson
                         </button>
                         <button
-                          class="wu-btn wu-btn--danger wu-btn--sm"
+                          class="w-btn w-btn--danger w-btn--sm"
                           type="button"
                           (click)="archiveLesson(lesson)"
                         >
@@ -287,7 +287,7 @@
                         >
                           <span>Quiz · {{ quiz.questionCount }} questions</span>
                           <button
-                            class="wu-btn wu-btn--secondary wu-btn--sm"
+                            class="w-btn w-btn--secondary w-btn--sm"
                             type="button"
                             (click)="openQuiz(quiz.id)"
                           >
@@ -304,16 +304,16 @@
                           <span>
                             {{ assignment.title }} · {{ assignment.totalPoints }} points
                           </span>
-                          <div class="wu-actions">
+                          <div class="w-actions">
                             <button
-                              class="wu-btn wu-btn--secondary wu-btn--sm"
+                              class="w-btn w-btn--secondary w-btn--sm"
                               type="button"
                               (click)="openAssignment(module.id, assignment)"
                             >
                               Edit assignment
                             </button>
                             <button
-                              class="wu-btn wu-btn--primary wu-btn--sm"
+                              class="w-btn w-btn--primary w-btn--sm"
                               type="button"
                               (click)="publishAssignment(assignment)"
                             >
@@ -324,7 +324,7 @@
                       }
                     </article>
                   } @empty {
-                    <p class="wu-muted">No lessons yet.</p>
+                    <p class="w-muted">No lessons yet.</p>
                   }
                 </div>
               </section>
@@ -342,7 +342,7 @@
                         Quiz · {{ quiz.questionCount }} questions · pass {{ quiz.passMark }}%
                       </span>
                       <button
-                        class="wu-btn wu-btn--secondary wu-btn--sm"
+                        class="w-btn w-btn--secondary w-btn--sm"
                         type="button"
                         (click)="openQuiz(quiz.id)"
                       >
@@ -360,16 +360,16 @@
                         {{ assignment.title }} · {{ assignment.totalPoints }} points ·
                         {{ assignment.status }}
                       </span>
-                      <div class="wu-actions">
+                      <div class="w-actions">
                         <button
-                          class="wu-btn wu-btn--secondary wu-btn--sm"
+                          class="w-btn w-btn--secondary w-btn--sm"
                           type="button"
                           (click)="openAssignment(module.id, assignment)"
                         >
                           Edit assignment
                         </button>
                         <button
-                          class="wu-btn wu-btn--primary wu-btn--sm"
+                          class="w-btn w-btn--primary w-btn--sm"
                           type="button"
                           (click)="publishAssignment(assignment)"
                         >
@@ -379,54 +379,54 @@
                     </article>
                   }
                   @if (module.quizzes.length === 0 && module.assignments.length === 0) {
-                    <p class="wu-muted">No module assessments yet.</p>
+                    <p class="w-muted">No module assessments yet.</p>
                   }
                 </div>
               </section>
             </div>
           </article>
         } @empty {
-          <section class="wu-empty">
-            <h2 class="wu-empty__title">No modules yet</h2>
-            <p class="wu-empty__text">Use the form above to add the first module.</p>
+          <section class="w-empty">
+            <h2 class="w-empty__title">No modules yet</h2>
+            <p class="w-empty__text">Use the form above to add the first module.</p>
           </section>
         }
       </div>
 
       @if (selectedQuiz(); as quiz) {
-        <section class="wu-card quiz-editor" data-testid="quiz-editor">
-          <div class="wu-card__body wu-stack">
+        <section class="w-card quiz-editor" data-testid="quiz-editor">
+          <div class="w-card__body w-stack">
             <header class="item-head">
               <div>
-                <p class="wu-eyebrow">Assessment editor</p>
+                <p class="w-eyebrow">Assessment editor</p>
                 <h2>Quiz questions</h2>
               </div>
-              <button class="wu-btn wu-btn--ghost" type="button" (click)="selectedQuiz.set(null)">
+              <button class="w-btn w-btn--ghost" type="button" (click)="selectedQuiz.set(null)">
                 Close quiz editor
               </button>
             </header>
             <form class="settings-grid" [formGroup]="quizForm" (ngSubmit)="updateQuiz()">
-              <div class="wu-field">
-                <label class="wu-label" for="edit-pass-mark">Pass mark</label>
+              <div class="w-field">
+                <label class="w-label" for="edit-pass-mark">Pass mark</label>
                 <input
-                  class="wu-input"
+                  class="w-input"
                   id="edit-pass-mark"
                   type="number"
                   formControlName="passMark"
                 />
               </div>
-              <div class="wu-field">
-                <label class="wu-label" for="edit-attempts">Attempts allowed</label>
+              <div class="w-field">
+                <label class="w-label" for="edit-attempts">Attempts allowed</label>
                 <input
-                  class="wu-input"
+                  class="w-input"
                   id="edit-attempts"
                   type="number"
                   formControlName="attemptsAllowed"
                 />
               </div>
-              <div class="wu-field">
-                <label class="wu-label" for="edit-feedback">Feedback mode</label>
-                <select class="wu-select" id="edit-feedback" formControlName="feedbackMode">
+              <div class="w-field">
+                <label class="w-label" for="edit-feedback">Feedback mode</label>
+                <select class="w-select" id="edit-feedback" formControlName="feedbackMode">
                   <option value="show-correct">Show correct answers</option>
                   <option value="score-only">Show score only</option>
                   <option value="after-all-attempts">After all attempts</option>
@@ -440,7 +440,7 @@
                 <input type="checkbox" formControlName="requiredToCompleteModule" />
                 Required for module completion
               </label>
-              <button class="wu-btn wu-btn--secondary" type="submit">Save quiz settings</button>
+              <button class="w-btn w-btn--secondary" type="submit">Save quiz settings</button>
             </form>
 
             <ol class="question-list">
@@ -448,11 +448,11 @@
                 <li class="question-row">
                   <div>
                     <strong>{{ question.text }}</strong>
-                    <div class="wu-muted">{{ question.type }}</div>
+                    <div class="w-muted">{{ question.type }}</div>
                   </div>
-                  <div class="wu-actions">
+                  <div class="w-actions">
                     <button
-                      class="wu-btn wu-btn--ghost wu-btn--sm"
+                      class="w-btn w-btn--ghost w-btn--sm"
                       type="button"
                       [disabled]="questionIndex === 0"
                       (click)="moveQuestion(question.id, -1)"
@@ -460,7 +460,7 @@
                       Move question up
                     </button>
                     <button
-                      class="wu-btn wu-btn--ghost wu-btn--sm"
+                      class="w-btn w-btn--ghost w-btn--sm"
                       type="button"
                       [disabled]="questionIndex === quiz.questions.length - 1"
                       (click)="moveQuestion(question.id, 1)"
@@ -473,13 +473,13 @@
             </ol>
 
             <form class="question-form" [formGroup]="questionForm" (ngSubmit)="addQuestion()">
-              <div class="wu-field question-form__text">
-                <label class="wu-label" for="question-text">Question text</label>
-                <input class="wu-input" id="question-text" formControlName="text" />
+              <div class="w-field question-form__text">
+                <label class="w-label" for="question-text">Question text</label>
+                <input class="w-input" id="question-text" formControlName="text" />
               </div>
-              <div class="wu-field">
-                <label class="wu-label" for="question-type">Question type</label>
-                <select class="wu-select" id="question-type" formControlName="type">
+              <div class="w-field">
+                <label class="w-label" for="question-type">Question type</label>
+                <select class="w-select" id="question-type" formControlName="type">
                   <option value="MultipleChoice">Multiple choice</option>
                   <option value="TrueFalse">True or false</option>
                   <option value="MultipleAnswer">Multiple answer</option>
@@ -487,38 +487,38 @@
                 </select>
               </div>
               @if (questionForm.controls.type.value !== 'ShortAnswer') {
-                <div class="wu-field">
-                  <label class="wu-label" for="answer-options">Answer options</label>
+                <div class="w-field">
+                  <label class="w-label" for="answer-options">Answer options</label>
                   <textarea
-                    class="wu-textarea"
+                    class="w-textarea"
                     id="answer-options"
                     rows="3"
                     formControlName="options"
                   ></textarea>
-                  <p class="wu-help">One option per line. True/false options are supplied.</p>
+                  <p class="w-help">One option per line. True/false options are supplied.</p>
                 </div>
-                <div class="wu-field">
-                  <label class="wu-label" for="correct-options"> Correct option numbers </label>
+                <div class="w-field">
+                  <label class="w-label" for="correct-options"> Correct option numbers </label>
                   <input
-                    class="wu-input"
+                    class="w-input"
                     id="correct-options"
                     placeholder="1, 3"
                     formControlName="correctIndexes"
                   />
                 </div>
               } @else {
-                <div class="wu-field">
-                  <label class="wu-label" for="correct-text-answers"> Correct text answers </label>
+                <div class="w-field">
+                  <label class="w-label" for="correct-text-answers"> Correct text answers </label>
                   <textarea
-                    class="wu-textarea"
+                    class="w-textarea"
                     id="correct-text-answers"
                     rows="3"
                     formControlName="correctAnswers"
                   ></textarea>
-                  <p class="wu-help">One accepted answer per line.</p>
+                  <p class="w-help">One accepted answer per line.</p>
                 </div>
               }
-              <button class="wu-btn wu-btn--primary" type="submit" [disabled]="busy()">
+              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
                 Add question
               </button>
             </form>
@@ -526,9 +526,9 @@
         </section>
       }
     } @else {
-      <section class="wu-empty">
-        <h2 class="wu-empty__title">No curriculum tracks</h2>
-        <p class="wu-empty__text">Create a track to begin authoring.</p>
+      <section class="w-empty">
+        <h2 class="w-empty__title">No curriculum tracks</h2>
+        <p class="w-empty__text">Create a track to begin authoring.</p>
       </section>
     }
   </main>
@@ -543,29 +543,29 @@
         (wuDialogEscape)="trackDialogOpen.set(false)"
       >
         <h2>Create track</h2>
-        <form class="wu-stack" [formGroup]="trackForm" (ngSubmit)="createTrack()">
-          <div class="wu-field">
-            <label class="wu-label" for="track-name">Track name</label>
-            <input class="wu-input" id="track-name" formControlName="name" />
+        <form class="w-stack" [formGroup]="trackForm" (ngSubmit)="createTrack()">
+          <div class="w-field">
+            <label class="w-label" for="track-name">Track name</label>
+            <input class="w-input" id="track-name" formControlName="name" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="track-key">Track key</label>
-            <input class="wu-input" id="track-key" formControlName="key" />
+          <div class="w-field">
+            <label class="w-label" for="track-key">Track key</label>
+            <input class="w-input" id="track-key" formControlName="key" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="track-description">Track description</label>
+          <div class="w-field">
+            <label class="w-label" for="track-description">Track description</label>
             <textarea
-              class="wu-textarea"
+              class="w-textarea"
               id="track-description"
               rows="4"
               formControlName="description"
             ></textarea>
           </div>
-          <div class="wu-actions">
-            <button class="wu-btn wu-btn--primary" type="submit" [disabled]="busy()">
+          <div class="w-actions">
+            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
               Create track
             </button>
-            <button class="wu-btn wu-btn--ghost" type="button" (click)="trackDialogOpen.set(false)">
+            <button class="w-btn w-btn--ghost" type="button" (click)="trackDialogOpen.set(false)">
               Cancel
             </button>
           </div>
@@ -585,67 +585,65 @@
       >
         <h2>{{ editingLessonId() ? 'Edit lesson' : 'Add lesson' }}</h2>
         <form class="dialog-grid" [formGroup]="lessonForm" (ngSubmit)="saveLesson()">
-          <div class="wu-field dialog-grid__wide">
-            <label class="wu-label" for="lesson-title">Lesson title</label>
-            <input class="wu-input" id="lesson-title" formControlName="title" />
+          <div class="w-field dialog-grid__wide">
+            <label class="w-label" for="lesson-title">Lesson title</label>
+            <input class="w-input" id="lesson-title" formControlName="title" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="lesson-scripture">Scripture reference</label>
-            <input class="wu-input" id="lesson-scripture" formControlName="scriptureReference" />
+          <div class="w-field">
+            <label class="w-label" for="lesson-scripture">Scripture reference</label>
+            <input class="w-input" id="lesson-scripture" formControlName="scriptureReference" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="lesson-minutes">Estimated minutes</label>
+          <div class="w-field">
+            <label class="w-label" for="lesson-minutes">Estimated minutes</label>
             <input
-              class="wu-input"
+              class="w-input"
               id="lesson-minutes"
               type="number"
               min="1"
               formControlName="estimatedMinutes"
             />
           </div>
-          <div class="wu-field dialog-grid__wide">
-            <label class="wu-label" for="learning-objectives">Learning objectives</label>
+          <div class="w-field dialog-grid__wide">
+            <label class="w-label" for="learning-objectives">Learning objectives</label>
             <textarea
-              class="wu-textarea"
+              class="w-textarea"
               id="learning-objectives"
               rows="3"
               formControlName="learningObjectives"
             ></textarea>
           </div>
-          <div class="wu-field dialog-grid__wide">
-            <label class="wu-label" for="teaching-body">Teaching body</label>
+          <div class="w-field dialog-grid__wide">
+            <label class="w-label" for="teaching-body">Teaching body</label>
             <textarea
-              class="wu-textarea"
+              class="w-textarea"
               id="teaching-body"
               rows="6"
               formControlName="teachingBody"
             ></textarea>
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="reflection-prompts">Reflection prompts</label>
+          <div class="w-field">
+            <label class="w-label" for="reflection-prompts">Reflection prompts</label>
             <textarea
-              class="wu-textarea"
+              class="w-textarea"
               id="reflection-prompts"
               rows="4"
               formControlName="reflectionPrompts"
             ></textarea>
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="leader-guide-notes">Leader guide notes</label>
+          <div class="w-field">
+            <label class="w-label" for="leader-guide-notes">Leader guide notes</label>
             <textarea
-              class="wu-textarea"
+              class="w-textarea"
               id="leader-guide-notes"
               rows="4"
               formControlName="leaderGuideNotes"
             ></textarea>
           </div>
-          <div class="wu-actions dialog-grid__wide">
-            <button class="wu-btn wu-btn--primary" type="submit" [disabled]="busy()">
+          <div class="w-actions dialog-grid__wide">
+            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
               {{ editingLessonId() ? 'Save lesson' : 'Create lesson' }}
             </button>
-            <button class="wu-btn wu-btn--ghost" type="button" (click)="closeLesson()">
-              Cancel
-            </button>
+            <button class="w-btn w-btn--ghost" type="button" (click)="closeLesson()">Cancel</button>
           </div>
         </form>
       </section>
@@ -662,23 +660,23 @@
         (wuDialogEscape)="closeQuizDialog()"
       >
         <h2>Add quiz</h2>
-        <form class="wu-stack" [formGroup]="quizForm" (ngSubmit)="createQuiz()">
-          <div class="wu-field">
-            <label class="wu-label" for="quiz-pass-mark">Pass mark</label>
-            <input class="wu-input" id="quiz-pass-mark" type="number" formControlName="passMark" />
+        <form class="w-stack" [formGroup]="quizForm" (ngSubmit)="createQuiz()">
+          <div class="w-field">
+            <label class="w-label" for="quiz-pass-mark">Pass mark</label>
+            <input class="w-input" id="quiz-pass-mark" type="number" formControlName="passMark" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="quiz-attempts">Attempts allowed</label>
+          <div class="w-field">
+            <label class="w-label" for="quiz-attempts">Attempts allowed</label>
             <input
-              class="wu-input"
+              class="w-input"
               id="quiz-attempts"
               type="number"
               formControlName="attemptsAllowed"
             />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="quiz-feedback">Feedback mode</label>
-            <select class="wu-select" id="quiz-feedback" formControlName="feedbackMode">
+          <div class="w-field">
+            <label class="w-label" for="quiz-feedback">Feedback mode</label>
+            <select class="w-select" id="quiz-feedback" formControlName="feedbackMode">
               <option value="show-correct">Show correct answers</option>
               <option value="score-only">Show score only</option>
               <option value="after-all-attempts">After all attempts</option>
@@ -692,11 +690,11 @@
             <input type="checkbox" formControlName="requiredToCompleteModule" />
             Required for module completion
           </label>
-          <div class="wu-actions">
-            <button class="wu-btn wu-btn--primary" type="submit" [disabled]="busy()">
+          <div class="w-actions">
+            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
               Create quiz
             </button>
-            <button class="wu-btn wu-btn--ghost" type="button" (click)="closeQuizDialog()">
+            <button class="w-btn w-btn--ghost" type="button" (click)="closeQuizDialog()">
               Cancel
             </button>
           </div>
@@ -716,21 +714,21 @@
       >
         <h2>{{ editingAssignmentId() ? 'Edit assignment' : 'Add assignment' }}</h2>
         <form class="dialog-grid" [formGroup]="assignmentForm" (ngSubmit)="saveAssignment()">
-          <div class="wu-field dialog-grid__wide">
-            <label class="wu-label" for="assignment-title">Assignment title</label>
-            <input class="wu-input" id="assignment-title" formControlName="title" />
+          <div class="w-field dialog-grid__wide">
+            <label class="w-label" for="assignment-title">Assignment title</label>
+            <input class="w-input" id="assignment-title" formControlName="title" />
           </div>
-          <div class="wu-field dialog-grid__wide">
-            <label class="wu-label" for="assignment-task">Task description</label>
+          <div class="w-field dialog-grid__wide">
+            <label class="w-label" for="assignment-task">Task description</label>
             <textarea
-              class="wu-textarea"
+              class="w-textarea"
               id="assignment-task"
               rows="5"
               formControlName="taskDescription"
             ></textarea>
           </div>
           <fieldset class="submission-types dialog-grid__wide">
-            <legend class="wu-label">Allowed submission types</legend>
+            <legend class="w-label">Allowed submission types</legend>
             <label class="check-row">
               <input type="checkbox" formControlName="textResponse" />
               Text response
@@ -748,14 +746,14 @@
               File upload
             </label>
           </fieldset>
-          <div class="wu-field">
-            <label class="wu-label" for="assignment-due">Due date</label>
-            <input class="wu-input" id="assignment-due" type="date" formControlName="dueDate" />
+          <div class="w-field">
+            <label class="w-label" for="assignment-due">Due date</label>
+            <input class="w-input" id="assignment-due" type="date" formControlName="dueDate" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="assignment-grace">Grace period days</label>
+          <div class="w-field">
+            <label class="w-label" for="assignment-grace">Grace period days</label>
             <input
-              class="wu-input"
+              class="w-input"
               id="assignment-grace"
               type="number"
               min="0"
@@ -771,25 +769,25 @@
             Require mentor approval
           </label>
           <fieldset class="rubric-editor dialog-grid__wide" formArrayName="rubric">
-            <legend class="wu-label">Rubric</legend>
+            <legend class="w-label">Rubric</legend>
             @for (row of rubric.controls; track row; let rubricIndex = $index) {
               <div class="rubric-row" [formGroupName]="rubricIndex">
-                <div class="wu-field">
-                  <label class="wu-label" [for]="'rubric-description-' + rubricIndex">
+                <div class="w-field">
+                  <label class="w-label" [for]="'rubric-description-' + rubricIndex">
                     Rubric criterion
                   </label>
                   <input
-                    class="wu-input"
+                    class="w-input"
                     [id]="'rubric-description-' + rubricIndex"
                     formControlName="description"
                   />
                 </div>
-                <div class="wu-field">
-                  <label class="wu-label" [for]="'rubric-points-' + rubricIndex">
+                <div class="w-field">
+                  <label class="w-label" [for]="'rubric-points-' + rubricIndex">
                     Criterion points
                   </label>
                   <input
-                    class="wu-input"
+                    class="w-input"
                     [id]="'rubric-points-' + rubricIndex"
                     type="number"
                     min="1"
@@ -797,7 +795,7 @@
                   />
                 </div>
                 <button
-                  class="wu-btn wu-btn--ghost"
+                  class="w-btn w-btn--ghost"
                   type="button"
                   [disabled]="rubric.length === 1"
                   (click)="removeRubricRow(rubricIndex)"
@@ -806,15 +804,15 @@
                 </button>
               </div>
             }
-            <button class="wu-btn wu-btn--secondary" type="button" (click)="addRubricRow()">
+            <button class="w-btn w-btn--secondary" type="button" (click)="addRubricRow()">
               Add rubric criterion
             </button>
           </fieldset>
-          <div class="wu-actions dialog-grid__wide">
-            <button class="wu-btn wu-btn--primary" type="submit" [disabled]="busy()">
+          <div class="w-actions dialog-grid__wide">
+            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
               {{ editingAssignmentId() ? 'Save assignment' : 'Create assignment' }}
             </button>
-            <button class="wu-btn wu-btn--ghost" type="button" (click)="closeAssignment()">
+            <button class="w-btn w-btn--ghost" type="button" (click)="closeAssignment()">
               Cancel
             </button>
           </div>
@@ -822,4 +820,4 @@
       </section>
     </div>
   }
-</wu-shell>
+</w-shell>

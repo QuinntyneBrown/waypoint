@@ -14,7 +14,7 @@ test('sign-out fully tears down the session and blocks protected pages', async (
   const home = new YouthHomePage(page);
   await expect(page).toHaveURL(YouthHomePage.urlPattern);
   const session = await page.evaluate(
-    () => sessionStorage.getItem('wu.session.v1') ?? localStorage.getItem('wu.session.v1'),
+    () => sessionStorage.getItem('w.session.v1') ?? localStorage.getItem('w.session.v1'),
   );
   const { refreshToken } = JSON.parse(session!) as { refreshToken: string };
 
@@ -29,7 +29,7 @@ test('sign-out fully tears down the session and blocks protected pages', async (
   // No account data remains: the session storage is purged and a protected page
   // redirects straight back to sign-in with no silent restore.
   const stored = await page.evaluate(
-    () => sessionStorage.getItem('wu.session.v1') ?? localStorage.getItem('wu.session.v1'),
+    () => sessionStorage.getItem('w.session.v1') ?? localStorage.getItem('w.session.v1'),
   );
   expect(stored).toBeNull();
   const refresh = await request.post('/api/auth/refresh', { data: { refreshToken } });

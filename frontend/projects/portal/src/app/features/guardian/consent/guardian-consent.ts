@@ -1,16 +1,16 @@
 import { DatePipe, DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiError, GuardianApi, GuardianConsentRecord } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, GuardianApi, GuardianConsentRecord } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 import { GuardianContextService } from '../guardian-context.service';
 
 // Traces to: L2-GUARDIAN-003, L2-CONSENT-001
 @Component({
-  selector: 'wu-guardian-consent',
+  selector: 'w-guardian-consent',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, ReactiveFormsModule, DatePipe],
+  imports: [WShell, ReactiveFormsModule, DatePipe],
   templateUrl: './guardian-consent.html',
 })
 export class GuardianConsent {

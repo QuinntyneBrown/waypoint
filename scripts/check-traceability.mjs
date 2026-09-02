@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Requirement traceability gate for Word Up.
+// Requirement traceability gate for Waypoint.
 // - Collects every in-scope L2 id from docs/specs/**/L2.md.
 // - Collects every L2 cited by tests: backend `[Property("Req","L2-…")]` and
 //   frontend/e2e `// Traces to: L2-…` headers.

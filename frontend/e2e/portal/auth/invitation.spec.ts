@@ -9,7 +9,7 @@ test('an invited youth accepts a contextual invite and continues to onboarding',
 }) => {
   const admin = await registerUser(request, 'ProgramAdministrator', 'invite-issuer');
   const auth = await signInApi(request, admin);
-  const email = `accepted-invite-${crypto.randomUUID()}@wordup.test`;
+  const email = `accepted-invite-${crypto.randomUUID()}@waypoint.test`;
   const issued = await request.post('/api/invitations', {
     headers: { Authorization: `Bearer ${auth.accessToken}` },
     data: { email, role: 'Youth', cohortId: null, mentorId: null },
@@ -21,7 +21,7 @@ test('an invited youth accepts a contextual invite and continues to onboarding',
 
   const invite = new InviteAcceptPage(page);
   await invite.goto(token!);
-  await expect(invite.heading).toContainText(/join word up as youth/i);
+  await expect(invite.heading).toContainText(/join waypoint as youth/i);
   await invite.displayName.fill('Invited Youth');
   await invite.password.fill('Password123');
   await invite.confirmPassword.fill('Password123');

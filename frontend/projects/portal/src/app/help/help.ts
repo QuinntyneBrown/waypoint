@@ -1,23 +1,23 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { shellRole } from '../shell-role';
 import { helpTopicsFor } from './help-content';
 
 // Traces to: L2-PLATFORM-005
 @Component({
-  selector: 'wu-help',
+  selector: 'w-help',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, WuIcon, WuShell],
+  imports: [RouterLink, WIcon, WShell],
   templateUrl: './help.html',
   styles: `
     .help-search {
       max-width: 44rem;
       position: relative;
     }
-    .help-search wu-icon {
-      left: var(--wu-s4);
+    .help-search w-icon {
+      left: var(--w-s4);
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -27,26 +27,26 @@ import { helpTopicsFor } from './help-content';
     }
     .help-grid {
       display: grid;
-      gap: var(--wu-s5);
+      gap: var(--w-s5);
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .help-topic__title {
       align-items: center;
       display: flex;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
     }
     .help-answer {
-      border-top: 1px solid var(--wu-border);
-      padding: var(--wu-s4) 0;
+      border-top: 1px solid var(--w-border);
+      padding: var(--w-s4) 0;
     }
     .help-answer summary {
       cursor: pointer;
       font-weight: 700;
       min-height: 44px;
-      padding: var(--wu-s2) 0;
+      padding: var(--w-s2) 0;
     }
     .help-answer p {
-      margin: var(--wu-s2) 0 0;
+      margin: var(--w-s2) 0 0;
     }
     @media (max-width: 48rem) {
       .help-grid {

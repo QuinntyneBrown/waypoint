@@ -1,27 +1,27 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiError, LearningApi, YouthQuizAttempt, YouthQuizQuestion } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, YouthQuizAttempt, YouthQuizQuestion } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 type QuizAnswers = Record<string, number[] | string>;
 
 // Traces to: L2-LEARN-004
 @Component({
-  selector: 'wu-youth-quiz-attempt',
+  selector: 'w-youth-quiz-attempt',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell],
+  imports: [WShell],
   templateUrl: './youth-quiz-attempt.html',
   styles: `
     .quiz-option {
       min-height: 2.75rem;
       display: flex;
       align-items: center;
-      gap: var(--wu-sp-3);
-      padding: var(--wu-sp-3);
-      border: 1px solid var(--wu-border);
-      border-radius: var(--wu-r-input);
+      gap: var(--w-sp-3);
+      padding: var(--w-sp-3);
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-r-input);
       cursor: pointer;
     }
   `,

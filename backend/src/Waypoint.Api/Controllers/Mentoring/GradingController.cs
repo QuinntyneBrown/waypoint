@@ -1,0 +1,41 @@
+using Waypoint.Api.Contracts.Mentoring;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Waypoint.Application.Mentoring.Grading;
+
+namespace Waypoint.Api.Controllers.Mentoring;
+
+[ApiController]
+[Route("api/mentor")]
+[Authorize(Roles = Roles.Mentor + "," + Roles.ProgramAdministrator)]
+public class GradingController : ControllerBase
+{
+    private readonly IMediator _mediator;
+
+    public GradingController(IMediator mediator) => _mediator = mediator;
+
+    [HttpGet("submissions/{id:guid}")]
+    public async Task<ActionResult<SubmissionReviewView>> Review(Guid id, CancellationToken cancellationToken)
+    {
+        return Ok(await _mediator.Send(new SubmissionReviewQuery(id), cancellationToken));
+    }
+
+    // Grade a youth submission (L2-MENTOR-003).
+    [HttpPost("submissions/{id:guid}/grade")]
+    public async Task<IActionResult> Grade(
+        Guid id, [FromBody] GradeSubmissionRequest request, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(
+            new GradeSubmissionCommand(
+                id,
+                request.Decision,
+                request.RubricScoresJson,
+                request.TotalAwarded,
+                request.Comment,
+                request.GuardianNotified,
+                request.ExpectedVersion),
+            cancellationToken);
+        return NoContent();
+    }
+}

@@ -1,25 +1,25 @@
-<wu-shell
+<w-shell
   role="mentor"
   active="my-youth"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <a class="wu-link" routerLink="/mentor/my-youth">Back to My youth</a>
+  <div class="w-container w-page">
+    <a class="w-link" routerLink="/mentor/my-youth">Back to My youth</a>
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
     @if (detail(); as youth) {
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">{{ youth.cohortName ?? 'Cohort not assigned' }}</div>
-          <h1 class="wu-page__title">{{ youth.displayName }}</h1>
-          <p class="wu-page__sub">Mentor-only coaching record</p>
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">{{ youth.cohortName ?? 'Cohort not assigned' }}</div>
+          <h1 class="w-page__title">{{ youth.displayName }}</h1>
+          <p class="w-page__sub">Mentor-only coaching record</p>
         </div>
       </div>
 
       @if (youth.atRisk) {
-        <aside class="wu-alert wu-alert--error" data-testid="youth-at-risk-banner">
+        <aside class="w-alert w-alert--error" data-testid="youth-at-risk-banner">
           <strong>At risk:</strong> {{ youth.atRiskReason }}
           @if (youth.flaggedByName && youth.flaggedAt) {
             <span
@@ -33,7 +33,7 @@
       <div class="detail-tabs" role="tablist" aria-label="Youth record sections">
         @for (tab of tabs; track tab.key) {
           <button
-            class="wu-tab detail-tab"
+            class="w-tab detail-tab"
             type="button"
             role="tab"
             [id]="'detail-tab-' + tab.key"
@@ -51,12 +51,12 @@
       @for (tab of tabs; track tab.key) {
         @if (activeTab() === tab.key) {
           <section
-            class="wu-card wu-mt-4"
+            class="w-card w-mt-4"
             role="tabpanel"
             [id]="'detail-panel-' + tab.key"
             [attr.aria-labelledby]="'detail-tab-' + tab.key"
           >
-            <div class="wu-card__body">
+            <div class="w-card__body">
               @switch (tab.key) {
                 @case ('profile') {
                   <div class="detail-grid">
@@ -80,7 +80,7 @@
                           }
                         </p>
                       } @else {
-                        <p class="wu-muted">No guardian contact is linked.</p>
+                        <p class="w-muted">No guardian contact is linked.</p>
                       }
                     </div>
                   </div>
@@ -101,10 +101,10 @@
                     @for (item of youth.attendance; track item.sessionId) {
                       <li class="detail-row">
                         <strong>{{ item.sessionTitle }}</strong> · {{ item.status }}
-                        <span class="wu-muted">{{ item.startsAt | date: 'mediumDate' }}</span>
+                        <span class="w-muted">{{ item.startsAt | date: 'mediumDate' }}</span>
                       </li>
                     } @empty {
-                      <li class="wu-muted">No attendance recorded.</li>
+                      <li class="w-muted">No attendance recorded.</li>
                     }
                   </ul>
                 }
@@ -112,7 +112,7 @@
                   <h2>Check-ins</h2>
                   <p>
                     <a
-                      class="wu-btn wu-btn--primary"
+                      class="w-btn w-btn--primary"
                       [routerLink]="['/mentor/check-ins']"
                       [queryParams]="{ youthId: youth.id }"
                     >
@@ -126,7 +126,7 @@
                         {{ item.date | date: 'mediumDate' }}
                       </li>
                     } @empty {
-                      <li class="wu-muted">No check-ins recorded.</li>
+                      <li class="w-muted">No check-ins recorded.</li>
                     }
                   </ul>
                 }
@@ -141,7 +141,7 @@
                         · {{ item.status }} · {{ item.submittedAt | date: 'mediumDate' }}
                       </li>
                     } @empty {
-                      <li class="wu-muted">No submissions yet.</li>
+                      <li class="w-muted">No submissions yet.</li>
                     }
                   </ul>
                 }
@@ -149,7 +149,7 @@
                   <h2>Competencies</h2>
                   <p>
                     <a
-                      class="wu-btn wu-btn--primary"
+                      class="w-btn w-btn--primary"
                       [routerLink]="['/mentor/youth', youth.id, 'competencies']"
                     >
                       Open competency tracker
@@ -164,7 +164,7 @@
                         }
                       </li>
                     } @empty {
-                      <li class="wu-muted">No competency assessments yet.</li>
+                      <li class="w-muted">No competency assessments yet.</li>
                     }
                   </ul>
                 }
@@ -174,7 +174,7 @@
         }
       }
     } @else if (!errorMessage()) {
-      <p class="wu-muted" role="status">Loading youth record…</p>
+      <p class="w-muted" role="status">Loading youth record…</p>
     }
   </div>
-</wu-shell>
+</w-shell>

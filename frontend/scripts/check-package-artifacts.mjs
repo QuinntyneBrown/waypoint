@@ -5,13 +5,13 @@ import { fileURLToPath } from 'node:url';
 
 const frontendRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const packageDefinitions = [
-  { directory: 'wu-api', name: '@wu/api' },
+  { directory: 'w-api', name: '@w/api' },
   {
-    directory: 'wu-auth',
-    name: '@wu/auth',
-    expectedPeers: { '@wu/api': '0.0.1' },
+    directory: 'w-auth',
+    name: '@w/auth',
+    expectedPeers: { '@w/api': '0.0.1' },
   },
-  { directory: 'wu-ui', name: '@wu/ui' },
+  { directory: 'w-ui', name: '@w/ui' },
 ];
 
 function assert(condition, message) {
@@ -121,8 +121,8 @@ for (const definition of packageDefinitions) {
 
 const packageImports = new Map();
 const importPatterns = [
-  /\b(?:from|import\s*\()\s*["'](@wu\/[^"']+)["']/g,
-  /\bimport\s*["'](@wu\/[^"']+)["']/g,
+  /\b(?:from|import\s*\()\s*["'](@way\/[^"']+)["']/g,
+  /\bimport\s*["'](@way\/[^"']+)["']/g,
 ];
 
 for (const [name, { directory, manifest }] of builtPackages) {

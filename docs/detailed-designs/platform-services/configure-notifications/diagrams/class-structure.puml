@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "PreferencesController" as controller_PreferencesController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "NotificationPreferencesQuery" as request_NotificationPreferencesQuery <<record>>
   class "NotificationPreferencesQueryHandler" as handler_NotificationPreferencesQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "NotificationPreference" as entity_NotificationPreference <<domain type>>
 }
 page_SettingsNotifications --> client_NotificationPreferencesApi : invokes

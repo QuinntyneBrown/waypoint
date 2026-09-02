@@ -1,128 +1,128 @@
-<wu-shell
+<w-shell
   role="admin"
   active="dashboard"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <header class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Director dashboard</div>
-        <h1 class="wu-page__title">Welcome back, {{ auth.user()?.displayName }}.</h1>
-        <p class="wu-page__sub">
+  <div class="w-container w-page">
+    <header class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Director dashboard</div>
+        <h1 class="w-page__title">Welcome back, {{ auth.user()?.displayName }}.</h1>
+        <p class="w-page__sub">
           A current view of program participation, progress, and staff load.
         </p>
       </div>
-      <button class="wu-btn wu-btn--ghost" type="button" [disabled]="loading()" (click)="load()">
-        <wu-icon name="refresh-cw" />Refresh
+      <button class="w-btn w-btn--ghost" type="button" [disabled]="loading()" (click)="load()">
+        <w-icon name="refresh-cw" />Refresh
       </button>
     </header>
     @if (errorMessage(); as error) {
-      <div class="wu-alert wu-alert--error" role="alert">
+      <div class="w-alert w-alert--error" role="alert">
         {{ error }}
-        <button class="wu-btn wu-btn--ghost" type="button" (click)="load()">Try again</button>
+        <button class="w-btn w-btn--ghost" type="button" (click)="load()">Try again</button>
       </div>
     }
     @if (loading()) {
-      <p class="wu-muted" role="status">Loading the director dashboard…</p>
+      <p class="w-muted" role="status">Loading the director dashboard…</p>
     } @else if (hub(); as view) {
-      <div class="wu-grid wu-grid--4" aria-label="Program summary">
-        <article class="wu-card wu-statcard">
-          <div class="wu-statcard__label">Active youth</div>
-          <div class="wu-statcard__value">{{ view.kpis.activeYouth }}</div>
+      <div class="w-grid w-grid--4" aria-label="Program summary">
+        <article class="w-card w-statcard">
+          <div class="w-statcard__label">Active youth</div>
+          <div class="w-statcard__value">{{ view.kpis.activeYouth }}</div>
         </article>
-        <article class="wu-card wu-statcard">
-          <div class="wu-statcard__label">Active cohorts</div>
-          <div class="wu-statcard__value">{{ view.kpis.cohorts }}</div>
+        <article class="w-card w-statcard">
+          <div class="w-statcard__label">Active cohorts</div>
+          <div class="w-statcard__value">{{ view.kpis.cohorts }}</div>
         </article>
-        <article class="wu-card wu-statcard">
-          <div class="wu-statcard__label">Average completion</div>
-          <div class="wu-statcard__value">{{ view.kpis.avgCompletion | percent: '1.0-0' }}</div>
+        <article class="w-card w-statcard">
+          <div class="w-statcard__label">Average completion</div>
+          <div class="w-statcard__value">{{ view.kpis.avgCompletion | percent: '1.0-0' }}</div>
         </article>
-        <article class="wu-card wu-statcard">
-          <div class="wu-statcard__label">Attendance rate</div>
-          <div class="wu-statcard__value">{{ view.kpis.attendanceRate | percent: '1.0-0' }}</div>
+        <article class="w-card w-statcard">
+          <div class="w-statcard__label">Attendance rate</div>
+          <div class="w-statcard__value">{{ view.kpis.attendanceRate | percent: '1.0-0' }}</div>
         </article>
       </div>
 
-      <section class="wu-mt-6">
+      <section class="w-mt-6">
         <h2>Quick actions</h2>
         <div class="dashboard-actions">
-          <a class="wu-card wu-card__body dashboard-action" routerLink="/admin/invitations"
-            ><wu-icon name="user-plus" /><strong>Invite people</strong></a
+          <a class="w-card w-card__body dashboard-action" routerLink="/admin/invitations"
+            ><w-icon name="user-plus" /><strong>Invite people</strong></a
           >
-          <a class="wu-card wu-card__body dashboard-action" routerLink="/admin/applications"
-            ><wu-icon name="clipboard-check" /><strong>Review applications</strong></a
+          <a class="w-card w-card__body dashboard-action" routerLink="/admin/applications"
+            ><w-icon name="clipboard-check" /><strong>Review applications</strong></a
           >
-          <a class="wu-card wu-card__body dashboard-action" routerLink="/admin/cohort-progress"
-            ><wu-icon name="trending-up" /><strong>Open progress board</strong></a
+          <a class="w-card w-card__body dashboard-action" routerLink="/admin/cohort-progress"
+            ><w-icon name="trending-up" /><strong>Open progress board</strong></a
           >
-          <a class="wu-card wu-card__body dashboard-action" routerLink="/admin/calendar"
-            ><wu-icon name="calendar" /><strong>Manage calendar</strong></a
+          <a class="w-card w-card__body dashboard-action" routerLink="/admin/calendar"
+            ><w-icon name="calendar" /><strong>Manage calendar</strong></a
           >
-          <a class="wu-card wu-card__body dashboard-action" routerLink="/admin/reports"
-            ><wu-icon name="bar-chart" /><strong>Explore reports</strong></a
+          <a class="w-card w-card__body dashboard-action" routerLink="/admin/reports"
+            ><w-icon name="bar-chart" /><strong>Explore reports</strong></a
           >
-          <a class="wu-card wu-card__body dashboard-action" routerLink="/admin/privacy"
-            ><wu-icon name="shield" /><strong>Privacy requests</strong></a
+          <a class="w-card w-card__body dashboard-action" routerLink="/admin/privacy"
+            ><w-icon name="shield" /><strong>Privacy requests</strong></a
           >
         </div>
       </section>
 
-      <div class="dashboard-grid wu-mt-6">
-        <section class="wu-card">
-          <div class="wu-card__body">
-            <div class="wu-cluster wu-cluster--between">
-              <h2 class="wu-card__title">Cohort health</h2>
+      <div class="dashboard-grid w-mt-6">
+        <section class="w-card">
+          <div class="w-card__body">
+            <div class="w-cluster w-cluster--between">
+              <h2 class="w-card__title">Cohort health</h2>
               <a routerLink="/admin/reports">Full report</a>
             </div>
             @for (cohort of view.cohorts; track cohort.cohortId) {
               <article class="dashboard-row">
-                <div class="wu-cluster wu-cluster--between">
+                <div class="w-cluster w-cluster--between">
                   <strong>{{ cohort.cohortName }}</strong
-                  ><span class="wu-badge" [class.wu-badge--error]="cohort.atRisk > 0"
+                  ><span class="w-badge" [class.w-badge--error]="cohort.atRisk > 0"
                     >{{ cohort.atRisk }} at risk</span
                   >
                 </div>
-                <p class="wu-muted">
+                <p class="w-muted">
                   {{ cohort.enrolment }} youth ·
                   {{ cohort.completionRate | percent: '1.0-0' }} complete ·
                   {{ cohort.attendanceRate | percent: '1.0-0' }} attendance
                 </p>
               </article>
             } @empty {
-              <p class="wu-muted">No cohort data is available yet.</p>
+              <p class="w-muted">No cohort data is available yet.</p>
             }
           </div>
         </section>
-        <section class="wu-card">
-          <div class="wu-card__body">
-            <div class="wu-cluster wu-cluster--between">
-              <h2 class="wu-card__title">Staff load</h2>
+        <section class="w-card">
+          <div class="w-card__body">
+            <div class="w-cluster w-cluster--between">
+              <h2 class="w-card__title">Staff load</h2>
               <a routerLink="/admin/mentor-assignments">Balance caseloads</a>
             </div>
             @for (mentor of view.staff.slice(0, 6); track mentor.mentorId) {
               <article class="dashboard-row">
-                <div class="wu-cluster wu-cluster--between">
+                <div class="w-cluster w-cluster--between">
                   <strong>{{ mentor.mentorName }}</strong
-                  ><span class="wu-badge" [class.wu-badge--error]="mentor.overloaded">{{
+                  ><span class="w-badge" [class.w-badge--error]="mentor.overloaded">{{
                     mentor.loadBalance
                   }}</span>
                 </div>
-                <p class="wu-muted">
+                <p class="w-muted">
                   {{ mentor.caseload }} youth · {{ mentor.checkIns }} check-ins ·
                   {{ mentor.reviews }} reviews
                 </p>
               </article>
             } @empty {
-              <p class="wu-muted">No mentor activity is available yet.</p>
+              <p class="w-muted">No mentor activity is available yet.</p>
             }
           </div>
         </section>
       </div>
-      <p class="wu-muted wu-text-sm wu-mt-4">
+      <p class="w-muted w-text-sm w-mt-4">
         Updated {{ view.generatedAt | date: 'medium' }} · {{ view.recordCount }} records
       </p>
     }
   </div>
-</wu-shell>
+</w-shell>

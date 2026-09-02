@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
 
 The Browse help feature slice refines `L2-PLATFORM-005` into one independently deliverable interaction. Users shall access self-serve help and submit support requests.
 
 An authenticated participant starts this feature interaction through the Portal application. The frontend application presents an authorized and bounded feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Submit a support request is an adjacent feature slice that owns other outcomes within the same primary L2 capability.
+The feature spans Portal application; Waypoint API application. The frontend application owns interaction state and presentation. The Waypoint API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Submit a support request is an adjacent feature slice that owns other outcomes within the same primary L2 capability.
 
 ### Components and types
 
@@ -23,11 +23,11 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`Support`](../../../../frontend/projects/portal/src/app/support/support.ts)<br>[`DisplayPreferencesService`](../../../../frontend/projects/portal/src/app/settings/display-preferences.service.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`SupportApi`](../../../../frontend/projects/wu-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`AccessController`](../../../../backend/src/WordUp.Api/Controllers/PlatformServices/AccessController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`SubmitSupportRequestCommand`](../../../../backend/src/WordUp.Application/PlatformServices/Support/SubmitSupportRequestCommand.cs)<br>[`SubmitSupportRequestCommandHandler`](../../../../backend/src/WordUp.Application/PlatformServices/Support/SubmitSupportRequestCommandHandler.cs)<br>[`SubmitSupportRequestCommandValidator`](../../../../backend/src/WordUp.Application/PlatformServices/Support/SubmitSupportRequestCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`SupportRequest`](../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs)<br>[`DisplayPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs)<br>[`NotificationPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| Frontend API boundary | [`SupportApi`](../../../../frontend/projects/w-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`AccessController`](../../../../backend/src/Waypoint.Api/Controllers/PlatformServices/AccessController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`SubmitSupportRequestCommand`](../../../../backend/src/Waypoint.Application/PlatformServices/Support/SubmitSupportRequestCommand.cs)<br>[`SubmitSupportRequestCommandHandler`](../../../../backend/src/Waypoint.Application/PlatformServices/Support/SubmitSupportRequestCommandHandler.cs)<br>[`SubmitSupportRequestCommandValidator`](../../../../backend/src/Waypoint.Application/PlatformServices/Support/SubmitSupportRequestCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`SupportRequest`](../../../../backend/src/Waypoint.Domain/PlatformServices/SupportRequest.cs)<br>[`DisplayPreference`](../../../../backend/src/Waypoint.Domain/PlatformServices/DisplayPreference.cs)<br>[`NotificationPreference`](../../../../backend/src/Waypoint.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/Waypoint.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -40,7 +40,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Behavior
 
 1. **Entry.** An authenticated participant starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-005`, `L2-AUTH-010`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the Waypoint API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-005`, `L2-AUTH-010`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
 3. **Result.** The frontend application presents an authorized and bounded feature result.
 
 ## Requirements
@@ -73,11 +73,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Browse help.](diagrams/c4-system-context.png)
 
-*Figure 1 — C4 system context: Browse help in the Word Up environment.*
+*Figure 1 — C4 system context: Browse help in the Waypoint environment.*
 
 #### Container
 

@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +get(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "ReportsController" as controller_ReportsController <<controller>> {
     +GetAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "CohortReportQuery" as request_CohortReportQuery <<record>>
   class "CohortReportQueryHandler" as handler_CohortReportQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "ViewCohortReportState" as entity_ViewCohortReportState <<domain type>>
 }
 page_AttendanceQueueService --> client_AuthApi : invokes

@@ -37,8 +37,8 @@ jobs:
           --health-cmd "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P Your_password123! -Q 'SELECT 1'"
           --health-interval 10s --health-timeout 5s --health-retries 10
     env:
-      WORDUP_TEST_SQLSERVER: "localhost"
-      WORDUP_TEST_SQLAUTH: "User Id=sa;Password=Your_password123!"
+      WAYPOINT_TEST_SQLSERVER: "localhost"
+      WAYPOINT_TEST_SQLAUTH: "User Id=sa;Password=Your_password123!"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
@@ -51,19 +51,19 @@ jobs:
         working-directory: backend
         run: dotnet --version
       - name: Restore
-        run: dotnet restore backend/WordUp.sln
+        run: dotnet restore backend/Waypoint.sln
       - name: Restore repository tools
         run: dotnet tool restore
       - name: Build
-        run: dotnet build backend/WordUp.sln --no-restore --configuration Release
+        run: dotnet build backend/Waypoint.sln --no-restore --configuration Release
       - name: Verify migrations match the model
         run: >-
           dotnet ef migrations has-pending-model-changes
-          --project backend/src/WordUp.Infrastructure
-          --startup-project backend/src/WordUp.Api
+          --project backend/src/Waypoint.Infrastructure
+          --startup-project backend/src/Waypoint.Api
           --configuration Release
           --no-build
       - name: Test (unit + integration)
-        run: dotnet test backend/WordUp.sln --no-build --configuration Release --logger "trx;LogFileName=test.trx"
+        run: dotnet test backend/Waypoint.sln --no-build --configuration Release --logger "trx;LogFileName=test.trx"
       - name: Requirement traceability gate
         run: node scripts/check-traceability.mjs --strict

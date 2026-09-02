@@ -20,15 +20,15 @@ box "Frontend — Public Site application" #E0F2FE
   participant "Programs" as page
   participant "PublicSiteApi" as client
 end box
-box "Backend — WordUp API application" #D1FADF
+box "Backend — Waypoint API application" #D1FADF
   participant "PublicController" as controller
 end box
-box "Backend — WordUp Application and Domain" #ECFDF3
+box "Backend — Waypoint Application and Domain" #ECFDF3
   participant "GetPublicContentQueryHandler" as handler
   participant "BrowseCurrentCohortsState" as entity
 end box
-box "Backend — WordUp Infrastructure" #FFF4E5
-  database "Word Up database" as db
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  database "Waypoint database" as db
 end box
 actor -> page : Start browse current cohorts
 page -> client : Build typed request

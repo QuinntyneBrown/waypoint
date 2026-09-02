@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Authentication and Access subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Authentication and Access subsystem owns this feature slice.
 
 The Rotate and revoke tokens feature slice refines `L2-AUTH-012` into one independently deliverable interaction. Access/refresh tokens shall be issued, stored, and rotated securely.
 
 An account holder starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+The feature spans Portal application; Waypoint API application. The frontend application owns interaction state and presentation. The Waypoint API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 ### Components and types
 
@@ -22,12 +22,12 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`AuthStore`](../../../../frontend/projects/wu-auth/src/lib/auth-store.ts)<br>[`SessionExpired`](../../../../frontend/projects/portal/src/app/states/session-expired/session-expired.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/wu-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`AuthController`](../../../../backend/src/WordUp.Api/Controllers/Authentication/AuthController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`RevokeInvitationCommand`](../../../../backend/src/WordUp.Application/Authentication/Invitations/RevokeInvitationCommand.cs)<br>[`RevokeInvitationCommandHandler`](../../../../backend/src/WordUp.Application/Authentication/Invitations/RevokeInvitationCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`Invitation`](../../../../backend/src/WordUp.Domain/Authentication/Invitation.cs)<br>[`InvitationStatus`](../../../../backend/src/WordUp.Domain/Authentication/InvitationStatus.cs)<br>[`RefreshToken`](../../../../backend/src/WordUp.Domain/Authentication/RefreshToken.cs)<br>[`PasswordResetToken`](../../../../backend/src/WordUp.Domain/Authentication/PasswordResetToken.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`ISecureTokens`](../../../../backend/src/WordUp.Application/Shared/Abstractions/ISecureTokens.cs)<br>[`IJwtTokenIssuer`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IJwtTokenIssuer.cs)<br>[`SecurityHeadersMiddleware`](../../../../backend/src/WordUp.Api/Middleware/SecurityHeadersMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| Frontend page | [`AuthStore`](../../../../frontend/projects/w-auth/src/lib/auth-store.ts)<br>[`SessionExpired`](../../../../frontend/projects/portal/src/app/states/session-expired/session-expired.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/w-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`AuthController`](../../../../backend/src/Waypoint.Api/Controllers/Authentication/AuthController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`RevokeInvitationCommand`](../../../../backend/src/Waypoint.Application/Authentication/Invitations/RevokeInvitationCommand.cs)<br>[`RevokeInvitationCommandHandler`](../../../../backend/src/Waypoint.Application/Authentication/Invitations/RevokeInvitationCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`Invitation`](../../../../backend/src/Waypoint.Domain/Authentication/Invitation.cs)<br>[`InvitationStatus`](../../../../backend/src/Waypoint.Domain/Authentication/InvitationStatus.cs)<br>[`RefreshToken`](../../../../backend/src/Waypoint.Domain/Authentication/RefreshToken.cs)<br>[`PasswordResetToken`](../../../../backend/src/Waypoint.Domain/Authentication/PasswordResetToken.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`ISecureTokens`](../../../../backend/src/Waypoint.Application/Shared/Abstractions/ISecureTokens.cs)<br>[`IJwtTokenIssuer`](../../../../backend/src/Waypoint.Application/Shared/Abstractions/IJwtTokenIssuer.cs)<br>[`SecurityHeadersMiddleware`](../../../../backend/src/Waypoint.Api/Middleware/SecurityHeadersMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -40,7 +40,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Behavior
 
 1. **Entry.** An account holder starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-AUTH-012`, `L2-NFR-002`, `L2-AUTH-007`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the Waypoint API application. The controller applies endpoint policy. The application handler applies `L2-AUTH-012`, `L2-NFR-002`, `L2-AUTH-007`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
 3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
@@ -82,11 +82,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Rotate and revoke tokens.](diagrams/c4-system-context.png)
 
-*Figure 1 — C4 system context: Rotate and revoke tokens in the Word Up environment.*
+*Figure 1 — C4 system context: Rotate and revoke tokens in the Waypoint environment.*
 
 #### Container
 

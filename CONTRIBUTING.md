@@ -1,6 +1,6 @@
-# Contributing to Word Up
+# Contributing to Waypoint
 
-Thank you for helping improve Word Up. Contributions may include code, tests, design, documentation, issue triage, accessibility feedback, safeguarding insight, and product knowledge.
+Thank you for helping improve Waypoint. Contributions may include code, tests, design, documentation, issue triage, accessibility feedback, safeguarding insight, and product knowledge.
 
 By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md). For support or security concerns, use the channels in [SUPPORT.md](SUPPORT.md) and [SECURITY.md](SECURITY.md).
 
@@ -20,7 +20,7 @@ git clone https://github.com/QuinntyneBrown/waypoint.git
 cd waypoint
 
 # Terminal 1: API
-dotnet run --project backend/src/WordUp.Api --environment Development --urls http://127.0.0.1:5211
+dotnet run --project backend/src/Waypoint.Api --environment Development --urls http://127.0.0.1:5211
 
 # Terminal 2: authenticated portal at http://localhost:4200
 cd frontend
@@ -51,8 +51,8 @@ Run the checks relevant to your change:
 
 ```bash
 # Backend build and tests
-dotnet build backend/WordUp.sln --configuration Release
-dotnet test backend/WordUp.sln --configuration Release --no-build
+dotnet build backend/Waypoint.sln --configuration Release
+dotnet test backend/Waypoint.sln --configuration Release --no-build
 
 # Requirement references
 node scripts/check-traceability.mjs --strict
@@ -67,7 +67,7 @@ npm run e2e:ci
 npm run e2e:performance
 ```
 
-Integration tests require SQL Server. They use `(localdb)\MSSQLLocalDB` by default; override the target with `WORDUP_TEST_SQLSERVER` and `WORDUP_TEST_SQLAUTH` when necessary.
+Integration tests require SQL Server. They use `(localdb)\MSSQLLocalDB` by default; override the target with `WAYPOINT_TEST_SQLSERVER` and `WAYPOINT_TEST_SQLAUTH` when necessary.
 
 `npm run build` builds the three shared libraries in dependency order, builds both applications, and validates the generated package metadata and tarball contents. Run the Playwright gates relevant to a UI change; changes to Youth interaction performance must include the isolated performance project.
 

@@ -3,49 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Staff activity report · Word Up</title>
+  <title>Staff activity report · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/wordup.css">
-  <script defer src="../../assets/js/wordup.js"></script>
+  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="reports" data-track="bible">
-  <main class="wu-main">
-    <div class="wu-container wu-page">
+  <main class="w-main">
+    <div class="w-container w-page">
 
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow"><a href="reports.html">Reports</a> · Staff</div>
-          <h1 class="wu-page__title">Staff activity report</h1>
-          <p class="wu-page__sub">Mentor engagement and load balance — check-ins, reviews and youth caseload.</p>
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow"><a href="reports.html">Reports</a> · Staff</div>
+          <h1 class="w-page__title">Staff activity report</h1>
+          <p class="w-page__sub">Mentor engagement and load balance — check-ins, reviews and youth caseload.</p>
         </div>
-        <div class="wu-page__actions">
-          <button class="wu-btn wu-btn--primary" data-toast="Staff report exported" data-toast-type="success" data-toast-title="Download ready"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
+        <div class="w-page__actions">
+          <button class="w-btn w-btn--primary" data-toast="Staff report exported" data-toast-type="success" data-toast-title="Download ready"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
         </div>
       </div>
 
       <!-- filter bar -->
-      <div class="wu-card wu-mb-4">
-        <div class="wu-card__body">
-          <div class="wu-grid wu-grid--3">
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="f-range">Date range</label>
-              <select class="wu-select" id="f-range">
+      <div class="w-card w-mb-4">
+        <div class="w-card__body">
+          <div class="w-grid w-grid--3">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="f-range">Date range</label>
+              <select class="w-select" id="f-range">
                 <option selected>This term (Apr–Jul 2026)</option>
                 <option>Last 30 days</option>
                 <option>Year to date</option>
               </select>
             </div>
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="f-role">Role</label>
-              <select class="wu-select" id="f-role">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="f-role">Role</label>
+              <select class="w-select" id="f-role">
                 <option selected>All mentors</option>
                 <option>Lead Mentor</option>
                 <option>Mentor</option>
               </select>
             </div>
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="f-sort">Sort by</label>
-              <select class="wu-select" id="f-sort">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="f-sort">Sort by</label>
+              <select class="w-select" id="f-sort">
                 <option selected>Youth caseload</option>
                 <option>Check-ins logged</option>
                 <option>Reviews completed</option>
@@ -59,86 +59,86 @@
       <div data-when-state="default">
 
         <!-- summary cards -->
-        <div class="wu-grid wu-grid--4 wu-mb-4">
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Active mentors</div><div class="wu-statcard__value">3</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-user-check"></use></svg>all reporting</div></div>
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Check-ins logged</div><div class="wu-statcard__value">148</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+21 this term</div></div>
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Reviews completed</div><div class="wu-statcard__value">62</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-clipboard-check"></use></svg>+9</div></div>
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Avg youth / mentor</div><div class="wu-statcard__value">8.3</div><div class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-alert-triangle"></use></svg>1 overloaded</div></div>
+        <div class="w-grid w-grid--4 w-mb-4">
+          <div class="w-card w-statcard"><div class="w-statcard__label">Active mentors</div><div class="w-statcard__value">3</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-user-check"></use></svg>all reporting</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">Check-ins logged</div><div class="w-statcard__value">148</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+21 this term</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">Reviews completed</div><div class="w-statcard__value">62</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-clipboard-check"></use></svg>+9</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">Avg youth / mentor</div><div class="w-statcard__value">8.3</div><div class="w-statcard__delta is-down"><svg class="w-icon"><use href="#i-alert-triangle"></use></svg>1 overloaded</div></div>
         </div>
 
         <!-- flag alerts -->
-        <div class="wu-alert wu-alert--warning wu-mb-4">
-          <svg class="wu-alert__icon wu-icon"><use href="#i-alert-triangle"></use></svg>
-          <div><div class="wu-alert__title">Load imbalance</div>Marcus Bello is carrying 12 youth (overloaded); Grace Adeyemi has 4 (capacity to take more). Consider redistributing 2–3 youth.</div>
+        <div class="w-alert w-alert--warning w-mb-4">
+          <svg class="w-alert__icon w-icon"><use href="#i-alert-triangle"></use></svg>
+          <div><div class="w-alert__title">Load imbalance</div>Marcus Bello is carrying 12 youth (overloaded); Grace Adeyemi has 4 (capacity to take more). Consider redistributing 2–3 youth.</div>
         </div>
 
         <!-- staff table -->
-        <div class="wu-card">
-          <div class="wu-card__header"><h3 class="wu-card__title">Mentor activity · 3</h3><span class="wu-muted wu-text-sm">Target load: 6–9 youth</span></div>
-          <div class="wu-card__body">
-            <div class="wu-table-wrap">
-              <table class="wu-table wu-table--cards">
+        <div class="w-card">
+          <div class="w-card__header"><h3 class="w-card__title">Mentor activity · 3</h3><span class="w-muted w-text-sm">Target load: 6–9 youth</span></div>
+          <div class="w-card__body">
+            <div class="w-table-wrap">
+              <table class="w-table w-table--cards">
                 <thead><tr><th>Mentor</th><th>Cohort</th><th>Youth</th><th>Check-ins</th><th>Reviews</th><th>Load balance</th><th>Status</th></tr></thead>
                 <tbody>
                   <tr>
-                    <td data-label="Mentor"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
+                    <td data-label="Mentor"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
                     <td data-label="Cohort">Rexdale Fall '25</td>
                     <td data-label="Youth">12</td>
                     <td data-label="Check-ins">64</td>
                     <td data-label="Reviews">28</td>
-                    <td data-label="Load balance"><div class="wu-progress"><div class="wu-progress__fill" style="--val:100%"></div></div></td>
-                    <td data-label="Status"><span class="wu-badge wu-badge--error wu-badge--dot">Overloaded</span></td>
+                    <td data-label="Load balance"><div class="w-progress"><div class="w-progress__fill" style="--val:100%"></div></div></td>
+                    <td data-label="Status"><span class="w-badge w-badge--error w-badge--dot">Overloaded</span></td>
                   </tr>
                   <tr>
-                    <td data-label="Mentor"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Danielle Osei"></span>Danielle Osei</div></td>
+                    <td data-label="Mentor"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Danielle Osei"></span>Danielle Osei</div></td>
                     <td data-label="Cohort">Warden Winter '26</td>
                     <td data-label="Youth">9</td>
                     <td data-label="Check-ins">52</td>
                     <td data-label="Reviews">21</td>
-                    <td data-label="Load balance"><div class="wu-progress"><div class="wu-progress__fill" style="--val:75%"></div></div></td>
-                    <td data-label="Status"><span class="wu-badge wu-badge--success wu-badge--dot">Balanced</span></td>
+                    <td data-label="Load balance"><div class="w-progress"><div class="w-progress__fill" style="--val:75%"></div></div></td>
+                    <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Balanced</span></td>
                   </tr>
                   <tr>
-                    <td data-label="Mentor"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Grace Adeyemi"></span>Grace Adeyemi</div></td>
+                    <td data-label="Mentor"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Grace Adeyemi"></span>Grace Adeyemi</div></td>
                     <td data-label="Cohort">St. Clair Spring '26</td>
                     <td data-label="Youth">4</td>
                     <td data-label="Check-ins">32</td>
                     <td data-label="Reviews">13</td>
-                    <td data-label="Load balance"><div class="wu-progress"><div class="wu-progress__fill" style="--val:33%"></div></div></td>
-                    <td data-label="Status"><span class="wu-badge wu-badge--warning wu-badge--dot">Underloaded</span></td>
+                    <td data-label="Load balance"><div class="w-progress"><div class="w-progress__fill" style="--val:33%"></div></div></td>
+                    <td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">Underloaded</span></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="wu-card__footer">
-            <div class="wu-cluster wu-gap-2">
-              <span class="wu-badge wu-badge--error wu-badge--dot">Overloaded &gt; 10</span>
-              <span class="wu-badge wu-badge--success wu-badge--dot">Balanced 6–9</span>
-              <span class="wu-badge wu-badge--warning wu-badge--dot">Underloaded &lt; 6</span>
+          <div class="w-card__footer">
+            <div class="w-cluster w-gap-2">
+              <span class="w-badge w-badge--error w-badge--dot">Overloaded &gt; 10</span>
+              <span class="w-badge w-badge--success w-badge--dot">Balanced 6–9</span>
+              <span class="w-badge w-badge--warning w-badge--dot">Underloaded &lt; 6</span>
             </div>
           </div>
         </div>
 
         <!-- activity split -->
-        <div class="wu-grid wu-grid--2 wu-mt-4">
-          <div class="wu-card">
-            <div class="wu-card__header"><h3 class="wu-card__title">Check-ins by mentor</h3></div>
-            <div class="wu-card__body">
-              <div class="wu-stack wu-stack--sm">
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Marcus Bello</span><span class="wu-progress__num">64</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:100%"></div></div></div>
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Danielle Osei</span><span class="wu-progress__num">52</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:81%"></div></div></div>
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Grace Adeyemi</span><span class="wu-progress__num">32</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:50%"></div></div></div>
+        <div class="w-grid w-grid--2 w-mt-4">
+          <div class="w-card">
+            <div class="w-card__header"><h3 class="w-card__title">Check-ins by mentor</h3></div>
+            <div class="w-card__body">
+              <div class="w-stack w-stack--sm">
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Marcus Bello</span><span class="w-progress__num">64</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:100%"></div></div></div>
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Danielle Osei</span><span class="w-progress__num">52</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:81%"></div></div></div>
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Grace Adeyemi</span><span class="w-progress__num">32</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:50%"></div></div></div>
               </div>
             </div>
           </div>
-          <div class="wu-card">
-            <div class="wu-card__header"><h3 class="wu-card__title">Reviews completed</h3></div>
-            <div class="wu-card__body">
-              <div class="wu-stack wu-stack--sm">
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Marcus Bello</span><span class="wu-progress__num">28</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:100%"></div></div></div>
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Danielle Osei</span><span class="wu-progress__num">21</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:75%"></div></div></div>
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Grace Adeyemi</span><span class="wu-progress__num">13</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:46%"></div></div></div>
+          <div class="w-card">
+            <div class="w-card__header"><h3 class="w-card__title">Reviews completed</h3></div>
+            <div class="w-card__body">
+              <div class="w-stack w-stack--sm">
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Marcus Bello</span><span class="w-progress__num">28</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:100%"></div></div></div>
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Danielle Osei</span><span class="w-progress__num">21</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:75%"></div></div></div>
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Grace Adeyemi</span><span class="w-progress__num">13</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:46%"></div></div></div>
               </div>
             </div>
           </div>
@@ -147,25 +147,25 @@
       </div>
 
       <!-- ===== LOADING ===== -->
-      <div data-when-state="loading" class="wu-hide">
-        <div class="wu-grid wu-grid--4 wu-mb-4">
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
+      <div data-when-state="loading" class="w-hide">
+        <div class="w-grid w-grid--4 w-mb-4">
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
         </div>
-        <div class="wu-card"><div class="wu-card__body">
-          <span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--text" style="width:80%"></span><span class="wu-skeleton wu-skeleton--text" style="width:60%"></span>
+        <div class="w-card"><div class="w-card__body">
+          <span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--text" style="width:80%"></span><span class="w-skeleton w-skeleton--text" style="width:60%"></span>
         </div></div>
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="wu-hide">
-        <div class="wu-card"><div class="wu-empty">
-          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-user-check"></use></svg></div>
-          <h3 class="wu-empty__title">No staff activity yet</h3>
-          <p class="wu-empty__text">No check-ins or reviews were logged in this range.</p>
-          <a class="wu-btn wu-btn--primary" href="../../authentication/admin/users-roles.html"><svg class="wu-icon"><use href="#i-users"></use></svg>Manage staff</a>
+      <div data-when-state="empty" class="w-hide">
+        <div class="w-card"><div class="w-empty">
+          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-user-check"></use></svg></div>
+          <h3 class="w-empty__title">No staff activity yet</h3>
+          <p class="w-empty__text">No check-ins or reviews were logged in this range.</p>
+          <a class="w-btn w-btn--primary" href="../../authentication/admin/users-roles.html"><svg class="w-icon"><use href="#i-users"></use></svg>Manage staff</a>
         </div></div>
       </div>
 

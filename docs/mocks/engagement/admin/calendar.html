@@ -3,128 +3,128 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Calendar · Word Up</title>
+  <title>Calendar · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/wordup.css">
-  <script defer src="../../assets/js/wordup.js"></script>
+  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="calendar" data-track="bible">
-  <main class="wu-main">
-    <div class="wu-container wu-page">
+  <main class="w-main">
+    <div class="w-container w-page">
 
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">Scheduling</div>
-          <h1 class="wu-page__title">Calendar</h1>
-          <p class="wu-page__sub">All sessions, events and retreats across every cohort in one place.</p>
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">Scheduling</div>
+          <h1 class="w-page__title">Calendar</h1>
+          <p class="w-page__sub">All sessions, events and retreats across every cohort in one place.</p>
         </div>
-        <div class="wu-page__actions">
-          <button class="wu-btn wu-btn--ghost"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
-          <button class="wu-btn wu-btn--primary" data-open-modal="m-session"><svg class="wu-icon"><use href="#i-plus"></use></svg>New session</button>
+        <div class="w-page__actions">
+          <button class="w-btn w-btn--ghost"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
+          <button class="w-btn w-btn--primary" data-open-modal="m-session"><svg class="w-icon"><use href="#i-plus"></use></svg>New session</button>
         </div>
       </div>
 
       <!-- ===== DEFAULT ===== -->
       <div data-when-state="default">
 
-        <div class="wu-cluster wu-cluster--between wu-mb-4">
-          <div class="wu-cluster wu-gap-2">
-            <button class="wu-iconbtn" aria-label="Previous month"><svg class="wu-icon"><use href="#i-chevron-left"></use></svg></button>
-            <h2 class="wu-mb-0">July 2026</h2>
-            <button class="wu-iconbtn" aria-label="Next month"><svg class="wu-icon"><use href="#i-chevron-right"></use></svg></button>
+        <div class="w-cluster w-cluster--between w-mb-4">
+          <div class="w-cluster w-gap-2">
+            <button class="w-iconbtn" aria-label="Previous month"><svg class="w-icon"><use href="#i-chevron-left"></use></svg></button>
+            <h2 class="w-mb-0">July 2026</h2>
+            <button class="w-iconbtn" aria-label="Next month"><svg class="w-icon"><use href="#i-chevron-right"></use></svg></button>
           </div>
-          <div class="wu-segment">
-            <span class="wu-segment__item">Month</span>
-            <span class="wu-segment__item is-active">Week</span>
-            <span class="wu-segment__item">Agenda</span>
+          <div class="w-segment">
+            <span class="w-segment__item">Month</span>
+            <span class="w-segment__item is-active">Week</span>
+            <span class="w-segment__item">Agenda</span>
           </div>
         </div>
 
-        <div class="wu-pillrow wu-mb-4">
-          <span class="wu-pill is-active">All cohorts</span>
-          <span class="wu-pill">Rexdale Fall '25</span>
-          <span class="wu-pill">Warden Winter '26</span>
-          <span class="wu-pill">St. Clair Spring '26</span>
+        <div class="w-pillrow w-mb-4">
+          <span class="w-pill is-active">All cohorts</span>
+          <span class="w-pill">Rexdale Fall '25</span>
+          <span class="w-pill">Warden Winter '26</span>
+          <span class="w-pill">St. Clair Spring '26</span>
         </div>
 
-        <div class="wu-grid wu-grid--4 wu-mb-4">
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Sessions this week</div><div class="wu-statcard__value">6</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-calendar"></use></svg>3 cohorts</div></div>
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Upcoming events</div><div class="wu-statcard__value">2</div></div>
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Mentors scheduled</div><div class="wu-statcard__value">3</div></div>
-          <div class="wu-card wu-card--lime"><div class="wu-card__body"><div class="wu-statcard__label">Next retreat</div><div class="wu-statcard__value">Aug 8</div></div></div>
+        <div class="w-grid w-grid--4 w-mb-4">
+          <div class="w-card w-statcard"><div class="w-statcard__label">Sessions this week</div><div class="w-statcard__value">6</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-calendar"></use></svg>3 cohorts</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">Upcoming events</div><div class="w-statcard__value">2</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">Mentors scheduled</div><div class="w-statcard__value">3</div></div>
+          <div class="w-card w-card--lime"><div class="w-card__body"><div class="w-statcard__label">Next retreat</div><div class="w-statcard__value">Aug 8</div></div></div>
         </div>
 
         <!-- Agenda list -->
-        <div class="wu-stack">
+        <div class="w-stack">
 
-          <div class="wu-eyebrow">Monday · Jul 20</div>
-          <div class="wu-card">
-            <div class="wu-card__body wu-cluster wu-cluster--between">
-              <div class="wu-cluster wu-gap-3" style="min-width:0">
-                <span class="wu-badge wu-badge--lime">4:00 PM</span>
+          <div class="w-eyebrow">Monday · Jul 20</div>
+          <div class="w-card">
+            <div class="w-card__body w-cluster w-cluster--between">
+              <div class="w-cluster w-gap-3" style="min-width:0">
+                <span class="w-badge w-badge--lime">4:00 PM</span>
                 <div style="min-width:0">
-                  <div class="wu-person__name">Servant Leadership — "The Towel and the Basin"</div>
-                  <div class="wu-person__meta"><svg class="wu-icon"><use href="#i-map-pin"></use></svg> Rexdale Community Hub · Mentor Marcus Bello</div>
+                  <div class="w-person__name">Servant Leadership — "The Towel and the Basin"</div>
+                  <div class="w-person__meta"><svg class="w-icon"><use href="#i-map-pin"></use></svg> Rexdale Community Hub · Mentor Marcus Bello</div>
                 </div>
               </div>
-              <div class="wu-cluster wu-gap-2">
-                <span class="wu-badge wu-badge--success wu-badge--dot">Rexdale Fall '25</span>
-                <button class="wu-iconbtn" aria-label="Edit session" data-open-modal="m-session"><svg class="wu-icon"><use href="#i-edit"></use></svg></button>
+              <div class="w-cluster w-gap-2">
+                <span class="w-badge w-badge--success w-badge--dot">Rexdale Fall '25</span>
+                <button class="w-iconbtn" aria-label="Edit session" data-open-modal="m-session"><svg class="w-icon"><use href="#i-edit"></use></svg></button>
               </div>
             </div>
           </div>
 
-          <div class="wu-eyebrow">Tuesday · Jul 21</div>
-          <div class="wu-card">
-            <div class="wu-card__body wu-cluster wu-cluster--between">
-              <div class="wu-cluster wu-gap-3">
-                <span class="wu-badge wu-badge--lime">6:30 PM</span>
+          <div class="w-eyebrow">Tuesday · Jul 21</div>
+          <div class="w-card">
+            <div class="w-card__body w-cluster w-cluster--between">
+              <div class="w-cluster w-gap-3">
+                <span class="w-badge w-badge--lime">6:30 PM</span>
                 <div>
-                  <div class="wu-person__name">Identity in Christ — Small group night</div>
-                  <div class="wu-person__meta"><svg class="wu-icon"><use href="#i-map-pin"></use></svg> Warden Ave Church · Mentor Danielle Osei</div>
+                  <div class="w-person__name">Identity in Christ — Small group night</div>
+                  <div class="w-person__meta"><svg class="w-icon"><use href="#i-map-pin"></use></svg> Warden Ave Church · Mentor Danielle Osei</div>
                 </div>
               </div>
-              <div class="wu-cluster wu-gap-2">
-                <span class="wu-badge wu-badge--info wu-badge--dot">Warden Winter '26</span>
-                <button class="wu-iconbtn" aria-label="Edit session" data-open-modal="m-session"><svg class="wu-icon"><use href="#i-edit"></use></svg></button>
+              <div class="w-cluster w-gap-2">
+                <span class="w-badge w-badge--info w-badge--dot">Warden Winter '26</span>
+                <button class="w-iconbtn" aria-label="Edit session" data-open-modal="m-session"><svg class="w-icon"><use href="#i-edit"></use></svg></button>
               </div>
             </div>
           </div>
 
-          <div class="wu-eyebrow">Thursday · Jul 23</div>
-          <div class="wu-card">
-            <div class="wu-card__body wu-cluster wu-cluster--between">
-              <div class="wu-cluster wu-gap-3">
-                <span class="wu-badge wu-badge--lime">4:00 PM</span>
+          <div class="w-eyebrow">Thursday · Jul 23</div>
+          <div class="w-card">
+            <div class="w-card__body w-cluster w-cluster--between">
+              <div class="w-cluster w-gap-3">
+                <span class="w-badge w-badge--lime">4:00 PM</span>
                 <div>
-                  <div class="wu-person__name">Web Basics: HTML &amp; CSS — Build lab</div>
-                  <div class="wu-person__meta"><svg class="wu-icon"><use href="#i-map-pin"></use></svg> St. Clair Library · Mentor Grace Adeyemi</div>
+                  <div class="w-person__name">Web Basics: HTML &amp; CSS — Build lab</div>
+                  <div class="w-person__meta"><svg class="w-icon"><use href="#i-map-pin"></use></svg> St. Clair Library · Mentor Grace Adeyemi</div>
                 </div>
               </div>
-              <div class="wu-cluster wu-gap-2">
-                <span class="wu-badge wu-badge--warning wu-badge--dot">St. Clair Spring '26</span>
-                <button class="wu-iconbtn" aria-label="Edit session" data-open-modal="m-session"><svg class="wu-icon"><use href="#i-edit"></use></svg></button>
+              <div class="w-cluster w-gap-2">
+                <span class="w-badge w-badge--warning w-badge--dot">St. Clair Spring '26</span>
+                <button class="w-iconbtn" aria-label="Edit session" data-open-modal="m-session"><svg class="w-icon"><use href="#i-edit"></use></svg></button>
               </div>
             </div>
           </div>
 
-          <div class="wu-eyebrow">Saturday · Aug 8 — Aug 9</div>
-          <div class="wu-card wu-card--greige">
-            <div class="wu-card__body wu-cluster wu-cluster--between">
-              <div class="wu-cluster wu-gap-3">
-                <span class="wu-badge wu-badge--ink"><svg class="wu-icon"><use href="#i-church"></use></svg> Retreat</span>
+          <div class="w-eyebrow">Saturday · Aug 8 — Aug 9</div>
+          <div class="w-card w-card--greige">
+            <div class="w-card__body w-cluster w-cluster--between">
+              <div class="w-cluster w-gap-3">
+                <span class="w-badge w-badge--ink"><svg class="w-icon"><use href="#i-church"></use></svg> Retreat</span>
                 <div>
-                  <div class="wu-person__name">Summer Leadership Retreat</div>
-                  <div class="wu-person__meta"><svg class="wu-icon"><use href="#i-map-pin"></use></svg> Muskoka Woods · All cohorts · Overnight</div>
+                  <div class="w-person__name">Summer Leadership Retreat</div>
+                  <div class="w-person__meta"><svg class="w-icon"><use href="#i-map-pin"></use></svg> Muskoka Woods · All cohorts · Overnight</div>
                 </div>
               </div>
-              <div class="wu-cluster wu-gap-2">
-                <div class="wu-avatarstack">
-                  <span class="wu-avatar wu-avatar--sm" data-name="Marcus Bello"></span>
-                  <span class="wu-avatar wu-avatar--sm" data-name="Grace Adeyemi"></span>
-                  <span class="wu-avatar wu-avatar--sm" data-name="Danielle Osei"></span>
+              <div class="w-cluster w-gap-2">
+                <div class="w-avatarstack">
+                  <span class="w-avatar w-avatar--sm" data-name="Marcus Bello"></span>
+                  <span class="w-avatar w-avatar--sm" data-name="Grace Adeyemi"></span>
+                  <span class="w-avatar w-avatar--sm" data-name="Danielle Osei"></span>
                 </div>
-                <button class="wu-iconbtn" aria-label="Edit event" data-open-modal="m-session"><svg class="wu-icon"><use href="#i-edit"></use></svg></button>
+                <button class="w-iconbtn" aria-label="Edit event" data-open-modal="m-session"><svg class="w-icon"><use href="#i-edit"></use></svg></button>
               </div>
             </div>
           </div>
@@ -134,27 +134,27 @@
       </div>
 
       <!-- ===== LOADING ===== -->
-      <div data-when-state="loading" class="wu-hide">
-        <div class="wu-grid wu-grid--4 wu-mb-4">
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
+      <div data-when-state="loading" class="w-hide">
+        <div class="w-grid w-grid--4 w-mb-4">
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
         </div>
-        <div class="wu-stack">
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--block"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--block"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--block"></span></div></div>
+        <div class="w-stack">
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--block"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--block"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--block"></span></div></div>
         </div>
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="wu-hide">
-        <div class="wu-card"><div class="wu-empty">
-          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-calendar"></use></svg></div>
-          <h3 class="wu-empty__title">Nothing scheduled</h3>
-          <p class="wu-empty__text">There are no sessions or events on the calendar yet. Schedule your first session to get cohorts moving.</p>
-          <button class="wu-btn wu-btn--primary" data-open-modal="m-session"><svg class="wu-icon"><use href="#i-plus"></use></svg>New session</button>
+      <div data-when-state="empty" class="w-hide">
+        <div class="w-card"><div class="w-empty">
+          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-calendar"></use></svg></div>
+          <h3 class="w-empty__title">Nothing scheduled</h3>
+          <p class="w-empty__text">There are no sessions or events on the calendar yet. Schedule your first session to get cohorts moving.</p>
+          <button class="w-btn w-btn--primary" data-open-modal="m-session"><svg class="w-icon"><use href="#i-plus"></use></svg>New session</button>
         </div></div>
       </div>
 
@@ -162,47 +162,47 @@
   </main>
 
   <!-- ===== NEW / EDIT SESSION MODAL ===== -->
-  <div class="wu-modal" id="m-session" role="dialog" aria-modal="true">
-    <div class="wu-modal__scrim"></div>
-    <div class="wu-modal__panel">
-      <div class="wu-modal__header">
-        <div><h2 class="wu-modal__title">New session</h2><p class="wu-modal__sub">Add a session, event or retreat to the calendar.</p></div>
-        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+  <div class="w-modal" id="m-session" role="dialog" aria-modal="true">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title">New session</h2><p class="w-modal__sub">Add a session, event or retreat to the calendar.</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="wu-modal__body">
-        <div class="wu-field">
-          <label class="wu-label">Title <span class="wu-label__req">*</span></label>
-          <input class="wu-input" placeholder="Servant Leadership — The Towel and the Basin">
+      <div class="w-modal__body">
+        <div class="w-field">
+          <label class="w-label">Title <span class="w-label__req">*</span></label>
+          <input class="w-input" placeholder="Servant Leadership — The Towel and the Basin">
         </div>
-        <div class="wu-grid wu-grid--2">
-          <div class="wu-field">
-            <label class="wu-label">Cohort <span class="wu-label__req">*</span></label>
-            <select class="wu-select"><option>Rexdale Fall '25</option><option>Warden Winter '26</option><option>St. Clair Spring '26</option><option>All cohorts</option></select>
+        <div class="w-grid w-grid--2">
+          <div class="w-field">
+            <label class="w-label">Cohort <span class="w-label__req">*</span></label>
+            <select class="w-select"><option>Rexdale Fall '25</option><option>Warden Winter '26</option><option>St. Clair Spring '26</option><option>All cohorts</option></select>
           </div>
-          <div class="wu-field">
-            <label class="wu-label">Mentor <span class="wu-label__req">*</span></label>
-            <select class="wu-select"><option>Marcus Bello</option><option>Grace Adeyemi</option><option>Danielle Osei</option></select>
-          </div>
-        </div>
-        <div class="wu-grid wu-grid--2">
-          <div class="wu-field">
-            <label class="wu-label">Date</label>
-            <input class="wu-input" type="date" value="2026-07-20">
-          </div>
-          <div class="wu-field">
-            <label class="wu-label">Time</label>
-            <input class="wu-input" type="time" value="16:00">
+          <div class="w-field">
+            <label class="w-label">Mentor <span class="w-label__req">*</span></label>
+            <select class="w-select"><option>Marcus Bello</option><option>Grace Adeyemi</option><option>Danielle Osei</option></select>
           </div>
         </div>
-        <div class="wu-field">
-          <label class="wu-label">Location</label>
-          <input class="wu-input" placeholder="Rexdale Community Hub">
+        <div class="w-grid w-grid--2">
+          <div class="w-field">
+            <label class="w-label">Date</label>
+            <input class="w-input" type="date" value="2026-07-20">
+          </div>
+          <div class="w-field">
+            <label class="w-label">Time</label>
+            <input class="w-input" type="time" value="16:00">
+          </div>
         </div>
-        <label class="wu-switch"><input type="checkbox" checked><span class="wu-switch__track"></span><span>Repeat weekly for this term</span></label>
+        <div class="w-field">
+          <label class="w-label">Location</label>
+          <input class="w-input" placeholder="Rexdale Community Hub">
+        </div>
+        <label class="w-switch"><input type="checkbox" checked><span class="w-switch__track"></span><span>Repeat weekly for this term</span></label>
       </div>
-      <div class="wu-modal__footer">
-        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
-        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Session added to calendar" data-toast-type="success" data-toast-title="Rexdale Fall '25">Save session</button>
+      <div class="w-modal__footer">
+        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <button class="w-btn w-btn--primary" data-close-modal data-toast="Session added to calendar" data-toast-type="success" data-toast-title="Rexdale Fall '25">Save session</button>
       </div>
     </div>
   </div>

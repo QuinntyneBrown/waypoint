@@ -1,24 +1,24 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthSubmissionStatus } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, YouthSubmissionStatus } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-LEARN-007
 @Component({
-  selector: 'wu-youth-submission-status',
+  selector: 'w-youth-submission-status',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink],
+  imports: [WShell, RouterLink],
   templateUrl: './youth-submission-status.html',
   styles: `
     .coding-sample {
       overflow-x: auto;
       white-space: pre-wrap;
-      padding: var(--wu-sp-4);
+      padding: var(--w-sp-4);
       background: #17202a;
       color: #f8f9f9;
-      border-radius: var(--wu-r-input);
+      border-radius: var(--w-r-input);
     }
   `,
 })

@@ -6,7 +6,7 @@ A running log of technical and product decisions worth recording. Each entry sta
 
 **Decision.** Maintain stable L1 and L2 IDs under `docs/specs`, with every acceptance test carrying a machine-readable `Traces to:` comment for the L2 requirements it verifies.
 
-**Why.** Word Up spans safeguarding, learning, mentoring, administration, communication, and reporting. Stable IDs keep behaviour reviewable as implementation proceeds and make coverage gaps visible.
+**Why.** Waypoint spans safeguarding, learning, mentoring, administration, communication, and reporting. Stable IDs keep behaviour reviewable as implementation proceeds and make coverage gaps visible.
 
 **Consequences.** IDs are never reused. Behaviour changes begin in the owning requirement, and CI runs `scripts/check-traceability.mjs` to reject invalid test references. Valid references prove trace integrity, not complete coverage.
 
@@ -38,7 +38,7 @@ A running log of technical and product decisions worth recording. Each entry sta
 
 **Decision.** Role policies are enforced by ASP.NET Core and resource/relationship rules are enforced in application handlers. Client visibility is presentational only.
 
-**Why.** Word Up handles youth, guardian, and program information. A hidden button or client-side route guard can be bypassed and cannot be the source of truth for access or consent.
+**Why.** Waypoint handles youth, guardian, and program information. A hidden button or client-side route guard can be bypassed and cannot be the source of truth for access or consent.
 
 **Consequences.** Permission and safeguarding changes require backend acceptance tests. Future clients must render server state faithfully and handle forbidden, gated, and redacted responses.
 
@@ -68,7 +68,7 @@ A running log of technical and product decisions worth recording. Each entry sta
 
 ## 9. Two-app Angular frontend on a same-origin proxy with in-memory access tokens
 
-**Decision.** Build the frontend as two applications — `portal` (authenticated SPA) and `public-site` (SSR/prerendered) — over shared `wu-ui`/`wu-api`/`wu-auth` libraries consumed via `@wu/*` TypeScript path aliases pointing at library **source** (no separate library build). E2E and dev run both apps behind an Angular dev-server proxy that forwards `/api` to the backend, so the browser makes same-origin requests and the 4200-only CORS policy never bites. The access token lives in memory only; the rotating refresh token + user snapshot persist in `sessionStorage` (or `localStorage` when "remember me" is checked), and a boot initializer re-mints the access token via refresh.
+**Decision.** Build the frontend as two applications — `portal` (authenticated SPA) and `public-site` (SSR/prerendered) — over shared `w-ui`/`w-api`/`w-auth` libraries consumed via `@w/*` TypeScript path aliases pointing at library **source** (no separate library build). E2E and dev run both apps behind an Angular dev-server proxy that forwards `/api` to the backend, so the browser makes same-origin requests and the 4200-only CORS policy never bites. The access token lives in memory only; the rotating refresh token + user snapshot persist in `sessionStorage` (or `localStorage` when "remember me" is checked), and a boot initializer re-mints the access token via refresh.
 
 **Why.** The public site needs SSR/SEO and must not carry auth/shell code, while all signed-in roles share one session, shell, and design system — so one authenticated app with lazy role areas plus one public app fits better than one-app or one-app-per-role. Source-aliased libraries keep the ATDD loop fast (no lib rebuild). A same-origin proxy matches production deployment and removes CORS from the test path. Keeping the access token out of persistent storage limits its exposure; XSS is the threat model, so Angular's default sanitization is never bypassed on user content.
 
@@ -89,3 +89,11 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** Database access, backups, and queued cross-recipient copies must not reveal safeguarding, learning, consent, support, or uploaded participant content. Encryption alone is not erasure, so duplicate prose and raw client identifiers must not be written into append-only ledgers, and subject-related delivery copies need an explicit lifecycle link independent of their recipient address. Email equality is not reliable evidence that two people own the same record; exact relational links make export, correction, and erasure both safer and bounded. Coarse device and network context preserves the accountability required by `L2-CONSENT-003` while minimizing the source retained for that purpose.
 
 **Consequences.** Production requires a stable secret encryption key and an operational key-rotation plan. Encrypted randomized columns cannot be filtered by freshly encrypted SQL parameters, so privacy collection queries use indexed ownership IDs; normalized invitation addresses remain separately indexed because they are operational identifiers rather than ownership evidence. Existing approved applications backfill a guardian link only from the authoritative `CreatedYouthUserId -> Users.GuardianUserId` relationship. Anonymous records remain unlinked until separately verified, and the access export explains that boundary. Fresh/upgrade migration, conditional-claim contention, plaintext-backfill, round-trip, tamper, correction, export-redaction, and removal-sentinel behavior are integration-tested. Environment owners still need encrypted backups, least-privilege database access, query-plan/data-volume validation, and recovery exercises.
+
+## 12. The product is named Waypoint
+
+**Decision.** Rename the product, repository, solution, projects, packages, CLI, design-system prefix, and all documentation from "Waypoint" to **Waypoint**. Every spelling collapses to one word: `Waypoint` in prose, namespaces, and types; `waypoint` in file names, URLs, and email domains; `WAYPOINT` in environment variables. The frontend prefix `way` becomes `w` (`w-` CSS classes and selectors, `--w-*` tokens, `@w/api`, `@w/auth`, `@w/ui`, `W*` classes, `W_*` constants). The dotnet tool command `way` becomes `way`. The consent-state response header becomes `X-Waypoint-State`, and the personal-data export file becomes `waypoint-personal-data-*.json`.
+
+**Why.** "Waypoint" said nothing about what the software does and carried an unrelated cultural reference. "Waypoint" describes the product: milestones, progression, and the journey a young person takes through the program. A single-word name also removes the six spelling variants that had accumulated.
+
+**Consequences.** The GitHub repository is `QuinntyneBrown/waypoint`; GitHub redirects the old `waypoint` URLs. The Azure Static Web App and resource group that host the user guide keep their original names (`waypoint-user-guides`, `waypoint-rg`) because Azure resource groups cannot be renamed in place; the user-guide README says so. Existing development databases named `Waypoint*` and tokens issued with the `Waypoint` JWT issuer are not migrated; recreate them. The rendered C4 diagrams under `docs/detailed-designs` were re-rendered with the new labels.

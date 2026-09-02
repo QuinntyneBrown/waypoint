@@ -120,7 +120,7 @@ export async function registerUser(
   role: string,
   tag = 'user',
 ): Promise<SeededUser> {
-  const email = `e2e-${tag}-${crypto.randomUUID()}@wordup.test`;
+  const email = `e2e-${tag}-${crypto.randomUUID()}@waypoint.test`;
   const password = 'Password123';
   const displayName = `E2E ${tag}`;
   const res = await request.post('/api/_test/users', {
@@ -243,7 +243,7 @@ export async function registerYouth(
   tag: string,
   opts: { onboarded?: boolean } = {},
 ): Promise<YouthCredentials> {
-  const email = `e2e-${tag}-${crypto.randomUUID()}@wordup.test`;
+  const email = `e2e-${tag}-${crypto.randomUUID()}@waypoint.test`;
   const password = 'Password123';
   const displayName = `E2E ${tag}`;
   const res = await request.post('/api/auth/register', {

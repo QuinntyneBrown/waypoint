@@ -9,16 +9,16 @@ import {
   OnboardingApi,
   ProfileApi,
   ApiError,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon } from '@w/ui';
 import { forkJoin, of, switchMap } from 'rxjs';
 
 // Traces to: L2-AUTH-011
 @Component({
-  selector: 'wu-onboarding',
+  selector: 'w-onboarding',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, WuIcon],
+  imports: [ReactiveFormsModule, WIcon],
   templateUrl: './onboarding.html',
 })
 export class Onboarding implements OnDestroy {

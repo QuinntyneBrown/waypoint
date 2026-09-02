@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ApiError, PublicSiteApi } from '@wu/api';
-import { WuIcon } from '@wu/ui';
+import { ApiError, PublicSiteApi } from '@w/api';
+import { WIcon } from '@w/ui';
 
 function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -10,9 +10,9 @@ function isEmail(value: string): boolean {
 
 // Traces to: L2-PUB-003
 @Component({
-  selector: 'wu-donate',
+  selector: 'w-donate',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, WuIcon],
+  imports: [ReactiveFormsModule, WIcon],
   templateUrl: './donate.html',
 })
 export class Donate {
@@ -57,7 +57,7 @@ export class Donate {
    */
   protected readonly providerUrl = computed(
     () =>
-      `https://donate.example-pci-provider.org/word-up?interval=monthly&amount=${this.selected() ?? ''}`,
+      `https://donate.example-pci-provider.org/waypoint?interval=monthly&amount=${this.selected() ?? ''}`,
   );
 
   protected select(amount: number): void {

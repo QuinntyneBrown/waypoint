@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * E2E acceptance harness for the Word Up frontend.
+ * E2E acceptance harness for the Waypoint frontend.
  *
  * Topology (see docs/frontend-implementation-plan.md § "E2E acceptance harness"):
  *   - API      http://127.0.0.1:5211  (real backend, InMemory DB, Testing env)
@@ -81,7 +81,7 @@ export default defineConfig({
   webServer: [
     {
       command:
-        'dotnet run --project ../backend/src/WordUp.Api --no-build --urls http://127.0.0.1:5211',
+        'dotnet run --project ../backend/src/Waypoint.Api --no-build --urls http://127.0.0.1:5211',
       url: 'http://127.0.0.1:5211/health',
       timeout: 120_000,
       reuseExistingServer: !CI,

@@ -1,14 +1,14 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 import { GuardianContextService } from '../guardian-context.service';
 
 // Traces to: L2-GUARDIAN-001
 @Component({
-  selector: 'wu-guardian-progress',
+  selector: 'w-guardian-progress',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, DatePipe],
+  imports: [WShell, DatePipe],
   templateUrl: './guardian-progress.html',
 })
 export class GuardianProgress {

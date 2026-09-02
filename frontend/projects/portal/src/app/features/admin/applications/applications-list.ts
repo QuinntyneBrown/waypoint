@@ -15,18 +15,18 @@ import {
   ApplicationReviewOptions,
   ApplicationsApi,
   ApplicationSummary,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAccessibleDialog, WIcon, WShell } from '@w/ui';
 import { Observable } from 'rxjs';
 
 type Decision = 'approve' | 'decline';
 
 // Traces to: L2-INTAKE-002, L2-CONSENT-002, L2-AUTH-009
 @Component({
-  selector: 'wu-applications-list',
+  selector: 'w-applications-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, WuAccessibleDialog, DatePipe, ReactiveFormsModule],
+  imports: [WShell, WIcon, WAccessibleDialog, DatePipe, ReactiveFormsModule],
   templateUrl: './applications-list.html',
   styles: `
     .application-name {
@@ -35,7 +35,7 @@ type Decision = 'approve' | 'decline';
     .review-detail {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-sp-4);
+      gap: var(--w-sp-4);
     }
     .review-detail__wide {
       grid-column: 1 / -1;
@@ -44,7 +44,7 @@ type Decision = 'approve' | 'decline';
       white-space: pre-wrap;
       overflow-wrap: anywhere;
     }
-    .wu-modal__footer .wu-btn {
+    .w-modal__footer .w-btn {
       min-height: 45px;
     }
     @media (max-width: 42rem) {
@@ -54,7 +54,7 @@ type Decision = 'approve' | 'decline';
       .review-detail__wide {
         grid-column: auto;
       }
-      .wu-modal__footer .wu-btn {
+      .w-modal__footer .w-btn {
         flex: 1 1 100%;
       }
     }

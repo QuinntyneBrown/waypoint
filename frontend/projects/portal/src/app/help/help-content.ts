@@ -1,9 +1,9 @@
-import { WuRole } from '@wu/ui';
+import { WRole } from '@w/ui';
 
 export interface HelpArticle {
   question: string;
   answer: string;
-  roles?: readonly WuRole[];
+  roles?: readonly WRole[];
   keywords?: string;
 }
 
@@ -13,7 +13,7 @@ export interface HelpTopic {
   articles: readonly HelpArticle[];
 }
 
-const ALL_ROLES: readonly WuRole[] = ['youth', 'mentor', 'admin', 'guardian', 'volunteer'];
+const ALL_ROLES: readonly WRole[] = ['youth', 'mentor', 'admin', 'guardian', 'volunteer'];
 
 export const HELP_TOPICS: readonly HelpTopic[] = [
   {
@@ -67,7 +67,7 @@ export const HELP_TOPICS: readonly HelpTopic[] = [
     icon: 'users',
     articles: [
       {
-        question: 'How do I invite someone to Word Up?',
+        question: 'How do I invite someone to Waypoint?',
         answer:
           'Open Invitations, choose the role and optional cohort context, then enter one or more email addresses. Links expire after 14 days.',
         roles: ['admin', 'mentor'],
@@ -131,7 +131,7 @@ export const HELP_TOPICS: readonly HelpTopic[] = [
   },
 ];
 
-export function helpTopicsFor(role: WuRole, query = ''): HelpTopic[] {
+export function helpTopicsFor(role: WRole, query = ''): HelpTopic[] {
   const needle = query.trim().toLocaleLowerCase();
   return HELP_TOPICS.map((topic) => ({
     ...topic,

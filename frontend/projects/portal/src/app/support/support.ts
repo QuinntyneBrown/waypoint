@@ -9,16 +9,16 @@ import {
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { ApiError, SUPPORT_CATEGORIES, SupportApi, SupportScreenshot } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { ApiError, SUPPORT_CATEGORIES, SupportApi, SupportScreenshot } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { shellRole } from '../shell-role';
 
 // Traces to: L2-PLATFORM-005
 @Component({
-  selector: 'wu-support',
+  selector: 'w-support',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, ReactiveFormsModule, RouterLink, WuIcon],
+  imports: [WShell, ReactiveFormsModule, RouterLink, WIcon],
   templateUrl: './support.html',
 })
 export class Support implements OnDestroy {

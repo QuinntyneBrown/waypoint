@@ -48,7 +48,7 @@ test('an admin sends and schedules targeted announcements and tracks recipient r
   await expect(page).toHaveURL(/\/auth\/sign-in/);
   await signIn.signIn({ email: seeded.youthEmail, password: seeded.youthPassword });
   await page.goto('/youth/announcements');
-  const recipientCard = page.locator('.wu-card').filter({ hasText: sentTitle });
+  const recipientCard = page.locator('.w-card').filter({ hasText: sentTitle });
   await expect(recipientCard).toBeVisible();
   await expect(recipientCard).toContainText('New');
   await page.getByRole('button', { name: 'Mark all read', exact: true }).click();

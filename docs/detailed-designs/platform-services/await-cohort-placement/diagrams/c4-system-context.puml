@@ -4,10 +4,10 @@ LAYOUT_LEFT_RIGHT()
 title C4 level 1 — Await cohort placement — system context
 Person(primary, "Authenticated participant", "Human role outside the software boundary")
 Person(staff, "Program staff", "Administers authorized program activity")
-System(wordup, "Word Up software system", "Youth leadership, learning, mentoring, and program operations")
+System(waypoint, "Waypoint software system", "Youth leadership, learning, mentoring, and program operations")
 
-Rel(primary, wordup, "An authenticated participant starts this feature interaction through th…")
-Rel(staff, wordup, "Administers authorized program activity")
+Rel(primary, waypoint, "An authenticated participant starts this feature interaction through th…")
+Rel(staff, waypoint, "Administers authorized program activity")
 
 SHOW_LEGEND()
 @enduml

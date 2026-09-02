@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "ProtectConcurrentUpdatesCommand" as request_ProtectConcurrentUpdatesCommand <<record>>
   class "ProtectConcurrentUpdatesCommandHandler" as handler_ProtectConcurrentUpdatesCommandHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "ProtectConcurrentUpdatesState" as entity_ProtectConcurrentUpdatesState <<domain type>>
 }
 page_ProtectConcurrentUpdatesPage --> client_NonFunctionalApi : invokes

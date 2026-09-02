@@ -35,7 +35,10 @@ test('sign-in with a wrong password fails with enumeration-safe copy', async ({
 test('sign-in with an unknown email shows the same generic failure', async ({ page }) => {
   const signInPage = new SignInPage(page);
   await signInPage.goto();
-  await signInPage.submitCredentials(`nobody-${crypto.randomUUID()}@wordup.test`, 'WrongPassword9');
+  await signInPage.submitCredentials(
+    `nobody-${crypto.randomUUID()}@waypoint.test`,
+    'WrongPassword9',
+  );
 
   await expect(signInPage.errorAlert).toContainText(/invalid email or password/i);
 });

@@ -1,36 +1,36 @@
-<wu-shell
+<w-shell
   role="mentor"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Curriculum</div>
-        <h1 class="wu-page__title">Assign work</h1>
-        <p class="wu-page__sub">
+  <div class="w-container w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Curriculum</div>
+        <h1 class="w-page__title">Assign work</h1>
+        <p class="w-page__sub">
           Add a published lesson, module, or project to individual journeys or a whole cohort.
         </p>
       </div>
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
-    <p class="wu-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
 
     @if (options(); as view) {
       <div class="assign-layout">
-        <section class="wu-card" aria-labelledby="assignment-details-heading">
-          <div class="wu-card__header">
-            <h2 class="wu-card__title" id="assignment-details-heading">Assignment details</h2>
+        <section class="w-card" aria-labelledby="assignment-details-heading">
+          <div class="w-card__header">
+            <h2 class="w-card__title" id="assignment-details-heading">Assignment details</h2>
           </div>
-          <div class="wu-card__body wu-stack">
-            <div class="wu-field">
-              <label class="wu-label" for="assign-item-type">What are you assigning?</label>
+          <div class="w-card__body w-stack">
+            <div class="w-field">
+              <label class="w-label" for="assign-item-type">What are you assigning?</label>
               <select
-                class="wu-select"
+                class="w-select"
                 id="assign-item-type"
                 [value]="itemType()"
                 (change)="setItemType($any($event.target).value)"
@@ -40,10 +40,10 @@
                 <option value="Project">Project / assignment</option>
               </select>
             </div>
-            <div class="wu-field">
-              <label class="wu-label" for="assign-item">Item</label>
+            <div class="w-field">
+              <label class="w-label" for="assign-item">Item</label>
               <select
-                class="wu-select"
+                class="w-select"
                 id="assign-item"
                 [value]="itemId()"
                 (change)="itemId.set($any($event.target).value)"
@@ -55,17 +55,17 @@
                 }
               </select>
               @if (filteredItems().length === 0) {
-                <p class="wu-help">
+                <p class="w-help">
                   No published {{ itemType().toLowerCase() }} items are available.
                 </p>
               }
             </div>
 
-            <div class="wu-divider"></div>
-            <fieldset class="wu-stack">
-              <legend class="wu-label">Who is this for?</legend>
-              <div class="wu-cluster">
-                <label class="wu-radio">
+            <div class="w-divider"></div>
+            <fieldset class="w-stack">
+              <legend class="w-label">Who is this for?</legend>
+              <div class="w-cluster">
+                <label class="w-radio">
                   <input
                     type="radio"
                     name="target-mode"
@@ -73,10 +73,10 @@
                     [checked]="targetMode() === 'individual'"
                     (change)="setTargetMode('individual')"
                   />
-                  <span class="wu-radio__box"></span>
+                  <span class="w-radio__box"></span>
                   <span>Selected youth</span>
                 </label>
-                <label class="wu-radio">
+                <label class="w-radio">
                   <input
                     type="radio"
                     name="target-mode"
@@ -84,7 +84,7 @@
                     [checked]="targetMode() === 'cohort'"
                     (change)="setTargetMode('cohort')"
                   />
-                  <span class="wu-radio__box"></span>
+                  <span class="w-radio__box"></span>
                   <span>Whole cohort</span>
                 </label>
               </div>
@@ -92,32 +92,32 @@
               @if (targetMode() === 'individual') {
                 <div class="recipient-list" data-testid="assign-youth-list">
                   @for (person of view.youth; track person.youthId) {
-                    <label class="wu-check">
+                    <label class="w-check">
                       <input
                         type="checkbox"
                         [checked]="youthIds().includes(person.youthId)"
                         (change)="toggleYouth(person.youthId, $any($event.target).checked)"
                       />
-                      <span class="wu-check__box">
-                        <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                      <span class="w-check__box">
+                        <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
                       </span>
                       <span>
                         {{ person.displayName }}
                         @if (person.atRisk) {
-                          <span class="wu-badge wu-badge--error">At risk</span>
+                          <span class="w-badge w-badge--error">At risk</span>
                         }
                         @if (person.cohortName) {
-                          <span class="wu-muted">· {{ person.cohortName }}</span>
+                          <span class="w-muted">· {{ person.cohortName }}</span>
                         }
                       </span>
                     </label>
                   }
                 </div>
               } @else {
-                <div class="wu-field wu-mb-0">
-                  <label class="wu-label" for="assign-cohort">Cohort</label>
+                <div class="w-field w-mb-0">
+                  <label class="w-label" for="assign-cohort">Cohort</label>
                   <select
-                    class="wu-select"
+                    class="w-select"
                     id="assign-cohort"
                     [value]="cohortId()"
                     (change)="cohortId.set($any($event.target).value)"
@@ -133,22 +133,22 @@
               }
             </fieldset>
 
-            <div class="wu-divider"></div>
-            <div class="wu-grid wu-grid--2">
-              <div class="wu-field">
-                <label class="wu-label" for="assign-due-date">Due date</label>
+            <div class="w-divider"></div>
+            <div class="w-grid w-grid--2">
+              <div class="w-field">
+                <label class="w-label" for="assign-due-date">Due date</label>
                 <input
-                  class="wu-input"
+                  class="w-input"
                   id="assign-due-date"
                   type="date"
                   [value]="dueDate()"
                   (input)="dueDate.set($any($event.target).value)"
                 />
               </div>
-              <div class="wu-field">
-                <label class="wu-label" for="assign-reminder">Reminder</label>
+              <div class="w-field">
+                <label class="w-label" for="assign-reminder">Reminder</label>
                 <select
-                  class="wu-select"
+                  class="w-select"
                   id="assign-reminder"
                   [value]="reminderCadence()"
                   (change)="reminderCadence.set($any($event.target).value)"
@@ -159,10 +159,10 @@
                 </select>
               </div>
             </div>
-            <div class="wu-field">
-              <label class="wu-label" for="assign-message">Message to youth</label>
+            <div class="w-field">
+              <label class="w-label" for="assign-message">Message to youth</label>
               <textarea
-                class="wu-textarea"
+                class="w-textarea"
                 id="assign-message"
                 rows="4"
                 maxlength="4000"
@@ -170,11 +170,11 @@
                 [value]="message()"
                 (input)="message.set($any($event.target).value)"
               ></textarea>
-              <p class="wu-help">Each recipient receives this in their mentor message thread.</p>
+              <p class="w-help">Each recipient receives this in their mentor message thread.</p>
             </div>
-            <div class="wu-actions">
+            <div class="w-actions">
               <button
-                class="wu-btn wu-btn--primary review-button"
+                class="w-btn w-btn--primary review-button"
                 type="button"
                 [disabled]="filteredItems().length === 0"
                 (click)="review()"
@@ -185,32 +185,29 @@
           </div>
         </section>
 
-        <aside
-          class="wu-card wu-card--greige summary-card"
-          aria-labelledby="assign-summary-heading"
-        >
-          <div class="wu-card__header">
-            <h2 class="wu-card__title" id="assign-summary-heading">Summary</h2>
+        <aside class="w-card w-card--greige summary-card" aria-labelledby="assign-summary-heading">
+          <div class="w-card__header">
+            <h2 class="w-card__title" id="assign-summary-heading">Summary</h2>
           </div>
-          <div class="wu-card__body wu-stack selection-summary">
+          <div class="w-card__body w-stack selection-summary">
             <div>
-              <p class="wu-eyebrow">Item</p>
+              <p class="w-eyebrow">Item</p>
               <p>
                 <strong>{{ selectedItem()?.title ?? 'Choose an item' }}</strong>
               </p>
-              <p class="wu-muted">{{ selectedItem()?.moduleName }}</p>
+              <p class="w-muted">{{ selectedItem()?.moduleName }}</p>
             </div>
-            <div class="wu-divider"></div>
+            <div class="w-divider"></div>
             <div>
-              <p class="wu-eyebrow">Recipients</p>
+              <p class="w-eyebrow">Recipients</p>
               <p>
                 <strong>{{ recipientCount() }} youth</strong>
               </p>
-              <p class="wu-muted">{{ recipientSummary() }}</p>
+              <p class="w-muted">{{ recipientSummary() }}</p>
             </div>
-            <div class="wu-divider"></div>
+            <div class="w-divider"></div>
             <div>
-              <p class="wu-eyebrow">Due</p>
+              <p class="w-eyebrow">Due</p>
               <p>
                 <strong>{{ dueDate() || 'Not set' }}</strong>
               </p>
@@ -219,41 +216,41 @@
         </aside>
       </div>
     } @else {
-      <p class="wu-muted" role="status">Loading assignable work…</p>
+      <p class="w-muted" role="status">Loading assignable work…</p>
     }
   </div>
 
   @if (reviewing()) {
     <div
-      class="wu-modal wu-modal--sm is-open"
+      class="w-modal w-modal--sm is-open"
       wuAccessibleDialog
       aria-labelledby="confirm-assign-heading"
       (wuDialogEscape)="cancelReview()"
     >
-      <div class="wu-modal__scrim" (click)="cancelReview()"></div>
-      <div class="wu-modal__panel">
-        <div class="wu-modal__header">
+      <div class="w-modal__scrim" (click)="cancelReview()"></div>
+      <div class="w-modal__panel">
+        <div class="w-modal__header">
           <div>
-            <h2 class="wu-modal__title" id="confirm-assign-heading">
+            <h2 class="w-modal__title" id="confirm-assign-heading">
               Assign {{ selectedItem()?.title }}?
             </h2>
-            <p class="wu-modal__sub">Due {{ dueDate() }}</p>
+            <p class="w-modal__sub">Due {{ dueDate() }}</p>
           </div>
           <button
-            class="wu-iconbtn wu-modal__close"
+            class="w-iconbtn w-modal__close"
             type="button"
             aria-label="Close"
             (click)="cancelReview()"
           >
-            <wu-icon name="x" />
+            <w-icon name="x" />
           </button>
         </div>
-        <div class="wu-modal__body wu-stack">
+        <div class="w-modal__body w-stack">
           <p>
             This adds the item to {{ recipientCount() }} youth
             {{ recipientCount() === 1 ? 'journey' : 'journeys' }}.
           </p>
-          <p class="wu-muted">{{ recipientSummary() }}</p>
+          <p class="w-muted">{{ recipientSummary() }}</p>
           @if (message().trim()) {
             <p>Each recipient will also receive your message right away.</p>
           }
@@ -261,9 +258,9 @@
             <p>A due reminder will be scheduled for each recipient.</p>
           }
         </div>
-        <div class="wu-modal__footer">
+        <div class="w-modal__footer">
           <button
-            class="wu-btn wu-btn--ghost"
+            class="w-btn w-btn--ghost"
             type="button"
             wuDialogInitialFocus
             (click)="cancelReview()"
@@ -271,7 +268,7 @@
             Cancel
           </button>
           <button
-            class="wu-btn wu-btn--primary confirm-button"
+            class="w-btn w-btn--primary confirm-button"
             type="button"
             [disabled]="saving()"
             (click)="confirm()"
@@ -282,4 +279,4 @@
       </div>
     </div>
   }
-</wu-shell>
+</w-shell>

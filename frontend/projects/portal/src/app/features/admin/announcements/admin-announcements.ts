@@ -9,22 +9,22 @@ import {
   CohortsApi,
   CohortSummary,
   ManagedAnnouncement,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { finalize, forkJoin } from 'rxjs';
 
 // Traces to: L2-ENGAGE-006, L2-AUTH-010, L2-NFR-001/009/010
 @Component({
-  selector: 'wu-admin-announcements',
+  selector: 'w-admin-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, ReactiveFormsModule, DatePipe, PercentPipe],
+  imports: [WShell, WIcon, ReactiveFormsModule, DatePipe, PercentPipe],
   templateUrl: './admin-announcements.html',
   styles: `
     .announcement-layout {
       display: grid;
       grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.35fr);
-      gap: var(--wu-sp-5);
+      gap: var(--w-sp-5);
       align-items: start;
     }
     .announcement-layout > * {
@@ -33,23 +33,23 @@ import { finalize, forkJoin } from 'rxjs';
     .announcement-options {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
       padding: 0;
       border: 0;
     }
     .announcement-option {
       display: flex;
       align-items: center;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
       min-height: 2.75rem;
-      padding: var(--wu-sp-2) var(--wu-sp-3);
-      border: 1px solid var(--wu-border);
-      border-radius: var(--wu-radius-md);
+      padding: var(--w-sp-2) var(--w-sp-3);
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-radius-md);
       cursor: pointer;
     }
     .announcement-option:has(input:checked) {
-      border-color: var(--wu-navy);
-      background: var(--wu-surface-subtle);
+      border-color: var(--w-navy);
+      background: var(--w-surface-subtle);
     }
     .announcement-option input {
       width: 1.25rem;
@@ -67,22 +67,22 @@ import { finalize, forkJoin } from 'rxjs';
     .announcement-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
       align-items: center;
     }
     .announcement-stats {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-sp-3);
-      padding-top: var(--wu-sp-3);
-      border-top: 1px solid var(--wu-border);
+      gap: var(--w-sp-3);
+      padding-top: var(--w-sp-3);
+      border-top: 1px solid var(--w-border);
     }
     .announcement-stat {
       min-width: 0;
     }
     .announcement-stat strong {
       display: block;
-      font-size: var(--wu-text-lg);
+      font-size: var(--w-text-lg);
     }
     @media (max-width: 58rem) {
       .announcement-layout {

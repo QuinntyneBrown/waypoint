@@ -1,67 +1,67 @@
-<wu-shell
+<w-shell
   [role]="shellRole()"
   active="attendance"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">{{ session()?.cohortName || 'Attendance' }}</div>
-        <h1 class="wu-page__title">{{ session()?.title || 'Take attendance' }}</h1>
+  <div class="w-container w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">{{ session()?.cohortName || 'Attendance' }}</div>
+        <h1 class="w-page__title">{{ session()?.title || 'Take attendance' }}</h1>
         @if (session(); as current) {
-          <p class="wu-page__sub">
+          <p class="w-page__sub">
             {{ current.startsAt | date: 'fullDate' }} at
             {{ current.startsAt | date: 'shortTime' }} · {{ current.location || 'Location TBD' }}
           </p>
         }
       </div>
-      <div class="wu-cluster">
-        <a class="wu-btn wu-btn--ghost" [routerLink]="calendarPath()">Calendar</a>
-        <a class="wu-btn wu-btn--ghost" [routerLink]="historyPath()">History</a>
+      <div class="w-cluster">
+        <a class="w-btn w-btn--ghost" [routerLink]="calendarPath()">Calendar</a>
+        <a class="w-btn w-btn--ghost" [routerLink]="historyPath()">History</a>
       </div>
     </div>
 
     @if (session() === undefined) {
-      <p class="wu-muted" role="status">Loading roster…</p>
+      <p class="w-muted" role="status">Loading roster…</p>
     } @else {
       <div class="attendance-summary" aria-label="Attendance tallies">
-        <div class="wu-card" data-testid="mentor-marked-tally">
+        <div class="w-card" data-testid="mentor-marked-tally">
           <strong>{{ marked() }} of {{ total() }}</strong
           ><span>marked</span>
         </div>
-        <div class="wu-card">
+        <div class="w-card">
           <strong>{{ present() }}</strong
           ><span>present</span>
         </div>
-        <div class="wu-card">
+        <div class="w-card">
           <strong>{{ late() }}</strong
           ><span>late</span>
         </div>
-        <div class="wu-card">
+        <div class="w-card">
           <strong>{{ excused() }}</strong
           ><span>excused</span>
         </div>
-        <div class="wu-card">
+        <div class="w-card">
           <strong>{{ absent() }}</strong
           ><span>absent</span>
         </div>
       </div>
 
-      <div class="wu-cluster wu-cluster--between">
-        <div class="wu-cluster">
-          <button class="wu-btn wu-btn--secondary" type="button" (click)="markAll('Present')">
+      <div class="w-cluster w-cluster--between">
+        <div class="w-cluster">
+          <button class="w-btn w-btn--secondary" type="button" (click)="markAll('Present')">
             All present
           </button>
-          <button class="wu-btn wu-btn--ghost" type="button" (click)="markAll(null)">Clear</button>
+          <button class="w-btn w-btn--ghost" type="button" (click)="markAll(null)">Clear</button>
         </div>
         @if (queue.pendingCount() > 0) {
-          <span class="wu-badge wu-badge--warning">{{ queue.pendingCount() }} pending sync</span>
+          <span class="w-badge w-badge--warning">{{ queue.pendingCount() }} pending sync</span>
         }
       </div>
 
-      <div class="wu-card">
-        <div class="wu-card__body">
+      <div class="w-card">
+        <div class="w-card__body">
           @for (row of rows(); track row.youthUserId) {
             <div class="attendance-row" data-testid="mentor-attendance-row">
               <strong>{{ row.name }}</strong>
@@ -72,7 +72,7 @@
               >
                 @for (status of statuses; track status) {
                   <button
-                    class="wu-btn wu-btn--secondary"
+                    class="w-btn w-btn--secondary"
                     type="button"
                     [class.is-selected]="row.mark === status"
                     [attr.aria-pressed]="row.mark === status"
@@ -82,12 +82,12 @@
                   </button>
                 }
               </div>
-              <div class="wu-field wu-mb-0">
-                <label class="wu-label" [for]="'attendance-note-' + row.youthUserId">
+              <div class="w-field w-mb-0">
+                <label class="w-label" [for]="'attendance-note-' + row.youthUserId">
                   Staff note for {{ row.name }}
                 </label>
                 <input
-                  class="wu-input"
+                  class="w-input"
                   [id]="'attendance-note-' + row.youthUserId"
                   maxlength="1000"
                   [value]="row.note || ''"
@@ -96,28 +96,24 @@
               </div>
             </div>
           } @empty {
-            <div class="wu-empty"><p>No active youth are on this session roster.</p></div>
+            <div class="w-empty"><p>No active youth are on this session roster.</p></div>
           }
         </div>
       </div>
 
       @if (queue.message(); as message) {
-        <p class="wu-alert wu-alert--info" role="status" aria-live="polite">{{ message }}</p>
+        <p class="w-alert w-alert--info" role="status" aria-live="polite">{{ message }}</p>
       }
       @if (queue.hasConflictForSession(sessionId)) {
-        <div class="wu-alert wu-alert--warning">
-          <div class="wu-stack wu-stack--sm">
+        <div class="w-alert w-alert--warning">
+          <div class="w-stack w-stack--sm">
             <strong>Choose which attendance to keep</strong>
             <p>A newer server edit conflicts with your queued change. Review before choosing.</p>
-            <div class="wu-cluster">
-              <button class="wu-btn wu-btn--primary" type="button" (click)="applyQueuedConflict()">
+            <div class="w-cluster">
+              <button class="w-btn w-btn--primary" type="button" (click)="applyQueuedConflict()">
                 Apply my changes
               </button>
-              <button
-                class="wu-btn wu-btn--secondary"
-                type="button"
-                (click)="keepServerAttendance()"
-              >
+              <button class="w-btn w-btn--secondary" type="button" (click)="keepServerAttendance()">
                 Keep server attendance
               </button>
             </div>
@@ -125,13 +121,13 @@
         </div>
       }
       @if (errorMessage(); as error) {
-        <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+        <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
       }
 
-      <div class="wu-cluster wu-cluster--between">
-        <span class="wu-muted">{{ dirty() ? 'Unsaved changes' : 'Changes saved' }}</span>
+      <div class="w-cluster w-cluster--between">
+        <span class="w-muted">{{ dirty() ? 'Unsaved changes' : 'Changes saved' }}</span>
         <button
-          class="wu-btn wu-btn--primary"
+          class="w-btn w-btn--primary"
           type="button"
           [disabled]="marked() !== total() || total() === 0 || saving()"
           (click)="save()"
@@ -141,4 +137,4 @@
       </div>
     }
   </div>
-</wu-shell>
+</w-shell>

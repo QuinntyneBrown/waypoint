@@ -2,10 +2,10 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import type { AbstractControl } from '@angular/forms';
-import { ApiError, PrivacyApi } from '@wu/api';
-import type { AdminDataSubjectRequest } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { ApiError, PrivacyApi } from '@w/api';
+import type { AdminDataSubjectRequest } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import {
   buildVerifiedOwnershipPayload,
   verifiedRecordCount as countVerifiedRecordIds,
@@ -15,26 +15,26 @@ import {
 
 // Traces to: L2-NFR-003
 @Component({
-  selector: 'wu-admin-privacy',
+  selector: 'w-admin-privacy',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, ReactiveFormsModule, WuIcon, WuShell],
+  imports: [DatePipe, ReactiveFormsModule, WIcon, WShell],
   templateUrl: './admin-privacy.html',
   styles: `
     .privacy-layout {
       display: grid;
-      gap: var(--wu-s5);
+      gap: var(--w-s5);
       grid-template-columns: minmax(0, 1.35fr) minmax(20rem, 0.65fr);
     }
     .privacy-row {
-      border-top: 1px solid var(--wu-border);
-      padding: var(--wu-s4) 0;
+      border-top: 1px solid var(--w-border);
+      padding: var(--w-s4) 0;
     }
     .privacy-row:first-child {
       border-top: 0;
     }
     .privacy-meta {
       display: grid;
-      gap: var(--wu-s2);
+      gap: var(--w-s2);
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .privacy-meta span {
@@ -42,9 +42,9 @@ import {
     }
     .verified-records {
       border: 0;
-      border-top: 1px solid var(--wu-border);
-      margin: var(--wu-s2) 0 0;
-      padding: var(--wu-s5) 0 0;
+      border-top: 1px solid var(--w-border);
+      margin: var(--w-s2) 0 0;
+      padding: var(--w-s5) 0 0;
     }
     .verified-records legend {
       font-size: 1.05rem;
@@ -53,27 +53,27 @@ import {
     }
     .verified-records__grid {
       display: grid;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
       grid-template-columns: minmax(0, 1fr);
     }
-    .verified-records__grid .wu-field {
+    .verified-records__grid .w-field {
       margin-bottom: 0;
     }
     .verified-attestation {
-      background: var(--wu-warning-bg);
-      border: 2px solid var(--wu-warning);
-      border-radius: var(--wu-r-card);
-      padding: var(--wu-s4);
+      background: var(--w-warning-bg);
+      border: 2px solid var(--w-warning);
+      border-radius: var(--w-r-card);
+      padding: var(--w-s4);
     }
-    .verified-attestation .wu-check {
+    .verified-attestation .w-check {
       align-items: flex-start;
       margin-bottom: 0;
     }
     .verified-error {
-      color: var(--wu-error);
+      color: var(--w-error);
       font-size: 0.85rem;
       font-weight: 600;
-      margin-top: var(--wu-s2);
+      margin-top: var(--w-s2);
     }
     @media (max-width: 62rem) {
       .privacy-layout {

@@ -7,9 +7,9 @@ import {
   MentorApi,
   MentorCompetencyItem,
   MentorCompetencySummary,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 
 interface CompetencyDraft {
   level: CompetencyLevel;
@@ -18,15 +18,15 @@ interface CompetencyDraft {
 
 // Traces to: L2-MENTOR-005, L2-LEARN-010
 @Component({
-  selector: 'wu-mentor-competencies',
+  selector: 'w-mentor-competencies',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, RouterLink, DatePipe],
+  imports: [WShell, WIcon, RouterLink, DatePipe],
   templateUrl: './mentor-competencies.html',
   styles: `
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
     }
     .summary-value {
       margin: 0;
@@ -36,7 +36,7 @@ interface CompetencyDraft {
     .competency-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-s5);
+      gap: var(--w-s5);
     }
     .assessment-record {
       min-height: 2.75rem;

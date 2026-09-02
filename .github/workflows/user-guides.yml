@@ -13,14 +13,14 @@ on:
   push:
     paths:
       - "user-guides/**"
-      - "frontend/projects/wu-ui/src/styles/**"
-      - "scripts/verify-word-up-user-guide-assets.mjs"
+      - "frontend/projects/w-ui/src/styles/**"
+      - "scripts/verify-waypoint-user-guide-assets.mjs"
       - ".github/workflows/user-guides.yml"
   pull_request:
     paths:
       - "user-guides/**"
-      - "frontend/projects/wu-ui/src/styles/**"
-      - "scripts/verify-word-up-user-guide-assets.mjs"
+      - "frontend/projects/w-ui/src/styles/**"
+      - "scripts/verify-waypoint-user-guide-assets.mjs"
       - ".github/workflows/user-guides.yml"
   workflow_dispatch:
 
@@ -40,7 +40,7 @@ jobs:
       # Runs first: if the vendored stylesheets have drifted from the design
       # system, nothing downstream is trustworthy.
       - name: Vendored design-system asset gate
-        run: node scripts/verify-word-up-user-guide-assets.mjs
+        run: node scripts/verify-waypoint-user-guide-assets.mjs
         working-directory: .
 
       # The guide pins its devDependencies and deliberately keeps no lockfile.

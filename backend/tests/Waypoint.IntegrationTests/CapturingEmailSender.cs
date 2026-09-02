@@ -1,0 +1,50 @@
+using System.Collections.Concurrent;
+using Waypoint.Application.Shared.Abstractions;
+
+namespace Waypoint.IntegrationTests;
+
+/// <summary>Test double for <see cref="IEmailSender"/> that records sent messages so specs can read
+/// invitation / reset tokens (which are only delivered by email).</summary>
+public sealed class CapturingEmailSender : IEmailSender
+{
+    public sealed record SentEmail(
+        string To,
+        string Subject,
+        string Body,
+        Guid? SubjectUserId,
+        bool PurgeAfterDelivery,
+        Guid? RecipientUserId,
+        bool IsPrivacyRemovalConfirmation);
+
+    private readonly ConcurrentQueue<SentEmail> _sent = new();
+
+    public Task SendAsync(
+        string toEmail,
+        string subject,
+        string body,
+        CancellationToken cancellationToken = default,
+        string? idempotencyKey = null,
+        Guid? subjectUserId = null,
+        bool purgeAfterDelivery = false,
+        Guid? recipientUserId = null,
+        bool isPrivacyRemovalConfirmation = false)
+    {
+        _sent.Enqueue(new SentEmail(
+            toEmail,
+            subject,
+            body,
+            subjectUserId,
+            purgeAfterDelivery,
+            recipientUserId,
+            isPrivacyRemovalConfirmation));
+        return Task.CompletedTask;
+    }
+
+    public SentEmail? LastTo(string email) =>
+        _sent.ToArray().LastOrDefault(e => string.Equals(e.To, email, StringComparison.OrdinalIgnoreCase));
+
+    public IReadOnlyList<SentEmail> AllTo(string email) =>
+        _sent.ToArray()
+            .Where(e => string.Equals(e.To, email, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+}

@@ -91,7 +91,7 @@ const sleep = (milliseconds) =>
 async function seedAuthorization(workerId) {
   const password = "PerformanceOnly123!";
   let credentials = {
-    email: `performance-${workerId}-${crypto.randomUUID()}@wordup.test`,
+    email: `performance-${workerId}-${crypto.randomUUID()}@waypoint.test`,
     password,
   };
   let cohortId = null;

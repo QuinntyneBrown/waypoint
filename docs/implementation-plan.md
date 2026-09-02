@@ -1,8 +1,8 @@
-# Word Up — Implementation Status
+# Waypoint — Implementation Status
 
 Snapshot: **2026-07-20**
 
-Word Up is a role-aware youth leadership platform derived from [PRD.md](PRD.md) and the 88 acceptance-testable L2 requirements under [`specs/`](specs/README.md). This document summarizes the implemented boundary. The detailed, requirement-by-requirement delivery record is the [gap-closure plan](gap-closure-plan.md).
+Waypoint is a role-aware youth leadership platform derived from [PRD.md](PRD.md) and the 88 acceptance-testable L2 requirements under [`specs/`](specs/README.md). This document summarizes the implemented boundary. The detailed, requirement-by-requirement delivery record is the [gap-closure plan](gap-closure-plan.md).
 
 ## Delivery status
 
@@ -10,7 +10,7 @@ Word Up is a role-aware youth leadership platform derived from [PRD.md](PRD.md) 
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
 | Product and requirements   | 61 L1 and 88 in-scope L2 requirements across 14 subsystems                                                                                                                                                                                       | `docs/specs/`, traceability gate            |
 | Backend                    | .NET 9 Clean Architecture API covering public, authentication, safeguarding, administration, curriculum, learning, engagement, role portals, reporting, privacy, and platform services                                                           | `backend/src`, HTTP integration tests       |
-| Persistence and operations | SQL Server EF migrations, in-memory development mode, encrypted sensitive fields, deterministic migration lifecycle, health probes, and the `wu` operational CLI                                                                                 | `WordUp.Infrastructure`, `WordUp.Cli`       |
+| Persistence and operations | SQL Server EF migrations, in-memory development mode, encrypted sensitive fields, deterministic migration lifecycle, health probes, and the `way` operational CLI                                                                                 | `Waypoint.Infrastructure`, `Waypoint.Cli`       |
 | Frontend                   | Angular 21 authenticated portal, SSR public site, shared UI/API/auth libraries, and routed youth, mentor, administrator, guardian, and volunteer experiences                                                                                     | `frontend/projects`, Playwright tests       |
 | Delivery services          | Absolute application links, configurable SMTP, encrypted durable email queue, retry/lease worker, and scheduled-notification dispatch independent of feed reads                                                                                  | infrastructure workers and completion tests |
 | Quality                    | Backend/unit/integration tests, frontend unit tests and production builds, Playwright E2E, throttled Youth interaction, XS–XL responsive checks, axe WCAG checks, route manifest, traceability, and a SQL-backed 50-user/20-RPS API load profile | local scripts and GitHub workflows          |
@@ -47,9 +47,9 @@ These are deployment and governance activities outside the repository-only compl
 
 ```bash
 # Backend (run from the repository root; global.json selects the stable .NET 9 SDK)
-dotnet restore backend/WordUp.sln
-dotnet build backend/WordUp.sln --configuration Release --no-restore
-dotnet test backend/WordUp.sln --configuration Release --no-build
+dotnet restore backend/Waypoint.sln
+dotnet build backend/Waypoint.sln --configuration Release --no-restore
+dotnet test backend/Waypoint.sln --configuration Release --no-build
 
 # Requirements (run from the repository root)
 node scripts/check-traceability.mjs --strict

@@ -6,7 +6,7 @@
 .admin-form {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--wu-sp-4);
+  gap: var(--w-sp-4);
   align-items: end;
 }
 
@@ -22,12 +22,12 @@
 .card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--wu-sp-4);
+  gap: var(--w-sp-4);
 }
 
 .stage-list {
   display: grid;
-  gap: var(--wu-sp-4);
+  gap: var(--w-sp-4);
 }
 
 .admin-card {
@@ -40,7 +40,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--wu-sp-4);
+  gap: var(--w-sp-4);
 }
 
 .badge-icon {
@@ -49,24 +49,24 @@
   min-width: 3rem;
   min-height: 3rem;
   border-radius: 999px;
-  background: var(--wu-surface-subtle);
+  background: var(--w-surface-subtle);
   font-weight: 700;
 }
 
 .definition-list {
   display: grid;
-  gap: var(--wu-sp-2);
+  gap: var(--w-sp-2);
   margin: 0;
 }
 
 .definition-list > div {
   display: grid;
   grid-template-columns: 7rem minmax(0, 1fr);
-  gap: var(--wu-sp-3);
+  gap: var(--w-sp-3);
 }
 
 .definition-list dt {
-  color: var(--wu-text-muted);
+  color: var(--w-text-muted);
 }
 
 .definition-list dd {
@@ -80,7 +80,7 @@
 
 .competency-list {
   display: grid;
-  gap: var(--wu-sp-3);
+  gap: var(--w-sp-3);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -88,8 +88,8 @@
 
 .competency-row {
   align-items: center;
-  border-top: 1px solid var(--wu-border);
-  padding-top: var(--wu-sp-3);
+  border-top: 1px solid var(--w-border);
+  padding-top: var(--w-sp-3);
 }
 
 .dialog-backdrop {
@@ -98,7 +98,7 @@
   z-index: 1000;
   display: grid;
   place-items: center;
-  padding: var(--wu-sp-4);
+  padding: var(--w-sp-4);
   overflow-y: auto;
   background: rgb(15 23 42 / 65%);
 }
@@ -107,10 +107,10 @@
   width: min(100%, 34rem);
   max-height: calc(100dvh - 2rem);
   overflow-y: auto;
-  border-radius: var(--wu-radius-lg);
-  background: var(--wu-surface);
-  box-shadow: var(--wu-shadow-lg);
-  padding: var(--wu-sp-5);
+  border-radius: var(--w-radius-lg);
+  background: var(--w-surface);
+  box-shadow: var(--w-shadow-lg);
+  padding: var(--w-sp-5);
 }
 
 .dialog-panel > h2 {
@@ -139,7 +139,7 @@
     flex-direction: column;
   }
 
-  .wu-actions,
+  .w-actions,
   .card-actions,
   .stage-actions {
     width: 100%;
@@ -147,18 +147,18 @@
     flex-direction: column;
   }
 
-  .wu-btn {
+  .w-btn {
     width: 100%;
     min-height: 45px;
   }
 
   .dialog-backdrop {
     align-items: start;
-    padding: var(--wu-sp-2);
+    padding: var(--w-sp-2);
   }
 
   .dialog-panel {
     max-height: calc(100dvh - 1rem);
-    padding: var(--wu-sp-4);
+    padding: var(--w-sp-4);
   }
 }

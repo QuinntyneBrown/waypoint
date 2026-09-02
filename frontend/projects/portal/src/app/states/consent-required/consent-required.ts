@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ApiError, ConsentApi } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuStatePage } from '@wu/ui';
+import { ApiError, ConsentApi } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WStatePage } from '@w/ui';
 
 // Traces to: L2-CONSENT-002
 @Component({
-  selector: 'wu-consent-required',
+  selector: 'w-consent-required',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuStatePage],
-  template: `<wu-state-page
+  imports: [WStatePage],
+  template: `<w-state-page
     icon="shield"
     tone="warning"
     eyebrow="Consent needed"
@@ -16,7 +16,7 @@ import { WuStatePage } from '@wu/ui';
     text="Before you can start lessons, a parent or guardian needs to give participation consent. It only takes a minute — send them a secure link, or have them sign now."
   >
     <button
-      class="wu-btn wu-btn--primary"
+      class="w-btn w-btn--primary"
       type="button"
       [class.is-loading]="notifying()"
       (click)="notifyGuardian()"
@@ -24,17 +24,17 @@ import { WuStatePage } from '@wu/ui';
     >
       Notify my guardian
     </button>
-    <button class="wu-btn wu-btn--ghost" type="button" (click)="guardianSignNow()">
+    <button class="w-btn w-btn--ghost" type="button" (click)="guardianSignNow()">
       My guardian can sign now
     </button>
-    <button class="wu-btn wu-btn--subtle" type="button" (click)="signOut()">Sign out</button>
+    <button class="w-btn w-btn--subtle" type="button" (click)="signOut()">Sign out</button>
     @if (deliveryMessage(); as message) {
-      <p class="wu-alert wu-alert--success" role="status" aria-live="polite">{{ message }}</p>
+      <p class="w-alert w-alert--success" role="status" aria-live="polite">{{ message }}</p>
     }
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
-  </wu-state-page>`,
+  </w-state-page>`,
 })
 export class ConsentRequired {
   private readonly api = inject(ConsentApi);

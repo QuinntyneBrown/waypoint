@@ -1,22 +1,22 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ApiError, AuditApi, AuditLogFilter, AuditLogPage } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, AuditApi, AuditLogFilter, AuditLogPage } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 import { finalize } from 'rxjs/operators';
 
 // Traces to: L2-CONSENT-003, L2-REPORT-003, L2-AUTH-009, L2-NFR-009/010
 @Component({
-  selector: 'wu-admin-audit-log',
+  selector: 'w-admin-audit-log',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, ReactiveFormsModule, DatePipe],
+  imports: [WShell, ReactiveFormsModule, DatePipe],
   templateUrl: './admin-audit-log.html',
   styles: `
     .audit-filters {
       display: grid;
       grid-template-columns: repeat(4, minmax(9rem, 1fr)) auto auto;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
       align-items: end;
     }
     .audit-target,
@@ -26,21 +26,21 @@ import { finalize } from 'rxjs/operators';
     }
     .audit-private {
       display: inline-flex;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
       align-items: center;
-      color: var(--wu-muted);
+      color: var(--w-muted);
       font-weight: 700;
     }
     .audit-pagination {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
       align-items: center;
       justify-content: space-between;
     }
     .audit-pagination__actions {
       display: flex;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
     }
     @media (max-width: 68rem) {
       .audit-filters {
@@ -51,9 +51,9 @@ import { finalize } from 'rxjs/operators';
       .audit-filters {
         grid-template-columns: 1fr;
       }
-      .audit-filters .wu-btn,
-      .audit-pagination .wu-btn,
-      .wu-page__actions .wu-btn {
+      .audit-filters .w-btn,
+      .audit-pagination .w-btn,
+      .w-page__actions .w-btn {
         width: 100%;
         min-height: 45px;
       }

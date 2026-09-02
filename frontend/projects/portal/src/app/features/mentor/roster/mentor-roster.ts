@@ -2,18 +2,18 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { ApiError, MentorApi, MentorRosterYouth } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { ApiError, MentorApi, MentorRosterYouth } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { debounceTime, switchMap, tap } from 'rxjs';
 
 type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
 
 // Traces to: L2-MENTOR-001, L2-AUTH-010
 @Component({
-  selector: 'wu-mentor-roster',
+  selector: 'w-mentor-roster',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, RouterLink, DatePipe],
+  imports: [WShell, WIcon, RouterLink, DatePipe],
   templateUrl: './mentor-roster.html',
   styles: `
     .roster-controls {
@@ -21,7 +21,7 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
       align-items: flex-end;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
     }
     .roster-search {
       flex: 1 1 16rem;
@@ -33,7 +33,7 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
     progress {
       width: 8rem;
       max-width: 100%;
-      accent-color: var(--wu-lime-600);
+      accent-color: var(--w-lime-600);
     }
   `,
 })

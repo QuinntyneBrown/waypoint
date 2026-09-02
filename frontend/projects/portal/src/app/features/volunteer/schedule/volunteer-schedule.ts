@@ -1,14 +1,14 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { VolunteerApi, VolunteerScheduleItem } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { VolunteerApi, VolunteerScheduleItem } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-VOLUNTEER-002
 @Component({
-  selector: 'wu-volunteer-schedule',
+  selector: 'w-volunteer-schedule',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, DatePipe],
+  imports: [WShell, DatePipe],
   templateUrl: './volunteer-schedule.html',
 })
 export class VolunteerSchedule {

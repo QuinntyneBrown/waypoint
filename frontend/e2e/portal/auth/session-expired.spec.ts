@@ -12,9 +12,9 @@ test('refresh-token reuse revokes the family and forces the session-expired stat
   await expect(page).toHaveURL(YouthHomePage.urlPattern);
 
   // Capture the app's stored refresh token and seed an in-progress draft.
-  const session = await page.evaluate(() => sessionStorage.getItem('wu.session.v1'));
+  const session = await page.evaluate(() => sessionStorage.getItem('w.session.v1'));
   const { refreshToken, user } = JSON.parse(session!);
-  const draftKey = `wu.draft.${user.userId}.reflection`;
+  const draftKey = `w.draft.${user.userId}.reflection`;
   await page.evaluate((k) => localStorage.setItem(k, 'my unsaved reflection'), draftKey);
 
   // Present the captured refresh token twice: the second use trips reuse
@@ -63,7 +63,7 @@ test('idle expiry revokes the session and restores the owner-bound reflection dr
   await expect(page).toHaveURL(new RegExp(`${reflectionUrl}$`));
 
   const activeRefreshToken = await page.evaluate(() => {
-    const raw = sessionStorage.getItem('wu.session.v1') ?? localStorage.getItem('wu.session.v1');
+    const raw = sessionStorage.getItem('w.session.v1') ?? localStorage.getItem('w.session.v1');
     return raw ? (JSON.parse(raw) as { refreshToken: string }).refreshToken : null;
   });
   expect(activeRefreshToken).not.toBeNull();
@@ -80,11 +80,11 @@ test('idle expiry revokes the session and restores the owner-bound reflection dr
   await expect(expired.heading).toBeVisible();
   expect(
     await page.evaluate(
-      () => sessionStorage.getItem('wu.session.v1') ?? localStorage.getItem('wu.session.v1'),
+      () => sessionStorage.getItem('w.session.v1') ?? localStorage.getItem('w.session.v1'),
     ),
   ).toBeNull();
   const capturedDraft = await page.evaluate(() => {
-    const raw = sessionStorage.getItem('wu.transient-form-draft');
+    const raw = sessionStorage.getItem('w.transient-form-draft');
     return raw
       ? (JSON.parse(raw) as {
           ownerUserId: string;

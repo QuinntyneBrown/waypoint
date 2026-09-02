@@ -1,28 +1,28 @@
-<wu-shell
+<w-shell
   role="youth"
   active="progress"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Learning analytics</div>
-        <h1 class="wu-page__title">My progress</h1>
-        <p class="wu-page__sub">The full picture of how you are growing.</p>
+  <div class="w-container w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Learning analytics</div>
+        <h1 class="w-page__title">My progress</h1>
+        <p class="w-page__sub">The full picture of how you are growing.</p>
       </div>
     </div>
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
 
     @if (progress(); as view) {
       <div class="progress-tabs" role="tablist" aria-label="Progress sections">
         @for (tab of tabs; track tab.id; let index = $index) {
           <button
-            class="wu-btn progress-tab"
-            [class.wu-btn--primary]="activeTab() === tab.id"
-            [class.wu-btn--ghost]="activeTab() !== tab.id"
+            class="w-btn progress-tab"
+            [class.w-btn--primary]="activeTab() === tab.id"
+            [class.w-btn--ghost]="activeTab() !== tab.id"
             type="button"
             role="tab"
             [id]="'progress-tab-' + tab.id"
@@ -42,37 +42,37 @@
           id="progress-panel-overview"
           role="tabpanel"
           aria-labelledby="progress-tab-overview"
-          class="wu-stack"
+          class="w-stack"
           data-testid="progress-overview"
         >
-          <div class="wu-grid wu-grid--2">
-            <article class="wu-card progress-stat">
-              <div class="wu-card__body wu-stack">
-                <span class="wu-muted">Overall progress</span
+          <div class="w-grid w-grid--2">
+            <article class="w-card progress-stat">
+              <div class="w-card__body w-stack">
+                <span class="w-muted">Overall progress</span
                 ><strong class="progress-stat__value"
                   >{{ view.overallPercent | number: '1.0-0' }}%</strong
                 >
               </div>
             </article>
-            <article class="wu-card progress-stat">
-              <div class="wu-card__body wu-stack">
-                <span class="wu-muted">Quiz average</span
+            <article class="w-card progress-stat">
+              <div class="w-card__body w-stack">
+                <span class="w-muted">Quiz average</span
                 ><strong class="progress-stat__value"
                   >{{ view.quizAverage | number: '1.0-0' }}%</strong
                 >
               </div>
             </article>
-            <article class="wu-card progress-stat">
-              <div class="wu-card__body wu-stack">
-                <span class="wu-muted">Lessons done</span
+            <article class="w-card progress-stat">
+              <div class="w-card__body w-stack">
+                <span class="w-muted">Lessons done</span
                 ><strong class="progress-stat__value"
                   >{{ view.lessonsCompleted
-                  }}<span class="wu-muted">/{{ view.lessonsTotal }}</span></strong
+                  }}<span class="w-muted">/{{ view.lessonsTotal }}</span></strong
                 >
               </div>
             </article>
-            <article class="wu-card wu-card--lime progress-stat">
-              <div class="wu-card__body wu-stack">
+            <article class="w-card w-card--lime progress-stat">
+              <div class="w-card__body w-stack">
                 <span>Attendance</span
                 ><strong class="progress-stat__value"
                   >{{ view.attendanceRate | number: '1.0-0' }}%</strong
@@ -80,17 +80,17 @@
               </div>
             </article>
           </div>
-          <section class="wu-card">
-            <div class="wu-card__body wu-stack">
+          <section class="w-card">
+            <div class="w-card__body w-stack">
               <h2>Leadership competencies</h2>
               @if (view.competencies.length === 0) {
-                <p class="wu-muted">Your mentor assessments will appear here.</p>
+                <p class="w-muted">Your mentor assessments will appear here.</p>
               }
               @for (competency of view.competencies; track competency.competencyId) {
-                <div class="wu-stack">
-                  <div class="wu-cluster wu-cluster--between">
+                <div class="w-stack">
+                  <div class="w-cluster w-cluster--between">
                     <strong>{{ competency.name }}</strong
-                    ><span class="wu-badge">{{ competency.level }}</span>
+                    ><span class="w-badge">{{ competency.level }}</span>
                   </div>
                   <progress class="competency-progress" [value]="competency.percent" max="100">
                     {{ competency.percent }}%</progress
@@ -99,17 +99,17 @@
               }
             </div>
           </section>
-          <section class="wu-card" data-testid="youth-shared-checkins">
-            <div class="wu-card__body wu-stack">
+          <section class="w-card" data-testid="youth-shared-checkins">
+            <div class="w-card__body w-stack">
               <h2>Shared mentor check-ins</h2>
               @if (view.sharedCheckIns.length === 0) {
-                <p class="wu-muted">Your mentor has not shared any check-in notes with you.</p>
+                <p class="w-muted">Your mentor has not shared any check-in notes with you.</p>
               }
               @for (checkIn of view.sharedCheckIns; track checkIn.checkInId) {
-                <article class="wu-stack">
-                  <div class="wu-cluster wu-cluster--between">
+                <article class="w-stack">
+                  <div class="w-cluster w-cluster--between">
                     <strong>{{ checkIn.type }}</strong>
-                    <span class="wu-muted">{{ checkIn.date | date: 'mediumDate' }}</span>
+                    <span class="w-muted">{{ checkIn.date | date: 'mediumDate' }}</span>
                   </div>
                   @if (checkIn.engagement) {
                     <p><strong>Engagement:</strong> {{ checkIn.engagement }}</p>
@@ -124,9 +124,7 @@
                     <p><strong>Actions:</strong> {{ checkIn.actionItems }}</p>
                   }
                   @if (checkIn.nextFollowUp) {
-                    <p class="wu-muted">
-                      Follow-up {{ checkIn.nextFollowUp | date: 'mediumDate' }}
-                    </p>
+                    <p class="w-muted">Follow-up {{ checkIn.nextFollowUp | date: 'mediumDate' }}</p>
                   }
                 </article>
               }
@@ -140,22 +138,22 @@
           id="progress-panel-quizzes"
           role="tabpanel"
           aria-labelledby="progress-tab-quizzes"
-          class="wu-card"
+          class="w-card"
           data-testid="progress-quizzes"
         >
-          <div class="wu-card__body wu-stack">
-            <div class="wu-cluster wu-cluster--between">
+          <div class="w-card__body w-stack">
+            <div class="w-cluster w-cluster--between">
               <h2>Quiz history</h2>
-              <span class="wu-badge">Average {{ view.quizAverage | number: '1.0-0' }}%</span>
+              <span class="w-badge">Average {{ view.quizAverage | number: '1.0-0' }}%</span>
             </div>
             @if (view.quizHistory.length === 0) {
-              <div class="wu-empty">
-                <h3 class="wu-empty__title">No approved quizzes yet</h3>
-                <p class="wu-empty__text">Your results appear after mentor approval.</p>
+              <div class="w-empty">
+                <h3 class="w-empty__title">No approved quizzes yet</h3>
+                <p class="w-empty__text">Your results appear after mentor approval.</p>
               </div>
             } @else {
-              <div class="wu-table-wrap">
-                <table class="wu-table wu-table--cards">
+              <div class="w-table-wrap">
+                <table class="w-table w-table--cards">
                   <thead>
                     <tr>
                       <th>Quiz</th>
@@ -172,9 +170,9 @@
                         <td data-label="Score">{{ quiz.score }}%</td>
                         <td data-label="Result">
                           <span
-                            class="wu-badge"
-                            [class.wu-badge--success]="quiz.passed"
-                            [class.wu-badge--error]="!quiz.passed"
+                            class="w-badge"
+                            [class.w-badge--success]="quiz.passed"
+                            [class.w-badge--error]="!quiz.passed"
                             >{{ quiz.passed ? 'Passed' : 'Not passed' }}</span
                           >
                         </td>
@@ -193,21 +191,21 @@
           id="progress-panel-attendance"
           role="tabpanel"
           aria-labelledby="progress-tab-attendance"
-          class="wu-card"
+          class="w-card"
           data-testid="progress-attendance"
         >
-          <div class="wu-card__body wu-stack">
-            <div class="wu-cluster wu-cluster--between">
+          <div class="w-card__body w-stack">
+            <div class="w-cluster w-cluster--between">
               <h2>Session attendance</h2>
-              <span class="wu-badge">{{ view.attendanceRate | number: '1.0-0' }}%</span>
+              <span class="w-badge">{{ view.attendanceRate | number: '1.0-0' }}%</span>
             </div>
             @if (view.attendanceHistory.length === 0) {
-              <div class="wu-empty">
-                <h3 class="wu-empty__title">No attendance recorded yet</h3>
+              <div class="w-empty">
+                <h3 class="w-empty__title">No attendance recorded yet</h3>
               </div>
             } @else {
-              <div class="wu-table-wrap">
-                <table class="wu-table wu-table--cards">
+              <div class="w-table-wrap">
+                <table class="w-table w-table--cards">
                   <thead>
                     <tr>
                       <th>Date</th>
@@ -222,12 +220,12 @@
                         <td data-label="Session">{{ session.sessionTitle }}</td>
                         <td data-label="Status">
                           <span
-                            class="wu-badge"
-                            [class.wu-badge--success]="session.status === 'Present'"
-                            [class.wu-badge--warning]="
+                            class="w-badge"
+                            [class.w-badge--success]="session.status === 'Present'"
+                            [class.w-badge--warning]="
                               session.status === 'Late' || session.status === 'Excused'
                             "
-                            [class.wu-badge--error]="session.status === 'Absent'"
+                            [class.w-badge--error]="session.status === 'Absent'"
                             >{{ session.status }}</span
                           >
                         </td>
@@ -241,7 +239,7 @@
         </section>
       }
     } @else {
-      <p class="wu-muted">Loading progress…</p>
+      <p class="w-muted">Loading progress…</p>
     }
   </div>
-</wu-shell>
+</w-shell>

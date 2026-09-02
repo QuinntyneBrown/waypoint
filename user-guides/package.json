@@ -1,16 +1,16 @@
 {
-  "name": "word-up-user-guides",
+  "name": "waypoint-user-guides",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Standalone static end-user guide for Word Up. No build step: every page is authored HTML that opens directly over file://.",
+  "description": "Standalone static end-user guide for Waypoint. No build step: every page is authored HTML that opens directly over file://.",
   "scripts": {
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "validate": "html-validate index.html 404.html start-here youth mentor administrator guardian volunteer reference advanced",
     "test": "playwright test --reporter=line",
-    "verify:assets": "node ../scripts/verify-word-up-user-guide-assets.mjs",
-    "verify:assets:fix": "node ../scripts/verify-word-up-user-guide-assets.mjs --fix"
+    "verify:assets": "node ../scripts/verify-waypoint-user-guide-assets.mjs",
+    "verify:assets:fix": "node ../scripts/verify-waypoint-user-guide-assets.mjs --fix"
   },
   "devDependencies": {
     "@playwright/test": "1.61.1",

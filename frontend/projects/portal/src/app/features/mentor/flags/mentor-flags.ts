@@ -8,26 +8,26 @@ import {
   MentorApi,
   MentorRosterYouth,
   MessagingApi,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 
 // Traces to: L2-MENTOR-007, L2-ENGAGE-007, L2-AUTH-010
 @Component({
-  selector: 'wu-mentor-flags',
+  selector: 'w-mentor-flags',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, RouterLink, DatePipe],
+  imports: [WShell, WIcon, RouterLink, DatePipe],
   templateUrl: './mentor-flags.html',
   styles: `
     .raise-grid {
       display: grid;
       grid-template-columns: minmax(12rem, 0.75fr) minmax(16rem, 1.5fr) auto;
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
       align-items: end;
     }
     .flag-list {
       display: grid;
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
     }
     .flag-card {
       overflow: hidden;
@@ -40,14 +40,14 @@ import { WuIcon, WuShell } from '@wu/ui';
       overflow-wrap: anywhere;
     }
     .inline-action {
-      padding: var(--wu-s4);
-      border-top: 1px solid var(--wu-border);
-      background: var(--wu-g100);
+      padding: var(--w-s4);
+      border-top: 1px solid var(--w-border);
+      background: var(--w-g100);
     }
     .action-field {
       max-width: 38rem;
     }
-    .flag-actions .wu-btn,
+    .flag-actions .w-btn,
     .raise-button {
       min-height: 44px;
     }

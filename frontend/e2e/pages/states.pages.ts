@@ -68,7 +68,7 @@ export class RequestedGuardianConsentPage extends BasePage {
     return this.page.getByText(/i give permission.*participate/i);
   }
   get mediaConsentOption() {
-    return this.page.getByText(/allow word up to use photos or video/i);
+    return this.page.getByText(/allow waypoint to use photos or video/i);
   }
   get groupOnlyOption() {
     return this.page.getByText(/group photos only/i);

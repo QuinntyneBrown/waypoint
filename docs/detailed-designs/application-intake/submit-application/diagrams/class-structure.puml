@@ -24,12 +24,12 @@ package "Frontend — Public Site application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "ApplicationsController" as controller_ApplicationsController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "SubmitApplicationCommand" as request_SubmitApplicationCommand <<record>>
   class "SubmitApplicationCommandHandler" as handler_SubmitApplicationCommandHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "YouthApplication" as entity_YouthApplication <<domain type>>
 }
 page_ApplicationsList --> client_ApplicationsApi : invokes

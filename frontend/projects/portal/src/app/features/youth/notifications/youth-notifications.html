@@ -1,72 +1,72 @@
-<wu-shell [role]="role()" active="" [userName]="userName()" (signOut)="signOut()">
-  <div class="wu-container wu-container--narrow wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Activity</div>
-        <h1 class="wu-page__title">Notifications</h1>
-        <span class="wu-badge" data-testid="notification-realtime-status">
+<w-shell [role]="role()" active="" [userName]="userName()" (signOut)="signOut()">
+  <div class="w-container w-container--narrow w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Activity</div>
+        <h1 class="w-page__title">Notifications</h1>
+        <span class="w-badge" data-testid="notification-realtime-status">
           {{ realtime.state() === 'connected' ? 'Live updates on' : 'Reconnecting live updates' }}
         </span>
       </div>
       @if (hasUnread()) {
-        <div class="wu-page__actions">
-          <button class="wu-btn wu-btn--ghost" type="button" (click)="markAllRead()">
+        <div class="w-page__actions">
+          <button class="w-btn w-btn--ghost" type="button" (click)="markAllRead()">
             Mark all read
           </button>
         </div>
       }
     </div>
 
-    <p class="wu-sr-only" role="status">{{ liveStatus() }}</p>
+    <p class="w-sr-only" role="status">{{ liveStatus() }}</p>
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
 
     @if (loading()) {
-      <p class="wu-muted" role="status">Loading notifications…</p>
+      <p class="w-muted" role="status">Loading notifications…</p>
     } @else if (items().length === 0) {
-      <div class="wu-empty">
-        <div class="wu-empty__icon"><wu-icon name="bell" /></div>
-        <h3 class="wu-empty__title">You’re all caught up</h3>
-        <p class="wu-empty__text">
+      <div class="w-empty">
+        <div class="w-empty__icon"><w-icon name="bell" /></div>
+        <h3 class="w-empty__title">You’re all caught up</h3>
+        <p class="w-empty__text">
           Messages, reminders, and other activity that needs your attention will appear here.
         </p>
       </div>
     } @else {
-      <div class="wu-stack">
+      <div class="w-stack">
         @for (item of items(); track item.id) {
           @if (item.linkPath) {
             <a
-              class="wu-card wu-card--link notification-card"
-              [class.wu-card--greige]="!item.read"
+              class="w-card w-card--link notification-card"
+              [class.w-card--greige]="!item.read"
               [routerLink]="item.linkPath"
               data-testid="notification-item"
             >
-              <div class="wu-card__body">
-                <div class="wu-cluster wu-cluster--between">
-                  <h3 class="wu-card__title">{{ item.title }}</h3>
+              <div class="w-card__body">
+                <div class="w-cluster w-cluster--between">
+                  <h3 class="w-card__title">{{ item.title }}</h3>
                   @if (!item.read) {
-                    <span class="wu-badge wu-badge--info wu-badge--dot">New</span>
+                    <span class="w-badge w-badge--info w-badge--dot">New</span>
                   }
                 </div>
-                <p class="wu-muted">{{ item.body }}</p>
-                <span class="wu-link">Open notification</span>
+                <p class="w-muted">{{ item.body }}</p>
+                <span class="w-link">Open notification</span>
               </div>
             </a>
           } @else {
             <article
-              class="wu-card notification-card"
-              [class.wu-card--greige]="!item.read"
+              class="w-card notification-card"
+              [class.w-card--greige]="!item.read"
               data-testid="notification-item"
             >
-              <div class="wu-card__body">
-                <div class="wu-cluster wu-cluster--between">
-                  <h3 class="wu-card__title">{{ item.title }}</h3>
+              <div class="w-card__body">
+                <div class="w-cluster w-cluster--between">
+                  <h3 class="w-card__title">{{ item.title }}</h3>
                   @if (!item.read) {
-                    <span class="wu-badge wu-badge--info wu-badge--dot">New</span>
+                    <span class="w-badge w-badge--info w-badge--dot">New</span>
                   }
                 </div>
-                <p class="wu-muted">{{ item.body }}</p>
+                <p class="w-muted">{{ item.body }}</p>
               </div>
             </article>
           }
@@ -74,4 +74,4 @@
       </div>
     }
   </div>
-</wu-shell>
+</w-shell>

@@ -8,15 +8,15 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError, LearningApi, LessonReadingState, YouthLesson } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, LessonReadingState, YouthLesson } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-LEARN-002
 @Component({
-  selector: 'wu-youth-lesson',
+  selector: 'w-youth-lesson',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink],
+  imports: [WShell, RouterLink],
   templateUrl: './youth-lesson.html',
   styles: `
     .lesson-copy {
@@ -35,8 +35,8 @@ import { WuShell } from '@wu/ui';
     .lesson-media {
       width: 100%;
       max-height: 28rem;
-      background: var(--wu-ink);
-      border-radius: var(--wu-r-card);
+      background: var(--w-ink);
+      border-radius: var(--w-r-card);
     }
     .reading-size-button {
       min-inline-size: 2.75rem;

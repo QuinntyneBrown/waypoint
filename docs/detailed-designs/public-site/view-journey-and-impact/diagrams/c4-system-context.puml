@@ -4,10 +4,10 @@ LAYOUT_LEFT_RIGHT()
 title C4 level 1 — View journey and impact — system context
 Person(primary, "Anonymous visitor", "Human role outside the software boundary")
 Person(staff, "Program staff", "Administers authorized program activity")
-System(wordup, "Word Up software system", "Youth leadership, learning, mentoring, and program operations")
+System(waypoint, "Waypoint software system", "Youth leadership, learning, mentoring, and program operations")
 
-Rel(primary, wordup, "An anonymous visitor starts this feature interaction through the Public…")
-Rel(staff, wordup, "Administers authorized program activity")
+Rel(primary, waypoint, "An anonymous visitor starts this feature interaction through the Public…")
+Rel(staff, waypoint, "Administers authorized program activity")
 
 SHOW_LEGEND()
 @enduml

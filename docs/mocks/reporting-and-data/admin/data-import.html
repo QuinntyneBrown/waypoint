@@ -3,110 +3,110 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Import from Google Sheets · Word Up</title>
+  <title>Import from Google Sheets · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/wordup.css">
-  <script defer src="../../assets/js/wordup.js"></script>
+  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="people" data-track="bible">
-  <main class="wu-main">
-    <div class="wu-container wu-page">
+  <main class="w-main">
+    <div class="w-container w-page">
 
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">People</div>
-          <h1 class="wu-page__title">Import from Google Sheets</h1>
-          <p class="wu-page__sub">Bring your existing roster into Word Up in three steps: upload, map columns, import.</p>
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">People</div>
+          <h1 class="w-page__title">Import from Google Sheets</h1>
+          <p class="w-page__sub">Bring your existing roster into Waypoint in three steps: upload, map columns, import.</p>
         </div>
-        <div class="wu-page__actions">
-          <button class="wu-btn wu-btn--ghost" data-toast="Template CSV downloaded" data-toast-type="info"><svg class="wu-icon"><use href="#i-download"></use></svg>Template</button>
+        <div class="w-page__actions">
+          <button class="w-btn w-btn--ghost" data-toast="Template CSV downloaded" data-toast-type="info"><svg class="w-icon"><use href="#i-download"></use></svg>Template</button>
         </div>
       </div>
 
-      <div class="wu-alert wu-alert--info wu-mb-6">
-        <svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg>
+      <div class="w-alert w-alert--info w-mb-6">
+        <svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg>
         <div>
-          <div class="wu-alert__title">Moving off Google Sheets</div>
-          Word Up is replacing the "Rexdale Roster" spreadsheet. Export any Google Sheet tab as CSV (File → Download → .csv), upload it here, and we'll map each column to a Word Up field. Your Sheet stays untouched.
+          <div class="w-alert__title">Moving off Google Sheets</div>
+          Waypoint is replacing the "Rexdale Roster" spreadsheet. Export any Google Sheet tab as CSV (File → Download → .csv), upload it here, and we'll map each column to a Waypoint field. Your Sheet stays untouched.
         </div>
       </div>
 
       <!-- Step 1 — Upload -->
-      <div class="wu-card wu-mb-6">
-        <div class="wu-card__header">
-          <h3 class="wu-card__title">1 · Upload CSV</h3>
-          <span class="wu-badge wu-badge--success wu-badge--dot">File ready</span>
+      <div class="w-card w-mb-6">
+        <div class="w-card__header">
+          <h3 class="w-card__title">1 · Upload CSV</h3>
+          <span class="w-badge w-badge--success w-badge--dot">File ready</span>
         </div>
-        <div class="wu-card__body">
-          <div class="wu-cluster wu-justify-between">
-            <div class="wu-person">
-              <span class="wu-avatar" data-name="CSV"></span>
+        <div class="w-card__body">
+          <div class="w-cluster w-justify-between">
+            <div class="w-person">
+              <span class="w-avatar" data-name="CSV"></span>
               <div>
-                <div class="wu-person__name">rexdale-roster.csv</div>
-                <div class="wu-person__meta">42 rows · 6 columns · uploaded just now</div>
+                <div class="w-person__name">rexdale-roster.csv</div>
+                <div class="w-person__meta">42 rows · 6 columns · uploaded just now</div>
               </div>
             </div>
-            <div class="wu-cluster wu-gap-2">
-              <label class="wu-btn wu-btn--secondary wu-btn--sm">
-                <svg class="wu-icon"><use href="#i-refresh"></use></svg>Replace file
-                <input type="file" accept=".csv" class="wu-hide">
+            <div class="w-cluster w-gap-2">
+              <label class="w-btn w-btn--secondary w-btn--sm">
+                <svg class="w-icon"><use href="#i-refresh"></use></svg>Replace file
+                <input type="file" accept=".csv" class="w-hide">
               </label>
-              <button class="wu-iconbtn" aria-label="Remove file"><svg class="wu-icon"><use href="#i-trash"></use></svg></button>
+              <button class="w-iconbtn" aria-label="Remove file"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Step 2 — Map columns -->
-      <div class="wu-card wu-mb-6">
-        <div class="wu-card__header">
-          <h3 class="wu-card__title">2 · Map columns</h3>
-          <span class="wu-muted">Sheet column → Word Up field</span>
+      <div class="w-card w-mb-6">
+        <div class="w-card__header">
+          <h3 class="w-card__title">2 · Map columns</h3>
+          <span class="w-muted">Sheet column → Waypoint field</span>
         </div>
-        <div class="wu-table-wrap">
-          <table class="wu-table wu-table--cards">
-            <thead><tr><th>Sheet column</th><th>Sample value</th><th>Word Up field</th></tr></thead>
+        <div class="w-table-wrap">
+          <table class="w-table w-table--cards">
+            <thead><tr><th>Sheet column</th><th>Sample value</th><th>Waypoint field</th></tr></thead>
             <tbody>
               <tr>
                 <td data-label="Sheet column"><strong>Full Name</strong></td>
-                <td data-label="Sample value" class="wu-muted">Jayden Alcantara</td>
-                <td data-label="Word Up field">
-                  <select class="wu-select" aria-label="Map Full Name"><option>Name</option><option>Email</option><option>Cohort</option><option>Mentor</option><option>Track</option><option>Status</option><option>— Skip column —</option></select>
+                <td data-label="Sample value" class="w-muted">Jayden Alcantara</td>
+                <td data-label="Waypoint field">
+                  <select class="w-select" aria-label="Map Full Name"><option>Name</option><option>Email</option><option>Cohort</option><option>Mentor</option><option>Track</option><option>Status</option><option>— Skip column —</option></select>
                 </td>
               </tr>
               <tr>
                 <td data-label="Sheet column"><strong>Email Address</strong></td>
-                <td data-label="Sample value" class="wu-muted">jayden.alcantara@student.tdsb.on.ca</td>
-                <td data-label="Word Up field">
-                  <select class="wu-select" aria-label="Map Email Address"><option>Email</option><option>Name</option><option>Cohort</option><option>Mentor</option><option>Track</option><option>Status</option><option>— Skip column —</option></select>
+                <td data-label="Sample value" class="w-muted">jayden.alcantara@student.tdsb.on.ca</td>
+                <td data-label="Waypoint field">
+                  <select class="w-select" aria-label="Map Email Address"><option>Email</option><option>Name</option><option>Cohort</option><option>Mentor</option><option>Track</option><option>Status</option><option>— Skip column —</option></select>
                 </td>
               </tr>
               <tr>
                 <td data-label="Sheet column"><strong>Group</strong></td>
-                <td data-label="Sample value" class="wu-muted">Rexdale Fall '25</td>
-                <td data-label="Word Up field">
-                  <select class="wu-select" aria-label="Map Group"><option>Cohort</option><option>Name</option><option>Email</option><option>Mentor</option><option>Track</option><option>Status</option><option>— Skip column —</option></select>
+                <td data-label="Sample value" class="w-muted">Rexdale Fall '25</td>
+                <td data-label="Waypoint field">
+                  <select class="w-select" aria-label="Map Group"><option>Cohort</option><option>Name</option><option>Email</option><option>Mentor</option><option>Track</option><option>Status</option><option>— Skip column —</option></select>
                 </td>
               </tr>
               <tr>
                 <td data-label="Sheet column"><strong>Leader</strong></td>
-                <td data-label="Sample value" class="wu-muted">Marcus Bello</td>
-                <td data-label="Word Up field">
-                  <select class="wu-select" aria-label="Map Leader"><option>Mentor</option><option>Name</option><option>Email</option><option>Cohort</option><option>Track</option><option>Status</option><option>— Skip column —</option></select>
+                <td data-label="Sample value" class="w-muted">Marcus Bello</td>
+                <td data-label="Waypoint field">
+                  <select class="w-select" aria-label="Map Leader"><option>Mentor</option><option>Name</option><option>Email</option><option>Cohort</option><option>Track</option><option>Status</option><option>— Skip column —</option></select>
                 </td>
               </tr>
               <tr>
                 <td data-label="Sheet column"><strong>Stream</strong></td>
-                <td data-label="Sample value" class="wu-muted">Bible &amp; Leadership</td>
-                <td data-label="Word Up field">
-                  <select class="wu-select" aria-label="Map Stream"><option>Track</option><option>Name</option><option>Email</option><option>Cohort</option><option>Mentor</option><option>Status</option><option>— Skip column —</option></select>
+                <td data-label="Sample value" class="w-muted">Bible &amp; Leadership</td>
+                <td data-label="Waypoint field">
+                  <select class="w-select" aria-label="Map Stream"><option>Track</option><option>Name</option><option>Email</option><option>Cohort</option><option>Mentor</option><option>Status</option><option>— Skip column —</option></select>
                 </td>
               </tr>
               <tr>
                 <td data-label="Sheet column"><strong>Notes</strong></td>
-                <td data-label="Sample value" class="wu-muted">Needs guardian consent</td>
-                <td data-label="Word Up field">
-                  <select class="wu-select" aria-label="Map Notes"><option>— Skip column —</option><option>Status</option><option>Name</option><option>Email</option><option>Cohort</option><option>Mentor</option><option>Track</option></select>
+                <td data-label="Sample value" class="w-muted">Needs guardian consent</td>
+                <td data-label="Waypoint field">
+                  <select class="w-select" aria-label="Map Notes"><option>— Skip column —</option><option>Status</option><option>Name</option><option>Email</option><option>Cohort</option><option>Mentor</option><option>Track</option></select>
                 </td>
               </tr>
             </tbody>
@@ -115,64 +115,64 @@
       </div>
 
       <!-- Step 3 — Preview -->
-      <div class="wu-card wu-mb-6">
-        <div class="wu-card__header">
-          <h3 class="wu-card__title">3 · Preview</h3>
-          <span class="wu-muted">First 5 of 42 rows</span>
+      <div class="w-card w-mb-6">
+        <div class="w-card__header">
+          <h3 class="w-card__title">3 · Preview</h3>
+          <span class="w-muted">First 5 of 42 rows</span>
         </div>
-        <div class="wu-table-wrap">
-          <table class="wu-table wu-table--cards">
+        <div class="w-table-wrap">
+          <table class="w-table w-table--cards">
             <thead><tr><th>Name</th><th>Email</th><th>Cohort</th><th>Mentor</th><th>Track</th><th>Import</th></tr></thead>
             <tbody>
               <tr>
-                <td data-label="Name"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
-                <td data-label="Email" class="wu-muted">jayden.alcantara@…</td>
+                <td data-label="Name"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
+                <td data-label="Email" class="w-muted">jayden.alcantara@…</td>
                 <td data-label="Cohort">Rexdale Fall '25</td>
                 <td data-label="Mentor">Marcus Bello</td>
                 <td data-label="Track">Bible &amp; Leadership</td>
-                <td data-label="Import"><span class="wu-badge wu-badge--success wu-badge--dot">Ready</span></td>
+                <td data-label="Import"><span class="w-badge w-badge--success w-badge--dot">Ready</span></td>
               </tr>
               <tr>
-                <td data-label="Name"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
-                <td data-label="Email" class="wu-muted">amara.okafor@…</td>
+                <td data-label="Name"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
+                <td data-label="Email" class="w-muted">amara.okafor@…</td>
                 <td data-label="Cohort">St. Clair Spring '26</td>
                 <td data-label="Mentor">Grace Adeyemi</td>
                 <td data-label="Track">Bible &amp; Leadership</td>
-                <td data-label="Import"><span class="wu-badge wu-badge--success wu-badge--dot">Ready</span></td>
+                <td data-label="Import"><span class="w-badge w-badge--success w-badge--dot">Ready</span></td>
               </tr>
               <tr>
-                <td data-label="Name"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td>
-                <td data-label="Email" class="wu-muted">devon.grant@…</td>
+                <td data-label="Name"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td>
+                <td data-label="Email" class="w-muted">devon.grant@…</td>
                 <td data-label="Cohort">Rexdale Fall '25</td>
                 <td data-label="Mentor">Marcus Bello</td>
                 <td data-label="Track">Bible &amp; Leadership</td>
-                <td data-label="Import"><span class="wu-badge wu-badge--warning wu-badge--dot">Missing consent</span></td>
+                <td data-label="Import"><span class="w-badge w-badge--warning w-badge--dot">Missing consent</span></td>
               </tr>
               <tr>
-                <td data-label="Name"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
-                <td data-label="Email" class="wu-muted">priya.sharma@…</td>
+                <td data-label="Name"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
+                <td data-label="Email" class="w-muted">priya.sharma@…</td>
                 <td data-label="Cohort">Rexdale Fall '25</td>
                 <td data-label="Mentor">Marcus Bello</td>
                 <td data-label="Track">Bible &amp; Leadership</td>
-                <td data-label="Import"><span class="wu-badge wu-badge--success wu-badge--dot">Ready</span></td>
+                <td data-label="Import"><span class="w-badge w-badge--success w-badge--dot">Ready</span></td>
               </tr>
               <tr>
-                <td data-label="Name"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Tyrone Clarke"></span>Tyrone Clarke</div></td>
-                <td data-label="Email" class="wu-muted">tyrone.clarke@…</td>
+                <td data-label="Name"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Tyrone Clarke"></span>Tyrone Clarke</div></td>
+                <td data-label="Email" class="w-muted">tyrone.clarke@…</td>
                 <td data-label="Cohort">Warden Winter '26</td>
                 <td data-label="Mentor">Danielle Osei</td>
                 <td data-label="Track">Coding for Kingdom</td>
-                <td data-label="Import"><span class="wu-badge wu-badge--error wu-badge--dot">Duplicate email</span></td>
+                <td data-label="Import"><span class="w-badge w-badge--error w-badge--dot">Duplicate email</span></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="wu-card__footer">
-          <div class="wu-cluster wu-justify-between">
-            <span class="wu-muted">40 ready · 1 needs consent · 1 duplicate skipped</span>
-            <div class="wu-cluster wu-gap-2">
-              <a class="wu-btn wu-btn--ghost" href="../../program-administration/admin/people.html">Cancel</a>
-              <button class="wu-btn wu-btn--primary" data-toast="Imported 40 people into Word Up" data-toast-type="success" data-toast-title="Import complete" data-then="program-administration/admin/people.html"><svg class="wu-icon"><use href="#i-download"></use></svg>Import 40 people</button>
+        <div class="w-card__footer">
+          <div class="w-cluster w-justify-between">
+            <span class="w-muted">40 ready · 1 needs consent · 1 duplicate skipped</span>
+            <div class="w-cluster w-gap-2">
+              <a class="w-btn w-btn--ghost" href="../../program-administration/admin/people.html">Cancel</a>
+              <button class="w-btn w-btn--primary" data-toast="Imported 40 people into Waypoint" data-toast-type="success" data-toast-title="Import complete" data-then="program-administration/admin/people.html"><svg class="w-icon"><use href="#i-download"></use></svg>Import 40 people</button>
             </div>
           </div>
         </div>

@@ -1,39 +1,37 @@
-<section class="wu-container wu-section" style="max-width: 640px">
-  <div class="wu-eyebrow">Give</div>
+<section class="w-container w-section" style="max-width: 640px">
+  <div class="w-eyebrow">Give</div>
   <h1>Back a young leader</h1>
-  <p class="wu-text-lg wu-muted">
+  <p class="w-text-lg w-muted">
     A monthly gift helps a young person belong, grow, and lead. Choose a tier to get started.
   </p>
 
-  <form [formGroup]="form" (ngSubmit)="confirm()" novalidate class="wu-stack wu-mt-6">
-    <div class="wu-grid wu-grid--2">
-      <div class="wu-field" [class.is-error]="error('donorName')">
-        <label class="wu-label" for="donorName"
-          >Your name <span class="wu-label__req">*</span></label
-        >
-        <input class="wu-input" id="donorName" formControlName="donorName" />
+  <form [formGroup]="form" (ngSubmit)="confirm()" novalidate class="w-stack w-mt-6">
+    <div class="w-grid w-grid--2">
+      <div class="w-field" [class.is-error]="error('donorName')">
+        <label class="w-label" for="donorName">Your name <span class="w-label__req">*</span></label>
+        <input class="w-input" id="donorName" formControlName="donorName" />
         @if (error('donorName')) {
-          <div class="wu-error-text">{{ error('donorName') }}</div>
+          <div class="w-error-text">{{ error('donorName') }}</div>
         }
       </div>
-      <div class="wu-field" [class.is-error]="error('email')">
-        <label class="wu-label" for="email">Email <span class="wu-label__req">*</span></label>
-        <input class="wu-input" id="email" type="email" formControlName="email" />
+      <div class="w-field" [class.is-error]="error('email')">
+        <label class="w-label" for="email">Email <span class="w-label__req">*</span></label>
+        <input class="w-input" id="email" type="email" formControlName="email" />
         @if (error('email')) {
-          <div class="wu-error-text">{{ error('email') }}</div>
+          <div class="w-error-text">{{ error('email') }}</div>
         }
       </div>
     </div>
 
     <fieldset style="border: 0; padding: 0; margin: 0">
-      <legend class="wu-label">Monthly amount</legend>
-      <div class="wu-cluster wu-mt-2">
+      <legend class="w-label">Monthly amount</legend>
+      <div class="w-cluster w-mt-2">
         @for (tier of tiers; track tier) {
           <button
             type="button"
-            class="wu-btn"
-            [class.wu-btn--primary]="selected() === tier"
-            [class.wu-btn--secondary]="selected() !== tier"
+            class="w-btn"
+            [class.w-btn--primary]="selected() === tier"
+            [class.w-btn--secondary]="selected() !== tier"
             [attr.aria-pressed]="selected() === tier"
             (click)="select(tier)"
           >
@@ -43,20 +41,20 @@
       </div>
     </fieldset>
 
-    <p class="wu-help">
-      Payments are processed securely by our external PCI-compliant provider — Word Up never sees or
-      stores your card details.
+    <p class="w-help">
+      Payments are processed securely by our external PCI-compliant provider — Waypoint never sees
+      or stores your card details.
     </p>
 
     @if (serverError()) {
-      <div class="wu-alert wu-alert--error" role="alert">
-        <wu-icon name="alert-circle" iconClass="wu-alert__icon" />
+      <div class="w-alert w-alert--error" role="alert">
+        <w-icon name="alert-circle" iconClass="w-alert__icon" />
         <div>{{ serverError() }}</div>
       </div>
     }
 
     <button
-      class="wu-btn wu-btn--primary wu-btn--lg"
+      class="w-btn w-btn--primary w-btn--lg"
       type="submit"
       [class.is-loading]="submitting()"
       [disabled]="selected() === null || submitting()"
@@ -66,15 +64,15 @@
   </form>
 
   @if (confirmed()) {
-    <div class="wu-alert wu-alert--success wu-mt-6" role="status">
+    <div class="w-alert w-alert--success w-mt-6" role="status">
       <div>
-        <div class="wu-alert__title">Thank you!</div>
+        <div class="w-alert__title">Thank you!</div>
         You’re giving ${{ selected() }} monthly. Finish your donation with our secure provider — it
         opens in a new tab.
       </div>
     </div>
     <a
-      class="wu-btn wu-btn--primary wu-btn--lg wu-mt-4"
+      class="w-btn w-btn--primary w-btn--lg w-mt-4"
       [href]="providerUrl()"
       target="_blank"
       rel="noopener noreferrer"

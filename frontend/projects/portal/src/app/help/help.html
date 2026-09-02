@@ -1,23 +1,23 @@
-<wu-shell
+<w-shell
   [role]="role()"
   active=""
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <header class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Help center</div>
-        <h1 class="wu-page__title">How can we help?</h1>
-        <p class="wu-page__sub">Search answers written for your Word Up role.</p>
+  <div class="w-container w-page">
+    <header class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Help center</div>
+        <h1 class="w-page__title">How can we help?</h1>
+        <p class="w-page__sub">Search answers written for your Waypoint role.</p>
       </div>
     </header>
 
-    <div class="help-search wu-mb-6">
-      <wu-icon name="search" />
-      <label class="wu-sr-only" for="help-search">Search help</label>
+    <div class="help-search w-mb-6">
+      <w-icon name="search" />
+      <label class="w-sr-only" for="help-search">Search help</label>
       <input
-        class="wu-input"
+        class="w-input"
         id="help-search"
         type="search"
         placeholder="Search lessons, attendance, privacy…"
@@ -27,18 +27,18 @@
     </div>
 
     @if (topics().length === 0) {
-      <div class="wu-empty" role="status">
-        <div class="wu-empty__icon"><wu-icon name="search" /></div>
-        <h2 class="wu-empty__title">No help articles found</h2>
-        <p class="wu-empty__text">Try a different word, or contact the support team.</p>
+      <div class="w-empty" role="status">
+        <div class="w-empty__icon"><w-icon name="search" /></div>
+        <h2 class="w-empty__title">No help articles found</h2>
+        <p class="w-empty__text">Try a different word, or contact the support team.</p>
       </div>
     } @else {
       <div class="help-grid">
         @for (topic of topics(); track topic.title) {
-          <section class="wu-card">
-            <div class="wu-card__body">
-              <h2 class="wu-card__title help-topic__title">
-                <wu-icon [name]="topic.icon" />{{ topic.title }}
+          <section class="w-card">
+            <div class="w-card__body">
+              <h2 class="w-card__title help-topic__title">
+                <w-icon [name]="topic.icon" />{{ topic.title }}
               </h2>
               @for (article of topic.articles; track article.question) {
                 <details class="help-answer">
@@ -52,14 +52,14 @@
       </div>
     }
 
-    <aside class="wu-card wu-mt-6">
-      <div class="wu-card__body wu-cluster wu-cluster--between">
+    <aside class="w-card w-mt-6">
+      <div class="w-card__body w-cluster w-cluster--between">
         <div>
-          <h2 class="wu-card__title">Still need a hand?</h2>
-          <p class="wu-muted">Send a private request and the program team will follow up.</p>
+          <h2 class="w-card__title">Still need a hand?</h2>
+          <p class="w-muted">Send a private request and the program team will follow up.</p>
         </div>
-        <a class="wu-btn wu-btn--primary" routerLink="/support">Contact support</a>
+        <a class="w-btn w-btn--primary" routerLink="/support">Contact support</a>
       </div>
     </aside>
   </div>
-</wu-shell>
+</w-shell>

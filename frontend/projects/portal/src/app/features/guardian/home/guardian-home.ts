@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 import { GuardianContextService } from '../guardian-context.service';
 
 // Traces to: L2-GUARDIAN-001
 @Component({
-  selector: 'wu-guardian-home',
+  selector: 'w-guardian-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink],
+  imports: [WShell, RouterLink],
   templateUrl: './guardian-home.html',
 })
 export class GuardianHome {

@@ -17,7 +17,7 @@ test('sign-in is keyboard operable with labelled inputs and adequate tap targets
   expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
 
   // Fully operable by keyboard: type and submit with Enter (AC3).
-  await signInPage.email.fill(`nobody-${crypto.randomUUID()}@wordup.test`);
+  await signInPage.email.fill(`nobody-${crypto.randomUUID()}@waypoint.test`);
   await signInPage.password.fill('WrongPassword9');
   await signInPage.password.press('Enter');
   await expect(signInPage.errorAlert).toContainText(/invalid email or password/i);

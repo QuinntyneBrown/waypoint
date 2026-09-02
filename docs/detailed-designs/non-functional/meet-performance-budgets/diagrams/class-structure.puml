@@ -24,12 +24,12 @@ package "Frontend — Public Site application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "MeetPerformanceBudgetsCommand" as request_MeetPerformanceBudgetsCommand <<record>>
   class "MeetPerformanceBudgetsCommandHandler" as handler_MeetPerformanceBudgetsCommandHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "MeetPerformanceBudgetsState" as entity_MeetPerformanceBudgetsState <<domain type>>
 }
 page_MeetPerformanceBudgetsPage --> client_NonFunctionalApi : invokes

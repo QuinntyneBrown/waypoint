@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { effect, inject, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthStore } from '@wu/auth';
+import { AuthStore } from '@w/auth';
 import { FormDraftService } from './form-draft.service';
 
 export const IDLE_TIMEOUT_MS = 30 * 60 * 1000;

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, guestGuard } from '@wu/auth';
+import { authGuard, guestGuard } from '@w/auth';
 import { consentGuard } from './guards/consent.guard';
 import { unsavedChangesGuard } from './guards/unsaved-changes.guard';
 
@@ -7,13 +7,13 @@ export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'auth/sign-in' },
   {
     path: 'invite',
-    title: 'Accept invitation · Word Up',
+    title: 'Accept invitation · Waypoint',
     loadComponent: () =>
       import('./auth/invite-accept/invite-accept').then((module) => module.InviteAcceptPage),
   },
   {
     path: 'consent/respond',
-    title: 'Guardian consent · Word Up',
+    title: 'Guardian consent · Waypoint',
     loadComponent: () =>
       import('./states/requested-guardian-consent/requested-guardian-consent').then(
         (module) => module.RequestedGuardianConsentPage,
@@ -25,54 +25,54 @@ export const routes: Routes = [
     children: [
       {
         path: 'invite',
-        title: 'Accept invitation · Word Up',
+        title: 'Accept invitation · Waypoint',
         loadComponent: () =>
           import('./auth/invite-accept/invite-accept').then((module) => module.InviteAcceptPage),
       },
       {
         path: 'sign-in',
-        title: 'Sign in · Word Up',
+        title: 'Sign in · Waypoint',
         loadComponent: () => import('./auth/sign-in/sign-in').then((m) => m.SignIn),
       },
       {
         path: 'forgot-password',
-        title: 'Reset password · Word Up',
+        title: 'Reset password · Waypoint',
         loadComponent: () =>
           import('./auth/forgot-password/forgot-password').then((m) => m.ForgotPassword),
       },
       {
         path: 'reset-link-sent',
-        title: 'Check your email · Word Up',
+        title: 'Check your email · Waypoint',
         loadComponent: () =>
           import('./auth/reset-link-sent/reset-link-sent').then((m) => m.ResetLinkSent),
       },
       {
         path: 'reset-password',
-        title: 'Set a new password · Word Up',
+        title: 'Set a new password · Waypoint',
         loadComponent: () =>
           import('./auth/reset-password/reset-password').then((m) => m.ResetPassword),
       },
       {
         path: 'reset-link-invalid',
-        title: 'Reset link · Word Up',
+        title: 'Reset link · Waypoint',
         loadComponent: () =>
           import('./auth/reset-link-invalid/reset-link-invalid').then((m) => m.ResetLinkInvalid),
       },
       {
         path: 'reset-success',
-        title: 'Password updated · Word Up',
+        title: 'Password updated · Waypoint',
         loadComponent: () =>
           import('./auth/reset-success/reset-success').then((m) => m.ResetSuccess),
       },
       {
         path: 'account-locked',
-        title: 'Account locked · Word Up',
+        title: 'Account locked · Waypoint',
         loadComponent: () =>
           import('./states/account-locked/account-locked').then((m) => m.AccountLocked),
       },
       {
         path: 'account-deactivated',
-        title: 'Account inactive · Word Up',
+        title: 'Account inactive · Waypoint',
         loadComponent: () =>
           import('./states/account-deactivated/account-deactivated').then(
             (m) => m.AccountDeactivated,
@@ -82,7 +82,7 @@ export const routes: Routes = [
   },
   {
     path: 'onboarding',
-    title: 'Set up your profile · Word Up',
+    title: 'Set up your profile · Waypoint',
     canActivate: [authGuard],
     loadComponent: () => import('./onboarding/onboarding').then((m) => m.Onboarding),
   },
@@ -93,12 +93,12 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home',
-        title: 'Home · Word Up',
+        title: 'Home · Waypoint',
         loadComponent: () => import('./features/youth/home/youth-home').then((m) => m.YouthHome),
       },
       {
         path: 'curriculum',
-        title: 'Curriculum · Word Up',
+        title: 'Curriculum · Waypoint',
         loadComponent: () =>
           import('./features/youth/curriculum/youth-curriculum').then(
             (module) => module.YouthCurriculumPage,
@@ -106,7 +106,7 @@ export const routes: Routes = [
       },
       {
         path: 'journey',
-        title: 'My journey · Word Up',
+        title: 'My journey · Waypoint',
         loadComponent: () =>
           import('./features/youth/journey/youth-journey').then(
             (module) => module.YouthJourneyPage,
@@ -114,13 +114,13 @@ export const routes: Routes = [
       },
       {
         path: 'badges',
-        title: 'Badges · Word Up',
+        title: 'Badges · Waypoint',
         loadComponent: () =>
           import('./features/youth/badges/youth-badges').then((module) => module.YouthBadgesPage),
       },
       {
         path: 'progress',
-        title: 'My progress · Word Up',
+        title: 'My progress · Waypoint',
         loadComponent: () =>
           import('./features/youth/progress/youth-progress').then(
             (module) => module.YouthProgressPage,
@@ -128,7 +128,7 @@ export const routes: Routes = [
       },
       {
         path: 'schedule',
-        title: 'My schedule · Word Up',
+        title: 'My schedule · Waypoint',
         loadComponent: () =>
           import('./features/youth/schedule/youth-schedule').then(
             (module) => module.YouthSchedulePage,
@@ -136,7 +136,7 @@ export const routes: Routes = [
       },
       {
         path: 'messages',
-        title: 'Messages · Word Up',
+        title: 'Messages · Waypoint',
         loadComponent: () =>
           import('./features/youth/messages/youth-messages').then(
             (module) => module.YouthMessagesPage,
@@ -144,13 +144,13 @@ export const routes: Routes = [
       },
       {
         path: 'coding/:id',
-        title: 'Coding lesson · Word Up',
+        title: 'Coding lesson · Waypoint',
         loadComponent: () =>
           import('./features/youth/coding/youth-coding').then((module) => module.YouthCodingPage),
       },
       {
         path: 'lessons/:id/reflection',
-        title: 'Reflection · Word Up',
+        title: 'Reflection · Waypoint',
         canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/youth/reflection/youth-reflection').then(
@@ -159,13 +159,13 @@ export const routes: Routes = [
       },
       {
         path: 'lessons/:id',
-        title: 'Lesson · Word Up',
+        title: 'Lesson · Waypoint',
         loadComponent: () =>
           import('./features/youth/lesson/youth-lesson').then((module) => module.YouthLessonPage),
       },
       {
         path: 'quizzes/:id/attempt',
-        title: 'Quiz attempt · Word Up',
+        title: 'Quiz attempt · Waypoint',
         loadComponent: () =>
           import('./features/youth/quiz-attempt/youth-quiz-attempt').then(
             (module) => module.YouthQuizAttemptPage,
@@ -173,7 +173,7 @@ export const routes: Routes = [
       },
       {
         path: 'quizzes/:id',
-        title: 'Quiz · Word Up',
+        title: 'Quiz · Waypoint',
         loadComponent: () =>
           import('./features/youth/quiz-intro/youth-quiz-intro').then(
             (module) => module.YouthQuizIntroPage,
@@ -181,7 +181,7 @@ export const routes: Routes = [
       },
       {
         path: 'quiz-attempts/:id/result',
-        title: 'Quiz result · Word Up',
+        title: 'Quiz result · Waypoint',
         loadComponent: () =>
           import('./features/youth/quiz-result/youth-quiz-result').then(
             (module) => module.YouthQuizResultPage,
@@ -189,7 +189,7 @@ export const routes: Routes = [
       },
       {
         path: 'assignments/:id',
-        title: 'Assignment · Word Up',
+        title: 'Assignment · Waypoint',
         loadComponent: () =>
           import('./features/youth/assignment/youth-assignment').then(
             (module) => module.YouthAssignmentPage,
@@ -197,7 +197,7 @@ export const routes: Routes = [
       },
       {
         path: 'submissions/:id/resubmit',
-        title: 'Revise assignment · Word Up',
+        title: 'Revise assignment · Waypoint',
         loadComponent: () =>
           import('./features/youth/resubmit/youth-resubmit').then(
             (module) => module.YouthResubmitPage,
@@ -205,7 +205,7 @@ export const routes: Routes = [
       },
       {
         path: 'submissions/:id',
-        title: 'Submission status · Word Up',
+        title: 'Submission status · Waypoint',
         loadComponent: () =>
           import('./features/youth/submission-status/youth-submission-status').then(
             (module) => module.YouthSubmissionStatusPage,
@@ -213,7 +213,7 @@ export const routes: Routes = [
       },
       {
         path: 'announcements',
-        title: 'Announcements · Word Up',
+        title: 'Announcements · Waypoint',
         loadComponent: () =>
           import('./features/youth/announcements/youth-announcements').then(
             (m) => m.YouthAnnouncements,
@@ -221,7 +221,7 @@ export const routes: Routes = [
       },
       {
         path: 'notifications',
-        title: 'Notifications · Word Up',
+        title: 'Notifications · Waypoint',
         loadComponent: () =>
           import('./features/youth/notifications/youth-notifications').then(
             (m) => m.YouthNotifications,
@@ -237,7 +237,7 @@ export const routes: Routes = [
       { path: 'home', pathMatch: 'full', redirectTo: 'dashboard' },
       {
         path: 'dashboard',
-        title: 'Mentor dashboard · Word Up',
+        title: 'Mentor dashboard · Waypoint',
         loadComponent: () =>
           import('./features/mentor/dashboard/mentor-dashboard').then(
             (module) => module.MentorDashboardPage,
@@ -245,7 +245,7 @@ export const routes: Routes = [
       },
       {
         path: 'my-youth',
-        title: 'My youth · Word Up',
+        title: 'My youth · Waypoint',
         loadComponent: () =>
           import('./features/mentor/roster/mentor-roster').then(
             (module) => module.MentorRosterPage,
@@ -253,7 +253,7 @@ export const routes: Routes = [
       },
       {
         path: 'invitations',
-        title: 'Invitations · Word Up',
+        title: 'Invitations · Waypoint',
         loadComponent: () =>
           import('./features/shared/invitations/invitations').then(
             (module) => module.InvitationsPage,
@@ -261,7 +261,7 @@ export const routes: Routes = [
       },
       {
         path: 'check-ins',
-        title: 'Check-ins · Word Up',
+        title: 'Check-ins · Waypoint',
         loadComponent: () =>
           import('./features/mentor/check-ins/mentor-check-ins').then(
             (module) => module.MentorCheckInsPage,
@@ -269,13 +269,13 @@ export const routes: Routes = [
       },
       {
         path: 'flags',
-        title: 'At-risk youth · Word Up',
+        title: 'At-risk youth · Waypoint',
         loadComponent: () =>
           import('./features/mentor/flags/mentor-flags').then((module) => module.MentorFlagsPage),
       },
       {
         path: 'youth/:id',
-        title: 'Youth detail · Word Up',
+        title: 'Youth detail · Waypoint',
         loadComponent: () =>
           import('./features/mentor/youth-detail/mentor-youth-detail').then(
             (module) => module.MentorYouthDetailPage,
@@ -283,7 +283,7 @@ export const routes: Routes = [
       },
       {
         path: 'assign-work',
-        title: 'Assign work · Word Up',
+        title: 'Assign work · Waypoint',
         loadComponent: () =>
           import('./features/mentor/assign-work/mentor-assign-work').then(
             (module) => module.MentorAssignWorkPage,
@@ -291,7 +291,7 @@ export const routes: Routes = [
       },
       {
         path: 'calendar',
-        title: 'Calendar · Word Up',
+        title: 'Calendar · Waypoint',
         loadComponent: () =>
           import('./features/mentor/calendar/mentor-calendar').then(
             (module) => module.MentorCalendarPage,
@@ -299,7 +299,7 @@ export const routes: Routes = [
       },
       {
         path: 'attendance',
-        title: 'Attendance · Word Up',
+        title: 'Attendance · Waypoint',
         loadComponent: () =>
           import('./features/mentor/attendance-history/mentor-attendance-history').then(
             (module) => module.MentorAttendanceHistoryPage,
@@ -307,7 +307,7 @@ export const routes: Routes = [
       },
       {
         path: 'attendance/:sessionId',
-        title: 'Take attendance · Word Up',
+        title: 'Take attendance · Waypoint',
         canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/mentor/attendance-capture/mentor-attendance-capture').then(
@@ -316,7 +316,7 @@ export const routes: Routes = [
       },
       {
         path: 'youth/:id/competencies',
-        title: 'Competency tracker · Word Up',
+        title: 'Competency tracker · Waypoint',
         loadComponent: () =>
           import('./features/mentor/competencies/mentor-competencies').then(
             (module) => module.MentorCompetenciesPage,
@@ -324,7 +324,7 @@ export const routes: Routes = [
       },
       {
         path: 'reviews',
-        title: 'Reviews · Word Up',
+        title: 'Reviews · Waypoint',
         loadComponent: () =>
           import('./features/mentor/reviews/mentor-reviews').then(
             (module) => module.MentorReviewsPage,
@@ -332,7 +332,7 @@ export const routes: Routes = [
       },
       {
         path: 'reviews/submissions/:id',
-        title: 'Review submission · Word Up',
+        title: 'Review submission · Waypoint',
         canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/mentor/submission-review/mentor-submission-review').then(
@@ -341,7 +341,7 @@ export const routes: Routes = [
       },
       {
         path: 'reviews/quizzes/:id',
-        title: 'Review quiz assessment · Word Up',
+        title: 'Review quiz assessment · Waypoint',
         loadComponent: () =>
           import('./features/mentor/quiz-review/mentor-quiz-review').then(
             (module) => module.MentorQuizReviewPage,
@@ -349,7 +349,7 @@ export const routes: Routes = [
       },
       {
         path: 'messages',
-        title: 'Messages · Word Up',
+        title: 'Messages · Waypoint',
         loadComponent: () =>
           import('./features/mentor/messages/mentor-messages').then(
             (module) => module.MentorMessagesPage,
@@ -357,7 +357,7 @@ export const routes: Routes = [
       },
       {
         path: 'notifications',
-        title: 'Notifications · Word Up',
+        title: 'Notifications · Waypoint',
         loadComponent: () =>
           import('./features/youth/notifications/youth-notifications').then(
             (module) => module.YouthNotifications,
@@ -373,7 +373,7 @@ export const routes: Routes = [
       { path: 'home', pathMatch: 'full', redirectTo: 'dashboard' },
       {
         path: 'dashboard',
-        title: 'Director dashboard · Word Up',
+        title: 'Director dashboard · Waypoint',
         loadComponent: () =>
           import('./features/admin/dashboard/admin-dashboard').then(
             (module) => module.AdminDashboardPage,
@@ -381,25 +381,25 @@ export const routes: Routes = [
       },
       {
         path: 'people',
-        title: 'People · Word Up',
+        title: 'People · Waypoint',
         loadComponent: () =>
           import('./features/admin/people/people-directory').then((m) => m.PeopleDirectory),
       },
       {
         path: 'people/:id',
-        title: 'Person record · Word Up',
+        title: 'Person record · Waypoint',
         loadComponent: () =>
           import('./features/admin/people/person-detail').then((module) => module.PersonDetailPage),
       },
       {
         path: 'applications',
-        title: 'Applications · Word Up',
+        title: 'Applications · Waypoint',
         loadComponent: () =>
           import('./features/admin/applications/applications-list').then((m) => m.ApplicationsList),
       },
       {
         path: 'invitations',
-        title: 'Invitations · Word Up',
+        title: 'Invitations · Waypoint',
         loadComponent: () =>
           import('./features/shared/invitations/invitations').then(
             (module) => module.InvitationsPage,
@@ -407,7 +407,7 @@ export const routes: Routes = [
       },
       {
         path: 'users-roles',
-        title: 'Users & roles · Word Up',
+        title: 'Users & roles · Waypoint',
         loadComponent: () =>
           import('./features/admin/users-roles/users-roles').then(
             (module) => module.UsersRolesPage,
@@ -415,13 +415,13 @@ export const routes: Routes = [
       },
       {
         path: 'cohorts',
-        title: 'Cohorts · Word Up',
+        title: 'Cohorts · Waypoint',
         loadComponent: () =>
           import('./features/admin/cohorts/cohorts-list').then((module) => module.CohortsListPage),
       },
       {
         path: 'cohorts/:id',
-        title: 'Cohort detail · Word Up',
+        title: 'Cohort detail · Waypoint',
         loadComponent: () =>
           import('./features/admin/cohorts/cohort-detail').then(
             (module) => module.CohortDetailPage,
@@ -429,7 +429,7 @@ export const routes: Routes = [
       },
       {
         path: 'cohort-progress',
-        title: 'Progress board · Word Up',
+        title: 'Progress board · Waypoint',
         loadComponent: () =>
           import('./features/admin/progress/progress-board').then(
             (module) => module.ProgressBoardPage,
@@ -437,7 +437,7 @@ export const routes: Routes = [
       },
       {
         path: 'reports',
-        title: 'Reports hub · Word Up',
+        title: 'Reports hub · Waypoint',
         loadComponent: () =>
           import('./features/admin/reports/admin-reports').then(
             (module) => module.AdminReportsPage,
@@ -445,7 +445,7 @@ export const routes: Routes = [
       },
       {
         path: 'import',
-        title: 'Import roster · Word Up',
+        title: 'Import roster · Waypoint',
         loadComponent: () =>
           import('./features/admin/import-roster/import-roster').then(
             (module) => module.ImportRosterPage,
@@ -453,7 +453,7 @@ export const routes: Routes = [
       },
       {
         path: 'audit',
-        title: 'Audit log · Word Up',
+        title: 'Audit log · Waypoint',
         loadComponent: () =>
           import('./features/admin/audit/admin-audit-log').then(
             (module) => module.AdminAuditLogPage,
@@ -461,7 +461,7 @@ export const routes: Routes = [
       },
       {
         path: 'privacy',
-        title: 'Privacy requests · Word Up',
+        title: 'Privacy requests · Waypoint',
         loadComponent: () =>
           import('./features/admin/privacy/admin-privacy').then(
             (module) => module.AdminPrivacyPage,
@@ -470,7 +470,7 @@ export const routes: Routes = [
       { path: 'notifications', pathMatch: 'full', redirectTo: 'announcements' },
       {
         path: 'mentor-assignments',
-        title: 'Mentor assignments · Word Up',
+        title: 'Mentor assignments · Waypoint',
         loadComponent: () =>
           import('./features/admin/mentors/mentor-assignments').then(
             (module) => module.MentorAssignmentsPage,
@@ -478,7 +478,7 @@ export const routes: Routes = [
       },
       {
         path: 'tracks',
-        title: 'Curriculum builder · Word Up',
+        title: 'Curriculum builder · Waypoint',
         canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/admin/curriculum/curriculum-builder').then(
@@ -487,7 +487,7 @@ export const routes: Routes = [
       },
       {
         path: 'badges',
-        title: 'Badge builder · Word Up',
+        title: 'Badge builder · Waypoint',
         canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/admin/curriculum/badge-builder').then(
@@ -496,7 +496,7 @@ export const routes: Routes = [
       },
       {
         path: 'progression',
-        title: 'Progression framework · Word Up',
+        title: 'Progression framework · Waypoint',
         canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/admin/curriculum/progression-builder').then(
@@ -505,7 +505,7 @@ export const routes: Routes = [
       },
       {
         path: 'calendar',
-        title: 'Program calendar · Word Up',
+        title: 'Program calendar · Waypoint',
         loadComponent: () =>
           import('./features/mentor/calendar/mentor-calendar').then(
             (module) => module.MentorCalendarPage,
@@ -513,7 +513,7 @@ export const routes: Routes = [
       },
       {
         path: 'announcements',
-        title: 'Announcement administration · Word Up',
+        title: 'Announcement administration · Waypoint',
         loadComponent: () =>
           import('./features/admin/announcements/admin-announcements').then(
             (module) => module.AdminAnnouncementsPage,
@@ -521,7 +521,7 @@ export const routes: Routes = [
       },
       {
         path: 'attendance',
-        title: 'Attendance administration · Word Up',
+        title: 'Attendance administration · Waypoint',
         loadComponent: () =>
           import('./features/mentor/attendance-history/mentor-attendance-history').then(
             (module) => module.MentorAttendanceHistoryPage,
@@ -529,7 +529,7 @@ export const routes: Routes = [
       },
       {
         path: 'attendance/:sessionId',
-        title: 'Take attendance · Word Up',
+        title: 'Take attendance · Waypoint',
         canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/mentor/attendance-capture/mentor-attendance-capture').then(
@@ -538,7 +538,7 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        title: 'Organization settings · Word Up',
+        title: 'Organization settings · Waypoint',
         loadComponent: () =>
           import('./features/admin/settings/organization-settings').then(
             (module) => module.OrganizationSettingsPage,
@@ -553,13 +553,13 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home',
-        title: 'Today · Word Up',
+        title: 'Today · Waypoint',
         loadComponent: () =>
           import('./features/volunteer/today/volunteer-today').then((m) => m.VolunteerToday),
       },
       {
         path: 'schedule',
-        title: 'Schedule · Word Up',
+        title: 'Schedule · Waypoint',
         loadComponent: () =>
           import('./features/volunteer/schedule/volunteer-schedule').then(
             (m) => m.VolunteerSchedule,
@@ -569,7 +569,7 @@ export const routes: Routes = [
       { path: 'notifications', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'attendance/:sessionId',
-        title: 'Take attendance · Word Up',
+        title: 'Take attendance · Waypoint',
         canDeactivate: [unsavedChangesGuard],
         loadComponent: () =>
           import('./features/volunteer/attendance/volunteer-attendance').then(
@@ -585,13 +585,13 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home',
-        title: 'Guardian home · Word Up',
+        title: 'Guardian home · Waypoint',
         loadComponent: () =>
           import('./features/guardian/home/guardian-home').then((module) => module.GuardianHome),
       },
       {
         path: 'progress',
-        title: 'Child progress · Word Up',
+        title: 'Child progress · Waypoint',
         loadComponent: () =>
           import('./features/guardian/progress/guardian-progress').then(
             (module) => module.GuardianProgress,
@@ -599,7 +599,7 @@ export const routes: Routes = [
       },
       {
         path: 'announcements',
-        title: 'Guardian news · Word Up',
+        title: 'Guardian news · Waypoint',
         loadComponent: () =>
           import('./features/guardian/announcements/guardian-announcements').then(
             (module) => module.GuardianAnnouncements,
@@ -607,7 +607,7 @@ export const routes: Routes = [
       },
       {
         path: 'consent',
-        title: 'Consent and contact · Word Up',
+        title: 'Consent and contact · Waypoint',
         loadComponent: () =>
           import('./features/guardian/consent/guardian-consent').then(
             (module) => module.GuardianConsent,
@@ -623,13 +623,13 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'profile' },
       {
         path: 'profile',
-        title: 'Profile · Word Up',
+        title: 'Profile · Waypoint',
         loadComponent: () =>
           import('./settings/profile/settings-profile').then((m) => m.SettingsProfile),
       },
       {
         path: 'notifications',
-        title: 'Notification settings · Word Up',
+        title: 'Notification settings · Waypoint',
         loadComponent: () =>
           import('./settings/notifications/settings-notifications').then(
             (m) => m.SettingsNotifications,
@@ -637,13 +637,13 @@ export const routes: Routes = [
       },
       {
         path: 'display',
-        title: 'Display & accessibility · Word Up',
+        title: 'Display & accessibility · Waypoint',
         loadComponent: () =>
           import('./settings/display/settings-display').then((m) => m.SettingsDisplay),
       },
       {
         path: 'privacy',
-        title: 'Privacy & data rights · Word Up',
+        title: 'Privacy & data rights · Waypoint',
         loadComponent: () =>
           import('./settings/privacy/settings-privacy').then(
             (module) => module.SettingsPrivacyPage,
@@ -653,52 +653,52 @@ export const routes: Routes = [
   },
   {
     path: 'help',
-    title: 'Help center · Word Up',
+    title: 'Help center · Waypoint',
     canActivate: [authGuard],
     loadComponent: () => import('./help/help').then((module) => module.HelpPage),
   },
   {
     path: 'support',
-    title: 'Contact support · Word Up',
+    title: 'Contact support · Waypoint',
     canActivate: [authGuard],
     loadComponent: () => import('./support/support').then((m) => m.Support),
   },
   {
     path: 'consent-required',
-    title: 'Consent needed · Word Up',
+    title: 'Consent needed · Waypoint',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./states/consent-required/consent-required').then((m) => m.ConsentRequired),
   },
   {
     path: 'session-expired',
-    title: 'Session expired · Word Up',
+    title: 'Session expired · Waypoint',
     loadComponent: () =>
       import('./states/session-expired/session-expired').then((m) => m.SessionExpired),
   },
   {
     path: 'forbidden',
-    title: 'No access · Word Up',
+    title: 'No access · Waypoint',
     loadComponent: () => import('./states/forbidden/forbidden').then((m) => m.Forbidden),
   },
   {
     path: 'server-error',
-    title: 'Something went wrong · Word Up',
+    title: 'Something went wrong · Waypoint',
     loadComponent: () => import('./states/server-error/server-error').then((m) => m.ServerError),
   },
   {
     path: 'maintenance',
-    title: 'Maintenance · Word Up',
+    title: 'Maintenance · Waypoint',
     loadComponent: () => import('./states/maintenance/maintenance').then((m) => m.Maintenance),
   },
   {
     path: 'offline',
-    title: 'Offline · Word Up',
+    title: 'Offline · Waypoint',
     loadComponent: () => import('./states/offline/offline-state').then((m) => m.OfflineState),
   },
   {
     path: '**',
-    title: 'Not found · Word Up',
+    title: 'Not found · Waypoint',
     loadComponent: () => import('./states/not-found/not-found').then((m) => m.NotFound),
   },
 ];

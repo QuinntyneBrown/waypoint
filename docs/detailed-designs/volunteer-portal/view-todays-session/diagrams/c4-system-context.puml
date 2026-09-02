@@ -4,10 +4,10 @@ LAYOUT_LEFT_RIGHT()
 title C4 level 1 — View today's session — system context
 Person(primary, "Volunteer", "Human role outside the software boundary")
 Person(staff, "Program staff", "Administers authorized program activity")
-System(wordup, "Word Up software system", "Youth leadership, learning, mentoring, and program operations")
+System(waypoint, "Waypoint software system", "Youth leadership, learning, mentoring, and program operations")
 
-Rel(primary, wordup, "A volunteer starts this feature interaction through the Portal applicat…")
-Rel(staff, wordup, "Administers authorized program activity")
+Rel(primary, waypoint, "A volunteer starts this feature interaction through the Portal applicat…")
+Rel(staff, waypoint, "Administers authorized program activity")
 
 SHOW_LEGEND()
 @enduml

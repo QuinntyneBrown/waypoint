@@ -7,14 +7,14 @@ import {
   InvitationOption,
   InvitationSummary,
   InvitationsApi,
-  WuRoleName,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+  WRoleName,
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { Observable } from 'rxjs';
 import { shellRole } from '../../../shell-role';
 
-const ROLES: readonly WuRoleName[] = [
+const ROLES: readonly WRoleName[] = [
   'Youth',
   'Mentor',
   'ProgramAdministrator',
@@ -24,26 +24,26 @@ const ROLES: readonly WuRoleName[] = [
 
 // Traces to: L2-AUTH-003, L2-AUTH-004
 @Component({
-  selector: 'wu-invitations',
+  selector: 'w-invitations',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, ReactiveFormsModule, WuIcon, WuShell],
+  imports: [DatePipe, ReactiveFormsModule, WIcon, WShell],
   templateUrl: './invitations.html',
   styles: `
     .invite-layout {
       display: grid;
-      gap: var(--wu-s5);
+      gap: var(--w-s5);
       grid-template-columns: minmax(18rem, 0.7fr) minmax(0, 1.3fr);
     }
     .invite-filters {
       display: grid;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
       grid-template-columns: 2fr repeat(2, minmax(9rem, 1fr));
     }
     .invite-actions {
       align-items: center;
       display: flex;
       flex-wrap: wrap;
-      gap: var(--wu-s2);
+      gap: var(--w-s2);
     }
     .invite-email {
       overflow-wrap: anywhere;
@@ -84,7 +84,7 @@ export class InvitationsPage {
 
   protected readonly form = this.fb.nonNullable.group({
     emails: ['', Validators.required],
-    role: ['Youth' as WuRoleName, Validators.required],
+    role: ['Youth' as WRoleName, Validators.required],
     cohortId: [''],
     mentorId: [''],
   });
@@ -136,7 +136,7 @@ export class InvitationsPage {
       this.errorMessage.set('Enter one valid email address per line.');
       return;
     }
-    const role: WuRoleName = this.isAdmin() ? value.role : 'Youth';
+    const role: WRoleName = this.isAdmin() ? value.role : 'Youth';
     const context = {
       role,
       cohortId: value.cohortId || null,

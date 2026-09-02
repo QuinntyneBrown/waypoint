@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "ProtectUnsavedWorkCommand" as request_ProtectUnsavedWorkCommand <<record>>
   class "ProtectUnsavedWorkCommandHandler" as handler_ProtectUnsavedWorkCommandHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "ProtectUnsavedWorkState" as entity_ProtectUnsavedWorkState <<domain type>>
 }
 page_ProtectUnsavedWorkPage --> client_NonFunctionalApi : invokes

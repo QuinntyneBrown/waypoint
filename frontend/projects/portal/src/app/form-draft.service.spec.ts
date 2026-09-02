@@ -1,7 +1,7 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { AuthStore } from '@wu/auth';
+import { AuthStore } from '@w/auth';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { FormDraftService } from './form-draft.service';
 
@@ -47,7 +47,7 @@ describe('FormDraftService', () => {
 
   it('restores safe controls only for the user who owned the captured route', () => {
     drafts.captureCurrentForm();
-    const stored = sessionStorage.getItem('wu.transient-form-draft') ?? '';
+    const stored = sessionStorage.getItem('w.transient-form-draft') ?? '';
     expect(stored).toContain('owner-1');
     expect(stored).toContain('private draft');
     expect(stored).not.toContain('never persist');
@@ -63,13 +63,13 @@ describe('FormDraftService', () => {
 
     expect(drafts.restoreAndClear()).toBe(false);
     expect(text.value).toBe('');
-    expect(sessionStorage.getItem('wu.transient-form-draft')).not.toBeNull();
+    expect(sessionStorage.getItem('w.transient-form-draft')).not.toBeNull();
 
     user.set({ ...user(), userId: 'owner-1' });
     expect(drafts.restoreAndClear()).toBe(true);
     expect(text.value).toBe('private draft');
     expect(mood.checked).toBe(true);
     expect(share.checked).toBe(true);
-    expect(sessionStorage.getItem('wu.transient-form-draft')).toBeNull();
+    expect(sessionStorage.getItem('w.transient-form-draft')).toBeNull();
   });
 });

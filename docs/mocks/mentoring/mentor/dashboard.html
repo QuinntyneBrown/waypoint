@@ -3,90 +3,90 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mentor dashboard · Word Up</title>
+  <title>Mentor dashboard · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/wordup.css">
-  <script defer src="../../assets/js/wordup.js"></script>
+  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
   <style>
     .dash-youth{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
-    .dash-youth__meta{font-size:.82rem;color:var(--wu-muted);margin:2px 0 0}
+    .dash-youth__meta{font-size:.82rem;color:var(--w-muted);margin:2px 0 0}
     .dash-session{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
-    .dash-date{width:56px;border:var(--wu-bw) solid var(--wu-border);border-radius:12px;text-align:center;overflow:hidden;flex:none;font-family:var(--wu-font-head)}
-    .dash-date span{display:block;padding:4px;background:var(--wu-lime);font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em}
+    .dash-date{width:56px;border:var(--w-bw) solid var(--w-border);border-radius:12px;text-align:center;overflow:hidden;flex:none;font-family:var(--w-font-head)}
+    .dash-date span{display:block;padding:4px;background:var(--w-lime);font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em}
     .dash-date b{display:block;padding:6px 4px 7px;font-size:1.35rem;line-height:1}
-    .dash-review{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:var(--wu-bw) solid var(--wu-border)}
+    .dash-review{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:var(--w-bw) solid var(--w-border)}
     .dash-review:last-child{border-bottom:0}
     @media(max-width:900px){.dash-main{grid-template-columns:1fr!important}}
   </style>
 </head>
 <body data-role="mentor" data-active="dashboard" data-track="bible">
-  <main class="wu-main">
-    <div class="wu-container wu-page">
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">Rexdale Fall '25</div>
-          <h1 class="wu-page__title">Welcome back, Marcus.</h1>
-          <p class="wu-page__sub">Here's how your youth are doing today, Friday, July 17.</p>
+  <main class="w-main">
+    <div class="w-container w-page">
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">Rexdale Fall '25</div>
+          <h1 class="w-page__title">Welcome back, Marcus.</h1>
+          <p class="w-page__sub">Here's how your youth are doing today, Friday, July 17.</p>
         </div>
-        <div class="wu-page__actions">
-          <a class="wu-btn wu-btn--ghost" href="../../engagement/mentor/attendance.html"><svg class="wu-icon"><use href="#i-user-check"></use></svg>Take attendance</a>
-          <button class="wu-btn wu-btn--primary" data-open-modal="m-checkin"><svg class="wu-icon"><use href="#i-clipboard-check"></use></svg>Log check-in</button>
+        <div class="w-page__actions">
+          <a class="w-btn w-btn--ghost" href="../../engagement/mentor/attendance.html"><svg class="w-icon"><use href="#i-user-check"></use></svg>Take attendance</a>
+          <button class="w-btn w-btn--primary" data-open-modal="m-checkin"><svg class="w-icon"><use href="#i-clipboard-check"></use></svg>Log check-in</button>
         </div>
       </div>
 
       <!-- Stat cards -->
-      <div class="wu-grid wu-grid--4">
-        <div class="wu-card wu-statcard"><div class="wu-statcard__label">My youth</div><div class="wu-statcard__value">4</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-users"></use></svg>Rexdale Fall '25</div></div>
-        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Pending reviews</div><div class="wu-statcard__value">5</div><div class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-file-text"></use></svg>2 overdue</div></div>
-        <div class="wu-card wu-statcard"><div class="wu-statcard__label">Avg progress</div><div class="wu-statcard__value">72%</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+5% this month</div></div>
-        <div class="wu-card wu-statcard"><div class="wu-statcard__label">At risk</div><div class="wu-statcard__value">1</div><div class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-flag"></use></svg>needs follow-up</div></div>
+      <div class="w-grid w-grid--4">
+        <div class="w-card w-statcard"><div class="w-statcard__label">My youth</div><div class="w-statcard__value">4</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-users"></use></svg>Rexdale Fall '25</div></div>
+        <div class="w-card w-statcard"><div class="w-statcard__label">Pending reviews</div><div class="w-statcard__value">5</div><div class="w-statcard__delta is-down"><svg class="w-icon"><use href="#i-file-text"></use></svg>2 overdue</div></div>
+        <div class="w-card w-statcard"><div class="w-statcard__label">Avg progress</div><div class="w-statcard__value">72%</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+5% this month</div></div>
+        <div class="w-card w-statcard"><div class="w-statcard__label">At risk</div><div class="w-statcard__value">1</div><div class="w-statcard__delta is-down"><svg class="w-icon"><use href="#i-flag"></use></svg>needs follow-up</div></div>
       </div>
 
-      <div class="wu-grid wu-grid--3 wu-mt-6 dash-main" style="grid-template-columns:2fr 1fr">
+      <div class="w-grid w-grid--3 w-mt-6 dash-main" style="grid-template-columns:2fr 1fr">
         <!-- My youth -->
         <section>
-          <div class="wu-cluster wu-justify-between wu-mb-4">
-            <h2 class="wu-mb-0">My youth</h2>
-            <a class="wu-btn wu-btn--ghost wu-btn--sm" href="my-youth.html">View all<svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a>
+          <div class="w-cluster w-justify-between w-mb-4">
+            <h2 class="w-mb-0">My youth</h2>
+            <a class="w-btn w-btn--ghost w-btn--sm" href="my-youth.html">View all<svg class="w-icon"><use href="#i-chevron-right"></use></svg></a>
           </div>
-          <div class="wu-grid wu-grid--2">
-            <div class="wu-card">
-              <div class="wu-card__body dash-youth">
-                <div class="wu-ring wu-ring--sm" style="--val:82"><span class="wu-ring__label">82%</span></div>
+          <div class="w-grid w-grid--2">
+            <div class="w-card">
+              <div class="w-card__body dash-youth">
+                <div class="w-ring w-ring--sm" style="--val:82"><span class="w-ring__label">82%</span></div>
                 <div>
-                  <a class="wu-person__name" href="youth-detail.html">Jayden Alcantara</a>
+                  <a class="w-person__name" href="youth-detail.html">Jayden Alcantara</a>
                   <p class="dash-youth__meta">Last check-in: 2 days ago</p>
-                  <span class="wu-badge wu-badge--success wu-badge--dot wu-mt-2">On track</span>
+                  <span class="w-badge w-badge--success w-badge--dot w-mt-2">On track</span>
                 </div>
               </div>
             </div>
-            <div class="wu-card">
-              <div class="wu-card__body dash-youth">
-                <div class="wu-ring wu-ring--sm" style="--val:74"><span class="wu-ring__label">74%</span></div>
+            <div class="w-card">
+              <div class="w-card__body dash-youth">
+                <div class="w-ring w-ring--sm" style="--val:74"><span class="w-ring__label">74%</span></div>
                 <div>
-                  <a class="wu-person__name" href="youth-detail.html">Amara Okafor</a>
+                  <a class="w-person__name" href="youth-detail.html">Amara Okafor</a>
                   <p class="dash-youth__meta">Last check-in: Yesterday</p>
-                  <span class="wu-badge wu-badge--success wu-badge--dot wu-mt-2">On track</span>
+                  <span class="w-badge w-badge--success w-badge--dot w-mt-2">On track</span>
                 </div>
               </div>
             </div>
-            <div class="wu-card">
-              <div class="wu-card__body dash-youth">
-                <div class="wu-ring wu-ring--sm" style="--val:38"><span class="wu-ring__label">38%</span></div>
+            <div class="w-card">
+              <div class="w-card__body dash-youth">
+                <div class="w-ring w-ring--sm" style="--val:38"><span class="w-ring__label">38%</span></div>
                 <div>
-                  <a class="wu-person__name" href="youth-detail.html">Devon Grant <svg class="wu-icon" aria-label="Flagged at risk"><use href="#i-flag"></use></svg></a>
+                  <a class="w-person__name" href="youth-detail.html">Devon Grant <svg class="w-icon" aria-label="Flagged at risk"><use href="#i-flag"></use></svg></a>
                   <p class="dash-youth__meta">Last check-in: 6 days ago</p>
-                  <span class="wu-badge wu-badge--error wu-badge--dot wu-mt-2">At risk</span>
+                  <span class="w-badge w-badge--error w-badge--dot w-mt-2">At risk</span>
                 </div>
               </div>
             </div>
-            <div class="wu-card">
-              <div class="wu-card__body dash-youth">
-                <div class="wu-ring wu-ring--sm" style="--val:70"><span class="wu-ring__label">70%</span></div>
+            <div class="w-card">
+              <div class="w-card__body dash-youth">
+                <div class="w-ring w-ring--sm" style="--val:70"><span class="w-ring__label">70%</span></div>
                 <div>
-                  <a class="wu-person__name" href="youth-detail.html">Zara Mensah</a>
+                  <a class="w-person__name" href="youth-detail.html">Zara Mensah</a>
                   <p class="dash-youth__meta">Last check-in: 4 hours ago</p>
-                  <span class="wu-badge wu-badge--success wu-badge--dot wu-mt-2">On track</span>
+                  <span class="w-badge w-badge--success w-badge--dot w-mt-2">On track</span>
                 </div>
               </div>
             </div>
@@ -94,61 +94,61 @@
         </section>
 
         <!-- Right rail -->
-        <aside class="wu-stack">
-          <div class="wu-card wu-card--ink">
-            <div class="wu-card__body dash-session">
+        <aside class="w-stack">
+          <div class="w-card w-card--ink">
+            <div class="w-card__body dash-session">
               <div class="dash-date"><span>Jul</span><b>18</b></div>
               <div>
-                <div class="wu-eyebrow" style="color:var(--wu-lime)">Today's session</div>
-                <h3 class="wu-mt-2 wu-mb-0">Servant Leadership</h3>
+                <div class="w-eyebrow" style="color:var(--w-lime)">Today's session</div>
+                <h3 class="w-mt-2 w-mb-0">Servant Leadership</h3>
                 <p class="dash-youth__meta" style="color:rgba(255,255,255,.72)">10:00 AM · Parkdale Community Hub · 5 youth</p>
               </div>
             </div>
-            <div class="wu-card__footer">
-              <a class="wu-btn wu-btn--primary wu-btn--sm" href="../../engagement/mentor/attendance.html">Take attendance</a>
-              <a class="wu-btn wu-btn--ghost wu-btn--sm" href="../../engagement/mentor/calendar.html">Details</a>
+            <div class="w-card__footer">
+              <a class="w-btn w-btn--primary w-btn--sm" href="../../engagement/mentor/attendance.html">Take attendance</a>
+              <a class="w-btn w-btn--ghost w-btn--sm" href="../../engagement/mentor/calendar.html">Details</a>
             </div>
           </div>
 
-          <div class="wu-card">
-            <div class="wu-card__header"><h3 class="wu-card__title">Quick actions</h3></div>
-            <div class="wu-card__body wu-stack wu-stack--sm">
-              <button class="wu-btn wu-btn--secondary wu-btn--block" data-open-modal="m-checkin"><svg class="wu-icon"><use href="#i-clipboard-check"></use></svg>Log a check-in</button>
-              <a class="wu-btn wu-btn--secondary wu-btn--block" href="../../engagement/mentor/attendance.html"><svg class="wu-icon"><use href="#i-user-check"></use></svg>Take attendance</a>
-              <a class="wu-btn wu-btn--secondary wu-btn--block" href="reviews.html"><svg class="wu-icon"><use href="#i-file-text"></use></svg>Review submissions</a>
-              <a class="wu-btn wu-btn--secondary wu-btn--block" href="../../engagement/mentor/messages.html"><svg class="wu-icon"><use href="#i-message-square"></use></svg>Message a youth</a>
+          <div class="w-card">
+            <div class="w-card__header"><h3 class="w-card__title">Quick actions</h3></div>
+            <div class="w-card__body w-stack w-stack--sm">
+              <button class="w-btn w-btn--secondary w-btn--block" data-open-modal="m-checkin"><svg class="w-icon"><use href="#i-clipboard-check"></use></svg>Log a check-in</button>
+              <a class="w-btn w-btn--secondary w-btn--block" href="../../engagement/mentor/attendance.html"><svg class="w-icon"><use href="#i-user-check"></use></svg>Take attendance</a>
+              <a class="w-btn w-btn--secondary w-btn--block" href="reviews.html"><svg class="w-icon"><use href="#i-file-text"></use></svg>Review submissions</a>
+              <a class="w-btn w-btn--secondary w-btn--block" href="../../engagement/mentor/messages.html"><svg class="w-icon"><use href="#i-message-square"></use></svg>Message a youth</a>
             </div>
           </div>
         </aside>
       </div>
 
       <!-- Reviews queue preview -->
-      <section class="wu-mt-6">
-        <div class="wu-cluster wu-justify-between wu-mb-4">
-          <h2 class="wu-mb-0">Reviews queue</h2>
-          <a class="wu-btn wu-btn--ghost wu-btn--sm" href="reviews.html">Open queue<svg class="wu-icon"><use href="#i-chevron-right"></use></svg></a>
+      <section class="w-mt-6">
+        <div class="w-cluster w-justify-between w-mb-4">
+          <h2 class="w-mb-0">Reviews queue</h2>
+          <a class="w-btn w-btn--ghost w-btn--sm" href="reviews.html">Open queue<svg class="w-icon"><use href="#i-chevron-right"></use></svg></a>
         </div>
-        <div class="wu-card">
-          <div class="wu-card__body">
+        <div class="w-card">
+          <div class="w-card__body">
             <div class="dash-review">
-              <div class="wu-person"><span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span><div><div class="wu-person__name">Devon Grant</div><div class="wu-person__meta">Reflection · Servant Leadership</div></div></div>
-              <div class="wu-cluster wu-gap-2"><span class="wu-badge wu-badge--error wu-badge--dot">Overdue 3d</span><a class="wu-btn wu-btn--primary wu-btn--sm" href="reviews.html">Review</a></div>
+              <div class="w-person"><span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span><div><div class="w-person__name">Devon Grant</div><div class="w-person__meta">Reflection · Servant Leadership</div></div></div>
+              <div class="w-cluster w-gap-2"><span class="w-badge w-badge--error w-badge--dot">Overdue 3d</span><a class="w-btn w-btn--primary w-btn--sm" href="reviews.html">Review</a></div>
             </div>
             <div class="dash-review">
-              <div class="wu-person"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span><div><div class="wu-person__name">Jayden Alcantara</div><div class="wu-person__meta">Quiz · Leading a Small Group</div></div></div>
-              <div class="wu-cluster wu-gap-2"><span class="wu-badge wu-badge--warning wu-badge--dot">Due today</span><a class="wu-btn wu-btn--primary wu-btn--sm" href="reviews.html">Review</a></div>
+              <div class="w-person"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span><div><div class="w-person__name">Jayden Alcantara</div><div class="w-person__meta">Quiz · Leading a Small Group</div></div></div>
+              <div class="w-cluster w-gap-2"><span class="w-badge w-badge--warning w-badge--dot">Due today</span><a class="w-btn w-btn--primary w-btn--sm" href="reviews.html">Review</a></div>
             </div>
             <div class="dash-review">
-              <div class="wu-person"><span class="wu-avatar wu-avatar--sm" data-name="Amara Okafor"></span><div><div class="wu-person__name">Amara Okafor</div><div class="wu-person__meta">Reflection · Identity in Christ</div></div></div>
-              <div class="wu-cluster wu-gap-2"><span class="wu-badge wu-badge--warning wu-badge--dot">Overdue 1d</span><a class="wu-btn wu-btn--primary wu-btn--sm" href="reviews.html">Review</a></div>
+              <div class="w-person"><span class="w-avatar w-avatar--sm" data-name="Amara Okafor"></span><div><div class="w-person__name">Amara Okafor</div><div class="w-person__meta">Reflection · Identity in Christ</div></div></div>
+              <div class="w-cluster w-gap-2"><span class="w-badge w-badge--warning w-badge--dot">Overdue 1d</span><a class="w-btn w-btn--primary w-btn--sm" href="reviews.html">Review</a></div>
             </div>
             <div class="dash-review">
-              <div class="wu-person"><span class="wu-avatar wu-avatar--sm" data-name="Zara Mensah"></span><div><div class="wu-person__name">Zara Mensah</div><div class="wu-person__meta">Assignment · Web Basics: HTML &amp; CSS</div></div></div>
-              <div class="wu-cluster wu-gap-2"><span class="wu-badge wu-badge--info">New</span><a class="wu-btn wu-btn--primary wu-btn--sm" href="reviews.html">Review</a></div>
+              <div class="w-person"><span class="w-avatar w-avatar--sm" data-name="Zara Mensah"></span><div><div class="w-person__name">Zara Mensah</div><div class="w-person__meta">Assignment · Web Basics: HTML &amp; CSS</div></div></div>
+              <div class="w-cluster w-gap-2"><span class="w-badge w-badge--info">New</span><a class="w-btn w-btn--primary w-btn--sm" href="reviews.html">Review</a></div>
             </div>
             <div class="dash-review">
-              <div class="wu-person"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span><div><div class="wu-person__name">Jayden Alcantara</div><div class="wu-person__meta">Testimony draft · Sharing Your Story</div></div></div>
-              <div class="wu-cluster wu-gap-2"><span class="wu-badge wu-badge--info">New</span><a class="wu-btn wu-btn--primary wu-btn--sm" href="reviews.html">Review</a></div>
+              <div class="w-person"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span><div><div class="w-person__name">Jayden Alcantara</div><div class="w-person__meta">Testimony draft · Sharing Your Story</div></div></div>
+              <div class="w-cluster w-gap-2"><span class="w-badge w-badge--info">New</span><a class="w-btn w-btn--primary w-btn--sm" href="reviews.html">Review</a></div>
             </div>
           </div>
         </div>
@@ -157,39 +157,39 @@
   </main>
 
   <!-- Log check-in modal -->
-  <div class="wu-modal wu-modal--sm" id="m-checkin" role="dialog" aria-modal="true">
-    <div class="wu-modal__scrim"></div>
-    <div class="wu-modal__panel">
-      <div class="wu-modal__header">
-        <div><h2 class="wu-modal__title">Log a check-in</h2><p class="wu-modal__sub">Record a conversation with a youth.</p></div>
-        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+  <div class="w-modal w-modal--sm" id="m-checkin" role="dialog" aria-modal="true">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title">Log a check-in</h2><p class="w-modal__sub">Record a conversation with a youth.</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="wu-modal__body wu-stack">
-        <div class="wu-field">
-          <label class="wu-label" for="ci-youth">Youth <span class="wu-label__req">*</span></label>
-          <select class="wu-select" id="ci-youth">
+      <div class="w-modal__body w-stack">
+        <div class="w-field">
+          <label class="w-label" for="ci-youth">Youth <span class="w-label__req">*</span></label>
+          <select class="w-select" id="ci-youth">
             <option>Jayden Alcantara</option>
             <option selected>Devon Grant</option>
             <option>Amara Okafor</option>
             <option>Zara Mensah</option>
           </select>
         </div>
-        <div class="wu-field">
-          <label class="wu-label" for="ci-type">Type</label>
-          <select class="wu-select" id="ci-type">
+        <div class="w-field">
+          <label class="w-label" for="ci-type">Type</label>
+          <select class="w-select" id="ci-type">
             <option>In person</option>
             <option>Phone call</option>
             <option>Message</option>
           </select>
         </div>
-        <div class="wu-field">
-          <label class="wu-label" for="ci-notes">Notes</label>
-          <textarea class="wu-textarea" id="ci-notes" placeholder="How are they doing? Any prayer requests or follow-ups?"></textarea>
+        <div class="w-field">
+          <label class="w-label" for="ci-notes">Notes</label>
+          <textarea class="w-textarea" id="ci-notes" placeholder="How are they doing? Any prayer requests or follow-ups?"></textarea>
         </div>
       </div>
-      <div class="wu-modal__footer">
-        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
-        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Check-in saved" data-toast-type="success" data-toast-title="Logged">Save check-in</button>
+      <div class="w-modal__footer">
+        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <button class="w-btn w-btn--primary" data-close-modal data-toast="Check-in saved" data-toast-type="success" data-toast-title="Logged">Save check-in</button>
       </div>
     </div>
   </div>

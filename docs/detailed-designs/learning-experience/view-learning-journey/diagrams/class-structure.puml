@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +get(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "JourneyController" as controller_JourneyController <<controller>> {
     +GetAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "JourneyQuery" as request_JourneyQuery <<record>>
   class "JourneyQueryHandler" as handler_JourneyQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "BadgeAward" as entity_BadgeAward <<domain type>>
 }
 page_YouthAnnouncements --> client_LearningExperienceApi : invokes

@@ -9,9 +9,9 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError, MentorApi, SubmissionReviewView } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, MentorApi, SubmissionReviewView } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
 import { DraftSaveResult, UnsavedChangesService } from '../../../unsaved-changes.service';
@@ -26,15 +26,15 @@ interface GradingDraft {
 
 // Traces to: L2-MENTOR-003, L2-LEARN-007, L2-ENGAGE-008
 @Component({
-  selector: 'wu-mentor-submission-review',
+  selector: 'w-mentor-submission-review',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, DatePipe],
+  imports: [WShell, RouterLink, DatePipe],
   templateUrl: './mentor-submission-review.html',
   styles: `
     .review-layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.75fr);
-      gap: var(--wu-s6);
+      gap: var(--w-s6);
       align-items: start;
     }
     .submitted-body {
@@ -50,12 +50,12 @@ interface GradingDraft {
     .rubric-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 7rem;
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
       align-items: center;
-      padding: var(--wu-s4) 0;
-      border-bottom: 1px solid var(--wu-border);
+      padding: var(--w-s4) 0;
+      border-bottom: 1px solid var(--w-border);
     }
-    .review-actions .wu-btn {
+    .review-actions .w-btn {
       min-height: 44px;
     }
     @media (max-width: 52rem) {

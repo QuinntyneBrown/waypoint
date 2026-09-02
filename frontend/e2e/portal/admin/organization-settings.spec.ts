@@ -20,20 +20,20 @@ test('saved organization identity and consent policy appear on the guardian cons
 
   const settings = new OrganizationSettingsPage(page);
   await settings.goto();
-  await settings.organizationName.fill('Word Up Toronto');
-  await settings.displayName.fill('Word Up T.O.');
-  await settings.logoUrl.fill('https://example.com/word-up-logo.png');
+  await settings.organizationName.fill('Waypoint Toronto');
+  await settings.displayName.fill('Waypoint T.O.');
+  await settings.logoUrl.fill('https://example.com/waypoint-logo.png');
   await settings.city.fill('Toronto');
-  await settings.contactEmail.fill('consent@wordup.example');
-  await settings.consentStatement.fill('I approve participation in the current Word Up program.');
+  await settings.contactEmail.fill('consent@waypoint.example');
+  await settings.consentStatement.fill('I approve participation in the current Waypoint program.');
   await settings.reconsentEachTerm.check();
   await settings.requireMediaConsent.check();
   await settings.saveSettings.click();
   await expect(settings.outcome).toContainText('saved and recorded');
 
   await page.reload();
-  await expect(settings.organizationName).toHaveValue('Word Up Toronto');
-  await expect(settings.displayName).toHaveValue('Word Up T.O.');
+  await expect(settings.organizationName).toHaveValue('Waypoint Toronto');
+  await expect(settings.displayName).toHaveValue('Waypoint T.O.');
   await expect(settings.reconsentEachTerm).toBeChecked();
 
   const childAuth = await signInApi(request, {
@@ -49,11 +49,11 @@ test('saved organization identity and consent policy appear on the guardian cons
   expect(token).toBeTruthy();
 
   await page.goto(`/consent/respond?token=${token}`);
-  await expect(page.getByRole('heading', { name: 'Word Up T.O. guardian consent' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Waypoint T.O. guardian consent' })).toBeVisible();
   await expect(
-    page.getByText('I approve participation in the current Word Up program.'),
+    page.getByText('I approve participation in the current Waypoint program.'),
   ).toBeVisible();
-  await expect(page.getByText('consent@wordup.example')).toBeVisible();
+  await expect(page.getByText('consent@waypoint.example')).toBeVisible();
   await expect(page.getByText(/media requires recorded guardian permission/i)).toBeVisible();
 });
 

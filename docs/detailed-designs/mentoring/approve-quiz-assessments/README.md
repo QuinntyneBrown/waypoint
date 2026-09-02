@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Mentoring and Coaching subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Mentoring and Coaching subsystem owns this feature slice.
 
 The Approve quiz assessments feature slice refines `L2-MENTOR-004` into one independently deliverable interaction. Mentors shall approve or override auto-scored quizzes before they count; youth see only approved scores.
 
 A mentor starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+The feature spans Portal application; Waypoint API application. The frontend application owns interaction state and presentation. The Waypoint API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 ### Components and types
 
@@ -24,10 +24,10 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
 | Frontend API boundary | `MentoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`QuizApprovalController`](../../../../backend/src/WordUp.Api/Controllers/Mentoring/QuizApprovalController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`ApproveAllQuizAttemptsCommand`](../../../../backend/src/WordUp.Application/Mentoring/QuizApproval/ApproveAllQuizAttemptsCommand.cs)<br>[`ApproveAllQuizAttemptsCommandHandler`](../../../../backend/src/WordUp.Application/Mentoring/QuizApproval/ApproveAllQuizAttemptsCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`CompetencyAssessment`](../../../../backend/src/WordUp.Domain/Mentoring/CompetencyAssessment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`SecurityHeadersMiddleware`](../../../../backend/src/WordUp.Api/Middleware/SecurityHeadersMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| API transport | [`QuizApprovalController`](../../../../backend/src/Waypoint.Api/Controllers/Mentoring/QuizApprovalController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`ApproveAllQuizAttemptsCommand`](../../../../backend/src/Waypoint.Application/Mentoring/QuizApproval/ApproveAllQuizAttemptsCommand.cs)<br>[`ApproveAllQuizAttemptsCommandHandler`](../../../../backend/src/Waypoint.Application/Mentoring/QuizApproval/ApproveAllQuizAttemptsCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`CompetencyAssessment`](../../../../backend/src/Waypoint.Domain/Mentoring/CompetencyAssessment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`SecurityHeadersMiddleware`](../../../../backend/src/Waypoint.Api/Middleware/SecurityHeadersMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -40,7 +40,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Behavior
 
 1. **Entry.** A mentor starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-MENTOR-004`, `L2-LEARN-005`, `L2-CONSENT-003`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the Waypoint API application. The controller applies endpoint policy. The application handler applies `L2-MENTOR-004`, `L2-LEARN-005`, `L2-CONSENT-003`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
 3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
@@ -82,11 +82,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Approve quiz assessments.](diagrams/c4-system-context.png)
 
-*Figure 1 — C4 system context: Approve quiz assessments in the Word Up environment.*
+*Figure 1 — C4 system context: Approve quiz assessments in the Waypoint environment.*
 
 #### Container
 

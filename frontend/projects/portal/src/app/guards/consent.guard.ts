@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { ConsentApi } from '@wu/api';
+import { ConsentApi } from '@w/api';
 import { catchError, map, of } from 'rxjs';
 
 /**

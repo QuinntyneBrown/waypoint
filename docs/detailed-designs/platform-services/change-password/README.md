@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Platform Services subsystem owns this feature slice.
 
 The Change a password feature slice refines `L2-PLATFORM-002` into one independently deliverable interaction. Users shall manage profile details, photo, and password.
 
 An authenticated participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Edit a profile is an adjacent feature slice that owns other outcomes within the same primary L2 capability.
+The feature spans Portal application; Waypoint API application. The frontend application owns interaction state and presentation. The Waypoint API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Edit a profile is an adjacent feature slice that owns other outcomes within the same primary L2 capability.
 
 ### Components and types
 
@@ -23,11 +23,11 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`ForgotPassword`](../../../../frontend/projects/portal/src/app/auth/forgot-password/forgot-password.ts)<br>[`ResetPassword`](../../../../frontend/projects/portal/src/app/auth/reset-password/reset-password.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`PasswordResetApi`](../../../../frontend/projects/wu-api/src/lib/services/password-reset-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`AccessController`](../../../../backend/src/WordUp.Api/Controllers/PlatformServices/AccessController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`ChangePasswordCommand`](../../../../backend/src/WordUp.Application/PlatformServices/Profile/ChangePasswordCommand.cs)<br>[`ChangePasswordCommandHandler`](../../../../backend/src/WordUp.Application/PlatformServices/Profile/ChangePasswordCommandHandler.cs)<br>[`ChangePasswordCommandValidator`](../../../../backend/src/WordUp.Application/PlatformServices/Profile/ChangePasswordCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`SupportRequest`](../../../../backend/src/WordUp.Domain/PlatformServices/SupportRequest.cs)<br>[`DisplayPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/DisplayPreference.cs)<br>[`NotificationPreference`](../../../../backend/src/WordUp.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`IJwtTokenIssuer`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IJwtTokenIssuer.cs)<br>[`ISecureTokens`](../../../../backend/src/WordUp.Application/Shared/Abstractions/ISecureTokens.cs)<br>[`SecurityHeadersMiddleware`](../../../../backend/src/WordUp.Api/Middleware/SecurityHeadersMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| Frontend API boundary | [`PasswordResetApi`](../../../../frontend/projects/w-api/src/lib/services/password-reset-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`AccessController`](../../../../backend/src/Waypoint.Api/Controllers/PlatformServices/AccessController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`ChangePasswordCommand`](../../../../backend/src/Waypoint.Application/PlatformServices/Profile/ChangePasswordCommand.cs)<br>[`ChangePasswordCommandHandler`](../../../../backend/src/Waypoint.Application/PlatformServices/Profile/ChangePasswordCommandHandler.cs)<br>[`ChangePasswordCommandValidator`](../../../../backend/src/Waypoint.Application/PlatformServices/Profile/ChangePasswordCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`SupportRequest`](../../../../backend/src/Waypoint.Domain/PlatformServices/SupportRequest.cs)<br>[`DisplayPreference`](../../../../backend/src/Waypoint.Domain/PlatformServices/DisplayPreference.cs)<br>[`NotificationPreference`](../../../../backend/src/Waypoint.Domain/PlatformServices/NotificationPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`IJwtTokenIssuer`](../../../../backend/src/Waypoint.Application/Shared/Abstractions/IJwtTokenIssuer.cs)<br>[`ISecureTokens`](../../../../backend/src/Waypoint.Application/Shared/Abstractions/ISecureTokens.cs)<br>[`SecurityHeadersMiddleware`](../../../../backend/src/Waypoint.Api/Middleware/SecurityHeadersMiddleware.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -40,7 +40,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Behavior
 
 1. **Entry.** An authenticated participant starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-002`, `L2-AUTH-008`, `L2-AUTH-012`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the Waypoint API application. The controller applies endpoint policy. The application handler applies `L2-PLATFORM-002`, `L2-AUTH-008`, `L2-AUTH-012`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
 3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
@@ -82,11 +82,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Change a password.](diagrams/c4-system-context.png)
 
-*Figure 1 — C4 system context: Change a password in the Word Up environment.*
+*Figure 1 — C4 system context: Change a password in the Waypoint environment.*
 
 #### Container
 

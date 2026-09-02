@@ -1,15 +1,15 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthJourney } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, YouthJourney } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-LEARN-009
 @Component({
-  selector: 'wu-youth-badges',
+  selector: 'w-youth-badges',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, DatePipe],
+  imports: [WShell, RouterLink, DatePipe],
   templateUrl: './youth-badges.html',
 })
 export class YouthBadgesPage {

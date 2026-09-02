@@ -1,21 +1,21 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ApiError, LearningApi, YouthProgress } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, YouthProgress } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 type ProgressTab = 'overview' | 'quizzes' | 'attendance';
 
 // Traces to: L2-LEARN-010
 @Component({
-  selector: 'wu-youth-progress',
+  selector: 'w-youth-progress',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, DecimalPipe, DatePipe],
+  imports: [WShell, DecimalPipe, DatePipe],
   templateUrl: './youth-progress.html',
   styles: `
     .progress-tabs {
       display: flex;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
       overflow-x: auto;
     }
     .progress-tab {

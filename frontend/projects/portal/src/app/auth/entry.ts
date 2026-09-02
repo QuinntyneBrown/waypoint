@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { OnboardingApi } from '@wu/api';
-import { roleHome } from '@wu/auth';
+import { OnboardingApi } from '@w/api';
+import { roleHome } from '@w/auth';
 import { catchError, map, Observable, of } from 'rxjs';
 
 /**

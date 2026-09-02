@@ -1,33 +1,33 @@
-<wu-shell
+<w-shell
   role="mentor"
   active="my-youth"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Your caseload</div>
-        <h1 class="wu-page__title">My youth</h1>
-        <p class="wu-page__sub">Search and filter youth assigned to you.</p>
+  <div class="w-container w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Your caseload</div>
+        <h1 class="w-page__title">My youth</h1>
+        <p class="w-page__sub">Search and filter youth assigned to you.</p>
       </div>
     </div>
 
-    <div class="roster-controls wu-mb-4">
-      <div class="wu-field wu-mb-0 roster-search">
-        <label class="wu-label" for="mentor-youth-search">Search youth</label>
+    <div class="roster-controls w-mb-4">
+      <div class="w-field w-mb-0 roster-search">
+        <label class="w-label" for="mentor-youth-search">Search youth</label>
         <input
           id="mentor-youth-search"
-          class="wu-input"
+          class="w-input"
           type="search"
           placeholder="Search by name…"
           [value]="search()"
           (input)="onSearch($any($event.target).value)"
         />
       </div>
-      <div class="wu-pillrow" aria-label="Roster status filter">
+      <div class="w-pillrow" aria-label="Roster status filter">
         <button
-          class="wu-pill filter-button"
+          class="w-pill filter-button"
           type="button"
           [class.is-active]="filter() === 'all'"
           [attr.aria-pressed]="filter() === 'all'"
@@ -36,7 +36,7 @@
           All
         </button>
         <button
-          class="wu-pill filter-button"
+          class="w-pill filter-button"
           type="button"
           [class.is-active]="filter() === 'on-track'"
           [attr.aria-pressed]="filter() === 'on-track'"
@@ -45,7 +45,7 @@
           On track
         </button>
         <button
-          class="wu-pill filter-button"
+          class="w-pill filter-button"
           type="button"
           [class.is-active]="filter() === 'at-risk'"
           [attr.aria-pressed]="filter() === 'at-risk'"
@@ -54,7 +54,7 @@
           At risk
         </button>
         <button
-          class="wu-pill filter-button"
+          class="w-pill filter-button"
           type="button"
           [class.is-active]="filter() === 'new'"
           [attr.aria-pressed]="filter() === 'new'"
@@ -66,22 +66,22 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
     @if (loading()) {
-      <p class="wu-muted" role="status">Loading your roster…</p>
+      <p class="w-muted" role="status">Loading your roster…</p>
     } @else if (youth().length === 0) {
-      <div class="wu-card wu-empty">
-        <div class="wu-empty__icon"><wu-icon name="users" /></div>
-        <h2 class="wu-empty__title">No youth match that filter</h2>
-        <p class="wu-empty__text">Try another status or clear your search to see your roster.</p>
-        <button class="wu-btn wu-btn--primary" type="button" (click)="clearFilters()">
+      <div class="w-card w-empty">
+        <div class="w-empty__icon"><w-icon name="users" /></div>
+        <h2 class="w-empty__title">No youth match that filter</h2>
+        <p class="w-empty__text">Try another status or clear your search to see your roster.</p>
+        <button class="w-btn w-btn--primary" type="button" (click)="clearFilters()">
           Clear filters
         </button>
       </div>
     } @else {
-      <div class="wu-table-wrap">
-        <table class="wu-table wu-table--cards">
+      <div class="w-table-wrap">
+        <table class="w-table w-table--cards">
           <thead>
             <tr>
               <th>Youth</th>
@@ -97,12 +97,12 @@
                 <td data-label="Youth">
                   <a [routerLink]="['/mentor/youth', person.id]">{{ person.displayName }}</a>
                   @if (person.new) {
-                    <span class="wu-badge wu-badge--info">New</span>
+                    <span class="w-badge w-badge--info">New</span>
                   }
                 </td>
                 <td data-label="Cohort">{{ person.cohortName ?? 'Not assigned' }}</td>
                 <td data-label="Progress">
-                  <div class="wu-cluster">
+                  <div class="w-cluster">
                     <progress
                       max="100"
                       [value]="percent(person.progress)"
@@ -113,7 +113,7 @@
                 </td>
                 <td data-label="Last active">{{ person.lastActiveAt | date: 'mediumDate' }}</td>
                 <td data-label="Status">
-                  <span class="wu-badge" [class.wu-badge--error]="person.atRisk">
+                  <span class="w-badge" [class.w-badge--error]="person.atRisk">
                     {{ person.status }}
                   </span>
                 </td>
@@ -124,4 +124,4 @@
       </div>
     }
   </div>
-</wu-shell>
+</w-shell>

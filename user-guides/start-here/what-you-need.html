@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="The browser and addresses Word Up runs at, why nobody can sign themselves up, who is eligible, and how the very first Program Administrator account is created."
+      content="The browser and addresses Waypoint runs at, why nobody can sign themselves up, who is eligible, and how the very first Program Administrator account is created."
     />
-    <title>What you need before you start — Word Up User Guide</title>
+    <title>What you need before you start — Waypoint User Guide</title>
     <link rel="stylesheet" href="../assets/vendor/core.css" />
     <link rel="stylesheet" href="../assets/vendor/a11y.css" />
     <link rel="stylesheet" href="../assets/guide.css" />
@@ -37,24 +37,24 @@
             <p class="ug-hero__eyebrow">Start here / 02</p>
             <h1>What you need before you start</h1>
             <p class="ug-hero__lede">
-              Word Up asks very little of you: a web browser and an account
+              Waypoint asks very little of you: a web browser and an account
               somebody else created for you. This page tells you the addresses
               to open, why there is no sign-up button anywhere, who is eligible
               to take part, and — if you are standing up a fresh install — the
               one command that creates the first account of all.
             </p>
             <div class="ug-hero__meta">
-              <span class="wu-badge wu-badge--outline">Everyone</span>
-              <span class="ug-stamp">WU-UG-02</span>
+              <span class="w-badge w-badge--outline">Everyone</span>
+              <span class="ug-stamp">W-UG-02</span>
             </div>
           </header>
 
           <nav data-ug-toc aria-label="On this page"></nav>
 
-          <section class="ug-section" id="what-word-up-is">
-            <h2>What Word Up is</h2>
+          <section class="ug-section" id="what-waypoint-is">
+            <h2>What Waypoint is</h2>
             <p>
-              Word Up is a youth leadership platform. A young person applies to
+              Waypoint is a youth leadership platform. A young person applies to
               a cohort, a guardian consents, a program administrator approves
               the application and places the applicant with a mentor, and from
               then on the young person works through a curriculum of lessons,
@@ -70,7 +70,7 @@
           <section class="ug-section" id="a-browser-and-two-addresses">
             <h2>A browser and two addresses</h2>
             <p>
-              Word Up runs entirely in a web browser. Any current desktop or
+              Waypoint runs entirely in a web browser. Any current desktop or
               mobile browser will do; there is nothing to install and nothing to
               configure.
             </p>
@@ -120,7 +120,7 @@
             <p>
               Behind both of them sits the API at
               <code>http://127.0.0.1:5211</code>. You do not need to open it to
-              use Word Up, but two of its addresses are worth knowing when
+              use Waypoint, but two of its addresses are worth knowing when
               something looks wrong:
             </p>
 
@@ -147,7 +147,7 @@
               </div>
             </div>
 
-            <div class="wu-alert wu-alert--info">
+            <div class="w-alert w-alert--info">
               <p>
                 The addresses above are the local development ones. If somebody
                 else set the system up for you, they will have given you a
@@ -161,7 +161,7 @@
             <h2>You cannot sign yourself up</h2>
             <p>
               There is no sign-up button, no "create an account" link, and no
-              way to register yourself. This is deliberate: Word Up works with
+              way to register yourself. This is deliberate: Waypoint works with
               young people, so every account is created by a named adult who is
               accountable for creating it.
             </p>
@@ -192,8 +192,8 @@
               cannot create accounts for anyone, including themselves.
             </p>
 
-            <div class="wu-alert wu-alert--info">
-              <p class="wu-alert__title">
+            <div class="w-alert w-alert--info">
+              <p class="w-alert__title">
                 Applying is not the same as having an account
               </p>
               <p>
@@ -213,7 +213,8 @@
               <strong>single use</strong> and
               <strong>expires after 14 days</strong>. Accepting it is covered
               step by step in
-              <a href="first-sign-in.html">Opening Word Up for the first time</a
+              <a href="first-sign-in.html"
+                >Opening Waypoint for the first time</a
               >.
             </p>
           </section>
@@ -257,7 +258,7 @@
               password is set — accepting an invitation, resetting a forgotten
               password, and changing your password in settings:
             </p>
-            <div class="wu-alert wu-alert--info">
+            <div class="w-alert w-alert--info">
               <p>
                 <strong
                   >Use at least 8 characters, including a letter and a
@@ -267,7 +268,7 @@
             </div>
             <p>
               There is no maximum length, no required symbol, no forced mixture
-              of upper and lower case, and no expiry. Word Up does not ask you
+              of upper and lower case, and no expiry. Waypoint does not ask you
               to change your password on a schedule.
             </p>
             <p>
@@ -303,7 +304,7 @@
           <section class="ug-section" id="the-very-first-account">
             <h2>The very first account</h2>
             <p>
-              This section is only for whoever is standing up a fresh Word Up
+              This section is only for whoever is standing up a fresh Waypoint
               install. If somebody already gave you an invitation, skip it.
             </p>
             <p>
@@ -316,13 +317,13 @@
               the inviting.
             </p>
             <p>
-              The <code>wu</code> command-line tool breaks the cycle. It creates
-              the first Program Administrator directly, applying any pending
-              database migrations on the way:
+              The <code>way</code> command-line tool breaks the cycle. It
+              creates the first Program Administrator directly, applying any
+              pending database migrations on the way:
             </p>
 
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu db seed --email &lt;email&gt; --password &lt;password&gt; --display-name &lt;name&gt;</code></pre>
+              <pre><code>way db seed --email &lt;email&gt; --password &lt;password&gt; --display-name &lt;name&gt;</code></pre>
             </div>
 
             <p>All three options are required.</p>
@@ -362,12 +363,10 @@
               >.
             </p>
 
-            <div class="wu-alert wu-alert--warning">
-              <p class="wu-alert__title">
-                The password is on your command line
-              </p>
+            <div class="w-alert w-alert--warning">
+              <p class="w-alert__title">The password is on your command line</p>
               <p>
-                <code>wu db seed</code> takes the password as a plain argument,
+                <code>way db seed</code> takes the password as a plain argument,
                 so it will be visible to anyone who can see your terminal and
                 will normally be written to your shell history. Use a throwaway
                 password for the seed account and change it in settings once you
@@ -380,7 +379,7 @@
             <h2>What you do not need</h2>
             <p>
               A number of things you might reasonably expect to need are not
-              part of Word Up at all.
+              part of Waypoint at all.
             </p>
             <ul>
               <li>
@@ -393,7 +392,7 @@
                 browser add-on, no special PDF viewer.
               </li>
               <li>
-                <strong>No second factor.</strong> Word Up asks for an email
+                <strong>No second factor.</strong> Waypoint asks for an email
                 address and a password. There is no authenticator app, no SMS
                 code and no hardware key.
               </li>
@@ -403,8 +402,8 @@
                   provider.</strong
                 >
                 There is no "continue with Google" button, no Google Workspace
-                or Drive connection, and no Google Sheets sync. Your Word Up
-                password is a Word Up password.
+                or Drive connection, and no Google Sheets sync. Your Waypoint
+                password is a Waypoint password.
               </li>
               <li>
                 <strong>No numeric PIN and no account switcher.</strong>
@@ -416,12 +415,12 @@
 
           <section class="ug-section" id="before-you-rely-on-this">
             <h2>Before you rely on this</h2>
-            <div class="wu-alert wu-alert--error" role="alert">
-              <p class="wu-alert__title">
+            <div class="w-alert w-alert--error" role="alert">
+              <p class="w-alert__title">
                 Not approved for production or for real participant information
               </p>
               <p>
-                Word Up is a development project. No independent security,
+                Waypoint is a development project. No independent security,
                 privacy, safeguarding, or accessibility review has been
                 completed, and no release is approved for production use or for
                 storing real participant information. Use synthetic data only.
@@ -448,7 +447,7 @@
                 <a class="ug-card" href="first-sign-in.html">
                   <span class="ug-card__kicker">Start here / 03</span>
                   <span class="ug-card__title"
-                    >Opening Word Up for the first time</span
+                    >Opening Waypoint for the first time</span
                   >
                   <span class="ug-card__desc"
                     >Accept the invitation, choose a password, work through the

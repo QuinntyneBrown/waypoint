@@ -52,7 +52,7 @@ test('an admin authors and publishes the complete curriculum workspace', async (
   await lesson.getByLabel('Upload PDF or MP4').setInputFiles({
     name: 'leader-guide.pdf',
     mimeType: 'application/pdf',
-    buffer: Buffer.from('%PDF-1.7\nWord Up curriculum guide'),
+    buffer: Buffer.from('%PDF-1.7\nWaypoint curriculum guide'),
   });
   await expect(lesson).toContainText('leader-guide.pdf');
   await lesson.getByRole('button', { name: 'Publish lesson' }).click();

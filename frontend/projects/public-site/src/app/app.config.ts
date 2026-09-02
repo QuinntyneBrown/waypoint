@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top' })),
-    // withFetch keeps HttpClient SSR-safe; the intake POST is anonymous (no wu-auth).
+    // withFetch keeps HttpClient SSR-safe; the intake POST is anonymous (no w-auth).
     provideHttpClient(withFetch()),
     provideClientHydration(withEventReplay()),
   ],

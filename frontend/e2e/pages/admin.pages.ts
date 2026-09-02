@@ -503,13 +503,13 @@ export class AdminCalendarPage extends BasePage {
     return this.page.getByRole('checkbox', { name: /repeat weekly/i });
   }
   get repeatsWeeklyControl() {
-    return this.page.locator('label.wu-check').filter({ hasText: /repeat weekly/i });
+    return this.page.locator('label.w-check').filter({ hasText: /repeat weekly/i });
   }
   get schedule() {
     return this.page.getByRole('button', { name: 'Schedule session', exact: true });
   }
   get status() {
-    return this.page.locator('p.wu-sr-only[role="status"]');
+    return this.page.locator('p.w-sr-only[role="status"]');
   }
   session(title: string) {
     return this.agenda.getByRole('article').filter({ hasText: title });

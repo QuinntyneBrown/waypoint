@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "SubmissionsController" as controller_SubmissionsController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "SubmissionStatusQuery" as request_SubmissionStatusQuery <<record>>
   class "SubmissionStatusQueryHandler" as handler_SubmissionStatusQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "Submission" as entity_Submission <<domain type>>
 }
 page_YouthNotifications --> client_NotificationPreferencesApi : invokes

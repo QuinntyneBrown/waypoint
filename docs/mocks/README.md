@@ -1,6 +1,6 @@
-# Word Up — HTML mocks
+# Waypoint — HTML mocks
 
-Static, high-fidelity design mocks for **Word Up**, a youth leadership platform supporting Bible study, mentoring, leadership development, coding, program operations, safeguarding, and progress tracking.
+Static, high-fidelity design mocks for **Waypoint**, a youth leadership platform supporting Bible study, mentoring, leadership development, coding, program operations, safeguarding, and progress tracking.
 
 Open [`index.html`](index.html) in a browser. It is the searchable product map for the complete mock set and links to dialog, empty, loading, and other state variants. No server, package install, build step, or internet connection is required.
 
@@ -35,8 +35,8 @@ The root also contains the product map, style guide, reusable page templates, an
 
 - `assets/css/_core.css` — tokens and component foundations
 - `assets/css/_fonts.css` — embedded font resources
-- `assets/css/wordup.css` — bundled styles consumed by every page
-- `assets/js/wordup.js` — shared shell, icons, dialogs, toasts, state helpers, and fictional data
+- `assets/css/waypoint.css` — bundled styles consumed by every page
+- `assets/js/waypoint.js` — shared shell, icons, dialogs, toasts, state helpers, and fictional data
 
 The mocks use FaithTech's visual language, including the signature lime brand colour, Space Grotesk headings, Inter body text, and Fraunces accents. Fonts are embedded, icons are inline SVG, and avatars are generated from initials so the screens work offline.
 

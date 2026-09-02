@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Public Site subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Public Site subsystem owns this feature slice.
 
 The Register volunteer interest feature slice refines `L2-PUB-003` into one independently deliverable interaction. The contact form, volunteer sign-up, and donation flow shall validate input, submit, and acknowledge the user; a volunteer request shall record the screening-consent acknowledgement.
 
 An anonymous visitor starts this feature interaction through the Public Site application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans Public Site application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Contact the program; Start a donation are adjacent feature slices that own other outcomes within the same primary L2 capability.
+The feature spans Public Site application; Waypoint API application. The frontend application owns interaction state and presentation. The Waypoint API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Contact the program; Start a donation are adjacent feature slices that own other outcomes within the same primary L2 capability.
 
 ### Components and types
 
@@ -23,11 +23,11 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`VolunteerAttendance`](../../../../frontend/projects/portal/src/app/features/volunteer/attendance/volunteer-attendance.ts)<br>[`VolunteerSchedule`](../../../../frontend/projects/portal/src/app/features/volunteer/schedule/volunteer-schedule.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`VolunteerApi`](../../../../frontend/projects/wu-api/src/lib/services/volunteer-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`PublicController`](../../../../backend/src/WordUp.Api/Controllers/PublicSite/PublicController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`SubmitVolunteerSignupCommand`](../../../../backend/src/WordUp.Application/PublicSite/SubmitVolunteerSignupCommand.cs)<br>[`SubmitVolunteerSignupCommandHandler`](../../../../backend/src/WordUp.Application/PublicSite/SubmitVolunteerSignupCommandHandler.cs)<br>[`SubmitVolunteerSignupCommandValidator`](../../../../backend/src/WordUp.Application/PublicSite/SubmitVolunteerSignupCommandValidator.cs)<br>[`SubmitVolunteerSignupResult`](../../../../backend/src/WordUp.Application/PublicSite/SubmitVolunteerSignupResult.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`VolunteerSignup`](../../../../backend/src/WordUp.Domain/PublicSite/VolunteerSignup.cs)<br>[`ContactRequest`](../../../../backend/src/WordUp.Domain/PublicSite/ContactRequest.cs)<br>[`DonationPledge`](../../../../backend/src/WordUp.Domain/PublicSite/DonationPledge.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`ValidationBehavior`](../../../../backend/src/WordUp.Application/Shared/Behaviors/ValidationBehavior.cs)<br>[`ICurrentUser`](../../../../backend/src/WordUp.Application/Shared/Abstractions/ICurrentUser.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| Frontend API boundary | [`VolunteerApi`](../../../../frontend/projects/w-api/src/lib/services/volunteer-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`PublicController`](../../../../backend/src/Waypoint.Api/Controllers/PublicSite/PublicController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`SubmitVolunteerSignupCommand`](../../../../backend/src/Waypoint.Application/PublicSite/SubmitVolunteerSignupCommand.cs)<br>[`SubmitVolunteerSignupCommandHandler`](../../../../backend/src/Waypoint.Application/PublicSite/SubmitVolunteerSignupCommandHandler.cs)<br>[`SubmitVolunteerSignupCommandValidator`](../../../../backend/src/Waypoint.Application/PublicSite/SubmitVolunteerSignupCommandValidator.cs)<br>[`SubmitVolunteerSignupResult`](../../../../backend/src/Waypoint.Application/PublicSite/SubmitVolunteerSignupResult.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`VolunteerSignup`](../../../../backend/src/Waypoint.Domain/PublicSite/VolunteerSignup.cs)<br>[`ContactRequest`](../../../../backend/src/Waypoint.Domain/PublicSite/ContactRequest.cs)<br>[`DonationPledge`](../../../../backend/src/Waypoint.Domain/PublicSite/DonationPledge.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`ValidationBehavior`](../../../../backend/src/Waypoint.Application/Shared/Behaviors/ValidationBehavior.cs)<br>[`ICurrentUser`](../../../../backend/src/Waypoint.Application/Shared/Abstractions/ICurrentUser.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -40,7 +40,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Behavior
 
 1. **Entry.** An anonymous visitor starts this feature interaction through the Public Site application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PUB-003`, `L2-NFR-001`, `L2-CONSENT-004`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the Waypoint API application. The controller applies endpoint policy. The application handler applies `L2-PUB-003`, `L2-NFR-001`, `L2-CONSENT-004`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
 3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
@@ -82,11 +82,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Register volunteer interest.](diagrams/c4-system-context.png)
 
-*Figure 1 — C4 system context: Register volunteer interest in the Word Up environment.*
+*Figure 1 — C4 system context: Register volunteer interest in the Waypoint environment.*
 
 #### Container
 

@@ -6,35 +6,35 @@ import {
   AssignWorkOptions,
   MentorApi,
   ReminderCadence,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAccessibleDialog, WIcon, WShell } from '@w/ui';
 
 type TargetMode = 'individual' | 'cohort';
 
 // Traces to: L2-MENTOR-008, L2-ENGAGE-008, L2-AUTH-010
 @Component({
-  selector: 'wu-mentor-assign-work',
+  selector: 'w-mentor-assign-work',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, WuAccessibleDialog],
+  imports: [WShell, WIcon, WAccessibleDialog],
   templateUrl: './mentor-assign-work.html',
   styles: `
     .assign-layout {
       display: grid;
       grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.6fr);
-      gap: var(--wu-s6);
+      gap: var(--w-s6);
       align-items: start;
     }
     .summary-card {
       position: sticky;
-      top: var(--wu-s4);
+      top: var(--w-s4);
     }
     .recipient-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-s2) var(--wu-s4);
+      gap: var(--w-s2) var(--w-s4);
     }
-    .recipient-list .wu-check {
+    .recipient-list .w-check {
       margin-bottom: 0;
     }
     .review-button,
@@ -59,7 +59,7 @@ type TargetMode = 'individual' | 'cohort';
       .review-button {
         width: 100%;
       }
-      .wu-modal__footer .wu-btn {
+      .w-modal__footer .w-btn {
         flex: 1 1 100%;
       }
     }

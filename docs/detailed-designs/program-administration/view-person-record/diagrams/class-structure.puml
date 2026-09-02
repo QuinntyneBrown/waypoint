@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +get(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "OrgSettingsController" as controller_OrgSettingsController <<controller>> {
     +GetAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "SendPasswordResetForPersonCommand" as request_SendPasswordResetForPersonCommand <<record>>
   class "SendPasswordResetForPersonCommandHandler" as handler_SendPasswordResetForPersonCommandHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "Cohort" as entity_Cohort <<domain type>>
 }
 page_ResetPassword --> client_PasswordResetApi : invokes

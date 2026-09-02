@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +get(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "OrgSettingsController" as controller_OrgSettingsController <<controller>> {
     +GetAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "ProgressBoardQuery" as request_ProgressBoardQuery <<record>>
   class "ProgressBoardQueryHandler" as handler_ProgressBoardQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "Cohort" as entity_Cohort <<domain type>>
 }
 page_SettingsNotifications --> client_PeopleApi : invokes

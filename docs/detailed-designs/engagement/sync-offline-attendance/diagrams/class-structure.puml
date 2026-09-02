@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "AttendanceController" as controller_AttendanceController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "AttendanceHistoryBySessionQuery" as request_AttendanceHistoryBySessionQuery <<record>>
   class "AttendanceHistoryBySessionQueryHandler" as handler_AttendanceHistoryBySessionQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "AttendanceRecord" as entity_AttendanceRecord <<domain type>>
 }
 page_AttendanceQueueService --> client_EngagementApi : invokes

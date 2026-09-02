@@ -1,6 +1,6 @@
-# Word Up
+# Waypoint
 
-Word Up is a youth leadership platform for Bible study, mentoring, leadership development, and coding.
+Waypoint is a youth leadership platform for Bible study, mentoring, leadership development, and coding.
 
 [![Backend CI](https://github.com/QuinntyneBrown/waypoint/actions/workflows/backend.yml/badge.svg)](https://github.com/QuinntyneBrown/waypoint/actions/workflows/backend.yml)
 [![Frontend CI](https://github.com/QuinntyneBrown/waypoint/actions/workflows/frontend.yml/badge.svg)](https://github.com/QuinntyneBrown/waypoint/actions/workflows/frontend.yml)
@@ -11,11 +11,11 @@ Word Up is a youth leadership platform for Bible study, mentoring, leadership de
 [Getting started](#getting-started) · [Documentation](#documentation) · [Contributing](#contributing) · [Support](SUPPORT.md)
 
 > [!WARNING]
-> Word Up remains a development project. Independent security, privacy, safeguarding, and accessibility reviews have not been completed, and no release is approved for production use or for storing real participant information. Use synthetic data only. See the current [implementation status](docs/implementation-plan.md) and [security policy](SECURITY.md).
+> Waypoint remains a development project. Independent security, privacy, safeguarding, and accessibility reviews have not been completed, and no release is approved for production use or for storing real participant information. Use synthetic data only. See the current [implementation status](docs/implementation-plan.md) and [security policy](SECURITY.md).
 
 ## Overview
 
-Word Up is designed to bring youth applications, consent and safeguarding, cohort operations, learning, mentoring, attendance, communication, and reporting into one role-aware system. It serves youth, mentors, guardians, volunteers, program administrators, and public visitors.
+Waypoint is designed to bring youth applications, consent and safeguarding, cohort operations, learning, mentoring, attendance, communication, and reporting into one role-aware system. It serves youth, mentors, guardians, volunteers, program administrators, and public visitors.
 
 The repository contains a .NET 9 API and operational CLI, an Angular 21 authenticated portal and public SSR site, shared frontend libraries, SQL Server persistence, automated acceptance tests, and static interaction references. The product scope comes from the [product requirements](docs/PRD.md) and 88 in-scope, acceptance-testable requirements under [`docs/specs`](docs/specs/README.md).
 
@@ -43,7 +43,7 @@ The repository contains a .NET 9 API and operational CLI, an Angular 21 authenti
 ```bash
 git clone https://github.com/QuinntyneBrown/waypoint.git
 cd waypoint
-dotnet restore backend/WordUp.sln
+dotnet restore backend/Waypoint.sln
 npm --prefix frontend ci
 ```
 
@@ -54,7 +54,7 @@ Start each process from the repository root in a separate terminal.
 Terminal 1 — API:
 
 ```bash
-dotnet run --project backend/src/WordUp.Api --environment Development --urls http://127.0.0.1:5211
+dotnet run --project backend/src/Waypoint.Api --environment Development --urls http://127.0.0.1:5211
 ```
 
 Terminal 2 — authenticated portal:
@@ -81,7 +81,7 @@ Both web applications proxy `/api` and `/hubs` to the API. Development starts wi
 
 ### Configuration
 
-Local defaults are defined in [`appsettings.json`](backend/src/WordUp.Api/appsettings.json). ASP.NET Core configuration keys use double underscores in environment variables; for example, `Jwt:SigningKey` becomes `Jwt__SigningKey`.
+Local defaults are defined in [`appsettings.json`](backend/src/Waypoint.Api/appsettings.json). ASP.NET Core configuration keys use double underscores in environment variables; for example, `Jwt:SigningKey` becomes `Jwt__SigningKey`.
 
 | Configuration                                                        | Purpose                                                                                  |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
@@ -92,7 +92,7 @@ Local defaults are defined in [`appsettings.json`](backend/src/WordUp.Api/appset
 | `ApplicationUrls:PortalBaseUrl`, `ApplicationUrls:PublicSiteBaseUrl` | Build absolute application links; production values must use HTTPS.                      |
 | `Smtp:*`                                                             | Configures SMTP delivery, TLS, sender identity, retry limits, and optional credentials.  |
 
-Production startup rejects the in-memory database, placeholder keys, non-HTTPS application URLs, and missing required SMTP settings. Keep secrets outside source control. See the [architecture guide](docs/ARCHITECTURE.md) and [CLI guide](backend/src/WordUp.Cli/README.md) for operational details.
+Production startup rejects the in-memory database, placeholder keys, non-HTTPS application URLs, and missing required SMTP settings. Keep secrets outside source control. See the [architecture guide](docs/ARCHITECTURE.md) and [CLI guide](backend/src/Waypoint.Cli/README.md) for operational details.
 
 ## Architecture
 
@@ -112,14 +112,14 @@ Run backend and requirements checks from the repository root:
 
 ```bash
 dotnet tool restore
-dotnet restore backend/WordUp.sln
-dotnet build backend/WordUp.sln --configuration Release --no-restore
-dotnet ef migrations has-pending-model-changes --project backend/src/WordUp.Infrastructure --startup-project backend/src/WordUp.Api --configuration Release --no-build
-dotnet test backend/WordUp.sln --configuration Release --no-build
+dotnet restore backend/Waypoint.sln
+dotnet build backend/Waypoint.sln --configuration Release --no-restore
+dotnet ef migrations has-pending-model-changes --project backend/src/Waypoint.Infrastructure --startup-project backend/src/Waypoint.Api --configuration Release --no-build
+dotnet test backend/Waypoint.sln --configuration Release --no-build
 node scripts/check-traceability.mjs --strict
 ```
 
-Integration tests create disposable SQL Server databases. They use `(localdb)\MSSQLLocalDB` by default on Windows. On Linux or macOS, provision a reachable SQL Server and set `WORDUP_TEST_SQLSERVER` and `WORDUP_TEST_SQLAUTH`; the [backend CI workflow](.github/workflows/backend.yml) shows a known-good container and connection setup.
+Integration tests create disposable SQL Server databases. They use `(localdb)\MSSQLLocalDB` by default on Windows. On Linux or macOS, provision a reachable SQL Server and set `WAYPOINT_TEST_SQLSERVER` and `WAYPOINT_TEST_SQLAUTH`; the [backend CI workflow](.github/workflows/backend.yml) shows a known-good container and connection setup.
 
 Run frontend checks from `frontend/`:
 
@@ -149,9 +149,9 @@ backend/
 frontend/
   projects/portal/     Authenticated role-aware application
   projects/public-site/ SSR public site and intake experience
-  projects/wu-api/     Typed API client and models
-  projects/wu-auth/    Session state, guards, and authentication integration
-  projects/wu-ui/      Shared design system and application shell
+  projects/w-api/     Typed API client and models
+  projects/w-auth/    Session state, guards, and authentication integration
+  projects/w-ui/      Shared design system and application shell
   e2e/                 Playwright acceptance and quality gates
 docs/
   specs/               L1/L2 requirements and acceptance criteria
@@ -164,7 +164,7 @@ scripts/               Traceability, documentation, and performance tooling
 ## Documentation
 
 The **[user guide](https://calm-meadow-033758b0f.7.azurestaticapps.net)** is the documentation for
-people who use Word Up — youth, mentors, guardians, volunteers, and program administrators. It covers
+people who use Waypoint — youth, mentors, guardians, volunteers, and program administrators. It covers
 every screen role by role, every message the product can show, and what this release does and does
 not do. Everything else below is for people building it.
 
@@ -177,7 +177,7 @@ not do. Everything else below is for people building it.
 | [Architecture](docs/ARCHITECTURE.md)                 | System layers, request flow, persistence, and security boundaries |
 | [Architecture decisions](docs/DECISIONS.md)          | Durable technical and product decisions                           |
 | [Frontend guide](frontend/README.md)                 | Angular applications, libraries, and frontend commands            |
-| [Operational CLI](backend/src/WordUp.Cli/README.md)  | CLI commands and production configuration                         |
+| [Operational CLI](backend/src/Waypoint.Cli/README.md)  | CLI commands and production configuration                         |
 | [Design references](docs/mocks/README.md)            | Static product map and role-based interaction references          |
 | [Changelog](CHANGELOG.md)                            | Notable contributor-visible changes                               |
 
@@ -197,4 +197,4 @@ Do not report vulnerabilities in a public issue. Follow [SECURITY.md](SECURITY.m
 
 ## License
 
-Copyright (c) 2026 Word Up contributors. Released under the [MIT License](LICENSE).
+Copyright (c) 2026 Waypoint contributors. Released under the [MIT License](LICENSE).

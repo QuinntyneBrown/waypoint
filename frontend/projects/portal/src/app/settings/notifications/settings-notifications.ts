@@ -1,10 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import {
-  NOTIFICATION_CATEGORIES,
-  NOTIFICATION_DEFAULTS,
-  NotificationPreferencesApi,
-} from '@wu/api';
-import { ToastService } from '@wu/ui';
+import { NOTIFICATION_CATEGORIES, NOTIFICATION_DEFAULTS, NotificationPreferencesApi } from '@w/api';
+import { ToastService } from '@w/ui';
 import { SettingsShell } from '../settings-shell';
 
 type Channel = 'inApp' | 'email';
@@ -15,7 +11,7 @@ interface PrefRow {
 
 // Traces to: L2-PLATFORM-003
 @Component({
-  selector: 'wu-settings-notifications',
+  selector: 'w-settings-notifications',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [SettingsShell],
   templateUrl: './settings-notifications.html',

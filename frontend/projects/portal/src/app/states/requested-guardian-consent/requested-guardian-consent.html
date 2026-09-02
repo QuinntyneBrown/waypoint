@@ -1,23 +1,23 @@
-<main class="wu-container wu-page">
-  <div class="wu-page__head">
-    <div class="wu-page__titles">
-      <div class="wu-eyebrow">Secure one-time form</div>
-      <h1 class="wu-page__title">
-        {{ request()?.organizationName ?? 'Word Up' }} guardian consent
+<main class="w-container w-page">
+  <div class="w-page__head">
+    <div class="w-page__titles">
+      <div class="w-eyebrow">Secure one-time form</div>
+      <h1 class="w-page__title">
+        {{ request()?.organizationName ?? 'Waypoint' }} guardian consent
       </h1>
-      <p class="wu-page__sub">Review participation and optional media choices.</p>
+      <p class="w-page__sub">Review participation and optional media choices.</p>
     </div>
   </div>
 
   @if (loadingError(); as error) {
-    <section class="wu-empty">
-      <h2 class="wu-empty__title">Consent link unavailable</h2>
-      <p class="wu-empty__text" role="alert">{{ error }}</p>
+    <section class="w-empty">
+      <h2 class="w-empty__title">Consent link unavailable</h2>
+      <p class="w-empty__text" role="alert">{{ error }}</p>
     </section>
   } @else if (receipt(); as saved) {
-    <section class="wu-card">
-      <div class="wu-card__body wu-stack">
-        <h2 class="wu-card__title">Consent recorded</h2>
+    <section class="w-card">
+      <div class="w-card__body w-stack">
+        <h2 class="w-card__title">Consent recorded</h2>
         <p>
           Thank you. The youth’s access updates automatically, and a copy has been sent to the
           guardian email.
@@ -32,9 +32,9 @@
       </div>
     </section>
   } @else if (request(); as consentRequest) {
-    <section class="wu-card">
-      <form class="wu-card__body wu-stack" [formGroup]="form" (ngSubmit)="submit()">
-        <div class="wu-alert wu-alert--info">
+    <section class="w-card">
+      <form class="w-card__body w-stack" [formGroup]="form" (ngSubmit)="submit()">
+        <div class="w-alert w-alert--info">
           <strong>Youth:</strong> {{ consentRequest.youthName }}<br />
           <span>
             Requested for {{ consentRequest.guardianDestination }} · Link expires
@@ -42,98 +42,96 @@
           </span>
         </div>
 
-        <div class="wu-card wu-card--subtle">
-          <div class="wu-card__body">
+        <div class="w-card w-card--subtle">
+          <div class="w-card__body">
             <strong>Participation statement</strong>
             <p>{{ consentRequest.consentStatement }}</p>
             @if (consentRequest.contactEmail) {
-              <p class="wu-muted">Questions: {{ consentRequest.contactEmail }}</p>
+              <p class="w-muted">Questions: {{ consentRequest.contactEmail }}</p>
             }
           </div>
         </div>
 
-        <div class="wu-field">
-          <label class="wu-label" for="requested-guardian-name">Guardian full name</label>
+        <div class="w-field">
+          <label class="w-label" for="requested-guardian-name">Guardian full name</label>
           <input
-            class="wu-input"
+            class="w-input"
             id="requested-guardian-name"
             autocomplete="name"
             formControlName="guardianName"
           />
         </div>
-        <div class="wu-field">
-          <label class="wu-label" for="requested-relationship">Relationship to youth</label>
-          <input class="wu-input" id="requested-relationship" formControlName="relationship" />
+        <div class="w-field">
+          <label class="w-label" for="requested-relationship">Relationship to youth</label>
+          <input class="w-input" id="requested-relationship" formControlName="relationship" />
         </div>
 
-        <label class="wu-check">
+        <label class="w-check">
           <input type="checkbox" formControlName="participationConsent" />
-          <span class="wu-check__box">
-            <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+          <span class="w-check__box">
+            <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
           </span>
-          <span>I give permission for this youth to participate in Word Up.</span>
+          <span>I give permission for this youth to participate in Waypoint.</span>
         </label>
 
-        <h2 class="wu-card__title">Optional media choices</h2>
+        <h2 class="w-card__title">Optional media choices</h2>
         @if (consentRequest.requireMediaConsent) {
-          <p class="wu-alert wu-alert--info">
+          <p class="w-alert w-alert--info">
             Organization policy: youth media requires recorded guardian permission. Participation
             consent remains separate from these optional media choices.
           </p>
         }
-        <label class="wu-check">
+        <label class="w-check">
           <input type="checkbox" formControlName="mediaConsent" />
-          <span class="wu-check__box">
-            <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+          <span class="w-check__box">
+            <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
           </span>
-          <span>Allow Word Up to use photos or video.</span>
+          <span>Allow Waypoint to use photos or video.</span>
         </label>
-        <label class="wu-check">
+        <label class="w-check">
           <input type="checkbox" formControlName="mediaAllPhotosVideo" />
-          <span class="wu-check__box">
-            <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+          <span class="w-check__box">
+            <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
           </span>
           <span>All photos and video</span>
         </label>
-        <label class="wu-check">
+        <label class="w-check">
           <input type="checkbox" formControlName="mediaGroupOnly" />
-          <span class="wu-check__box">
-            <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+          <span class="w-check__box">
+            <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
           </span>
           <span>Group photos only</span>
         </label>
-        <label class="wu-check">
+        <label class="w-check">
           <input type="checkbox" formControlName="mediaFirstNameCaptions" />
-          <span class="wu-check__box">
-            <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+          <span class="w-check__box">
+            <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
           </span>
           <span>First-name captions</span>
         </label>
 
-        <div class="wu-field">
-          <label class="wu-label" for="requested-signature">
+        <div class="w-field">
+          <label class="w-label" for="requested-signature">
             Type your full name as your signature
           </label>
           <input
-            class="wu-input"
+            class="w-input"
             id="requested-signature"
             autocomplete="name"
             formControlName="signature"
           />
-          <p class="wu-help">
-            Typing your name creates an electronic signature with date and time.
-          </p>
+          <p class="w-help">Typing your name creates an electronic signature with date and time.</p>
         </div>
 
-        <button class="wu-btn wu-btn--primary" type="submit" [disabled]="submitting()">
+        <button class="w-btn w-btn--primary" type="submit" [disabled]="submitting()">
           Sign and submit consent
         </button>
         @if (submitError(); as error) {
-          <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+          <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
         }
       </form>
     </section>
   } @else {
-    <p class="wu-muted">Checking secure consent link…</p>
+    <p class="w-muted">Checking secure consent link…</p>
   }
 </main>

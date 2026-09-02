@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "AccessController" as controller_AccessController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "AccessStateQuery" as request_AccessStateQuery <<record>>
   class "AccessStateQueryHandler" as handler_AccessStateQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "SupportRequest" as entity_SupportRequest <<domain type>>
 }
 page_Forbidden --> client_DisplayPreferencesApi : invokes

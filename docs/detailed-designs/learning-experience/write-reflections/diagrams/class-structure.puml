@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "ReflectionsController" as controller_ReflectionsController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "SaveReflectionCommand" as request_SaveReflectionCommand <<record>>
   class "SaveReflectionCommandHandler" as handler_SaveReflectionCommandHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "ReflectionEntry" as entity_ReflectionEntry <<domain type>>
 }
 page_YouthAnnouncements --> client_AuthApi : invokes

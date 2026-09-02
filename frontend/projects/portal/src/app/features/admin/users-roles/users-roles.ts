@@ -1,11 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, PeopleApi, PersonSummary, WuRoleName } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAvatar, WuIcon, WuShell } from '@wu/ui';
+import { ApiError, PeopleApi, PersonSummary, WRoleName } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAvatar, WIcon, WShell } from '@w/ui';
 
-const ROLES: readonly WuRoleName[] = [
+const ROLES: readonly WRoleName[] = [
   'Youth',
   'Mentor',
   'ProgramAdministrator',
@@ -15,28 +15,28 @@ const ROLES: readonly WuRoleName[] = [
 
 // Traces to: L2-AUTH-009, L2-ADMIN-001, L2-ADMIN-002
 @Component({
-  selector: 'wu-users-roles',
+  selector: 'w-users-roles',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, RouterLink, WuAvatar, WuIcon, WuShell],
+  imports: [DatePipe, RouterLink, WAvatar, WIcon, WShell],
   templateUrl: './users-roles.html',
   styles: `
     .users-filters {
       display: grid;
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
       grid-template-columns: minmax(14rem, 2fr) minmax(10rem, 1fr) auto;
       align-items: end;
     }
     .user-cell {
       align-items: center;
       display: flex;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
       min-width: 14rem;
     }
     .role-action {
       align-items: center;
       display: flex;
       flex-wrap: wrap;
-      gap: var(--wu-s2);
+      gap: var(--w-s2);
     }
     @media (max-width: 48rem) {
       .users-filters {

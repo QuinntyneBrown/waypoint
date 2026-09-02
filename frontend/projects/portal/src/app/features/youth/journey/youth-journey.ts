@@ -1,19 +1,19 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthJourney } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, YouthJourney } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-LEARN-009
 @Component({
-  selector: 'wu-youth-journey',
+  selector: 'w-youth-journey',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink],
+  imports: [WShell, RouterLink],
   templateUrl: './youth-journey.html',
   styles: `
     .journey-timeline {
-      border-inline-start: 3px solid var(--wu-border);
-      padding-inline-start: var(--wu-sp-5);
+      border-inline-start: 3px solid var(--w-border);
+      padding-inline-start: var(--w-sp-5);
     }
     .journey-module {
       position: relative;
@@ -24,13 +24,13 @@ import { WuShell } from '@wu/ui';
       inline-size: 0.9rem;
       block-size: 0.9rem;
       border-radius: 50%;
-      background: var(--wu-border);
-      inset-inline-start: calc(-1 * var(--wu-sp-5) - 0.55rem);
+      background: var(--w-border);
+      inset-inline-start: calc(-1 * var(--w-sp-5) - 0.55rem);
       inset-block-start: 1.35rem;
     }
     .journey-module--current::before {
-      background: var(--wu-lime);
-      box-shadow: 0 0 0 4px var(--wu-lime-soft);
+      background: var(--w-lime);
+      box-shadow: 0 0 0 4px var(--w-lime-soft);
     }
     .journey-progress {
       width: 100%;

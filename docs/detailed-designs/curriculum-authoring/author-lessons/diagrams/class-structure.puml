@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "LessonsController" as controller_LessonsController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "CreateLessonCommand" as request_CreateLessonCommand <<record>>
   class "CreateLessonCommandHandler" as handler_CreateLessonCommandHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "Lesson" as entity_Lesson <<domain type>>
 }
 page_AuthorLessonsPage --> client_CurriculumAuthoringApi : invokes

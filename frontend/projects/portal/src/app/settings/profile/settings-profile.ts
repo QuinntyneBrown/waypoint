@@ -9,16 +9,16 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiError, isPasswordCompliant, PASSWORD_POLICY_MESSAGE, ProfileApi } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { ToastService, WuIcon } from '@wu/ui';
+import { ApiError, isPasswordCompliant, PASSWORD_POLICY_MESSAGE, ProfileApi } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { ToastService, WIcon } from '@w/ui';
 import { SettingsShell } from '../settings-shell';
 
 // Traces to: L2-PLATFORM-002
 @Component({
-  selector: 'wu-settings-profile',
+  selector: 'w-settings-profile',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SettingsShell, ReactiveFormsModule, WuIcon],
+  imports: [SettingsShell, ReactiveFormsModule, WIcon],
   templateUrl: './settings-profile.html',
 })
 export class SettingsProfile implements OnDestroy {

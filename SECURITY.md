@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-Word Up is under active development. Security fixes are applied to the latest commit on the `main` branch; older commits, forks, and deployments are not supported. No release is currently approved for production use or for storing real participant information.
+Waypoint is under active development. Security fixes are applied to the latest commit on the `main` branch; older commits, forks, and deployments are not supported. No release is currently approved for production use or for storing real participant information.
 
 ## Reporting a vulnerability
 
@@ -21,7 +21,7 @@ Maintainers will acknowledge a report as soon as practical, investigate it, and 
 
 ## Security and safeguarding considerations
 
-Word Up is an early-stage project and has not completed an independent production security, privacy, accessibility, or safeguarding assessment. In particular:
+Waypoint is an early-stage project and has not completed an independent production security, privacy, accessibility, or safeguarding assessment. In particular:
 
 - The development `Jwt:SigningKey` in `appsettings.json` is a placeholder and must be replaced with a strong secret supplied through user secrets or environment configuration before any non-local use.
 - The default in-memory database is for local development only and provides no durable operational storage.

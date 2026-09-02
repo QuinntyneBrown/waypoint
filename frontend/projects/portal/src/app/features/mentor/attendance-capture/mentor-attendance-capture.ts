@@ -14,9 +14,9 @@ import {
   StaffAttendanceRosterEntry,
   StaffOperationsApi,
   StaffSessionAttendance,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuRole, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WRole, WShell } from '@w/ui';
 import { EditorDraftService } from '../../../editor-draft.service';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
 import { DraftSaveResult, UnsavedChangesService } from '../../../unsaved-changes.service';
@@ -24,31 +24,31 @@ import { AttendanceQueueService } from '../../volunteer/attendance/attendance-qu
 
 // Traces to: L2-ENGAGE-002/003, L2-NFR-004/006/007/009/010
 @Component({
-  selector: 'wu-mentor-attendance-capture',
+  selector: 'w-mentor-attendance-capture',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, DatePipe, RouterLink],
+  imports: [WShell, DatePipe, RouterLink],
   templateUrl: './mentor-attendance-capture.html',
   styles: `
     .attendance-summary {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
     }
     .attendance-summary > div {
-      padding: var(--wu-s3);
+      padding: var(--w-s3);
       text-align: center;
     }
     .attendance-summary strong {
       display: block;
-      font-size: var(--wu-text-xl);
+      font-size: var(--w-text-xl);
     }
     .attendance-row {
       display: grid;
       grid-template-columns: minmax(10rem, 0.5fr) minmax(22rem, 1fr) minmax(12rem, 0.6fr);
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
       align-items: center;
-      padding: var(--wu-s4) 0;
-      border-bottom: 1px solid var(--wu-color-border);
+      padding: var(--w-s4) 0;
+      border-bottom: 1px solid var(--w-color-border);
     }
     .attendance-row:last-child {
       border-bottom: 0;
@@ -56,15 +56,15 @@ import { AttendanceQueueService } from '../../volunteer/attendance/attendance-qu
     .attendance-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--wu-s2);
+      gap: var(--w-s2);
     }
-    .attendance-actions .wu-btn {
+    .attendance-actions .w-btn {
       min-width: 44px;
       min-height: 44px;
       flex: 1 1 auto;
     }
     .attendance-actions .is-selected {
-      outline: 3px solid var(--wu-color-ink);
+      outline: 3px solid var(--w-color-ink);
       outline-offset: 1px;
     }
     @media (max-width: 64rem) {
@@ -79,8 +79,8 @@ import { AttendanceQueueService } from '../../volunteer/attendance/attendance-qu
       .attendance-summary > div:first-child {
         grid-column: 1 / -1;
       }
-      .attendance-actions .wu-btn {
-        flex: 1 1 calc(50% - var(--wu-s2));
+      .attendance-actions .w-btn {
+        flex: 1 1 calc(50% - var(--w-s2));
       }
     }
   `,
@@ -102,7 +102,7 @@ export class MentorAttendanceCapturePage implements UnsavedChangesAware {
   protected readonly errorMessage = signal<string | null>(null);
   private readonly baseline = signal('');
   protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
-  protected readonly shellRole = computed<WuRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly shellRole = computed<WRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
   protected readonly calendarPath = computed(() =>
     this.isAdmin() ? '/admin/calendar' : '/mentor/calendar',
   );

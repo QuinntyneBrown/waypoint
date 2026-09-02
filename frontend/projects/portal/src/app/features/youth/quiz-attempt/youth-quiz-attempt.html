@@ -1,42 +1,40 @@
-<wu-shell
+<w-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-container--narrow wu-page">
+  <div class="w-container w-container--narrow w-page">
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
     @if (saveStatus(); as status) {
-      <p class="wu-muted" role="status">{{ status }}</p>
+      <p class="w-muted" role="status">{{ status }}</p>
     }
 
     @if (attempt(); as view) {
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">
             Attempt {{ view.attemptNumber }} of {{ view.attemptsAllowed }}
           </div>
-          <h1 class="wu-page__title">{{ view.title }}</h1>
-          <p class="wu-page__sub" data-testid="quiz-progress">
+          <h1 class="w-page__title">{{ view.title }}</h1>
+          <p class="w-page__sub" data-testid="quiz-progress">
             Question {{ currentIndex() + 1 }} of {{ view.questionCount }}
           </p>
         </div>
       </div>
 
       @if (currentQuestion(); as question) {
-        <section class="wu-card">
-          <div class="wu-card__body wu-stack">
-            <h2 class="wu-card__title">{{ question.text }}</h2>
-            <div class="wu-stack">
+        <section class="w-card">
+          <div class="w-card__body w-stack">
+            <h2 class="w-card__title">{{ question.text }}</h2>
+            <div class="w-stack">
               @if (question.type === 'ShortAnswer') {
-                <div class="wu-field">
-                  <label class="wu-label" [for]="'short-answer-' + question.id">
-                    Your answer
-                  </label>
+                <div class="w-field">
+                  <label class="w-label" [for]="'short-answer-' + question.id"> Your answer </label>
                   <input
-                    class="wu-input"
+                    class="w-input"
                     [id]="'short-answer-' + question.id"
                     type="text"
                     maxlength="1000"
@@ -44,7 +42,7 @@
                     [value]="textAnswer(question.id)"
                     (change)="writeText(question.id, $any($event.target).value)"
                   />
-                  <p class="wu-help">Your answer saves when you leave this field.</p>
+                  <p class="w-help">Your answer saves when you leave this field.</p>
                 </div>
               } @else {
                 @for (option of question.options; track $index) {
@@ -71,15 +69,15 @@
           </div>
         </section>
 
-        <div class="wu-actions wu-actions--between">
+        <div class="w-actions w-actions--between">
           @if (currentIndex() > 0) {
-            <button class="wu-btn wu-btn--ghost" type="button" (click)="move(-1)">
+            <button class="w-btn w-btn--ghost" type="button" (click)="move(-1)">
               Previous question
             </button>
           }
           @if (currentIndex() < view.questionCount - 1) {
             <button
-              class="wu-btn wu-btn--primary"
+              class="w-btn w-btn--primary"
               type="button"
               [disabled]="!answered(question.id) || saveStatus() === 'Saving answer…'"
               (click)="move(1)"
@@ -88,7 +86,7 @@
             </button>
           } @else {
             <button
-              class="wu-btn wu-btn--primary"
+              class="w-btn w-btn--primary"
               type="button"
               [disabled]="
                 !answered(question.id) || submitting() || saveStatus() === 'Saving answer…'
@@ -101,7 +99,7 @@
         </div>
       }
     } @else {
-      <p class="wu-muted">Preparing your attempt…</p>
+      <p class="w-muted">Preparing your attempt…</p>
     }
   </div>
-</wu-shell>
+</w-shell>

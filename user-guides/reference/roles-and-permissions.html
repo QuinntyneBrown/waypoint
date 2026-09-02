@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="The five Word Up roles, the eight permission policies behind them, the full capability matrix, the consent gate on youth participation, and the exact message you get when a request is refused."
+      content="The five Waypoint roles, the eight permission policies behind them, the full capability matrix, the consent gate on youth participation, and the exact message you get when a request is refused."
     />
-    <title>Roles and permissions — Word Up User Guide</title>
+    <title>Roles and permissions — Waypoint User Guide</title>
     <link rel="stylesheet" href="../assets/vendor/core.css" />
     <link rel="stylesheet" href="../assets/vendor/a11y.css" />
     <link rel="stylesheet" href="../assets/guide.css" />
@@ -37,15 +37,15 @@
             <p class="ug-hero__eyebrow">Reference / 17</p>
             <h1>Roles and permissions</h1>
             <p class="ug-hero__lede">
-              Word Up decides what you can do in two passes: your role opens a
+              Waypoint decides what you can do in two passes: your role opens a
               door, and then a scope rule decides which records behind that door
               are yours. This page gives both — the five roles, the eight
               policies, the complete capability matrix, and the exact wording of
               every refusal you can meet.
             </p>
             <div class="ug-hero__meta">
-              <span class="wu-badge wu-badge--outline">Everyone</span>
-              <span class="ug-stamp">WU-UG-17</span>
+              <span class="w-badge w-badge--outline">Everyone</span>
+              <span class="ug-stamp">W-UG-17</span>
             </div>
           </header>
 
@@ -153,10 +153,10 @@
           <section class="ug-section" id="the-eight-policies">
             <h2>The eight policies</h2>
             <p>
-              Word Up does not scatter role checks through the product. It names
-              eight permissions, decides once which roles hold each, and then
-              every screen and endpoint asks for a permission by name. If you
-              want to know whether you can do something, find the policy.
+              Waypoint does not scatter role checks through the product. It
+              names eight permissions, decides once which roles hold each, and
+              then every screen and endpoint asks for a permission by name. If
+              you want to know whether you can do something, find the policy.
             </p>
 
             <div class="ug-tablewrap">
@@ -172,7 +172,7 @@
                   <tr>
                     <th scope="row"><code>YouthParticipation</code></th>
                     <td>
-                      <span class="wu-badge wu-badge--outline">Youth</span> —
+                      <span class="w-badge w-badge--outline">Youth</span> —
                       <strong>and</strong> a valid guardian participation
                       consent
                     </td>
@@ -185,7 +185,7 @@
                   <tr>
                     <th scope="row"><code>ManageUsers</code></th>
                     <td>
-                      <span class="wu-badge wu-badge--outline"
+                      <span class="w-badge w-badge--outline"
                         >Program Administrator</span
                       >
                     </td>
@@ -198,7 +198,7 @@
                   <tr>
                     <th scope="row"><code>ApproveApplications</code></th>
                     <td>
-                      <span class="wu-badge wu-badge--outline"
+                      <span class="w-badge w-badge--outline"
                         >Program Administrator</span
                       >
                     </td>
@@ -210,7 +210,7 @@
                   <tr>
                     <th scope="row"><code>EditCurriculum</code></th>
                     <td>
-                      <span class="wu-badge wu-badge--outline"
+                      <span class="w-badge w-badge--outline"
                         >Program Administrator</span
                       >
                     </td>
@@ -223,7 +223,7 @@
                   <tr>
                     <th scope="row"><code>ImportExportData</code></th>
                     <td>
-                      <span class="wu-badge wu-badge--outline"
+                      <span class="w-badge w-badge--outline"
                         >Program Administrator</span
                       >
                     </td>
@@ -232,7 +232,7 @@
                   <tr>
                     <th scope="row"><code>ViewAuditLog</code></th>
                     <td>
-                      <span class="wu-badge wu-badge--outline"
+                      <span class="w-badge w-badge--outline"
                         >Program Administrator</span
                       >
                     </td>
@@ -241,10 +241,10 @@
                   <tr>
                     <th scope="row"><code>InviteUsers</code></th>
                     <td>
-                      <span class="wu-badge wu-badge--outline"
+                      <span class="w-badge w-badge--outline"
                         >Program Administrator</span
                       >
-                      <span class="wu-badge wu-badge--outline">Mentor</span>
+                      <span class="w-badge w-badge--outline">Mentor</span>
                     </td>
                     <td>
                       Creating, listing, resending and revoking invitations,
@@ -254,11 +254,11 @@
                   <tr>
                     <th scope="row"><code>RecordAttendance</code></th>
                     <td>
-                      <span class="wu-badge wu-badge--outline"
+                      <span class="w-badge w-badge--outline"
                         >Program Administrator</span
                       >
-                      <span class="wu-badge wu-badge--outline">Mentor</span>
-                      <span class="wu-badge wu-badge--outline">Volunteer</span>
+                      <span class="w-badge w-badge--outline">Mentor</span>
+                      <span class="w-badge w-badge--outline">Volunteer</span>
                     </td>
                     <td>Saving an attendance register</td>
                   </tr>
@@ -266,7 +266,7 @@
               </table>
             </div>
 
-            <div class="wu-alert wu-alert--info">
+            <div class="w-alert w-alert--info">
               <p>
                 Six of the eight are administrator-only. That is the shape of
                 the product: mentors get exactly two shared permissions —
@@ -625,7 +625,7 @@
             <p>
               <code>YouthParticipation</code> is the only policy that asks a
               second question after the role check. Being a
-              <code>Youth</code> is necessary but not sufficient: Word Up also
+              <code>Youth</code> is necessary but not sufficient: Waypoint also
               checks, on every single request, that a valid guardian
               participation consent exists.
             </p>
@@ -650,13 +650,13 @@
               </p>
             </figure>
 
-            <div class="wu-alert wu-alert--info">
-              <p class="wu-alert__title">
+            <div class="w-alert w-alert--info">
+              <p class="w-alert__title">
                 A youth with no linked guardian is not consent-gated
               </p>
               <p>
                 If no guardian account is linked to the young person's record,
-                Word Up treats them as an adult: participation is allowed
+                Waypoint treats them as an adult: participation is allowed
                 without any consent record, and they control their own media
                 permissions. The gate exists for minors with a guardian on file,
                 not for every account that happens to hold the
@@ -667,10 +667,10 @@
             <p>
               A consent refusal is not an ordinary refusal, and the product does
               not treat it like one. The response carries
-              <code>X-WordUp-State: consent-required</code>, and instead of the
-              generic <strong>Error 403</strong> page the young person is taken
-              to <strong>A guardian needs to sign off</strong>, which offers
-              <strong>Notify my guardian</strong>,
+              <code>X-Waypoint-State: consent-required</code>, and instead of
+              the generic <strong>Error 403</strong> page the young person is
+              taken to <strong>A guardian needs to sign off</strong>, which
+              offers <strong>Notify my guardian</strong>,
               <strong>My guardian can sign now</strong> and
               <strong>Sign out</strong>. The fix is a signature, not a different
               account.
@@ -683,7 +683,7 @@
                 >Guardian consent for individual photos or video is
                 required.</strong
               >
-              and <code>X-WordUp-State: media-consent-required</code>. What
+              and <code>X-Waypoint-State: media-consent-required</code>. What
               makes a consent record valid at a given moment is set out in
               <a href="lifecycles-and-evidence.html#guardian-consent"
                 >Guardian consent validity</a
@@ -915,8 +915,8 @@
               </table>
             </div>
 
-            <div class="wu-alert wu-alert--warning">
-              <p class="wu-alert__title">Preview limitation</p>
+            <div class="w-alert w-alert--warning">
+              <p class="w-alert__title">Preview limitation</p>
               <p>
                 The <strong>Attendance</strong> item in the volunteer sidebar
                 and bottom navigation redirects to <strong>Today</strong>; it
@@ -1076,8 +1076,8 @@
               </table>
             </div>
 
-            <div class="wu-alert wu-alert--info">
-              <p class="wu-alert__title">Every denial is written down</p>
+            <div class="w-alert w-alert--info">
+              <p class="w-alert__title">Every denial is written down</p>
               <p>
                 Every 403, of every kind, writes a
                 <code>ProtectedActionDenied</code> entry to the audit log naming
@@ -1089,7 +1089,7 @@
             </div>
 
             <p>
-              Two things a refusal is <em>not</em>. It is not a 404 — Word Up
+              Two things a refusal is <em>not</em>. It is not a 404 — Waypoint
               tells you that you are not allowed rather than pretending the
               thing does not exist. And it is not a bug report: if you believe
               you should have access, the fix is a role change or an assignment
@@ -1148,8 +1148,8 @@
               </li>
             </ul>
 
-            <div class="wu-alert wu-alert--warning">
-              <p class="wu-alert__title">
+            <div class="w-alert w-alert--warning">
+              <p class="w-alert__title">
                 Changing a role is not a way to hand over a caseload
               </p>
               <p>
@@ -1168,7 +1168,7 @@
                   <span class="ug-card__kicker">Reference</span>
                   <span class="ug-card__title">Messages and error codes</span>
                   <span class="ug-card__desc"
-                    >Every status Word Up can return and every fixed message,
+                    >Every status Waypoint can return and every fixed message,
                     including the ones on this page in context.</span
                   >
                 </a>

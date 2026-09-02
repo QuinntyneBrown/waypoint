@@ -1,13 +1,13 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
-import { AuthStore } from '@wu/auth';
+import { AuthStore } from '@w/auth';
 
 interface OwnedEditorDraft<T> {
   ownerUserId: string;
   value: T;
 }
 
-const STORAGE_PREFIX = 'wu.editor-draft.';
+const STORAGE_PREFIX = 'w.editor-draft.';
 
 /** Session-local, owner-bound storage for authoring forms that have no server draft aggregate. */
 @Injectable({ providedIn: 'root' })

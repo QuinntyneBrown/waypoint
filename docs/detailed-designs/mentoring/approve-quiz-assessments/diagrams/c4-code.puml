@@ -2,7 +2,7 @@
 !include <C4/C4_Component>
 LAYOUT_LEFT_RIGHT()
 title C4 level 4 — Approve quiz assessments — code elements
-System_Boundary(wordup, "Word Up software system") {
+System_Boundary(waypoint, "Waypoint software system") {
   Container_Boundary(frontend, "Frontend") {
     Container_Boundary(frontend_app, "Portal application") {
       Component(page, "YouthAnnouncements", "Angular component", "Feature page code element")
@@ -10,16 +10,16 @@ System_Boundary(wordup, "Word Up software system") {
     }
   }
   Container_Boundary(backend, "Backend") {
-    Container_Boundary(api_app, "WordUp API application") {
+    Container_Boundary(api_app, "Waypoint API application") {
       Component(controller, "QuizApprovalController", "C# controller", "HTTP endpoint code element")
     }
-    Container_Boundary(application, "WordUp Application") {
+    Container_Boundary(application, "Waypoint Application") {
       Component(request, "ApproveAllQuizAttemptsCommand", "C# request record", "Application request code element")
       Component(handler, "ApproveAllQuizAttemptsCommandHandler", "C# handler class", "Application handler code element")
       Component(dbport, "IAppDbContext", "C# interface", "Persistence port")
       Component(current, "ICurrentUser", "C# interface", "Current-user port")
     }
-    Container_Boundary(domain, "WordUp Domain") {
+    Container_Boundary(domain, "Waypoint Domain") {
       Component(entity, "CompetencyAssessment", "C# domain type", "Feature domain code element")
     }
   }

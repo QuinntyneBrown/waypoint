@@ -2,35 +2,35 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { ApiError, CohortOptions, CohortsApi, CohortSummary } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
+import { ApiError, CohortOptions, CohortsApi, CohortSummary } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAccessibleDialog, WIcon, WShell } from '@w/ui';
 import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-003
 @Component({
-  selector: 'wu-cohorts-list',
+  selector: 'w-cohorts-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, WuAccessibleDialog, RouterLink, DatePipe, ReactiveFormsModule],
+  imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe, ReactiveFormsModule],
   templateUrl: './cohorts-list.html',
   styles: `
     .cohort-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
-      gap: var(--wu-sp-4);
+      gap: var(--w-sp-4);
     }
     .cohort-card {
       height: 100%;
     }
     .cohort-card__meta {
       display: grid;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
       overflow-wrap: anywhere;
     }
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-sp-4);
+      gap: var(--w-sp-4);
     }
     .form-grid__wide {
       grid-column: 1 / -1;
@@ -42,7 +42,7 @@ import { finalize } from 'rxjs';
       .form-grid__wide {
         grid-column: auto;
       }
-      .wu-modal__footer .wu-btn {
+      .w-modal__footer .w-btn {
         flex: 1 1 100%;
         min-height: 45px;
       }

@@ -1,72 +1,72 @@
-<wu-shell
+<w-shell
   role="mentor"
   active="my-youth"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <a class="wu-link" [routerLink]="['/mentor/youth', youthId]">Back to youth record</a>
+  <div class="w-container w-page">
+    <a class="w-link" [routerLink]="['/mentor/youth', youthId]">Back to youth record</a>
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
-    <p class="wu-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
     @if (summary(); as view) {
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">Mentor assessment</div>
-          <h1 class="wu-page__title">{{ view.youthName }} competencies</h1>
-          <p class="wu-page__sub">
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">Mentor assessment</div>
+          <h1 class="w-page__title">{{ view.youthName }} competencies</h1>
+          <p class="w-page__sub">
             Record the latest observed level and supporting notes for each competency.
           </p>
         </div>
       </div>
 
-      <section class="wu-card" data-testid="competency-summary" aria-label="Competency summary">
-        <div class="wu-card__body summary-grid">
+      <section class="w-card" data-testid="competency-summary" aria-label="Competency summary">
+        <div class="w-card__body summary-grid">
           <div>
-            <p class="wu-muted">Proficient or mastered</p>
+            <p class="w-muted">Proficient or mastered</p>
             <p class="summary-value">{{ view.masteredOrProficient }} of {{ view.total }}</p>
           </div>
           <div>
-            <p class="wu-muted">Framework coverage</p>
+            <p class="w-muted">Framework coverage</p>
             <p class="summary-value">{{ view.total }} competencies</p>
           </div>
           <div>
-            <p class="wu-muted">Current stage</p>
+            <p class="w-muted">Current stage</p>
             <p class="summary-value">{{ view.currentStageName ?? 'Not configured' }}</p>
-            <p class="wu-muted">{{ view.currentStageProgress }}% complete</p>
+            <p class="w-muted">{{ view.currentStageProgress }}% complete</p>
           </div>
         </div>
       </section>
 
       @if (view.items.length === 0) {
-        <div class="wu-card wu-empty">
-          <div class="wu-empty__icon"><wu-icon name="award" /></div>
-          <h2 class="wu-empty__title">No competencies configured</h2>
-          <p class="wu-empty__text">A program administrator can add the progression framework.</p>
+        <div class="w-card w-empty">
+          <div class="w-empty__icon"><w-icon name="award" /></div>
+          <h2 class="w-empty__title">No competencies configured</h2>
+          <p class="w-empty__text">A program administrator can add the progression framework.</p>
         </div>
       } @else {
         <div class="competency-grid">
           @for (item of view.items; track item.competencyId) {
             <article
-              class="wu-card"
+              class="w-card"
               data-testid="competency-card"
               [attr.data-competency-id]="item.competencyId"
             >
-              <div class="wu-card__header">
+              <div class="w-card__header">
                 <div>
-                  <p class="wu-eyebrow">{{ item.stageName }}</p>
-                  <h2 class="wu-card__title">{{ item.name }}</h2>
+                  <p class="w-eyebrow">{{ item.stageName }}</p>
+                  <h2 class="w-card__title">{{ item.name }}</h2>
                 </div>
-                <span class="wu-badge">{{ levelLabel(draft(item).level) }}</span>
+                <span class="w-badge">{{ levelLabel(draft(item).level) }}</span>
               </div>
-              <div class="wu-card__body wu-stack">
-                <div class="wu-field">
-                  <label class="wu-label" [for]="'level-' + item.competencyId">
+              <div class="w-card__body w-stack">
+                <div class="w-field">
+                  <label class="w-label" [for]="'level-' + item.competencyId">
                     {{ item.name }} level
                   </label>
                   <select
-                    class="wu-select"
+                    class="w-select"
                     [id]="'level-' + item.competencyId"
                     (change)="setLevel(item, $any($event.target).value)"
                   >
@@ -77,12 +77,12 @@
                     }
                   </select>
                 </div>
-                <div class="wu-field">
-                  <label class="wu-label" [for]="'notes-' + item.competencyId">
+                <div class="w-field">
+                  <label class="w-label" [for]="'notes-' + item.competencyId">
                     {{ item.name }} notes
                   </label>
                   <textarea
-                    class="wu-textarea"
+                    class="w-textarea"
                     [id]="'notes-' + item.competencyId"
                     rows="4"
                     maxlength="2000"
@@ -92,16 +92,16 @@
                 </div>
                 <div class="assessment-record">
                   @if (item.assessedAt) {
-                    <p class="wu-muted">
+                    <p class="w-muted">
                       Latest: {{ item.assessedByName ?? 'Staff member' }} ·
                       {{ item.assessedAt | date: 'medium' }}
                     </p>
                   } @else {
-                    <p class="wu-muted">Not assessed yet.</p>
+                    <p class="w-muted">Not assessed yet.</p>
                   }
                 </div>
                 <button
-                  class="wu-btn wu-btn--primary save-button"
+                  class="w-btn w-btn--primary save-button"
                   type="button"
                   [disabled]="savingId() !== null"
                   (click)="save(item)"
@@ -114,7 +114,7 @@
         </div>
       }
     } @else if (!errorMessage()) {
-      <p class="wu-muted" role="status">Loading competency framework…</p>
+      <p class="w-muted" role="status">Loading competency framework…</p>
     }
   </div>
-</wu-shell>
+</w-shell>

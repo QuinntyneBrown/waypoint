@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--wu-sp-4);
+  gap: var(--w-sp-4);
 }
 
 .track-picker {
@@ -24,13 +24,13 @@
   align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap;
-  gap: var(--wu-sp-3);
+  gap: var(--w-sp-3);
 }
 
 .module-form {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--wu-sp-4);
+  gap: var(--w-sp-4);
   align-items: end;
 }
 
@@ -50,7 +50,7 @@
 .media-list,
 .question-list {
   display: grid;
-  gap: var(--wu-sp-4);
+  gap: var(--w-sp-4);
 }
 
 .curriculum-module,
@@ -61,29 +61,29 @@
 }
 
 .nested-section {
-  border-top: 1px solid var(--wu-border);
-  padding-top: var(--wu-sp-4);
+  border-top: 1px solid var(--w-border);
+  padding-top: var(--w-sp-4);
 }
 
 .nested-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--wu-sp-4);
-  margin-top: var(--wu-sp-3);
+  gap: var(--w-sp-4);
+  margin-top: var(--w-sp-3);
 }
 
 .nested-card,
 .assessment-row,
 .question-row {
-  border: 1px solid var(--wu-border);
-  border-radius: var(--wu-radius-md);
-  background: var(--wu-surface-subtle);
-  padding: var(--wu-sp-4);
+  border: 1px solid var(--w-border);
+  border-radius: var(--w-radius-md);
+  background: var(--w-surface-subtle);
+  padding: var(--w-sp-4);
 }
 
 .nested-card {
   display: grid;
-  gap: var(--wu-sp-3);
+  gap: var(--w-sp-3);
 }
 
 .assessment-row {
@@ -100,14 +100,14 @@
 }
 
 .quiz-editor {
-  margin-top: var(--wu-sp-5);
+  margin-top: var(--w-sp-5);
 }
 
 .settings-grid,
 .question-form {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--wu-sp-4);
+  gap: var(--w-sp-4);
   align-items: end;
 }
 
@@ -124,7 +124,7 @@
 .check-row {
   display: flex;
   align-items: center;
-  gap: var(--wu-sp-2);
+  gap: var(--w-sp-2);
   min-height: 2.75rem;
 }
 
@@ -140,7 +140,7 @@
   z-index: 1000;
   display: grid;
   place-items: center;
-  padding: var(--wu-sp-4);
+  padding: var(--w-sp-4);
   overflow-y: auto;
   background: rgb(15 23 42 / 65%);
 }
@@ -149,10 +149,10 @@
   width: min(100%, 34rem);
   max-height: calc(100dvh - 2rem);
   overflow-y: auto;
-  border-radius: var(--wu-radius-lg);
-  background: var(--wu-surface);
-  box-shadow: var(--wu-shadow-lg);
-  padding: var(--wu-sp-5);
+  border-radius: var(--w-radius-lg);
+  background: var(--w-surface);
+  box-shadow: var(--w-shadow-lg);
+  padding: var(--w-sp-5);
 }
 
 .dialog-panel--wide {
@@ -166,7 +166,7 @@
 .dialog-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--wu-sp-4);
+  gap: var(--w-sp-4);
 }
 
 .dialog-grid__wide {
@@ -176,7 +176,7 @@
 .submission-types {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--wu-sp-2) var(--wu-sp-4);
+  gap: var(--w-sp-2) var(--w-sp-4);
   margin: 0;
   border: 0;
   padding: 0;
@@ -184,17 +184,17 @@
 
 .rubric-editor {
   display: grid;
-  gap: var(--wu-sp-3);
+  gap: var(--w-sp-3);
   margin: 0;
-  border: 1px solid var(--wu-border);
-  border-radius: var(--wu-radius-md);
-  padding: var(--wu-sp-4);
+  border: 1px solid var(--w-border);
+  border-radius: var(--w-radius-md);
+  padding: var(--w-sp-4);
 }
 
 .rubric-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.25fr) auto;
-  gap: var(--wu-sp-3);
+  gap: var(--w-sp-3);
   align-items: end;
 }
 
@@ -241,13 +241,13 @@
 
   .track-meta,
   .item-actions,
-  .wu-actions {
+  .w-actions {
     width: 100%;
     align-items: stretch;
     flex-direction: column;
   }
 
-  .wu-btn,
+  .w-btn,
   input[type='file'] {
     width: 100%;
     min-height: 45px;
@@ -255,11 +255,11 @@
 
   .dialog-backdrop {
     align-items: start;
-    padding: var(--wu-sp-2);
+    padding: var(--w-sp-2);
   }
 
   .dialog-panel {
     max-height: calc(100dvh - 1rem);
-    padding: var(--wu-sp-4);
+    padding: var(--w-sp-4);
   }
 }

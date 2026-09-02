@@ -15,9 +15,9 @@ import {
   SaveQuiz,
   TrackSummary,
   TrackWorkspace,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAccessibleDialog, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAccessibleDialog, WShell } from '@w/ui';
 import { finalize, Observable } from 'rxjs';
 import { EditorDraftService } from '../../../editor-draft.service';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
@@ -93,9 +93,9 @@ interface CurriculumAuthoringDraft {
 
 // Traces to: L2-CURRIC-001..004, L2-NFR-001, L2-NFR-009, L2-NFR-010
 @Component({
-  selector: 'wu-curriculum-builder',
+  selector: 'w-curriculum-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuAccessibleDialog, ReactiveFormsModule],
+  imports: [WShell, WAccessibleDialog, ReactiveFormsModule],
   templateUrl: './curriculum-builder.html',
   styleUrl: './curriculum-builder.css',
 })

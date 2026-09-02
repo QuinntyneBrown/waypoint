@@ -16,9 +16,9 @@ import {
   ProgressionStage,
   SaveBadge,
   TrackWorkspace,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAccessibleDialog, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAccessibleDialog, WShell } from '@w/ui';
 import { finalize, forkJoin, of, switchMap } from 'rxjs';
 import { EditorDraftService } from '../../../editor-draft.service';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
@@ -32,9 +32,9 @@ interface BadgeTarget {
 
 // Traces to: L2-CURRIC-005, L2-NFR-001, L2-NFR-009, L2-NFR-010
 @Component({
-  selector: 'wu-badge-builder',
+  selector: 'w-badge-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuAccessibleDialog, ReactiveFormsModule],
+  imports: [WShell, WAccessibleDialog, ReactiveFormsModule],
   templateUrl: './badge-builder.html',
   styleUrl: './curriculum-admin.css',
 })

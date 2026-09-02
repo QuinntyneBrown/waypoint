@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Non-Functional and Quality subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Non-Functional and Quality subsystem owns this feature slice.
 
 The Deliver real-time events feature slice refines `L2-NFR-005` into one independently deliverable interaction. The system shall deliver notifications and messages to authorized, correctly-scoped recipients in near-real-time.
 
-A Word Up participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
+A Waypoint participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+The feature spans Portal application; Waypoint API application. The frontend application owns interaction state and presentation. The Waypoint API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 ### Components and types
 
@@ -23,11 +23,11 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer                           | Components, types, and classes                                                                                                                                                                                                                                                                                                                                                                             | Responsibility                                                                                                                                                  |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Frontend page                   | [`SettingsNotifications`](../../../../frontend/projects/portal/src/app/settings/notifications/settings-notifications.ts)<br>[`YouthNotifications`](../../../../frontend/projects/portal/src/app/features/youth/notifications/youth-notifications.ts)                                                                                                                                                       | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states.                                             |
-| Frontend API boundary           | [`NotificationPreferencesApi`](../../../../frontend/projects/wu-api/src/lib/services/notification-preferences-api.ts)                                                                                                                                                                                                                                                                                      | Serializes requests, deserializes typed results, and maps safe API errors for the page.                                                                         |
+| Frontend API boundary           | [`NotificationPreferencesApi`](../../../../frontend/projects/w-api/src/lib/services/notification-preferences-api.ts)                                                                                                                                                                                                                                                                                      | Serializes requests, deserializes typed results, and maps safe API errors for the page.                                                                         |
 | API transport                   | `NonFunctionalController` _(planned boundary)_                                                                                                                                                                                                                                                                                                                                                             | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR.                                          |
 | Application slice               | `DeliverRealtimeEventsCommand` _(planned boundary)_<br>`DeliverRealtimeEventsCommandHandler` _(planned boundary)_                                                                                                                                                                                                                                                                                          | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result.                                                     |
 | Domain state                    | `DeliverRealtimeEventsState` _(planned boundary)_                                                                                                                                                                                                                                                                                                                                                          | Holds persistent state and lifecycle invariants used by the feature.                                                                                            |
-| Infrastructure and shared ports | [`RealtimeConnectionRegistry`](../../../../backend/src/WordUp.Api/Realtime/RealtimeConnectionRegistry.cs)<br>[`RealtimeHub`](../../../../backend/src/WordUp.Api/Realtime/RealtimeHub.cs)<br>[`SignalRChangePublisher`](../../../../backend/src/WordUp.Api/Realtime/SignalRChangePublisher.cs)<br>[`SecurityHeadersMiddleware`](../../../../backend/src/WordUp.Api/Middleware/SecurityHeadersMiddleware.cs) | Tracks authenticated connections and revalidates current account, session, role, and cohort state before sending directly to authorized connection identifiers. |
+| Infrastructure and shared ports | [`RealtimeConnectionRegistry`](../../../../backend/src/Waypoint.Api/Realtime/RealtimeConnectionRegistry.cs)<br>[`RealtimeHub`](../../../../backend/src/Waypoint.Api/Realtime/RealtimeHub.cs)<br>[`SignalRChangePublisher`](../../../../backend/src/Waypoint.Api/Realtime/SignalRChangePublisher.cs)<br>[`SecurityHeadersMiddleware`](../../../../backend/src/Waypoint.Api/Middleware/SecurityHeadersMiddleware.cs) | Tracks authenticated connections and revalidates current account, session, role, and cohort state before sending directly to authorized connection identifiers. |
 
 ### Functions and data flow
 
@@ -41,8 +41,8 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A Word Up participant starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-NFR-005`, `L2-AUTH-010`, `L2-ENGAGE-007`, `L2-ENGAGE-008`, scopes the operation to the current actor, and queries or changes domain state through the persistence port. Before each realtime send, the API revalidates the connected user's current status, anonymization state, session version, role, and requested user or cohort audience.
+1. **Entry.** A Waypoint participant starts this feature interaction through the Portal application.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the Waypoint API application. The controller applies endpoint policy. The application handler applies `L2-NFR-005`, `L2-AUTH-010`, `L2-ENGAGE-007`, `L2-ENGAGE-008`, scopes the operation to the current actor, and queries or changes domain state through the persistence port. Before each realtime send, the API revalidates the connected user's current status, anonymization state, session version, role, and requested user or cohort audience.
 3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
@@ -93,11 +93,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Deliver real-time events.](diagrams/c4-system-context.png)
 
-_Figure 1 — C4 system context: Deliver real-time events in the Word Up environment._
+_Figure 1 — C4 system context: Deliver real-time events in the Waypoint environment._
 
 #### Container
 

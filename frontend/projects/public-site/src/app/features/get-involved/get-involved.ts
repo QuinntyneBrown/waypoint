@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { ApiError, PublicSiteApi } from '@wu/api';
-import { WuIcon } from '@wu/ui';
+import { ApiError, PublicSiteApi } from '@w/api';
+import { WIcon } from '@w/ui';
 
 function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -11,9 +11,9 @@ function isEmail(value: string): boolean {
 
 // Traces to: L2-PUB-003
 @Component({
-  selector: 'wu-get-involved',
+  selector: 'w-get-involved',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WuIcon],
+  imports: [ReactiveFormsModule, RouterLink, WIcon],
   templateUrl: './get-involved.html',
 })
 export class GetInvolved {

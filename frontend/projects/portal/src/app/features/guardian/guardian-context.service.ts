@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { ApiError, GuardianApi, GuardianChildProgress, GuardianChildSummary } from '@wu/api';
+import { ApiError, GuardianApi, GuardianChildProgress, GuardianChildSummary } from '@w/api';
 
 // Shared linked-child state across Guardian home/progress routes.
 @Injectable({ providedIn: 'root' })

@@ -1,0 +1,11 @@
+global using Waypoint.Domain.ApplicationIntake;
+global using Waypoint.Domain.Authentication;
+global using Waypoint.Domain.ConsentAndSafeguarding;
+global using Waypoint.Domain.CurriculumAuthoring;
+global using Waypoint.Domain.Engagement;
+global using Waypoint.Domain.GuardianPortal;
+global using Waypoint.Domain.LearningExperience;
+global using Waypoint.Domain.Mentoring;
+global using Waypoint.Domain.PlatformServices;
+global using Waypoint.Domain.ProgramAdministration;
+global using Waypoint.Domain.PublicSite;

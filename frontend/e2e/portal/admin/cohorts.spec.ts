@@ -21,13 +21,13 @@ test('an admin creates a fully described cohort from authoritative options', asy
   await dialog.getByLabel('Lead mentor').selectOption(seeded.mentorId);
   await dialog.getByLabel('Start date').fill('2026-09-01');
   await dialog.getByLabel('End date').fill('2027-01-15');
-  await dialog.getByLabel('Meeting location').fill('Word Up Community Hall');
+  await dialog.getByLabel('Meeting location').fill('Waypoint Community Hall');
   await dialog.getByRole('button', { name: 'Create cohort' }).click();
 
   const card = cohorts.card(cohortName);
   await expect(card).toContainText(seeded.primaryTrackName);
   await expect(card).toContainText(seeded.mentorName);
-  await expect(card).toContainText('Word Up Community Hall');
+  await expect(card).toContainText('Waypoint Community Hall');
   await card.getByRole('link', { name: cohortName }).click();
   await expect(new CohortDetailPage(page).heading).toHaveText(cohortName);
 });

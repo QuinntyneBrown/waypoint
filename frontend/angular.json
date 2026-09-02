@@ -11,7 +11,7 @@
       "schematics": {},
       "root": "projects/portal",
       "sourceRoot": "projects/portal/src",
-      "prefix": "wu",
+      "prefix": "w",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -25,9 +25,9 @@
               }
             ],
             "styles": [
-              "projects/wu-ui/src/styles/fonts.css",
-              "projects/wu-ui/src/styles/core.css",
-              "projects/wu-ui/src/styles/a11y.css",
+              "projects/w-ui/src/styles/fonts.css",
+              "projects/w-ui/src/styles/core.css",
+              "projects/w-ui/src/styles/a11y.css",
               "projects/portal/src/styles.css"
             ]
           },
@@ -76,20 +76,20 @@
         }
       }
     },
-    "wu-ui": {
+    "w-ui": {
       "projectType": "library",
-      "root": "projects/wu-ui",
-      "sourceRoot": "projects/wu-ui/src",
-      "prefix": "wu",
+      "root": "projects/w-ui",
+      "sourceRoot": "projects/w-ui/src",
+      "prefix": "w",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/wu-ui/tsconfig.lib.prod.json"
+              "tsConfig": "projects/w-ui/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/wu-ui/tsconfig.lib.json"
+              "tsConfig": "projects/w-ui/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -97,25 +97,25 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/wu-ui/tsconfig.spec.json"
+            "tsConfig": "projects/w-ui/tsconfig.spec.json"
           }
         }
       }
     },
-    "wu-api": {
+    "w-api": {
       "projectType": "library",
-      "root": "projects/wu-api",
-      "sourceRoot": "projects/wu-api/src",
-      "prefix": "wu",
+      "root": "projects/w-api",
+      "sourceRoot": "projects/w-api/src",
+      "prefix": "w",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/wu-api/tsconfig.lib.prod.json"
+              "tsConfig": "projects/w-api/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/wu-api/tsconfig.lib.json"
+              "tsConfig": "projects/w-api/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -123,25 +123,25 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/wu-api/tsconfig.spec.json"
+            "tsConfig": "projects/w-api/tsconfig.spec.json"
           }
         }
       }
     },
-    "wu-auth": {
+    "w-auth": {
       "projectType": "library",
-      "root": "projects/wu-auth",
-      "sourceRoot": "projects/wu-auth/src",
-      "prefix": "wu",
+      "root": "projects/w-auth",
+      "sourceRoot": "projects/w-auth/src",
+      "prefix": "w",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/wu-auth/tsconfig.lib.prod.json"
+              "tsConfig": "projects/w-auth/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/wu-auth/tsconfig.lib.json"
+              "tsConfig": "projects/w-auth/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -149,7 +149,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/wu-auth/tsconfig.spec.json"
+            "tsConfig": "projects/w-auth/tsconfig.spec.json"
           }
         }
       }
@@ -159,7 +159,7 @@
       "schematics": {},
       "root": "projects/public-site",
       "sourceRoot": "projects/public-site/src",
-      "prefix": "wu",
+      "prefix": "w",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -173,8 +173,8 @@
               }
             ],
             "styles": [
-              "projects/wu-ui/src/styles/fonts.css",
-              "projects/wu-ui/src/styles/core.css",
+              "projects/w-ui/src/styles/fonts.css",
+              "projects/w-ui/src/styles/core.css",
               "projects/public-site/src/styles.css"
             ],
             "server": "projects/public-site/src/main.server.ts",

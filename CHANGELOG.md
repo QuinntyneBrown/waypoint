@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file. The format 
 - Youth application intake, onboarding, guardian consent, audit logging, and their acceptance tests
 - EF Core persistence with in-memory development and SQL Server integration-test providers
 - Angular 21 workspace foundations for the production web clients
-- Angular frontend (Tier A): `portal` (authenticated SPA) and `public-site` (SSR/prerendered marketing + anonymous intake) apps over `wu-ui`/`wu-api`/`wu-auth` libraries — design-system port (tokens, fonts, 93 icons, toast, shell), sign-in/refresh/sign-out/lockout/session-expired, password reset, youth onboarding + no-cohort, consent gate, application intake, settings & preferences (profile, notifications, display accessibility, support), youth feeds, and offline/500/503/403 states
+- Angular frontend (Tier A): `portal` (authenticated SPA) and `public-site` (SSR/prerendered marketing + anonymous intake) apps over `w-ui`/`w-api`/`w-auth` libraries — design-system port (tokens, fonts, 93 icons, toast, shell), sign-in/refresh/sign-out/lockout/session-expired, password reset, youth onboarding + no-cohort, consent gate, application intake, settings & preferences (profile, notifications, display accessibility, support), youth feeds, and offline/500/503/403 states
 - Complete role portal routing for youth, mentor, guardian, volunteer, and program-administrator journeys, including the administrator dashboard and users/roles workspace
 - End-to-end invitation management and acceptance: scoped single/bulk issue, pending-list filters, resend/revoke, token context, expired-link replacement requests, and onboarding hand-off
 - Role-tailored searchable help center plus self-service and administrator data-rights request workflows

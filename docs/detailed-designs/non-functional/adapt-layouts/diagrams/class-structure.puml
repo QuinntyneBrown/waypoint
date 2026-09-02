@@ -24,12 +24,12 @@ package "Frontend — Public Site application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "NonFunctionalController" as controller_NonFunctionalController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "AdaptLayoutsCommand" as request_AdaptLayoutsCommand <<record>>
   class "AdaptLayoutsCommandHandler" as handler_AdaptLayoutsCommandHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "AdaptLayoutsState" as entity_AdaptLayoutsState <<domain type>>
 }
 page_AdaptLayoutsPage --> client_NonFunctionalApi : invokes

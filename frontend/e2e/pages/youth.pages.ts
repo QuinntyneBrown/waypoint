@@ -183,9 +183,7 @@ export class YouthSchedulePage extends BasePage {
     return this.page.getByRole('checkbox', { name: /remind me before this session/i });
   }
   get reminderOption() {
-    return this.page
-      .locator('label.wu-check')
-      .filter({ hasText: /remind me before this session/i });
+    return this.page.locator('label.w-check').filter({ hasText: /remind me before this session/i });
   }
   get saveButton() {
     return this.page.getByRole('button', { name: /save rsvp/i });

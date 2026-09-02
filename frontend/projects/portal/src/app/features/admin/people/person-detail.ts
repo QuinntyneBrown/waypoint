@@ -1,9 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, PeopleApi, PersonDetail } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
+import { ApiError, PeopleApi, PersonDetail } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAccessibleDialog, WIcon, WShell } from '@w/ui';
 import { finalize, Observable } from 'rxjs';
 
 type PersonTab = 'profile' | 'guardian' | 'progress' | 'attendance' | 'notes' | 'account';
@@ -15,16 +15,16 @@ type LifecycleAction =
 
 // Traces to: L2-ADMIN-002, L2-CONSENT-003
 @Component({
-  selector: 'wu-person-detail',
+  selector: 'w-person-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, WuAccessibleDialog, RouterLink, DatePipe],
+  imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe],
   templateUrl: './person-detail.html',
   styles: `
     .record-tabs {
       display: flex;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
       overflow-x: auto;
-      padding-block: var(--wu-sp-2);
+      padding-block: var(--w-sp-2);
     }
     .record-tab {
       min-height: 44px;
@@ -33,7 +33,7 @@ type LifecycleAction =
     .record-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-sp-5);
+      gap: var(--w-sp-5);
     }
     .record-list {
       margin: 0;
@@ -41,8 +41,8 @@ type LifecycleAction =
       list-style: none;
     }
     .record-row {
-      padding: var(--wu-sp-4) 0;
-      border-bottom: 1px solid var(--wu-border);
+      padding: var(--w-sp-4) 0;
+      border-bottom: 1px solid var(--w-border);
       overflow-wrap: anywhere;
     }
     .record-row:last-child {
@@ -51,14 +51,14 @@ type LifecycleAction =
     .account-actions {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-sp-4);
+      gap: var(--w-sp-4);
     }
-    .account-actions .wu-btn {
+    .account-actions .w-btn {
       justify-content: center;
       min-height: 45px;
     }
     .danger-zone {
-      border-color: var(--wu-danger);
+      border-color: var(--w-danger);
     }
     .confirmation-copy {
       overflow-wrap: anywhere;
@@ -72,7 +72,7 @@ type LifecycleAction =
       .account-actions {
         grid-template-columns: 1fr;
       }
-      .wu-modal__footer .wu-btn {
+      .w-modal__footer .w-btn {
         flex: 1 1 100%;
         min-height: 45px;
       }

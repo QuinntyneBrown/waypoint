@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthStore } from '@wu/auth';
+import { AuthStore } from '@w/auth';
 
 interface DraftField {
   key: string;
@@ -15,7 +15,7 @@ interface TransientFormDraft {
   fields: DraftField[];
 }
 
-const STORAGE_KEY = 'wu.transient-form-draft';
+const STORAGE_KEY = 'w.transient-form-draft';
 
 /**
  * Captures ordinary form controls before error or expiry navigation and restores them after recovery.

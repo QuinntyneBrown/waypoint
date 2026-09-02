@@ -3,34 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reports · Word Up</title>
+  <title>Reports · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/wordup.css">
-  <script defer src="../../assets/js/wordup.js"></script>
+  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="reports" data-track="bible">
-  <main class="wu-main">
-    <div class="wu-container wu-page">
+  <main class="w-main">
+    <div class="w-container w-page">
 
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">Analytics</div>
-          <h1 class="wu-page__title">Reports</h1>
-          <p class="wu-page__sub">Outcomes and engagement across Word Up — for staff meetings, board updates and funders.</p>
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">Analytics</div>
+          <h1 class="w-page__title">Reports</h1>
+          <p class="w-page__sub">Outcomes and engagement across Waypoint — for staff meetings, board updates and funders.</p>
         </div>
-        <div class="wu-page__actions">
-          <a class="wu-btn wu-btn--ghost" href="report-builder.html"><svg class="wu-icon"><use href="#i-sliders"></use></svg>Custom report</a>
-          <button class="wu-btn wu-btn--primary" data-open-modal="m-export"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
+        <div class="w-page__actions">
+          <a class="w-btn w-btn--ghost" href="report-builder.html"><svg class="w-icon"><use href="#i-sliders"></use></svg>Custom report</a>
+          <button class="w-btn w-btn--primary" data-open-modal="m-export"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
         </div>
       </div>
 
       <!-- ===== FILTER BAR ===== -->
-      <div class="wu-card wu-mb-4">
-        <div class="wu-card__body">
-          <div class="wu-grid wu-grid--4">
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="f-range">Date range</label>
-              <select class="wu-select" id="f-range">
+      <div class="w-card w-mb-4">
+        <div class="w-card__body">
+          <div class="w-grid w-grid--4">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="f-range">Date range</label>
+              <select class="w-select" id="f-range">
                 <option selected>This term (Apr–Jul 2026)</option>
                 <option>Last 30 days</option>
                 <option>Last 90 days</option>
@@ -38,26 +38,26 @@
                 <option>All time</option>
               </select>
             </div>
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="f-cohort">Cohort</label>
-              <select class="wu-select" id="f-cohort">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="f-cohort">Cohort</label>
+              <select class="w-select" id="f-cohort">
                 <option selected>All cohorts</option>
                 <option>Rexdale Fall '25</option>
                 <option>Warden Winter '26</option>
                 <option>St. Clair Spring '26</option>
               </select>
             </div>
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="f-track">Track</label>
-              <select class="wu-select" id="f-track">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="f-track">Track</label>
+              <select class="w-select" id="f-track">
                 <option selected>All tracks</option>
                 <option>Bible &amp; Leadership</option>
                 <option>Coding for Kingdom</option>
               </select>
             </div>
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="f-mentor">Mentor</label>
-              <select class="wu-select" id="f-mentor">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="f-mentor">Mentor</label>
+              <select class="w-select" id="f-mentor">
                 <option selected>All mentors</option>
                 <option>Marcus Bello</option>
                 <option>Grace Adeyemi</option>
@@ -65,11 +65,11 @@
               </select>
             </div>
           </div>
-          <div class="wu-cluster wu-justify-between wu-mt-4">
-            <span class="wu-muted wu-text-sm">Showing <strong>42 youth</strong> across <strong>3 cohorts</strong> · updated Thu Jul 16, 2026</span>
-            <div class="wu-cluster wu-gap-2">
-              <button class="wu-btn wu-btn--ghost wu-btn--sm" data-toast="Filters reset" data-toast-type="info">Reset</button>
-              <button class="wu-btn wu-btn--secondary wu-btn--sm"><svg class="wu-icon"><use href="#i-filter"></use></svg>Apply</button>
+          <div class="w-cluster w-justify-between w-mt-4">
+            <span class="w-muted w-text-sm">Showing <strong>42 youth</strong> across <strong>3 cohorts</strong> · updated Thu Jul 16, 2026</span>
+            <div class="w-cluster w-gap-2">
+              <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Filters reset" data-toast-type="info">Reset</button>
+              <button class="w-btn w-btn--secondary w-btn--sm"><svg class="w-icon"><use href="#i-filter"></use></svg>Apply</button>
             </div>
           </div>
         </div>
@@ -79,103 +79,103 @@
       <div data-when-state="default">
 
         <!-- KPI cards -->
-        <div class="wu-grid wu-grid--4 wu-mb-4">
-          <div class="wu-card wu-statcard">
-            <div class="wu-statcard__label">Active youth</div>
-            <div class="wu-statcard__value">42</div>
-            <div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+6 this term</div>
+        <div class="w-grid w-grid--4 w-mb-4">
+          <div class="w-card w-statcard">
+            <div class="w-statcard__label">Active youth</div>
+            <div class="w-statcard__value">42</div>
+            <div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+6 this term</div>
           </div>
-          <div class="wu-card wu-statcard">
-            <div class="wu-statcard__label">Avg progress</div>
-            <div class="wu-statcard__value">64%</div>
-            <div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+4% vs last term</div>
+          <div class="w-card w-statcard">
+            <div class="w-statcard__label">Avg progress</div>
+            <div class="w-statcard__value">64%</div>
+            <div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+4% vs last term</div>
           </div>
-          <div class="wu-card wu-statcard">
-            <div class="wu-statcard__label">Attendance</div>
-            <div class="wu-statcard__value">89%</div>
-            <div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+2%</div>
+          <div class="w-card w-statcard">
+            <div class="w-statcard__label">Attendance</div>
+            <div class="w-statcard__value">89%</div>
+            <div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+2%</div>
           </div>
-          <div class="wu-card wu-statcard">
-            <div class="wu-statcard__label">At risk</div>
-            <div class="wu-statcard__value">3</div>
-            <div class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-trending-down"></use></svg>needs follow-up</div>
+          <div class="w-card w-statcard">
+            <div class="w-statcard__label">At risk</div>
+            <div class="w-statcard__value">3</div>
+            <div class="w-statcard__delta is-down"><svg class="w-icon"><use href="#i-trending-down"></use></svg>needs follow-up</div>
           </div>
         </div>
 
-        <div class="wu-grid wu-grid--2 wu-mb-4">
+        <div class="w-grid w-grid--2 w-mb-4">
           <!-- Progression over time (vertical bars) -->
-          <div class="wu-card">
-            <div class="wu-card__header">
-              <h3 class="wu-card__title">Average progress over time</h3>
-              <span class="wu-badge wu-badge--lime">Bible &amp; Leadership</span>
+          <div class="w-card">
+            <div class="w-card__header">
+              <h3 class="w-card__title">Average progress over time</h3>
+              <span class="w-badge w-badge--lime">Bible &amp; Leadership</span>
             </div>
-            <div class="wu-card__body">
+            <div class="w-card__body">
               <div style="display:flex;align-items:flex-end;gap:12px;height:180px;padding-top:8px">
                 <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%">
-                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:34%;width:100%;border-radius:6px"></div></div>
-                  <span class="wu-text-sm wu-muted">Jan</span>
+                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:34%;width:100%;border-radius:6px"></div></div>
+                  <span class="w-text-sm w-muted">Jan</span>
                 </div>
                 <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%">
-                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:41%;width:100%;border-radius:6px"></div></div>
-                  <span class="wu-text-sm wu-muted">Feb</span>
+                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:41%;width:100%;border-radius:6px"></div></div>
+                  <span class="w-text-sm w-muted">Feb</span>
                 </div>
                 <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%">
-                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:47%;width:100%;border-radius:6px"></div></div>
-                  <span class="wu-text-sm wu-muted">Mar</span>
+                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:47%;width:100%;border-radius:6px"></div></div>
+                  <span class="w-text-sm w-muted">Mar</span>
                 </div>
                 <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%">
-                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:53%;width:100%;border-radius:6px"></div></div>
-                  <span class="wu-text-sm wu-muted">Apr</span>
+                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:53%;width:100%;border-radius:6px"></div></div>
+                  <span class="w-text-sm w-muted">Apr</span>
                 </div>
                 <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%">
-                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:58%;width:100%;border-radius:6px"></div></div>
-                  <span class="wu-text-sm wu-muted">May</span>
+                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:58%;width:100%;border-radius:6px"></div></div>
+                  <span class="w-text-sm w-muted">May</span>
                 </div>
                 <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%">
-                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:61%;width:100%;border-radius:6px"></div></div>
-                  <span class="wu-text-sm wu-muted">Jun</span>
+                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:61%;width:100%;border-radius:6px"></div></div>
+                  <span class="w-text-sm w-muted">Jun</span>
                 </div>
                 <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%">
-                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:64%;width:100%;border-radius:6px"></div></div>
-                  <span class="wu-text-sm wu-muted">Jul</span>
+                  <div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:64%;width:100%;border-radius:6px"></div></div>
+                  <span class="w-text-sm w-muted">Jul</span>
                 </div>
               </div>
             </div>
-            <div class="wu-card__footer"><span class="wu-muted wu-text-sm">Steady climb from 34% to 64% average completion across active youth.</span></div>
+            <div class="w-card__footer"><span class="w-muted w-text-sm">Steady climb from 34% to 64% average completion across active youth.</span></div>
           </div>
 
           <!-- Completion by module (horizontal bars) -->
-          <div class="wu-card">
-            <div class="wu-card__header">
-              <h3 class="wu-card__title">Completion by module</h3>
-              <span class="wu-badge">All cohorts</span>
+          <div class="w-card">
+            <div class="w-card__header">
+              <h3 class="w-card__title">Completion by module</h3>
+              <span class="w-badge">All cohorts</span>
             </div>
-            <div class="wu-card__body">
-              <div class="wu-stack wu-stack--sm">
+            <div class="w-card__body">
+              <div class="w-stack w-stack--sm">
                 <div>
-                  <div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Who Is Jesus?</span><span class="wu-progress__num">88%</span></div>
-                  <div class="wu-progress"><div class="wu-progress__fill" style="--val:88%"></div></div>
+                  <div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Who Is Jesus?</span><span class="w-progress__num">88%</span></div>
+                  <div class="w-progress"><div class="w-progress__fill" style="--val:88%"></div></div>
                 </div>
                 <div>
-                  <div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Identity in Christ</span><span class="wu-progress__num">76%</span></div>
-                  <div class="wu-progress"><div class="wu-progress__fill" style="--val:76%"></div></div>
+                  <div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Identity in Christ</span><span class="w-progress__num">76%</span></div>
+                  <div class="w-progress"><div class="w-progress__fill" style="--val:76%"></div></div>
                 </div>
                 <div>
-                  <div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Servant Leadership</span><span class="wu-progress__num">61%</span></div>
-                  <div class="wu-progress"><div class="wu-progress__fill" style="--val:61%"></div></div>
+                  <div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Servant Leadership</span><span class="w-progress__num">61%</span></div>
+                  <div class="w-progress"><div class="w-progress__fill" style="--val:61%"></div></div>
                 </div>
                 <div>
-                  <div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Leading a Small Group</span><span class="wu-progress__num">39%</span></div>
-                  <div class="wu-progress"><div class="wu-progress__fill" style="--val:39%"></div></div>
+                  <div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Leading a Small Group</span><span class="w-progress__num">39%</span></div>
+                  <div class="w-progress"><div class="w-progress__fill" style="--val:39%"></div></div>
                 </div>
                 <div>
-                  <div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Sharing Your Story</span><span class="wu-progress__num">18%</span></div>
-                  <div class="wu-progress"><div class="wu-progress__fill" style="--val:18%"></div></div>
+                  <div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Sharing Your Story</span><span class="w-progress__num">18%</span></div>
+                  <div class="w-progress"><div class="w-progress__fill" style="--val:18%"></div></div>
                 </div>
-                <div class="wu-divider"></div>
+                <div class="w-divider"></div>
                 <div>
-                  <div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Intro to Scratch <span class="wu-badge wu-badge--outline">Coding</span></span><span class="wu-progress__num">52%</span></div>
-                  <div class="wu-progress"><div class="wu-progress__fill wu-progress__fill" style="--val:52%"></div></div>
+                  <div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Intro to Scratch <span class="w-badge w-badge--outline">Coding</span></span><span class="w-progress__num">52%</span></div>
+                  <div class="w-progress"><div class="w-progress__fill w-progress__fill" style="--val:52%"></div></div>
                 </div>
               </div>
             </div>
@@ -183,70 +183,70 @@
         </div>
 
         <!-- Engagement (vertical bars per week) -->
-        <div class="wu-card wu-mb-4">
-          <div class="wu-card__header">
-            <h3 class="wu-card__title">Weekly engagement</h3>
-            <span class="wu-muted wu-text-sm">Lessons completed &amp; reflections submitted per week</span>
+        <div class="w-card w-mb-4">
+          <div class="w-card__header">
+            <h3 class="w-card__title">Weekly engagement</h3>
+            <span class="w-muted w-text-sm">Lessons completed &amp; reflections submitted per week</span>
           </div>
-          <div class="wu-card__body">
+          <div class="w-card__body">
             <div style="display:flex;align-items:flex-end;gap:8px;height:150px;padding-top:8px">
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:44%;width:100%;border-radius:6px"></div></div><span class="wu-text-sm wu-muted">W1</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:62%;width:100%;border-radius:6px"></div></div><span class="wu-text-sm wu-muted">W2</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:57%;width:100%;border-radius:6px"></div></div><span class="wu-text-sm wu-muted">W3</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:78%;width:100%;border-radius:6px"></div></div><span class="wu-text-sm wu-muted">W4</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:70%;width:100%;border-radius:6px"></div></div><span class="wu-text-sm wu-muted">W5</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:66%;width:100%;border-radius:6px"></div></div><span class="wu-text-sm wu-muted">W6</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:85%;width:100%;border-radius:6px"></div></div><span class="wu-text-sm wu-muted">W7</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="wu-progress__fill" style="height:92%;width:100%;border-radius:6px"></div></div><span class="wu-text-sm wu-muted">W8</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:44%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W1</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:62%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W2</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:57%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W3</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:78%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W4</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:70%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W5</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:66%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W6</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:85%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W7</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:92%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W8</span></div>
             </div>
           </div>
-          <div class="wu-card__footer"><span class="wu-muted wu-text-sm">Peak engagement in Week 8 (Servant Leadership launch).</span></div>
+          <div class="w-card__footer"><span class="w-muted w-text-sm">Peak engagement in Week 8 (Servant Leadership launch).</span></div>
         </div>
 
         <!-- Links to specific reports -->
-        <h2 class="wu-mb-4">Detailed reports</h2>
-        <div class="wu-grid wu-grid--2">
-          <a class="wu-card wu-card--link" href="report-youth.html">
-            <div class="wu-card__body">
-              <div class="wu-cluster wu-justify-between">
-                <div class="wu-person">
-                  <span class="wu-avatar" data-name="Priya Sharma"></span>
-                  <div><div class="wu-person__name">Individual youth report</div><div class="wu-person__meta">Printable per-youth progress for meetings &amp; funders</div></div>
+        <h2 class="w-mb-4">Detailed reports</h2>
+        <div class="w-grid w-grid--2">
+          <a class="w-card w-card--link" href="report-youth.html">
+            <div class="w-card__body">
+              <div class="w-cluster w-justify-between">
+                <div class="w-person">
+                  <span class="w-avatar" data-name="Priya Sharma"></span>
+                  <div><div class="w-person__name">Individual youth report</div><div class="w-person__meta">Printable per-youth progress for meetings &amp; funders</div></div>
                 </div>
-                <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+                <svg class="w-icon"><use href="#i-chevron-right"></use></svg>
               </div>
             </div>
           </a>
-          <a class="wu-card wu-card--link" href="report-cohort.html">
-            <div class="wu-card__body">
-              <div class="wu-cluster wu-justify-between">
-                <div class="wu-person">
-                  <span class="wu-avatar" data-name="Rexdale Fall"></span>
-                  <div><div class="wu-person__name">Cohort report</div><div class="wu-person__meta">Aggregate outcomes &amp; trends by cohort</div></div>
+          <a class="w-card w-card--link" href="report-cohort.html">
+            <div class="w-card__body">
+              <div class="w-cluster w-justify-between">
+                <div class="w-person">
+                  <span class="w-avatar" data-name="Rexdale Fall"></span>
+                  <div><div class="w-person__name">Cohort report</div><div class="w-person__meta">Aggregate outcomes &amp; trends by cohort</div></div>
                 </div>
-                <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+                <svg class="w-icon"><use href="#i-chevron-right"></use></svg>
               </div>
             </div>
           </a>
-          <a class="wu-card wu-card--link" href="report-attendance.html">
-            <div class="wu-card__body">
-              <div class="wu-cluster wu-justify-between">
-                <div class="wu-person">
-                  <span class="wu-avatar" data-name="Attendance Report"></span>
-                  <div><div class="wu-person__name">Attendance report</div><div class="wu-person__meta">Rates by cohort, session and youth</div></div>
+          <a class="w-card w-card--link" href="report-attendance.html">
+            <div class="w-card__body">
+              <div class="w-cluster w-justify-between">
+                <div class="w-person">
+                  <span class="w-avatar" data-name="Attendance Report"></span>
+                  <div><div class="w-person__name">Attendance report</div><div class="w-person__meta">Rates by cohort, session and youth</div></div>
                 </div>
-                <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+                <svg class="w-icon"><use href="#i-chevron-right"></use></svg>
               </div>
             </div>
           </a>
-          <a class="wu-card wu-card--link" href="report-staff.html">
-            <div class="wu-card__body">
-              <div class="wu-cluster wu-justify-between">
-                <div class="wu-person">
-                  <span class="wu-avatar" data-name="Marcus Bello"></span>
-                  <div><div class="wu-person__name">Staff activity report</div><div class="wu-person__meta">Mentor check-ins, reviews &amp; load balance</div></div>
+          <a class="w-card w-card--link" href="report-staff.html">
+            <div class="w-card__body">
+              <div class="w-cluster w-justify-between">
+                <div class="w-person">
+                  <span class="w-avatar" data-name="Marcus Bello"></span>
+                  <div><div class="w-person__name">Staff activity report</div><div class="w-person__meta">Mentor check-ins, reviews &amp; load balance</div></div>
                 </div>
-                <svg class="wu-icon"><use href="#i-chevron-right"></use></svg>
+                <svg class="w-icon"><use href="#i-chevron-right"></use></svg>
               </div>
             </div>
           </a>
@@ -255,37 +255,37 @@
       </div>
 
       <!-- ===== LOADING ===== -->
-      <div data-when-state="loading" class="wu-hide">
-        <div class="wu-grid wu-grid--4 wu-mb-4">
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
+      <div data-when-state="loading" class="w-hide">
+        <div class="w-grid w-grid--4 w-mb-4">
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
         </div>
-        <div class="wu-grid wu-grid--2">
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--title"></span><span class="wu-skeleton wu-skeleton--block"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--title"></span><span class="wu-skeleton wu-skeleton--block"></span></div></div>
+        <div class="w-grid w-grid--2">
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--title"></span><span class="w-skeleton w-skeleton--block"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--title"></span><span class="w-skeleton w-skeleton--block"></span></div></div>
         </div>
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="wu-hide">
-        <div class="wu-card"><div class="wu-empty">
-          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-bar-chart"></use></svg></div>
-          <h3 class="wu-empty__title">No data for these filters</h3>
-          <p class="wu-empty__text">No youth activity matched this date range and cohort. Try widening the range or clearing filters.</p>
-          <button class="wu-btn wu-btn--primary" data-toast="Filters cleared" data-toast-type="info">Clear filters</button>
+      <div data-when-state="empty" class="w-hide">
+        <div class="w-card"><div class="w-empty">
+          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-bar-chart"></use></svg></div>
+          <h3 class="w-empty__title">No data for these filters</h3>
+          <p class="w-empty__text">No youth activity matched this date range and cohort. Try widening the range or clearing filters.</p>
+          <button class="w-btn w-btn--primary" data-toast="Filters cleared" data-toast-type="info">Clear filters</button>
         </div></div>
       </div>
 
       <!-- ===== ERROR ===== -->
-      <div data-when-state="error" class="wu-hide">
-        <div class="wu-alert wu-alert--error">
-          <svg class="wu-alert__icon wu-icon"><use href="#i-alert-circle"></use></svg>
+      <div data-when-state="error" class="w-hide">
+        <div class="w-alert w-alert--error">
+          <svg class="w-alert__icon w-icon"><use href="#i-alert-circle"></use></svg>
           <div>
-            <div class="wu-alert__title">Couldn’t load analytics</div>
+            <div class="w-alert__title">Couldn’t load analytics</div>
             The reporting service didn’t respond. Your data is safe — try again.
-            <div class="wu-mt-4"><button class="wu-btn wu-btn--secondary wu-btn--sm"><svg class="wu-icon"><use href="#i-refresh"></use></svg>Retry</button></div>
+            <div class="w-mt-4"><button class="w-btn w-btn--secondary w-btn--sm"><svg class="w-icon"><use href="#i-refresh"></use></svg>Retry</button></div>
           </div>
         </div>
       </div>
@@ -294,27 +294,27 @@
   </main>
 
   <!-- ===== modal: export ===== -->
-  <div class="wu-modal wu-modal--sm" id="m-export" role="dialog" aria-modal="true">
-    <div class="wu-modal__scrim"></div>
-    <div class="wu-modal__panel">
-      <div class="wu-modal__header">
-        <div><h2 class="wu-modal__title">Export report</h2><p class="wu-modal__sub">This term (Apr–Jul 2026) · All cohorts</p></div>
-        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+  <div class="w-modal w-modal--sm" id="m-export" role="dialog" aria-modal="true">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title">Export report</h2><p class="w-modal__sub">This term (Apr–Jul 2026) · All cohorts</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="wu-modal__body">
-        <div class="wu-field">
-          <label class="wu-label">Format</label>
-          <label class="wu-radio"><input type="radio" name="fmt" checked><span class="wu-radio__box"></span><span>PDF — formatted summary</span></label>
-          <label class="wu-radio"><input type="radio" name="fmt"><span class="wu-radio__box"></span><span>CSV — raw data for spreadsheets</span></label>
-          <label class="wu-radio"><input type="radio" name="fmt"><span class="wu-radio__box"></span><span>Google Sheets — sync to Word Up workbook</span></label>
+      <div class="w-modal__body">
+        <div class="w-field">
+          <label class="w-label">Format</label>
+          <label class="w-radio"><input type="radio" name="fmt" checked><span class="w-radio__box"></span><span>PDF — formatted summary</span></label>
+          <label class="w-radio"><input type="radio" name="fmt"><span class="w-radio__box"></span><span>CSV — raw data for spreadsheets</span></label>
+          <label class="w-radio"><input type="radio" name="fmt"><span class="w-radio__box"></span><span>Google Sheets — sync to Waypoint workbook</span></label>
         </div>
-        <label class="wu-check"><input type="checkbox" checked><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Include charts</span></label>
-        <label class="wu-check"><input type="checkbox"><span class="wu-check__box"><svg class="wu-icon"><use href="#i-check"></use></svg></span><span>Include youth-level detail</span></label>
-        <div class="wu-alert wu-alert--info wu-mt-4"><svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg><div>Exports respect the current filters. No personal data leaves your device in this demo.</div></div>
+        <label class="w-check"><input type="checkbox" checked><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span>Include charts</span></label>
+        <label class="w-check"><input type="checkbox"><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span>Include youth-level detail</span></label>
+        <div class="w-alert w-alert--info w-mt-4"><svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg><div>Exports respect the current filters. No personal data leaves your device in this demo.</div></div>
       </div>
-      <div class="wu-modal__footer">
-        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
-        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Report exported" data-toast-type="success" data-toast-title="Download ready"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
+      <div class="w-modal__footer">
+        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <button class="w-btn w-btn--primary" data-close-modal data-toast="Report exported" data-toast-type="success" data-toast-title="Download ready"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
       </div>
     </div>
   </div>

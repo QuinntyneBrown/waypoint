@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, UrlTree } from '@angular/router';
-import { ConsentApi } from '@wu/api';
+import { ConsentApi } from '@w/api';
 import { firstValueFrom, isObservable, Observable, of, throwError } from 'rxjs';
 import { describe, expect, it } from 'vitest';
 import { consentGuard } from './consent.guard';

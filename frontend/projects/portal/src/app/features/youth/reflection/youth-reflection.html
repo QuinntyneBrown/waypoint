@@ -1,42 +1,42 @@
-<wu-shell
+<w-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-container--narrow wu-page">
-    <a class="wu-btn wu-btn--ghost" [routerLink]="['/youth/lessons', editor()?.lessonId]">
+  <div class="w-container w-container--narrow w-page">
+    <a class="w-btn w-btn--ghost" [routerLink]="['/youth/lessons', editor()?.lessonId]">
       Back to lesson
     </a>
 
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as status) {
-      <p class="wu-alert wu-alert--success" role="status">{{ status }}</p>
+      <p class="w-alert w-alert--success" role="status">{{ status }}</p>
     }
 
     @if (editor(); as view) {
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">Lesson reflection</div>
-          <h1 class="wu-page__title">Reflect on {{ view.lessonTitle }}</h1>
-          <p class="wu-page__sub">Take your time. You can save this as a private draft.</p>
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">Lesson reflection</div>
+          <h1 class="w-page__title">Reflect on {{ view.lessonTitle }}</h1>
+          <p class="w-page__sub">Take your time. You can save this as a private draft.</p>
         </div>
       </div>
 
       @if (view.prompt) {
-        <section class="wu-card wu-card--greige">
-          <div class="wu-card__body">
-            <div class="wu-eyebrow">Think about it</div>
-            <p class="wu-scripture">{{ view.prompt }}</p>
+        <section class="w-card w-card--greige">
+          <div class="w-card__body">
+            <div class="w-eyebrow">Think about it</div>
+            <p class="w-scripture">{{ view.prompt }}</p>
           </div>
         </section>
       }
 
-      <form class="wu-stack" [formGroup]="form" (ngSubmit)="submit()">
-        <fieldset class="wu-card">
-          <div class="wu-card__body wu-stack">
+      <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
+        <fieldset class="w-card">
+          <div class="w-card__body w-stack">
             <legend><strong>How are you feeling?</strong></legend>
             <div class="mood-options">
               @for (mood of ['Hopeful', 'Thoughtful', 'Unsure', 'Challenged']; track mood) {
@@ -52,68 +52,68 @@
               }
             </div>
             @if (form.controls.mood.touched && form.controls.mood.hasError('required')) {
-              <p class="wu-field__error">Choose how you are feeling.</p>
+              <p class="w-field__error">Choose how you are feeling.</p>
             }
           </div>
         </fieldset>
 
-        <div class="wu-field">
-          <label class="wu-field__label" for="reflection-text">Your reflection</label>
+        <div class="w-field">
+          <label class="w-field__label" for="reflection-text">Your reflection</label>
           <textarea
             id="reflection-text"
-            class="wu-input"
+            class="w-input"
             formControlName="text"
             maxlength="8000"
             aria-describedby="reflection-help reflection-error"
           ></textarea>
-          <p id="reflection-help" class="wu-field__hint">
+          <p id="reflection-help" class="w-field__hint">
             Required when you submit. Drafts can be unfinished.
           </p>
           @if (form.controls.text.touched && form.controls.text.hasError('required')) {
-            <p id="reflection-error" class="wu-field__error">Reflection text is required.</p>
+            <p id="reflection-error" class="w-field__error">Reflection text is required.</p>
           }
         </div>
 
-        <div class="wu-field">
-          <label class="wu-field__label" for="secondary-response">One action I will take</label>
+        <div class="w-field">
+          <label class="w-field__label" for="secondary-response">One action I will take</label>
           <textarea
             id="secondary-response"
-            class="wu-input"
+            class="w-input"
             formControlName="secondaryResponse"
             maxlength="4000"
           ></textarea>
-          <p class="wu-field__hint">Optional</p>
+          <p class="w-field__hint">Optional</p>
         </div>
 
-        <section class="wu-card wu-card--greige">
-          <div class="wu-card__body wu-stack">
+        <section class="w-card w-card--greige">
+          <div class="w-card__body w-stack">
             <label class="share-option">
               <input type="checkbox" formControlName="shareWithMentor" />
               <strong>Share with my mentor</strong>
             </label>
-            <p class="wu-muted">
+            <p class="w-muted">
               Off by default. When it is off, this reflection is private to you. Turn it on only if
               you want your assigned mentor to read it and respond during check-ins.
             </p>
           </div>
         </section>
 
-        <div class="wu-actions">
+        <div class="w-actions">
           <button
-            class="wu-btn wu-btn--secondary"
+            class="w-btn w-btn--secondary"
             type="button"
             [disabled]="saving()"
             (click)="saveDraft()"
           >
             Save draft
           </button>
-          <button class="wu-btn wu-btn--primary" type="submit" [disabled]="saving()">
+          <button class="w-btn w-btn--primary" type="submit" [disabled]="saving()">
             Submit reflection
           </button>
         </div>
       </form>
     } @else {
-      <p class="wu-muted">Loading reflection…</p>
+      <p class="w-muted">Loading reflection…</p>
     }
   </div>
-</wu-shell>
+</w-shell>

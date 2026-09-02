@@ -12,7 +12,7 @@ Every slice follows the loop:
    - **UI slice where the API already exists** → a Playwright E2E in `frontend/e2e/**`
      using the Page Object Model (`frontend/e2e/pages/`), tagged `// Traces to: L2-…`.
    - **Server behaviour** → an NUnit integration test in
-     `backend/tests/WordUp.IntegrationTests/**` through `HttpClient`, with
+     `backend/tests/Waypoint.IntegrationTests/**` through `HttpClient`, with
      `// Traces to: L2-…` + `[Property("Req","L2-…")]`.
 2. Run it; watch it fail for the right reason.
 3. Minimum implementation to green.
@@ -243,7 +243,7 @@ requirement conflicts early (they gate "done").
       local teardown when disconnected, preserves owner-bound safe form fields, bypasses dirty-route
       guards for the authoritative expiry state, and carries the recovery route through sign-in.
       Reflection recovery restores text, mood, optional response, and sharing choice after its async
-      editor loads; explicit sign-out still purges all Word Up session and draft storage.
+      editor loads; explicit sign-out still purges all Waypoint session and draft storage.
 - [x] **H2** Per-action consent enforcement in protected youth handlers `L2-CONSENT-002/004` —
       every lesson, quiz, assignment, coding, reflection, journey, and progress request now applies
       the shared participation policy before its handler runs. Linked minors without current consent
@@ -353,7 +353,7 @@ requirement conflicts early (they gate "done").
 - [x] **H21** Operational CLI + durable DB lifecycle/migrations `L2-NFR-011` — production rejects
       missing/in-memory connection strings and placeholder secrets before serving, applies pending
       migrations once during startup, and has an initial SQL Server migration plus reusable lifecycle
-      service. The packable `wu` tool reuses application validation/handlers for database migrate,
+      service. The packable `way` tool reuses application validation/handlers for database migrate,
       guarded reset and idempotent seed; user, invitation, and cohort management; youth CSV import;
       youth/cohort exports; badge awards; and audited token issuance with deterministic operator
       attribution.
@@ -642,7 +642,7 @@ requirement conflicts early (they gate "done").
   revokes the server session, uses a two-second disconnected fallback, clears the local session, and
   hard-transitions past feature leave guards to the session-expired state. Re-authentication returns
   the same user to the reflection editor and restores text, mood, optional response, and mentor-share
-  choice; another user cannot consume that draft, while explicit sign-out still purges all Word Up
+  choice; another user cannot consume that draft, while explicit sign-out still purges all Waypoint
   storage. Eight portal units, twenty auth-library units, the 426.57 kB production build, and four
   combined sign-out/expiry/reflection browser journeys pass.
 - 2026-07-18 — H2 done: one endpoint authorization policy now reuses the term-aware participation

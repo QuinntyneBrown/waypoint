@@ -65,7 +65,7 @@ test('offline volunteer attendance is owner-bound, queued, and automatically syn
 
   const queued = await page.evaluate(() =>
     Object.entries(localStorage)
-      .filter(([key]) => key.startsWith('wu.attendance.queue.'))
+      .filter(([key]) => key.startsWith('w.attendance.queue.'))
       .map(([, value]) => JSON.parse(value)),
   );
   expect(JSON.stringify(queued)).toContain(volunteer.userId);
@@ -105,7 +105,7 @@ test('an offline attendance conflict is explicit and can be deterministically re
   await expect(attendance.syncStatus).toContainText(/waiting to sync/i);
   const queuedPayload = await page.evaluate(() =>
     Object.entries(localStorage)
-      .filter(([key]) => key.startsWith('wu.attendance.queue.'))
+      .filter(([key]) => key.startsWith('w.attendance.queue.'))
       .map(([, value]) => JSON.parse(value)),
   );
   expect(JSON.stringify(queuedPayload)).toContain('"expectedVersion":"none"');

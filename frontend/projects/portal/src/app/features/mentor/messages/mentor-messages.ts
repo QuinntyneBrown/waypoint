@@ -17,18 +17,18 @@ import {
   MentorMessageInbox,
   MessageView,
   MessagingApi,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAccessibleDialog, WIcon, WShell } from '@w/ui';
 import { RealtimeService } from '../../../realtime.service';
 
 type MessageMode = 'thread' | 'broadcast';
 
 // Traces to: L2-ENGAGE-007, L2-ENGAGE-008, L2-NFR-005, L2-AUTH-010
 @Component({
-  selector: 'wu-mentor-messages',
+  selector: 'w-mentor-messages',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, WuAccessibleDialog, DatePipe, ReactiveFormsModule],
+  imports: [WShell, WIcon, WAccessibleDialog, DatePipe, ReactiveFormsModule],
   templateUrl: './mentor-messages.html',
   styles: `
     .messages-layout {
@@ -38,28 +38,28 @@ type MessageMode = 'thread' | 'broadcast';
       overflow: hidden;
     }
     .inbox-panel {
-      border-right: 1px solid var(--wu-border);
-      background: var(--wu-white);
+      border-right: 1px solid var(--w-border);
+      background: var(--w-white);
     }
     .inbox-head,
     .conversation-head,
     .composer,
     .broadcast-panel {
-      padding: var(--wu-sp-4);
+      padding: var(--w-sp-4);
     }
     .conversation-list {
       margin: 0;
       padding: 0;
       list-style: none;
-      border-top: 1px solid var(--wu-border);
+      border-top: 1px solid var(--w-border);
     }
     .conversation-button {
       display: block;
       width: 100%;
       min-height: 62px;
-      padding: var(--wu-sp-3) var(--wu-sp-4);
+      padding: var(--w-sp-3) var(--w-sp-4);
       border: 0;
-      border-bottom: 1px solid var(--wu-border);
+      border-bottom: 1px solid var(--w-border);
       background: transparent;
       color: inherit;
       text-align: left;
@@ -67,10 +67,10 @@ type MessageMode = 'thread' | 'broadcast';
     }
     .conversation-button:hover,
     .conversation-button.is-active {
-      background: var(--wu-lime-soft);
+      background: var(--w-lime-soft);
     }
     .conversation-button:focus-visible {
-      outline: 3px solid var(--wu-ink);
+      outline: 3px solid var(--w-ink);
       outline-offset: -3px;
     }
     .conversation-preview {
@@ -83,11 +83,11 @@ type MessageMode = 'thread' | 'broadcast';
       display: flex;
       min-width: 0;
       flex-direction: column;
-      background: var(--wu-g100);
+      background: var(--w-g100);
     }
     .conversation-head {
-      border-bottom: 1px solid var(--wu-border);
-      background: var(--wu-white);
+      border-bottom: 1px solid var(--w-border);
+      background: var(--w-white);
     }
     .thread-log {
       display: flex;
@@ -95,9 +95,9 @@ type MessageMode = 'thread' | 'broadcast';
       min-height: 18rem;
       max-height: 32rem;
       margin: 0;
-      padding: var(--wu-sp-5);
+      padding: var(--w-sp-5);
       flex-direction: column;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
       overflow-y: auto;
       list-style: none;
     }
@@ -110,21 +110,21 @@ type MessageMode = 'thread' | 'broadcast';
     .message-bubble {
       width: fit-content;
       max-width: 75%;
-      padding: var(--wu-sp-3) var(--wu-sp-4);
-      border: 1px solid var(--wu-border);
-      border-radius: var(--wu-r-card);
-      background: var(--wu-white);
+      padding: var(--w-sp-3) var(--w-sp-4);
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-r-card);
+      background: var(--w-white);
       overflow-wrap: anywhere;
     }
     .message-row--mine .message-bubble {
-      background: var(--wu-lime-soft);
+      background: var(--w-lime-soft);
     }
     .message-body {
       white-space: pre-wrap;
     }
     .composer {
-      border-top: 1px solid var(--wu-border);
-      background: var(--wu-white);
+      border-top: 1px solid var(--w-border);
+      background: var(--w-white);
     }
     .mobile-back {
       display: none;

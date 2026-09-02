@@ -1,5 +1,5 @@
 import type { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import type { FulfillDataSubjectRequest } from '@wu/api';
+import type { FulfillDataSubjectRequest } from '@w/api';
 
 export const VERIFIED_RECORD_LIMIT = 200;
 export const VERIFIED_RECORD_FIELDS = [

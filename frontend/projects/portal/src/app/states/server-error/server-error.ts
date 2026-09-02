@@ -1,24 +1,24 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthStore, roleHome } from '@wu/auth';
-import { WuStatePage } from '@wu/ui';
+import { AuthStore, roleHome } from '@w/auth';
+import { WStatePage } from '@w/ui';
 import { FormDraftService } from '../../form-draft.service';
 
 // Traces to: L2-PLATFORM-008
 @Component({
-  selector: 'wu-server-error',
+  selector: 'w-server-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuStatePage, RouterLink],
-  template: `<wu-state-page
+  imports: [WStatePage, RouterLink],
+  template: `<w-state-page
     icon="alert-triangle"
     tone="error"
     eyebrow="Error 500"
     title="Something went wrong"
     text="We hit a snag on our end — nothing you did caused it. Please try again in a moment."
   >
-    <button class="wu-btn wu-btn--primary" type="button" (click)="retry()">Try again</button>
-    <a class="wu-btn wu-btn--ghost" [routerLink]="home">Back to home</a>
-  </wu-state-page>`,
+    <button class="w-btn w-btn--primary" type="button" (click)="retry()">Try again</button>
+    <a class="w-btn w-btn--ghost" [routerLink]="home">Back to home</a>
+  </w-state-page>`,
 })
 export class ServerError {
   private readonly auth = inject(AuthStore);

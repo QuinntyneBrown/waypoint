@@ -194,10 +194,10 @@ export class InviteAcceptPage extends BasePage {
     return this.page.getByRole('checkbox', { name: /community guidelines/i });
   }
   get joinButton() {
-    return this.page.getByRole('button', { name: /join word up/i });
+    return this.page.getByRole('button', { name: /join waypoint/i });
   }
   async agreeToGuidelines(): Promise<void> {
-    await this.page.locator('label.wu-check', { hasText: 'community guidelines' }).click();
+    await this.page.locator('label.w-check', { hasText: 'community guidelines' }).click();
   }
   async goto(token: string): Promise<void> {
     await this.page.goto(`/auth/invite?token=${encodeURIComponent(token)}`);

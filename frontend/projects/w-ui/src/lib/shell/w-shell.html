@@ -1,0 +1,100 @@
+<div class="w-offline" [class.is-visible]="showOffline()">
+  <w-icon name="wifi-off" />
+  <span>You’re offline — changes will save when you reconnect.</span>
+</div>
+
+<header class="w-topbar">
+  <button class="w-iconbtn w-topbar__burger" type="button" aria-label="Menu" (click)="toggleNav()">
+    <w-icon name="menu" />
+  </button>
+  <a class="w-brand" [routerLink]="nav().brandPath">
+    <span class="w-brand__mark">W</span><span class="w-brand__name">Waypoint</span>
+  </a>
+  <div class="w-topbar__actions">
+    <a class="w-iconbtn" [routerLink]="'/' + role() + '/notifications'" aria-label="Notifications">
+      <w-icon name="bell" />
+    </a>
+    <button
+      class="w-iconbtn"
+      type="button"
+      aria-label="Account"
+      [attr.aria-expanded]="accountOpen()"
+      (click)="toggleAccount()"
+    >
+      <w-avatar [name]="userName()" size="sm" />
+    </button>
+  </div>
+</header>
+
+<div class="w-navscrim" (click)="closeNav()"></div>
+
+<nav class="w-sidenav" aria-label="Main">
+  @for (item of nav().items; track $index) {
+    @if (isGroup(item)) {
+      <div class="w-sidenav__group">{{ item.group }}</div>
+    } @else {
+      <a
+        class="w-sidenav__item"
+        [class.is-active]="item.key === active()"
+        [routerLink]="item.path"
+        [attr.aria-current]="item.key === active() ? 'page' : null"
+        (click)="closeNav()"
+      >
+        <w-icon [name]="item.icon" />
+        <span>{{ item.label }}</span>
+        @if (item.badge) {
+          <span class="w-sidenav__badge">{{ item.badge }}</span>
+        }
+      </a>
+    }
+  }
+  <div class="w-sidenav__foot">
+    <button class="w-sidenav__item" type="button" (click)="emitSignOut()">
+      <w-icon name="log-out" />
+      <span>Sign out</span>
+    </button>
+  </div>
+</nav>
+
+@if (botItems().length) {
+  <nav class="w-botnav" aria-label="Primary">
+    @for (item of botItems(); track item.key) {
+      <a
+        class="w-botnav__item"
+        [class.is-active]="item.key === active()"
+        [routerLink]="item.path"
+        [attr.aria-current]="item.key === active() ? 'page' : null"
+      >
+        <w-icon [name]="item.icon" />
+        <span>{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+}
+
+@if (accountOpen()) {
+  <div class="w-menu" style="top: 52px; right: 12px" role="menu">
+    <div class="w-menu__item" style="pointer-events: none">
+      <w-avatar [name]="userName()" size="sm" />
+      <span
+        ><b>{{ userName() }}</b
+        ><br /><span class="w-muted w-text-sm">{{ roleLabel() }}</span></span
+      >
+    </div>
+    <div class="w-menu__sep"></div>
+    <a class="w-menu__item" routerLink="/settings/profile" (click)="toggleAccount()">
+      <w-icon name="user" />Profile &amp; settings
+    </a>
+    <a class="w-menu__item" routerLink="/help" (click)="toggleAccount()">
+      <w-icon name="help-circle" />Help
+    </a>
+    <div class="w-menu__sep"></div>
+    <button class="w-menu__item w-menu__item--danger" type="button" (click)="emitSignOut()">
+      <w-icon name="log-out" />Sign out
+    </button>
+  </div>
+}
+
+<main class="w-main">
+  <ng-content />
+</main>

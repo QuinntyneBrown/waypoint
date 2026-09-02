@@ -1,6 +1,6 @@
 # Contributors
 
-Word Up is made possible by people who contribute code, design, product thinking, requirements, safeguarding insight, documentation, testing, and review.
+Waypoint is made possible by people who contribute code, design, product thinking, requirements, safeguarding insight, documentation, testing, and review.
 
 The repository history currently includes contributions from:
 

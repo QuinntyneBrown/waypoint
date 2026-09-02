@@ -1,25 +1,25 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, MentorApi, MentorYouthDetail } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, MentorApi, MentorYouthDetail } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 type DetailTab =
   'profile' | 'progress' | 'attendance' | 'check-ins' | 'submissions' | 'competencies';
 
 // Traces to: L2-MENTOR-002, L2-AUTH-010
 @Component({
-  selector: 'wu-mentor-youth-detail',
+  selector: 'w-mentor-youth-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, DatePipe],
+  imports: [WShell, RouterLink, DatePipe],
   templateUrl: './mentor-youth-detail.html',
   styles: `
     .detail-tabs {
       display: flex;
-      gap: var(--wu-s2);
+      gap: var(--w-s2);
       overflow-x: auto;
-      padding-block: var(--wu-s2);
+      padding-block: var(--w-s2);
     }
     .detail-tab {
       min-height: 44px;
@@ -28,7 +28,7 @@ type DetailTab =
     .detail-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-s5);
+      gap: var(--w-s5);
     }
     .detail-list {
       margin: 0;
@@ -36,8 +36,8 @@ type DetailTab =
       list-style: none;
     }
     .detail-row {
-      padding: var(--wu-s4) 0;
-      border-bottom: 1px solid var(--wu-border);
+      padding: var(--w-s4) 0;
+      border-bottom: 1px solid var(--w-border);
       overflow-wrap: anywhere;
     }
     .detail-row:last-child {

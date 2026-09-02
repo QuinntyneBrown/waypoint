@@ -7,9 +7,9 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, VolunteerApi, VolunteerRosterEntry } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, VolunteerApi, VolunteerRosterEntry } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 import { EditorDraftService } from '../../../editor-draft.service';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
 import { DraftSaveResult, UnsavedChangesService } from '../../../unsaved-changes.service';
@@ -23,32 +23,32 @@ interface AttendanceRow extends VolunteerRosterEntry {
 
 // Traces to: L2-VOLUNTEER-001, L2-ENGAGE-002/003, L2-NFR-004/007
 @Component({
-  selector: 'wu-volunteer-attendance',
+  selector: 'w-volunteer-attendance',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink],
+  imports: [WShell, RouterLink],
   templateUrl: './volunteer-attendance.html',
   styles: [
     `
       .attendance-summary {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: var(--wu-space-3);
+        gap: var(--w-space-3);
       }
       .attendance-summary > div {
-        padding: var(--wu-space-3);
+        padding: var(--w-space-3);
         text-align: center;
       }
       .attendance-summary strong {
         display: block;
-        font-size: var(--wu-text-xl);
+        font-size: var(--w-text-xl);
       }
       .attendance-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--wu-space-4);
-        padding: var(--wu-space-4) 0;
-        border-bottom: 1px solid var(--wu-color-border);
+        gap: var(--w-space-4);
+        padding: var(--w-space-4) 0;
+        border-bottom: 1px solid var(--w-color-border);
       }
       .attendance-row:last-child {
         border-bottom: 0;
@@ -58,13 +58,13 @@ interface AttendanceRow extends VolunteerRosterEntry {
       }
       .attendance-actions {
         display: flex;
-        gap: var(--wu-space-2);
+        gap: var(--w-space-2);
       }
       .attendance-actions .is-selected {
-        outline: 3px solid var(--wu-color-ink);
+        outline: 3px solid var(--w-color-ink);
         outline-offset: 2px;
       }
-      .attendance-actions .wu-btn {
+      .attendance-actions .w-btn {
         min-height: 44px;
         min-width: 44px;
       }
@@ -73,7 +73,7 @@ interface AttendanceRow extends VolunteerRosterEntry {
           align-items: stretch;
           flex-direction: column;
         }
-        .attendance-actions .wu-btn {
+        .attendance-actions .w-btn {
           flex: 1;
         }
       }

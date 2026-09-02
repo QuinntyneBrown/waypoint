@@ -15,9 +15,9 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "@wu/ui": ["./projects/wu-ui/src/public-api.ts"],
-      "@wu/api": ["./projects/wu-api/src/public-api.ts"],
-      "@wu/auth": ["./projects/wu-auth/src/public-api.ts"]
+      "@w/ui": ["./projects/w-ui/src/public-api.ts"],
+      "@w/api": ["./projects/w-api/src/public-api.ts"],
+      "@w/auth": ["./projects/w-auth/src/public-api.ts"]
     }
   },
   "angularCompilerOptions": {
@@ -35,22 +35,22 @@
       "path": "./projects/portal/tsconfig.spec.json"
     },
     {
-      "path": "./projects/wu-ui/tsconfig.lib.json"
+      "path": "./projects/w-ui/tsconfig.lib.json"
     },
     {
-      "path": "./projects/wu-ui/tsconfig.spec.json"
+      "path": "./projects/w-ui/tsconfig.spec.json"
     },
     {
-      "path": "./projects/wu-api/tsconfig.lib.json"
+      "path": "./projects/w-api/tsconfig.lib.json"
     },
     {
-      "path": "./projects/wu-api/tsconfig.spec.json"
+      "path": "./projects/w-api/tsconfig.spec.json"
     },
     {
-      "path": "./projects/wu-auth/tsconfig.lib.json"
+      "path": "./projects/w-auth/tsconfig.lib.json"
     },
     {
-      "path": "./projects/wu-auth/tsconfig.spec.json"
+      "path": "./projects/w-auth/tsconfig.spec.json"
     },
     {
       "path": "./projects/public-site/tsconfig.app.json"

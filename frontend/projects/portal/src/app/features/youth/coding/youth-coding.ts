@@ -3,21 +3,21 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError, CodingLesson, CodingLessonStep, LearningApi } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, CodingLesson, CodingLessonStep, LearningApi } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-LEARN-008
 @Component({
-  selector: 'wu-youth-coding',
+  selector: 'w-youth-coding',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, ReactiveFormsModule],
+  imports: [WShell, RouterLink, ReactiveFormsModule],
   templateUrl: './youth-coding.html',
   styles: `
     .coding-layout {
       display: grid;
       grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.6fr);
-      gap: var(--wu-sp-5);
+      gap: var(--w-sp-5);
       align-items: start;
     }
     .coding-step-button {
@@ -34,10 +34,10 @@ import { WuShell } from '@wu/ui';
     .coding-sample {
       overflow-x: auto;
       white-space: pre-wrap;
-      padding: var(--wu-sp-4);
+      padding: var(--w-sp-4);
       background: #17202a;
       color: #f8f9f9;
-      border-radius: var(--wu-r-input);
+      border-radius: var(--w-r-input);
     }
     .coding-editor {
       width: 100%;
@@ -48,8 +48,8 @@ import { WuShell } from '@wu/ui';
       display: block;
       width: 100%;
       min-height: 18rem;
-      border: 1px solid var(--wu-border);
-      border-radius: var(--wu-r-input);
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-r-input);
       background: white;
     }
     .coding-progress {

@@ -7,9 +7,9 @@ import {
   RosterImportRequest,
   RosterImportResult,
   RosterPreview,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAccessibleDialog, WIcon, WShell } from '@w/ui';
 import { finalize } from 'rxjs/operators';
 
 interface ImportColumn {
@@ -20,9 +20,9 @@ interface ImportColumn {
 
 // Traces to: L2-REPORT-004, L2-NFR-001, L2-NFR-009/010, L2-CONSENT-003
 @Component({
-  selector: 'wu-import-roster',
+  selector: 'w-import-roster',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, WuAccessibleDialog, FormsModule],
+  imports: [WShell, WIcon, WAccessibleDialog, FormsModule],
   templateUrl: './import-roster.html',
   styles: `
     .import-columns,
@@ -34,22 +34,22 @@ interface ImportColumn {
     .import-columns td,
     .import-preview th,
     .import-preview td {
-      padding: var(--wu-sp-3);
-      border-bottom: 1px solid var(--wu-border);
+      padding: var(--w-sp-3);
+      border-bottom: 1px solid var(--w-border);
       text-align: left;
       vertical-align: top;
     }
     .import-file {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
       align-items: center;
       justify-content: space-between;
     }
     .import-counts {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
     }
     .import-count strong {
       display: block;
@@ -59,21 +59,21 @@ interface ImportColumn {
       font-weight: 700;
     }
     .import-status--ready {
-      color: var(--wu-success);
+      color: var(--w-success);
     }
     .import-status--duplicate,
     .import-status--consent {
-      color: var(--wu-warning);
+      color: var(--w-warning);
     }
     .import-status--invalid {
-      color: var(--wu-danger);
+      color: var(--w-danger);
     }
     .import-dialog-backdrop {
       position: fixed;
       z-index: 1000;
       inset: 0;
       display: grid;
-      padding: var(--wu-sp-4);
+      padding: var(--w-sp-4);
       place-items: center;
       background: rgb(0 0 0 / 55%);
     }
@@ -93,15 +93,15 @@ interface ImportColumn {
       .import-columns tr,
       .import-preview tr {
         display: grid;
-        gap: var(--wu-sp-2);
-        padding: var(--wu-sp-3);
-        border-bottom: 1px solid var(--wu-border);
+        gap: var(--w-sp-2);
+        padding: var(--w-sp-3);
+        border-bottom: 1px solid var(--w-border);
       }
       .import-columns td,
       .import-preview td {
         display: grid;
         grid-template-columns: minmax(7rem, 0.8fr) minmax(0, 1.2fr);
-        gap: var(--wu-sp-2);
+        gap: var(--w-sp-2);
         padding: 0;
         border: 0;
         overflow-wrap: anywhere;
@@ -109,12 +109,12 @@ interface ImportColumn {
       .import-columns td::before,
       .import-preview td::before {
         content: attr(data-label);
-        color: var(--wu-text-muted);
+        color: var(--w-text-muted);
         font-weight: 700;
       }
-      .import-columns .wu-select,
-      .import-file .wu-btn,
-      .import-actions .wu-btn {
+      .import-columns .w-select,
+      .import-file .w-btn,
+      .import-actions .w-btn {
         min-height: 45px;
         width: 100%;
       }
@@ -211,7 +211,7 @@ export class ImportRosterPage {
     }
     const assigned = mapped.filter((field) => field !== 'Skip');
     if (new Set(assigned).size !== assigned.length) {
-      return 'Map each Word Up field at most once.';
+      return 'Map each Waypoint field at most once.';
     }
     return null;
   }

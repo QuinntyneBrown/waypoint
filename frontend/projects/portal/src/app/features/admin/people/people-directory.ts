@@ -2,9 +2,9 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { ApiError, DirectoryCohort, PagedPeople, PeopleApi } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { ApiError, DirectoryCohort, PagedPeople, PeopleApi } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { catchError, debounceTime, of, switchMap, tap } from 'rxjs';
 
 interface DirectoryQuery {
@@ -16,15 +16,15 @@ interface DirectoryQuery {
 
 // Traces to: L2-ADMIN-001
 @Component({
-  selector: 'wu-people-directory',
+  selector: 'w-people-directory',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, RouterLink, DatePipe],
+  imports: [WShell, WIcon, RouterLink, DatePipe],
   templateUrl: './people-directory.html',
   styles: `
     .directory-filters {
       display: grid;
       grid-template-columns: minmax(14rem, 1fr) minmax(13rem, 0.5fr);
-      gap: var(--wu-sp-4);
+      gap: var(--w-sp-4);
       align-items: end;
     }
     .role-filters {
@@ -36,10 +36,10 @@ interface DirectoryQuery {
     .role-filter-list {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
     }
     .pager {
-      margin-top: var(--wu-sp-4);
+      margin-top: var(--w-sp-4);
     }
     @media (max-width: 42rem) {
       .directory-filters {
@@ -48,8 +48,8 @@ interface DirectoryQuery {
       .role-filters {
         grid-column: auto;
       }
-      .role-filter-list .wu-btn {
-        flex: 1 1 calc(50% - var(--wu-sp-2));
+      .role-filter-list .w-btn {
+        flex: 1 1 calc(50% - var(--w-sp-2));
       }
     }
   `,

@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "CheckInsController" as controller_CheckInsController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "CheckInHistoryQuery" as request_CheckInHistoryQuery <<record>>
   class "CheckInHistoryQueryHandler" as handler_CheckInHistoryQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "CheckIn" as entity_CheckIn <<domain type>>
 }
 page_AuthStore --> client_AuthApi : invokes

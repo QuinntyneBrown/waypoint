@@ -4,12 +4,12 @@ frontend/** text eol=lf
 
 # The user guide is pinned for the same reason, and for a second one: it carries
 # byte-identical copies of the design-system stylesheets in assets/vendor/, and
-# scripts/verify-word-up-user-guide-assets.mjs sha256-compares them against the
+# scripts/verify-waypoint-user-guide-assets.mjs sha256-compares them against the
 # originals under frontend/. If only one of the two trees were normalised, a
 # Windows checkout would rewrite the copy's line endings and the gate would
 # report drift that does not exist.
 user-guides/** text eol=lf
-scripts/verify-word-up-user-guide-assets.mjs text eol=lf
+scripts/verify-waypoint-user-guide-assets.mjs text eol=lf
 
 # Binary assets must win over the `text eol=lf` path rules above (last match wins).
 # Those rules are directory-wide, so they also caught the fonts under

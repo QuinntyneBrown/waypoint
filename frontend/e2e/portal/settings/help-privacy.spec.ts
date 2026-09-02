@@ -11,7 +11,7 @@ test('help content is searchable and tailored to the signed-in role', async ({ p
 
   await expect(help.heading).toBeVisible();
   await expect(page.getByText(/only see one session roster/i)).toBeVisible();
-  await expect(page.getByText(/invite someone to word up/i)).toHaveCount(0);
+  await expect(page.getByText(/invite someone to waypoint/i)).toHaveCount(0);
   await help.search.fill('offline');
   await expect(page.getByText(/take attendance/i)).toBeVisible();
 });
@@ -68,5 +68,5 @@ test('a verified access request unlocks the complete export and history loads pa
   const downloadPromise = page.waitForEvent('download');
   await privacy.downloadButton.click();
   const download = await downloadPromise;
-  expect(download.suggestedFilename()).toMatch(/^word-up-personal-data-.*\.json$/);
+  expect(download.suggestedFilename()).toMatch(/^waypoint-personal-data-.*\.json$/);
 });

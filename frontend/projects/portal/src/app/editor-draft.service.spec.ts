@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AuthStore } from '@wu/auth';
+import { AuthStore } from '@w/auth';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { EditorDraftService } from './editor-draft.service';
 

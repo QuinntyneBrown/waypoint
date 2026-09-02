@@ -1,27 +1,27 @@
 /* Display & accessibility preference hooks (L2-PLATFORM-004). A preferences
-   service sets `--wu-text-scale` and toggles these classes on <html>; the rules
+   service sets `--w-text-scale` and toggles these classes on <html>; the rules
    here turn those hooks into real rendering changes. Loaded after core.css. */
 
 :root {
-  --wu-text-scale: 1;
+  --w-text-scale: 1;
 }
 
 body {
-  font-size: calc(1rem * var(--wu-text-scale));
+  font-size: calc(1rem * var(--w-text-scale));
 }
 
 /* Higher-contrast borders, text, and focus. */
-.wu-a11y-contrast {
-  --wu-border: rgba(22, 22, 12, 0.55);
-  --wu-border-strong: rgba(22, 22, 12, 0.75);
-  --wu-muted: rgba(22, 22, 12, 0.82);
-  --wu-ink-60: rgba(22, 22, 12, 0.82);
+.w-a11y-contrast {
+  --w-border: rgba(22, 22, 12, 0.55);
+  --w-border-strong: rgba(22, 22, 12, 0.75);
+  --w-muted: rgba(22, 22, 12, 0.82);
+  --w-ink-60: rgba(22, 22, 12, 0.82);
 }
 
 /* Respect reduced-motion by neutralising animations/transitions. */
-.wu-a11y-reduce-motion *,
-.wu-a11y-reduce-motion *::before,
-.wu-a11y-reduce-motion *::after {
+.w-a11y-reduce-motion *,
+.w-a11y-reduce-motion *::before,
+.w-a11y-reduce-motion *::after {
   animation-duration: 0.001ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.001ms !important;
@@ -29,12 +29,12 @@ body {
 }
 
 /* Always underline links for clearer affordance. */
-.wu-a11y-underline a {
+.w-a11y-underline a {
   text-decoration: underline;
 }
 
 /* Serif reading font for body copy. */
-.wu-a11y-reading-font body,
-body.wu-a11y-reading-font {
-  font-family: var(--wu-font-serif);
+.w-a11y-reading-font body,
+body.w-a11y-reading-font {
+  font-family: var(--w-font-serif);
 }

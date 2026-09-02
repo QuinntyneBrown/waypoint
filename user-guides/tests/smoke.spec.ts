@@ -1,5 +1,5 @@
 /**
- * Smoke suite for the Word Up user guide.
+ * Smoke suite for the Waypoint user guide.
  *
  * The guide has no build step and no server, so every spec loads pages straight
  * off disk over `file://` — the same way a reader can open them.
@@ -166,8 +166,8 @@ test("every page renders its injected chrome with no page errors", async ({
     // The registry parsed from source must be exactly the one the page runs.
     const live = await page.evaluate(() =>
       (
-        window as never as { WordUpGuide: { pages: { slug: string }[] } }
-      ).WordUpGuide.pages.map((entry) => entry.slug),
+        window as never as { WaypointGuide: { pages: { slug: string }[] } }
+      ).WaypointGuide.pages.map((entry) => entry.slug),
     );
     expect(live, `${entry.slug}: running registry differs from source`).toEqual(
       registry.map((page) => page.slug),
@@ -176,7 +176,7 @@ test("every page renders its injected chrome with no page errors", async ({
     await expect(
       page.locator(".ug-header .ug-brand__name"),
       entry.slug,
-    ).toHaveText("Word Up");
+    ).toHaveText("Waypoint");
     await expect(page.locator(".ug-nav__item"), entry.slug).toHaveCount(
       registry.length,
     );
@@ -216,7 +216,7 @@ test("the 404 page renders the chrome and offers a way back", async ({
   await visit(page, "404");
 
   await expect(page.locator(".ug-header .ug-brand__name")).toHaveText(
-    "Word Up",
+    "Waypoint",
   );
   await expect(page.locator(".ug-nav__item")).toHaveCount(registry.length);
   await expect(page.locator(".ug-status")).toContainText("Design system");
@@ -228,7 +228,7 @@ test("the 404 page renders the chrome and offers a way back", async ({
   await expect(home).toBeVisible();
   await home.click();
   await expect(page.locator("h1")).toHaveText(
-    "Everything Word Up can do, written for the people who use it",
+    "Everything Waypoint can do, written for the people who use it",
   );
 
   expect(errors, `page errors:\n${errors.join("\n")}`).toEqual([]);
@@ -395,7 +395,7 @@ test("the pager moves forward and back through the reading order", async ({
   }
 
   await expect(page.locator("h1")).toHaveText(
-    "Everything Word Up can do, written for the people who use it",
+    "Everything Waypoint can do, written for the people who use it",
   );
 });
 
@@ -457,8 +457,8 @@ test("display preferences apply the token contract", async ({ page }) => {
   await expect(themeToggle).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator("html")).toHaveAttribute("data-ug-theme", "dark");
 
-  // The dark theme is built purely by remapping existing --wu-* tokens, so
-  // --ug-bg must resolve to exactly the value of --wu-ink.
+  // The dark theme is built purely by remapping existing --w-* tokens, so
+  // --ug-bg must resolve to exactly the value of --w-ink.
   const { background, ugBg, wuInk } = await page.evaluate(() => {
     const root = getComputedStyle(document.documentElement);
     return {
@@ -466,7 +466,7 @@ test("display preferences apply the token contract", async ({ page }) => {
         "background-color",
       ),
       ugBg: root.getPropertyValue("--ug-bg").trim(),
-      wuInk: root.getPropertyValue("--wu-ink").trim(),
+      wuInk: root.getPropertyValue("--w-ink").trim(),
     };
   });
 
@@ -505,7 +505,7 @@ test("reduced motion removes transition durations", async ({ page }) => {
     "reduced",
   );
   // The product's own reduced-motion hook is reused, not reinvented.
-  await expect(page.locator("html")).toHaveClass(/wu-a11y-reduce-motion/);
+  await expect(page.locator("html")).toHaveClass(/w-a11y-reduce-motion/);
 
   const reduced = await page.evaluate(() => {
     const nodes = [
@@ -590,7 +590,7 @@ test("the stylesheet contains no hardcoded colour outside the token contract", (
       /color|background|border|outline|fill|stroke|shadow/.test(property);
 
     // Strip custom-property names before looking for named colours, so a
-    // reference to a token such as `var(--wu-white)` is not mistaken for the
+    // reference to a token such as `var(--w-white)` is not mistaken for the
     // literal keyword `white`. A genuine literal (`--ug-x: white;`) survives
     // this and is still reported.
     const withoutTokenNames = trimmed.replace(/--[a-zA-Z0-9-]+/g, "");
@@ -602,6 +602,6 @@ test("the stylesheet contains no hardcoded colour outside the token contract", (
 
   expect(
     findings,
-    `every colour must resolve through the --wu-* token contract:\n${findings.join("\n")}`,
+    `every colour must resolve through the --w-* token contract:\n${findings.join("\n")}`,
   ).toEqual([]);
 });

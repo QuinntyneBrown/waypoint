@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ApiError, RsvpResponse, ScheduleApi, YouthSession } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, RsvpResponse, ScheduleApi, YouthSession } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 interface RsvpDraft {
   response: RsvpResponse | null;
@@ -12,19 +12,19 @@ interface RsvpDraft {
 
 // Traces to: L2-ENGAGE-005, L2-ENGAGE-008
 @Component({
-  selector: 'wu-youth-schedule',
+  selector: 'w-youth-schedule',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, DatePipe],
+  imports: [WShell, DatePipe],
   templateUrl: './youth-schedule.html',
   styles: `
     .schedule-list {
       display: grid;
-      gap: var(--wu-sp-5);
+      gap: var(--w-sp-5);
     }
     .session-card__layout {
       display: grid;
       grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 1fr);
-      gap: var(--wu-sp-6);
+      gap: var(--w-sp-6);
       align-items: start;
     }
     .session-meta {
@@ -35,14 +35,14 @@ interface RsvpDraft {
     .rsvp-options {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
     }
     .rsvp-option {
       min-width: 0;
       margin: 0;
-      padding: var(--wu-sp-2);
-      border: 1px solid var(--wu-border);
-      border-radius: var(--wu-r-input);
+      padding: var(--w-sp-2);
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-r-input);
     }
     .rsvp-note {
       min-height: 7rem;

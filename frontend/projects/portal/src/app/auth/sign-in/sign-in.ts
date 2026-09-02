@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon } from '@wu/ui';
+import { ApiError } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon } from '@w/ui';
 import { switchMap } from 'rxjs';
 import { EntryResolver } from '../entry';
 
 @Component({
-  selector: 'wu-sign-in',
+  selector: 'w-sign-in',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WuIcon],
+  imports: [ReactiveFormsModule, RouterLink, WIcon],
   templateUrl: './sign-in.html',
 })
 export class SignIn {

@@ -8,11 +8,11 @@ import {
   ConsentReceipt,
   RequestedConsent,
   RequestedConsentCapture,
-} from '@wu/api';
+} from '@w/api';
 
 // Traces to: L2-CONSENT-001, L2-CONSENT-002, L2-PLATFORM-011
 @Component({
-  selector: 'wu-requested-guardian-consent',
+  selector: 'w-requested-guardian-consent',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, DatePipe],
   templateUrl: './requested-guardian-consent.html',

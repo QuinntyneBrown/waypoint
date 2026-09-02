@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "BadgesController" as controller_BadgesController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "AwardBadgeCommand" as request_AwardBadgeCommand <<record>>
   class "AwardBadgeCommandHandler" as handler_AwardBadgeCommandHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "Badge" as entity_Badge <<domain type>>
 }
 page_SettingsNotifications --> client_NotificationPreferencesApi : invokes

@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthSubmissionStatus } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, YouthSubmissionStatus } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-LEARN-007
 @Component({
-  selector: 'wu-youth-resubmit',
+  selector: 'w-youth-resubmit',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, ReactiveFormsModule],
+  imports: [WShell, RouterLink, ReactiveFormsModule],
   templateUrl: './youth-resubmit.html',
 })
 export class YouthResubmitPage {

@@ -3,42 +3,42 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Attendance report · Word Up</title>
+  <title>Attendance report · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/wordup.css">
-  <script defer src="../../assets/js/wordup.js"></script>
+  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="attendance" data-track="bible">
-  <main class="wu-main">
-    <div class="wu-container wu-page">
+  <main class="w-main">
+    <div class="w-container w-page">
 
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow"><a href="reports.html">Reports</a> · Attendance</div>
-          <h1 class="wu-page__title">Attendance report</h1>
-          <p class="wu-page__sub">Attendance rates by cohort, session and youth across the program.</p>
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow"><a href="reports.html">Reports</a> · Attendance</div>
+          <h1 class="w-page__title">Attendance report</h1>
+          <p class="w-page__sub">Attendance rates by cohort, session and youth across the program.</p>
         </div>
-        <div class="wu-page__actions">
-          <a class="wu-btn wu-btn--ghost" href="../../engagement/admin/attendance-admin.html"><svg class="wu-icon"><use href="#i-clipboard-check"></use></svg>Manage sessions</a>
-          <button class="wu-btn wu-btn--primary" data-open-modal="m-export"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
+        <div class="w-page__actions">
+          <a class="w-btn w-btn--ghost" href="../../engagement/admin/attendance-admin.html"><svg class="w-icon"><use href="#i-clipboard-check"></use></svg>Manage sessions</a>
+          <button class="w-btn w-btn--primary" data-open-modal="m-export"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
         </div>
       </div>
 
       <!-- filter bar -->
-      <div class="wu-card wu-mb-4">
-        <div class="wu-card__body">
-          <div class="wu-grid wu-grid--3">
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="f-from">From</label>
-              <input class="wu-input" id="f-from" type="date" value="2026-04-01">
+      <div class="w-card w-mb-4">
+        <div class="w-card__body">
+          <div class="w-grid w-grid--3">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="f-from">From</label>
+              <input class="w-input" id="f-from" type="date" value="2026-04-01">
             </div>
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="f-to">To</label>
-              <input class="wu-input" id="f-to" type="date" value="2026-07-16">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="f-to">To</label>
+              <input class="w-input" id="f-to" type="date" value="2026-07-16">
             </div>
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="f-cohort">Cohort</label>
-              <select class="wu-select" id="f-cohort">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="f-cohort">Cohort</label>
+              <select class="w-select" id="f-cohort">
                 <option selected>All cohorts</option>
                 <option>Rexdale Fall '25</option>
                 <option>Warden Winter '26</option>
@@ -53,40 +53,40 @@
       <div data-when-state="default">
 
         <!-- summary cards -->
-        <div class="wu-grid wu-grid--4 wu-mb-4">
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Overall rate</div><div class="wu-statcard__value">89%</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-trending-up"></use></svg>+2% this term</div></div>
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Sessions held</div><div class="wu-statcard__value">36</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-calendar"></use></svg>Apr–Jul</div></div>
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Perfect attendance</div><div class="wu-statcard__value">7</div><div class="wu-statcard__delta is-up"><svg class="wu-icon"><use href="#i-star"></use></svg>youth</div></div>
-          <div class="wu-card wu-statcard"><div class="wu-statcard__label">Chronic absence</div><div class="wu-statcard__value">2</div><div class="wu-statcard__delta is-down"><svg class="wu-icon"><use href="#i-alert-triangle"></use></svg>below 60%</div></div>
+        <div class="w-grid w-grid--4 w-mb-4">
+          <div class="w-card w-statcard"><div class="w-statcard__label">Overall rate</div><div class="w-statcard__value">89%</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+2% this term</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">Sessions held</div><div class="w-statcard__value">36</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-calendar"></use></svg>Apr–Jul</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">Perfect attendance</div><div class="w-statcard__value">7</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-star"></use></svg>youth</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">Chronic absence</div><div class="w-statcard__value">2</div><div class="w-statcard__delta is-down"><svg class="w-icon"><use href="#i-alert-triangle"></use></svg>below 60%</div></div>
         </div>
 
         <!-- rate by cohort -->
-        <div class="wu-card wu-mb-4">
-          <div class="wu-card__header"><h3 class="wu-card__title">Attendance by cohort</h3></div>
-          <div class="wu-card__body">
-            <div class="wu-stack wu-stack--sm">
-              <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Warden Winter '26 · Danielle Osei</span><span class="wu-progress__num">93%</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:93%"></div></div></div>
-              <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">St. Clair Spring '26 · Grace Adeyemi</span><span class="wu-progress__num">90%</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:90%"></div></div></div>
-              <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Rexdale Fall '25 · Marcus Bello</span><span class="wu-progress__num">86%</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:86%"></div></div></div>
+        <div class="w-card w-mb-4">
+          <div class="w-card__header"><h3 class="w-card__title">Attendance by cohort</h3></div>
+          <div class="w-card__body">
+            <div class="w-stack w-stack--sm">
+              <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Warden Winter '26 · Danielle Osei</span><span class="w-progress__num">93%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:93%"></div></div></div>
+              <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">St. Clair Spring '26 · Grace Adeyemi</span><span class="w-progress__num">90%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:90%"></div></div></div>
+              <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Rexdale Fall '25 · Marcus Bello</span><span class="w-progress__num">86%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:86%"></div></div></div>
             </div>
           </div>
         </div>
 
-        <div class="wu-grid wu-grid--2">
+        <div class="w-grid w-grid--2">
           <!-- sessions table -->
-          <div class="wu-card">
-            <div class="wu-card__header"><h3 class="wu-card__title">Recent sessions</h3><span class="wu-muted wu-text-sm">Last 8</span></div>
-            <div class="wu-card__body">
-              <div class="wu-table-wrap">
-                <table class="wu-table wu-table--cards wu-table--compact">
+          <div class="w-card">
+            <div class="w-card__header"><h3 class="w-card__title">Recent sessions</h3><span class="w-muted w-text-sm">Last 8</span></div>
+            <div class="w-card__body">
+              <div class="w-table-wrap">
+                <table class="w-table w-table--cards w-table--compact">
                   <thead><tr><th>Session</th><th>Cohort</th><th>Present</th><th>Rate</th></tr></thead>
                   <tbody>
-                    <tr><td data-label="Session">Thu Jul 16 · Servant Leadership</td><td data-label="Cohort">Rexdale Fall '25</td><td data-label="Present">7/8</td><td data-label="Rate"><span class="wu-badge wu-badge--success wu-badge--dot">88%</span></td></tr>
-                    <tr><td data-label="Session">Tue Jul 14 · Identity in Christ</td><td data-label="Cohort">Warden Winter '26</td><td data-label="Present">9/9</td><td data-label="Rate"><span class="wu-badge wu-badge--success wu-badge--dot">100%</span></td></tr>
-                    <tr><td data-label="Session">Wed Jul 15 · Who Is Jesus?</td><td data-label="Cohort">St. Clair Spring '26</td><td data-label="Present">8/9</td><td data-label="Rate"><span class="wu-badge wu-badge--success wu-badge--dot">89%</span></td></tr>
-                    <tr><td data-label="Session">Thu Jul 9 · Servant Leadership</td><td data-label="Cohort">Rexdale Fall '25</td><td data-label="Present">6/8</td><td data-label="Rate"><span class="wu-badge wu-badge--warning wu-badge--dot">75%</span></td></tr>
-                    <tr><td data-label="Session">Tue Jul 7 · Identity in Christ</td><td data-label="Cohort">Warden Winter '26</td><td data-label="Present">8/9</td><td data-label="Rate"><span class="wu-badge wu-badge--success wu-badge--dot">89%</span></td></tr>
-                    <tr><td data-label="Session">Thu Jul 2 · Leading a Small Group</td><td data-label="Cohort">Rexdale Fall '25</td><td data-label="Present">5/8</td><td data-label="Rate"><span class="wu-badge wu-badge--error wu-badge--dot">63%</span></td></tr>
+                    <tr><td data-label="Session">Thu Jul 16 · Servant Leadership</td><td data-label="Cohort">Rexdale Fall '25</td><td data-label="Present">7/8</td><td data-label="Rate"><span class="w-badge w-badge--success w-badge--dot">88%</span></td></tr>
+                    <tr><td data-label="Session">Tue Jul 14 · Identity in Christ</td><td data-label="Cohort">Warden Winter '26</td><td data-label="Present">9/9</td><td data-label="Rate"><span class="w-badge w-badge--success w-badge--dot">100%</span></td></tr>
+                    <tr><td data-label="Session">Wed Jul 15 · Who Is Jesus?</td><td data-label="Cohort">St. Clair Spring '26</td><td data-label="Present">8/9</td><td data-label="Rate"><span class="w-badge w-badge--success w-badge--dot">89%</span></td></tr>
+                    <tr><td data-label="Session">Thu Jul 9 · Servant Leadership</td><td data-label="Cohort">Rexdale Fall '25</td><td data-label="Present">6/8</td><td data-label="Rate"><span class="w-badge w-badge--warning w-badge--dot">75%</span></td></tr>
+                    <tr><td data-label="Session">Tue Jul 7 · Identity in Christ</td><td data-label="Cohort">Warden Winter '26</td><td data-label="Present">8/9</td><td data-label="Rate"><span class="w-badge w-badge--success w-badge--dot">89%</span></td></tr>
+                    <tr><td data-label="Session">Thu Jul 2 · Leading a Small Group</td><td data-label="Cohort">Rexdale Fall '25</td><td data-label="Present">5/8</td><td data-label="Rate"><span class="w-badge w-badge--error w-badge--dot">63%</span></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -94,45 +94,45 @@
           </div>
 
           <!-- per-youth attendance bars -->
-          <div class="wu-card">
-            <div class="wu-card__header"><h3 class="wu-card__title">Per-youth attendance</h3><span class="wu-badge">Rexdale Fall '25</span></div>
-            <div class="wu-card__body">
-              <div class="wu-stack wu-stack--sm">
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Priya Sharma</span><span class="wu-progress__num">96%</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:96%"></div></div></div>
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Jayden Alcantara</span><span class="wu-progress__num">92%</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:92%"></div></div></div>
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Amara Okafor</span><span class="wu-progress__num">88%</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:88%"></div></div></div>
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Zara Mensah</span><span class="wu-progress__num">84%</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:84%"></div></div></div>
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Malik Johnson</span><span class="wu-progress__num">76%</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:76%"></div></div></div>
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Elijah Brown</span><span class="wu-progress__num">72%</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:72%"></div></div></div>
-                <div><div class="wu-cluster wu-justify-between wu-mb-0"><span class="wu-text-sm wu-fw-600">Devon Grant <span class="wu-badge wu-badge--error wu-badge--dot">At risk</span></span><span class="wu-progress__num">58%</span></div><div class="wu-progress"><div class="wu-progress__fill" style="--val:58%"></div></div></div>
+          <div class="w-card">
+            <div class="w-card__header"><h3 class="w-card__title">Per-youth attendance</h3><span class="w-badge">Rexdale Fall '25</span></div>
+            <div class="w-card__body">
+              <div class="w-stack w-stack--sm">
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Priya Sharma</span><span class="w-progress__num">96%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:96%"></div></div></div>
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Jayden Alcantara</span><span class="w-progress__num">92%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:92%"></div></div></div>
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Amara Okafor</span><span class="w-progress__num">88%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:88%"></div></div></div>
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Zara Mensah</span><span class="w-progress__num">84%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:84%"></div></div></div>
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Malik Johnson</span><span class="w-progress__num">76%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:76%"></div></div></div>
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Elijah Brown</span><span class="w-progress__num">72%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:72%"></div></div></div>
+                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Devon Grant <span class="w-badge w-badge--error w-badge--dot">At risk</span></span><span class="w-progress__num">58%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:58%"></div></div></div>
               </div>
             </div>
-            <div class="wu-card__footer"><a class="wu-btn wu-btn--ghost wu-btn--sm" href="report-youth.html"><svg class="wu-icon"><use href="#i-file-text"></use></svg>Open youth report</a></div>
+            <div class="w-card__footer"><a class="w-btn w-btn--ghost w-btn--sm" href="report-youth.html"><svg class="w-icon"><use href="#i-file-text"></use></svg>Open youth report</a></div>
           </div>
         </div>
 
       </div>
 
       <!-- ===== LOADING ===== -->
-      <div data-when-state="loading" class="wu-hide">
-        <div class="wu-grid wu-grid--4 wu-mb-4">
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
-          <div class="wu-card"><div class="wu-card__body"><span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--title"></span></div></div>
+      <div data-when-state="loading" class="w-hide">
+        <div class="w-grid w-grid--4 w-mb-4">
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
         </div>
-        <div class="wu-card"><div class="wu-card__body">
-          <span class="wu-skeleton wu-skeleton--text"></span><span class="wu-skeleton wu-skeleton--text" style="width:85%"></span><span class="wu-skeleton wu-skeleton--text" style="width:70%"></span>
+        <div class="w-card"><div class="w-card__body">
+          <span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--text" style="width:85%"></span><span class="w-skeleton w-skeleton--text" style="width:70%"></span>
         </div></div>
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="wu-hide">
-        <div class="wu-card"><div class="wu-empty">
-          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-calendar"></use></svg></div>
-          <h3 class="wu-empty__title">No sessions in this range</h3>
-          <p class="wu-empty__text">No attendance was recorded between these dates. Try a wider range.</p>
-          <button class="wu-btn wu-btn--primary" data-toast="Range widened" data-toast-type="info">Reset dates</button>
+      <div data-when-state="empty" class="w-hide">
+        <div class="w-card"><div class="w-empty">
+          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-calendar"></use></svg></div>
+          <h3 class="w-empty__title">No sessions in this range</h3>
+          <p class="w-empty__text">No attendance was recorded between these dates. Try a wider range.</p>
+          <button class="w-btn w-btn--primary" data-toast="Range widened" data-toast-type="info">Reset dates</button>
         </div></div>
       </div>
 
@@ -140,23 +140,23 @@
   </main>
 
   <!-- ===== modal: export ===== -->
-  <div class="wu-modal wu-modal--sm" id="m-export" role="dialog" aria-modal="true">
-    <div class="wu-modal__scrim"></div>
-    <div class="wu-modal__panel">
-      <div class="wu-modal__header">
-        <div><h2 class="wu-modal__title">Export attendance</h2><p class="wu-modal__sub">Apr 1 – Jul 16, 2026 · All cohorts</p></div>
-        <button class="wu-iconbtn wu-modal__close" data-close-modal aria-label="Close"><svg class="wu-icon"><use href="#i-x"></use></svg></button>
+  <div class="w-modal w-modal--sm" id="m-export" role="dialog" aria-modal="true">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title">Export attendance</h2><p class="w-modal__sub">Apr 1 – Jul 16, 2026 · All cohorts</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="wu-modal__body">
-        <div class="wu-field">
-          <label class="wu-label">Format</label>
-          <label class="wu-radio"><input type="radio" name="fmt" checked><span class="wu-radio__box"></span><span>CSV — one row per session</span></label>
-          <label class="wu-radio"><input type="radio" name="fmt"><span class="wu-radio__box"></span><span>PDF — summary with rates</span></label>
+      <div class="w-modal__body">
+        <div class="w-field">
+          <label class="w-label">Format</label>
+          <label class="w-radio"><input type="radio" name="fmt" checked><span class="w-radio__box"></span><span>CSV — one row per session</span></label>
+          <label class="w-radio"><input type="radio" name="fmt"><span class="w-radio__box"></span><span>PDF — summary with rates</span></label>
         </div>
       </div>
-      <div class="wu-modal__footer">
-        <button class="wu-btn wu-btn--ghost" data-close-modal>Cancel</button>
-        <button class="wu-btn wu-btn--primary" data-close-modal data-toast="Attendance exported" data-toast-type="success"><svg class="wu-icon"><use href="#i-download"></use></svg>Export</button>
+      <div class="w-modal__footer">
+        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <button class="w-btn w-btn--primary" data-close-modal data-toast="Attendance exported" data-toast-type="success"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
       </div>
     </div>
   </div>

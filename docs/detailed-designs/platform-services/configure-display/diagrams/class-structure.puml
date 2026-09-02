@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "PreferencesController" as controller_PreferencesController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "DisplayPreferenceQuery" as request_DisplayPreferenceQuery <<record>>
   class "DisplayPreferenceQueryHandler" as handler_DisplayPreferenceQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "DisplayPreference" as entity_DisplayPreference <<domain type>>
 }
 page_DisplayPreferencesService --> client_DisplayPreferencesApi : invokes

@@ -3,52 +3,52 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Notifications · Word Up</title>
+  <title>Notifications · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/wordup.css">
-  <script defer src="../../assets/js/wordup.js"></script>
+  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
   <style>
     .notif{display:flex;gap:14px;align-items:flex-start;padding:14px 4px}
-    .notif + .notif{border-top:var(--wu-bw) solid var(--wu-border)}
-    .notif__icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--wu-g100);flex:none}
-    .notif__icon .wu-icon{width:18px;height:18px}
+    .notif + .notif{border-top:var(--w-bw) solid var(--w-border)}
+    .notif__icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--w-g100);flex:none}
+    .notif__icon .w-icon{width:18px;height:18px}
     .notif__body{flex:1;min-width:0}
     .notif__title{font-weight:650;margin:0}
-    .notif__meta{font-size:.82rem;color:var(--wu-muted);margin:2px 0 0}
-    .notif__time{font-size:.72rem;color:var(--wu-muted);flex:none;white-space:nowrap}
-    .notif.is-unread .notif__icon{background:var(--wu-lime)}
+    .notif__meta{font-size:.82rem;color:var(--w-muted);margin:2px 0 0}
+    .notif__time{font-size:.72rem;color:var(--w-muted);flex:none;white-space:nowrap}
+    .notif.is-unread .notif__icon{background:var(--w-lime)}
   </style>
 </head>
 <body data-role="youth" data-active="home" data-track="bible">
-  <main class="wu-main">
-    <div class="wu-container wu-container--narrow wu-page">
+  <main class="w-main">
+    <div class="w-container w-container--narrow w-page">
 
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">Activity</div>
-          <h1 class="wu-page__title">Notifications</h1>
-          <p class="wu-page__sub">Everything that needs your attention.</p>
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">Activity</div>
+          <h1 class="w-page__title">Notifications</h1>
+          <p class="w-page__sub">Everything that needs your attention.</p>
         </div>
-        <div class="wu-page__actions">
-          <button class="wu-btn wu-btn--ghost" data-toast="All notifications marked read" data-toast-type="success">Mark all read</button>
+        <div class="w-page__actions">
+          <button class="w-btn w-btn--ghost" data-toast="All notifications marked read" data-toast-type="success">Mark all read</button>
         </div>
       </div>
 
       <!-- ===== default ===== -->
       <div data-when-state="default">
-        <div class="wu-card">
-          <div class="wu-card__body">
+        <div class="w-card">
+          <div class="w-card__body">
             <a class="notif is-unread" href="../../learning-experience/youth/curriculum.html" style="text-decoration:none;color:inherit">
-              <div class="notif__icon"><svg class="wu-icon"><use href="#i-clipboard-check"></use></svg></div>
+              <div class="notif__icon"><svg class="w-icon"><use href="#i-clipboard-check"></use></svg></div>
               <div class="notif__body">
                 <p class="notif__title">Your quiz was graded</p>
-                <p class="notif__meta">“Servant Leadership” quiz · You scored 9/10. <span class="wu-badge wu-badge--success wu-badge--dot">Passed</span></p>
+                <p class="notif__meta">“Servant Leadership” quiz · You scored 9/10. <span class="w-badge w-badge--success w-badge--dot">Passed</span></p>
               </div>
               <span class="notif__time">10m</span>
             </a>
 
             <a class="notif is-unread" href="../../learning-experience/youth/badges.html" style="text-decoration:none;color:inherit">
-              <div class="notif__icon"><svg class="wu-icon"><use href="#i-award"></use></svg></div>
+              <div class="notif__icon"><svg class="w-icon"><use href="#i-award"></use></svg></div>
               <div class="notif__body">
                 <p class="notif__title">New badge earned</p>
                 <p class="notif__meta">You unlocked <strong>Faithful Five</strong> for a five-week streak. Nice work!</p>
@@ -57,7 +57,7 @@
             </a>
 
             <a class="notif" href="messages.html" style="text-decoration:none;color:inherit">
-              <div class="notif__icon"><svg class="wu-icon"><use href="#i-message-square"></use></svg></div>
+              <div class="notif__icon"><svg class="w-icon"><use href="#i-message-square"></use></svg></div>
               <div class="notif__body">
                 <p class="notif__title">New message from Marcus Bello</p>
                 <p class="notif__meta">“Proud of you for finishing that reflection…”</p>
@@ -66,16 +66,16 @@
             </a>
 
             <a class="notif" href="../../learning-experience/youth/curriculum.html" style="text-decoration:none;color:inherit">
-              <div class="notif__icon"><svg class="wu-icon"><use href="#i-clock"></use></svg></div>
+              <div class="notif__icon"><svg class="w-icon"><use href="#i-clock"></use></svg></div>
               <div class="notif__body">
                 <p class="notif__title">Assignment due soon</p>
-                <p class="notif__meta">“Sharing Your Story” reflection is due Friday. <span class="wu-badge wu-badge--warning wu-badge--dot">2 days left</span></p>
+                <p class="notif__meta">“Sharing Your Story” reflection is due Friday. <span class="w-badge w-badge--warning w-badge--dot">2 days left</span></p>
               </div>
               <span class="notif__time">5h</span>
             </a>
 
             <a class="notif" href="schedule.html" style="text-decoration:none;color:inherit">
-              <div class="notif__icon"><svg class="wu-icon"><use href="#i-calendar"></use></svg></div>
+              <div class="notif__icon"><svg class="w-icon"><use href="#i-calendar"></use></svg></div>
               <div class="notif__body">
                 <p class="notif__title">Session reminder</p>
                 <p class="notif__meta">Rexdale midweek session · Thursday 4:00 PM at the Community Hub.</p>
@@ -87,22 +87,22 @@
       </div>
 
       <!-- ===== loading ===== -->
-      <div data-when-state="loading" class="wu-hide">
-        <div class="wu-card"><div class="wu-card__body">
-          <div class="notif"><span class="wu-skeleton wu-skeleton--circle"></span><div class="notif__body"><span class="wu-skeleton wu-skeleton--title"></span><span class="wu-skeleton wu-skeleton--text" style="width:70%"></span></div></div>
-          <div class="notif"><span class="wu-skeleton wu-skeleton--circle"></span><div class="notif__body"><span class="wu-skeleton wu-skeleton--title"></span><span class="wu-skeleton wu-skeleton--text" style="width:60%"></span></div></div>
-          <div class="notif"><span class="wu-skeleton wu-skeleton--circle"></span><div class="notif__body"><span class="wu-skeleton wu-skeleton--title"></span><span class="wu-skeleton wu-skeleton--text" style="width:75%"></span></div></div>
+      <div data-when-state="loading" class="w-hide">
+        <div class="w-card"><div class="w-card__body">
+          <div class="notif"><span class="w-skeleton w-skeleton--circle"></span><div class="notif__body"><span class="w-skeleton w-skeleton--title"></span><span class="w-skeleton w-skeleton--text" style="width:70%"></span></div></div>
+          <div class="notif"><span class="w-skeleton w-skeleton--circle"></span><div class="notif__body"><span class="w-skeleton w-skeleton--title"></span><span class="w-skeleton w-skeleton--text" style="width:60%"></span></div></div>
+          <div class="notif"><span class="w-skeleton w-skeleton--circle"></span><div class="notif__body"><span class="w-skeleton w-skeleton--title"></span><span class="w-skeleton w-skeleton--text" style="width:75%"></span></div></div>
         </div></div>
       </div>
 
       <!-- ===== empty ===== -->
-      <div data-when-state="empty" class="wu-hide">
-        <div class="wu-card">
-          <div class="wu-empty">
-            <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-check-circle"></use></svg></div>
-            <h3 class="wu-empty__title">You’re all caught up</h3>
-            <p class="wu-empty__text">No new notifications right now. We’ll let you know when something needs you.</p>
-            <a class="wu-btn wu-btn--primary" href="../../learning-experience/youth/home.html">Back to home</a>
+      <div data-when-state="empty" class="w-hide">
+        <div class="w-card">
+          <div class="w-empty">
+            <div class="w-empty__icon"><svg class="w-icon"><use href="#i-check-circle"></use></svg></div>
+            <h3 class="w-empty__title">You’re all caught up</h3>
+            <p class="w-empty__text">No new notifications right now. We’ll let you know when something needs you.</p>
+            <a class="w-btn w-btn--primary" href="../../learning-experience/youth/home.html">Back to home</a>
           </div>
         </div>
       </div>

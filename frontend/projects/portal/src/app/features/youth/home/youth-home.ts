@@ -1,21 +1,21 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthHomeView } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, YouthHomeView } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-LEARN-001..010, L2-ENGAGE-005, L2-MENTOR-008, L2-PLATFORM-011
 @Component({
-  selector: 'wu-youth-home',
+  selector: 'w-youth-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, DatePipe, DecimalPipe],
+  imports: [WShell, RouterLink, DatePipe, DecimalPipe],
   templateUrl: './youth-home.html',
   styles: `
     .home-hero {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: var(--wu-sp-5);
+      gap: var(--w-sp-5);
       align-items: center;
     }
     .home-progress {
@@ -34,10 +34,10 @@ import { WuShell } from '@wu/ui';
     .assignment-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: var(--wu-sp-4);
+      gap: var(--w-sp-4);
       align-items: center;
-      padding-block: var(--wu-sp-4);
-      border-top: 1px solid var(--wu-border);
+      padding-block: var(--w-sp-4);
+      border-top: 1px solid var(--w-border);
     }
     .assignment-row:first-child {
       border-top: 0;
@@ -47,7 +47,7 @@ import { WuShell } from '@wu/ui';
       .assignment-row {
         grid-template-columns: minmax(0, 1fr);
       }
-      .assignment-row .wu-btn {
+      .assignment-row .w-btn {
         width: 100%;
       }
     }

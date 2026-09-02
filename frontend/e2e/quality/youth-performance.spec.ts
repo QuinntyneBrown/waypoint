@@ -30,7 +30,7 @@ test('primary youth screen is interactive within the Chromebook-class budget', a
 
   await page.addInitScript((session) => {
     if (location.origin === 'http://localhost:4200') {
-      sessionStorage.setItem('wu.session.v1', session);
+      sessionStorage.setItem('w.session.v1', session);
     }
     const metrics = globalThis as typeof globalThis & {
       __wordUpInteractiveAt?: number;

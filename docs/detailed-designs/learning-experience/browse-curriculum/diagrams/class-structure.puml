@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +get(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "YouthCurriculumController" as controller_YouthCurriculumController <<controller>> {
     +GetAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "BrowseCurriculumQuery" as request_BrowseCurriculumQuery <<record>>
   class "BrowseCurriculumQueryHandler" as handler_BrowseCurriculumQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "LessonProgress" as entity_LessonProgress <<domain type>>
 }
 page_YouthAnnouncements --> client_PublicSiteApi : invokes

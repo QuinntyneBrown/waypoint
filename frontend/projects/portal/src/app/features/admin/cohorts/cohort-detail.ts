@@ -2,27 +2,27 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, CohortDetail, CohortOptions, CohortsApi } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAccessibleDialog, WuIcon, WuShell } from '@wu/ui';
+import { ApiError, CohortDetail, CohortOptions, CohortsApi } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAccessibleDialog, WIcon, WShell } from '@w/ui';
 import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-003
 @Component({
-  selector: 'wu-cohort-detail',
+  selector: 'w-cohort-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, WuAccessibleDialog, RouterLink, DatePipe, ReactiveFormsModule],
+  imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe, ReactiveFormsModule],
   templateUrl: './cohort-detail.html',
   styles: `
     .cohort-summary {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-sp-4);
+      gap: var(--w-sp-4);
     }
     .member-layout {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(17rem, 1fr);
-      gap: var(--wu-sp-5);
+      gap: var(--w-sp-5);
       align-items: start;
     }
     .member-list {
@@ -34,9 +34,9 @@ import { finalize } from 'rxjs';
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--wu-sp-4);
-      padding: var(--wu-sp-4) 0;
-      border-bottom: 1px solid var(--wu-border);
+      gap: var(--w-sp-4);
+      padding: var(--w-sp-4) 0;
+      border-bottom: 1px solid var(--w-border);
       overflow-wrap: anywhere;
     }
     .member-row:last-child {
@@ -44,7 +44,7 @@ import { finalize } from 'rxjs';
     }
     .member-actions {
       display: grid;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
     }
     @media (max-width: 48rem) {
       .member-layout,
@@ -55,7 +55,7 @@ import { finalize } from 'rxjs';
         align-items: flex-start;
         flex-direction: column;
       }
-      .wu-modal__footer .wu-btn {
+      .w-modal__footer .w-btn {
         flex: 1 1 100%;
         min-height: 45px;
       }

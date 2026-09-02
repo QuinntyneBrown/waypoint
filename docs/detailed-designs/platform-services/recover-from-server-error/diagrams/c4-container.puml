@@ -3,16 +3,16 @@
 LAYOUT_LEFT_RIGHT()
 title C4 level 2 — Recover from a server error — containers
 Person(primary, "Authenticated participant", "Uses the feature")
-System_Boundary(wordup, "Word Up software system") {
+System_Boundary(waypoint, "Waypoint software system") {
   Container_Boundary(frontend, "Frontend") {
     Container(app1, "Public Site application", "Angular", "Recover from a server error interaction")
     Container(app2, "Portal application", "Angular", "Recover from a server error interaction")
   }
   Container_Boundary(backend, "Backend") {
-    Container(api, "WordUp API application", "ASP.NET Core", "Authentication, policy, and feature endpoints")
+    Container(api, "Waypoint API application", "ASP.NET Core", "Authentication, policy, and feature endpoints")
     Container(realtime, "Realtime gateway", "SignalR", "Feature change delivery")
   }
-  ContainerDb(db, "Word Up database", "SQL Server", "Authoritative feature state")
+  ContainerDb(db, "Waypoint database", "SQL Server", "Authoritative feature state")
 }
 Rel(primary, app1, "Uses")
 Rel(app1, api, "Calls", "HTTPS JSON")

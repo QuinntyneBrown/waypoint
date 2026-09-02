@@ -1,24 +1,24 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { maskEmail, PasswordResetApi } from '@wu/api';
-import { ToastService, WuStatePage } from '@wu/ui';
+import { maskEmail, PasswordResetApi } from '@w/api';
+import { ToastService, WStatePage } from '@w/ui';
 
 // Traces to: L2-AUTH-005
 @Component({
-  selector: 'wu-reset-link-sent',
+  selector: 'w-reset-link-sent',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuStatePage, RouterLink],
-  template: `<wu-state-page
+  imports: [WStatePage, RouterLink],
+  template: `<w-state-page
     icon="mail"
     tone="info"
     eyebrow="Reset link sent"
     title="Check your email"
     [text]="bodyText"
   >
-    <button class="wu-btn wu-btn--ghost" type="button" (click)="resend()">Resend link</button>
-    <a class="wu-btn wu-btn--primary" routerLink="/auth/sign-in">Back to sign in</a>
-  </wu-state-page>`,
+    <button class="w-btn w-btn--ghost" type="button" (click)="resend()">Resend link</button>
+    <a class="w-btn w-btn--primary" routerLink="/auth/sign-in">Back to sign in</a>
+  </w-state-page>`,
 })
 export class ResetLinkSent {
   private readonly doc = inject(DOCUMENT);

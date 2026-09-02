@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Mentoring and Coaching subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Mentoring and Coaching subsystem owns this feature slice.
 
 The Assign work feature slice refines `L2-MENTOR-008` into one independently deliverable interaction. Mentors shall assign lessons/modules/projects to individuals or a whole cohort with due date, reminder, and message.
 
 A mentor starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+The feature spans Portal application; Waypoint API application. The frontend application owns interaction state and presentation. The Waypoint API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 ### Components and types
 
@@ -23,11 +23,11 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthNotifications`](../../../../frontend/projects/portal/src/app/features/youth/notifications/youth-notifications.ts)<br>[`SettingsNotifications`](../../../../frontend/projects/portal/src/app/settings/notifications/settings-notifications.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`NotificationPreferencesApi`](../../../../frontend/projects/wu-api/src/lib/services/notification-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`AssignWorkController`](../../../../backend/src/WordUp.Api/Controllers/Mentoring/AssignWorkController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`AssignWorkCommand`](../../../../backend/src/WordUp.Application/Mentoring/AssignWork/AssignWorkCommand.cs)<br>[`AssignWorkCommandHandler`](../../../../backend/src/WordUp.Application/Mentoring/AssignWork/AssignWorkCommandHandler.cs)<br>[`AssignWorkCommandValidator`](../../../../backend/src/WordUp.Application/Mentoring/AssignWork/AssignWorkCommandValidator.cs)<br>[`AssignWorkResult`](../../../../backend/src/WordUp.Application/Mentoring/AssignWork/AssignWorkCommand.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`AssignedWork`](../../../../backend/src/WordUp.Domain/Mentoring/AssignedWork.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`ICurrentUser`](../../../../backend/src/WordUp.Application/Shared/Abstractions/ICurrentUser.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| Frontend API boundary | [`NotificationPreferencesApi`](../../../../frontend/projects/w-api/src/lib/services/notification-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`AssignWorkController`](../../../../backend/src/Waypoint.Api/Controllers/Mentoring/AssignWorkController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`AssignWorkCommand`](../../../../backend/src/Waypoint.Application/Mentoring/AssignWork/AssignWorkCommand.cs)<br>[`AssignWorkCommandHandler`](../../../../backend/src/Waypoint.Application/Mentoring/AssignWork/AssignWorkCommandHandler.cs)<br>[`AssignWorkCommandValidator`](../../../../backend/src/Waypoint.Application/Mentoring/AssignWork/AssignWorkCommandValidator.cs)<br>[`AssignWorkResult`](../../../../backend/src/Waypoint.Application/Mentoring/AssignWork/AssignWorkCommand.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`AssignedWork`](../../../../backend/src/Waypoint.Domain/Mentoring/AssignedWork.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`ICurrentUser`](../../../../backend/src/Waypoint.Application/Shared/Abstractions/ICurrentUser.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -40,7 +40,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Behavior
 
 1. **Entry.** A mentor starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-MENTOR-008`, `L2-ENGAGE-008`, `L2-ENGAGE-007`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the Waypoint API application. The controller applies endpoint policy. The application handler applies `L2-MENTOR-008`, `L2-ENGAGE-008`, `L2-ENGAGE-007`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
 3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
@@ -82,11 +82,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Assign work.](diagrams/c4-system-context.png)
 
-*Figure 1 — C4 system context: Assign work in the Word Up environment.*
+*Figure 1 — C4 system context: Assign work in the Waypoint environment.*
 
 #### Container
 

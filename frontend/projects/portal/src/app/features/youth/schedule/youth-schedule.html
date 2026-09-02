@@ -1,43 +1,41 @@
-<wu-shell
+<w-shell
   role="youth"
   active="schedule"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Your cohort</div>
-        <h1 class="wu-page__title">My schedule</h1>
-        <p class="wu-page__sub">See what’s coming up and let your mentor know your plans.</p>
+  <div class="w-container w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Your cohort</div>
+        <h1 class="w-page__title">My schedule</h1>
+        <p class="w-page__sub">See what’s coming up and let your mentor know your plans.</p>
       </div>
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
 
     @if (sessions(); as upcoming) {
       @if (upcoming.length === 0) {
-        <section class="wu-card wu-empty">
-          <div class="wu-card__body">
-            <h2 class="wu-empty__title">No upcoming sessions yet</h2>
-            <p class="wu-empty__text">
-              New cohort sessions will appear here when they are planned.
-            </p>
+        <section class="w-card w-empty">
+          <div class="w-card__body">
+            <h2 class="w-empty__title">No upcoming sessions yet</h2>
+            <p class="w-empty__text">New cohort sessions will appear here when they are planned.</p>
           </div>
         </section>
       } @else {
         <div class="schedule-list">
           @for (session of upcoming; track session.sessionId) {
-            <article class="wu-card" data-testid="youth-session">
-              <div class="wu-card__body session-card__layout">
-                <div class="wu-stack">
+            <article class="w-card" data-testid="youth-session">
+              <div class="w-card__body session-card__layout">
+                <div class="w-stack">
                   <div>
-                    <div class="wu-eyebrow">Upcoming session</div>
-                    <h2 class="wu-card__title">{{ session.title }}</h2>
+                    <div class="w-eyebrow">Upcoming session</div>
+                    <h2 class="w-card__title">{{ session.title }}</h2>
                   </div>
-                  <ul class="session-meta wu-stack">
+                  <ul class="session-meta w-stack">
                     <li>
                       <strong>Date</strong><br />
                       <time [attr.datetime]="session.startsAt">{{
@@ -55,18 +53,18 @@
                     }
                   </ul>
                   @if (session.response) {
-                    <span class="wu-badge wu-badge--success" data-testid="current-rsvp">
+                    <span class="w-badge w-badge--success" data-testid="current-rsvp">
                       Current response:
                       {{ session.response === 'CantAttend' ? 'Can’t make it' : session.response }}
                     </span>
                   }
                 </div>
 
-                <div class="wu-stack">
-                  <fieldset class="wu-stack">
+                <div class="w-stack">
+                  <fieldset class="w-stack">
                     <legend><strong>Your RSVP</strong></legend>
                     <div class="rsvp-options">
-                      <label class="wu-radio rsvp-option">
+                      <label class="w-radio rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -74,9 +72,9 @@
                           [checked]="draft(session.sessionId).response === 'going'"
                           (change)="setResponse(session.sessionId, 'going')"
                         />
-                        <span class="wu-radio__box"></span><span>Going</span>
+                        <span class="w-radio__box"></span><span>Going</span>
                       </label>
-                      <label class="wu-radio rsvp-option">
+                      <label class="w-radio rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -84,9 +82,9 @@
                           [checked]="draft(session.sessionId).response === 'maybe'"
                           (change)="setResponse(session.sessionId, 'maybe')"
                         />
-                        <span class="wu-radio__box"></span><span>Maybe</span>
+                        <span class="w-radio__box"></span><span>Maybe</span>
                       </label>
-                      <label class="wu-radio rsvp-option">
+                      <label class="w-radio rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -94,17 +92,17 @@
                           [checked]="draft(session.sessionId).response === 'can\'t make it'"
                           (change)="setResponse(session.sessionId, 'can\'t make it')"
                         />
-                        <span class="wu-radio__box"></span><span>Can’t make it</span>
+                        <span class="w-radio__box"></span><span>Can’t make it</span>
                       </label>
                     </div>
                   </fieldset>
 
-                  <div class="wu-field">
-                    <label class="wu-label" [for]="'rsvp-note-' + session.sessionId">
-                      Note to your mentor <span class="wu-label__opt">(optional)</span>
+                  <div class="w-field">
+                    <label class="w-label" [for]="'rsvp-note-' + session.sessionId">
+                      Note to your mentor <span class="w-label__opt">(optional)</span>
                     </label>
                     <textarea
-                      class="wu-textarea rsvp-note"
+                      class="w-textarea rsvp-note"
                       [id]="'rsvp-note-' + session.sessionId"
                       maxlength="1000"
                       [value]="draft(session.sessionId).note"
@@ -112,20 +110,20 @@
                     ></textarea>
                   </div>
 
-                  <label class="wu-check">
+                  <label class="w-check">
                     <input
                       type="checkbox"
                       [checked]="draft(session.sessionId).reminderSet"
                       [disabled]="draft(session.sessionId).response === 'can\'t make it'"
                       (change)="setReminder(session.sessionId, $any($event.target).checked)"
                     />
-                    <span class="wu-check__box"></span>
+                    <span class="w-check__box"></span>
                     <span>Remind me before this session</span>
                   </label>
 
-                  <div class="wu-actions">
+                  <div class="w-actions">
                     <button
-                      class="wu-btn wu-btn--primary"
+                      class="w-btn w-btn--primary"
                       type="button"
                       [disabled]="saving().has(session.sessionId)"
                       (click)="save(session.sessionId)"
@@ -137,7 +135,7 @@
                     </span>
                   </div>
                   @if (session.reminderSet && session.reminderAt) {
-                    <p class="wu-muted" data-testid="reminder-time">
+                    <p class="w-muted" data-testid="reminder-time">
                       Reminder scheduled for {{ session.reminderAt | date: 'medium' }}.
                     </p>
                   }
@@ -148,7 +146,7 @@
         </div>
       }
     } @else {
-      <p class="wu-muted" role="status">Loading schedule…</p>
+      <p class="w-muted" role="status">Loading schedule…</p>
     }
   </div>
-</wu-shell>
+</w-shell>

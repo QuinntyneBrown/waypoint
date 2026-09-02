@@ -1,18 +1,18 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, effect, EnvironmentInjector, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DisplayPreferencesApi } from '@wu/api';
-import { SessionStore } from '@wu/auth';
-import { WuToastHost } from '@wu/ui';
+import { DisplayPreferencesApi } from '@w/api';
+import { SessionStore } from '@w/auth';
+import { WToastHost } from '@w/ui';
 import { DisplayPreferencesService } from './settings/display-preferences.service';
 import { IdleSessionService } from './idle-session.service';
 
 const NON_CRITICAL_RUNTIME_DELAY_MS = 1_500;
 
 @Component({
-  selector: 'wu-root',
-  imports: [RouterOutlet, WuToastHost],
-  template: `<router-outlet /> <wu-toast-host />`,
+  selector: 'w-root',
+  imports: [RouterOutlet, WToastHost],
+  template: `<router-outlet /> <w-toast-host />`,
 })
 export class App {
   private readonly session = inject(SessionStore);

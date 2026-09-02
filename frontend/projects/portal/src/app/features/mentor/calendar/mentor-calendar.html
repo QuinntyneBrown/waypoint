@@ -1,15 +1,15 @@
-<wu-shell
+<w-shell
   [role]="shellRole()"
   active="calendar"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Program</div>
-        <h1 class="wu-page__title">{{ isAdmin() ? 'Program calendar' : 'Calendar' }}</h1>
-        <p class="wu-page__sub">
+  <div class="w-container w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Program</div>
+        <h1 class="w-page__title">{{ isAdmin() ? 'Program calendar' : 'Calendar' }}</h1>
+        <p class="w-page__sub">
           {{
             isAdmin()
               ? 'Schedule sessions across cohorts and open their attendance rosters.'
@@ -20,19 +20,19 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
-    <p class="wu-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
 
     <div class="calendar-layout">
-      <section class="wu-stack" aria-labelledby="calendar-view-heading">
+      <section class="w-stack" aria-labelledby="calendar-view-heading">
         <div class="calendar-toolbar">
           <div>
             <h2 id="calendar-view-heading">{{ rangeLabel() }}</h2>
-            <div class="wu-cluster" role="tablist" aria-label="Calendar view">
+            <div class="w-cluster" role="tablist" aria-label="Calendar view">
               @for (mode of ['month', 'week', 'agenda']; track mode) {
                 <button
-                  class="wu-btn wu-btn--ghost"
+                  class="w-btn w-btn--ghost"
                   type="button"
                   role="tab"
                   [attr.aria-selected]="view() === mode"
@@ -44,11 +44,11 @@
               }
             </div>
           </div>
-          <div class="wu-cluster">
-            <div class="wu-field wu-mb-0">
-              <label class="wu-label" for="calendar-cohort-filter">Calendar cohort</label>
+          <div class="w-cluster">
+            <div class="w-field w-mb-0">
+              <label class="w-label" for="calendar-cohort-filter">Calendar cohort</label>
               <select
-                class="wu-select"
+                class="w-select"
                 id="calendar-cohort-filter"
                 [value]="cohortFilter()"
                 (change)="cohortFilter.set($any($event.target).value)"
@@ -59,14 +59,14 @@
                 }
               </select>
             </div>
-            <button class="wu-btn wu-btn--ghost" type="button" (click)="shift(-1)">Previous</button>
-            <button class="wu-btn wu-btn--ghost" type="button" (click)="today()">Today</button>
-            <button class="wu-btn wu-btn--ghost" type="button" (click)="shift(1)">Next</button>
+            <button class="w-btn w-btn--ghost" type="button" (click)="shift(-1)">Previous</button>
+            <button class="w-btn w-btn--ghost" type="button" (click)="today()">Today</button>
+            <button class="w-btn w-btn--ghost" type="button" (click)="shift(1)">Next</button>
           </div>
         </div>
 
         @if (loading()) {
-          <p class="wu-muted" role="status">Loading sessions…</p>
+          <p class="w-muted" role="status">Loading sessions…</p>
         } @else if (view() === 'month') {
           <div class="calendar-scroll" data-testid="month-calendar">
             <div class="month-grid" role="grid" aria-label="Month calendar">
@@ -118,51 +118,51 @@
         } @else {
           <div class="agenda-list" data-testid="agenda-calendar">
             @for (session of agendaSessions(); track session.id) {
-              <article class="wu-card">
-                <div class="wu-card__body wu-cluster wu-cluster--between">
+              <article class="w-card">
+                <div class="w-card__body w-cluster w-cluster--between">
                   <div>
-                    <p class="wu-eyebrow">{{ session.startsAt | date: 'EEEE, MMM d' }}</p>
+                    <p class="w-eyebrow">{{ session.startsAt | date: 'EEEE, MMM d' }}</p>
                     <h3>{{ session.title }}</h3>
                     <p>
                       {{ session.startsAt | date: 'shortTime' }} ·
                       {{ session.location || 'Location TBD' }}
                     </p>
-                    <p class="wu-muted">
+                    <p class="w-muted">
                       {{ session.cohortName }} · {{ session.mentorName }} ·
                       {{ session.rosterCount }} youth
                     </p>
                   </div>
-                  <a class="wu-btn wu-btn--secondary" [routerLink]="[attendanceBase(), session.id]">
+                  <a class="w-btn w-btn--secondary" [routerLink]="[attendanceBase(), session.id]">
                     {{ session.attendanceTaken ? 'Edit attendance' : 'Take attendance' }}
                   </a>
                 </div>
               </article>
             } @empty {
-              <div class="wu-empty"><p>No sessions in this agenda range.</p></div>
+              <div class="w-empty"><p>No sessions in this agenda range.</p></div>
             }
           </div>
         }
       </section>
 
-      <aside class="wu-card session-form" aria-labelledby="new-session-heading">
-        <div class="wu-card__header">
-          <h2 class="wu-card__title" id="new-session-heading">New session</h2>
+      <aside class="w-card session-form" aria-labelledby="new-session-heading">
+        <div class="w-card__header">
+          <h2 class="w-card__title" id="new-session-heading">New session</h2>
         </div>
-        <div class="wu-card__body wu-stack">
-          <div class="wu-field">
-            <label class="wu-label" for="session-title">Title</label>
+        <div class="w-card__body w-stack">
+          <div class="w-field">
+            <label class="w-label" for="session-title">Title</label>
             <input
-              class="wu-input"
+              class="w-input"
               id="session-title"
               maxlength="200"
               [value]="title()"
               (input)="title.set($any($event.target).value)"
             />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="session-cohort">Cohort</label>
+          <div class="w-field">
+            <label class="w-label" for="session-cohort">Cohort</label>
             <select
-              class="wu-select"
+              class="w-select"
               id="session-cohort"
               [value]="cohortId()"
               (change)="cohortId.set($any($event.target).value)"
@@ -173,10 +173,10 @@
               }
             </select>
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="session-mentor">Mentor</label>
+          <div class="w-field">
+            <label class="w-label" for="session-mentor">Mentor</label>
             <select
-              class="wu-select"
+              class="w-select"
               id="session-mentor"
               [value]="mentorId()"
               (change)="mentorId.set($any($event.target).value)"
@@ -187,11 +187,11 @@
               }
             </select>
           </div>
-          <div class="wu-grid wu-grid--2">
-            <div class="wu-field">
-              <label class="wu-label" for="session-date">Date</label>
+          <div class="w-grid w-grid--2">
+            <div class="w-field">
+              <label class="w-label" for="session-date">Date</label>
               <input
-                class="wu-input"
+                class="w-input"
                 id="session-date"
                 type="date"
                 [min]="selectedCohort()?.termStart?.slice(0, 10)"
@@ -200,10 +200,10 @@
                 (input)="date.set($any($event.target).value)"
               />
             </div>
-            <div class="wu-field">
-              <label class="wu-label" for="session-time">Time</label>
+            <div class="w-field">
+              <label class="w-label" for="session-time">Time</label>
               <input
-                class="wu-input"
+                class="w-input"
                 id="session-time"
                 type="time"
                 [value]="time()"
@@ -211,11 +211,11 @@
               />
             </div>
           </div>
-          <div class="wu-grid wu-grid--2">
-            <div class="wu-field">
-              <label class="wu-label" for="session-duration">Minutes</label>
+          <div class="w-grid w-grid--2">
+            <div class="w-field">
+              <label class="w-label" for="session-duration">Minutes</label>
               <input
-                class="wu-input"
+                class="w-input"
                 id="session-duration"
                 type="number"
                 min="1"
@@ -224,10 +224,10 @@
                 (input)="durationMinutes.set($any($event.target).value)"
               />
             </div>
-            <div class="wu-field">
-              <label class="wu-label" for="session-location">Location</label>
+            <div class="w-field">
+              <label class="w-label" for="session-location">Location</label>
               <input
-                class="wu-input"
+                class="w-input"
                 id="session-location"
                 maxlength="256"
                 [value]="location()"
@@ -235,17 +235,17 @@
               />
             </div>
           </div>
-          <label class="wu-check">
+          <label class="w-check">
             <input
               type="checkbox"
               [checked]="repeatsWeekly()"
               (change)="repeatsWeekly.set($any($event.target).checked)"
             />
-            <span class="wu-check__box"></span>
+            <span class="w-check__box"></span>
             <span>Repeat weekly through the cohort term</span>
           </label>
           <button
-            class="wu-btn wu-btn--primary"
+            class="w-btn w-btn--primary"
             type="button"
             [disabled]="saving() || !options()?.cohorts?.length"
             (click)="createSession()"
@@ -253,10 +253,10 @@
             {{ saving() ? 'Scheduling…' : 'Schedule session' }}
           </button>
           @if (statusMessage(); as message) {
-            <p class="wu-alert wu-alert--success">{{ message }}</p>
+            <p class="w-alert w-alert--success">{{ message }}</p>
           }
         </div>
       </aside>
     </div>
   </div>
-</wu-shell>
+</w-shell>

@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Learning Experience subsystem owns this feature slice.
 
 The Submit an assignment feature slice refines `L2-LEARN-006` into one independently deliverable interaction. Youth shall view an assignment brief (rubric, due date) and submit work of the allowed types with an attestation.
 
 A youth participant starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+The feature spans Portal application; Waypoint API application. The frontend application owns interaction state and presentation. The Waypoint API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 ### Components and types
 
@@ -24,10 +24,10 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
 | Frontend API boundary | `LearningExperienceApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`YouthCurriculumController`](../../../../backend/src/WordUp.Api/Controllers/LearningExperience/YouthCurriculumController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`SubmitAssignmentCommand`](../../../../backend/src/WordUp.Application/LearningExperience/Submissions/SubmitAssignmentCommand.cs)<br>[`SubmitAssignmentCommandHandler`](../../../../backend/src/WordUp.Application/LearningExperience/Submissions/SubmitAssignmentCommandHandler.cs)<br>[`SubmitAssignmentCommandValidator`](../../../../backend/src/WordUp.Application/LearningExperience/Submissions/SubmitAssignmentCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`Submission`](../../../../backend/src/WordUp.Domain/LearningExperience/Submission.cs)<br>[`SubmissionStatus`](../../../../backend/src/WordUp.Domain/LearningExperience/SubmissionStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`ValidationBehavior`](../../../../backend/src/WordUp.Application/Shared/Behaviors/ValidationBehavior.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| API transport | [`YouthCurriculumController`](../../../../backend/src/Waypoint.Api/Controllers/LearningExperience/YouthCurriculumController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`SubmitAssignmentCommand`](../../../../backend/src/Waypoint.Application/LearningExperience/Submissions/SubmitAssignmentCommand.cs)<br>[`SubmitAssignmentCommandHandler`](../../../../backend/src/Waypoint.Application/LearningExperience/Submissions/SubmitAssignmentCommandHandler.cs)<br>[`SubmitAssignmentCommandValidator`](../../../../backend/src/Waypoint.Application/LearningExperience/Submissions/SubmitAssignmentCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`Submission`](../../../../backend/src/Waypoint.Domain/LearningExperience/Submission.cs)<br>[`SubmissionStatus`](../../../../backend/src/Waypoint.Domain/LearningExperience/SubmissionStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`ValidationBehavior`](../../../../backend/src/Waypoint.Application/Shared/Behaviors/ValidationBehavior.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -40,7 +40,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Behavior
 
 1. **Entry.** A youth participant starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-LEARN-006`, `L2-CURRIC-004`, `L2-NFR-001`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the Waypoint API application. The controller applies endpoint policy. The application handler applies `L2-LEARN-006`, `L2-CURRIC-004`, `L2-NFR-001`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
 3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
@@ -82,11 +82,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Submit an assignment.](diagrams/c4-system-context.png)
 
-*Figure 1 — C4 system context: Submit an assignment in the Word Up environment.*
+*Figure 1 — C4 system context: Submit an assignment in the Waypoint environment.*
 
 #### Container
 

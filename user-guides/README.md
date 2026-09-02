@@ -1,9 +1,9 @@
-# Word Up — User Guide
+# Waypoint — User Guide
 
-The end-user guide to [Word Up](../README.md): a standalone, static, no-build-step site that
+The end-user guide to [Waypoint](../README.md): a standalone, static, no-build-step site that
 documents the shipping product — the Angular portal and public site — role by role.
 
-It is written for the people who **use** Word Up, not the people who build it: young people,
+It is written for the people who **use** Waypoint, not the people who build it: young people,
 mentors, guardians, volunteers, and program administrators. Contributor documentation lives
 elsewhere (see [`docs/`](../docs/), [`docs/specs/`](../docs/specs/README.md), and
 [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md)).
@@ -47,25 +47,25 @@ depends on being served from a particular root.
 
 ## Structure
 
-| Path                       | Contents                                                                                                                                                           |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `index.html`               | Landing page: what Word Up does, the lifecycle figure, the who-does-what table, the card grid, reading paths per role, and what this release does and does not do. |
-| `404.html`                 | Branded not-found page. Renders the full chrome and offers a way back. Deliberately **not** in the reading order.                                                  |
-| `assets/guide.css`         | Every style in the guide. All values resolve through the `--wu-*` design-token contract.                                                                           |
-| `assets/guide.js`          | Every behaviour in the guide, and the page registry (see below).                                                                                                   |
-| `assets/vendor/core.css`   | Vendored, byte-identical copy of the Word Up design system.                                                                                                        |
-| `assets/vendor/a11y.css`   | Vendored, byte-identical copy of the display/accessibility hooks.                                                                                                  |
-| `start-here/`              | What you need first, opening Word Up for the first time, a named tour of the window, and one complete walkthrough.                                                 |
-| `youth/`                   | Working through a lesson; taking quizzes and submitting assignments.                                                                                               |
-| `mentor/`                  | Reviewing and grading work; roster, check-ins and at-risk flags.                                                                                                   |
-| `administrator/`           | Applications and people; cohorts, curriculum and settings; attendance, the progress board and reports.                                                             |
-| `guardian/`                | Giving consent and following a child's progress.                                                                                                                   |
-| `volunteer/`               | Running today's session.                                                                                                                                           |
-| `reference/`               | Messages and error codes; lifecycles and evidence; roles and permissions; accessibility and display preferences.                                                   |
-| `advanced/`                | Privacy, consent and the audit trail; integration contracts; symptom-first troubleshooting.                                                                        |
-| `tests/smoke.spec.ts`      | The Playwright smoke suite.                                                                                                                                        |
-| `staticwebapp.config.json` | Static-host routing, MIME types, and security headers.                                                                                                             |
-| `package.json`             | Pinned tooling. Private, and deliberately without a lockfile.                                                                                                      |
+| Path                       | Contents                                                                                                                                                            |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index.html`               | Landing page: what Waypoint does, the lifecycle figure, the who-does-what table, the card grid, reading paths per role, and what this release does and does not do. |
+| `404.html`                 | Branded not-found page. Renders the full chrome and offers a way back. Deliberately **not** in the reading order.                                                   |
+| `assets/guide.css`         | Every style in the guide. All values resolve through the `--w-*` design-token contract.                                                                             |
+| `assets/guide.js`          | Every behaviour in the guide, and the page registry (see below).                                                                                                    |
+| `assets/vendor/core.css`   | Vendored, byte-identical copy of the Waypoint design system.                                                                                                        |
+| `assets/vendor/a11y.css`   | Vendored, byte-identical copy of the display/accessibility hooks.                                                                                                   |
+| `start-here/`              | What you need first, opening Waypoint for the first time, a named tour of the window, and one complete walkthrough.                                                 |
+| `youth/`                   | Working through a lesson; taking quizzes and submitting assignments.                                                                                                |
+| `mentor/`                  | Reviewing and grading work; roster, check-ins and at-risk flags.                                                                                                    |
+| `administrator/`           | Applications and people; cohorts, curriculum and settings; attendance, the progress board and reports.                                                              |
+| `guardian/`                | Giving consent and following a child's progress.                                                                                                                    |
+| `volunteer/`               | Running today's session.                                                                                                                                            |
+| `reference/`               | Messages and error codes; lifecycles and evidence; roles and permissions; accessibility and display preferences.                                                    |
+| `advanced/`                | Privacy, consent and the audit trail; integration contracts; symptom-first troubleshooting.                                                                         |
+| `tests/smoke.spec.ts`      | The Playwright smoke suite.                                                                                                                                         |
+| `staticwebapp.config.json` | Static-host routing, MIME types, and security headers.                                                                                                              |
+| `package.json`             | Pinned tooling. Private, and deliberately without a lockfile.                                                                                                       |
 
 ---
 
@@ -99,8 +99,8 @@ it appears to do — the guide marks it with a **Preview limitation** callout ra
 it as working:
 
 ```html
-<div class="wu-alert wu-alert--warning">
-  <p class="wu-alert__title">Preview limitation</p>
+<div class="w-alert w-alert--warning">
+  <p class="w-alert__title">Preview limitation</p>
   <p>
     What looks like it works, what actually happens, and what to do instead.
   </p>
@@ -110,7 +110,7 @@ it as working:
 Every such limitation is stated on the page where the surrounding task is described, and all of them
 are collected in [`advanced/troubleshooting.html`](advanced/troubleshooting.html). The landing page
 states plainly, up front, what works today and what does not — including the release-level warning
-that Word Up is a development project and is **not approved for production use or for storing real
+that Waypoint is a development project and is **not approved for production use or for storing real
 participant information**.
 
 Every quoted button label, status word, validation message, and state name is taken **verbatim from
@@ -122,25 +122,25 @@ source**. When the product's wording changes, the guide is wrong until it is upd
 
 The guide is styled to look like the product, using the product's own components.
 
-**Token rule.** Every value in `assets/guide.css` resolves through the `--wu-*` design-token
+**Token rule.** Every value in `assets/guide.css` resolves through the `--w-*` design-token
 contract. There are no literal colours, type stacks, spacing values, radii, shadows, or durations in
 its rule bodies — a smoke test scans the file and fails the build if one appears. Guide-only chrome
-uses the `ug-` class prefix so it can never collide with the product's `wu-` components.
+uses the `ug-` class prefix so it can never collide with the product's `w-` components.
 
-The guide's own dark-theme toggle is built by **remapping existing `--wu-*` tokens to one another**,
-so it introduces no colour of its own. That toggle is guide chrome: the Word Up product has no
+The guide's own dark-theme toggle is built by **remapping existing `--w-*` tokens to one another**,
+so it introduces no colour of its own. That toggle is guide chrome: the Waypoint product has no
 light/dark theme, and the guide says so.
 
 **Vendoring.** The guide deploys as its own site and cannot reach a sibling directory at runtime, so
 it carries **byte-identical copies** of the design-system stylesheets in `assets/vendor/`, taken
-from `frontend/projects/wu-ui/src/styles/`. A gate keeps the copies honest:
+from `frontend/projects/w-ui/src/styles/`. A gate keeps the copies honest:
 
 ```bash
 # From the repository root — verify (exits non-zero on drift)
-node scripts/verify-word-up-user-guide-assets.mjs
+node scripts/verify-waypoint-user-guide-assets.mjs
 
 # Re-copy each drifted source over its vendored copy
-node scripts/verify-word-up-user-guide-assets.mjs --fix
+node scripts/verify-waypoint-user-guide-assets.mjs --fix
 ```
 
 The same two commands are available from this folder as `npm run verify:assets` and
@@ -151,7 +151,7 @@ be drift.
 
 **`fonts.css` is deliberately not vendored.** It declares `@font-face` rules with absolute
 `/fonts/*.woff2` URLs that cannot resolve over `file://`, and the guide is required to make no
-external font request. The `--wu-font-*` tokens already carry complete system-font fallback stacks,
+external font request. The `--w-font-*` tokens already carry complete system-font fallback stacks,
 so omitting it degrades cleanly.
 
 ---
@@ -214,6 +214,8 @@ The target is an Azure Static Web App on the Free plan:
 | Resource group | `word-up-rg` (East US 2)                              |
 | Plan           | Free                                                  |
 | Secret         | `AZURE_STATIC_WEB_APPS_API_TOKEN` (repository secret) |
+
+The Azure resource names predate the product's rename to Waypoint and were left unchanged because Azure resource groups cannot be renamed in place; use them exactly as written.
 
 The app is deliberately **not** linked to GitHub on the Azure side. Linking it would make Azure
 generate its own workflow file that competes with `user-guides.yml`; instead the deployment token is

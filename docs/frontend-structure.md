@@ -1,6 +1,6 @@
 # Frontend Structure — Angular Workspace
 
-Implemented folder structure for the Word Up frontend (`frontend/`). The Angular 21 workspace contains the `portal` and `public-site` applications plus the `wu-ui`, `wu-api`, and `wu-auth` libraries described below (see [DECISIONS.md](DECISIONS.md) #9).
+Implemented folder structure for the Waypoint frontend (`frontend/`). The Angular 21 workspace contains the `portal` and `public-site` applications plus the `w-ui`, `w-api`, and `w-auth` libraries described below (see [DECISIONS.md](DECISIONS.md) #9).
 
 Related docs: [ARCHITECTURE.md](ARCHITECTURE.md) (system boundary), [implementation-plan.md](implementation-plan.md) (delivery phases), [contract.md](contract.md) (design system + mock contract), [`specs/`](specs/README.md) (L1/L2 requirements).
 
@@ -14,10 +14,10 @@ Related docs: [ARCHITECTURE.md](ARCHITECTURE.md) (system boundary), [implementat
 | ------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `portal`      | Application | The single **authenticated** SPA for all signed-in roles: Youth, Mentor, Program Administrator, Guardian, Volunteer. Role areas are lazy-loaded route groups, not separate apps.                |
 | `public-site` | Application | The **unauthenticated** public website: program information, youth application/referral intake, contact, privacy, donation handoff. Server-side rendered / prerendered for SEO and performance. |
-| `wu-ui`       | Library     | The `wu-` design system as Angular components, plus design tokens and global styles.                                                                                                            |
-| `wu-api`      | Library     | Typed API contracts (DTOs mirroring the backend records) and per-subsystem HTTP services for `/api/*`.                                                                                          |
-| `wu-auth`     | Library     | Session state, JWT access-token handling, refresh rotation, HTTP interceptor, functional route guards, role directives.                                                                         |
-| `wu-realtime` | Library     | SignalR `HubConnection` wrapper for near-real-time notifications and messages (L2-NFR-005).                                                                                                     |
+| `w-ui`       | Library     | The `w-` design system as Angular components, plus design tokens and global styles.                                                                                                            |
+| `w-api`      | Library     | Typed API contracts (DTOs mirroring the backend records) and per-subsystem HTTP services for `/api/*`.                                                                                          |
+| `w-auth`     | Library     | Session state, JWT access-token handling, refresh rotation, HTTP interceptor, functional route guards, role directives.                                                                         |
+| `w-realtime` | Library     | SignalR `HubConnection` wrapper for near-real-time notifications and messages (L2-NFR-005).                                                                                                     |
 
 ### Why two apps (and not one, and not one per role)
 
@@ -32,7 +32,7 @@ Sequencing per the implementation plan: `portal` is generated first (Phase 3, yo
 
 ```
 frontend/
-├── angular.json              # Workspace config; one entry per project below (prefix "wu" for all)
+├── angular.json              # Workspace config; one entry per project below (prefix "w" for all)
 ├── package.json              # npm scripts (ng serve/build/test), Angular 21.2.x, rxjs, tslib
 ├── package-lock.json         # Locked dependency graph (committed)
 ├── tsconfig.json             # Base TypeScript config; per-project tsconfigs extend it
@@ -49,10 +49,10 @@ frontend/
 └── projects/                 # newProjectRoot — ALL apps and libraries live here
     ├── portal/
     ├── public-site/
-    ├── wu-ui/
-    ├── wu-api/
-    ├── wu-auth/
-    └── wu-realtime/
+    ├── w-ui/
+    ├── w-api/
+    ├── w-auth/
+    └── w-realtime/
 ```
 
 All filenames are lowercase kebab-case (repo convention). Projects are generated standalone (no NgModules), with signals and `inject()`, functional guards/interceptors, and Vitest via `ng test`. Unit tests are colocated `*.spec.ts` files next to the code they cover.
@@ -69,13 +69,13 @@ projects/portal/
 ├── src/
 │   ├── index.html                # SPA host page
 │   ├── main.ts                   # bootstrapApplication(App, appConfig)
-│   ├── styles.css                # Global styles: imports wu-ui design tokens; app-level resets only
+│   ├── styles.css                # Global styles: imports w-ui design tokens; app-level resets only
 │   └── app/
 │       ├── app.ts                # Root component: <router-outlet> only
 │       ├── app.html
 │       ├── app.css
-│       ├── app.config.ts         # Providers: router, HttpClient + wu-auth interceptor,
-│       │                         #   wu-realtime connection, error handling
+│       ├── app.config.ts         # Providers: router, HttpClient + w-auth interceptor,
+│       │                         #   w-realtime connection, error handling
 │       ├── app.routes.ts         # Top-level routes: /auth, /onboarding, and one lazy
 │       │                         #   route group per role area below
 │       ├── shell/                # Authenticated layout: top bar, role-aware nav, notification
@@ -108,7 +108,7 @@ projects/portal/
 └── tsconfig.spec.json
 ```
 
-**Inside each `features/<area>/`:** one `<area>.routes.ts` (the lazy entry), then one folder per screen/flow containing the page component (`.ts`/`.html`/`.css` + colocated `.spec.ts`). Data access goes through `wu-api` services — feature folders contain **no raw `HttpClient` calls and no duplicated DTOs**. Cross-cutting UI belongs in `wu-ui`; anything used by two or more areas must not live inside a single area's folder.
+**Inside each `features/<area>/`:** one `<area>.routes.ts` (the lazy entry), then one folder per screen/flow containing the page component (`.ts`/`.html`/`.css` + colocated `.spec.ts`). Data access goes through `w-api` services — feature folders contain **no raw `HttpClient` calls and no duplicated DTOs**. Cross-cutting UI belongs in `w-ui`; anything used by two or more areas must not live inside a single area's folder.
 
 **Guard rule (non-negotiable):** route guards and hidden nav items in `portal` are presentational conveniences. The API response is the authority for access, consent gating, and redaction — the client must render forbidden/gated/redacted responses faithfully ([DECISIONS.md](DECISIONS.md) #5).
 
@@ -116,7 +116,7 @@ projects/portal/
 
 ## `projects/public-site/` — unauthenticated application
 
-SSR/prerendered for SEO, performance, and anonymous accessibility. Contains **no** auth session logic and never imports `wu-auth` or `wu-realtime`.
+SSR/prerendered for SEO, performance, and anonymous accessibility. Contains **no** auth session logic and never imports `w-auth` or `w-realtime`.
 
 ```
 projects/public-site/
@@ -126,7 +126,7 @@ projects/public-site/
 │   ├── main.ts                   # Browser bootstrap
 │   ├── main.server.ts            # SSR bootstrap
 │   ├── server.ts                 # SSR entry / prerender host
-│   ├── styles.css                # Imports wu-ui tokens
+│   ├── styles.css                # Imports w-ui tokens
 │   └── app/
 │       ├── app.ts / app.html / app.css
 │       ├── app.config.ts         # + app.config.server.ts for SSR providers
@@ -148,25 +148,25 @@ projects/public-site/
 
 ## Shared libraries
 
-Each library follows the standard CLI layout: `src/public-api.ts` (the only import surface), `src/lib/**`, `ng-package.json`, `tsconfig.lib.json`. Apps import via the TS path alias (e.g. `@wu/ui`), never deep-relative paths.
+Each library follows the standard CLI layout: `src/public-api.ts` (the only import surface), `src/lib/**`, `ng-package.json`, `tsconfig.lib.json`. Apps import via the TS path alias (e.g. `@w/ui`), never deep-relative paths.
 
-### `projects/wu-ui/` — design system
+### `projects/w-ui/` — design system
 
 ```
-projects/wu-ui/src/lib/
-├── styles/                       # Design tokens, typography, spacing — the wu- CSS ported from
+projects/w-ui/src/lib/
+├── styles/                       # Design tokens, typography, spacing — the w- CSS ported from
 │                                 #   docs/mocks (styleguide.html is the visual reference)
-├── button/  card/  badge/  ...   # One folder per wu- component (wu-button, wu-card, …),
+├── button/  card/  badge/  ...   # One folder per w- component (w-button, w-card, …),
 │                                 #   presentation-only: inputs/outputs, no HTTP, no routing
 └── states/                       # Reusable empty/loading/error primitives shared by both apps
 ```
 
-The `wu-` class contract in [contract.md](contract.md) governs markup and class names; the mocks under `docs/mocks/` remain the interaction reference ([DECISIONS.md](DECISIONS.md) #6). Display preferences (text size, contrast, motion, reading font — no theme toggle in v1) live here.
+The `w-` class contract in [contract.md](contract.md) governs markup and class names; the mocks under `docs/mocks/` remain the interaction reference ([DECISIONS.md](DECISIONS.md) #6). Display preferences (text size, contrast, motion, reading font — no theme toggle in v1) live here.
 
-### `projects/wu-api/` — typed API client
+### `projects/w-api/` — typed API client
 
 ```
-projects/wu-api/src/lib/
+projects/w-api/src/lib/
 ├── models/                       # Request/response interfaces mirroring the backend's
 │   │                             #   command/query records, foldered per subsystem
 │   ├── auth/  intake/  consent/  invitations/  onboarding/  …
@@ -177,10 +177,10 @@ projects/wu-api/src/lib/
 
 The only place `HttpClient` is used for REST calls. When the backend contract changes, it changes here first — both apps consume this library, keeping DTOs single-sourced.
 
-### `projects/wu-auth/` — session & access
+### `projects/w-auth/` — session & access
 
 ```
-projects/wu-auth/src/lib/
+projects/w-auth/src/lib/
 ├── session-store.ts              # Signal-based session state (current user, roles, expiry)
 ├── token-refresh.ts              # Rotating refresh-token flow; handles family revocation on reuse
 ├── auth-interceptor.ts           # Attaches bearer token; drives refresh-on-401
@@ -188,10 +188,10 @@ projects/wu-auth/src/lib/
 └── directives/                   # e.g. *wuIfRole — show/hide by server-declared role
 ```
 
-### `projects/wu-realtime/` — live updates
+### `projects/w-realtime/` — live updates
 
 ```
-projects/wu-realtime/src/lib/
+projects/w-realtime/src/lib/
 ├── connection.ts                 # SignalR HubConnection lifecycle (connect on sign-in,
 │                                 #   reconnect/backoff, dispose on sign-out)
 └── channels/                     # Typed notification + message streams (L2-NFR-005) consumed
@@ -213,12 +213,12 @@ projects/wu-realtime/src/lib/
 | `learning-experience/`       | `portal` → youth learning features                                          |
 | `mentoring/`                 | `portal` → mentor features                                                  |
 | `non-functional/`            | Cross-cutting quality references                                            |
-| `platform-services/`         | `wu-ui` state primitives + `portal` settings, help, and system states       |
+| `platform-services/`         | `w-ui` state primitives + `portal` settings, help, and system states       |
 | `program-administration/`    | `portal` → people, cohort, and organization features                        |
 | `public-site/`               | `public-site` features                                                      |
 | `reporting-and-data/`        | `portal` → reporting and import features                                    |
 | `volunteer-portal/`          | `portal` → volunteer features                                               |
-| `assets/`, `styleguide.html` | `wu-ui` styles/tokens (visual reference)                                    |
+| `assets/`, `styleguide.html` | `w-ui` styles/tokens (visual reference)                                    |
 
 ---
 
@@ -226,12 +226,12 @@ projects/wu-realtime/src/lib/
 
 ```bash
 cd frontend
-ng generate application portal --style=css --prefix=wu           # Phase 3
-ng generate library wu-ui --prefix=wu                            # with first portal slice
-ng generate library wu-api --prefix=wu
-ng generate library wu-auth --prefix=wu
-ng generate library wu-realtime --prefix=wu                      # with notifications slice
-ng generate application public-site --style=css --prefix=wu --ssr # Phase 4
+ng generate application portal --style=css --prefix=w           # Phase 3
+ng generate library w-ui --prefix=w                            # with first portal slice
+ng generate library w-api --prefix=w
+ng generate library w-auth --prefix=w
+ng generate library w-realtime --prefix=w                      # with notifications slice
+ng generate application public-site --style=css --prefix=w --ssr # Phase 4
 ```
 
 Until the first target exists, `ng build`/`ng serve`/`ng test` fail by design and are **not** repository quality gates ([DECISIONS.md](DECISIONS.md) #7).

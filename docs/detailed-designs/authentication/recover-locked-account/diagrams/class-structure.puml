@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "AuthController" as controller_AuthController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "RecoverLockedAccountCommand" as request_RecoverLockedAccountCommand <<record>>
   class "RecoverLockedAccountCommandHandler" as handler_RecoverLockedAccountCommandHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "PasswordResetToken" as entity_PasswordResetToken <<domain type>>
 }
 page_AccountLocked --> client_AuthApi : invokes

@@ -1,13 +1,13 @@
-<wu-shell role="youth" active="announcements" [userName]="userName()" (signOut)="signOut()">
-  <div class="wu-container wu-container--narrow wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">News</div>
-        <h1 class="wu-page__title">Announcements</h1>
+<w-shell role="youth" active="announcements" [userName]="userName()" (signOut)="signOut()">
+  <div class="w-container w-container--narrow w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">News</div>
+        <h1 class="w-page__title">Announcements</h1>
       </div>
       @if (hasUnread()) {
-        <div class="wu-page__actions">
-          <button class="wu-btn wu-btn--ghost" type="button" (click)="markAllRead()">
+        <div class="w-page__actions">
+          <button class="w-btn w-btn--ghost" type="button" (click)="markAllRead()">
             Mark all read
           </button>
         </div>
@@ -15,29 +15,29 @@
     </div>
 
     @if (!loading() && items().length === 0) {
-      <div class="wu-empty">
-        <div class="wu-empty__icon"><wu-icon name="bell" /></div>
-        <h3 class="wu-empty__title">No announcements yet</h3>
-        <p class="wu-empty__text">
+      <div class="w-empty">
+        <div class="w-empty__icon"><w-icon name="bell" /></div>
+        <h3 class="w-empty__title">No announcements yet</h3>
+        <p class="w-empty__text">
           Program-wide news will show up here. Check back soon — you’re all caught up.
         </p>
       </div>
     } @else {
-      <div class="wu-stack">
+      <div class="w-stack">
         @for (item of items(); track item.id) {
-          <div class="wu-card" [class.wu-card--greige]="!item.read">
-            <div class="wu-card__body">
-              <div class="wu-cluster wu-cluster--between">
-                <h3 class="wu-card__title">{{ item.title }}</h3>
+          <div class="w-card" [class.w-card--greige]="!item.read">
+            <div class="w-card__body">
+              <div class="w-cluster w-cluster--between">
+                <h3 class="w-card__title">{{ item.title }}</h3>
                 @if (!item.read) {
-                  <span class="wu-badge wu-badge--info wu-badge--dot">New</span>
+                  <span class="w-badge w-badge--info w-badge--dot">New</span>
                 }
               </div>
-              <p class="wu-muted">{{ item.message }}</p>
+              <p class="w-muted">{{ item.message }}</p>
             </div>
           </div>
         }
       </div>
     }
   </div>
-</wu-shell>
+</w-shell>

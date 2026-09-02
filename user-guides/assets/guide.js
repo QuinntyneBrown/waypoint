@@ -1,5 +1,5 @@
 /*
- * Word Up User Guide — site chrome.
+ * Waypoint User Guide — site chrome.
  *
  * THE PAGE REGISTRY (`PAGES`, below) IS THE SINGLE SOURCE OF TRUTH.
  * ------------------------------------------------------------------
@@ -22,8 +22,8 @@
 (function () {
   "use strict";
 
-  /** Version of the vendored Word Up design system these pages are styled with. */
-  var DESIGN_SYSTEM_VERSION = "wu-ui 0.0.1";
+  /** Version of the vendored Waypoint design system these pages are styled with. */
+  var DESIGN_SYSTEM_VERSION = "w-ui 0.0.1";
 
   /* ==========================================================================
      Page registry — order is reading order
@@ -33,10 +33,10 @@
     {
       category: "Start here",
       slug: "index",
-      title: "Word Up User Guide",
+      title: "Waypoint User Guide",
       icon: "home",
       description:
-        "What Word Up does, who does what, how this guide is organised, and what this release does and does not do.",
+        "What Waypoint does, who does what, how this guide is organised, and what this release does and does not do.",
       keywords: [
         "overview",
         "introduction",
@@ -54,7 +54,7 @@
       title: "What you need before you start",
       icon: "clipboard-check",
       description:
-        "The addresses Word Up runs at, why there is no self-signup, and how the very first administrator account is created.",
+        "The addresses Waypoint runs at, why there is no self-signup, and how the very first administrator account is created.",
       keywords: [
         "requirements",
         "prerequisites",
@@ -64,7 +64,7 @@
         "signup",
         "invitation",
         "seed",
-        "wu db seed",
+        "way db seed",
         "age",
         "eligibility",
       ],
@@ -72,7 +72,7 @@
     {
       category: "Start here",
       slug: "start-here/first-sign-in",
-      title: "Opening Word Up for the first time",
+      title: "Opening Waypoint for the first time",
       icon: "log-in",
       description:
         "Accept an invitation, choose a password, complete the three onboarding steps, and clear the guardian consent gate.",
@@ -89,8 +89,8 @@
     },
     {
       category: "Start here",
-      slug: "start-here/the-word-up-window",
-      title: "A tour of the Word Up window",
+      slug: "start-here/the-waypoint-window",
+      title: "A tour of the Waypoint window",
       icon: "grid",
       description:
         "The name of every region of the application frame, from the offline banner down to the toast host.",
@@ -314,7 +314,7 @@
       title: "Messages and error codes",
       icon: "alert-triangle",
       description:
-        "Every response code and validation message Word Up can show you, what causes it, and what to do about it.",
+        "Every response code and validation message Waypoint can show you, what causes it, and what to do about it.",
       keywords: [
         "error",
         "validation",
@@ -422,10 +422,10 @@
       title: "Integration contracts",
       icon: "code",
       description:
-        "The wu operational command line, the HTTP surface, realtime events, and the headers every response carries.",
+        "The way operational command line, the HTTP surface, realtime events, and the headers every response carries.",
       keywords: [
         "cli",
-        "wu",
+        "way",
         "api",
         "http",
         "endpoint",
@@ -512,8 +512,8 @@
      ========================================================================== */
 
   var root = document.documentElement;
-  var STORAGE_THEME = "wu-ug.theme";
-  var STORAGE_MOTION = "wu-ug.motion";
+  var STORAGE_THEME = "w-ug.theme";
+  var STORAGE_MOTION = "w-ug.motion";
   var SVG_NS = "http://www.w3.org/2000/svg";
 
   function readStored(key) {
@@ -543,7 +543,7 @@
   /** Builds an inline SVG icon. Unknown names render nothing rather than a box. */
   function icon(name, className) {
     var svg = document.createElementNS(SVG_NS, "svg");
-    svg.setAttribute("class", "wu-icon" + (className ? " " + className : ""));
+    svg.setAttribute("class", "w-icon" + (className ? " " + className : ""));
     svg.setAttribute("viewBox", "0 0 24 24");
     svg.setAttribute("aria-hidden", "true");
     svg.setAttribute("focusable", "false");
@@ -604,10 +604,10 @@
   /* ==========================================================================
      Display preferences — dark theme and reduced motion
      --------------------------------------------------------------------------
-     The Word Up product has no light/dark theme; display preferences there are
+     The Waypoint product has no light/dark theme; display preferences there are
      text size, contrast, motion, underlines and reading font, and they are saved
      on the server. These two toggles are guide chrome only. The dark theme is
-     built by remapping existing --wu-* tokens to one another, so it introduces
+     built by remapping existing --w-* tokens to one another, so it introduces
      no new colour values of its own.
      ========================================================================== */
 
@@ -620,7 +620,7 @@
     root.setAttribute("data-ug-theme", prefs.theme);
     root.setAttribute("data-ug-motion", prefs.motion);
     // Reuse the product's own reduced-motion hook from the vendored a11y.css.
-    root.classList.toggle("wu-a11y-reduce-motion", prefs.motion === "reduced");
+    root.classList.toggle("w-a11y-reduce-motion", prefs.motion === "reduced");
   }
 
   function describeToggle(button, kind) {
@@ -679,7 +679,7 @@
     brand.href = href("index");
     brand.appendChild(el("span", "ug-brand__mark", "W"));
     var brandText = el("span", "ug-brand__text");
-    brandText.appendChild(el("span", "ug-brand__name", "Word Up"));
+    brandText.appendChild(el("span", "ug-brand__name", "Waypoint"));
     brandText.appendChild(el("span", "ug-brand__sub", "User Guide"));
     brand.appendChild(brandText);
     host.appendChild(brand);
@@ -864,7 +864,7 @@
     host.className = "ug-status";
 
     var left = el("div", "ug-status__group");
-    left.appendChild(el("span", "ug-status__label", "Word Up User Guide"));
+    left.appendChild(el("span", "ug-status__label", "Waypoint User Guide"));
     left.appendChild(el("span", "ug-status__dot"));
     left.appendChild(
       el(
@@ -1156,7 +1156,7 @@
   });
 
   // Exposed for the smoke suite only; nothing on a page reads this.
-  window.WordUpGuide = {
+  window.WaypointGuide = {
     pages: PAGES,
     designSystemVersion: DESIGN_SYSTEM_VERSION,
   };

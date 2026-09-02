@@ -4,10 +4,10 @@ LAYOUT_LEFT_RIGHT()
 title C4 level 1 — RSVP to a session — system context
 Person(primary, "Mentor, volunteer, or program administrator", "Human role outside the software boundary")
 Person(staff, "Program staff", "Administers authorized program activity")
-System(wordup, "Word Up software system", "Youth leadership, learning, mentoring, and program operations")
+System(waypoint, "Waypoint software system", "Youth leadership, learning, mentoring, and program operations")
 
-Rel(primary, wordup, "A mentor, volunteer, or program administrator starts this feature inter…")
-Rel(staff, wordup, "Administers authorized program activity")
+Rel(primary, waypoint, "A mentor, volunteer, or program administrator starts this feature inter…")
+Rel(staff, waypoint, "Administers authorized program activity")
 
 SHOW_LEGEND()
 @enduml

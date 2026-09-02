@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { AnnouncementsApi, AnnouncementView } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { AnnouncementsApi, AnnouncementView } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { shellRole } from '../../../shell-role';
 
 // Traces to: L2-ENGAGE-006
 @Component({
-  selector: 'wu-youth-announcements',
+  selector: 'w-youth-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon],
+  imports: [WShell, WIcon],
   templateUrl: './youth-announcements.html',
 })
 export class YouthAnnouncements {

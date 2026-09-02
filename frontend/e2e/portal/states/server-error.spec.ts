@@ -8,5 +8,5 @@ test('the global 500 handler returns a friendly body with no stack trace', async
   const text = await res.text();
   expect(text).toContain('An unexpected error occurred');
   // No internals leaked to the client.
-  expect(text).not.toMatch(/StackTrace|InvalidOperationException|WordUp\.|\.cs:\d/);
+  expect(text).not.toMatch(/StackTrace|InvalidOperationException|Waypoint\.|\.cs:\d/);
 });

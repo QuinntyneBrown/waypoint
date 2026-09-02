@@ -20,7 +20,8 @@ export const apiStateInterceptor: HttpInterceptorFn = (request, next) => {
   return next(request).pipe(
     catchError((error: unknown) => {
       const status = (error as { status?: number })?.status;
-      const state = error instanceof HttpErrorResponse ? error.headers.get('X-WordUp-State') : null;
+      const state =
+        error instanceof HttpErrorResponse ? error.headers.get('X-Waypoint-State') : null;
       if (state === 'media-consent-required') {
         // The active feature owns this recoverable, action-specific consent message.
         return throwError(() => error);

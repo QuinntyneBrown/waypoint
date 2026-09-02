@@ -4,22 +4,22 @@ import {
   CohortMentorAssignment,
   MentorAssignmentOverview,
   MentorAssignmentsApi,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-005, L2-REPORT-001, L2-NFR-009, L2-NFR-010
 @Component({
-  selector: 'wu-mentor-assignments',
+  selector: 'w-mentor-assignments',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon],
+  imports: [WShell, WIcon],
   templateUrl: './mentor-assignments.html',
   styles: `
     .assignment-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-sp-5);
+      gap: var(--w-sp-5);
       align-items: start;
     }
     .assignment-card,
@@ -28,23 +28,23 @@ import { finalize } from 'rxjs';
     }
     .supporting-list {
       display: grid;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
       max-height: 16rem;
       overflow-y: auto;
-      padding: var(--wu-sp-2);
-      border: 1px solid var(--wu-border);
-      border-radius: var(--wu-radius-md);
+      padding: var(--w-sp-2);
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-radius-md);
     }
     .supporting-option {
       display: flex;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
       align-items: flex-start;
       min-height: 2.75rem;
-      padding: var(--wu-sp-2);
-      border-radius: var(--wu-radius-sm);
+      padding: var(--w-sp-2);
+      border-radius: var(--w-radius-sm);
     }
     .supporting-option:hover {
-      background: var(--wu-surface-subtle);
+      background: var(--w-surface-subtle);
     }
     .supporting-option input {
       width: 1.25rem;
@@ -55,30 +55,30 @@ import { finalize } from 'rxjs';
     .load-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-      gap: var(--wu-sp-4);
+      gap: var(--w-sp-4);
     }
     .load-card__head,
     .load-metrics {
       display: flex;
       justify-content: space-between;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
       align-items: flex-start;
     }
     .load-metrics {
-      margin-top: var(--wu-sp-4);
+      margin-top: var(--w-sp-4);
     }
     .load-metric {
       min-width: 0;
     }
     .load-metric strong {
       display: block;
-      font-size: var(--wu-text-xl);
+      font-size: var(--w-text-xl);
     }
     @media (max-width: 48rem) {
       .assignment-grid {
         grid-template-columns: 1fr;
       }
-      .assignment-card .wu-btn {
+      .assignment-card .w-btn {
         width: 100%;
         min-height: 45px;
       }

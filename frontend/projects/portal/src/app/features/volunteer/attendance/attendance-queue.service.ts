@@ -1,8 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { ApiError, AttendanceTally, AttendanceWrite, VolunteerApi } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { OfflineService } from '@wu/ui';
+import { ApiError, AttendanceTally, AttendanceWrite, VolunteerApi } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { OfflineService } from '@w/ui';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 interface QueuedAttendanceWrite {
@@ -219,7 +219,7 @@ export class AttendanceQueueService {
   }
 
   private storageKey(ownerUserId: string): string {
-    return `wu.attendance.queue.${ownerUserId}`;
+    return `w.attendance.queue.${ownerUserId}`;
   }
 
   private get storage(): Storage | null {

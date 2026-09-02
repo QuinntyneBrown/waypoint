@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, LearningApi, ReflectionEditor, SaveReflectionInput } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, ReflectionEditor, SaveReflectionInput } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
 import { FormDraftService } from '../../../form-draft.service';
@@ -13,22 +13,22 @@ const OPTIONAL_PROMPT = 'One action I will take';
 
 // Traces to: L2-LEARN-003, L2-NFR-007
 @Component({
-  selector: 'wu-youth-reflection',
+  selector: 'w-youth-reflection',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, ReactiveFormsModule],
+  imports: [WShell, RouterLink, ReactiveFormsModule],
   templateUrl: './youth-reflection.html',
   styles: `
     .mood-options {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
     }
     .mood-option,
     .share-option {
       min-height: 2.75rem;
       display: flex;
       align-items: center;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
       cursor: pointer;
     }
     textarea {

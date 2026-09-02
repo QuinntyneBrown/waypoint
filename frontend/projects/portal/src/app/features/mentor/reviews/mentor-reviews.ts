@@ -1,24 +1,24 @@
 import { DOCUMENT, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, MentorApi, MentorReviewPreview } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { ApiError, MentorApi, MentorReviewPreview } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 
 // Traces to: L2-MENTOR-001, L2-MENTOR-003, L2-MENTOR-004
 @Component({
-  selector: 'wu-mentor-reviews',
+  selector: 'w-mentor-reviews',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, RouterLink, DatePipe],
+  imports: [WShell, WIcon, RouterLink, DatePipe],
   templateUrl: './mentor-reviews.html',
   styles: `
     .queue-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--wu-s4);
-      padding: var(--wu-s4) 0;
-      border-bottom: 1px solid var(--wu-border);
+      gap: var(--w-s4);
+      padding: var(--w-s4) 0;
+      border-bottom: 1px solid var(--w-border);
     }
     .queue-row:last-child {
       border-bottom: 0;

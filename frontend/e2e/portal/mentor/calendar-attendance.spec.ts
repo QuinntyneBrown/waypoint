@@ -113,7 +113,7 @@ test('mentor attendance uses the private offline queue and automatically syncs',
 
   const queued = await page.evaluate(() =>
     Object.entries(localStorage)
-      .filter(([key]) => key.startsWith('wu.attendance.queue.'))
+      .filter(([key]) => key.startsWith('w.attendance.queue.'))
       .map(([, value]) => JSON.parse(value)),
   );
   expect(JSON.stringify(queued)).toContain(auth.userId);

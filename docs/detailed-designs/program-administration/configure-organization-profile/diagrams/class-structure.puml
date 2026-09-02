@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "OrgSettingsController" as controller_OrgSettingsController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "GetOrgSettingsQuery" as request_GetOrgSettingsQuery <<record>>
   class "GetOrgSettingsQueryHandler" as handler_GetOrgSettingsQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "OrgSettings" as entity_OrgSettings <<domain type>>
 }
 page_SettingsProfile --> client_ProfileApi : invokes

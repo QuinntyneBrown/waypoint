@@ -2,7 +2,7 @@
 
 ## Principles
 
-Word Up is maintained openly, with decisions guided by participant safety, safeguarding, privacy, accessibility, correctness, maintainability, and the project's purpose: helping young people grow as leaders who love Jesus. Delivery speed and technical convenience do not override these responsibilities.
+Waypoint is maintained openly, with decisions guided by participant safety, safeguarding, privacy, accessibility, correctness, maintainability, and the project's purpose: helping young people grow as leaders who love Jesus. Delivery speed and technical convenience do not override these responsibilities.
 
 Requirements and acceptance criteria are part of the product contract. Authentication, authorization, consent, auditability, and participant-data boundaries must be enforced on the server and supported by test evidence.
 

@@ -1,6 +1,6 @@
-# Word Up — stakeholder demo plan
+# Waypoint — stakeholder demo plan
 
-A repeatable script for showing Word Up to someone who has **never seen it before**, in
+A repeatable script for showing Waypoint to someone who has **never seen it before**, in
 either **15 minutes** (core) or **30 minutes** (extended).
 
 This document covers three things:
@@ -9,7 +9,7 @@ This document covers three things:
 2. **The data setup** — exactly how to build the scenarios the story needs, from an empty database.
 3. **The run sheet** — minute-by-minute, with what to click and what to say.
 
-> Word Up is a development project. Demo with **synthetic data only** — never real participant
+> Waypoint is a development project. Demo with **synthetic data only** — never real participant
 > information. See [SECURITY.md](../SECURITY.md) and [not-implemented.md](not-implemented.md).
 
 ---
@@ -42,7 +42,7 @@ the API/Swagger — unless the stakeholder is technical and asks. Do not promise
 Everything hangs off **one young person** and the adults around her. Use the same names all the way
 through; never say "the user."
 
-> **Amara is 18. She hears about Word Up from a friend, applies on the website, gets accepted into
+> **Amara is 18. She hears about Waypoint from a friend, applies on the website, gets accepted into
 > the Fall cohort, works through her first leadership lesson, passes the quiz, and earns her first
 > badge. Along the way, her mentor Grace is watching her progress, Grace's other youth David is
 > falling behind and gets flagged, guardian Ruth has to grant consent before her daughter Imani can
@@ -65,13 +65,13 @@ the story harder to follow, not more impressive.
 
 | Persona | Role | Sign-in | Demonstrates |
 |---|---|---|---|
-| **Pat Morgan** | ProgramAdministrator | `pat@wordup.demo` | Intake review, cohort oversight, reporting, audit |
-| **Grace Adeyemi** | Mentor | `grace@wordup.demo` | Mentor dashboard, check-ins, risk flags, grading |
-| **Amara Bell** | Youth (on track) | `amara@wordup.demo` | The happy path: lesson → quiz → badge → journey |
-| **David Osei** | Youth (falling behind) | `david@wordup.demo` | The at-risk case that mentoring is built to catch |
-| **Imani Clarke** | Youth (consent-blocked) | `imani@wordup.demo` | The safeguarding gate |
-| **Ruth Clarke** | Guardian (Imani's) | `ruth@wordup.demo` | Guardian visibility + granting consent |
-| **Sam Whitfield** | Volunteer | `sam@wordup.demo` | Narrow, session-scoped access |
+| **Pat Morgan** | ProgramAdministrator | `pat@waypoint.demo` | Intake review, cohort oversight, reporting, audit |
+| **Grace Adeyemi** | Mentor | `grace@waypoint.demo` | Mentor dashboard, check-ins, risk flags, grading |
+| **Amara Bell** | Youth (on track) | `amara@waypoint.demo` | The happy path: lesson → quiz → badge → journey |
+| **David Osei** | Youth (falling behind) | `david@waypoint.demo` | The at-risk case that mentoring is built to catch |
+| **Imani Clarke** | Youth (consent-blocked) | `imani@waypoint.demo` | The safeguarding gate |
+| **Ruth Clarke** | Guardian (Imani's) | `ruth@waypoint.demo` | Guardian visibility + granting consent |
+| **Sam Whitfield** | Volunteer | `sam@waypoint.demo` | Narrow, session-scoped access |
 | *8 roster rows* | Youth (bulk) | — | CSV import with a duplicate and a missing-consent row |
 
 Shared demo password: `Demo!Pass123` — put it on a sticky note, not on screen.
@@ -108,7 +108,7 @@ a stray `Ctrl+C`, a file-watch rebuild — **your entire demo dataset is gone**,
 real database so the data survives and so you can re-run the demo without re-seeding.
 
 ```bash
-export ConnectionStrings__Default='Server=localhost;Database=WordUpDemo;Trusted_Connection=True;TrustServerCertificate=True'
+export ConnectionStrings__Default='Server=localhost;Database=WaypointDemo;Trusted_Connection=True;TrustServerCertificate=True'
 ```
 
 ### 4.3 Run a mail catcher
@@ -124,7 +124,7 @@ export Smtp__Enabled=true
 export Smtp__Host=127.0.0.1
 export Smtp__Port=2525
 export Smtp__UseStartTls=false
-export Smtp__FromEmail=noreply@wordup.demo
+export Smtp__FromEmail=noreply@waypoint.demo
 ```
 
 If you would rather not run one: the seed script sets passwords directly, so **every persona can
@@ -137,7 +137,7 @@ Three terminals, from the repo root, with the environment variables above export
 
 ```bash
 # 1 — API
-dotnet run --project backend/src/WordUp.Api --environment Development --urls http://127.0.0.1:5211
+dotnet run --project backend/src/Waypoint.Api --environment Development --urls http://127.0.0.1:5211
 
 # 2 — authenticated portal        → http://localhost:4200
 npm --prefix frontend start
@@ -160,15 +160,15 @@ PW='Demo!Pass123'
 
 # Build once and run with --no-build --verbosity quiet: otherwise MSBuild chatter lands on stdout
 # and every `| jq -r .id` in this script parses garbage.
-dotnet build backend/src/WordUp.Cli -c Release -v q --nologo
-CLI="dotnet run --project backend/src/WordUp.Cli -c Release --no-build --verbosity quiet --"
+dotnet build backend/src/Waypoint.Cli -c Release -v q --nologo
+CLI="dotnet run --project backend/src/Waypoint.Cli -c Release --no-build --verbosity quiet --"
 
 # 1 — schema + first Program Administrator ---------------------------------
 $CLI db migrate
-$CLI db seed --email pat@wordup.demo --password "$PW" --display-name 'Pat Morgan'
+$CLI db seed --email pat@waypoint.demo --password "$PW" --display-name 'Pat Morgan'
 
 # 2 — admin bearer token (audited, no browser needed) ----------------------
-TOKEN=$($CLI token issue --user pat@wordup.demo | jq -r .accessToken)
+TOKEN=$($CLI token issue --user pat@waypoint.demo | jq -r .accessToken)
 AUTH=(-sS -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json')
 
 # 3 — curriculum: track -> module -> lesson -> quiz ------------------------
@@ -213,11 +213,11 @@ curl "${AUTH[@]}" -X POST "$API/api/modules/$MODULE/publish" >/dev/null
 curl "${AUTH[@]}" -X POST "$API/api/tracks/$TRACK/publish"  >/dev/null
 
 # 4 — staff accounts -------------------------------------------------------
-MENTOR=$($CLI user create --email grace@wordup.demo --password "$PW" \
+MENTOR=$($CLI user create --email grace@waypoint.demo --password "$PW" \
   --display-name 'Grace Adeyemi' --role Mentor | jq -r .id)
-GUARDIAN=$($CLI user create --email ruth@wordup.demo --password "$PW" \
+GUARDIAN=$($CLI user create --email ruth@waypoint.demo --password "$PW" \
   --display-name 'Ruth Clarke' --role Guardian | jq -r .id)
-$CLI user create --email sam@wordup.demo  --password "$PW" \
+$CLI user create --email sam@waypoint.demo  --password "$PW" \
   --display-name 'Sam Whitfield' --role Volunteer >/dev/null
 
 # 5 — cohort (requires a PUBLISHED track and an active mentor) -------------
@@ -225,11 +225,11 @@ COHORT=$($CLI cohort create --name 'Fall 2026 — Tuesdays' \
   --track "$TRACK" --lead-mentor "$MENTOR" --location 'Community Hall' | jq -r .id)
 
 # 6 — youth ----------------------------------------------------------------
-$CLI user create --email amara@wordup.demo --password "$PW" \
+$CLI user create --email amara@waypoint.demo --password "$PW" \
   --display-name 'Amara Bell'  --role Youth --cohort "$COHORT" --mentor "$MENTOR"
-$CLI user create --email david@wordup.demo --password "$PW" \
+$CLI user create --email david@waypoint.demo --password "$PW" \
   --display-name 'David Osei'  --role Youth --cohort "$COHORT" --mentor "$MENTOR"
-IMANI=$($CLI user create --email imani@wordup.demo --password "$PW" \
+IMANI=$($CLI user create --email imani@waypoint.demo --password "$PW" \
   --display-name 'Imani Clarke' --role Youth --cohort "$COHORT" --mentor "$MENTOR" | jq -r .id)
 
 # 7 — guardian linkage, deliberately WITHOUT a consent record --------------
@@ -249,8 +249,8 @@ Password for every persona: $PW
 EOF
 ```
 
-Substitute `wu` for `dotnet run --project backend/src/WordUp.Cli --` if you have installed the
-packed tool (`PackAsTool`, command name `wu`). It is not in the repo's tool manifest by default.
+Substitute `way` for `dotnet run --project backend/src/Waypoint.Cli --` if you have installed the
+packed tool (`PackAsTool`, command name `way`). It is not in the repo's tool manifest by default.
 
 ### 4.6 Build the scenario states through the UI
 
@@ -267,15 +267,15 @@ rehearsal. Do these in order, ~10 minutes:
 | 5 | Amara | Start (don't finish) **lesson 2** | A live finish during the demo → badge |
 
 > **Guardian linkage.** The seed script already links Ruth to Imani with
-> `wu user link-guardian <youth-id> <guardian-id>` (§4.5, step 7) and records **no** consent — that
+> `way user link-guardian <youth-id> <guardian-id>` (§4.5, step 7) and records **no** consent — that
 > is what arms the consent gate. Both accounts must be **active**, the youth must have the Youth
 > role and the guardian the Guardian role, and the link is audit-logged as `GuardianLinked`, so it
 > shows up in Pat's audit view alongside Ruth's consent in §5. To link someone else on the fly
 > (`$CLI` as defined in §4.5):
 >
 > ```bash
-> IMANI=$($CLI user list --search imani@wordup.demo | jq -r '.items[0].id')
-> RUTH=$($CLI user list --search ruth@wordup.demo  | jq -r '.items[0].id')
+> IMANI=$($CLI user list --search imani@waypoint.demo | jq -r '.items[0].id')
+> RUTH=$($CLI user list --search ruth@waypoint.demo  | jq -r '.items[0].id')
 > $CLI user link-guardian "$IMANI" "$RUTH"
 > ```
 
@@ -285,10 +285,10 @@ missing** so the import summary reports something real:
 
 ```csv
 Name,Email,Cohort,Mentor,Track,Status,Consent
-Joy Mensah,joy@wordup.demo,Fall 2026 — Tuesdays,Grace Adeyemi,Foundations of Leadership,Active,Yes
-Marcus Reid,marcus@wordup.demo,Fall 2026 — Tuesdays,Grace Adeyemi,Foundations of Leadership,Active,Yes
-Nia Fofana,nia@wordup.demo,Fall 2026 — Tuesdays,Grace Adeyemi,Foundations of Leadership,Active,No
-Amara Bell,amara@wordup.demo,Fall 2026 — Tuesdays,Grace Adeyemi,Foundations of Leadership,Active,Yes
+Joy Mensah,joy@waypoint.demo,Fall 2026 — Tuesdays,Grace Adeyemi,Foundations of Leadership,Active,Yes
+Marcus Reid,marcus@waypoint.demo,Fall 2026 — Tuesdays,Grace Adeyemi,Foundations of Leadership,Active,Yes
+Nia Fofana,nia@waypoint.demo,Fall 2026 — Tuesdays,Grace Adeyemi,Foundations of Leadership,Active,No
+Amara Bell,amara@waypoint.demo,Fall 2026 — Tuesdays,Grace Adeyemi,Foundations of Leadership,Active,Yes
 ```
 
 Row 3 lands in **needs consent**; row 4 is a **duplicate**. Import returns
@@ -351,7 +351,7 @@ Admin → *Import* → upload the CSV from §4.6. Land on the four-number summar
 > "Eight rows in. Six imported, one duplicate skipped, one held back because consent isn't on file.
 > It won't quietly create a record it isn't allowed to have."
 
-Or via CLI: `wu import youth --from roster.csv`.
+Or via CLI: `way import youth --from roster.csv`.
 
 ### 6.4 Communication (2 min)
 Post an announcement as Pat; show it appear on Amara's home and in her notifications. Show the
@@ -385,11 +385,11 @@ These are the things that will actually bite you. Read this section before your 
 | **A minor's application cannot be approved** | Approval requires a recorded guardian consent, and there is no implemented path to record consent for an applicant who has no account yet. Applications accept ages **12–18**; only an **18-year-old** can be approved end to end. | Use **age 18** for the live intake beat. Demo the consent gate separately through Imani and Ruth (§5), where it works properly. |
 | **Demo data vanishes** | The default database is in-memory and dies with the API process. | Use SQL Server (§4.2). |
 | **Invitation link is unobtainable** | `Smtp:Enabled` is `false` by default and the transport throws; the fallback sender logs no token. | Run a mail catcher (§4.3), or skip the invite beat — every persona has a password. |
-| **Cohort creation fails** | `wu cohort create` requires a **published** track id and an **active mentor** id. | The seed script publishes track, module, and lessons before creating the cohort. Keep that order. |
+| **Cohort creation fails** | `way cohort create` requires a **published** track id and an **active mentor** id. | The seed script publishes track, module, and lessons before creating the cohort. Keep that order. |
 | **Youth sees an empty curriculum** | Youth see only **published** modules and lessons, sourced from their cohort's track (plus any explicit track enrolments). | Confirm all three publish calls returned success and the youth has `--cohort` set. |
 | **Quiz question rejected** | `type` is a numeric enum (`1`–`4`); string values are not accepted. `feedbackMode` must be exactly `show-correct`, `score-only`, or `after-all-attempts`. | Use the values in the seed script verbatim. |
-| **Guardian link is refused** | `wu user link-guardian` requires an **active Youth** and an **active Guardian** — it exits `2` with "Choose an active youth for guardian linkage." or "Choose an active guardian." | Check both accounts exist with the right role (`wu user list --search <email>`) and are active. The ids are positional: **youth first, guardian second**. |
-| **Imported youth cannot sign in** | Roster import creates youth **records** with no password. | That's correct behaviour — say so. Signing-in personas come from `wu user create`. |
+| **Guardian link is refused** | `way user link-guardian` requires an **active Youth** and an **active Guardian** — it exits `2` with "Choose an active youth for guardian linkage." or "Choose an active guardian." | Check both accounts exist with the right role (`way user list --search <email>`) and are active. The ids are positional: **youth first, guardian second**. |
+| **Imported youth cannot sign in** | Roster import creates youth **records** with no password. | That's correct behaviour — say so. Signing-in personas come from `way user create`. |
 | **Account switching eats the clock** | Five roles, one browser. | Separate browser profiles or windows, all pre-signed-in (§4.7). |
 | **Something breaks live** | It happens. | Say "that's a bug, and it's on the list" and move on. Have screenshots of the youth journey and the progress board in a folder as a hard fallback. Do **not** fall back to `docs/mocks/` — those are static references and a stakeholder will not know the difference until they ask a question you can't answer. |
 
@@ -399,7 +399,7 @@ These are the things that will actually bite you. Read this section before your 
 
 ```bash
 # Destructive — drops and recreates the demo database, then re-seeds from scratch.
-dotnet run --project backend/src/WordUp.Cli -- db reset --confirm RESET
+dotnet run --project backend/src/Waypoint.Cli -- db reset --confirm RESET
 ./scripts/demo/seed-demo.sh
 ```
 
@@ -444,6 +444,6 @@ Then redo §4.6 (about 10 minutes). If you demo often, consider snapshotting the
 - [PRD.md](PRD.md) — what the product is for
 - [specs/README.md](specs/README.md) — the 88 in-scope requirements
 - [ARCHITECTURE.md](ARCHITECTURE.md) — how it is built
-- [backend/src/WordUp.Cli/README.md](../backend/src/WordUp.Cli/README.md) — the `wu` operational CLI
+- [backend/src/Waypoint.Cli/README.md](../backend/src/Waypoint.Cli/README.md) — the `way` operational CLI
 - [not-implemented.md](not-implemented.md) — current gaps and the release boundary
 - [../user-guides/](../user-guides/) — role-by-role end-user documentation

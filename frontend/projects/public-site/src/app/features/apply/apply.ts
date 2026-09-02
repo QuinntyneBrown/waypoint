@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { APPLICANT_MAX_AGE, APPLICANT_MIN_AGE, ApiError, IntakeApi } from '@wu/api';
-import { WuIcon } from '@wu/ui';
+import { APPLICANT_MAX_AGE, APPLICANT_MIN_AGE, ApiError, IntakeApi } from '@w/api';
+import { WIcon } from '@w/ui';
 
 function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -11,9 +11,9 @@ function isEmail(value: string): boolean {
 
 // Traces to: L2-INTAKE-001
 @Component({
-  selector: 'wu-apply',
+  selector: 'w-apply',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WuIcon],
+  imports: [ReactiveFormsModule, RouterLink, WIcon],
   templateUrl: './apply.html',
 })
 export class Apply {

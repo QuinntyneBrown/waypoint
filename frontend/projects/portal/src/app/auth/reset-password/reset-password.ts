@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiError, isPasswordCompliant, PASSWORD_POLICY_MESSAGE, PasswordResetApi } from '@wu/api';
-import { WuIcon } from '@wu/ui';
+import { ApiError, isPasswordCompliant, PASSWORD_POLICY_MESSAGE, PasswordResetApi } from '@w/api';
+import { WIcon } from '@w/ui';
 
 // Traces to: L2-AUTH-005
 @Component({
-  selector: 'wu-reset-password',
+  selector: 'w-reset-password',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, WuIcon],
+  imports: [ReactiveFormsModule, WIcon],
   templateUrl: './reset-password.html',
 })
 export class ResetPassword {

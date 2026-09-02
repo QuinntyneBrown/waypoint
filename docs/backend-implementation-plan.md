@@ -1,4 +1,4 @@
-# Word Up — Backend Implementation Plan
+# Waypoint — Backend Implementation Plan
 
 > **Status (2026-07-20): completed and retained as a historical delivery record.** The
 > repository's engineering-completion boundary and current verification gates are summarized in
@@ -6,7 +6,7 @@
 > scope, and "NEW" path statements below describe the baseline plan as it was originally written.
 > This status is not a production-launch certification.
 
-> Historical target: a production-grade API that powers the Word Up prototype
+> Historical target: a production-grade API that powers the Waypoint prototype
 > (`docs/mocks/index.html`). Planned stack: **.NET 8 · Clean Architecture · Controllers · MediatR
 > (free) · EF Core + SQL Server/SQL Express · JWT OAuth2 · SignalR · NUnit · System.CommandLine
 > dotnet tool.**
@@ -15,7 +15,7 @@
 
 ## 1. Context
 
-The front-end mockups in this repo define a youth-leadership tracking app for **Word Up** (director **Shawn Peters**; personas Youth, Mentor, Director, Guardian, Volunteer). This document plans the **backend** that turns those mockups into a real system: authenticate users, store the curriculum + progression data currently held in Google Sheets, track every youth's journey, push real-time updates, and expose an admin CLI for operations and the Sheets migration.
+The front-end mockups in this repo define a youth-leadership tracking app for **Waypoint** (director **Shawn Peters**; personas Youth, Mentor, Director, Guardian, Volunteer). This document plans the **backend** that turns those mockups into a real system: authenticate users, store the curriculum + progression data currently held in Google Sheets, track every youth's journey, push real-time updates, and expose an admin CLI for operations and the Sheets migration.
 
 The design **matches the developer's existing house style** (the `Forge` clean-architecture template and the `mvp`/`CodeGenerator` dotnet tools) so it drops into the same ecosystem, with the deltas the request calls out (NUnit instead of xUnit; SignalR + an admin CLI added).
 
@@ -24,7 +24,7 @@ The design **matches the developer's existing house style** (the `Forge` clean-a
 Monorepo alongside the mockups:
 
 ```
-word-up/
+waypoint/
   docs/
     mocks/                                   # existing front-end prototype (index.html + subsystem folders)
     contract.md                              # front-end build contract
@@ -33,9 +33,9 @@ word-up/
     icd/                                     # Interface Control Document (§12)
   backend/                                   # NEW — this plan
     Directory.Build.props
-    WordUp.sln
-    src/{WordUp.Domain, WordUp.Application, WordUp.Infrastructure, WordUp.Api, WordUp.Cli}
-    tests/{WordUp.UnitTests, WordUp.IntegrationTests}
+    Waypoint.sln
+    src/{Waypoint.Domain, Waypoint.Application, Waypoint.Infrastructure, Waypoint.Api, Waypoint.Cli}
+    tests/{Waypoint.UnitTests, Waypoint.IntegrationTests}
 ```
 
 ---
@@ -47,14 +47,14 @@ word-up/
 | Framework      | **.NET 8** (`net8.0`)                                                                                                               | As requested. House `Directory.Build.props` pattern, retargeted from Forge's net9.0.                                                                                                                                                                                          |
 | Architecture   | **Clean Architecture**, 4 projects (Domain/Application/Infrastructure/Api) + CLI + tests                                            | Matches Forge exactly; dependencies flow inward.                                                                                                                                                                                                                              |
 | API surface    | **MVC Controllers** (not Minimal APIs), thin, delegate to MediatR                                                                   | House convention; requested "Controllers".                                                                                                                                                                                                                                    |
-| Mediator       | **MediatR `12.5.0`**                                                                                                                | Last **Apache-2.0 / free** release before v13 went dual-license (RPL 1.5 + commercial) on 2025-07-02.¹ House pins 12.x. _(Aside: v13 has a free Community edition for nonprofits/<$5M revenue — Word Up qualifies — but 12.5.0 avoids the question and matches house style.)_ |
+| Mediator       | **MediatR `12.5.0`**                                                                                                                | Last **Apache-2.0 / free** release before v13 went dual-license (RPL 1.5 + commercial) on 2025-07-02.¹ House pins 12.x. _(Aside: v13 has a free Community edition for nonprofits/<$5M revenue — Waypoint qualifies — but 12.5.0 avoids the question and matches house style.)_ |
 | Validation     | **FluentValidation `11.10.0`** via a `ValidationBehavior` pipeline                                                                  | House convention.                                                                                                                                                                                                                                                             |
 | Error model    | **Typed exceptions → `ProblemDetails` middleware** (RFC 7807)                                                                       | Forge's canonical style. _(Alternative: `Result<T>` + `ToActionResult` as in `appbuilder` — pick one, don't mix. See §16.)_                                                                                                                                                   |
 | Persistence    | **EF Core `8.x` + SQL Server / SQL Express**                                                                                        | Requested. `Server=.\SQLEXPRESS` for local, full SQL Server in prod. Migrations live in Infrastructure.                                                                                                                                                                       |
 | AuthN/AuthZ    | **JWT bearer (OAuth2 password + refresh)** via an `IJwtTokenIssuer` port; role + policy authorization                               | Forge's hand-rolled JWT approach; roles map to the 5 personas.                                                                                                                                                                                                                |
 | Real-time      | **SignalR** via an Application-side `IChangePublisher` port + Api-side `IHubContext` adapter                                        | Keeps handlers transport-agnostic (the `appbuilder` pattern).                                                                                                                                                                                                                 |
 | Testing        | **NUnit `4.x`** — unit + integration                                                                                                | As requested. _(House uses xUnit; we keep the house **patterns** — `WebApplicationFactory` + real SQL DB per fixture — and translate them to NUnit.)_                                                                                                                         |
-| Admin CLI      | **`System.CommandLine 2.0.0-beta4`**, packaged as a **dotnet tool** (`wu`)                                                          | Matches the `mvp`/`CodeGenerator.Cli` tools (same beta, `Host` DI, `PackAsTool`). GA 2.0.x exists but changed the API and dropped the Hosting package — see §10.²                                                                                                             |
+| Admin CLI      | **`System.CommandLine 2.0.0-beta4`**, packaged as a **dotnet tool** (`way`)                                                          | Matches the `mvp`/`CodeGenerator.Cli` tools (same beta, `Host` DI, `PackAsTool`). GA 2.0.x exists but changed the API and dropped the Hosting package — see §10.²                                                                                                             |
 | Interface spec | **ICD** in `docs/icd/` + live **OpenAPI/Swagger**                                                                                   | Requested. OpenAPI is generated; the ICD is the human contract (§12).                                                                                                                                                                                                         |
 | DTO mapping    | **Manual LINQ projection** (no AutoMapper in app code)                                                                              | House convention.                                                                                                                                                                                                                                                             |
 | Conventions    | **File-per-type**, **folder-per-feature** (vertical slice), file-scoped namespaces, records for messages/DTOs, classes for handlers | House convention.                                                                                                                                                                                                                                                             |
@@ -72,23 +72,23 @@ Dependency direction: `Api → Application + Infrastructure`, `Infrastructure �
 backend/
   Directory.Build.props        # net8.0; Nullable=enable; ImplicitUsings=enable;
                                # TreatWarningsAsErrors=true; WarningsAsErrors=nullable
-  WordUp.sln
+  Waypoint.sln
   src/
-    WordUp.Domain/             # entities + enums only. ZERO package refs.
-    WordUp.Application/        # CQRS handlers, DTOs, Abstractions (ports), Behaviors
-    WordUp.Infrastructure/     # AppDbContext, Migrations/, port adapters
-    WordUp.Api/                # Controllers, Contracts (request DTOs), Middleware,
+    Waypoint.Domain/             # entities + enums only. ZERO package refs.
+    Waypoint.Application/        # CQRS handlers, DTOs, Abstractions (ports), Behaviors
+    Waypoint.Infrastructure/     # AppDbContext, Migrations/, port adapters
+    Waypoint.Api/                # Controllers, Contracts (request DTOs), Middleware,
                                # Realtime/ (hubs+adapter), Program.cs
-    WordUp.Cli/           # System.CommandLine dotnet tool (PackAsTool)
+    Waypoint.Cli/           # System.CommandLine dotnet tool (PackAsTool)
   tests/
-    WordUp.UnitTests/          # NUnit: handlers, validators, domain rules (fast, no DB)
-    WordUp.IntegrationTests/   # NUnit + WebApplicationFactory + real SQL DB per fixture
+    Waypoint.UnitTests/          # NUnit: handlers, validators, domain rules (fast, no DB)
+    Waypoint.IntegrationTests/   # NUnit + WebApplicationFactory + real SQL DB per fixture
 ```
 
 **File-per-type + folder-per-feature.** Every class/interface/enum/record is its own file. Application features are vertical slices:
 
 ```
-WordUp.Application/
+Waypoint.Application/
   Abstractions/                # ports: IAppDbContext, IClock, ICurrentUser,
                                #        IJwtTokenIssuer, IPasswordHasher,
                                #        IRefreshTokenStore, IChangePublisher,
@@ -128,7 +128,7 @@ WordUp.Application/
 
 ## 4. Domain model
 
-Entities are plain POCOs (`{ get; set; }`, `Guid Id`, no attributes, no base class) in `WordUp.Domain`. Enums are **numbered from 1**, persisted as `int` (`HasConversion<int>()`), serialized as **strings** on the wire (`JsonStringEnumConverter`). Grouped by aggregate area (mapped from the mockups):
+Entities are plain POCOs (`{ get; set; }`, `Guid Id`, no attributes, no base class) in `Waypoint.Domain`. Enums are **numbered from 1**, persisted as `int` (`HasConversion<int>()`), serialized as **strings** on the wire (`JsonStringEnumConverter`). Grouped by aggregate area (mapped from the mockups):
 
 **Identity & access**
 
@@ -186,10 +186,10 @@ Entities are plain POCOs (`{ get; set; }`, `Guid Id`, no attributes, no base cla
 - `AddApplication()` scans the assembly for MediatR handlers + validators and registers the behavior.
 
 ```csharp
-// WordUp.Application/Progress/CompleteLessonCommand.cs
+// Waypoint.Application/Progress/CompleteLessonCommand.cs
 public record CompleteLessonCommand(Guid YouthId, Guid LessonId) : IRequest<LessonProgressDto>;
 
-// WordUp.Application/Progress/CompleteLessonCommandHandler.cs
+// Waypoint.Application/Progress/CompleteLessonCommandHandler.cs
 public sealed class CompleteLessonCommandHandler(IAppDbContext db, IClock clock, IChangePublisher changes)
     : IRequestHandler<CompleteLessonCommand, LessonProgressDto>
 {
@@ -211,7 +211,7 @@ public sealed class CompleteLessonCommandHandler(IAppDbContext db, IClock clock,
 
 ## 6. API layer
 
-- Thin `[ApiController]` controllers deriving straight from `ControllerBase`, one per resource area, attribute-routed `api/<plural>` with kebab sub-routes and typed constraints (`{id:guid}`). **`CancellationToken` threaded into every action.** Request DTOs are records in `WordUp.Api/Contracts/`; the controller maps `Request → Command`.
+- Thin `[ApiController]` controllers deriving straight from `ControllerBase`, one per resource area, attribute-routed `api/<plural>` with kebab sub-routes and typed constraints (`{id:guid}`). **`CancellationToken` threaded into every action.** Request DTOs are records in `Waypoint.Api/Contracts/`; the controller maps `Request → Command`.
 - **Middleware order:** `SecurityHeaders → RequestLogging → ExceptionHandling(→ProblemDetails) → Auth → Controllers`.
 - **OpenAPI:** Swashbuckle with JWT bearer security scheme; the generated `swagger.json` is the machine-readable side of the ICD (§12).
 - **CORS:** allow the front-end origin(s); for the offline file:// prototype, a dev policy allowing `null`/localhost origins.
@@ -255,12 +255,12 @@ _(Alternative if richer user management is wanted: ASP.NET Core Identity + polic
 Handlers stay transport-agnostic: they call the Application port `IChangePublisher`; the Api supplies a SignalR adapter.
 
 ```
-WordUp.Application/Abstractions/IChangePublisher.cs      // port
-WordUp.Api/Realtime/WordUpHub.cs                         // public sealed class WordUpHub : Hub;  [Authorize]
-WordUp.Api/Realtime/SignalRChangePublisher.cs            // IChangePublisher adapter over IHubContext<WordUpHub>
+Waypoint.Application/Abstractions/IChangePublisher.cs      // port
+Waypoint.Api/Realtime/WaypointHub.cs                         // public sealed class WaypointHub : Hub;  [Authorize]
+Waypoint.Api/Realtime/SignalRChangePublisher.cs            // IChangePublisher adapter over IHubContext<WaypointHub>
 ```
 
-- Register: `services.AddSignalR();`, `services.AddScoped<IChangePublisher, SignalRChangePublisher>();`, `app.MapHub<WordUpHub>("/hubs/wordup").RequireAuthorization();`
+- Register: `services.AddSignalR();`, `services.AddScoped<IChangePublisher, SignalRChangePublisher>();`, `app.MapHub<WaypointHub>("/hubs/waypoint").RequireAuthorization();`
 - **Groups:** on connect, add the connection to `user-{id}`, `cohort-{cohortId}`, and `role-{role}` groups (from JWT claims in `OnConnectedAsync`).
 - **Events (server→client):** `progressUpdated`, `quizGraded`, `submissionReviewed`, `badgeAwarded`, `attendanceSaved`, `newMessage`, `announcementPosted`, `youthFlagged`, `notificationCreated`. Payloads are records serialized as JSON (documented in the ICD).
 - **Auth on the hub:** JWT via `access_token` query string (SignalR's standard) wired in `JwtBearerEvents.OnMessageReceived` for the `/hubs` path.
@@ -273,25 +273,25 @@ WordUp.Api/Realtime/SignalRChangePublisher.cs            // IChangePublisher ada
 - **`AppDbContext : DbContext, IAppDbContext`** in Infrastructure; handlers depend on `IAppDbContext`. `DbSet`s via `=> Set<T>()`.
 - **Configuration:** inline `modelBuilder.Entity<T>(b => { … })` blocks in `OnModelCreating` (house style — not `IEntityTypeConfiguration` per entity): `HasMaxLength`, `HasIndex`, enum `HasConversion<int>()`, relationships, and `HasData` for reference/seed data (tracks, badges, competencies, the demo cohort).
 - **Provider:** `UseSqlServer(connectionString)`; local `Server=.\SQLEXPRESS;Trusted_Connection=True;TrustServerCertificate=True`, prod via config/secret. Connection string key `DefaultConnection` with fail-fast.
-- **Migrations:** `WordUp.Infrastructure/Migrations/`; `Microsoft.EntityFrameworkCore.Design` referenced by Infrastructure **and** Api (Api is the EF startup project). Apply at startup with `await db.Database.MigrateAsync();` (and/or via the CLI `db migrate`).
+- **Migrations:** `Waypoint.Infrastructure/Migrations/`; `Microsoft.EntityFrameworkCore.Design` referenced by Infrastructure **and** Api (Api is the EF startup project). Apply at startup with `await db.Database.MigrateAsync();` (and/or via the CLI `db migrate`).
 - **Concurrency:** `rowversion` on mutable aggregates (attendance, submissions) to support the mockup's "unsaved changes / sync" flows.
 - **Seeding:** a `DevDataSeeder` reproduces the mockups' sample cast (Jayden Alcantara, Marcus Bello, Shawn Peters, the three cohorts, the Servant Leadership module) so the API demos identically to the front-end.
 
 ---
 
-## 10. Admin CLI — `wu` (dotnet tool)
+## 10. Admin CLI — `way` (dotnet tool)
 
-A `System.CommandLine` console app in `WordUp.Cli`, packaged as a dotnet tool, that **reuses `AddApplication()` + `AddInfrastructure()`** through a Generic Host — so every admin action runs the same handlers/validation as the API.
+A `System.CommandLine` console app in `Waypoint.Cli`, packaged as a dotnet tool, that **reuses `AddApplication()` + `AddInfrastructure()`** through a Generic Host — so every admin action runs the same handlers/validation as the API.
 
 ```xml
-<!-- WordUp.Cli.csproj -->
+<!-- Waypoint.Cli.csproj -->
 <PropertyGroup>
   <OutputType>Exe</OutputType>
   <TargetFramework>net8.0</TargetFramework>
-  <AssemblyName>wu</AssemblyName>
+  <AssemblyName>way</AssemblyName>
   <PackAsTool>true</PackAsTool>
-  <ToolCommandName>wu</ToolCommandName>
-  <PackageId>WordUp.Cli</PackageId>
+  <ToolCommandName>way</ToolCommandName>
+  <PackageId>Waypoint.Cli</PackageId>
   <Version>1.0.0</Version>
 </PropertyGroup>
 ```
@@ -302,7 +302,7 @@ A `System.CommandLine` console app in `WordUp.Cli`, packaged as a dotnet tool, t
 **Command tree:**
 
 ```
-wu
+way
   db     migrate | seed | reset
   user   create | list | set-role | reset-password | deactivate
   invite create | resend | revoke | list
@@ -321,15 +321,15 @@ This covers the requested "admin utility functions" and the Sheets-migration pat
 
 Two projects; **NUnit 4.x** with `NUnit3TestAdapter` + `Microsoft.NET.Test.Sdk`. We keep the house **patterns** (feature-foldered, driven through the real API, real SQL DB per fixture, hand-rolled fakes, traceability comments) and translate xUnit's `IAsyncLifetime` to NUnit's async `[OneTimeSetUp]/[OneTimeTearDown]`. **Every acceptance (integration) test must trace to an L2 requirement** — see "Requirements traceability" below; this is a hard rule, enforced in CI.
 
-**`WordUp.UnitTests`** — fast, no DB:
+**`Waypoint.UnitTests`** — fast, no DB:
 
 - Handler tests against fakes/in-memory `IAppDbContext` (SQLite-in-memory or a hand-rolled fake), validator tests, domain rule tests, JWT issuer, password hasher, progression/quiz-scoring logic.
 - `Moq 4.20.x` allowed for ports, but prefer hand-rolled fakes (e.g. `FakeClock`) as the house does.
 
-**`WordUp.IntegrationTests`** — through the HTTP surface:
+**`Waypoint.IntegrationTests`** — through the HTTP surface:
 
 - `Microsoft.AspNetCore.Mvc.Testing` + `WebApplicationFactory<Program>` (add `public partial class Program;` to `Program.cs`).
-- **Real SQL Server, one throwaway DB per test fixture:** a `SqlServerFixture` (base `[TestFixture]` or a `[SetUpFixture]`) creates `WordUp_IntegrationTests_{Guid:N}` in `[OneTimeSetUp]` (`MigrateAsync`), `DROP DATABASE` in `[OneTimeTearDown]`; connection overridable via env var `WORDUP_TEST_SQLSERVER` (default `.\SQLEXPRESS`). The factory swaps the `DbContextOptions` in `ConfigureTestServices`. _(Optional: Respawn for reset-between-tests, or Testcontainers for CI without a local instance.)_
+- **Real SQL Server, one throwaway DB per test fixture:** a `SqlServerFixture` (base `[TestFixture]` or a `[SetUpFixture]`) creates `Waypoint_IntegrationTests_{Guid:N}` in `[OneTimeSetUp]` (`MigrateAsync`), `DROP DATABASE` in `[OneTimeTearDown]`; connection overridable via env var `WAYPOINT_TEST_SQLSERVER` (default `.\SQLEXPRESS`). The factory swaps the `DbContextOptions` in `ConfigureTestServices`. _(Optional: Respawn for reset-between-tests, or Testcontainers for CI without a local instance.)_
 - SignalR is tested with `Microsoft.AspNetCore.SignalR.Client` (`HubConnectionBuilder`) asserting events fire (e.g. quiz submit ⇒ `quizGraded`).
 - Feature-foldered (`Auth/`, `Cohorts/`, `Progress/`…), classes `…Tests`, methods `snake_case_sentences`, each **tagged with the L2 requirement it verifies** — a `// Traces to: L2-<AREA>-NNN` comment _and_ a machine-readable `[Property("Req", "L2-<AREA>-NNN")]` attribute (see traceability rule below).
 - Coverage via `coverlet.collector`; gate meaningful handler/endpoint coverage in CI.
@@ -344,7 +344,7 @@ Two projects; **NUnit 4.x** with `NUnit3TestAdapter` + `Microsoft.NET.Test.Sdk`.
 - **Bidirectional coverage (both directions enforced):**
   - _Forward_ — every L2 requirement in `docs/specs/` has **≥1** acceptance test tagged with its id.
   - _Backward_ — every acceptance test carries **≥1 valid** `L2-*` id that exists in `docs/specs/`.
-- **CI gate:** a traceability check reads the `[Property("Req", …)]` metadata across the `WordUp.IntegrationTests` assembly and reconciles it against the `docs/specs/` L2 catalog. The build **fails** if any acceptance test has no valid L2 id, or any L2 requirement has zero covering acceptance tests. A generated **traceability matrix** (L2 id ↔ tests, with pass/fail) is published as a build artifact each run.
+- **CI gate:** a traceability check reads the `[Property("Req", …)]` metadata across the `Waypoint.IntegrationTests` assembly and reconciles it against the `docs/specs/` L2 catalog. The build **fails** if any acceptance test has no valid L2 id, or any L2 requirement has zero covering acceptance tests. A generated **traceability matrix** (L2 id ↔ tests, with pass/fail) is published as a build artifact each run.
 - Unit tests _may_ also cite L2 ids but are not required to — the **L2 ↔ acceptance-test** link is the enforced contract.
 
 ---
@@ -369,7 +369,7 @@ Representative slice (the Director's progress board):
 | `GET`   | `/api/cohorts/{id}/progress`   | StaffOnly     | –                         | `CohortProgressDto`                  | 200, 401, 403, 404 |
 | `POST`  | `/api/quizzes/{id}/attempts`   | YouthOnly     | `SubmitQuizRequest`       | `QuizResultDto`                      | 201, 400, 403      |
 | `PATCH` | `/api/submissions/{id}/review` | StaffOnly     | `ReviewSubmissionRequest` | `SubmissionDto`                      | 200, 400, 403, 404 |
-| SignalR | `/hubs/wordup` → `quizGraded`  | authenticated | –                         | `{ youthId, quizId, score, passed }` | –                  |
+| SignalR | `/hubs/waypoint` → `quizGraded`  | authenticated | –                         | `{ youthId, quizId, score, passed }` | –                  |
 
 _Generation:_ the ICD markdown can be produced/refreshed with the repo's **`public-icd`** skill (adds C4/sequence/class PlantUML), seeded from the OpenAPI output so it never drifts from the code.
 
@@ -396,7 +396,7 @@ Each milestone is independently shippable and lights up specific front-end scree
 4. **M3 — Progress & tracking (the spreadsheet-killer).** Lesson completion, quiz attempts, submissions+review, reflections, competencies, progression, badges, cohort progress board. Screens: `youth/quiz*|submit-work|reflection`, `mentor/youth-detail|competency|reviews|grade-submission`, `admin/cohort-progress`.
 5. **M4 — Engagement.** Sessions/calendar, attendance (+offline sync semantics), check-ins, flags, announcements, messages, notifications. Screens: `mentor/attendance|check-in|flags|calendar|messages`, `youth/schedule|messages|announcements|notifications`.
 6. **M5 — Real-time.** SignalR hub + `IChangePublisher`, wire events into M3/M4 handlers, client reconnection semantics.
-7. **M6 — Reports & Admin CLI.** Report queries + rendering; `wu` dotnet tool incl. Google-Sheets import. Screens: `admin/reports|report-*|data-import`.
+7. **M6 — Reports & Admin CLI.** Report queries + rendering; `way` dotnet tool incl. Google-Sheets import. Screens: `admin/reports|report-*|data-import`.
 8. **M7 — Hardening & ICD.** Authorization edge cases, rate limiting, audit, load/security pass, finalize `docs/icd/`, package the CLI, deployment runbook.
 
 ---
@@ -434,7 +434,7 @@ Each milestone is independently shippable and lights up specific front-end scree
 3. **NUnit vs house xUnit:** plan honors the requested **NUnit** — confirm you want to diverge from the house xUnit standard for this repo.
 4. **Test DB:** real SQL Express per fixture (house pattern, needs SQL Express on dev/CI) **vs** Testcontainers (portable CI, needs Docker) **vs** SQLite for integration (fast but not SQL-Server-faithful). _Recommendation: SQL Express per fixture locally, Testcontainers in CI._
 5. **System.CommandLine:** beta4 to match existing tools (recommended) **vs** GA 2.0.x (current API, manual DI).
-6. **Repo layout:** backend under `word-up/backend/` (recommended) **vs** a separate `word-up-api` repo.
+6. **Repo layout:** backend under `waypoint/backend/` (recommended) **vs** a separate `waypoint-api` repo.
 7. **MediatR:** pin 12.5.0 (recommended) **vs** adopt v13 Community edition (free for this nonprofit, latest features, RPL-1.5 copyleft).
 
 ---

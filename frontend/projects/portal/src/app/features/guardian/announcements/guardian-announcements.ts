@@ -1,14 +1,14 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { ApiError, GuardianAnnouncement, GuardianApi } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, GuardianAnnouncement, GuardianApi } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-GUARDIAN-002
 @Component({
-  selector: 'wu-guardian-announcements',
+  selector: 'w-guardian-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, DatePipe],
+  imports: [WShell, DatePipe],
   templateUrl: './guardian-announcements.html',
 })
 export class GuardianAnnouncements {

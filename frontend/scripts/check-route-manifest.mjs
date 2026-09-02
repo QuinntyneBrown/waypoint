@@ -70,9 +70,9 @@ function collectRoutes(array, parent = '') {
 }
 
 function collectNavigation(source) {
-  const initializer = variableInitializer(source, 'WU_NAV');
+  const initializer = variableInitializer(source, 'W_NAV');
   if (!ts.isObjectLiteralExpression(initializer))
-    throw new Error('WU_NAV must be an object literal');
+    throw new Error('W_NAV must be an object literal');
 
   const navigation = [];
   const errors = [];
@@ -147,7 +147,7 @@ for (const entry of navigation) {
 for (const [allowKey] of allowlist) {
   const [role, path] = allowKey.split(':');
   if (!navigation.some((entry) => entry.role === role && entry.path === path))
-    errors.push(`stale unresolved-navigation entry no longer exists in WU_NAV: ${allowKey}`);
+    errors.push(`stale unresolved-navigation entry no longer exists in W_NAV: ${allowKey}`);
   if (portalRoutes.has(path))
     errors.push(
       `stale unresolved-navigation entry now has a real route and must be removed: ${allowKey}`,

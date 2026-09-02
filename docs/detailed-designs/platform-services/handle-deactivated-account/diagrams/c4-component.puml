@@ -2,7 +2,7 @@
 !include <C4/C4_Component>
 LAYOUT_LEFT_RIGHT()
 title C4 level 3 — Handle a deactivated account — components
-System_Boundary(wordup, "Word Up software system") {
+System_Boundary(waypoint, "Waypoint software system") {
   Container_Boundary(frontend, "Frontend") {
     Container_Boundary(frontend_app, "Portal application") {
       Component(page, "AccountDeactivated", "Angular page component", "Owns feature interaction state and presentation")
@@ -10,17 +10,17 @@ System_Boundary(wordup, "Word Up software system") {
     }
   }
   Container_Boundary(backend, "Backend") {
-    Container_Boundary(api_app, "WordUp API application") {
+    Container_Boundary(api_app, "Waypoint API application") {
       Component(controller, "SupportController", "API controller", "Applies transport policy and maps requests")
     }
-    Container_Boundary(application, "WordUp Application") {
+    Container_Boundary(application, "Waypoint Application") {
       Component(request, "HandleDeactivatedAccountCommand", "MediatR request", "Represents the application use case")
       Component(handler, "HandleDeactivatedAccountCommandHandler", "MediatR handler", "Coordinates authorized feature behavior")
     }
-    Container_Boundary(domain, "WordUp Domain") {
+    Container_Boundary(domain, "Waypoint Domain") {
       Component(entity, "SupportRequest", "Domain type", "Holds feature state and invariants")
     }
-    Container_Boundary(infrastructure, "WordUp Infrastructure") {
+    Container_Boundary(infrastructure, "Waypoint Infrastructure") {
       Component(persistence, "AppDbContext", "EF Core adapter", "Queries and persists authoritative state")
     }
   }

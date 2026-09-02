@@ -1,7 +1,7 @@
 import { BrowserContext, Page } from '@playwright/test';
 
 /**
- * The authenticated app shell (`wu-shell`) that wraps every signed-in surface:
+ * The authenticated app shell (`w-shell`) that wraps every signed-in surface:
  * the sign-out control, the connectivity banner, and the mobile bottom nav.
  * A component object rather than a full page — compose it from page objects
  * (e.g. `YouthHomePage.shell`) or construct it directly.
@@ -15,12 +15,12 @@ export class AppShell {
 
   /** The offline indicator; gains `is-visible` while connectivity is down. */
   get offlineBanner() {
-    return this.page.locator('.wu-offline');
+    return this.page.locator('.w-offline');
   }
 
   /** Mobile-first bottom navigation, present on XS youth surfaces. */
   get bottomNav() {
-    return this.page.locator('.wu-botnav');
+    return this.page.locator('.w-botnav');
   }
 
   async signOut(): Promise<void> {

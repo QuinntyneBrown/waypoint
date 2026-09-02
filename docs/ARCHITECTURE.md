@@ -1,6 +1,6 @@
 # Architecture
 
-Word Up is an early full-stack application organized around a server-authoritative API, a requirements corpus, and a static interaction reference. This document describes the implemented layers and the intended client boundary. For delivery sequence and status, see the [implementation plan](implementation-plan.md); for rationale, see [DECISIONS.md](DECISIONS.md).
+Waypoint is an early full-stack application organized around a server-authoritative API, a requirements corpus, and a static interaction reference. This document describes the implemented layers and the intended client boundary. For delivery sequence and status, see the [implementation plan](implementation-plan.md); for rationale, see [DECISIONS.md](DECISIONS.md).
 
 ## System overview
 
@@ -40,19 +40,19 @@ The HTML mocks are standalone and do not call the API. The Angular `portal` and 
 
 The backend follows Clean Architecture. Domain and Application code remain independent of HTTP transport details. Infrastructure supplies concrete implementations for abstractions declared by Application, and Api composes the process.
 
-### Domain (`WordUp.Domain`)
+### Domain (`Waypoint.Domain`)
 
-Domain types are grouped by their owning requirements subsystem. Their folders and namespaces match—for example, authentication types live in `Authentication/` under `WordUp.Domain.Authentication`, while curriculum entities live in `CurriculumAuthoring/` under `WordUp.Domain.CurriculumAuthoring`.
+Domain types are grouped by their owning requirements subsystem. Their folders and namespaces match—for example, authentication types live in `Authentication/` under `Waypoint.Domain.Authentication`, while curriculum entities live in `CurriculumAuthoring/` under `Waypoint.Domain.CurriculumAuthoring`.
 
 Domain types contain persistent state and invariants that do not depend on ASP.NET Core or EF Core configuration.
 
-### Application (`WordUp.Application`)
+### Application (`Waypoint.Application`)
 
 Use cases are expressed as MediatR commands and queries with dedicated handlers and FluentValidation validators. The first folder and namespace tier follows the functional subsystems in `docs/specs`: Application Intake, Authentication, Consent and Safeguarding, Curriculum Authoring, Engagement, Guardian Portal, Learning Experience, Mentoring, Platform Services, Program Administration, Public Site, Reporting and Data, and Volunteer Portal. Subsystems with several use-case areas retain feature folders beneath that tier.
 
 Cross-cutting ports, pipeline behaviors, and application exceptions live under `Shared/`. The layer depends on shared abstractions such as `IAppDbContext`, `IClock`, `ICurrentUser`, `IEmailSender`, `IJwtTokenIssuer`, `IPasswordHasher`, `ISecureTokens`, and `IAuditLogger`.
 
-### Infrastructure (`WordUp.Infrastructure`)
+### Infrastructure (`Waypoint.Infrastructure`)
 
 Infrastructure implements EF Core persistence, BCrypt password hashing, JWT issuance, secure opaque tokens, current-user access, audit logging, AES-GCM sensitive-field and uploaded-file protection, configurable SMTP through an encrypted durable email queue, leased email/scheduled-notification workers, retained/dead-envelope cleanup, post-commit best-effort SignalR dispatch, and the system clock. After schema migration, a key-aware lifecycle pass rewrites legacy plaintext sensitive columns before the API serves traffic and rejects ciphertext that cannot be authenticated. Atomic MediatR requests commit business state, audit rows, and email envelopes together; realtime callbacks are discarded on rollback. SQL Server transaction-owned per-user locks serialize privacy correction/removal with linked notification/email production and delivery, and conditional ownership updates prevent concurrent verified-record claims from overwriting one another. Testing replaces email transport with an in-process capture; Production validates HTTPS application URLs, encryption/signing keys, and SMTP configuration before serving.
 
@@ -63,7 +63,7 @@ Infrastructure implements EF Core persistence, BCrypt password hashing, JWT issu
 
 The in-memory provider is convenient but non-durable and is not a production persistence strategy.
 
-### Api (`WordUp.Api`)
+### Api (`Waypoint.Api`)
 
 Thin controllers under `Controllers/<Subsystem>/` translate HTTP requests into MediatR messages. That tree contains controllers only; transport-specific request records live in the matching `Contracts/<Subsystem>/` namespace. `Program.cs` composes the layers and configures:
 
@@ -96,25 +96,25 @@ The system models youth applications, guardian information, consent, safeguardin
 
 ## Frontend and design reference
 
-`frontend/` is an Angular 21 workspace with two applications — `portal` (the authenticated SPA for all signed-in roles) and `public-site` (SSR/prerendered marketing + anonymous application intake) — over shared `wu-ui` (design system), `wu-api` (typed API client), and `wu-auth` (session, rotating-refresh, guards) libraries. Both apps consume the API through a same-origin dev-server proxy and preserve the server-authoritative permission and safeguarding model — guards and hidden nav are presentational only. The portal now implements youth, administrator, mentor, guardian, and volunteer routes; Testing-only HTTP fixtures provision each role for browser acceptance without exposing a production role-granting path. Acceptance coverage uses the real API and both apps, with specs traced to L2 requirements; see [DECISIONS.md](DECISIONS.md) #9 and the historical [frontend implementation plan](frontend-implementation-plan.md).
+`frontend/` is an Angular 21 workspace with two applications — `portal` (the authenticated SPA for all signed-in roles) and `public-site` (SSR/prerendered marketing + anonymous application intake) — over shared `w-ui` (design system), `w-api` (typed API client), and `w-auth` (session, rotating-refresh, guards) libraries. Both apps consume the API through a same-origin dev-server proxy and preserve the server-authoritative permission and safeguarding model — guards and hidden nav are presentational only. The portal now implements youth, administrator, mentor, guardian, and volunteer routes; Testing-only HTTP fixtures provision each role for browser acceptance without exposing a production role-granting path. Acceptance coverage uses the real API and both apps, with specs traced to L2 requirements; see [DECISIONS.md](DECISIONS.md) #9 and the historical [frontend implementation plan](frontend-implementation-plan.md).
 
 The two apps have an explicit navigation boundary. Same-origin production defaults place the public
 site at `/` and the portal at `/portal`; deployments on separate origins replace each app's
-`runtime-config.js` and set `window.__WORD_UP_CONFIG__.portalBaseUrl` or `publicSiteBaseUrl`.
+`runtime-config.js` and set `window.__WAYPOINT_CONFIG__.portalBaseUrl` or `publicSiteBaseUrl`.
 Local development resolves the sibling apps on ports 4200 and 4201. Dynamic public SSR routes can
-call a private API origin through `WORD_UP_API_BASE_URL`, while browser API requests remain
+call a private API origin through `WAYPOINT_API_BASE_URL`, while browser API requests remain
 same-origin.
 
 `docs/mocks/` contains the current responsive interaction reference: a product map, a living style guide, shared assets, templates, and role-specific screens. The mocks are intentionally framework-free and run directly from the filesystem. They contain fictional data and must not be mistaken for the production application.
 
 ## Testing strategy
 
-- **`WordUp.UnitTests`** — validators and isolated business rules
-- **`WordUp.IntegrationTests`** — full HTTP behaviour through `WebApplicationFactory` and a disposable SQL Server database
+- **`Waypoint.UnitTests`** — validators and isolated business rules
+- **`Waypoint.IntegrationTests`** — full HTTP behaviour through `WebApplicationFactory` and a disposable SQL Server database
 - **Requirement traceability** — `scripts/check-traceability.mjs --strict` validates references and requires coverage for all in-scope L2 requirements
 - **Frontend quality** — production builds, unit tests, route-manifest validation, Playwright E2E, keyboard-dialog checks, XS–XL responsive checks, and axe WCAG checks
 - **Performance** — bounded payload integration tests, a throttled primary-Youth-screen interaction budget, and a SQL-backed fixed-arrival-rate gate with 50 distinct cohort-scoped users at 20 RPS
 - **Persistence compatibility** — a fresh-database migration smoke plus EF's pending-model-change gate before the full backend suite
 - **GitHub Actions** — restores, builds, tests, and runs backend, frontend, traceability, accessibility, and performance gates
 
-Integration tests default to LocalDB on Windows. CI and other environments override the server and authentication fragment through `WORDUP_TEST_SQLSERVER` and `WORDUP_TEST_SQLAUTH`.
+Integration tests default to LocalDB on Windows. CI and other environments override the server and authentication fragment through `WAYPOINT_TEST_SQLSERVER` and `WAYPOINT_TEST_SQLAUTH`.

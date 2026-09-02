@@ -1,8 +1,8 @@
-# Word Up Platform — PRD
+# Waypoint Platform — PRD
 
 ## Purpose
 
-Word Up is a youth-development platform combining learning, mentorship, cohort participation, and program operations. It replaces fragmented spreadsheets and messaging with one system for tracking each learner’s journey.
+Waypoint is a youth-development platform combining learning, mentorship, cohort participation, and program operations. It replaces fragmented spreadsheets and messaging with one system for tracking each learner’s journey.
 
 ## Users
 

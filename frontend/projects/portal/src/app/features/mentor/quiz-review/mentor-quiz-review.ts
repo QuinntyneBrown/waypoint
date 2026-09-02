@@ -1,27 +1,27 @@
 import { DOCUMENT, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, MentorApi, QuizAssessmentReview } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, MentorApi, QuizAssessmentReview } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-MENTOR-004, L2-LEARN-005
 @Component({
-  selector: 'wu-mentor-quiz-review',
+  selector: 'w-mentor-quiz-review',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, DatePipe],
+  imports: [WShell, RouterLink, DatePipe],
   templateUrl: './mentor-quiz-review.html',
   styles: `
     .assessment-layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.65fr);
-      gap: var(--wu-s6);
+      gap: var(--w-s6);
       align-items: start;
     }
     .score-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
     }
     .score-value {
       font-size: 2rem;
@@ -33,15 +33,15 @@ import { WuShell } from '@wu/ui';
       padding: 0;
       margin: 0;
       display: grid;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
     }
     .answer-option {
       display: flex;
       align-items: flex-start;
-      gap: var(--wu-s3);
-      padding: var(--wu-s3);
-      border: 1px solid var(--wu-border);
-      border-radius: var(--wu-radius-sm);
+      gap: var(--w-s3);
+      padding: var(--w-s3);
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-radius-sm);
     }
     .answer-option--selected {
       border-width: 2px;

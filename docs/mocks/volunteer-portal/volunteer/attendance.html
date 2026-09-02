@@ -3,23 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Take attendance · Word Up</title>
+  <title>Take attendance · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/wordup.css">
-  <script defer src="../../assets/js/wordup.js"></script>
+  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="volunteer" data-active="attendance">
-  <main class="wu-main">
-    <div class="wu-container wu-container--narrow wu-page">
+  <main class="w-main">
+    <div class="w-container w-container--narrow w-page">
 
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">Rexdale Fall '25 · Today 4:00 PM</div>
-          <h1 class="wu-page__title">Take attendance</h1>
-          <p class="wu-page__sub">Tap present or absent for each youth. Saves on this device, even offline.</p>
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">Rexdale Fall '25 · Today 4:00 PM</div>
+          <h1 class="w-page__title">Take attendance</h1>
+          <p class="w-page__sub">Tap present or absent for each youth. Saves on this device, even offline.</p>
         </div>
-        <div class="wu-page__actions">
-          <button class="wu-btn wu-btn--secondary" data-toggle-offline><svg class="wu-icon"><use href="#i-wifi-off"></use></svg>Simulate offline</button>
+        <div class="w-page__actions">
+          <button class="w-btn w-btn--secondary" data-toggle-offline><svg class="w-icon"><use href="#i-wifi-off"></use></svg>Simulate offline</button>
         </div>
       </div>
 
@@ -27,109 +27,109 @@
       <div data-when-state="default">
 
         <!-- Offline note -->
-        <div class="wu-alert wu-alert--info wu-mb-4">
-          <svg class="wu-alert__icon wu-icon"><use href="#i-wifi-off"></use></svg>
+        <div class="w-alert w-alert--info w-mb-4">
+          <svg class="w-alert__icon w-icon"><use href="#i-wifi-off"></use></svg>
           <div>
-            <div class="wu-alert__title">Works offline</div>
+            <div class="w-alert__title">Works offline</div>
             No signal at the Hub? No problem — your marks are saved here and sync when you reconnect.
           </div>
         </div>
 
         <!-- Session summary -->
-        <div class="wu-card wu-mb-4">
-          <div class="wu-card__body">
-            <div class="wu-cluster wu-cluster--between">
+        <div class="w-card w-mb-4">
+          <div class="w-card__body">
+            <div class="w-cluster w-cluster--between">
               <div>
-                <div class="wu-person__name">Servant Leadership — “Leading Like Jesus”</div>
-                <div class="wu-person__meta"><svg class="wu-icon"><use href="#i-map-pin"></use></svg> Rexdale Community Hub · Room 2 · with Marcus Bello</div>
+                <div class="w-person__name">Servant Leadership — “Leading Like Jesus”</div>
+                <div class="w-person__meta"><svg class="w-icon"><use href="#i-map-pin"></use></svg> Rexdale Community Hub · Room 2 · with Marcus Bello</div>
               </div>
-              <span class="wu-badge wu-badge--lime">Thu Jul 17</span>
+              <span class="w-badge w-badge--lime">Thu Jul 17</span>
             </div>
           </div>
         </div>
 
         <!-- Quick mark -->
-        <div class="wu-cluster wu-justify-between wu-mb-4">
-          <span class="wu-muted">Roster · 8 youth</span>
-          <button class="wu-btn wu-btn--subtle wu-btn--sm" data-toast="Marked everyone present" data-toast-type="info"><svg class="wu-icon"><use href="#i-check-circle"></use></svg>All present</button>
+        <div class="w-cluster w-justify-between w-mb-4">
+          <span class="w-muted">Roster · 8 youth</span>
+          <button class="w-btn w-btn--subtle w-btn--sm" data-toast="Marked everyone present" data-toast-type="info"><svg class="w-icon"><use href="#i-check-circle"></use></svg>All present</button>
         </div>
 
         <!-- Roster: present/absent toggles -->
-        <div class="wu-card">
-          <div class="wu-card__body">
-            <div class="wu-table-wrap">
-              <table class="wu-table wu-table--cards">
+        <div class="w-card">
+          <div class="w-card__body">
+            <div class="w-table-wrap">
+              <table class="w-table w-table--cards">
                 <thead><tr><th>Youth</th><th>Attendance</th></tr></thead>
                 <tbody>
                   <tr>
-                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
+                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
                     <td data-label="Attendance">
-                      <div class="wu-segment" role="radiogroup" aria-label="Attendance for Jayden Alcantara">
-                        <button class="wu-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="wu-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Jayden Alcantara">
+                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
+                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
                     <td data-label="Attendance">
-                      <div class="wu-segment" role="radiogroup" aria-label="Attendance for Amara Okafor">
-                        <button class="wu-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="wu-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Amara Okafor">
+                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
+                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
                     <td data-label="Attendance">
-                      <div class="wu-segment" role="radiogroup" aria-label="Attendance for Priya Sharma">
-                        <button class="wu-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="wu-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Priya Sharma">
+                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
+                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
                     <td data-label="Attendance">
-                      <div class="wu-segment" role="radiogroup" aria-label="Attendance for Malik Johnson">
-                        <button class="wu-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="wu-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Malik Johnson">
+                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Elijah Brown"></span>Elijah Brown</div></td>
+                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Elijah Brown"></span>Elijah Brown</div></td>
                     <td data-label="Attendance">
-                      <div class="wu-segment" role="radiogroup" aria-label="Attendance for Elijah Brown">
-                        <button class="wu-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="wu-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Elijah Brown">
+                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Fatima Ali"></span>Fatima Ali</div></td>
+                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Fatima Ali"></span>Fatima Ali</div></td>
                     <td data-label="Attendance">
-                      <div class="wu-segment" role="radiogroup" aria-label="Attendance for Fatima Ali">
-                        <button class="wu-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="wu-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Fatima Ali">
+                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Devon Grant"></span>Devon Grant <span class="wu-badge wu-badge--error wu-badge--dot">At risk</span></div></td>
+                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span>Devon Grant <span class="w-badge w-badge--error w-badge--dot">At risk</span></div></td>
                     <td data-label="Attendance">
-                      <div class="wu-segment" role="radiogroup" aria-label="Attendance for Devon Grant">
-                        <button class="wu-segment__item" role="radio" aria-checked="false">Present</button>
-                        <button class="wu-segment__item is-active" role="radio" aria-checked="true">Absent</button>
+                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Devon Grant">
+                        <button class="w-segment__item" role="radio" aria-checked="false">Present</button>
+                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="wu-table__cellmain"><span class="wu-avatar wu-avatar--sm" data-name="Zara Mensah"></span>Zara Mensah</div></td>
+                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Zara Mensah"></span>Zara Mensah</div></td>
                     <td data-label="Attendance">
-                      <div class="wu-segment" role="radiogroup" aria-label="Attendance for Zara Mensah">
-                        <button class="wu-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="wu-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Zara Mensah">
+                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
@@ -140,11 +140,11 @@
         </div>
 
         <!-- Sticky save bar -->
-        <div class="wu-card wu-mt-4" style="position:sticky;bottom:12px">
-          <div class="wu-card__body">
-            <div class="wu-cluster wu-justify-between">
-              <span class="wu-muted"><strong>7 present</strong> · 1 absent</span>
-              <a class="wu-btn wu-btn--primary" href="home.html" data-toast="Attendance saved" data-toast-type="success" data-toast-title="Rexdale — Thu 4pm"><svg class="wu-icon"><use href="#i-check"></use></svg>Save attendance</a>
+        <div class="w-card w-mt-4" style="position:sticky;bottom:12px">
+          <div class="w-card__body">
+            <div class="w-cluster w-justify-between">
+              <span class="w-muted"><strong>7 present</strong> · 1 absent</span>
+              <a class="w-btn w-btn--primary" href="home.html" data-toast="Attendance saved" data-toast-type="success" data-toast-title="Rexdale — Thu 4pm"><svg class="w-icon"><use href="#i-check"></use></svg>Save attendance</a>
             </div>
           </div>
         </div>
@@ -152,27 +152,27 @@
       </div>
 
       <!-- ===== loading ===== -->
-      <div data-when-state="loading" class="wu-hide">
-        <div class="wu-card wu-mb-4"><div class="wu-card__body">
-          <span class="wu-skeleton wu-skeleton--title"></span>
-          <span class="wu-skeleton wu-skeleton--text"></span>
+      <div data-when-state="loading" class="w-hide">
+        <div class="w-card w-mb-4"><div class="w-card__body">
+          <span class="w-skeleton w-skeleton--title"></span>
+          <span class="w-skeleton w-skeleton--text"></span>
         </div></div>
-        <div class="wu-card"><div class="wu-card__body">
-          <span class="wu-skeleton wu-skeleton--text"></span>
-          <span class="wu-skeleton wu-skeleton--text" style="width:85%"></span>
-          <span class="wu-skeleton wu-skeleton--text" style="width:70%"></span>
-          <div class="wu-mt-4"></div>
-          <span class="wu-skeleton wu-skeleton--block"></span>
+        <div class="w-card"><div class="w-card__body">
+          <span class="w-skeleton w-skeleton--text"></span>
+          <span class="w-skeleton w-skeleton--text" style="width:85%"></span>
+          <span class="w-skeleton w-skeleton--text" style="width:70%"></span>
+          <div class="w-mt-4"></div>
+          <span class="w-skeleton w-skeleton--block"></span>
         </div></div>
       </div>
 
       <!-- ===== empty ===== -->
-      <div data-when-state="empty" class="wu-hide">
-        <div class="wu-card"><div class="wu-empty">
-          <div class="wu-empty__icon"><svg class="wu-icon"><use href="#i-calendar"></use></svg></div>
-          <h3 class="wu-empty__title">No session assigned today</h3>
-          <p class="wu-empty__text">You don’t have a session to take attendance for right now. Check your schedule for upcoming assignments.</p>
-          <a class="wu-btn wu-btn--primary" href="schedule.html"><svg class="wu-icon"><use href="#i-calendar"></use></svg>View schedule</a>
+      <div data-when-state="empty" class="w-hide">
+        <div class="w-card"><div class="w-empty">
+          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-calendar"></use></svg></div>
+          <h3 class="w-empty__title">No session assigned today</h3>
+          <p class="w-empty__text">You don’t have a session to take attendance for right now. Check your schedule for upcoming assignments.</p>
+          <a class="w-btn w-btn--primary" href="schedule.html"><svg class="w-icon"><use href="#i-calendar"></use></svg>View schedule</a>
         </div></div>
       </div>
 

@@ -1,11 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, PublicContentView, PublicSiteApi } from '@wu/api';
+import { ApiError, PublicContentView, PublicSiteApi } from '@w/api';
 
 // Traces to: L2-PUB-002
 @Component({
-  selector: 'wu-about',
+  selector: 'w-about',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DatePipe, RouterLink],
   templateUrl: './about.html',

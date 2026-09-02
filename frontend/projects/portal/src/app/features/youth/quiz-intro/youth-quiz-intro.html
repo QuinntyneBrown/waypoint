@@ -1,54 +1,54 @@
-<wu-shell
+<w-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-container--narrow wu-page">
-    <a class="wu-btn wu-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+  <div class="w-container w-container--narrow w-page">
+    <a class="w-btn w-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
 
     @if (intro(); as view) {
-      <div class="wu-page__head">
-        <div class="wu-page__titles">
-          <div class="wu-eyebrow">Knowledge check</div>
-          <h1 class="wu-page__title">{{ view.title }}</h1>
-          <p class="wu-page__sub">
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">Knowledge check</div>
+          <h1 class="w-page__title">{{ view.title }}</h1>
+          <p class="w-page__sub">
             Attempt {{ view.currentAttemptNumber }} of {{ view.attemptsAllowed }}
           </p>
         </div>
       </div>
 
       <div class="quiz-facts">
-        <div class="wu-card">
-          <div class="wu-card__body">
+        <div class="w-card">
+          <div class="w-card__body">
             <strong>{{ view.questionCount }} questions</strong>
           </div>
         </div>
-        <div class="wu-card">
-          <div class="wu-card__body">
+        <div class="w-card">
+          <div class="w-card__body">
             <strong>{{ view.estimatedMinutes }} minutes</strong>
           </div>
         </div>
-        <div class="wu-card">
-          <div class="wu-card__body">
+        <div class="w-card">
+          <div class="w-card__body">
             <strong>{{ view.passMark }}% pass mark</strong>
           </div>
         </div>
-        <div class="wu-card">
-          <div class="wu-card__body">
+        <div class="w-card">
+          <div class="w-card__body">
             <strong>{{ view.attemptsRemaining }} attempts remaining</strong>
           </div>
         </div>
       </div>
 
       @if (view.badgeReward; as badge) {
-        <section class="wu-card wu-card--greige">
-          <div class="wu-card__body wu-stack">
-            <div class="wu-eyebrow">Badge reward</div>
-            <h2 class="wu-card__title">{{ badge.name }}</h2>
+        <section class="w-card w-card--greige">
+          <div class="w-card__body w-stack">
+            <div class="w-eyebrow">Badge reward</div>
+            <h2 class="w-card__title">{{ badge.name }}</h2>
             @if (badge.description) {
               <p>{{ badge.description }}</p>
             }
@@ -57,14 +57,14 @@
       }
 
       @if (view.attemptsExhausted) {
-        <p class="wu-alert wu-alert--warning">You have used all attempts for this quiz.</p>
+        <p class="w-alert w-alert--warning">You have used all attempts for this quiz.</p>
       } @else {
-        <button class="wu-btn wu-btn--primary wu-btn--block" type="button" (click)="begin()">
+        <button class="w-btn w-btn--primary w-btn--block" type="button" (click)="begin()">
           {{ view.hasInProgressAttempt ? 'Resume attempt' : 'Start attempt' }}
         </button>
       }
     } @else {
-      <p class="wu-muted">Loading quiz…</p>
+      <p class="w-muted">Loading quiz…</p>
     }
   </div>
-</wu-shell>
+</w-shell>

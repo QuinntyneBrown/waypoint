@@ -1,22 +1,22 @@
-<wu-shell
+<w-shell
   role="admin"
   active="import"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">People</div>
-        <h1 class="wu-page__title">Import roster</h1>
-        <p class="wu-page__sub">
-          Bring an existing roster into Word Up in three reviewed steps: upload, map, and import.
+  <div class="w-container w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">People</div>
+        <h1 class="w-page__title">Import roster</h1>
+        <p class="w-page__sub">
+          Bring an existing roster into Waypoint in three reviewed steps: upload, map, and import.
         </p>
       </div>
     </div>
 
-    <div class="wu-alert wu-alert--info">
-      <wu-icon name="info" />
+    <div class="w-alert w-alert--info">
+      <w-icon name="info" />
       <div>
         Export a Google Sheet as CSV first. The source sheet stays untouched, and only rows marked
         Ready will create youth accounts.
@@ -24,34 +24,34 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <div class="wu-alert wu-alert--error" role="alert">
-        <wu-icon name="alert-triangle" />
+      <div class="w-alert w-alert--error" role="alert">
+        <w-icon name="alert-triangle" />
         <div>{{ error }}</div>
       </div>
     }
 
-    <section class="wu-card" aria-labelledby="import-upload-heading">
-      <div class="wu-card__header">
-        <h2 class="wu-card__title" id="import-upload-heading">1 · Upload CSV</h2>
+    <section class="w-card" aria-labelledby="import-upload-heading">
+      <div class="w-card__header">
+        <h2 class="w-card__title" id="import-upload-heading">1 · Upload CSV</h2>
       </div>
-      <div class="wu-card__body wu-stack">
-        <div class="wu-field">
-          <label class="wu-label" for="roster-file">Roster CSV</label>
+      <div class="w-card__body w-stack">
+        <div class="w-field">
+          <label class="w-label" for="roster-file">Roster CSV</label>
           <input
             #fileInput
-            class="wu-input"
+            class="w-input"
             id="roster-file"
             type="file"
             accept=".csv,text/csv,application/vnd.ms-excel"
             (change)="chooseFile($event)"
           />
-          <p class="wu-hint">CSV only, up to 2 MB. The file is validated before it is sent.</p>
+          <p class="w-hint">CSV only, up to 2 MB. The file is validated before it is sent.</p>
         </div>
         @if (fileName(); as name) {
           <div class="import-file" data-testid="import-file-summary">
             <div>
               <strong>{{ name }}</strong>
-              <div class="wu-muted">
+              <div class="w-muted">
                 {{ rowCount() }} row{{ rowCount() === 1 ? '' : 's' }} ·
                 {{ columns().length }} column{{ columns().length === 1 ? '' : 's' }} ·
                 {{
@@ -59,7 +59,7 @@
                 }}
               </div>
             </div>
-            <button class="wu-btn wu-btn--secondary" type="button" (click)="removeFile(fileInput)">
+            <button class="w-btn w-btn--secondary" type="button" (click)="removeFile(fileInput)">
               Remove file
             </button>
           </div>
@@ -68,20 +68,20 @@
     </section>
 
     @if (columns().length > 0) {
-      <section class="wu-card" aria-labelledby="import-map-heading">
-        <div class="wu-card__header">
+      <section class="w-card" aria-labelledby="import-map-heading">
+        <div class="w-card__header">
           <div>
-            <h2 class="wu-card__title" id="import-map-heading">2 · Map columns</h2>
-            <p class="wu-muted">CSV column → Word Up field. Leave unneeded columns as Skip.</p>
+            <h2 class="w-card__title" id="import-map-heading">2 · Map columns</h2>
+            <p class="w-muted">CSV column → Waypoint field. Leave unneeded columns as Skip.</p>
           </div>
         </div>
-        <div class="wu-table-wrap">
+        <div class="w-table-wrap">
           <table class="import-columns">
             <thead>
               <tr>
                 <th>CSV column</th>
                 <th>Sample value</th>
-                <th>Word Up field</th>
+                <th>Waypoint field</th>
               </tr>
             </thead>
             <tbody>
@@ -90,10 +90,10 @@
                   <td data-label="CSV column">
                     <strong>{{ column.header }}</strong>
                   </td>
-                  <td data-label="Sample value" class="wu-muted">{{ column.sample }}</td>
-                  <td data-label="Word Up field">
+                  <td data-label="Sample value" class="w-muted">{{ column.sample }}</td>
+                  <td data-label="Waypoint field">
                     <select
-                      class="wu-select"
+                      class="w-select"
                       [attr.aria-label]="'Map ' + column.header"
                       [ngModel]="column.field"
                       (ngModelChange)="updateMapping(column.header, $event)"
@@ -108,12 +108,12 @@
             </tbody>
           </table>
         </div>
-        <div class="wu-card__footer wu-stack">
+        <div class="w-card__footer w-stack">
           @if (mappingError(); as mappingMessage) {
-            <p class="wu-error">{{ mappingMessage }}</p>
+            <p class="w-error">{{ mappingMessage }}</p>
           }
           <button
-            class="wu-btn wu-btn--primary"
+            class="w-btn w-btn--primary"
             type="button"
             [disabled]="mappingError() !== null || loading()"
             (click)="previewRoster()"
@@ -125,39 +125,39 @@
     }
 
     @if (preview(); as roster) {
-      <section class="wu-card" aria-labelledby="import-preview-heading">
-        <div class="wu-card__header">
+      <section class="w-card" aria-labelledby="import-preview-heading">
+        <div class="w-card__header">
           <div>
-            <h2 class="wu-card__title" id="import-preview-heading">3 · Preview</h2>
-            <p class="wu-muted">Review every row before confirming the import.</p>
+            <h2 class="w-card__title" id="import-preview-heading">3 · Preview</h2>
+            <p class="w-muted">Review every row before confirming the import.</p>
           </div>
         </div>
-        <div class="wu-card__body wu-stack">
+        <div class="w-card__body w-stack">
           <div class="import-counts" data-testid="import-preview-summary">
-            <div class="wu-card import-count">
-              <div class="wu-card__body">
+            <div class="w-card import-count">
+              <div class="w-card__body">
                 <strong>{{ roster.ready }}</strong> ready
               </div>
             </div>
-            <div class="wu-card import-count">
-              <div class="wu-card__body">
+            <div class="w-card import-count">
+              <div class="w-card__body">
                 <strong>{{ roster.needsConsent }}</strong> needs consent
               </div>
             </div>
-            <div class="wu-card import-count">
-              <div class="wu-card__body">
+            <div class="w-card import-count">
+              <div class="w-card__body">
                 <strong>{{ roster.duplicates }}</strong> duplicate{{
                   roster.duplicates === 1 ? '' : 's'
                 }}
               </div>
             </div>
-            <div class="wu-card import-count">
-              <div class="wu-card__body">
+            <div class="w-card import-count">
+              <div class="w-card__body">
                 <strong>{{ roster.invalid }}</strong> invalid
               </div>
             </div>
           </div>
-          <div class="wu-table-wrap">
+          <div class="w-table-wrap">
             <table class="import-preview">
               <thead>
                 <tr>
@@ -185,7 +185,7 @@
                         {{ statusLabel(row.status) }}
                       </span>
                       @if (row.message) {
-                        <div class="wu-muted">{{ row.message }}</div>
+                        <div class="w-muted">{{ row.message }}</div>
                       }
                     </td>
                   </tr>
@@ -194,9 +194,9 @@
             </table>
           </div>
         </div>
-        <div class="wu-card__footer import-actions">
+        <div class="w-card__footer import-actions">
           <button
-            class="wu-btn wu-btn--primary"
+            class="w-btn w-btn--primary"
             type="button"
             [disabled]="roster.ready === 0 || loading()"
             (click)="requestConfirmation()"
@@ -208,10 +208,10 @@
     }
 
     @if (result(); as imported) {
-      <section class="wu-card" data-testid="import-result" aria-labelledby="import-result-heading">
-        <div class="wu-card__body wu-stack">
+      <section class="w-card" data-testid="import-result" aria-labelledby="import-result-heading">
+        <div class="w-card__body w-stack">
           <div>
-            <div class="wu-eyebrow">Roster saved</div>
+            <div class="w-eyebrow">Roster saved</div>
             <h2 id="import-result-heading">Import complete</h2>
           </div>
           <div class="import-counts">
@@ -228,7 +228,7 @@
               <strong>{{ imported.invalid }}</strong> invalid
             </div>
           </div>
-          <a class="wu-btn wu-btn--secondary" href="/admin/people">View people</a>
+          <a class="w-btn w-btn--secondary" href="/admin/people">View people</a>
         </div>
       </section>
     }
@@ -237,27 +237,27 @@
   @if (confirming() && preview(); as roster) {
     <div class="import-dialog-backdrop" (click)="cancelConfirmation()">
       <div
-        class="wu-card import-dialog"
+        class="w-card import-dialog"
         wuAccessibleDialog
         aria-labelledby="confirm-import-title"
         (click)="$event.stopPropagation()"
         (wuDialogEscape)="cancelConfirmation()"
       >
-        <div class="wu-card__header">
-          <h2 class="wu-card__title" id="confirm-import-title">Confirm roster import</h2>
+        <div class="w-card__header">
+          <h2 class="w-card__title" id="confirm-import-title">Confirm roster import</h2>
         </div>
-        <div class="wu-card__body">
+        <div class="w-card__body">
           <p>
             Only {{ roster.ready }} ready {{ roster.ready === 1 ? 'row' : 'rows' }} will create an
             account. Duplicates, missing-consent rows, and invalid rows will remain unchanged.
           </p>
         </div>
-        <div class="wu-card__footer wu-cluster">
-          <button class="wu-btn wu-btn--ghost" type="button" (click)="cancelConfirmation()">
+        <div class="w-card__footer w-cluster">
+          <button class="w-btn w-btn--ghost" type="button" (click)="cancelConfirmation()">
             Cancel
           </button>
           <button
-            class="wu-btn wu-btn--primary"
+            class="w-btn w-btn--primary"
             type="button"
             wuDialogInitialFocus
             [disabled]="loading()"
@@ -269,4 +269,4 @@
       </div>
     </div>
   }
-</wu-shell>
+</w-shell>

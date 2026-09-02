@@ -15,20 +15,20 @@ skinparam package {
   FontColor #101828
   BackgroundColor #F9FAFB
 }
-actor "Word Up participant" as actor
+actor "Waypoint participant" as actor
 box "Frontend — Public Site application" #E0F2FE
   participant "DisplayPreferencesService" as page
   participant "DisplayPreferencesApi" as client
 end box
-box "Backend — WordUp API application" #D1FADF
+box "Backend — Waypoint API application" #D1FADF
   participant "NonFunctionalController" as controller
 end box
-box "Backend — WordUp Application and Domain" #ECFDF3
+box "Backend — Waypoint Application and Domain" #ECFDF3
   participant "MeetAccessibilityStandardCommandHandler" as handler
   participant "MeetAccessibilityStandardState" as entity
 end box
-box "Backend — WordUp Infrastructure" #FFF4E5
-  database "Word Up database" as db
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  database "Waypoint database" as db
 end box
 actor -> page : Start meet the accessibility standard
 page -> client : Build typed request

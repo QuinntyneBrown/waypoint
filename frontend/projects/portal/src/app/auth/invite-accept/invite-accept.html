@@ -1,18 +1,18 @@
-<div class="wu-authpage">
-  <div class="wu-authcard">
-    <div class="wu-authcard__brand">
-      <span class="wu-brand__mark" style="width: 38px; height: 38px; font-size: 1.1rem">W</span>
-      <span style="font-family: var(--wu-font-head); font-weight: 700; font-size: 1.2rem"
-        >Word Up</span
+<div class="w-authpage">
+  <div class="w-authcard">
+    <div class="w-authcard__brand">
+      <span class="w-brand__mark" style="width: 38px; height: 38px; font-size: 1.1rem">W</span>
+      <span style="font-family: var(--w-font-head); font-weight: 700; font-size: 1.2rem"
+        >Waypoint</span
       >
     </div>
 
     @if (loading()) {
-      <p class="wu-muted wu-text-c" role="status">Checking your invitation…</p>
+      <p class="w-muted w-text-c" role="status">Checking your invitation…</p>
     } @else if (context(); as invite) {
       @if (invite.state === 'valid') {
-        <h1 style="font-size: 1.5rem; text-align: center">Join Word Up as {{ invite.role }}</h1>
-        <p class="wu-muted wu-text-c wu-mb-4">
+        <h1 style="font-size: 1.5rem; text-align: center">Join Waypoint as {{ invite.role }}</h1>
+        <p class="w-muted w-text-c w-mb-4">
           Invitation for {{ invite.maskedEmail }}
           @if (invite.cohortName) {
             · {{ invite.cohortName }}
@@ -22,100 +22,100 @@
           }
         </p>
         @if (errorMessage(); as error) {
-          <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+          <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
         }
         <form [formGroup]="form" (ngSubmit)="accept()" novalidate>
           <div
-            class="wu-field"
+            class="w-field"
             [class.is-error]="
               form.controls.displayName.touched && form.controls.displayName.invalid
             "
           >
-            <label class="wu-label" for="invite-name">Display name</label>
+            <label class="w-label" for="invite-name">Display name</label>
             <input
-              class="wu-input"
+              class="w-input"
               id="invite-name"
               autocomplete="name"
               formControlName="displayName"
             />
             @if (form.controls.displayName.touched && form.controls.displayName.invalid) {
-              <p class="wu-error-text">Enter the name you want people to see.</p>
+              <p class="w-error-text">Enter the name you want people to see.</p>
             }
           </div>
           <div
-            class="wu-field"
+            class="w-field"
             [class.is-error]="form.controls.password.touched && form.controls.password.invalid"
           >
-            <label class="wu-label" for="invite-password">Create password</label>
+            <label class="w-label" for="invite-password">Create password</label>
             <div style="position: relative">
               <input
-                class="wu-input"
+                class="w-input"
                 id="invite-password"
                 [type]="showPassword() ? 'text' : 'password'"
                 autocomplete="new-password"
                 formControlName="password"
               />
               <button
-                class="wu-iconbtn"
+                class="w-iconbtn"
                 type="button"
                 style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%)"
                 [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
                 [attr.aria-pressed]="showPassword()"
                 (click)="togglePassword()"
               >
-                <wu-icon [name]="showPassword() ? 'eye-off' : 'eye'" />
+                <w-icon [name]="showPassword() ? 'eye-off' : 'eye'" />
               </button>
             </div>
             @if (form.controls.password.touched && form.controls.password.invalid) {
-              <p class="wu-error-text">Use at least 8 characters with a letter and a number.</p>
+              <p class="w-error-text">Use at least 8 characters with a letter and a number.</p>
             }
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="invite-confirm">Confirm password</label>
+          <div class="w-field">
+            <label class="w-label" for="invite-confirm">Confirm password</label>
             <input
-              class="wu-input"
+              class="w-input"
               id="invite-confirm"
               [type]="showPassword() ? 'text' : 'password'"
               autocomplete="new-password"
               formControlName="confirmPassword"
             />
           </div>
-          <label class="wu-check wu-mt-4">
+          <label class="w-check w-mt-4">
             <input type="checkbox" formControlName="agreeToGuidelines" />
-            <span class="wu-check__box"><wu-icon name="check" /></span>
-            <span>I agree to follow the Word Up community guidelines.</span>
+            <span class="w-check__box"><w-icon name="check" /></span>
+            <span>I agree to follow the Waypoint community guidelines.</span>
           </label>
           @if (form.controls.agreeToGuidelines.touched && form.controls.agreeToGuidelines.invalid) {
-            <p class="wu-error-text">Agreement is required to join.</p>
+            <p class="w-error-text">Agreement is required to join.</p>
           }
           <button
-            class="wu-btn wu-btn--primary wu-btn--block wu-btn--lg wu-mt-5"
+            class="w-btn w-btn--primary w-btn--block w-btn--lg w-mt-5"
             type="submit"
             [disabled]="submitting()"
           >
-            {{ submitting() ? 'Creating account…' : 'Join Word Up' }}
+            {{ submitting() ? 'Creating account…' : 'Join Waypoint' }}
           </button>
         </form>
       } @else {
-        <div class="wu-empty">
-          <div class="wu-empty__icon"><wu-icon name="clock" /></div>
-          <h1 class="wu-empty__title" style="font-size: 1.5rem">
+        <div class="w-empty">
+          <div class="w-empty__icon"><w-icon name="clock" /></div>
+          <h1 class="w-empty__title" style="font-size: 1.5rem">
             {{ stateHeading(invite.state) }}
           </h1>
-          <p class="wu-empty__text">
+          <p class="w-empty__text">
             For your security, invite links are single-use and expire after 14 days.
           </p>
           @if (invite.state === 'accepted') {
-            <p class="wu-empty__text">
+            <p class="w-empty__text">
               Your account already exists. Sign in with the password you created.
             </p>
           } @else if (replacementRequested()) {
-            <p class="wu-alert wu-alert--success" role="status">
+            <p class="w-alert w-alert--success" role="status">
               If a replacement can be sent, the person who invited you has been notified.
             </p>
           } @else {
             <button
-              class="wu-btn wu-btn--primary"
+              class="w-btn w-btn--primary"
               type="button"
               [disabled]="requesting() || !token"
               (click)="requestReplacement()"
@@ -123,7 +123,7 @@
               {{ requesting() ? 'Requesting…' : 'Request a new invite' }}
             </button>
           }
-          <a class="wu-btn wu-btn--ghost wu-mt-3" routerLink="/auth/sign-in">Back to sign in</a>
+          <a class="w-btn w-btn--ghost w-mt-3" routerLink="/auth/sign-in">Back to sign in</a>
         </div>
       }
     }

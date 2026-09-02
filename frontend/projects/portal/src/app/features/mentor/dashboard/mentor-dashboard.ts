@@ -7,35 +7,35 @@ import {
   MentorDashboardView,
   MentorReviewPreview,
   MentorRosterYouth,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { forkJoin } from 'rxjs';
 
 // Traces to: L2-MENTOR-001, L2-AUTH-010
 @Component({
-  selector: 'wu-mentor-dashboard',
+  selector: 'w-mentor-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, RouterLink, DatePipe],
+  imports: [WShell, WIcon, RouterLink, DatePipe],
   templateUrl: './mentor-dashboard.html',
   styles: `
     .mentor-preview-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
     }
     .youth-preview {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
       align-items: center;
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
     }
     .progress-number {
       display: grid;
       place-items: center;
       width: 3.5rem;
       height: 3.5rem;
-      border: 0.35rem solid var(--wu-lime);
+      border: 0.35rem solid var(--w-lime);
       border-radius: 50%;
       font-weight: 700;
     }
@@ -43,9 +43,9 @@ import { forkJoin } from 'rxjs';
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--wu-s4);
-      padding: var(--wu-s4) 0;
-      border-bottom: 1px solid var(--wu-border);
+      gap: var(--w-s4);
+      padding: var(--w-s4) 0;
+      border-bottom: 1px solid var(--w-border);
     }
     .review-row:last-child {
       border-bottom: 0;

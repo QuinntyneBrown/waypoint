@@ -31,10 +31,10 @@ jobs:
           --health-interval 10s --health-timeout 5s --health-retries 10
     env:
       ASPNETCORE_ENVIRONMENT: Testing
-      ConnectionStrings__Default: "Server=localhost,1433;Database=WordUpPerformance;User Id=sa;Password=Your_password123!;Encrypt=False;TrustServerCertificate=True"
+      ConnectionStrings__Default: "Server=localhost,1433;Database=WaypointPerformance;User Id=sa;Password=Your_password123!;Encrypt=False;TrustServerCertificate=True"
       Jwt__SigningKey: performance-only-signing-key-do-not-use-outside-ci-0123456789
-      WORDUP_TEST_SQLSERVER: localhost
-      WORDUP_TEST_SQLAUTH: "User Id=sa;Password=Your_password123!"
+      WAYPOINT_TEST_SQLSERVER: localhost
+      WAYPOINT_TEST_SQLAUTH: "User Id=sa;Password=Your_password123!"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
@@ -44,16 +44,16 @@ jobs:
         with:
           node-version: 22
       - name: Build API and performance contracts
-        run: dotnet build backend/WordUp.sln --configuration Release
+        run: dotnet build backend/Waypoint.sln --configuration Release
       - name: Verify bounded list payloads
         run: >-
-          dotnet test backend/tests/WordUp.IntegrationTests/WordUp.IntegrationTests.csproj
+          dotnet test backend/tests/Waypoint.IntegrationTests/Waypoint.IntegrationTests.csproj
           --configuration Release --no-build
           --filter "TestCategory=Performance"
       - name: Start API
         shell: bash
         run: |
-          dotnet run --project backend/src/WordUp.Api --configuration Release --no-build --urls http://127.0.0.1:5211 > api-performance.log 2>&1 &
+          dotnet run --project backend/src/Waypoint.Api --configuration Release --no-build --urls http://127.0.0.1:5211 > api-performance.log 2>&1 &
           echo $! > api-performance.pid
           for attempt in {1..60}; do
             if curl --fail --silent http://127.0.0.1:5211/health/ready > /dev/null; then

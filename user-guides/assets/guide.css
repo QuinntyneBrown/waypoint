@@ -1,63 +1,63 @@
 /* ============================================================================
-   Word Up User Guide — site chrome.
+   Waypoint User Guide — site chrome.
 
    TOKEN RULE
-   Every value in this file resolves through the Word Up `--wu-*` design-token
+   Every value in this file resolves through the Waypoint `--w-*` design-token
    contract vendored in `assets/vendor/core.css`. There are no literal colours,
    type stacks, spacing values, radii, shadows or durations in the rule bodies
    below — a smoke test scans this file and fails the build if one appears.
 
    The single declaration site is the guide token layer immediately below. Every
-   `--ug-*` token there is derived from a `--wu-*` token. The two exceptions are
+   `--ug-*` token there is derived from a `--w-*` token. The two exceptions are
    motion duration and two chrome widths, which the product has no token for;
    they are named once, here, and never repeated.
 
    The product ships no light/dark theme (see docs/specs Appendix A-10). The dark
    theme in this file is guide chrome only, and it is built by remapping existing
-   `--wu-*` tokens to one another with `color-mix`, so it introduces no new
+   `--w-*` tokens to one another with `color-mix`, so it introduces no new
    colour of its own.
    ============================================================================ */
 
 /* ---------- Guide token layer ---------- */
 :root {
-  --ug-bg: var(--wu-bg);
-  --ug-surface: var(--wu-surface);
-  --ug-surface-2: var(--wu-surface-2);
-  --ug-text: var(--wu-text);
-  --ug-muted: var(--wu-muted);
-  --ug-border: var(--wu-border);
-  --ug-border-strong: var(--wu-border-strong);
-  --ug-accent: var(--wu-lime);
-  --ug-accent-ink: var(--wu-ink);
-  --ug-focus: var(--wu-ink);
+  --ug-bg: var(--w-bg);
+  --ug-surface: var(--w-surface);
+  --ug-surface-2: var(--w-surface-2);
+  --ug-text: var(--w-text);
+  --ug-muted: var(--w-muted);
+  --ug-border: var(--w-border);
+  --ug-border-strong: var(--w-border-strong);
+  --ug-accent: var(--w-lime);
+  --ug-accent-ink: var(--w-ink);
+  --ug-focus: var(--w-ink);
 
-  --ug-font-head: var(--wu-font-head);
-  --ug-font-body: var(--wu-font-body);
+  --ug-font-head: var(--w-font-head);
+  --ug-font-body: var(--w-font-body);
   --ug-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --ug-r-sm: var(--wu-r-sm);
-  --ug-r-input: var(--wu-r-input);
-  --ug-r-card: var(--wu-r-card);
-  --ug-r-lg: var(--wu-r-lg);
-  --ug-r-pill: var(--wu-r-pill);
+  --ug-r-sm: var(--w-r-sm);
+  --ug-r-input: var(--w-r-input);
+  --ug-r-card: var(--w-r-card);
+  --ug-r-lg: var(--w-r-lg);
+  --ug-r-pill: var(--w-r-pill);
 
-  --ug-s1: var(--wu-s1);
-  --ug-s2: var(--wu-s2);
-  --ug-s3: var(--wu-s3);
-  --ug-s4: var(--wu-s4);
-  --ug-s5: var(--wu-s5);
-  --ug-s6: var(--wu-s6);
-  --ug-s7: var(--wu-s7);
-  --ug-s8: var(--wu-s8);
-  --ug-s9: var(--wu-s9);
-  --ug-s10: var(--wu-s10);
+  --ug-s1: var(--w-s1);
+  --ug-s2: var(--w-s2);
+  --ug-s3: var(--w-s3);
+  --ug-s4: var(--w-s4);
+  --ug-s5: var(--w-s5);
+  --ug-s6: var(--w-s6);
+  --ug-s7: var(--w-s7);
+  --ug-s8: var(--w-s8);
+  --ug-s9: var(--w-s9);
+  --ug-s10: var(--w-s10);
 
-  --ug-bw: var(--wu-bw);
-  --ug-shadow-sm: var(--wu-shadow-sm);
-  --ug-shadow-pop: var(--wu-shadow-pop);
+  --ug-bw: var(--w-bw);
+  --ug-shadow-sm: var(--w-shadow-sm);
+  --ug-shadow-pop: var(--w-shadow-pop);
 
-  --ug-header-h: var(--wu-topbar-h);
-  --ug-sidebar-w: var(--wu-sidenav-w);
+  --ug-header-h: var(--w-topbar-h);
+  --ug-sidebar-w: var(--w-sidenav-w);
   --ug-measure: 74ch;
 
   /* The product has no motion token; this is the guide's own, declared once. */
@@ -66,28 +66,28 @@
 
 /* ---------- Dark theme (guide chrome only, token remap) ---------- */
 :root[data-ug-theme="dark"] {
-  --ug-bg: var(--wu-ink);
-  --ug-surface: color-mix(in srgb, var(--wu-ink) 92%, var(--wu-white));
-  --ug-surface-2: color-mix(in srgb, var(--wu-ink) 84%, var(--wu-white));
-  --ug-text: var(--wu-g100);
-  --ug-muted: color-mix(in srgb, var(--wu-g100) 68%, var(--wu-ink));
-  --ug-border: color-mix(in srgb, var(--wu-ink) 74%, var(--wu-white));
-  --ug-border-strong: color-mix(in srgb, var(--wu-ink) 56%, var(--wu-white));
-  --ug-focus: var(--wu-lime);
+  --ug-bg: var(--w-ink);
+  --ug-surface: color-mix(in srgb, var(--w-ink) 92%, var(--w-white));
+  --ug-surface-2: color-mix(in srgb, var(--w-ink) 84%, var(--w-white));
+  --ug-text: var(--w-g100);
+  --ug-muted: color-mix(in srgb, var(--w-g100) 68%, var(--w-ink));
+  --ug-border: color-mix(in srgb, var(--w-ink) 74%, var(--w-white));
+  --ug-border-strong: color-mix(in srgb, var(--w-ink) 56%, var(--w-white));
+  --ug-focus: var(--w-lime);
 
   /* Re-point the product tokens so vendored components follow the guide theme. */
-  --wu-bg: var(--ug-bg);
-  --wu-surface: var(--ug-surface);
-  --wu-surface-2: var(--ug-surface-2);
-  --wu-text: var(--ug-text);
-  --wu-muted: var(--ug-muted);
-  --wu-border: var(--ug-border);
-  --wu-border-strong: var(--ug-border-strong);
-  --wu-ink-04: color-mix(in srgb, var(--wu-white) 6%, transparent);
-  --wu-ink-08: color-mix(in srgb, var(--wu-white) 10%, transparent);
-  --wu-ink-14: color-mix(in srgb, var(--wu-white) 16%, transparent);
-  --wu-ink-60: var(--ug-muted);
-  --wu-ink-80: var(--ug-text);
+  --w-bg: var(--ug-bg);
+  --w-surface: var(--ug-surface);
+  --w-surface-2: var(--ug-surface-2);
+  --w-text: var(--ug-text);
+  --w-muted: var(--ug-muted);
+  --w-border: var(--ug-border);
+  --w-border-strong: var(--ug-border-strong);
+  --w-ink-04: color-mix(in srgb, var(--w-white) 6%, transparent);
+  --w-ink-08: color-mix(in srgb, var(--w-white) 10%, transparent);
+  --w-ink-14: color-mix(in srgb, var(--w-white) 16%, transparent);
+  --w-ink-60: var(--ug-muted);
+  --w-ink-80: var(--ug-text);
 }
 
 /* ---------- Reduced motion ---------- */
@@ -330,7 +330,7 @@ body.ug-search-open {
 }
 
 .ug-nav__item:hover {
-  background: var(--wu-ink-04);
+  background: var(--w-ink-04);
 }
 
 .ug-nav__item.is-active {
@@ -353,7 +353,7 @@ main {
 }
 
 .ug-page {
-  max-width: var(--wu-container);
+  max-width: var(--w-container);
   padding: var(--ug-s6) var(--ug-s6) var(--ug-s10);
   margin: 0 auto;
 }
@@ -456,7 +456,7 @@ main {
 .ug-section code {
   padding: 0 var(--ug-s1);
   border-radius: var(--ug-r-sm);
-  background: var(--wu-ink-08);
+  background: var(--w-ink-08);
   font-family: var(--ug-font-mono);
   font-size: 0.88em;
 }
@@ -955,8 +955,8 @@ main {
 .ug-toast {
   padding: var(--ug-s3) var(--ug-s5);
   border-radius: var(--ug-r-input);
-  background: var(--wu-ink);
-  color: var(--wu-white);
+  background: var(--w-ink);
+  color: var(--w-white);
   box-shadow: var(--ug-shadow-pop);
   font-size: 0.88rem;
 }
@@ -1130,7 +1130,7 @@ main {
 .ug-search__scrim {
   position: fixed;
   inset: 0;
-  background: var(--wu-ink-60);
+  background: var(--w-ink-60);
 }
 
 .ug-search__panel {

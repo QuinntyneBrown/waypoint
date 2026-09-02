@@ -7,23 +7,23 @@ import {
   SessionCohortOption,
   SessionSchedulingOptions,
   StaffOperationsApi,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuRole, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WRole, WShell } from '@w/ui';
 
 type CalendarView = 'month' | 'week' | 'agenda';
 
 // Traces to: L2-ENGAGE-001, L2-AUTH-010, L2-NFR-009/010
 @Component({
-  selector: 'wu-mentor-calendar',
+  selector: 'w-mentor-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, DatePipe, RouterLink],
+  imports: [WShell, DatePipe, RouterLink],
   templateUrl: './mentor-calendar.html',
   styles: `
     .calendar-layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.34fr);
-      gap: var(--wu-s6);
+      gap: var(--w-s6);
       align-items: start;
     }
     .calendar-toolbar {
@@ -31,7 +31,7 @@ type CalendarView = 'month' | 'week' | 'agenda';
       flex-wrap: wrap;
       align-items: end;
       justify-content: space-between;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
     }
     .calendar-scroll {
       max-width: 100%;
@@ -42,53 +42,53 @@ type CalendarView = 'month' | 'week' | 'agenda';
       display: grid;
       grid-template-columns: repeat(7, minmax(6.5rem, 1fr));
       min-width: 48rem;
-      border: 1px solid var(--wu-color-border);
-      border-radius: var(--wu-radius-lg);
+      border: 1px solid var(--w-color-border);
+      border-radius: var(--w-radius-lg);
       overflow: hidden;
     }
     .calendar-weekday {
-      padding: var(--wu-s2);
-      background: var(--wu-color-greige-100);
-      border-bottom: 1px solid var(--wu-color-border);
+      padding: var(--w-s2);
+      background: var(--w-color-greige-100);
+      border-bottom: 1px solid var(--w-color-border);
       font-weight: 700;
       text-align: center;
     }
     .calendar-day {
       min-height: 8rem;
-      padding: var(--wu-s2);
-      border-right: 1px solid var(--wu-color-border);
-      border-bottom: 1px solid var(--wu-color-border);
+      padding: var(--w-s2);
+      border-right: 1px solid var(--w-color-border);
+      border-bottom: 1px solid var(--w-color-border);
     }
     .calendar-day:nth-child(7n) {
       border-right: 0;
     }
     .calendar-day.is-outside {
-      color: var(--wu-color-text-muted);
-      background: var(--wu-color-greige-50);
+      color: var(--w-color-text-muted);
+      background: var(--w-color-greige-50);
     }
     .calendar-event {
       display: block;
-      margin-top: var(--wu-s2);
-      padding: var(--wu-s2);
-      border-radius: var(--wu-radius-md);
-      background: var(--wu-color-lilac-100);
+      margin-top: var(--w-s2);
+      padding: var(--w-s2);
+      border-radius: var(--w-radius-md);
+      background: var(--w-color-lilac-100);
       color: inherit;
       text-decoration: none;
       overflow-wrap: anywhere;
     }
     .calendar-event:hover,
     .calendar-event:focus-visible {
-      background: var(--wu-color-lilac-200);
+      background: var(--w-color-lilac-200);
     }
     .agenda-list {
       display: grid;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
     }
     .session-form {
       position: sticky;
-      top: var(--wu-s4);
+      top: var(--w-s4);
     }
-    .calendar-toolbar .wu-btn,
+    .calendar-toolbar .w-btn,
     .calendar-event,
     [role='tab'] {
       min-height: 44px;
@@ -103,7 +103,7 @@ type CalendarView = 'month' | 'week' | 'agenda';
     }
     @media (max-width: 36rem) {
       .calendar-toolbar > *,
-      .session-form .wu-btn {
+      .session-form .w-btn {
         width: 100%;
       }
     }
@@ -123,7 +123,7 @@ export class MentorCalendarPage {
   protected readonly anchor = signal(this.startOfDay(new Date()));
   protected readonly cohortFilter = signal('');
   protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
-  protected readonly shellRole = computed<WuRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly shellRole = computed<WRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
   protected readonly attendanceBase = computed(() =>
     this.isAdmin() ? '/admin/attendance' : '/mentor/attendance',
   );

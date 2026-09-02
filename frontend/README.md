@@ -1,12 +1,12 @@
-# Word Up frontend
+# Waypoint frontend
 
 This Angular 21 workspace contains two applications and three shared libraries:
 
 - `portal`: the authenticated role-aware application
 - `public-site`: the SSR public site and intake experience
-- `@wu/api`: typed API models, services, and error handling
-- `@wu/auth`: session state, guards, and authentication integration
-- `@wu/ui`: the shared design system and application shell
+- `@w/api`: typed API models, services, and error handling
+- `@w/auth`: session state, guards, and authentication integration
+- `@w/ui`: the shared design system and application shell
 
 ## Prerequisites
 
@@ -40,7 +40,7 @@ Both applications proxy `/api` and `/hubs` to `http://127.0.0.1:5211`.
 
 ## Build and package verification
 
-The root build is deliberately ordered: it builds `@wu/api`, `@wu/auth`, and `@wu/ui`, then the portal and public site, then verifies the generated package metadata, entry points, tarball contents, and cross-package imports.
+The root build is deliberately ordered: it builds `@w/api`, `@w/auth`, and `@w/ui`, then the portal and public site, then verifies the generated package metadata, entry points, tarball contents, and cross-package imports.
 
 ```bash
 npm run build
@@ -64,9 +64,9 @@ Angular unit tests use Vitest:
 npm test
 npx ng test portal
 npx ng test public-site
-npx ng test wu-api
-npx ng test wu-auth
-npx ng test wu-ui
+npx ng test w-api
+npx ng test w-auth
+npx ng test w-ui
 ```
 
 Browser acceptance, responsive, accessibility, and Chromebook-class interaction gates use Playwright:

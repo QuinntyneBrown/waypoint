@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Non-Functional and Quality subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Non-Functional and Quality subsystem owns this feature slice.
 
 The Operate and observe the system feature slice refines `L2-NFR-011` into one independently deliverable interaction. The system shall expose health checks, structured logging, and an admin CLI (operational tooling — an out-of-band ops interface, not product scope).
 
-A platform operator starts this feature interaction through the out-of-band `wu` command-line tool. The tool composes the same application and infrastructure layers as the API, attributes state changes to an active Program Administrator, and presents structured command results on standard output.
+A platform operator starts this feature interaction through the out-of-band `way` command-line tool. The tool composes the same application and infrastructure layers as the API, attributes state changes to an active Program Administrator, and presents structured command results on standard output.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans the WordUp API, CLI, application, and infrastructure projects. The API owns health and request telemetry; the CLI owns operational parsing and presentation. Both use the same application handlers, validation pipeline, domain rules, audit path, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+The feature spans the Waypoint API, CLI, application, and infrastructure projects. The API owns health and request telemetry; the CLI owns operational parsing and presentation. Both use the same application handlers, validation pipeline, domain rules, audit path, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 ### Components and types
 
@@ -22,10 +22,10 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Operational transport | [`CliApplication`](../../../../backend/src/WordUp.Cli/CliApplication.cs)<br>[`Program`](../../../../backend/src/WordUp.Cli/Program.cs) | Defines typed `wu` commands, composes the generic host, selects an operator, and maps safe results/errors to stdout/stderr. |
-| API transport | [`Program`](../../../../backend/src/WordUp.Api/Program.cs)<br>[`RequestLoggingMiddleware`](../../../../backend/src/WordUp.Api/Observability/RequestLoggingMiddleware.cs) | Exposes health endpoints, validates production configuration, applies migrations before serving, and emits redacted structured telemetry. |
-| Application slice | [`CreateOperationalUserCommand`](../../../../backend/src/WordUp.Application/OperationalAdministration/CreateOperationalUserCommand.cs)<br>[`ListInvitationsQuery`](../../../../backend/src/WordUp.Application/OperationalAdministration/ListInvitationsQuery.cs)<br>[`IssueOperationalTokenQuery`](../../../../backend/src/WordUp.Application/OperationalAdministration/IssueOperationalTokenQuery.cs) | Adds operational use cases where no API command already exists; all other CLI leaves send the existing application command/query through MediatR. |
-| Infrastructure and shared ports | [`DatabaseLifecycle`](../../../../backend/src/WordUp.Infrastructure/DatabaseLifecycle.cs)<br>[`InfrastructureStartupValidator`](../../../../backend/src/WordUp.Infrastructure/InfrastructureStartupValidator.cs)<br>[`AppDbContext`](../../../../backend/src/WordUp.Infrastructure/AppDbContext.cs) | Supplies durable migration/reset behavior, fail-fast production configuration validation, persistence, audit, email, hashing, and token adapters. |
+| Operational transport | [`CliApplication`](../../../../backend/src/Waypoint.Cli/CliApplication.cs)<br>[`Program`](../../../../backend/src/Waypoint.Cli/Program.cs) | Defines typed `way` commands, composes the generic host, selects an operator, and maps safe results/errors to stdout/stderr. |
+| API transport | [`Program`](../../../../backend/src/Waypoint.Api/Program.cs)<br>[`RequestLoggingMiddleware`](../../../../backend/src/Waypoint.Api/Observability/RequestLoggingMiddleware.cs) | Exposes health endpoints, validates production configuration, applies migrations before serving, and emits redacted structured telemetry. |
+| Application slice | [`CreateOperationalUserCommand`](../../../../backend/src/Waypoint.Application/OperationalAdministration/CreateOperationalUserCommand.cs)<br>[`ListInvitationsQuery`](../../../../backend/src/Waypoint.Application/OperationalAdministration/ListInvitationsQuery.cs)<br>[`IssueOperationalTokenQuery`](../../../../backend/src/Waypoint.Application/OperationalAdministration/IssueOperationalTokenQuery.cs) | Adds operational use cases where no API command already exists; all other CLI leaves send the existing application command/query through MediatR. |
+| Infrastructure and shared ports | [`DatabaseLifecycle`](../../../../backend/src/Waypoint.Infrastructure/DatabaseLifecycle.cs)<br>[`InfrastructureStartupValidator`](../../../../backend/src/Waypoint.Infrastructure/InfrastructureStartupValidator.cs)<br>[`AppDbContext`](../../../../backend/src/Waypoint.Infrastructure/AppDbContext.cs) | Supplies durable migration/reset behavior, fail-fast production configuration validation, persistence, audit, email, hashing, and token adapters. |
 
 ### Functions and data flow
 
@@ -38,7 +38,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 ### Behavior
 
-1. **Entry.** A platform operator runs a typed `wu` command. Help and version output require no production configuration.
+1. **Entry.** A platform operator runs a typed `way` command. Help and version output require no production configuration.
 2. **Processing.** Destructive reset requires `--confirm RESET`; other state-changing commands resolve an active Program Administrator for audit attribution and send the corresponding request through the shared validation/application pipeline.
 3. **Result.** The handler commits an audited state change when applicable. The CLI returns JSON, a generated report path, or a concise status line and a deterministic exit code. Production API startup separately validates durable configuration and applies pending migrations before serving.
 
@@ -63,11 +63,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Operate and observe the system.](diagrams/c4-system-context.png)
 
-*Figure 1 — C4 system context: Operate and observe the system in the Word Up environment.*
+*Figure 1 — C4 system context: Operate and observe the system in the Waypoint environment.*
 
 #### Container
 

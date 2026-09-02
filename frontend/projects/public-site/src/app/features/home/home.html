@@ -1,38 +1,36 @@
-<section class="wu-hero">
-  <div class="wu-container">
-    <div class="wu-eyebrow">Word Up · Toronto</div>
+<section class="w-hero">
+  <div class="w-container">
+    <div class="w-eyebrow">Waypoint · Toronto</div>
     <h1 style="max-width: 16ch">Raising up young leaders who love Jesus.</h1>
-    <p class="wu-text-lg wu-muted" style="max-width: 54ch">
+    <p class="w-text-lg w-muted" style="max-width: 54ch">
       A youth leadership program pairing mentorship with real skills — in faith and in code — so
       young people in our neighbourhoods can grow, belong, and lead.
     </p>
-    <div class="wu-cluster wu-mt-6">
-      <a class="wu-btn wu-btn--primary wu-btn--lg" routerLink="/apply">Apply now</a>
-      <a class="wu-btn wu-btn--ghost wu-btn--lg" routerLink="/programs">Explore the programs</a>
+    <div class="w-cluster w-mt-6">
+      <a class="w-btn w-btn--primary w-btn--lg" routerLink="/apply">Apply now</a>
+      <a class="w-btn w-btn--ghost w-btn--lg" routerLink="/programs">Explore the programs</a>
     </div>
   </div>
 </section>
 
-<section class="wu-container wu-section">
-  <div class="wu-eyebrow">How it works</div>
+<section class="w-container w-section">
+  <div class="w-eyebrow">How it works</div>
   <h2>Your journey in four steps</h2>
   @if (loading()) {
-    <p class="wu-muted" role="status">Loading program information…</p>
+    <p class="w-muted" role="status">Loading program information…</p>
   } @else if (error()) {
-    <div class="wu-alert wu-alert--danger" role="alert">
+    <div class="w-alert w-alert--danger" role="alert">
       <p>{{ error() }}</p>
-      <button class="wu-btn wu-btn--ghost wu-btn--sm" type="button" (click)="load()">
-        Try again
-      </button>
+      <button class="w-btn w-btn--ghost w-btn--sm" type="button" (click)="load()">Try again</button>
     </div>
   } @else if (content(); as publicContent) {
-    <div class="wu-grid wu-grid--4 wu-mt-6">
+    <div class="w-grid w-grid--4 w-mt-6">
       @for (step of publicContent.journey; track step.step) {
-        <div class="wu-card">
-          <div class="wu-card__body">
-            <div class="wu-eyebrow">Step {{ step.step }}</div>
-            <h3 class="wu-card__title">{{ step.title }}</h3>
-            <p class="wu-muted">{{ step.description }}</p>
+        <div class="w-card">
+          <div class="w-card__body">
+            <div class="w-eyebrow">Step {{ step.step }}</div>
+            <h3 class="w-card__title">{{ step.title }}</h3>
+            <p class="w-muted">{{ step.description }}</p>
           </div>
         </div>
       }
@@ -40,31 +38,31 @@
   }
 </section>
 
-<section class="wu-container wu-section">
-  <div class="wu-eyebrow">Our impact</div>
+<section class="w-container w-section">
+  <div class="w-eyebrow">Our impact</div>
   <h2>Growing leaders across the city</h2>
   @if (content(); as publicContent) {
-    <div class="wu-grid wu-grid--4 wu-mt-6">
-      <div class="wu-card wu-statcard">
-        <div class="wu-statcard__value">{{ publicContent.impact.tracks }}</div>
-        <div class="wu-statcard__label">Learning tracks</div>
+    <div class="w-grid w-grid--4 w-mt-6">
+      <div class="w-card w-statcard">
+        <div class="w-statcard__value">{{ publicContent.impact.tracks }}</div>
+        <div class="w-statcard__label">Learning tracks</div>
       </div>
-      <div class="wu-card wu-statcard">
-        <div class="wu-statcard__value">{{ publicContent.impact.cohorts }}</div>
-        <div class="wu-statcard__label">Cohorts</div>
+      <div class="w-card w-statcard">
+        <div class="w-statcard__value">{{ publicContent.impact.cohorts }}</div>
+        <div class="w-statcard__label">Cohorts</div>
       </div>
-      <div class="wu-card wu-statcard">
-        <div class="wu-statcard__value">{{ publicContent.impact.modules }}</div>
-        <div class="wu-statcard__label">Published modules</div>
+      <div class="w-card w-statcard">
+        <div class="w-statcard__value">{{ publicContent.impact.modules }}</div>
+        <div class="w-statcard__label">Published modules</div>
       </div>
-      <div class="wu-card wu-statcard">
-        <div class="wu-statcard__value">{{ publicContent.impact.neighbourhoods }}</div>
-        <div class="wu-statcard__label">Neighbourhoods</div>
+      <div class="w-card w-statcard">
+        <div class="w-statcard__value">{{ publicContent.impact.neighbourhoods }}</div>
+        <div class="w-statcard__label">Neighbourhoods</div>
       </div>
     </div>
   }
-  <div class="wu-cluster wu-mt-6">
-    <a class="wu-btn wu-btn--primary" routerLink="/apply">Start your application</a>
-    <a class="wu-btn wu-btn--ghost" routerLink="/get-involved">Get involved</a>
+  <div class="w-cluster w-mt-6">
+    <a class="w-btn w-btn--primary" routerLink="/apply">Start your application</a>
+    <a class="w-btn w-btn--ghost" routerLink="/get-involved">Get involved</a>
   </div>
 </section>

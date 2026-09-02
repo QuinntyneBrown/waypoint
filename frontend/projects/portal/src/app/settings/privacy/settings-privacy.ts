@@ -1,29 +1,29 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiError, DataSubjectAction, DataSubjectRequestResult, MyData, PrivacyApi } from '@wu/api';
+import { ApiError, DataSubjectAction, DataSubjectRequestResult, MyData, PrivacyApi } from '@w/api';
 import { forkJoin } from 'rxjs';
 import { SettingsShell } from '../settings-shell';
 
 // Traces to: L2-NFR-003
 @Component({
-  selector: 'wu-settings-privacy',
+  selector: 'w-settings-privacy',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DatePipe, ReactiveFormsModule, SettingsShell],
   templateUrl: './settings-privacy.html',
   styles: `
     .privacy-grid {
       display: grid;
-      gap: var(--wu-s5);
+      gap: var(--w-s5);
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
     .privacy-data {
       display: grid;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .privacy-data dt {
-      color: var(--wu-muted);
+      color: var(--w-muted);
       font-size: 0.85rem;
     }
     .privacy-data dd {
@@ -31,8 +31,8 @@ import { SettingsShell } from '../settings-shell';
       overflow-wrap: anywhere;
     }
     .request-row {
-      border-top: 1px solid var(--wu-border);
-      padding: var(--wu-s4) 0;
+      border-top: 1px solid var(--w-border);
+      padding: var(--w-s4) 0;
     }
     @media (max-width: 48rem) {
       .privacy-grid,
@@ -203,6 +203,6 @@ export class SettingsPrivacyPage {
     const quoted = contentDisposition?.match(/filename="?([^";]+)"?/i)?.[1];
     const fromHeader = encoded ? decodeURIComponent(encoded) : quoted;
     const safe = fromHeader?.replace(/[\\/]/g, '-').trim();
-    return safe || `word-up-personal-data-${this.data()?.id ?? 'export'}.json`;
+    return safe || `waypoint-personal-data-${this.data()?.id ?? 'export'}.json`;
   }
 }

@@ -32,7 +32,7 @@ test('modal focus is trapped, Escape closes, and focus returns to its opener', a
   await expect(opener).toBeFocused();
 
   await opener.click();
-  await page.locator('.wu-modal__scrim').click({ position: { x: 2, y: 2 } });
+  await page.locator('.w-modal__scrim').click({ position: { x: 2, y: 2 } });
   await expect(dialog).toBeHidden();
   await expect(opener).toBeFocused();
 });

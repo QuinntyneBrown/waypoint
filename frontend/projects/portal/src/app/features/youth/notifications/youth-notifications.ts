@@ -8,17 +8,17 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { ApiError, NotificationsApi, NotificationView } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { ApiError, NotificationsApi, NotificationView } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { RealtimeService } from '../../../realtime.service';
 import { shellRole } from '../../../shell-role';
 
 // Traces to: L2-ENGAGE-008, L2-NFR-005
 @Component({
-  selector: 'wu-notifications',
+  selector: 'w-notifications',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, RouterLink],
+  imports: [WShell, WIcon, RouterLink],
   templateUrl: './youth-notifications.html',
   styles: `
     .notification-card {
@@ -29,7 +29,7 @@ import { shellRole } from '../../../shell-role';
       overflow-wrap: anywhere;
     }
     .notification-card:focus-visible {
-      outline: 3px solid var(--wu-ink);
+      outline: 3px solid var(--w-ink);
       outline-offset: 2px;
     }
   `,

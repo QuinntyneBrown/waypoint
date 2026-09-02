@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Every message Word Up can show you, every HTTP status behind it, and what to do about each one — including the full list of validation messages grouped by area."
+      content="Every message Waypoint can show you, every HTTP status behind it, and what to do about each one — including the full list of validation messages grouped by area."
     />
-    <title>Messages and error codes — Word Up User Guide</title>
+    <title>Messages and error codes — Waypoint User Guide</title>
     <link rel="stylesheet" href="../assets/vendor/core.css" />
     <link rel="stylesheet" href="../assets/vendor/a11y.css" />
     <link rel="stylesheet" href="../assets/guide.css" />
@@ -40,7 +40,7 @@
             <p class="ug-hero__eyebrow">Reference / 15</p>
             <h1>Messages and error codes</h1>
             <p class="ug-hero__lede">
-              Every message Word Up can put in front of you comes from one of
+              Every message Waypoint can put in front of you comes from one of
               three places: a validation rule that checked what you typed, a
               named error that maps to a specific HTTP status, or an unexpected
               failure. This page lists all three, verbatim, with the status code
@@ -48,17 +48,17 @@
               screen.
             </p>
             <div class="ug-hero__meta">
-              <span class="wu-badge wu-badge--outline">Everyone</span>
-              <span class="ug-stamp">WU-UG-15</span>
+              <span class="w-badge w-badge--outline">Everyone</span>
+              <span class="ug-stamp">W-UG-15</span>
             </div>
           </header>
 
           <nav data-ug-toc aria-label="On this page"></nav>
 
-          <section class="ug-section" id="how-word-up-reports-a-problem">
-            <h2>How Word Up reports a problem</h2>
+          <section class="ug-section" id="how-waypoint-reports-a-problem">
+            <h2>How Waypoint reports a problem</h2>
             <p>
-              Word Up never shows you a raw error. Every failure that reaches
+              Waypoint never shows you a raw error. Every failure that reaches
               the interface is a small JSON body with a
               <code>title</code> field, and the interface shows that
               <code>title</code> to you as the message text. If you are reading
@@ -108,7 +108,7 @@
 
             <h3>An unexpected failure</h3>
             <p>
-              If Word Up hits something it did not plan for, the response is a
+              If Waypoint hits something it did not plan for, the response is a
               <strong>500</strong> with a fixed title and a
               <code>correlationId</code>. That identifier is the single most
               useful thing you can pass to whoever supports your installation:
@@ -121,20 +121,20 @@
 }</code></pre>
             </div>
 
-            <div class="wu-alert wu-alert--info">
-              <p class="wu-alert__title">A 500 never shows you a stack trace</p>
+            <div class="w-alert w-alert--info">
+              <p class="w-alert__title">A 500 never shows you a stack trace</p>
               <p>
                 The body carries the title and the correlation id and nothing
                 else. No file names, no line numbers, no internal exception
                 text. That is deliberate: the detail goes to the server log,
                 where only your operations team can read it. If someone shows
-                you a Word Up screen with a stack trace on it, it is not this
+                you a Waypoint screen with a stack trace on it, it is not this
                 release.
               </p>
             </div>
 
             <p>
-              Every response Word Up sends — success or failure — carries an
+              Every response Waypoint sends — success or failure — carries an
               <code>X-Correlation-ID</code> header. If you send your own value
               in that header it is reused, as long as it is 128 characters or
               fewer and contains only letters, digits, and
@@ -146,7 +146,7 @@
           <section class="ug-section" id="status-codes">
             <h2>Every status you can meet</h2>
             <p>
-              These are the only statuses a person using Word Up will ever be
+              These are the only statuses a person using Waypoint will ever be
               shown. The status decides how the interface reacts — a 401 sends
               you to the sign-in screen, a 403 to the
               <strong>Error 403</strong> page, a 503 to the maintenance page —
@@ -268,7 +268,7 @@
                   <tr>
                     <th scope="row" class="ug-nowrap">500</th>
                     <td>Unexpected error</td>
-                    <td>Something failed that Word Up did not anticipate</td>
+                    <td>Something failed that Waypoint did not anticipate</td>
                     <td>
                       Try again in a moment. If it repeats, quote the
                       <code>correlationId</code> from the response.
@@ -300,7 +300,7 @@
               <pre><code>HTTP 503  Retry-After: 120
 
 {
-  "title": "Word Up is down for scheduled maintenance.",
+  "title": "Waypoint is down for scheduled maintenance.",
   "detail": "Nothing you've done is lost. Please check again shortly.",
   "retryAfterSeconds": 120
 }</code></pre>
@@ -310,7 +310,7 @@
               <strong>Scheduled maintenance</strong> /
               <strong>We’ll be right back</strong> /
               <strong
-                >Word Up is down for a short bit of maintenance. Nothing you’ve
+                >Waypoint is down for a short bit of maintenance. Nothing you’ve
                 done is lost — please check again shortly.</strong
               >
             </p>
@@ -445,7 +445,7 @@
                       A youth tried to reach lessons, quizzes, submissions,
                       reflections, or their journey without a valid guardian
                       participation consent. The response also carries
-                      <code>X-WordUp-State: consent-required</code>, and the
+                      <code>X-Waypoint-State: consent-required</code>, and the
                       portal redirects to
                       <strong>A guardian needs to sign off</strong>.
                     </td>
@@ -463,7 +463,7 @@
                       without that specific media permission. Participation
                       consent alone is not enough — media consent is separate
                       and granular. Carries
-                      <code>X-WordUp-State: media-consent-required</code>.
+                      <code>X-Waypoint-State: media-consent-required</code>.
                     </td>
                   </tr>
                   <tr>
@@ -475,7 +475,7 @@
                     </th>
                     <td class="ug-nowrap">400</td>
                     <td>
-                      A youth asked Word Up to send a consent link, but no
+                      A youth asked Waypoint to send a consent link, but no
                       guardian address is on record. An administrator has to add
                       one first.
                     </td>
@@ -562,14 +562,14 @@
           </section>
 
           <section class="ug-section" id="the-state-header">
-            <h2>The X-WordUp-State header</h2>
+            <h2>The X-Waypoint-State header</h2>
             <p>
               Two refusals are not really about permission at all — they are
               about consent, and the fix is a form rather than a different
               account. So that the portal can tell them apart from an ordinary
               refusal, those two responses add a header called
-              <code>X-WordUp-State</code>. It has exactly two values and appears
-              on nothing else.
+              <code>X-Waypoint-State</code>. It has exactly two values and
+              appears on nothing else.
             </p>
 
             <div class="ug-tablewrap">
@@ -639,9 +639,9 @@
             <p>
               Both produce exactly
               <strong>Invalid email or password.</strong> with a
-              <strong>400</strong>. Word Up will not tell you whether an address
-              has an account, because that would let anyone test a list of
-              addresses to find out who is in the program. If you are unsure
+              <strong>400</strong>. Waypoint will not tell you whether an
+              address has an account, because that would let anyone test a list
+              of addresses to find out who is in the program. If you are unsure
               which account you have, use <strong>Forgot password</strong> — it
               also gives the same answer whether or not the address exists, and
               sends mail only if it does.
@@ -673,7 +673,7 @@
               you accept an invitation, when you reset a forgotten password, and
               when you change your password in settings:
             </p>
-            <div class="wu-alert wu-alert--info">
+            <div class="w-alert w-alert--info">
               <p>
                 <strong
                   >Password must be at least 8 characters and include at least
@@ -697,7 +697,7 @@
 
             <h3>The rate limit</h3>
             <p>
-              Word Up allows <strong>20 requests per 60 seconds</strong> from
+              Waypoint allows <strong>20 requests per 60 seconds</strong> from
               any one network address across three surfaces:
             </p>
             <ul>
@@ -722,12 +722,12 @@
               the minute out.
             </p>
 
-            <div class="wu-alert wu-alert--warning">
-              <p class="wu-alert__title">Preview limitation</p>
+            <div class="w-alert w-alert--warning">
+              <p class="w-alert__title">Preview limitation</p>
               <p>
                 Idle sign-out gives no warning. After 30 minutes of inactivity
                 you are signed out with no countdown and no "are you still
-                there?" prompt. Word Up captures what you had typed into a form
+                there?" prompt. Waypoint captures what you had typed into a form
                 first and restores it after you sign back in, but there is
                 nothing on screen to tell you the clock is running.
               </p>
@@ -768,7 +768,7 @@
                       The age on the public application form is outside 12–18
                     </td>
                     <td>
-                      Word Up serves 12 to 18 year olds. Contact the program
+                      Waypoint serves 12 to 18 year olds. Contact the program
                       team about anyone outside that range.
                     </td>
                   </tr>
@@ -847,7 +847,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="wu-muted wu-text-sm">
+            <p class="w-muted w-text-sm">
               Length limits on the same form: first and last name 128; cohort
               interest and neighbourhood 256; track interest 256; why interested
               2000. On the administrator's approve and decline actions the
@@ -932,7 +932,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="wu-muted wu-text-sm">
+            <p class="w-muted w-text-sm">
               Also: sign-in requires a well-formed email and a non-empty
               password; every invited address must be a valid email of 256
               characters or fewer; display names are 1–128 characters; pronouns
@@ -967,7 +967,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="wu-muted wu-text-sm">
+            <p class="w-muted w-text-sm">
               Guardian name, relationship and typed signature are all required.
               On the emailed-link form they are limited to 128, 64 and 128
               characters.
@@ -1110,7 +1110,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="wu-muted wu-text-sm">
+            <p class="w-muted w-text-sm">
               Also: a quiz pass mark is 1–100 and attempts allowed is 1–10; an
               assignment grace period is 0–365 days; track and module names are
               limited to 128 characters, lesson and assignment titles to 256,
@@ -1187,7 +1187,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="wu-muted wu-text-sm">
+            <p class="w-muted w-text-sm">
               Also: reflection text is limited to 8000 characters and its mood
               to 50; a youth's note on a submission to 1000; coding-lesson code
               to 50,000 characters, and a coding project must have code in it.
@@ -1226,7 +1226,7 @@
                     <td>Sending work back with an empty comment</td>
                     <td>
                       Say what needs fixing. A youth cannot act on a bare
-                      rejection, so Word Up will not let you send one.
+                      rejection, so Waypoint will not let you send one.
                     </td>
                   </tr>
                   <tr>
@@ -1331,7 +1331,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="wu-muted wu-text-sm">
+            <p class="w-muted w-text-sm">
               Also: a flag reason is required and limited to 1000 characters;
               each check-in field (engagement, goals, prayer requests, action
               items) to 2000; competency notes to 2000; an assign-work message
@@ -1445,7 +1445,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="wu-muted wu-text-sm">
+            <p class="w-muted w-text-sm">
               Also: an attendance note is limited to 1000 characters and an RSVP
               note to 1000; a session title to 200, its location to 256 and its
               duration to 1–1440 minutes; an announcement title to 200 and its
@@ -1503,7 +1503,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="wu-muted wu-text-sm">
+            <p class="w-muted w-text-sm">
               Also: a cohort needs a name (128), a track and a lead mentor, with
               location up to 256; organisation settings need a name (128), and
               accept a display name (128), logo URL (2048), city (128), consent
@@ -1733,7 +1733,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="wu-muted wu-text-sm">
+            <p class="w-muted w-text-sm">
               Also: a support request needs a category (64), a description
               (4000) and a valid reply-to email; a profile needs a display name
               (128) and a valid email (256); privacy request details are limited
@@ -1791,7 +1791,7 @@
                     <td>Donor name, email, tier</td>
                     <td>
                       A monthly amount, if given, must be greater than zero.
-                      Word Up records a pledge — it does not take payment.
+                      Waypoint records a pledge — it does not take payment.
                     </td>
                   </tr>
                 </tbody>

@@ -7,18 +7,18 @@ import {
   SessionSchedulingOptions,
   StaffOperationsApi,
   YouthAttendanceSummary,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuRole, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WRole, WShell } from '@w/ui';
 import { forkJoin } from 'rxjs';
 
 type HistoryView = 'session' | 'youth';
 
 // Traces to: L2-ENGAGE-004, L2-REPORT-003, L2-NFR-009/010
 @Component({
-  selector: 'wu-mentor-attendance-history',
+  selector: 'w-mentor-attendance-history',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, DatePipe, PercentPipe, RouterLink],
+  imports: [WShell, DatePipe, PercentPipe, RouterLink],
   templateUrl: './mentor-attendance-history.html',
   styles: `
     .history-toolbar {
@@ -26,13 +26,13 @@ type HistoryView = 'session' | 'youth';
       flex-wrap: wrap;
       align-items: end;
       justify-content: space-between;
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
     }
     .history-filters {
       display: flex;
       flex-wrap: wrap;
       align-items: end;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
     }
     .history-table-wrap {
       max-width: 100%;
@@ -45,24 +45,24 @@ type HistoryView = 'session' | 'youth';
     }
     .history-table th,
     .history-table td {
-      padding: var(--wu-s3);
-      border-bottom: 1px solid var(--wu-color-border);
+      padding: var(--w-s3);
+      border-bottom: 1px solid var(--w-color-border);
       text-align: left;
       vertical-align: middle;
     }
     [role='tab'],
-    .history-toolbar .wu-btn,
-    .history-table .wu-btn {
+    .history-toolbar .w-btn,
+    .history-table .w-btn {
       min-height: 44px;
     }
     @media (max-width: 42rem) {
       .history-filters,
-      .history-filters .wu-field,
-      .history-filters .wu-btn,
-      .history-toolbar > .wu-cluster {
+      .history-filters .w-field,
+      .history-filters .w-btn,
+      .history-toolbar > .w-cluster {
         width: 100%;
       }
-      .history-toolbar > .wu-cluster .wu-btn {
+      .history-toolbar > .w-cluster .w-btn {
         flex: 1;
       }
     }
@@ -86,7 +86,7 @@ export class MentorAttendanceHistoryPage {
   protected readonly statusMessage = signal<string | null>(null);
   private loadSequence = 0;
   protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
-  protected readonly shellRole = computed<WuRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly shellRole = computed<WRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
   protected readonly calendarPath = computed(() =>
     this.isAdmin() ? '/admin/calendar' : '/mentor/calendar',
   );

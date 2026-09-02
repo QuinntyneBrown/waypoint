@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +execute(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "PeopleController" as controller_PeopleController <<controller>> {
     +PostAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "ListPeopleQuery" as request_ListPeopleQuery <<record>>
   class "ListPeopleQueryHandler" as handler_ListPeopleQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "Cohort" as entity_Cohort <<domain type>>
 }
 page_PeopleDirectory --> client_PeopleApi : invokes

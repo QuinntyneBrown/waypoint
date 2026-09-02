@@ -5,14 +5,14 @@ import {
   DisplayPreferencesApi,
   TEXT_SCALE_MAX,
   TEXT_SCALE_MIN,
-} from '@wu/api';
-import { ToastService } from '@wu/ui';
+} from '@w/api';
+import { ToastService } from '@w/ui';
 import { SettingsShell } from '../settings-shell';
 import { DisplayPreferencesService } from '../display-preferences.service';
 
 // Traces to: L2-PLATFORM-004
 @Component({
-  selector: 'wu-settings-display',
+  selector: 'w-settings-display',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [SettingsShell],
   templateUrl: './settings-display.html',

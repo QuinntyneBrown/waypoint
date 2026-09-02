@@ -1,6 +1,6 @@
-import { WuRole } from '@wu/ui';
+import { WRole } from '@w/ui';
 
-const MAP: Record<string, WuRole> = {
+const MAP: Record<string, WRole> = {
   Youth: 'youth',
   Mentor: 'mentor',
   ProgramAdministrator: 'admin',
@@ -8,7 +8,7 @@ const MAP: Record<string, WuRole> = {
   Volunteer: 'volunteer',
 };
 
-/** Map a backend role string to the shell's WuRole. */
-export function shellRole(role: string | null | undefined): WuRole {
+/** Map a backend role string to the shell's WRole. */
+export function shellRole(role: string | null | undefined): WRole {
   return (role && MAP[role]) || 'youth';
 }

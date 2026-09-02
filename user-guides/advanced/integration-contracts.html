@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="The operator-facing contracts of Word Up: the wu command line, the HTTP API surface and its authentication, the receive-only realtime hub, the headers every response carries, maintenance mode, and the production startup checks."
+      content="The operator-facing contracts of Waypoint: the way command line, the HTTP API surface and its authentication, the receive-only realtime hub, the headers every response carries, maintenance mode, and the production startup checks."
     />
-    <title>Integration contracts — Word Up User Guide</title>
+    <title>Integration contracts — Waypoint User Guide</title>
     <link rel="stylesheet" href="../assets/vendor/core.css" />
     <link rel="stylesheet" href="../assets/vendor/a11y.css" />
     <link rel="stylesheet" href="../assets/guide.css" />
@@ -37,19 +37,19 @@
             <p class="ug-hero__eyebrow">Advanced / 20</p>
             <h1>Integration contracts</h1>
             <p class="ug-hero__lede">
-              This page is for the people who run Word Up and the people who
+              This page is for the people who run Waypoint and the people who
               connect something to it — not for youth, mentors or guardians. It
-              documents the <code>wu</code> command line, the HTTP surface and
+              documents the <code>way</code> command line, the HTTP surface and
               how it authenticates, the realtime hub, the headers on every
               response, and what happens during maintenance. If you are here to
               use the product, every other page in this guide is a better
               starting point.
             </p>
             <div class="ug-hero__meta">
-              <span class="wu-badge wu-badge--outline"
+              <span class="w-badge w-badge--outline"
                 >Program Administrator</span
               >
-              <span class="ug-stamp">WU-UG-20</span>
+              <span class="ug-stamp">W-UG-20</span>
             </div>
           </header>
 
@@ -58,13 +58,13 @@
           <section class="ug-section" id="what-this-page-is">
             <h2>What this page is, and what it is not</h2>
             <p>
-              Word Up ships two things an operator can talk to directly: an HTTP
-              API, and a command-line tool called <code>wu</code>.
+              Waypoint ships two things an operator can talk to directly: an
+              HTTP API, and a command-line tool called <code>way</code>.
             </p>
 
-            <div class="wu-alert wu-alert--info">
-              <p class="wu-alert__title">
-                The <code>wu</code> command line is operational tooling, not a
+            <div class="w-alert w-alert--info">
+              <p class="w-alert__title">
+                The <code>way</code> command line is operational tooling, not a
                 product feature
               </p>
               <p>
@@ -72,8 +72,8 @@
                 first administrator, and run bulk or recovery work from a
                 terminal. It is not part of anybody's day-to-day job, it has no
                 place in a training session, and nothing in it is required to
-                use Word Up normally. If you are not the person who deploys Word
-                Up, you will never need it.
+                use Waypoint normally. If you are not the person who deploys
+                Waypoint, you will never need it.
               </p>
             </div>
 
@@ -84,9 +84,9 @@
               a rule.
             </p>
 
-            <div class="wu-alert wu-alert--error" role="alert">
+            <div class="w-alert w-alert--error" role="alert">
               <p>
-                <strong>Not approved for production.</strong> Word Up is a
+                <strong>Not approved for production.</strong> Waypoint is a
                 development project. No independent security, privacy,
                 safeguarding, or accessibility review has been completed, and no
                 release is approved for production use or for storing real
@@ -95,24 +95,24 @@
             </div>
           </section>
 
-          <section class="ug-section" id="the-wu-command-line">
-            <h2>The <code>wu</code> command line</h2>
+          <section class="ug-section" id="the-w-command-line">
+            <h2>The <code>way</code> command line</h2>
 
             <h3>Installing and getting help</h3>
             <p>
-              <code>wu</code> is packed as a .NET tool. Install it, then ask it
+              <code>way</code> is packed as a .NET tool. Install it, then ask it
               what it can do:
             </p>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu --help</code></pre>
+              <pre><code>way --help</code></pre>
             </div>
             <p>
               Every group and every command answers <code>--help</code> as well,
               and that answer is authoritative for typed arguments and options:
             </p>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu db --help
-wu invite create --help</code></pre>
+              <pre><code>way db --help
+way invite create --help</code></pre>
             </div>
             <p>
               <code>--help</code> and <code>--version</code> are handled before
@@ -201,14 +201,14 @@ wu invite create --help</code></pre>
 
             <h3>Who the command acts as</h3>
             <p>
-              Word Up audits by person, not by process, so every command that
+              Waypoint audits by person, not by process, so every command that
               changes something is attributed to a real Program Administrator
-              account. By default <code>wu</code> picks the oldest active
+              account. By default <code>way</code> picks the oldest active
               Program Administrator. The global option
               <code>--actor</code> chooses one deterministically:
             </p>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu --actor 0f2c9d24-6a1b-4f0e-9d33-6c0a2f5b8e41 user list</code></pre>
+              <pre><code>way --actor 0f2c9d24-6a1b-4f0e-9d33-6c0a2f5b8e41 user list</code></pre>
             </div>
             <p>It fails in exactly two ways, and both are worth recognising.</p>
             <div class="ug-defs">
@@ -216,7 +216,7 @@ wu invite create --help</code></pre>
                 <p class="ug-defs__term">
                   <code
                     >error: No active Program Administrator is available; run
-                    'wu db seed' first.</code
+                    'way db seed' first.</code
                   >
                 </p>
                 <p class="ug-defs__desc">
@@ -247,7 +247,7 @@ wu invite create --help</code></pre>
             </p>
 
             <h3><code>db</code> — database lifecycle</h3>
-            <p>Manage the Word Up database schema and seed data.</p>
+            <p>Manage the Waypoint database schema and seed data.</p>
             <div class="ug-tablewrap">
               <table>
                 <thead>
@@ -288,10 +288,10 @@ wu invite create --help</code></pre>
 
             <p>Bring a new environment up in two commands:</p>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu db migrate</code></pre>
+              <pre><code>way db migrate</code></pre>
             </div>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu db seed --email director@example.org --password "…" --display-name "Program Director"</code></pre>
+              <pre><code>way db seed --email director@example.org --password "…" --display-name "Program Director"</code></pre>
             </div>
             <p>
               <code>db seed</code> prints the account as JSON. That is the first
@@ -300,15 +300,15 @@ wu invite create --help</code></pre>
               invitation.
             </p>
 
-            <div class="wu-alert wu-alert--error" role="alert">
-              <p class="wu-alert__title">
-                <code>wu db reset</code> destroys the database
+            <div class="w-alert w-alert--error" role="alert">
+              <p class="w-alert__title">
+                <code>way db reset</code> destroys the database
               </p>
               <p>
                 It drops and recreates the database named in
                 <code>ConnectionStrings__Default</code>. Every account, every
                 submission, every attendance record and the entire audit log are
-                gone, and nothing in Word Up can bring them back. It exists for
+                gone, and nothing in Waypoint can bring them back. It exists for
                 throwaway development databases. The confirmation must be the
                 exact string <code>RESET</code>, and anything else is refused
                 with
@@ -317,11 +317,11 @@ wu invite create --help</code></pre>
               </p>
             </div>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu db reset --confirm RESET</code></pre>
+              <pre><code>way db reset --confirm RESET</code></pre>
             </div>
 
             <h3><code>user</code> — accounts</h3>
-            <p>Manage Word Up user accounts.</p>
+            <p>Manage Waypoint user accounts.</p>
             <div class="ug-tablewrap">
               <table>
                 <thead>
@@ -392,7 +392,7 @@ wu invite create --help</code></pre>
               <code>Volunteer</code> — not a display label.
             </p>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu user list --role Mentor --search rivera</code></pre>
+              <pre><code>way user list --role Mentor --search rivera</code></pre>
             </div>
             <p>
               There is no <code>user remove</code>. Permanent removal runs
@@ -456,7 +456,7 @@ wu invite create --help</code></pre>
               </table>
             </div>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu invite create --email new.mentor@example.org --role Mentor</code></pre>
+              <pre><code>way invite create --email new.mentor@example.org --role Mentor</code></pre>
             </div>
             <p>
               Invitations expire after 14 days and are single use, whether they
@@ -518,7 +518,7 @@ wu invite create --help</code></pre>
               cannot be assigned.
             </p>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu cohort progress 6b1e4a90-7c2d-4b53-90f1-2ad8c3e77b04</code></pre>
+              <pre><code>way cohort progress 6b1e4a90-7c2d-4b53-90f1-2ad8c3e77b04</code></pre>
             </div>
 
             <h3><code>import</code> — roster CSV</h3>
@@ -552,7 +552,7 @@ wu invite create --help</code></pre>
               <code>Consent</code>. Matching ignores letter case.
             </p>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu import youth --from ./roster-autumn.csv</code></pre>
+              <pre><code>way import youth --from ./roster-autumn.csv</code></pre>
             </div>
 
             <h3><code>report</code> — exports</h3>
@@ -598,7 +598,7 @@ wu invite create --help</code></pre>
               with <code>error: Output file already exists: …</code>
             </p>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu report cohort 6b1e4a90-7c2d-4b53-90f1-2ad8c3e77b04 --format csv --out ./autumn.csv</code></pre>
+              <pre><code>way report cohort 6b1e4a90-7c2d-4b53-90f1-2ad8c3e77b04 --format csv --out ./autumn.csv</code></pre>
             </div>
 
             <h3><code>badge</code> — manual awards</h3>
@@ -652,7 +652,7 @@ wu invite create --help</code></pre>
               </table>
             </div>
             <div class="ug-copy" data-ug-copy>
-              <pre><code>wu token issue --user director@example.org</code></pre>
+              <pre><code>way token issue --user director@example.org</code></pre>
             </div>
             <p>
               This is how you get a bearer token for a script or a
@@ -716,7 +716,7 @@ wu invite create --help</code></pre>
               Every protected endpoint expects a bearer JWT in the standard
               <code>Authorization</code> header. Get one by signing in at
               <code>POST /api/auth/sign-in</code>, or by issuing one with
-              <code>wu token issue</code>.
+              <code>way token issue</code>.
             </p>
             <div class="ug-defs">
               <div class="ug-defs__row">
@@ -968,7 +968,7 @@ wu invite create --help</code></pre>
           <section class="ug-section" id="realtime">
             <h2>Realtime updates</h2>
             <p>
-              Word Up pushes a small number of live updates over a SignalR hub
+              Waypoint pushes a small number of live updates over a SignalR hub
               at <code>/hubs/realtime</code>.
             </p>
 
@@ -989,8 +989,8 @@ wu invite create --help</code></pre>
               allowed to run on.
             </p>
 
-            <div class="wu-alert wu-alert--info">
-              <p class="wu-alert__title">The hub is receive-only</p>
+            <div class="w-alert w-alert--info">
+              <p class="w-alert__title">The hub is receive-only</p>
               <p>
                 There are no client-callable methods. You connect, you listen,
                 and that is the entire contract. Anything that changes state
@@ -1187,12 +1187,12 @@ wu invite create --help</code></pre>
               including the global 500 handler and the maintenance 503.
             </p>
 
-            <h3><code>X-WordUp-State</code></h3>
+            <h3><code>X-Waypoint-State</code></h3>
             <p>
-              A response can carry <code>X-WordUp-State</code> to tell a client
-              <em>why</em> it was refused, so the client can route to the right
-              screen rather than showing a generic error. Two values exist:
-              <code>consent-required</code> and
+              A response can carry <code>X-Waypoint-State</code> to tell a
+              client <em>why</em> it was refused, so the client can route to the
+              right screen rather than showing a generic error. Two values
+              exist: <code>consent-required</code> and
               <code>media-consent-required</code>. The portal uses them to send
               a youth to <strong>A guardian needs to sign off</strong> instead
               of to a dead end. The header is explicitly exposed through CORS,
@@ -1215,7 +1215,7 @@ wu invite create --help</code></pre>
             </p>
             <div class="ug-copy" data-ug-copy>
               <pre><code>{
-  "title": "Word Up is down for scheduled maintenance.",
+  "title": "Waypoint is down for scheduled maintenance.",
   "detail": "Nothing you've done is lost. Please check again shortly.",
   "retryAfterSeconds": 120
 }</code></pre>
@@ -1231,7 +1231,7 @@ wu invite create --help</code></pre>
               It is headed <strong>We’ll be right back</strong> under the
               eyebrow <strong>Scheduled maintenance</strong>, with the line
               <strong
-                >Word Up is down for a short bit of maintenance. Nothing you’ve
+                >Waypoint is down for a short bit of maintenance. Nothing you’ve
                 done is lost — please check again shortly.</strong
               >
             </p>
@@ -1241,7 +1241,7 @@ wu invite create --help</code></pre>
             <h2>Production startup refuses bad configuration</h2>
             <p>
               When the environment is <code>Production</code>, both the API and
-              <code>wu</code> validate their configuration before doing
+              <code>way</code> validate their configuration before doing
               anything, and refuse to start if it is unsafe. The command line
               prints the reason prefixed <code>error: </code> and exits with
               code 2.
@@ -1300,7 +1300,7 @@ wu invite create --help</code></pre>
                   <span class="ug-card__kicker">Reference</span>
                   <span class="ug-card__title">Messages and error codes</span>
                   <span class="ug-card__desc"
-                    >Every HTTP status Word Up returns and the message that
+                    >Every HTTP status Waypoint returns and the message that
                     comes with it.</span
                   >
                 </a>

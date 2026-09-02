@@ -1,7 +1,7 @@
 {
   "portalRoutesSource": "projects/portal/src/app/app.routes.ts",
   "publicRoutesSource": "projects/public-site/src/app/app.routes.ts",
-  "navigationSource": "projects/wu-ui/src/lib/shell/nav-config.ts",
+  "navigationSource": "projects/w-ui/src/lib/shell/nav-config.ts",
   "requiredPortalRoutes": [
     "/auth/sign-in",
     "/invite",

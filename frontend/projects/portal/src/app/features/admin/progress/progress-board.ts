@@ -7,36 +7,36 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ApiError, CohortOptions, CohortsApi, CohortSummary, ProgressBoard } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { ApiError, CohortOptions, CohortsApi, CohortSummary, ProgressBoard } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { debounceTime, filter, finalize, forkJoin, merge } from 'rxjs';
 import { RealtimeService } from '../../../realtime.service';
 
 // Traces to: L2-ADMIN-004, L2-REPORT-003, L2-NFR-005
 @Component({
-  selector: 'wu-progress-board',
+  selector: 'w-progress-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon],
+  imports: [WShell, WIcon],
   templateUrl: './progress-board.html',
   styles: `
     .board-filters {
       display: grid;
       grid-template-columns: repeat(2, minmax(13rem, 1fr));
-      gap: var(--wu-sp-4);
+      gap: var(--w-sp-4);
       align-items: end;
     }
     .board-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
     }
     .matrix-wrap {
       max-width: 100%;
       overflow-x: auto;
       overscroll-behavior-inline: contain;
-      border: 1px solid var(--wu-border);
-      border-radius: var(--wu-radius-lg);
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-radius-lg);
     }
     .matrix {
       width: 100%;
@@ -44,15 +44,15 @@ import { RealtimeService } from '../../../realtime.service';
     }
     .matrix th,
     .matrix td {
-      padding: var(--wu-sp-3);
-      border-bottom: 1px solid var(--wu-border);
+      padding: var(--w-sp-3);
+      border-bottom: 1px solid var(--w-border);
       text-align: left;
       vertical-align: middle;
     }
     .matrix thead th {
       position: sticky;
       top: 0;
-      background: var(--wu-surface);
+      background: var(--w-surface);
       z-index: 1;
     }
     .matrix th:first-child,
@@ -60,7 +60,7 @@ import { RealtimeService } from '../../../realtime.service';
       position: sticky;
       left: 0;
       min-width: 13rem;
-      background: var(--wu-surface);
+      background: var(--w-surface);
       z-index: 2;
     }
     .matrix thead th:first-child {
@@ -71,42 +71,42 @@ import { RealtimeService } from '../../../realtime.service';
     }
     .module-cell__name {
       display: block;
-      margin-bottom: var(--wu-sp-1);
-      color: var(--wu-text-muted);
-      font-size: var(--wu-text-sm);
+      margin-bottom: var(--w-sp-1);
+      color: var(--w-text-muted);
+      font-size: var(--w-text-sm);
     }
     .state {
       display: inline-flex;
       align-items: center;
       min-height: 2rem;
-      padding: 0 var(--wu-sp-2);
-      border-radius: var(--wu-radius-pill);
-      background: var(--wu-surface-subtle);
+      padding: 0 var(--w-sp-2);
+      border-radius: var(--w-radius-pill);
+      background: var(--w-surface-subtle);
       font-weight: 700;
       white-space: nowrap;
     }
     .state--done {
-      color: var(--wu-success);
+      color: var(--w-success);
     }
     .state--progress {
-      color: var(--wu-info);
+      color: var(--w-info);
     }
     .state--unassigned {
-      color: var(--wu-text-muted);
+      color: var(--w-text-muted);
       font-weight: 500;
     }
     .matrix tfoot th,
     .matrix tfoot td {
       border-bottom: 0;
-      background: var(--wu-surface-subtle);
+      background: var(--w-surface-subtle);
       font-weight: 700;
     }
     @media (max-width: 42rem) {
       .board-filters {
         grid-template-columns: 1fr;
       }
-      .board-actions .wu-btn {
-        flex: 1 1 calc(50% - var(--wu-sp-3));
+      .board-actions .w-btn {
+        flex: 1 1 calc(50% - var(--w-sp-3));
         min-height: 45px;
       }
     }

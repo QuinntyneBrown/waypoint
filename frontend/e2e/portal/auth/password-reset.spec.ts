@@ -25,7 +25,7 @@ test('forgot-password gives an identical masked confirmation for known and unkno
   await expect(sent.resendButton).toBeVisible();
 
   // Unknown email → identical confirmation UI (no enumeration).
-  await forgot.requestReset(`nobody-${crypto.randomUUID()}@wordup.test`);
+  await forgot.requestReset(`nobody-${crypto.randomUUID()}@waypoint.test`);
   await expect(page).toHaveURL(ResetLinkSentPage.urlPattern);
   await expect(sent.resendButton).toBeVisible();
 });

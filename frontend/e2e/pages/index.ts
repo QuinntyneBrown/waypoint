@@ -1,4 +1,4 @@
-// Page Object Model surface for the Word Up E2E suite. Import page objects from
+// Page Object Model surface for the Waypoint E2E suite. Import page objects from
 // this barrel; API/data fixtures live in `../support`.
 export { BasePage } from './base.page';
 export {

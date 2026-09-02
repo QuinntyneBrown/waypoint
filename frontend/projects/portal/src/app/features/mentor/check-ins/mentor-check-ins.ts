@@ -1,29 +1,29 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiError, MentorApi, MentorCheckIn, MentorRosterYouth } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { ApiError, MentorApi, MentorCheckIn, MentorRosterYouth } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 
 type CheckInType = '1:1' | 'call' | 'session';
 
 // Traces to: L2-MENTOR-006, L2-LEARN-010, L2-GUARDIAN-001
 @Component({
-  selector: 'wu-mentor-check-ins',
+  selector: 'w-mentor-check-ins',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, DatePipe],
+  imports: [WShell, WIcon, DatePipe],
   templateUrl: './mentor-check-ins.html',
   styles: `
     .check-in-layout {
       display: grid;
       grid-template-columns: minmax(19rem, 0.75fr) minmax(0, 1.25fr);
-      gap: var(--wu-s6);
+      gap: var(--w-s6);
       align-items: start;
     }
     .history-filters {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--wu-s4);
+      gap: var(--w-s4);
     }
     .history-card p {
       overflow-wrap: anywhere;

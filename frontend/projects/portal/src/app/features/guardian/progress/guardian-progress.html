@@ -1,141 +1,141 @@
-<wu-shell
+<w-shell
   role="guardian"
   active="progress"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Read-only family view</div>
-        <h1 class="wu-page__title">Child progress</h1>
+  <div class="w-container w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Read-only family view</div>
+        <h1 class="w-page__title">Child progress</h1>
         @if (context.progress(); as progress) {
-          <p class="wu-page__sub">{{ progress.childName }}</p>
+          <p class="w-page__sub">{{ progress.childName }}</p>
         }
       </div>
     </div>
 
     @if (context.loading()) {
-      <p class="wu-muted">Loading progress…</p>
+      <p class="w-muted">Loading progress…</p>
     } @else if (context.progress(); as progress) {
-      <div class="wu-stack wu-stack--lg">
-        <section class="wu-card">
-          <div class="wu-card__body wu-stack">
-            <h2 class="wu-card__title">Modules</h2>
+      <div class="w-stack w-stack--lg">
+        <section class="w-card">
+          <div class="w-card__body w-stack">
+            <h2 class="w-card__title">Modules</h2>
             @for (module of progress.modules; track module.moduleId) {
-              <div class="wu-listitem" data-testid="guardian-module">
-                <div class="wu-listitem__body">
-                  <div class="wu-listitem__title">{{ module.name }}</div>
-                  <div class="wu-listitem__meta">
+              <div class="w-listitem" data-testid="guardian-module">
+                <div class="w-listitem__body">
+                  <div class="w-listitem__title">{{ module.name }}</div>
+                  <div class="w-listitem__meta">
                     {{ module.status }} · {{ module.completionPercent.toFixed(0) }}%
                   </div>
                 </div>
               </div>
             } @empty {
-              <p class="wu-muted">No modules assigned yet.</p>
+              <p class="w-muted">No modules assigned yet.</p>
             }
           </div>
         </section>
 
-        <section class="wu-card">
-          <div class="wu-card__body wu-stack">
-            <h2 class="wu-card__title">Attendance history</h2>
+        <section class="w-card">
+          <div class="w-card__body w-stack">
+            <h2 class="w-card__title">Attendance history</h2>
             @for (item of progress.attendanceHistory; track item.sessionId) {
-              <div class="wu-listitem" data-testid="guardian-attendance">
-                <div class="wu-listitem__body">
-                  <div class="wu-listitem__title">{{ item.title }}</div>
-                  <div class="wu-listitem__meta">
+              <div class="w-listitem" data-testid="guardian-attendance">
+                <div class="w-listitem__body">
+                  <div class="w-listitem__title">{{ item.title }}</div>
+                  <div class="w-listitem__meta">
                     {{ item.startsAt | date: 'MMM d, y' }} · {{ item.status }}
                   </div>
                 </div>
               </div>
             } @empty {
-              <p class="wu-muted">No attendance recorded yet.</p>
+              <p class="w-muted">No attendance recorded yet.</p>
             }
           </div>
         </section>
 
-        <div class="wu-grid wu-grid--2">
-          <section class="wu-card" data-testid="guardian-quiz-outcomes">
-            <div class="wu-card__body wu-stack">
-              <h2 class="wu-card__title">Approved quiz outcomes</h2>
+        <div class="w-grid w-grid--2">
+          <section class="w-card" data-testid="guardian-quiz-outcomes">
+            <div class="w-card__body w-stack">
+              <h2 class="w-card__title">Approved quiz outcomes</h2>
               @for (quiz of progress.quizHistory; track quiz.attemptId) {
-                <div class="wu-listitem">
-                  <div class="wu-listitem__body">
-                    <div class="wu-listitem__title">{{ quiz.quizTitle }}</div>
-                    <div class="wu-listitem__meta">
+                <div class="w-listitem">
+                  <div class="w-listitem__body">
+                    <div class="w-listitem__title">{{ quiz.quizTitle }}</div>
+                    <div class="w-listitem__meta">
                       {{ quiz.score }}% · {{ quiz.passed ? 'Passed' : 'Keep going' }} ·
                       {{ quiz.approvedAt | date: 'MMM d, y' }}
                     </div>
                   </div>
                 </div>
               } @empty {
-                <p class="wu-muted">No approved quiz outcomes yet.</p>
+                <p class="w-muted">No approved quiz outcomes yet.</p>
               }
             </div>
           </section>
 
-          <section class="wu-card" data-testid="guardian-competencies">
-            <div class="wu-card__body wu-stack">
-              <h2 class="wu-card__title">Leadership competencies</h2>
+          <section class="w-card" data-testid="guardian-competencies">
+            <div class="w-card__body w-stack">
+              <h2 class="w-card__title">Leadership competencies</h2>
               @for (competency of progress.competencies; track competency.competencyId) {
-                <div class="wu-listitem">
-                  <div class="wu-listitem__body">
-                    <div class="wu-listitem__title">{{ competency.name }}</div>
-                    <div class="wu-listitem__meta">
+                <div class="w-listitem">
+                  <div class="w-listitem__body">
+                    <div class="w-listitem__title">{{ competency.name }}</div>
+                    <div class="w-listitem__meta">
                       {{ competency.level }} · {{ competency.percent }}%
                     </div>
                   </div>
                 </div>
               } @empty {
-                <p class="wu-muted">No competency assessments yet.</p>
+                <p class="w-muted">No competency assessments yet.</p>
               }
             </div>
           </section>
         </div>
 
-        <div class="wu-grid wu-grid--2">
-          <section class="wu-card" data-testid="guardian-earned-badges">
-            <div class="wu-card__body wu-stack">
-              <h2 class="wu-card__title">Earned badges</h2>
+        <div class="w-grid w-grid--2">
+          <section class="w-card" data-testid="guardian-earned-badges">
+            <div class="w-card__body w-stack">
+              <h2 class="w-card__title">Earned badges</h2>
               @for (badge of progress.earnedBadges; track badge.badgeId) {
                 <p><span aria-hidden="true">★</span> {{ badge.name }}</p>
               } @empty {
-                <p class="wu-muted">No badges earned yet.</p>
+                <p class="w-muted">No badges earned yet.</p>
               }
             </div>
           </section>
-          <section class="wu-card" data-testid="guardian-locked-badges">
-            <div class="wu-card__body wu-stack">
-              <h2 class="wu-card__title">Still to unlock</h2>
+          <section class="w-card" data-testid="guardian-locked-badges">
+            <div class="w-card__body w-stack">
+              <h2 class="w-card__title">Still to unlock</h2>
               @for (badge of progress.lockedBadges; track badge.badgeId) {
                 <p><span aria-hidden="true">○</span> {{ badge.name }}</p>
               } @empty {
-                <p class="wu-muted">Everything is unlocked.</p>
+                <p class="w-muted">Everything is unlocked.</p>
               }
             </div>
           </section>
         </div>
 
-        <section class="wu-card" data-testid="guardian-upcoming-sessions">
-          <div class="wu-card__body wu-stack">
-            <h2 class="wu-card__title">Upcoming schedule</h2>
+        <section class="w-card" data-testid="guardian-upcoming-sessions">
+          <div class="w-card__body w-stack">
+            <h2 class="w-card__title">Upcoming schedule</h2>
             @for (session of progress.upcomingSessions; track session.sessionId) {
               <p>
                 <strong>{{ session.title }}</strong> ·
                 {{ session.startsAt | date: 'MMM d, h:mm a' }}
               </p>
             } @empty {
-              <p class="wu-muted">No upcoming sessions.</p>
+              <p class="w-muted">No upcoming sessions.</p>
             }
           </div>
         </section>
 
-        <section class="wu-card" data-testid="guardian-shared-checkins">
-          <div class="wu-card__body wu-stack">
-            <h2 class="wu-card__title">Shared mentor updates</h2>
+        <section class="w-card" data-testid="guardian-shared-checkins">
+          <div class="w-card__body w-stack">
+            <h2 class="w-card__title">Shared mentor updates</h2>
             @for (checkIn of progress.sharedCheckIns; track checkIn.checkInId) {
-              <article class="wu-stack wu-stack--sm">
+              <article class="w-stack w-stack--sm">
                 <strong>{{ checkIn.date | date: 'MMM d, y' }} · {{ checkIn.type }}</strong>
                 @if (checkIn.engagement) {
                   <p>{{ checkIn.engagement }}</p>
@@ -151,16 +151,16 @@
                 }
               </article>
             } @empty {
-              <p class="wu-muted">No mentor updates have been shared.</p>
+              <p class="w-muted">No mentor updates have been shared.</p>
             }
           </div>
         </section>
       </div>
     } @else {
-      <div class="wu-empty">
-        <h2 class="wu-empty__title">No progress to show yet</h2>
-        <p class="wu-empty__text">A linked youth’s aggregate progress will appear here.</p>
+      <div class="w-empty">
+        <h2 class="w-empty__title">No progress to show yet</h2>
+        <p class="w-empty__text">A linked youth’s aggregate progress will appear here.</p>
       </div>
     }
   </div>
-</wu-shell>
+</w-shell>

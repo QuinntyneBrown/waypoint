@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Public Site subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Public Site subsystem owns this feature slice.
 
 The Navigate the public site feature slice refines `L2-PUB-001` into one independently deliverable interaction. The public marketing pages shall be served to anonymous visitors and shall not require or leak authenticated data.
 
 An anonymous visitor starts this feature interaction through the Public Site application. The frontend application presents an authorized and bounded feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans Public Site application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+The feature spans Public Site application; Waypoint API application. The frontend application owns interaction state and presentation. The Waypoint API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 ### Components and types
 
@@ -23,11 +23,11 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`NotFound`](../../../../frontend/projects/public-site/src/app/features/not-found/not-found.ts)<br>[`About`](../../../../frontend/projects/public-site/src/app/features/about/about.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/wu-api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`PublicController`](../../../../backend/src/WordUp.Api/Controllers/PublicSite/PublicController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`GetPublicContentQuery`](../../../../backend/src/WordUp.Application/PublicSite/GetPublicContentQuery.cs)<br>[`GetPublicContentQueryHandler`](../../../../backend/src/WordUp.Application/PublicSite/GetPublicContentQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`ContactRequest`](../../../../backend/src/WordUp.Domain/PublicSite/ContactRequest.cs)<br>[`DonationPledge`](../../../../backend/src/WordUp.Domain/PublicSite/DonationPledge.cs)<br>[`VolunteerSignup`](../../../../backend/src/WordUp.Domain/PublicSite/VolunteerSignup.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`NotFoundException`](../../../../backend/src/WordUp.Application/Shared/Common/NotFoundException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/w-api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| API transport | [`PublicController`](../../../../backend/src/Waypoint.Api/Controllers/PublicSite/PublicController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`GetPublicContentQuery`](../../../../backend/src/Waypoint.Application/PublicSite/GetPublicContentQuery.cs)<br>[`GetPublicContentQueryHandler`](../../../../backend/src/Waypoint.Application/PublicSite/GetPublicContentQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`ContactRequest`](../../../../backend/src/Waypoint.Domain/PublicSite/ContactRequest.cs)<br>[`DonationPledge`](../../../../backend/src/Waypoint.Domain/PublicSite/DonationPledge.cs)<br>[`VolunteerSignup`](../../../../backend/src/Waypoint.Domain/PublicSite/VolunteerSignup.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`NotFoundException`](../../../../backend/src/Waypoint.Application/Shared/Common/NotFoundException.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -40,7 +40,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Behavior
 
 1. **Entry.** An anonymous visitor starts this feature interaction through the Public Site application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-PUB-001`, `L2-NFR-009`, `L2-NFR-010`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the Waypoint API application. The controller applies endpoint policy. The application handler applies `L2-PUB-001`, `L2-NFR-009`, `L2-NFR-010`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
 3. **Result.** The frontend application presents an authorized and bounded feature result.
 
 ## Requirements
@@ -82,11 +82,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Navigate the public site.](diagrams/c4-system-context.png)
 
-*Figure 1 — C4 system context: Navigate the public site in the Word Up environment.*
+*Figure 1 — C4 system context: Navigate the public site in the Waypoint environment.*
 
 #### Container
 

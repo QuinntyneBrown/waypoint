@@ -9,9 +9,9 @@ import {
   ReportsApi,
   ReportsHub,
   YouthReport,
-} from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+} from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -19,30 +19,30 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
 
 // Traces to: L2-REPORT-001, L2-AUTH-010, L2-NFR-009/010
 @Component({
-  selector: 'wu-admin-reports',
+  selector: 'w-admin-reports',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuIcon, ReactiveFormsModule, DatePipe, DecimalPipe, PercentPipe],
+  imports: [WShell, WIcon, ReactiveFormsModule, DatePipe, DecimalPipe, PercentPipe],
   templateUrl: './admin-reports.html',
   styles: `
     .report-filters {
       display: grid;
       grid-template-columns: repeat(5, minmax(8.5rem, 1fr)) auto;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
       align-items: end;
     }
     .report-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--wu-sp-2) var(--wu-sp-5);
+      gap: var(--w-sp-2) var(--w-sp-5);
       align-items: center;
     }
     .report-tabs {
       display: flex;
-      gap: var(--wu-sp-2);
+      gap: var(--w-sp-2);
       overflow-x: auto;
-      padding-bottom: var(--wu-sp-1);
+      padding-bottom: var(--w-sp-1);
     }
-    .report-tabs .wu-btn {
+    .report-tabs .w-btn {
       flex: 0 0 auto;
     }
     .report-kpis,
@@ -50,7 +50,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     .report-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--wu-sp-4);
+      gap: var(--w-sp-4);
     }
     .report-kpi strong {
       display: block;
@@ -60,20 +60,20 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     .report-chart-row {
       display: grid;
       grid-template-columns: minmax(8rem, 1fr) minmax(8rem, 3fr) auto;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
       align-items: center;
     }
     .report-bar {
       height: 0.75rem;
       overflow: hidden;
       border-radius: 999px;
-      background: var(--wu-surface-subtle);
+      background: var(--w-surface-subtle);
     }
     .report-bar > span {
       display: block;
       height: 100%;
       border-radius: inherit;
-      background: var(--wu-teal);
+      background: var(--w-teal);
     }
     .report-ring {
       --report-value: 0%;
@@ -83,7 +83,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       margin-inline: auto;
       place-items: center;
       border-radius: 50%;
-      background: conic-gradient(var(--wu-teal) var(--report-value), var(--wu-surface-subtle) 0);
+      background: conic-gradient(var(--w-teal) var(--report-value), var(--w-surface-subtle) 0);
       position: relative;
     }
     .report-ring::before {
@@ -91,7 +91,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       position: absolute;
       inset: 0.65rem;
       border-radius: 50%;
-      background: var(--wu-surface);
+      background: var(--w-surface);
     }
     .report-ring strong {
       position: relative;
@@ -109,10 +109,10 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     .report-stat-line {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
     }
     .report-status--risk {
-      color: var(--wu-danger);
+      color: var(--w-danger);
       font-weight: 700;
     }
     @media (max-width: 72rem) {
@@ -135,8 +135,8 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       .report-chart-row .report-bar {
         grid-column: 1 / -1;
       }
-      .report-filters .wu-btn,
-      .report-selector .wu-btn {
+      .report-filters .w-btn,
+      .report-selector .w-btn {
         width: 100%;
         min-height: 45px;
       }

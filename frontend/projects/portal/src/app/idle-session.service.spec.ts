@@ -1,7 +1,7 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
-import { AuthStore } from '@wu/auth';
+import { AuthStore } from '@w/auth';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { FormDraftService } from './form-draft.service';
 import { IDLE_TIMEOUT_MS, IdleSessionService } from './idle-session.service';

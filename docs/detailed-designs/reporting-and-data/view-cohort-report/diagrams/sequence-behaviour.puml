@@ -20,15 +20,15 @@ box "Frontend — Portal application" #E0F2FE
   participant "AttendanceQueueService" as page
   participant "AuthApi" as client
 end box
-box "Backend — WordUp API application" #D1FADF
+box "Backend — Waypoint API application" #D1FADF
   participant "ReportsController" as controller
 end box
-box "Backend — WordUp Application and Domain" #ECFDF3
+box "Backend — Waypoint Application and Domain" #ECFDF3
   participant "CohortReportQueryHandler" as handler
   participant "ViewCohortReportState" as entity
 end box
-box "Backend — WordUp Infrastructure" #FFF4E5
-  database "Word Up database" as db
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  database "Waypoint database" as db
 end box
 actor -> page : Start view a cohort report
 page -> client : Build typed request

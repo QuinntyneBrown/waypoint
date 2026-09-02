@@ -1,0 +1,40 @@
+/* Display & accessibility preference hooks (L2-PLATFORM-004). A preferences
+   service sets `--w-text-scale` and toggles these classes on <html>; the rules
+   here turn those hooks into real rendering changes. Loaded after core.css. */
+
+:root {
+  --w-text-scale: 1;
+}
+
+body {
+  font-size: calc(1rem * var(--w-text-scale));
+}
+
+/* Higher-contrast borders, text, and focus. */
+.w-a11y-contrast {
+  --w-border: rgba(22, 22, 12, 0.55);
+  --w-border-strong: rgba(22, 22, 12, 0.75);
+  --w-muted: rgba(22, 22, 12, 0.82);
+  --w-ink-60: rgba(22, 22, 12, 0.82);
+}
+
+/* Respect reduced-motion by neutralising animations/transitions. */
+.w-a11y-reduce-motion *,
+.w-a11y-reduce-motion *::before,
+.w-a11y-reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Always underline links for clearer affordance. */
+.w-a11y-underline a {
+  text-decoration: underline;
+}
+
+/* Serif reading font for body copy. */
+.w-a11y-reading-font body,
+body.w-a11y-reading-font {
+  font-family: var(--w-font-serif);
+}

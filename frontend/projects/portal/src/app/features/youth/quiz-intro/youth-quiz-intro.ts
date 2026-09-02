@@ -1,20 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError, LearningApi, QuizIntro } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, QuizIntro } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-LEARN-004
 @Component({
-  selector: 'wu-youth-quiz-intro',
+  selector: 'w-youth-quiz-intro',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink],
+  imports: [WShell, RouterLink],
   templateUrl: './youth-quiz-intro.html',
   styles: `
     .quiz-facts {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-      gap: var(--wu-sp-3);
+      gap: var(--w-sp-3);
     }
   `,
 })

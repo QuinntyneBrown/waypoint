@@ -1,38 +1,38 @@
 import { DatePipe, PercentPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, ReportsApi, ReportsHub } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuIcon, WuShell } from '@wu/ui';
+import { ApiError, ReportsApi, ReportsHub } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WIcon, WShell } from '@w/ui';
 
 // Traces to: L2-ADMIN-004, L2-REPORT-001
 @Component({
-  selector: 'wu-admin-dashboard',
+  selector: 'w-admin-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, PercentPipe, RouterLink, WuIcon, WuShell],
+  imports: [DatePipe, PercentPipe, RouterLink, WIcon, WShell],
   templateUrl: './admin-dashboard.html',
   styles: `
     .dashboard-grid {
       display: grid;
-      gap: var(--wu-s5);
+      gap: var(--w-s5);
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .dashboard-row {
-      border-top: 1px solid var(--wu-border);
-      padding: var(--wu-s4) 0;
+      border-top: 1px solid var(--w-border);
+      padding: var(--w-s4) 0;
     }
     .dashboard-row:first-child {
       border-top: 0;
     }
     .dashboard-actions {
       display: grid;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .dashboard-action {
       align-items: center;
       display: flex;
-      gap: var(--wu-s3);
+      gap: var(--w-s3);
       min-height: 56px;
     }
     @media (max-width: 62rem) {

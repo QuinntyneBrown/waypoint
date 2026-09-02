@@ -24,12 +24,12 @@ package "Frontend — Portal application" {
     +get(request): Observable
   }
 }
-package "Backend — WordUp API application" {
+package "Backend — Waypoint API application" {
   class "GuardianController" as controller_GuardianController <<controller>> {
     +GetAsync(request, cancellationToken): ActionResult
   }
 }
-package "Backend — WordUp Application" {
+package "Backend — Waypoint Application" {
   class "ChildProgressQuery" as request_ChildProgressQuery <<record>>
   class "ChildProgressQueryHandler" as handler_ChildProgressQueryHandler <<handler>> {
     +Handle(request, cancellationToken): Result
@@ -42,7 +42,7 @@ package "Backend — WordUp Application" {
     +Role: string
   }
 }
-package "Backend — WordUp Domain" {
+package "Backend — Waypoint Domain" {
   class "GuardianProfile" as entity_GuardianProfile <<domain type>>
 }
 page_AttendanceQueueService --> client_AuthApi : invokes

@@ -4,10 +4,10 @@ LAYOUT_LEFT_RIGHT()
 title C4 level 1 — Complete a coding lesson — system context
 Person(primary, "Youth participant", "Human role outside the software boundary")
 Person(staff, "Program staff", "Administers authorized program activity")
-System(wordup, "Word Up software system", "Youth leadership, learning, mentoring, and program operations")
+System(waypoint, "Waypoint software system", "Youth leadership, learning, mentoring, and program operations")
 
-Rel(primary, wordup, "A youth participant starts this feature interaction through the Portal…")
-Rel(staff, wordup, "Administers authorized program activity")
+Rel(primary, waypoint, "A youth participant starts this feature interaction through the Portal…")
+Rel(staff, waypoint, "Administers authorized program activity")
 
 SHOW_LEGEND()
 @enduml

@@ -3,73 +3,73 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reflection · Word Up</title>
+  <title>Reflection · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/wordup.css">
-  <script defer src="../../assets/js/wordup.js"></script>
+  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
   <style>
     .rf-mood{display:flex;gap:10px;flex-wrap:wrap}
-    .rf-mood__opt{flex:1;min-width:56px;border:var(--wu-bw) solid var(--wu-border);border-radius:var(--wu-r-card);background:var(--wu-white);padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.72rem;color:var(--wu-muted);cursor:pointer}
-    .rf-mood__opt .wu-icon{width:24px;height:24px;color:var(--wu-ink)}
-    .rf-mood__opt.is-selected{border-color:var(--wu-ink);background:var(--wu-lime)}
-    .rf-actions{position:sticky;bottom:0;background:var(--wu-white);border-top:var(--wu-bw) solid var(--wu-border);padding:var(--wu-s4) 0;margin-top:var(--wu-s6);display:flex;gap:12px}
-    .rf-actions .wu-btn--primary{flex:1}
+    .rf-mood__opt{flex:1;min-width:56px;border:var(--w-bw) solid var(--w-border);border-radius:var(--w-r-card);background:var(--w-white);padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.72rem;color:var(--w-muted);cursor:pointer}
+    .rf-mood__opt .w-icon{width:24px;height:24px;color:var(--w-ink)}
+    .rf-mood__opt.is-selected{border-color:var(--w-ink);background:var(--w-lime)}
+    .rf-actions{position:sticky;bottom:0;background:var(--w-white);border-top:var(--w-bw) solid var(--w-border);padding:var(--w-s4) 0;margin-top:var(--w-s6);display:flex;gap:12px}
+    .rf-actions .w-btn--primary{flex:1}
   </style>
 </head>
 <body data-role="youth" data-active="curriculum" data-track="bible">
-  <main class="wu-main">
-    <div class="wu-container wu-container--narrow wu-page">
+  <main class="w-main">
+    <div class="w-container w-container--narrow w-page">
 
-      <div class="wu-cluster wu-gap-2 wu-mb-4">
-        <a class="wu-btn wu-btn--ghost wu-btn--icon" href="lesson-bible.html" aria-label="Back to lesson"><svg class="wu-icon"><use href="#i-arrow-left"></use></svg></a>
+      <div class="w-cluster w-gap-2 w-mb-4">
+        <a class="w-btn w-btn--ghost w-btn--icon" href="lesson-bible.html" aria-label="Back to lesson"><svg class="w-icon"><use href="#i-arrow-left"></use></svg></a>
         <div>
-          <div class="wu-eyebrow">Servant Leadership · Last Shall Be First</div>
-          <h1 class="wu-page__title wu-mb-0">Your reflection</h1>
+          <div class="w-eyebrow">Servant Leadership · Last Shall Be First</div>
+          <h1 class="w-page__title w-mb-0">Your reflection</h1>
         </div>
       </div>
 
-      <p class="wu-muted" style="max-width:60ch">No wrong answers here. A few honest sentences is plenty — this is between you, God, and (if you choose) your mentor.</p>
+      <p class="w-muted" style="max-width:60ch">No wrong answers here. A few honest sentences is plenty — this is between you, God, and (if you choose) your mentor.</p>
 
-      <form class="wu-stack wu-mt-4" onsubmit="return false">
-        <div class="wu-field">
-          <label class="wu-label" for="rf-stood">What stood out to you? <span class="wu-label__req">*</span></label>
-          <textarea class="wu-textarea" id="rf-stood" rows="4" placeholder="A verse, an idea, a question you’re still sitting with…"></textarea>
-          <div class="wu-help">Think about Mark 10:45 — serving vs. being served.</div>
+      <form class="w-stack w-mt-4" onsubmit="return false">
+        <div class="w-field">
+          <label class="w-label" for="rf-stood">What stood out to you? <span class="w-label__req">*</span></label>
+          <textarea class="w-textarea" id="rf-stood" rows="4" placeholder="A verse, an idea, a question you’re still sitting with…"></textarea>
+          <div class="w-help">Think about Mark 10:45 — serving vs. being served.</div>
         </div>
 
-        <div class="wu-field">
-          <label class="wu-label" for="rf-serve">How will you serve this week?</label>
-          <textarea class="wu-textarea" id="rf-serve" rows="4" placeholder="One small, specific thing you can actually do."></textarea>
+        <div class="w-field">
+          <label class="w-label" for="rf-serve">How will you serve this week?</label>
+          <textarea class="w-textarea" id="rf-serve" rows="4" placeholder="One small, specific thing you can actually do."></textarea>
         </div>
 
-        <div class="wu-field">
-          <label class="wu-label">How are you feeling about this lesson?</label>
+        <div class="w-field">
+          <label class="w-label">How are you feeling about this lesson?</label>
           <div class="rf-mood" role="radiogroup" aria-label="Engagement level">
-            <button type="button" class="rf-mood__opt" role="radio" aria-checked="false" onclick="this.parentNode.querySelectorAll('.rf-mood__opt').forEach(function(b){b.classList.remove('is-selected');b.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><svg class="wu-icon"><use href="#i-x-circle"></use></svg>Lost</button>
-            <button type="button" class="rf-mood__opt" role="radio" aria-checked="false" onclick="this.parentNode.querySelectorAll('.rf-mood__opt').forEach(function(b){b.classList.remove('is-selected');b.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><svg class="wu-icon"><use href="#i-help-circle"></use></svg>Meh</button>
-            <button type="button" class="rf-mood__opt is-selected" role="radio" aria-checked="true" onclick="this.parentNode.querySelectorAll('.rf-mood__opt').forEach(function(b){b.classList.remove('is-selected');b.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><svg class="wu-icon"><use href="#i-smile"></use></svg>Good</button>
-            <button type="button" class="rf-mood__opt" role="radio" aria-checked="false" onclick="this.parentNode.querySelectorAll('.rf-mood__opt').forEach(function(b){b.classList.remove('is-selected');b.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><svg class="wu-icon"><use href="#i-heart"></use></svg>Fired up</button>
+            <button type="button" class="rf-mood__opt" role="radio" aria-checked="false" onclick="this.parentNode.querySelectorAll('.rf-mood__opt').forEach(function(b){b.classList.remove('is-selected');b.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><svg class="w-icon"><use href="#i-x-circle"></use></svg>Lost</button>
+            <button type="button" class="rf-mood__opt" role="radio" aria-checked="false" onclick="this.parentNode.querySelectorAll('.rf-mood__opt').forEach(function(b){b.classList.remove('is-selected');b.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><svg class="w-icon"><use href="#i-help-circle"></use></svg>Meh</button>
+            <button type="button" class="rf-mood__opt is-selected" role="radio" aria-checked="true" onclick="this.parentNode.querySelectorAll('.rf-mood__opt').forEach(function(b){b.classList.remove('is-selected');b.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><svg class="w-icon"><use href="#i-smile"></use></svg>Good</button>
+            <button type="button" class="rf-mood__opt" role="radio" aria-checked="false" onclick="this.parentNode.querySelectorAll('.rf-mood__opt').forEach(function(b){b.classList.remove('is-selected');b.setAttribute('aria-checked','false')});this.classList.add('is-selected');this.setAttribute('aria-checked','true')"><svg class="w-icon"><use href="#i-heart"></use></svg>Fired up</button>
           </div>
         </div>
 
-        <div class="wu-card wu-card--greige">
-          <div class="wu-card__body">
-            <label class="wu-switch"><input type="checkbox"><span class="wu-switch__track"></span><span>Share this reflection with my mentor, Marcus Bello</span></label>
-            <p class="wu-muted wu-text-sm wu-mb-0 wu-mt-2">Off by default. When off, only you can see it. When on, Marcus can read and reply in check-ins.</p>
+        <div class="w-card w-card--greige">
+          <div class="w-card__body">
+            <label class="w-switch"><input type="checkbox"><span class="w-switch__track"></span><span>Share this reflection with my mentor, Marcus Bello</span></label>
+            <p class="w-muted w-text-sm w-mb-0 w-mt-2">Off by default. When off, only you can see it. When on, Marcus can read and reply in check-ins.</p>
           </div>
         </div>
 
-        <div class="wu-alert wu-alert--info">
-          <svg class="wu-alert__icon wu-icon"><use href="#i-info"></use></svg>
+        <div class="w-alert w-alert--info">
+          <svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg>
           <div>You have unsaved changes. If you leave this page, save a draft first so you don’t lose your words.</div>
         </div>
       </form>
     </div>
 
-    <div class="wu-container wu-container--narrow">
+    <div class="w-container w-container--narrow">
       <div class="rf-actions">
-        <button class="wu-btn wu-btn--ghost" data-toast="Draft saved" data-toast-type="success" data-toast-title="Saved for later">Save draft</button>
-        <button class="wu-btn wu-btn--primary" data-toast="Reflection submitted" data-toast-type="success" data-toast-title="Well done, Jayden" data-then="learning-experience/youth/journey.html">Submit</button>
+        <button class="w-btn w-btn--ghost" data-toast="Draft saved" data-toast-type="success" data-toast-title="Saved for later">Save draft</button>
+        <button class="w-btn w-btn--primary" data-toast="Reflection submitted" data-toast-type="success" data-toast-title="Well done, Jayden" data-then="learning-experience/youth/journey.html">Submit</button>
       </div>
     </div>
   </main>

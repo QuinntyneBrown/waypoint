@@ -1,15 +1,15 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { VolunteerApi, VolunteerTodayView } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { VolunteerApi, VolunteerTodayView } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-VOLUNTEER-001
 @Component({
-  selector: 'wu-volunteer-today',
+  selector: 'w-volunteer-today',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, DatePipe],
+  imports: [WShell, RouterLink, DatePipe],
   templateUrl: './volunteer-today.html',
 })
 export class VolunteerToday {

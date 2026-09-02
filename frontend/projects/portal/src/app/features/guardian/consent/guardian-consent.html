@@ -1,73 +1,73 @@
-<wu-shell
+<w-shell
   role="guardian"
   active="consent"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <div class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">Guardian settings</div>
-        <h1 class="wu-page__title">Consent and contact</h1>
-        <p class="wu-page__sub">Manage your own details and your youth’s consent record.</p>
+  <div class="w-container w-page">
+    <div class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">Guardian settings</div>
+        <h1 class="w-page__title">Consent and contact</h1>
+        <p class="w-page__sub">Manage your own details and your youth’s consent record.</p>
       </div>
     </div>
 
-    <div class="wu-grid wu-grid--2">
-      <section class="wu-card">
-        <form class="wu-card__body wu-stack" [formGroup]="contactForm" (ngSubmit)="saveContact()">
-          <h2 class="wu-card__title">Contact details</h2>
-          <div class="wu-field">
-            <label class="wu-label" for="guardian-name">Name</label>
-            <input class="wu-input" id="guardian-name" formControlName="displayName" />
+    <div class="w-grid w-grid--2">
+      <section class="w-card">
+        <form class="w-card__body w-stack" [formGroup]="contactForm" (ngSubmit)="saveContact()">
+          <h2 class="w-card__title">Contact details</h2>
+          <div class="w-field">
+            <label class="w-label" for="guardian-name">Name</label>
+            <input class="w-input" id="guardian-name" formControlName="displayName" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="guardian-email">Email</label>
-            <input class="wu-input" id="guardian-email" type="email" formControlName="email" />
+          <div class="w-field">
+            <label class="w-label" for="guardian-email">Email</label>
+            <input class="w-input" id="guardian-email" type="email" formControlName="email" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="guardian-relationship">Relationship</label>
-            <input class="wu-input" id="guardian-relationship" formControlName="relationship" />
+          <div class="w-field">
+            <label class="w-label" for="guardian-relationship">Relationship</label>
+            <input class="w-input" id="guardian-relationship" formControlName="relationship" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="guardian-phone">Phone</label>
-            <input class="wu-input" id="guardian-phone" type="tel" formControlName="phone" />
+          <div class="w-field">
+            <label class="w-label" for="guardian-phone">Phone</label>
+            <input class="w-input" id="guardian-phone" type="tel" formControlName="phone" />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="guardian-emergency-name">Emergency contact name</label>
+          <div class="w-field">
+            <label class="w-label" for="guardian-emergency-name">Emergency contact name</label>
             <input
-              class="wu-input"
+              class="w-input"
               id="guardian-emergency-name"
               formControlName="emergencyContactName"
             />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="guardian-emergency-phone">Emergency contact phone</label>
+          <div class="w-field">
+            <label class="w-label" for="guardian-emergency-phone">Emergency contact phone</label>
             <input
-              class="wu-input"
+              class="w-input"
               id="guardian-emergency-phone"
               type="tel"
               formControlName="emergencyContactPhone"
             />
           </div>
-          <button class="wu-btn wu-btn--primary" type="submit" [disabled]="saving()">
+          <button class="w-btn w-btn--primary" type="submit" [disabled]="saving()">
             Save contact details
           </button>
         </form>
       </section>
 
-      <div class="wu-stack">
+      <div class="w-stack">
         @if (records() === undefined) {
-          <p class="wu-muted">Loading consent record…</p>
+          <p class="w-muted">Loading consent record…</p>
         } @else if (records()![0]; as record) {
-          <section class="wu-card">
-            <div class="wu-card__body wu-stack">
-              <div class="wu-cluster wu-cluster--between">
-                <h2 class="wu-card__title">Participation consent</h2>
+          <section class="w-card">
+            <div class="w-card__body w-stack">
+              <div class="w-cluster w-cluster--between">
+                <h2 class="w-card__title">Participation consent</h2>
                 <span
-                  class="wu-badge"
-                  [class.wu-badge--success]="record.withdrawnAt === null"
-                  [class.wu-badge--error]="record.withdrawnAt !== null"
+                  class="w-badge"
+                  [class.w-badge--success]="record.withdrawnAt === null"
+                  [class.w-badge--error]="record.withdrawnAt !== null"
                   data-testid="participation-status"
                 >
                   {{ record.withdrawnAt ? 'Withdrawn' : 'Active' }}
@@ -85,9 +85,9 @@
                 <dt>Reference</dt>
                 <dd data-testid="consent-reference">{{ record.referenceId }}</dd>
               </dl>
-              <div class="wu-cluster">
+              <div class="w-cluster">
                 <button
-                  class="wu-btn wu-btn--secondary"
+                  class="w-btn w-btn--secondary"
                   type="button"
                   [disabled]="saving()"
                   (click)="emailCopy(record.consentId)"
@@ -96,7 +96,7 @@
                 </button>
                 @if (!record.withdrawnAt) {
                   <button
-                    class="wu-btn wu-btn--danger"
+                    class="w-btn w-btn--danger"
                     type="button"
                     [disabled]="saving()"
                     (click)="withdraw(record.consentId)"
@@ -108,46 +108,46 @@
             </div>
           </section>
 
-          <section class="wu-card">
-            <form class="wu-card__body wu-stack" [formGroup]="mediaForm" (ngSubmit)="saveMedia()">
-              <h2 class="wu-card__title">Media consent</h2>
-              <label class="wu-check">
+          <section class="w-card">
+            <form class="w-card__body w-stack" [formGroup]="mediaForm" (ngSubmit)="saveMedia()">
+              <h2 class="w-card__title">Media consent</h2>
+              <label class="w-check">
                 <input type="checkbox" formControlName="mediaConsent" />
-                <span class="wu-check__box">
-                  <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                <span class="w-check__box">
+                  <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
                 </span>
                 <span>Allow media use</span>
               </label>
-              <label class="wu-check">
+              <label class="w-check">
                 <input type="checkbox" formControlName="mediaAllPhotosVideo" />
-                <span class="wu-check__box">
-                  <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                <span class="w-check__box">
+                  <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
                 </span>
                 <span>All photos and video</span>
               </label>
-              <label class="wu-check">
+              <label class="w-check">
                 <input type="checkbox" formControlName="mediaGroupOnly" />
-                <span class="wu-check__box">
-                  <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                <span class="w-check__box">
+                  <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
                 </span>
                 <span>Group photos only</span>
               </label>
-              <label class="wu-check">
+              <label class="w-check">
                 <input type="checkbox" formControlName="mediaFirstNameCaptions" />
-                <span class="wu-check__box">
-                  <svg class="wu-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                <span class="w-check__box">
+                  <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
                 </span>
                 <span>First-name captions</span>
               </label>
-              <button class="wu-btn wu-btn--primary" type="submit" [disabled]="saving()">
+              <button class="w-btn w-btn--primary" type="submit" [disabled]="saving()">
                 Save media consent
               </button>
             </form>
           </section>
         } @else {
-          <div class="wu-empty">
-            <h2 class="wu-empty__title">No consent record yet</h2>
-            <p class="wu-empty__text">
+          <div class="w-empty">
+            <h2 class="w-empty__title">No consent record yet</h2>
+            <p class="w-empty__text">
               A participation and media consent record will appear once a youth is linked.
             </p>
           </div>
@@ -156,12 +156,12 @@
     </div>
 
     @if (statusMessage(); as message) {
-      <p class="wu-alert wu-alert--success" role="status" aria-live="polite">{{ message }}</p>
+      <p class="w-alert w-alert--success" role="status" aria-live="polite">{{ message }}</p>
     } @else {
       <p role="status" aria-live="polite"></p>
     }
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
   </div>
-</wu-shell>
+</w-shell>

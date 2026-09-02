@@ -1,6 +1,6 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
-import { API_BASE_URL, MessageView, NotificationView } from '@wu/api';
-import { SessionStore } from '@wu/auth';
+import { API_BASE_URL, MessageView, NotificationView } from '@w/api';
+import { SessionStore } from '@w/auth';
 import {
   HubConnection,
   HubConnectionBuilder,

@@ -1,10 +1,10 @@
-# Word Up — Project Guide
+# Waypoint — Project Guide
 
 Guidance for anyone (human or agent) working in this repo. Read this first.
 
 ## What this repo is
-- **Front-end prototype** (`docs/mocks/`): a static, **offline** HTML mockup of the Word Up youth-leadership app, styled with FaithTech's design system. Runs from `file://`, zero network requests. Open `docs/mocks/index.html`. Design/markup contract: `docs/contract.md`.
-- **Backend** (`backend/`, planned): a .NET 8 Clean Architecture API + `WordUp.Cli` dotnet tool (`wu`). Full spec: `docs/backend-implementation-plan.md`.
+- **Front-end prototype** (`docs/mocks/`): a static, **offline** HTML mockup of the Waypoint youth-leadership app, styled with FaithTech's design system. Runs from `file://`, zero network requests. Open `docs/mocks/index.html`. Design/markup contract: `docs/contract.md`.
+- **Backend** (`backend/`, planned): a .NET 8 Clean Architecture API + `Waypoint.Cli` dotnet tool (`way`). Full spec: `docs/backend-implementation-plan.md`.
 
 ---
 
@@ -40,8 +40,8 @@ Guidance for anyone (human or agent) working in this repo. Read this first.
 ---
 
 ## Conventions (summary — full detail in the docs)
-- **Backend:** Clean Architecture (`WordUp.{Domain,Application,Infrastructure,Api}` + `WordUp.Cli`), file-per-type, folder-per-feature, thin controllers over MediatR **12.5.0** (the free Apache-2.0 pin), FluentValidation pipeline, EF Core + SQL Server, JWT OAuth2, SignalR via an `IChangePublisher` port. Records for commands/queries/DTOs; classes for handlers.
-- **Front-end:** offline `file://`, no `fetch`/modules/external requests, lowercase filenames, `wu-` design-system classes only.
+- **Backend:** Clean Architecture (`Waypoint.{Domain,Application,Infrastructure,Api}` + `Waypoint.Cli`), file-per-type, folder-per-feature, thin controllers over MediatR **12.5.0** (the free Apache-2.0 pin), FluentValidation pipeline, EF Core + SQL Server, JWT OAuth2, SignalR via an `IChangePublisher` port. Records for commands/queries/DTOs; classes for handlers.
+- **Front-end:** offline `file://`, no `fetch`/modules/external requests, lowercase filenames, `w-` design-system classes only.
 
 ## Key docs
 - `docs/backend-implementation-plan.md` — backend architecture, domain model, milestones.

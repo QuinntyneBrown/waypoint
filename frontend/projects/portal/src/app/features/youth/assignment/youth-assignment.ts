@@ -2,15 +2,15 @@ import { DatePipe, DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError, AssignmentBrief, AssignmentUpload, LearningApi } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, AssignmentBrief, AssignmentUpload, LearningApi } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-LEARN-006, L2-NFR-001
 @Component({
-  selector: 'wu-youth-assignment',
+  selector: 'w-youth-assignment',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, ReactiveFormsModule, DatePipe],
+  imports: [WShell, RouterLink, ReactiveFormsModule, DatePipe],
   templateUrl: './youth-assignment.html',
 })
 export class YouthAssignmentPage {

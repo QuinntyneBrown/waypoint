@@ -23,7 +23,7 @@ test('an administrator can send and track an invitation', async ({ page, request
   const invitations = new InvitationsPage(page);
   await invitations.goto();
 
-  const email = `invite-${crypto.randomUUID()}@wordup.test`;
+  const email = `invite-${crypto.randomUUID()}@waypoint.test`;
   await invitations.emails.fill(email);
   await invitations.sendButton.click();
   await expect(page.getByText('Invitation sent.', { exact: true })).toBeVisible();

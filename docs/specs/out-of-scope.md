@@ -1,4 +1,4 @@
-# Word Up — Out of Scope / Deferred (v1)
+# Waypoint — Out of Scope / Deferred (v1)
 
 Features below were present in the specification but are **not authorized by the PRD** (`docs/PRD.md`), the single source of truth. They have been removed from the L1/L2 requirements and recorded here with rationale so nothing is lost. Retired requirement IDs are **not reused**. Revisit each only if the PRD is expanded and the product owner prioritizes it.
 

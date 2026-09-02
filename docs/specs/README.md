@@ -1,4 +1,4 @@
-# Word Up — Requirements Specification
+# Waypoint — Requirements Specification
 
 Requirements are organized **by subsystem**. Each subsystem has its own folder containing an `L1.md` (high-level requirements) and `L2.md` (detailed requirements with Given/When/Then acceptance criteria).
 
@@ -40,7 +40,7 @@ Every acceptance test must carry a trace header identifying the L2(s) it covers,
 
 ## Source
 
-Requirements are derived from the **Word Up PRD** (`docs/PRD.md`), the single source of truth. Personas: Youth, Mentor (**Lead Mentor** is a per-cohort designation, not a system role), Program Administrator, Guardian, Volunteer, plus unauthenticated Public visitors.
+Requirements are derived from the **Waypoint PRD** (`docs/PRD.md`), the single source of truth. Personas: Youth, Mentor (**Lead Mentor** is a per-cohort designation, not a system role), Program Administrator, Guardian, Volunteer, plus unauthenticated Public visitors.
 
 ---
 

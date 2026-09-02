@@ -1,39 +1,39 @@
-<wu-shell
+<w-shell
   role="admin"
   active="users-roles"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="wu-container wu-page">
-    <header class="wu-page__head">
-      <div class="wu-page__titles">
-        <div class="wu-eyebrow">People</div>
-        <h1 class="wu-page__title">Users &amp; roles</h1>
-        <p class="wu-page__sub">Review active accounts and change access deliberately.</p>
+  <div class="w-container w-page">
+    <header class="w-page__head">
+      <div class="w-page__titles">
+        <div class="w-eyebrow">People</div>
+        <h1 class="w-page__title">Users &amp; roles</h1>
+        <p class="w-page__sub">Review active accounts and change access deliberately.</p>
       </div>
-      <a class="wu-btn wu-btn--primary" routerLink="/admin/invitations"
-        ><wu-icon name="user-plus" />Invitations</a
+      <a class="w-btn w-btn--primary" routerLink="/admin/invitations"
+        ><w-icon name="user-plus" />Invitations</a
       >
     </header>
 
-    <div class="wu-alert wu-alert--info">
+    <div class="w-alert w-alert--info">
       Staff roles can access other people’s records. Every role change takes effect immediately and
       is audit logged.
     </div>
     @if (errorMessage(); as error) {
-      <p class="wu-alert wu-alert--error" role="alert">{{ error }}</p>
+      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as message) {
-      <p class="wu-alert wu-alert--success" role="status">{{ message }}</p>
+      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
     }
 
-    <section class="wu-card">
-      <div class="wu-card__body">
-        <div class="users-filters wu-mb-5">
-          <div class="wu-field">
-            <label class="wu-label" for="users-search">Search users</label>
+    <section class="w-card">
+      <div class="w-card__body">
+        <div class="users-filters w-mb-5">
+          <div class="w-field">
+            <label class="w-label" for="users-search">Search users</label>
             <input
-              class="wu-input"
+              class="w-input"
               id="users-search"
               type="search"
               [value]="search()"
@@ -41,10 +41,10 @@
               (keyup.enter)="applySearch()"
             />
           </div>
-          <div class="wu-field">
-            <label class="wu-label" for="users-role-filter">Current role</label>
+          <div class="w-field">
+            <label class="w-label" for="users-role-filter">Current role</label>
             <select
-              class="wu-select"
+              class="w-select"
               id="users-role-filter"
               [value]="roleFilter()"
               (change)="roleFilterChanged($event)"
@@ -55,16 +55,16 @@
               }
             </select>
           </div>
-          <button class="wu-btn wu-btn--secondary" type="button" (click)="applySearch()">
+          <button class="w-btn w-btn--secondary" type="button" (click)="applySearch()">
             Search
           </button>
         </div>
 
         @if (loading()) {
-          <p class="wu-muted" role="status">Loading users and roles…</p>
+          <p class="w-muted" role="status">Loading users and roles…</p>
         } @else {
-          <div class="wu-table-wrap">
-            <table class="wu-table wu-table--cards">
+          <div class="w-table-wrap">
+            <table class="w-table w-table--cards">
               <thead>
                 <tr>
                   <th>User</th>
@@ -79,15 +79,15 @@
                   <tr data-testid="user-role-row">
                     <td data-label="User">
                       <div class="user-cell">
-                        <wu-avatar [name]="person.displayName" size="sm" /><span
+                        <w-avatar [name]="person.displayName" size="sm" /><span
                           ><a [routerLink]="['/admin/people', person.id]"
                             ><strong>{{ person.displayName }}</strong></a
-                          ><br /><span class="wu-muted wu-text-sm">{{ person.email }}</span></span
+                          ><br /><span class="w-muted w-text-sm">{{ person.email }}</span></span
                         >
                       </div>
                     </td>
                     <td data-label="Status">
-                      <span class="wu-badge" [class.wu-badge--lime]="person.status === 'Active'">{{
+                      <span class="w-badge" [class.w-badge--lime]="person.status === 'Active'">{{
                         person.status
                       }}</span>
                     </td>
@@ -99,11 +99,11 @@
                     </td>
                     <td data-label="Role">
                       <div class="role-action">
-                        <label class="wu-sr-only" [for]="'role-' + person.id"
+                        <label class="w-sr-only" [for]="'role-' + person.id"
                           >Role for {{ person.displayName }}</label
                         >
                         <select
-                          class="wu-select"
+                          class="w-select"
                           [id]="'role-' + person.id"
                           [value]="selectedRoles()[person.id]"
                           (change)="selectedRoleChanged(person, $event)"
@@ -115,7 +115,7 @@
                         @if (confirmId() === person.id) {
                           <span>Apply now?</span>
                           <button
-                            class="wu-btn wu-btn--danger wu-btn--sm"
+                            class="w-btn w-btn--danger w-btn--sm"
                             type="button"
                             [disabled]="savingId() === person.id"
                             (click)="changeRole(person)"
@@ -123,7 +123,7 @@
                             Confirm
                           </button>
                           <button
-                            class="wu-btn wu-btn--ghost wu-btn--sm"
+                            class="w-btn w-btn--ghost w-btn--sm"
                             type="button"
                             (click)="confirmId.set(null)"
                           >
@@ -131,7 +131,7 @@
                           </button>
                         } @else {
                           <button
-                            class="wu-btn wu-btn--ghost wu-btn--sm"
+                            class="w-btn w-btn--ghost w-btn--sm"
                             type="button"
                             [disabled]="selectedRoles()[person.id] === person.role"
                             (click)="requestRoleChange(person)"
@@ -145,10 +145,10 @@
                 } @empty {
                   <tr>
                     <td colspan="5">
-                      <div class="wu-empty">
-                        <div class="wu-empty__icon"><wu-icon name="users" /></div>
-                        <h2 class="wu-empty__title">No users found</h2>
-                        <p class="wu-empty__text">Change the filters or invite someone new.</p>
+                      <div class="w-empty">
+                        <div class="w-empty__icon"><w-icon name="users" /></div>
+                        <h2 class="w-empty__title">No users found</h2>
+                        <p class="w-empty__text">Change the filters or invite someone new.</p>
                       </div>
                     </td>
                   </tr>
@@ -156,18 +156,18 @@
               </tbody>
             </table>
           </div>
-          <div class="wu-cluster wu-cluster--between wu-mt-4">
+          <div class="w-cluster w-cluster--between w-mt-4">
             <button
-              class="wu-btn wu-btn--ghost"
+              class="w-btn w-btn--ghost"
               type="button"
               [disabled]="page() <= 1"
               (click)="previous()"
             >
               Previous
             </button>
-            <span class="wu-muted">Page {{ page() }} · {{ total() }} total</span>
+            <span class="w-muted">Page {{ page() }} · {{ total() }} total</span>
             <button
-              class="wu-btn wu-btn--ghost"
+              class="w-btn w-btn--ghost"
               type="button"
               [disabled]="page() * 25 >= total()"
               (click)="next()"
@@ -179,4 +179,4 @@
       </div>
     </section>
   </div>
-</wu-shell>
+</w-shell>

@@ -20,15 +20,15 @@ box "Frontend — Portal application" #E0F2FE
   participant "SettingsProfile" as page
   participant "ProfileApi" as client
 end box
-box "Backend — WordUp API application" #D1FADF
+box "Backend — Waypoint API application" #D1FADF
   participant "ProfileController" as controller
 end box
-box "Backend — WordUp Application and Domain" #ECFDF3
+box "Backend — Waypoint Application and Domain" #ECFDF3
   participant "UpdateProfileCommandHandler" as handler
   participant "SupportRequest" as entity
 end box
-box "Backend — WordUp Infrastructure" #FFF4E5
-  database "Word Up database" as db
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  database "Waypoint database" as db
 end box
 actor -> page : Start edit a profile
 page -> client : Build typed request

@@ -2,19 +2,19 @@
 
 ## Overview
 
-Word Up is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns this feature slice.
+Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Curriculum Authoring subsystem owns this feature slice.
 
 The Author assignments feature slice refines `L2-CURRIC-004` into one independently deliverable interaction. Staff shall define assignments with submission types, a rubric, and due rules.
 
 A program administrator starts this feature interaction through the Portal application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
-The Word Up software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
+The Waypoint software system is the entity of interest (EoI). This focused architecture description (AD) addresses the feature boundary, participating applications, software structure, requirements, and behavior. It does not claim conformance as a complete AD; stakeholder perspectives, complete concern coverage, correspondences outside requirement traceability, and architecture decisions remain in the system-level AD.
 
 ## Description
 
 ### Vertical slice boundary
 
-The feature spans Portal application; WordUp API application. The frontend application owns interaction state and presentation. The WordUp API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
+The feature spans Portal application; Waypoint API application. The frontend application owns interaction state and presentation. The Waypoint API application remains authoritative for authentication, authorization, validation, domain rules, and persisted state. Adjacent subsystem feature slices own behavior outside this end-to-end outcome.
 
 ### Components and types
 
@@ -24,10 +24,10 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | --- | --- | --- |
 | Frontend page | `AuthorAssignmentsPage` *(planned boundary)* | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
 | Frontend API boundary | `CurriculumAuthoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
-| API transport | [`AssignmentsController`](../../../../backend/src/WordUp.Api/Controllers/CurriculumAuthoring/AssignmentsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
-| Application slice | [`CreateAssignmentCommand`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Assessments/CreateAssignmentCommand.cs)<br>[`CreateAssignmentCommandHandler`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Assessments/CreateAssignmentCommandHandler.cs)<br>[`CreateAssignmentCommandValidator`](../../../../backend/src/WordUp.Application/CurriculumAuthoring/Assessments/CreateAssignmentCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
-| Domain state | [`Assignment`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Assignment.cs)<br>[`RubricCriterion`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/RubricCriterion.cs)<br>[`Badge`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Badge.cs)<br>[`Competency`](../../../../backend/src/WordUp.Domain/CurriculumAuthoring/Competency.cs) | Holds persistent state and lifecycle invariants used by the feature. |
-| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/WordUp.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
+| API transport | [`AssignmentsController`](../../../../backend/src/Waypoint.Api/Controllers/CurriculumAuthoring/AssignmentsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
+| Application slice | [`CreateAssignmentCommand`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Assessments/CreateAssignmentCommand.cs)<br>[`CreateAssignmentCommandHandler`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Assessments/CreateAssignmentCommandHandler.cs)<br>[`CreateAssignmentCommandValidator`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Assessments/CreateAssignmentCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
+| Domain state | [`Assignment`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Assignment.cs)<br>[`RubricCriterion`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/RubricCriterion.cs)<br>[`Badge`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Badge.cs)<br>[`Competency`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Competency.cs) | Holds persistent state and lifecycle invariants used by the feature. |
+| Infrastructure and shared ports | [`IAppDbContext`](../../../../backend/src/Waypoint.Application/Shared/Abstractions/IAppDbContext.cs) | Supplies persistence, current-user context, time, audit, email, or realtime adapters when the feature requires them. |
 
 ### Functions and data flow
 
@@ -40,7 +40,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Behavior
 
 1. **Entry.** A program administrator starts this feature interaction through the Portal application.
-2. **Processing.** The frontend application captures the interaction and sends a typed request to the WordUp API application. The controller applies endpoint policy. The application handler applies `L2-CURRIC-004`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
+2. **Processing.** The frontend application captures the interaction and sends a typed request to the Waypoint API application. The controller applies endpoint policy. The application handler applies `L2-CURRIC-004`, scopes the operation to the current actor, and queries or changes domain state through the persistence port.
 3. **Result.** The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
 ## Requirements
@@ -64,11 +64,11 @@ The six figures use one visual vocabulary. Blue boxes identify frontend elements
 
 #### System context
 
-Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Word Up software system for this feature.
+Figure 1 is a view component governed by the C4 system-context model kind. It identifies the people and external software systems that interact with the Waypoint software system for this feature.
 
 ![Figure 1 — C4 system context for Author assignments.](diagrams/c4-system-context.png)
 
-*Figure 1 — C4 system context: Author assignments in the Word Up environment.*
+*Figure 1 — C4 system context: Author assignments in the Waypoint environment.*
 
 #### Container
 

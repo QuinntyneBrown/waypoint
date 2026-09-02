@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiError, CurriculumAuthoringApi, ProgressionCompetency, ProgressionStage } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuAccessibleDialog, WuShell } from '@wu/ui';
+import { ApiError, CurriculumAuthoringApi, ProgressionCompetency, ProgressionStage } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WAccessibleDialog, WShell } from '@w/ui';
 import { finalize, Observable } from 'rxjs';
 import { EditorDraftService } from '../../../editor-draft.service';
 import { UnsavedChangesAware } from '../../../guards/unsaved-changes.guard';
@@ -22,9 +22,9 @@ type ProgressionAuthoringDraft =
 
 // Traces to: L2-CURRIC-006, L2-NFR-001, L2-NFR-009, L2-NFR-010
 @Component({
-  selector: 'wu-progression-builder',
+  selector: 'w-progression-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, WuAccessibleDialog, ReactiveFormsModule],
+  imports: [WShell, WAccessibleDialog, ReactiveFormsModule],
   templateUrl: './progression-builder.html',
   styleUrl: './curriculum-admin.css',
 })

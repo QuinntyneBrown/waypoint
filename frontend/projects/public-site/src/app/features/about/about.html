@@ -1,46 +1,46 @@
-<section class="wu-container wu-section">
-  <div class="wu-eyebrow">About Word Up</div>
+<section class="w-container w-section">
+  <div class="w-eyebrow">About Waypoint</div>
   <h1>Mentorship and practical learning, close to home</h1>
-  <p class="wu-text-lg wu-muted" style="max-width: 60ch">
-    Word Up helps young people grow in faith, skills, and leadership alongside a dedicated mentor
+  <p class="w-text-lg w-muted" style="max-width: 60ch">
+    Waypoint helps young people grow in faith, skills, and leadership alongside a dedicated mentor
     and neighbourhood cohort.
   </p>
 
-  <div class="wu-mt-6">
-    <div class="wu-eyebrow">Current cohorts</div>
+  <div class="w-mt-6">
+    <div class="w-eyebrow">Current cohorts</div>
     <h2>Find your community</h2>
 
     @if (loading()) {
-      <p class="wu-muted" role="status">Loading cohorts…</p>
+      <p class="w-muted" role="status">Loading cohorts…</p>
     } @else if (error()) {
-      <div class="wu-alert wu-alert--danger" role="alert">
+      <div class="w-alert w-alert--danger" role="alert">
         <p>{{ error() }}</p>
-        <button class="wu-btn wu-btn--ghost wu-btn--sm" type="button" (click)="load()">
+        <button class="w-btn w-btn--ghost w-btn--sm" type="button" (click)="load()">
           Try again
         </button>
       </div>
     } @else if (content(); as publicContent) {
       @if (publicContent.cohorts.length === 0) {
-        <div class="wu-empty">
+        <div class="w-empty">
           <h3>No cohorts are currently listed</h3>
-          <p class="wu-muted">You can still apply and our team will share upcoming options.</p>
+          <p class="w-muted">You can still apply and our team will share upcoming options.</p>
         </div>
       } @else {
-        <div class="wu-grid wu-grid--2 wu-mt-6">
+        <div class="w-grid w-grid--2 w-mt-6">
           @for (cohort of publicContent.cohorts; track cohort.id) {
-            <article class="wu-card">
-              <div class="wu-card__header wu-cluster wu-justify-between">
-                <h3 class="wu-card__title">{{ cohort.name }}</h3>
-                <span class="wu-badge">{{ cohort.status }}</span>
+            <article class="w-card">
+              <div class="w-card__header w-cluster w-justify-between">
+                <h3 class="w-card__title">{{ cohort.name }}</h3>
+                <span class="w-badge">{{ cohort.status }}</span>
               </div>
-              <div class="wu-card__body">
-                <dl class="wu-stack wu-gap-3">
+              <div class="w-card__body">
+                <dl class="w-stack w-gap-3">
                   <div>
-                    <dt class="wu-text-sm wu-muted">Neighbourhood</dt>
+                    <dt class="w-text-sm w-muted">Neighbourhood</dt>
                     <dd>{{ cohort.neighbourhood || 'To be confirmed' }}</dd>
                   </div>
                   <div>
-                    <dt class="wu-text-sm wu-muted">Dates</dt>
+                    <dt class="w-text-sm w-muted">Dates</dt>
                     <dd>
                       {{ cohort.termStart | date: 'MMM d, y' : 'UTC' }}–{{
                         cohort.termEnd | date: 'MMM d, y' : 'UTC'
@@ -48,7 +48,7 @@
                     </dd>
                   </div>
                   <div>
-                    <dt class="wu-text-sm wu-muted">Lead mentor</dt>
+                    <dt class="w-text-sm w-muted">Lead mentor</dt>
                     <dd>{{ cohort.leadMentor || 'To be confirmed' }}</dd>
                   </div>
                 </dl>
@@ -60,8 +60,8 @@
     }
   </div>
 
-  <div class="wu-cluster wu-mt-6">
-    <a class="wu-btn wu-btn--primary" routerLink="/apply">Apply now</a>
-    <a class="wu-btn wu-btn--ghost" routerLink="/programs">Explore the programs</a>
+  <div class="w-cluster w-mt-6">
+    <a class="w-btn w-btn--primary" routerLink="/apply">Apply now</a>
+    <a class="w-btn w-btn--ghost" routerLink="/programs">Explore the programs</a>
   </div>
 </section>

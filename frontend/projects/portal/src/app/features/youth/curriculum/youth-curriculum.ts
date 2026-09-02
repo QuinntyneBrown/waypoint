@@ -1,15 +1,15 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthCurriculum } from '@wu/api';
-import { AuthStore } from '@wu/auth';
-import { WuShell } from '@wu/ui';
+import { ApiError, LearningApi, YouthCurriculum } from '@w/api';
+import { AuthStore } from '@w/auth';
+import { WShell } from '@w/ui';
 
 // Traces to: L2-LEARN-001
 @Component({
-  selector: 'wu-youth-curriculum',
+  selector: 'w-youth-curriculum',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WuShell, RouterLink, DecimalPipe],
+  imports: [WShell, RouterLink, DecimalPipe],
   templateUrl: './youth-curriculum.html',
 })
 export class YouthCurriculumPage {
