@@ -10,7 +10,7 @@ This document covers three things:
 3. **The run sheet** — minute-by-minute, with what to click and what to say.
 
 > Waypoint is a development project. Demo with **synthetic data only** — never real participant
-> information. See [SECURITY.md](../SECURITY.md) and [not-implemented.md](not-implemented.md).
+> information. See [SECURITY.md](../SECURITY.md) and the current [implementation status](implementation-plan.md).
 
 ---
 
@@ -445,5 +445,5 @@ Then redo §4.6 (about 10 minutes). If you demo often, consider snapshotting the
 - [specs/README.md](specs/README.md) — the 88 in-scope requirements
 - [ARCHITECTURE.md](ARCHITECTURE.md) — how it is built
 - [backend/src/Waypoint.Cli/README.md](../backend/src/Waypoint.Cli/README.md) — the `way` operational CLI
-- [not-implemented.md](not-implemented.md) — current gaps and the release boundary
+- [implementation-plan.md](implementation-plan.md) — current implementation status and release boundary
 - [../user-guides/](../user-guides/) — role-by-role end-user documentation

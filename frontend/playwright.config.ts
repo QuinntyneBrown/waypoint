@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * E2E acceptance harness for the Waypoint frontend.
  *
- * Topology (see docs/frontend-implementation-plan.md § "E2E acceptance harness"):
+ * Test topology:
  *   - API      http://127.0.0.1:5211  (real backend, InMemory DB, Testing env)
  *   - portal   http://localhost:4200  (proxies /api -> 5211)
  *   - public-site http://localhost:4201 (added in M6)

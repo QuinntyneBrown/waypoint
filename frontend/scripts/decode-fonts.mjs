@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // One-time / reproducible: decode the six base64 `data:font/woff2` URIs in
 // docs/mocks/assets/css/_fonts.css into real .woff2 binaries under an app's
-// public/fonts/ directory. Keeps ~178 KB of base64 out of the JS/CSS bundle
-// (frontend-implementation-plan.md Risks #1). Idempotent.
+// public/fonts/ directory. Keeps ~178 KB of base64 out of the JS/CSS bundle.
+// Idempotent.
 //
 // Usage: node scripts/decode-fonts.mjs [targetPublicDir]
 //   default target: projects/portal/public/fonts

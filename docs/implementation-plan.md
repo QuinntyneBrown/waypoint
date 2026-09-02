@@ -2,7 +2,7 @@
 
 Snapshot: **2026-07-20**
 
-Waypoint is a role-aware youth leadership platform derived from [PRD.md](PRD.md) and the 88 acceptance-testable L2 requirements under [`specs/`](specs/README.md). This document summarizes the implemented boundary. The detailed, requirement-by-requirement delivery record is the [gap-closure plan](gap-closure-plan.md).
+Waypoint is a role-aware youth leadership platform derived from [PRD.md](PRD.md) and the 88 acceptance-testable L2 requirements under [`specs/`](specs/README.md). This document summarizes the implemented boundary; executable acceptance tests, the strict traceability gate, and Git history provide the detailed delivery record.
 
 ## Delivery status
 
@@ -24,7 +24,7 @@ The in-repository implementation plan is complete when:
 - role-tailored help and user/admin data-rights workflows are available;
 - scheduled work is delivered by background processing rather than a user reading a feed;
 - the pinned SDK, builds, tests, traceability, formatting, route, responsive, accessibility, and agreed load gates pass; and
-- the [gap-closure plan](gap-closure-plan.md) has no open in-scope implementation item.
+- every in-scope L2 requirement is covered by the strict traceability gate and its acceptance suite.
 
 This boundary is an engineering completion milestone, not permission to use real participant data or a formal production launch certification.
 
@@ -76,4 +76,4 @@ CI definitions live in `.github/workflows/backend.yml`, `.github/workflows/front
 
 ## Keeping status current
 
-Update the [gap-closure tracker](gap-closure-plan.md) when an in-scope implementation changes, [DECISIONS.md](DECISIONS.md) for durable technical choices, [`specs/`](specs/README.md) for requirement changes, and [CHANGELOG.md](../CHANGELOG.md) for contributor-visible changes.
+Update this status when the implemented boundary changes, [DECISIONS.md](DECISIONS.md) for durable technical choices, [`specs/`](specs/README.md) for requirement changes, and [CHANGELOG.md](../CHANGELOG.md) for contributor-visible changes.

@@ -3,8 +3,9 @@
 Guidance for anyone (human or agent) working in this repo. Read this first.
 
 ## What this repo is
-- **Front-end prototype** (`docs/mocks/`): a static, **offline** HTML mockup of the Waypoint youth-leadership app, styled with FaithTech's design system. Runs from `file://`, zero network requests. Open `docs/mocks/index.html`. Design/markup contract: `docs/contract.md`.
-- **Backend** (`backend/`, planned): a .NET 8 Clean Architecture API + `Waypoint.Cli` dotnet tool (`way`). Full spec: `docs/backend-implementation-plan.md`.
+- **Frontend** (`frontend/`): an Angular 21 authenticated portal and public SSR site with shared UI, API, and authentication libraries.
+- **Interaction reference** (`docs/mocks/`): static, **offline** HTML mockups styled with FaithTech's design system. They run from `file://` with zero network requests. Open `docs/mocks/index.html`; the design/markup contract is `docs/contract.md`.
+- **Backend** (`backend/`): a .NET 9 Clean Architecture API and the `Waypoint.Cli` operational tool (`way`). Current structure and boundaries are documented in `docs/ARCHITECTURE.md`.
 
 ---
 
@@ -28,11 +29,11 @@ Guidance for anyone (human or agent) working in this repo. Read this first.
 - **One behaviour at a time.** Small red → green → refactor cycles, not big-bang implementations.
 - **Commit only with the full suite passing.**
 
-### How this maps to the backend (see `docs/backend-implementation-plan.md` §11)
+### How this maps to the backend
 - **Framework:** NUnit (unit + integration).
 - **Integration tests** run against the real API via `WebApplicationFactory<Program>` with a **real SQL Server / SQL Express database, one throwaway DB per fixture** (`[OneTimeSetUp]` migrates, `[OneTimeTearDown]` drops). Drive behaviour through `HttpClient`; assert on responses and persisted state. SignalR behaviour is asserted via a real `HubConnection`.
 - Tests are **feature-foldered** to mirror the app, named as `snake_case_sentences`.
-- **Every acceptance test must trace to an L2 requirement.** Tag each acceptance test with the L2 id it verifies — a `// Traces to: L2-<AREA>-NNN` comment **and** a machine-readable `[Property("Req", "L2-<AREA>-NNN")]` attribute — where `L2-*` ids live in `docs/specs/`. No acceptance test without a governing L2 requirement; no L2 requirement is done without a passing acceptance test. A CI gate enforces this both ways (see `docs/backend-implementation-plan.md` §11).
+- **Every acceptance test must trace to an L2 requirement.** Tag each acceptance test with the L2 id it verifies — a `// Traces to: L2-<AREA>-NNN` comment **and** a machine-readable `[Property("Req", "L2-<AREA>-NNN")]` attribute — where `L2-*` ids live in `docs/specs/`. No acceptance test without a governing L2 requirement; no L2 requirement is done without a passing acceptance test. The CI traceability gate enforces this both ways.
 - A new feature is "done" only when its integration test (written first, seen to fail) is green, it traces to its L2 requirement, and the full suite passes.
 
 > Scope note: the front-end in `docs/mocks/` is **static mockups** (HTML/CSS + presentation-only JS) with no business logic — there is nothing to ATDD there beyond the offline/no-network invariants already enforced (`docs/contract.md`). The moment real logic is introduced (the backend, or any behavioural JS), the ATDD loop above is required.
@@ -41,8 +42,10 @@ Guidance for anyone (human or agent) working in this repo. Read this first.
 
 ## Conventions (summary — full detail in the docs)
 - **Backend:** Clean Architecture (`Waypoint.{Domain,Application,Infrastructure,Api}` + `Waypoint.Cli`), file-per-type, folder-per-feature, thin controllers over MediatR **12.5.0** (the free Apache-2.0 pin), FluentValidation pipeline, EF Core + SQL Server, JWT OAuth2, SignalR via an `IChangePublisher` port. Records for commands/queries/DTOs; classes for handlers.
-- **Front-end:** offline `file://`, no `fetch`/modules/external requests, lowercase filenames, `w-` design-system classes only.
+- **Frontend:** Angular applications live under `frontend/`; the static mocks remain offline `file://` references with no `fetch`, modules, or external requests and use lowercase filenames plus `w-` design-system classes.
 
 ## Key docs
-- `docs/backend-implementation-plan.md` — backend architecture, domain model, milestones.
+- `docs/ARCHITECTURE.md` — implemented system structure and boundaries.
+- `docs/implementation-plan.md` — current implementation status and verification gates.
+- `docs/specs/README.md` — requirements, stable IDs, and traceability rules.
 - `docs/contract.md` — front-end component/class + JS API contract.
