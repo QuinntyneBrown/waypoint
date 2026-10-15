@@ -22,8 +22,8 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`AuthStore`](../../../../frontend/projects/w-auth/src/lib/auth-store.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/w-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend page | [`AuthStore`](../../../../frontend/projects/auth/src/lib/auth-store.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`DataController`](../../../../backend/src/Waypoint.Api/Controllers/ReportingAndData/DataController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`ExportAuditLogQuery`](../../../../backend/src/Waypoint.Application/ReportingAndData/DataTransfer/ExportAuditLogQuery.cs)<br>[`ExportAuditLogQueryHandler`](../../../../backend/src/Waypoint.Application/ReportingAndData/DataTransfer/ExportAuditLogQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | `ExportFilteredDataState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |

@@ -22,8 +22,8 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/portal/src/app/features/youth/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/w-api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/youth/src/lib/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/youth/src/lib/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`MentorController`](../../../../backend/src/Waypoint.Api/Controllers/Mentoring/MentorController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`YouthDetailQuery`](../../../../backend/src/Waypoint.Application/Mentoring/MentorRoster/YouthDetailQuery.cs)<br>[`YouthDetailQueryHandler`](../../../../backend/src/Waypoint.Application/Mentoring/MentorRoster/YouthDetailQueryHandler.cs)<br>[`YouthDetail`](../../../../backend/src/Waypoint.Application/Mentoring/MentorRoster/YouthDetailQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Flag`](../../../../backend/src/Waypoint.Domain/Mentoring/Flag.cs) | Holds persistent state and lifecycle invariants used by the feature. |

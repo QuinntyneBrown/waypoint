@@ -5,10 +5,9 @@ import {
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { authInterceptor, provideWuAuth } from '@w/auth';
+import { authInterceptor, provideWuAuth } from '@waypoint/auth';
 import { routes } from './app.routes';
-import { apiStateInterceptor } from './api-state.interceptor';
-import { maintenanceInterceptor } from './maintenance.interceptor';
+import { apiStateInterceptor, maintenanceInterceptor } from '@waypoint/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [

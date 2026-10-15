@@ -22,8 +22,8 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/portal/src/app/features/youth/announcements/youth-announcements.ts)<br>[`VolunteerSchedule`](../../../../frontend/projects/portal/src/app/features/volunteer/schedule/volunteer-schedule.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/w-api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/youth/src/lib/announcements/youth-announcements.ts)<br>[`VolunteerSchedule`](../../../../frontend/projects/volunteer/src/lib/schedule/volunteer-schedule.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`GuardianController`](../../../../backend/src/Waypoint.Api/Controllers/GuardianPortal/GuardianController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`GuardianAnnouncementsQuery`](../../../../backend/src/Waypoint.Application/GuardianPortal/GuardianAnnouncementsQuery.cs)<br>[`GuardianAnnouncementsQueryHandler`](../../../../backend/src/Waypoint.Application/GuardianPortal/GuardianAnnouncementsQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`GuardianProfile`](../../../../backend/src/Waypoint.Domain/GuardianPortal/GuardianProfile.cs) | Holds persistent state and lifecycle invariants used by the feature. |

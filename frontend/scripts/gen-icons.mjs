@@ -12,7 +12,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const FRONTEND = join(HERE, '..');
 const REPO = join(FRONTEND, '..');
 const SRC = join(REPO, 'docs', 'mocks', 'assets', 'js', 'waypoint.js');
-const OUT = join(FRONTEND, 'projects', 'w-ui', 'src', 'lib', 'icon', 'w-icons.ts');
+const OUT = join(FRONTEND, 'projects', 'components', 'src', 'lib', 'icon', 'w-icons.ts');
 
 const js = readFileSync(SRC, 'utf8');
 const block = js.match(/var ICONS = \{([\s\S]*?)\n {2}\};/);

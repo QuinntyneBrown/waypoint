@@ -1,6 +1,6 @@
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
 import { provideServerRendering, withRoutes } from '@angular/ssr';
-import { API_BASE_URL } from '@w/api';
+import { API_BASE_URL } from '@waypoint/api';
 import { appConfig } from './app.config';
 import { serverRoutes } from './app.routes.server';
 

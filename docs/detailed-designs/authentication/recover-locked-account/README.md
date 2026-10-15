@@ -22,8 +22,8 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`AccountLocked`](../../../../frontend/projects/portal/src/app/states/account-locked/account-locked.ts)<br>[`AccountDeactivated`](../../../../frontend/projects/portal/src/app/states/account-deactivated/account-deactivated.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/w-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend page | [`AccountLocked`](../../../../frontend/projects/account/src/lib/states/account-locked/account-locked.ts)<br>[`AccountDeactivated`](../../../../frontend/projects/account/src/lib/states/account-deactivated/account-deactivated.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AuthController`](../../../../backend/src/Waypoint.Api/Controllers/Authentication/AuthController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | `RecoverLockedAccountCommand` *(planned boundary)*<br>`RecoverLockedAccountCommandHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`PasswordResetToken`](../../../../backend/src/Waypoint.Domain/Authentication/PasswordResetToken.cs)<br>[`RefreshToken`](../../../../backend/src/Waypoint.Domain/Authentication/RefreshToken.cs) | Holds persistent state and lifecycle invariants used by the feature. |

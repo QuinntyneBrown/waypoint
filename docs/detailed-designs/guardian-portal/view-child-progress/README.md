@@ -22,8 +22,8 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`AttendanceQueueService`](../../../../frontend/projects/portal/src/app/features/volunteer/attendance/attendance-queue.service.ts)<br>[`AuthStore`](../../../../frontend/projects/w-auth/src/lib/auth-store.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/w-api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend page | [`AttendanceQueueService`](../../../../frontend/projects/volunteer/src/lib/attendance/attendance-queue.service.ts)<br>[`AuthStore`](../../../../frontend/projects/auth/src/lib/auth-store.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`GuardianController`](../../../../backend/src/Waypoint.Api/Controllers/GuardianPortal/GuardianController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`ChildProgressQuery`](../../../../backend/src/Waypoint.Application/GuardianPortal/ChildProgressQuery.cs)<br>[`ChildProgressQueryHandler`](../../../../backend/src/Waypoint.Application/GuardianPortal/ChildProgressQueryHandler.cs)<br>[`ChildProgressView`](../../../../backend/src/Waypoint.Application/GuardianPortal/ChildProgressQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`GuardianProfile`](../../../../backend/src/Waypoint.Domain/GuardianPortal/GuardianProfile.cs) | Holds persistent state and lifecycle invariants used by the feature. |

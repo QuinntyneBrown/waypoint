@@ -22,7 +22,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`AttendanceQueueService`](../../../../frontend/projects/portal/src/app/features/volunteer/attendance/attendance-queue.service.ts)<br>[`OfflineState`](../../../../frontend/projects/portal/src/app/states/offline/offline-state.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend page | [`AttendanceQueueService`](../../../../frontend/projects/volunteer/src/lib/attendance/attendance-queue.service.ts)<br>[`OfflineState`](../../../../frontend/projects/account/src/lib/states/offline/offline-state.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
 | Frontend API boundary | `EngagementApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AttendanceController`](../../../../backend/src/Waypoint.Api/Controllers/Engagement/AttendanceController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AttendanceHistoryBySessionQuery`](../../../../backend/src/Waypoint.Application/Engagement/Attendance/AttendanceHistoryBySessionQuery.cs)<br>[`AttendanceHistoryBySessionQueryHandler`](../../../../backend/src/Waypoint.Application/Engagement/Attendance/AttendanceHistoryBySessionQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |

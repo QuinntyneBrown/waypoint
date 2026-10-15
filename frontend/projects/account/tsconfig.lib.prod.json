@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "declarationMap": false,
+    "paths": {
+      "@waypoint/api": ["../../dist/api"],
+      "@waypoint/auth": ["../../dist/auth"],
+      "@waypoint/components": ["../../dist/components"],
+      "@waypoint/core": ["../../dist/core"],
+      "@waypoint/core/*": ["../../dist/core/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "compilationMode": "partial"
+  }
+}

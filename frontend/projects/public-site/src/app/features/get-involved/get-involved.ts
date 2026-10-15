@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { ApiError, PublicSiteApi } from '@w/api';
-import { WIcon } from '@w/ui';
+import { ApiError, PublicSiteApi } from '@waypoint/api';
+import { WIcon } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);

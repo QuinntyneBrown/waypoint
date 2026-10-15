@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { roleHome } from '@w/auth';
+import { roleHome } from '@waypoint/auth';
 import { routes } from './app.routes';
 
 function route(path: string): Route {

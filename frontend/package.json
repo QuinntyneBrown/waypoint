@@ -7,7 +7,7 @@
     "start:public": "ng serve public-site --port 4201",
     "build": "npm run packages:build && npm run apps:build && npm run packages:check",
     "apps:build": "ng build portal && ng build public-site",
-    "packages:build": "ng build w-api && ng build w-auth && ng build w-ui",
+    "packages:build": "ng build api && ng build components && ng build auth && ng build core && ng build account && ng build youth && ng build mentor && ng build admin && ng build guardian && ng build volunteer",
     "packages:check": "node scripts/check-package-artifacts.mjs",
     "watch": "ng build portal --watch --configuration development",
     "test": "ng test",
