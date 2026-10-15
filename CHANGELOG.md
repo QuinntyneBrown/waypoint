@@ -25,4 +25,9 @@ All notable changes to this project will be documented in this file. The format 
 - Backend CI and project community-health documentation
 - Plain-language picture explainer of the repository at `docs/waypoint-in-pictures.html`, linked from the README
 
+### Fixed
+
+- Fulfilling an email correction no longer discards pending outbox envelopes addressed to the data subject themselves; they are readdressed to the corrected email and remain in the subject's access export until removal
+- Realtime expired-token acceptance test now mints its short-lived token with the user's stored session version, so it exercises authentication expiry instead of failing bearer validation
+
 The repository has not published a versioned release. Earlier development history is available in the [commit log](https://github.com/QuinntyneBrown/waypoint/commits/main/).
