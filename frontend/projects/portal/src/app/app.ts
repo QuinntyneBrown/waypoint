@@ -1,11 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, effect, EnvironmentInjector, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DisplayPreferencesApi } from '@w/api';
-import { SessionStore } from '@w/auth';
-import { WToastHost } from '@w/ui';
-import { DisplayPreferencesService } from './settings/display-preferences.service';
-import { IdleSessionService } from './idle-session.service';
+import { DisplayPreferencesApi } from '@waypoint/api';
+import { SessionStore } from '@waypoint/auth';
+import { WToastHost } from '@waypoint/components';
+import { DisplayPreferencesService, IdleSessionService } from '@waypoint/core';
 
 const NON_CRITICAL_RUNTIME_DELAY_MS = 1_500;
 
@@ -60,7 +59,7 @@ export class App {
 
       if (!this.realtimeStarted) {
         this.realtimeStarted = true;
-        void import('./realtime.service')
+        void import('@waypoint/core/realtime')
           .then(({ RealtimeService }) => this.environment.get(RealtimeService))
           .catch(() => (this.realtimeStarted = false));
       }
@@ -70,7 +69,7 @@ export class App {
         (currentUser.role === 'Mentor' || currentUser.role === 'Volunteer')
       ) {
         this.attendanceQueueStarted = true;
-        void import('./features/volunteer/attendance/attendance-queue.service')
+        void import('@waypoint/core/attendance')
           .then(({ AttendanceQueueService }) => this.environment.get(AttendanceQueueService))
           .catch(() => (this.attendanceQueueStarted = false));
       }

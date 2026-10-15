@@ -22,7 +22,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`AttendanceQueueService`](../../../../frontend/projects/portal/src/app/features/volunteer/attendance/attendance-queue.service.ts)<br>[`VolunteerAttendance`](../../../../frontend/projects/portal/src/app/features/volunteer/attendance/volunteer-attendance.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend page | [`AttendanceQueueService`](../../../../frontend/projects/volunteer/src/lib/attendance/attendance-queue.service.ts)<br>[`VolunteerAttendance`](../../../../frontend/projects/volunteer/src/lib/attendance/volunteer-attendance.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
 | Frontend API boundary | `CurriculumAuthoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`ProgressionController`](../../../../backend/src/Waypoint.Api/Controllers/CurriculumAuthoring/ProgressionController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AddCompetencyCommand`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Progression/AddCompetencyCommand.cs)<br>[`AddCompetencyCommandHandler`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Progression/AddCompetencyCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |

@@ -5,13 +5,81 @@ import { fileURLToPath } from 'node:url';
 
 const frontendRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const packageDefinitions = [
-  { directory: 'w-api', name: '@w/api' },
+  { directory: 'api', name: '@waypoint/api' },
+  { directory: 'components', name: '@waypoint/components' },
   {
-    directory: 'w-auth',
-    name: '@w/auth',
-    expectedPeers: { '@w/api': '0.0.1' },
+    directory: 'auth',
+    name: '@waypoint/auth',
+    expectedPeers: { '@waypoint/api': '0.0.1', '@waypoint/components': '0.0.1' },
   },
-  { directory: 'w-ui', name: '@w/ui' },
+  {
+    directory: 'core',
+    name: '@waypoint/core',
+    expectedPeers: {
+      '@waypoint/api': '0.0.1',
+      '@waypoint/auth': '0.0.1',
+      '@waypoint/components': '0.0.1',
+    },
+  },
+  {
+    directory: 'account',
+    name: '@waypoint/account',
+    expectedPeers: {
+      '@waypoint/api': '0.0.1',
+      '@waypoint/auth': '0.0.1',
+      '@waypoint/components': '0.0.1',
+      '@waypoint/core': '0.0.1',
+    },
+  },
+  {
+    directory: 'youth',
+    name: '@waypoint/youth',
+    expectedPeers: {
+      '@waypoint/api': '0.0.1',
+      '@waypoint/auth': '0.0.1',
+      '@waypoint/components': '0.0.1',
+      '@waypoint/core': '0.0.1',
+    },
+  },
+  {
+    directory: 'mentor',
+    name: '@waypoint/mentor',
+    expectedPeers: {
+      '@waypoint/api': '0.0.1',
+      '@waypoint/auth': '0.0.1',
+      '@waypoint/components': '0.0.1',
+      '@waypoint/core': '0.0.1',
+    },
+  },
+  {
+    directory: 'admin',
+    name: '@waypoint/admin',
+    expectedPeers: {
+      '@waypoint/api': '0.0.1',
+      '@waypoint/auth': '0.0.1',
+      '@waypoint/components': '0.0.1',
+      '@waypoint/core': '0.0.1',
+    },
+  },
+  {
+    directory: 'guardian',
+    name: '@waypoint/guardian',
+    expectedPeers: {
+      '@waypoint/api': '0.0.1',
+      '@waypoint/auth': '0.0.1',
+      '@waypoint/components': '0.0.1',
+    },
+  },
+  {
+    directory: 'volunteer',
+    name: '@waypoint/volunteer',
+    expectedPeers: {
+      '@waypoint/api': '0.0.1',
+      '@waypoint/auth': '0.0.1',
+      '@waypoint/components': '0.0.1',
+      '@waypoint/core': '0.0.1',
+    },
+  },
 ];
 
 function assert(condition, message) {
@@ -121,8 +189,8 @@ for (const definition of packageDefinitions) {
 
 const packageImports = new Map();
 const importPatterns = [
-  /\b(?:from|import\s*\()\s*["'](@way\/[^"']+)["']/g,
-  /\bimport\s*["'](@way\/[^"']+)["']/g,
+  /\b(?:from|import\s*\()\s*["'](@waypoint\/[^"']+)["']/g,
+  /\bimport\s*["'](@waypoint\/[^"']+)["']/g,
 ];
 
 for (const [name, { directory, manifest }] of builtPackages) {
@@ -161,11 +229,38 @@ for (const [name, { directory, manifest }] of builtPackages) {
   );
 }
 
+const allowedImports = {
+  '@waypoint/api': [],
+  '@waypoint/components': [],
+};
+for (const [name, imports] of packageImports) {
+  const allowed = allowedImports[name];
+  if (!allowed) continue;
+  for (const importedName of imports) {
+    assert(allowed.includes(importedName), `${name} must not depend on ${importedName}.`);
+  }
+}
+for (const [name, imports] of packageImports) {
+  for (const importedName of imports) {
+    assert(
+      ![
+        '@waypoint/youth',
+        '@waypoint/mentor',
+        '@waypoint/admin',
+        '@waypoint/guardian',
+        '@waypoint/volunteer',
+        '@waypoint/account',
+      ].includes(importedName),
+      `${name} must not depend on the role feature library ${importedName}.`,
+    );
+  }
+}
+
 const importSummary = [...packageImports]
   .filter(([, imports]) => imports.length > 0)
   .map(([name, imports]) => `${name} -> ${imports.join(', ')}`)
   .join('; ');
 
 console.log(
-  `Package artifact check passed for ${packageDefinitions.map(({ name }) => name).join(', ')} (3 npm pack dry runs${importSummary ? `; ${importSummary}` : ''}).`,
+  `Package artifact check passed for ${packageDefinitions.map(({ name }) => name).join(', ')} (${packageDefinitions.length} npm pack dry runs${importSummary ? `; ${importSummary}` : ''}).`,
 );

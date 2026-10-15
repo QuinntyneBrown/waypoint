@@ -92,7 +92,7 @@ A running log of technical and product decisions worth recording. Each entry sta
 
 ## 12. The product is named Waypoint
 
-**Decision.** Rename the product, repository, solution, projects, packages, CLI, design-system prefix, and all documentation from "Waypoint" to **Waypoint**. Every spelling collapses to one word: `Waypoint` in prose, namespaces, and types; `waypoint` in file names, URLs, and email domains; `WAYPOINT` in environment variables. The frontend prefix `way` becomes `w` (`w-` CSS classes and selectors, `--w-*` tokens, `@w/api`, `@w/auth`, `@w/ui`, `W*` classes, `W_*` constants). The dotnet tool command `way` becomes `way`. The consent-state response header becomes `X-Waypoint-State`, and the personal-data export file becomes `waypoint-personal-data-*.json`.
+**Decision.** Rename the product, repository, solution, projects, packages, CLI, design-system prefix, and all documentation from "Waypoint" to **Waypoint**. Every spelling collapses to one word: `Waypoint` in prose, namespaces, and types; `waypoint` in file names, URLs, and email domains; `WAYPOINT` in environment variables. The frontend prefix `way` becomes `w` (`w-` CSS classes and selectors, `--w-*` tokens, `@waypoint/api`, `@waypoint/auth`, `@waypoint/components`, `W*` classes, `W_*` constants). The dotnet tool command `way` becomes `way`. The consent-state response header becomes `X-Waypoint-State`, and the personal-data export file becomes `waypoint-personal-data-*.json`.
 
 **Why.** "Waypoint" said nothing about what the software does and carried an unrelated cultural reference. "Waypoint" describes the product: milestones, progression, and the journey a young person takes through the program. A single-word name also removes the six spelling variants that had accumulated.
 

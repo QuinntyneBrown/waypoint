@@ -13,13 +13,13 @@ on:
   push:
     paths:
       - "user-guides/**"
-      - "frontend/projects/w-ui/src/styles/**"
+      - "frontend/projects/components/src/styles/**"
       - "scripts/verify-waypoint-user-guide-assets.mjs"
       - ".github/workflows/user-guides.yml"
   pull_request:
     paths:
       - "user-guides/**"
-      - "frontend/projects/w-ui/src/styles/**"
+      - "frontend/projects/components/src/styles/**"
       - "scripts/verify-waypoint-user-guide-assets.mjs"
       - ".github/workflows/user-guides.yml"
   workflow_dispatch:

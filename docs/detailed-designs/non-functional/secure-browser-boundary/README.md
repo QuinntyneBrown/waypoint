@@ -22,8 +22,8 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`ForgotPassword`](../../../../frontend/projects/portal/src/app/auth/forgot-password/forgot-password.ts)<br>[`ResetPassword`](../../../../frontend/projects/portal/src/app/auth/reset-password/reset-password.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`PasswordResetApi`](../../../../frontend/projects/w-api/src/lib/services/password-reset-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend page | [`ForgotPassword`](../../../../frontend/projects/auth/pages/src/forgot-password/forgot-password.ts)<br>[`ResetPassword`](../../../../frontend/projects/auth/pages/src/reset-password/reset-password.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`PasswordResetApi`](../../../../frontend/projects/api/src/lib/services/password-reset-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | `NonFunctionalController` *(planned boundary)* | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | `SecureBrowserBoundaryCommand` *(planned boundary)*<br>`SecureBrowserBoundaryCommandHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | `SecureBrowserBoundaryState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |

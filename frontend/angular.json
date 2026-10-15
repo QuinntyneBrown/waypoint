@@ -25,9 +25,9 @@
               }
             ],
             "styles": [
-              "projects/w-ui/src/styles/fonts.css",
-              "projects/w-ui/src/styles/core.css",
-              "projects/w-ui/src/styles/a11y.css",
+              "projects/components/src/styles/fonts.css",
+              "projects/components/src/styles/core.css",
+              "projects/components/src/styles/a11y.css",
               "projects/portal/src/styles.css"
             ]
           },
@@ -76,84 +76,6 @@
         }
       }
     },
-    "w-ui": {
-      "projectType": "library",
-      "root": "projects/w-ui",
-      "sourceRoot": "projects/w-ui/src",
-      "prefix": "w",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/w-ui/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/w-ui/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "tsConfig": "projects/w-ui/tsconfig.spec.json"
-          }
-        }
-      }
-    },
-    "w-api": {
-      "projectType": "library",
-      "root": "projects/w-api",
-      "sourceRoot": "projects/w-api/src",
-      "prefix": "w",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/w-api/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/w-api/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "tsConfig": "projects/w-api/tsconfig.spec.json"
-          }
-        }
-      }
-    },
-    "w-auth": {
-      "projectType": "library",
-      "root": "projects/w-auth",
-      "sourceRoot": "projects/w-auth/src",
-      "prefix": "w",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/w-auth/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/w-auth/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "tsConfig": "projects/w-auth/tsconfig.spec.json"
-          }
-        }
-      }
-    },
     "public-site": {
       "projectType": "application",
       "schematics": {},
@@ -173,8 +95,8 @@
               }
             ],
             "styles": [
-              "projects/w-ui/src/styles/fonts.css",
-              "projects/w-ui/src/styles/core.css",
+              "projects/components/src/styles/fonts.css",
+              "projects/components/src/styles/core.css",
               "projects/public-site/src/styles.css"
             ],
             "server": "projects/public-site/src/main.server.ts",
@@ -228,6 +150,242 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        }
+      }
+    },
+    "api": {
+      "projectType": "library",
+      "root": "projects/api",
+      "sourceRoot": "projects/api/src",
+      "prefix": "w",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/api/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/api/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/api/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "components": {
+      "projectType": "library",
+      "root": "projects/components",
+      "sourceRoot": "projects/components/src",
+      "prefix": "w",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/components/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "auth": {
+      "projectType": "library",
+      "root": "projects/auth",
+      "sourceRoot": "projects/auth/src",
+      "prefix": "w",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/auth/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/auth/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/auth/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "core": {
+      "projectType": "library",
+      "root": "projects/core",
+      "sourceRoot": "projects/core/src",
+      "prefix": "w",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/core/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "account": {
+      "projectType": "library",
+      "root": "projects/account",
+      "sourceRoot": "projects/account/src",
+      "prefix": "w",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/account/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/account/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/account/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "youth": {
+      "projectType": "library",
+      "root": "projects/youth",
+      "sourceRoot": "projects/youth/src",
+      "prefix": "w",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/youth/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/youth/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "mentor": {
+      "projectType": "library",
+      "root": "projects/mentor",
+      "sourceRoot": "projects/mentor/src",
+      "prefix": "w",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/mentor/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/mentor/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "admin": {
+      "projectType": "library",
+      "root": "projects/admin",
+      "sourceRoot": "projects/admin/src",
+      "prefix": "w",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/admin/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/admin/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/admin/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "guardian": {
+      "projectType": "library",
+      "root": "projects/guardian",
+      "sourceRoot": "projects/guardian/src",
+      "prefix": "w",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/guardian/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/guardian/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "volunteer": {
+      "projectType": "library",
+      "root": "projects/volunteer",
+      "sourceRoot": "projects/volunteer/src",
+      "prefix": "w",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/volunteer/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/volunteer/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

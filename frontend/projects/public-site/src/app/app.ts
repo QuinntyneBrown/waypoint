@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS } from '@w/ui';
+import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS } from '@waypoint/components';
 
 @Component({
   selector: 'w-root',

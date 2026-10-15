@@ -15,9 +15,18 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "@w/ui": ["./projects/w-ui/src/public-api.ts"],
-      "@w/api": ["./projects/w-api/src/public-api.ts"],
-      "@w/auth": ["./projects/w-auth/src/public-api.ts"]
+      "@waypoint/api": ["./projects/api/src/public-api.ts"],
+      "@waypoint/components": ["./projects/components/src/public-api.ts"],
+      "@waypoint/auth": ["./projects/auth/src/public-api.ts"],
+      "@waypoint/auth/*": ["./projects/auth/*/src/public-api.ts"],
+      "@waypoint/core": ["./projects/core/src/public-api.ts"],
+      "@waypoint/core/*": ["./projects/core/*/src/public-api.ts"],
+      "@waypoint/account": ["./projects/account/src/public-api.ts"],
+      "@waypoint/youth": ["./projects/youth/src/public-api.ts"],
+      "@waypoint/mentor": ["./projects/mentor/src/public-api.ts"],
+      "@waypoint/admin": ["./projects/admin/src/public-api.ts"],
+      "@waypoint/guardian": ["./projects/guardian/src/public-api.ts"],
+      "@waypoint/volunteer": ["./projects/volunteer/src/public-api.ts"]
     }
   },
   "angularCompilerOptions": {
@@ -28,35 +37,29 @@
   },
   "files": [],
   "references": [
-    {
-      "path": "./projects/portal/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/portal/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/w-ui/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/w-ui/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/w-api/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/w-api/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/w-auth/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/w-auth/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/public-site/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/public-site/tsconfig.spec.json"
-    }
+    { "path": "./projects/portal/tsconfig.app.json" },
+    { "path": "./projects/portal/tsconfig.spec.json" },
+    { "path": "./projects/public-site/tsconfig.app.json" },
+    { "path": "./projects/public-site/tsconfig.spec.json" },
+    { "path": "./projects/api/tsconfig.lib.json" },
+    { "path": "./projects/api/tsconfig.spec.json" },
+    { "path": "./projects/components/tsconfig.lib.json" },
+    { "path": "./projects/components/tsconfig.spec.json" },
+    { "path": "./projects/auth/tsconfig.lib.json" },
+    { "path": "./projects/auth/tsconfig.spec.json" },
+    { "path": "./projects/core/tsconfig.lib.json" },
+    { "path": "./projects/core/tsconfig.spec.json" },
+    { "path": "./projects/account/tsconfig.lib.json" },
+    { "path": "./projects/account/tsconfig.spec.json" },
+    { "path": "./projects/youth/tsconfig.lib.json" },
+    { "path": "./projects/youth/tsconfig.spec.json" },
+    { "path": "./projects/mentor/tsconfig.lib.json" },
+    { "path": "./projects/mentor/tsconfig.spec.json" },
+    { "path": "./projects/admin/tsconfig.lib.json" },
+    { "path": "./projects/admin/tsconfig.spec.json" },
+    { "path": "./projects/guardian/tsconfig.lib.json" },
+    { "path": "./projects/guardian/tsconfig.spec.json" },
+    { "path": "./projects/volunteer/tsconfig.lib.json" },
+    { "path": "./projects/volunteer/tsconfig.spec.json" }
   ]
 }

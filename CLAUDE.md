@@ -42,7 +42,7 @@ Guidance for anyone (human or agent) working in this repo. Read this first.
 
 ## Conventions (summary — full detail in the docs)
 - **Backend:** Clean Architecture (`Waypoint.{Domain,Application,Infrastructure,Api}` + `Waypoint.Cli`), file-per-type, folder-per-feature, thin controllers over MediatR **12.5.0** (the free Apache-2.0 pin), FluentValidation pipeline, EF Core + SQL Server, JWT OAuth2, SignalR via an `IChangePublisher` port. Records for commands/queries/DTOs; classes for handlers.
-- **Frontend:** Angular applications live under `frontend/`; the static mocks remain offline `file://` references with no `fetch`, modules, or external requests and use lowercase filenames plus `w-` design-system classes.
+- **Frontend:** Angular applications (`portal`, `public-site`) live under `frontend/projects/` and depend on `@waypoint/*` feature libraries, `@waypoint/api` (backend services + DTOs/enums), and `@waypoint/components` (presentation only, no workspace deps) — see `frontend/README.md`; the static mocks remain offline `file://` references with no `fetch`, modules, or external requests and use lowercase filenames plus `w-` design-system classes.
 
 ## Key docs
 - `docs/ARCHITECTURE.md` — implemented system structure and boundaries.

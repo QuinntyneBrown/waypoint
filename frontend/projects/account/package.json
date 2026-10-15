@@ -1,0 +1,18 @@
+{
+  "name": "@waypoint/account",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/router": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@waypoint/api": "0.0.1",
+    "@waypoint/auth": "0.0.1",
+    "@waypoint/components": "0.0.1",
+    "@waypoint/core": "0.0.1"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

@@ -22,8 +22,8 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`VolunteerToday`](../../../../frontend/projects/portal/src/app/features/volunteer/today/volunteer-today.ts)<br>[`SessionPersistence`](../../../../frontend/projects/w-auth/src/lib/session-persistence.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`VolunteerApi`](../../../../frontend/projects/w-api/src/lib/services/volunteer-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend page | [`VolunteerToday`](../../../../frontend/projects/volunteer/src/lib/today/volunteer-today.ts)<br>[`SessionPersistence`](../../../../frontend/projects/auth/src/lib/session-persistence.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend API boundary | [`VolunteerApi`](../../../../frontend/projects/api/src/lib/services/volunteer-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`VolunteerController`](../../../../backend/src/Waypoint.Api/Controllers/VolunteerPortal/VolunteerController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`VolunteerTodayQuery`](../../../../backend/src/Waypoint.Application/VolunteerPortal/VolunteerTodayQuery.cs)<br>[`VolunteerTodayQueryHandler`](../../../../backend/src/Waypoint.Application/VolunteerPortal/VolunteerTodayQueryHandler.cs)<br>[`VolunteerTodayView`](../../../../backend/src/Waypoint.Application/VolunteerPortal/VolunteerTodayQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | `ViewTodaysSessionState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |

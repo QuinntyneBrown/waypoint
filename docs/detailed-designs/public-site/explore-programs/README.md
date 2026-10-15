@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`Programs`](../../../../frontend/projects/public-site/src/app/features/programs/programs.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/w-api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`PublicController`](../../../../backend/src/Waypoint.Api/Controllers/PublicSite/PublicController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`GetPublicContentQuery`](../../../../backend/src/Waypoint.Application/PublicSite/GetPublicContentQuery.cs)<br>[`GetPublicContentQueryHandler`](../../../../backend/src/Waypoint.Application/PublicSite/GetPublicContentQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | `ExploreProgramsState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |

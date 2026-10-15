@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, PublicContentView, PublicSiteApi } from '@w/api';
+import { ApiError, PublicContentView, PublicSiteApi } from '@waypoint/api';
 
 // Traces to: L2-PUB-002
 @Component({
