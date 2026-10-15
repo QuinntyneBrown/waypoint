@@ -119,6 +119,4 @@ for other agents. Keep the two copies identical.
 - `creating-videos` — narrated walkthrough videos
 - `estimating-designs` — per-subsystem effort and percent-complete tables
 
-## Boundaries
 
-- `AGENTS.md` is generated. Regenerate it with `primer init`; edits to it are replaced.
