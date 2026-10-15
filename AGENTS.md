@@ -31,17 +31,6 @@ It is built with dotnet.
 - `frontend/scripts/`
 - `scripts/`
 - `scripts/performance/`
-- `user-guides/`
-- `user-guides/administrator/`
-- `user-guides/advanced/`
-- `user-guides/assets/`
-- `user-guides/guardian/`
-- `user-guides/mentor/`
-- `user-guides/reference/`
-- `user-guides/start-here/`
-- `user-guides/tests/`
-- `user-guides/volunteer/`
-- `user-guides/youth/`
 
 ## Testing
 
@@ -54,7 +43,6 @@ It is built with dotnet.
   - `.github/workflows/backend.yml`
   - `.github/workflows/frontend.yml`
   - `.github/workflows/performance.yml`
-  - `.github/workflows/user-guides.yml`
 
 ## Scope, Simplicity, and Zero-Waste Engineering (CRITICAL)
 

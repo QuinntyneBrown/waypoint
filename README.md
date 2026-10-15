@@ -5,7 +5,6 @@ Waypoint is a youth leadership platform for Bible study, mentoring, leadership d
 [![Backend CI](https://github.com/QuinntyneBrown/waypoint/actions/workflows/backend.yml/badge.svg)](https://github.com/QuinntyneBrown/waypoint/actions/workflows/backend.yml)
 [![Frontend CI](https://github.com/QuinntyneBrown/waypoint/actions/workflows/frontend.yml/badge.svg)](https://github.com/QuinntyneBrown/waypoint/actions/workflows/frontend.yml)
 [![Performance](https://github.com/QuinntyneBrown/waypoint/actions/workflows/performance.yml/badge.svg)](https://github.com/QuinntyneBrown/waypoint/actions/workflows/performance.yml)
-[![User guides](https://github.com/QuinntyneBrown/waypoint/actions/workflows/user-guides.yml/badge.svg)](https://github.com/QuinntyneBrown/waypoint/actions/workflows/user-guides.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 [Getting started](#getting-started) · [Documentation](#documentation) · [Contributing](#contributing) · [Support](SUPPORT.md)
@@ -157,20 +156,13 @@ docs/
   specs/               L1/L2 requirements and acceptance criteria
   detailed-designs/    Feature-level designs and diagrams
   mocks/               Static interaction references
-user-guides/           Published end-user guide (static, no build step)
 scripts/               Traceability, documentation, and performance tooling
 ```
 
 ## Documentation
 
-The **[user guide](https://calm-meadow-033758b0f.7.azurestaticapps.net)** is the documentation for
-people who use Waypoint — youth, mentors, guardians, volunteers, and program administrators. It covers
-every screen role by role, every message the product can show, and what this release does and does
-not do. Everything else below is for people building it.
-
 | Document                                             | Purpose                                                           |
 | ---------------------------------------------------- | ----------------------------------------------------------------- |
-| [User guide](https://calm-meadow-033758b0f.7.azurestaticapps.net) | End-user guide by role, error reference, and lifecycle reference ([source](user-guides/README.md)) |
 | [Implementation status](docs/implementation-plan.md) | Implemented boundary, verification commands, and release work     |
 | [Product requirements](docs/PRD.md)                  | Product goals, users, scope, and constraints                      |
 | [Requirements specification](docs/specs/README.md)   | Stable requirement IDs, acceptance criteria, and traceability     |
