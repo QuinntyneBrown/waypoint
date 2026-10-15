@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stepper — Waypoint design system</title>
+<meta name="description" content="Ordered steps: lessons in a module, application stages.">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../assets/components.css">
+<link rel="stylesheet" href="../assets/ds.css">
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="ds-shell">
+<nav class="ds-nav" aria-label="Design system">
+<div class="ds-nav__brand"><a href="../index.html">Waypoint DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
+<details open><summary>Foundations</summary><ul>
+<li><a href="../foundations/color.html">Color</a></li>
+<li><a href="../foundations/typography.html">Typography</a></li>
+<li><a href="../foundations/spacing.html">Spacing</a></li>
+<li><a href="../foundations/layout.html">Layout</a></li>
+<li><a href="../foundations/elevation.html">Elevation</a></li>
+<li><a href="../foundations/shape.html">Shape</a></li>
+<li><a href="../foundations/motion.html">Motion</a></li>
+<li><a href="../foundations/iconography.html">Iconography</a></li>
+<li><a href="../foundations/theming.html">Theming</a></li>
+<li><a href="../foundations/responsive.html">Responsive</a></li>
+<li><a href="../foundations/accessibility.html">Accessibility</a></li>
+<li><a href="../foundations/content.html">Content</a></li>
+</ul></details><details open><summary>Components</summary><ul>
+<li><a href="../components/button.html">Button</a></li>
+<li><a href="../components/icon-button.html">Icon button</a></li>
+<li><a href="../components/button-group.html">Button group</a></li>
+<li><a href="../components/link.html">Link</a></li>
+<li><a href="../components/menu.html">Menu</a></li>
+<li><a href="../components/text-field.html">Text field</a></li>
+<li><a href="../components/textarea.html">Textarea</a></li>
+<li><a href="../components/select.html">Select</a></li>
+<li><a href="../components/checkbox.html">Checkbox</a></li>
+<li><a href="../components/radio-group.html">Radio group</a></li>
+<li><a href="../components/switch.html">Switch</a></li>
+<li><a href="../components/file-upload.html">File upload</a></li>
+<li><a href="../components/form-field.html">Form field</a></li>
+<li><a href="../components/form-layout.html">Form layout</a></li>
+<li><a href="../components/top-bar.html">Top bar</a></li>
+<li><a href="../components/sidebar-navigation.html">Sidebar navigation</a></li>
+<li><a href="../components/bottom-navigation.html">Bottom navigation</a></li>
+<li><a href="../components/tabs.html">Tabs</a></li>
+<li><a href="../components/breadcrumb.html">Breadcrumb</a></li>
+<li><a href="../components/pagination.html">Pagination</a></li>
+<li><a href="../components/stepper.html">Stepper</a></li>
+<li><a href="../components/footer.html">Footer</a></li>
+<li><a href="../components/skip-link.html">Skip link</a></li>
+<li><a href="../components/card.html">Card</a></li>
+<li><a href="../components/accordion.html">Accordion</a></li>
+<li><a href="../components/dialog.html">Dialog</a></li>
+<li><a href="../components/drawer.html">Drawer</a></li>
+<li><a href="../components/tooltip.html">Tooltip</a></li>
+<li><a href="../components/divider.html">Divider</a></li>
+<li><a href="../components/layout.html">Container, grid and stack</a></li>
+<li><a href="../components/table.html">Table</a></li>
+<li><a href="../components/list.html">List</a></li>
+<li><a href="../components/message-thread.html">Message thread</a></li>
+<li><a href="../components/description-list.html">Description list</a></li>
+<li><a href="../components/avatar.html">Avatar</a></li>
+<li><a href="../components/badge.html">Badge</a></li>
+<li><a href="../components/chip.html">Chip</a></li>
+<li><a href="../components/stat.html">Stat card</a></li>
+<li><a href="../components/timeline.html">Timeline</a></li>
+<li><a href="../components/toast.html">Toast</a></li>
+<li><a href="../components/alert.html">Alert</a></li>
+<li><a href="../components/inline-message.html">Inline message</a></li>
+<li><a href="../components/progress.html">Progress</a></li>
+<li><a href="../components/spinner.html">Spinner</a></li>
+<li><a href="../components/skeleton.html">Skeleton</a></li>
+<li><a href="../components/empty-state.html">Empty state</a></li>
+<li><a href="../components/error-page.html">Error page</a></li>
+<li><a href="../components/scripture.html">Scripture quote</a></li>
+<li><a href="../components/quiz-option.html">Quiz option</a></li>
+<li><a href="../components/achievement-badge.html">Achievement badge</a></li>
+</ul></details><details open><summary>Patterns</summary><ul>
+<li><a href="../patterns/forms.html">Forms</a></li>
+<li><a href="../patterns/feedback.html">Feedback and loading</a></li>
+<li><a href="../patterns/empty-and-error.html">Empty and error states</a></li>
+<li><a href="../patterns/navigation.html">Navigation and page structure</a></li>
+<li><a href="../patterns/dialogs-and-overlays.html">Dialogs and overlays</a></li>
+<li><a href="../patterns/tables-and-lists.html">Data tables and lists</a></li>
+<li><a href="../patterns/notifications.html">Notifications</a></li>
+<li><a href="../patterns/content-and-tone.html">Content and tone</a></li>
+</ul></details></nav>
+<main id="main" class="ds-main">
+<header class="ds-header">
+<p class="ds-kicker">Component · Navigation</p>
+<h1>Stepper</h1>
+<p class="ds-lead">Ordered steps: lessons in a module, application stages.</p>
+<div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Light + dark</span></div>
+<ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#anatomy">Anatomy</a></li><li><a href="#variants">Variants</a></li><li><a href="#sizes">Sizes</a></li><li><a href="#states">States</a></li><li><a href="#responsive">Responsive</a></li><li><a href="#theming">Theming</a></li><li><a href="#accessibility">Accessibility</a></li><li><a href="#content">Content</a></li><li><a href="#do-dont">Do and don't</a></li><li><a href="#tokens">Tokens</a></li><li><a href="#code">Code</a></li><li><a href="#sources">Sources</a></li></ul>
+</header>
+<section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2><p>Lesson steps list a module's lessons with their status. For a history of events use a <a href="timeline.html">timeline</a>.</p></section>
+<section class="ds-section" id="anatomy"><h2><a href="#anatomy">Anatomy</a></h2><div class="ds-anatomy"><figure class="ds-anatomy__figure"><ol class="w-list"><li><a class="w-lessonstep is-done" href="#anatomy"><span class="w-lessonstep__num"><svg class="w-icon" aria-hidden="true" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="w-lessonstep__body"><b>Who is Jesus?</b><br><span class="w-muted">Completed</span></span></a></li><li><a class="w-lessonstep" href="#anatomy" aria-current="step"><span class="w-lessonstep__num">2</span><span class="w-lessonstep__body"><b>The Great Commission</b><br><span class="w-muted">In progress · 12 min</span></span></a></li><li><div class="w-lessonstep is-locked"><span class="w-lessonstep__num"><svg class="w-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span class="w-lessonstep__body"><b>Serving others</b><br><span class="w-muted">Unlocks after lesson 2</span></span></div></li></ol><span class="ds-callout" style="left: 10%; top: 6%;" aria-hidden="true">1</span><span class="ds-callout" style="left: 50%; top: 6%;" aria-hidden="true">2</span><span class="ds-callout" style="left: 90%; top: 6%;" aria-hidden="true">3</span></figure><ol class="ds-anatomy__list"><li><div><b>Number / status</b><small>32px circle: lime when done, ink when current.</small></div></li><li><div><b>Body</b><small>Title and status line.</small></div></li><li><div><b>Row</b><small>Card-like with hairline border.</small></div></li></ol></div></section>
+<section class="ds-section" id="variants"><h2><a href="#variants">Variants</a></h2><div class="ds-example"><div class="ds-example__canvas"><p class="w-muted">See anatomy.</p></div><div class="ds-example__caption"><span>Vertical list (default); application stages use the timeline.</span></div><details class="ds-example__code"><summary>HTML</summary><pre><code>&lt;p class="w-muted"&gt;See anatomy.&lt;/p&gt;</code></pre></details></div></section>
+<section class="ds-section" id="sizes" data-na="One size."><h2><a href="#sizes">Sizes</a></h2><p class="ds-na">One size.</p></section>
+<section class="ds-section" id="states"><h2><a href="#states">States</a></h2><p>Pointer and focus states are forced with <code>data-state</code> so they can be reviewed statically; real pages get them from <code>:hover</code>, <code>:focus-visible</code>, <code>:active</code> and ARIA attributes.</p><div class="ds-matrix"><table><thead><tr><th scope="col">Variant</th><th scope="col">Upcoming</th><th scope="col">Current</th><th scope="col">Complete</th><th scope="col">Locked</th><th scope="col">Error</th></tr></thead><tbody><tr><th scope="row">Step</th><td><div class="w-lessonstep"><span class="w-lessonstep__num">3</span><span class="w-lessonstep__body"><b>Lesson</b></span></div></td><td><div class="w-lessonstep" aria-current="step"><span class="w-lessonstep__num">3</span><span class="w-lessonstep__body"><b>Lesson</b></span></div></td><td><div class="w-lessonstep is-done"><span class="w-lessonstep__num">3</span><span class="w-lessonstep__body"><b>Lesson</b></span></div></td><td><div class="w-lessonstep is-locked"><span class="w-lessonstep__num">3</span><span class="w-lessonstep__body"><b>Lesson</b></span></div></td><td><div class="w-lessonstep is-error"><span class="w-lessonstep__num">3</span><span class="w-lessonstep__body"><b>Lesson</b></span></div></td></tr></tbody></table></div><h3>Both themes</h3><div class="ds-themes"><div data-theme="light"><div class="ds-example__canvas"><div class="w-lessonstep"><span class="w-lessonstep__num">3</span><span class="w-lessonstep__body"><b>Lesson</b></span></div></div></div><div data-theme="dark"><div class="ds-example__canvas"><div class="w-lessonstep"><span class="w-lessonstep__num">3</span><span class="w-lessonstep__body"><b>Lesson</b></span></div></div></div></div><p>Status is also written as text ("Completed", "Locked"), not shown only by colour or icon.</p></section>
+<section class="ds-section" id="responsive"><h2><a href="#responsive">Responsive behaviour</a></h2><ul><li>Full width at all sizes.</li></ul></section>
+<section class="ds-section" id="theming"><h2><a href="#theming">Theming</a></h2><p>Done: <code>--color-brand</code>. Current: <code>--color-accent</code>.</p><p>Dark theme applies with <code>[data-theme="dark"]</code> or the OS preference; the component itself has no theme-specific CSS.</p></section>
+<section class="ds-section" id="accessibility"><h2><a href="#accessibility">Accessibility</a></h2><h3>Role and pattern</h3><p><code>&lt;ol&gt;</code>; current step <code>aria-current="step"</code>; locked steps are not links.</p>
+<h3>Keyboard</h3><table class="ds-table ds-keys"><thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead><tbody><tr><td><kbd>Tab / Shift+Tab</kbd></td><td>Moves focus to and from the control in DOM order.</td></tr><tr><td><kbd>Enter</kbd></td><td>Opens the lesson.</td></tr></tbody></table>
+<h3>Focus</h3><p>Ring.</p><h3>Labelling</h3><p>Status text in the row.</p>
+<h3>Contrast</h3><div class="ds-themes"><div data-theme="light"><p class="ds-kicker">Light</p><div class="ds-pair"><span>Done number</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-brand|--color-brand" data-min="4.5"></span></div><div class="ds-pair"><span>Current number</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-accent|--color-accent" data-min="4.5"></span></div><div class="ds-pair"><span>Locked text</span><span class="ds-pair__ratio" data-contrast="--color-fg-muted|--color-bg-subtle" data-min="4.5"></span></div></div><div data-theme="dark"><p class="ds-kicker">Dark</p><div class="ds-pair"><span>Done number</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-brand|--color-brand" data-min="4.5"></span></div><div class="ds-pair"><span>Current number</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-accent|--color-accent" data-min="4.5"></span></div><div class="ds-pair"><span>Locked text</span><span class="ds-pair__ratio" data-contrast="--color-fg-muted|--color-bg-subtle" data-min="4.5"></span></div></div></div><h3>Motion</h3><p>None.</p><h3>Touch</h3><p>Rows 64px+.</p></section>
+<section class="ds-section" id="content"><h2><a href="#content">Content</a></h2><ul><li>Status line: "Completed", "In progress · 12 min", "Unlocks after lesson 2".</li></ul></section>
+<section class="ds-section" id="do-dont"><h2><a href="#do-dont">Do and don't</a></h2><div class="ds-dodont"><figure class="ds-do"><div class="ds-example__canvas"><div class="w-lessonstep is-locked"><span class="w-lessonstep__num"><svg class="w-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span class="w-lessonstep__body"><b>Serving others</b><br><span class="w-muted">Unlocks after lesson 2</span></span></div></div><figcaption>Locked says why.</figcaption></figure><figure class="ds-dont"><div class="ds-example__canvas"><div class="w-lessonstep" style="opacity:.55"><span class="w-lessonstep__num">3</span><b>Serving others</b></div></div><figcaption>The mocks dimmed locked rows to 55% opacity: unreadable and unexplained.</figcaption></figure><figure class="ds-do"><div class="ds-example__canvas"><p>Ordered list.</p></div><figcaption>Use <code>&lt;ol&gt;</code>.</figcaption></figure><figure class="ds-dont"><div class="ds-example__canvas"><p>Divs.</p></div><figcaption>Order lost to assistive tech.</figcaption></figure></div></section>
+<section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2><div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Part</th><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead><tbody><tr><td>Done</td><td><code>--color-brand</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-brand" data-swatch></i><span data-token="--color-brand"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-brand" data-swatch></i><span data-token="--color-brand"></span></span></td></tr><tr><td>Current</td><td><code>--color-accent</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-accent" data-swatch></i><span data-token="--color-accent"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-accent" data-swatch></i><span data-token="--color-accent"></span></span></td></tr><tr><td>Locked</td><td><code>--color-bg-subtle</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-bg-subtle" data-swatch></i><span data-token="--color-bg-subtle"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-bg-subtle" data-swatch></i><span data-token="--color-bg-subtle"></span></span></td></tr><tr><td>Radius</td><td><code>--radius-lg</code></td><td colspan="2"><span data-token="--radius-lg"></span></td></tr></tbody></table></div></section>
+<section class="ds-section" id="code"><h2><a href="#code">Code</a></h2><pre><code>&lt;ol class="w-list"&gt;
+  &lt;li&gt;&lt;a class="w-lessonstep" href="…" aria-current="step"&gt;&lt;span class="w-lessonstep__num"&gt;2&lt;/span&gt;…&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</code></pre><div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Class / attribute</th><th scope="col">Effect</th></tr></thead><tbody><tr><td><code>.w-lessonstep</code></td><td>Step row.</td></tr><tr><td><code>.is-done / .is-locked / .is-error</code></td><td>Status.</td></tr><tr><td><code>aria-current="step"</code></td><td>Current.</td></tr></tbody></table></div></section>
+<section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2><p>Extracted from these mocks:</p><ul><li><a href="../../mocks/curriculum-authoring/admin/lesson-editor.html">curriculum-authoring/admin/lesson-editor.html</a></li><li><a href="../../mocks/curriculum-authoring/admin/module-editor.html">curriculum-authoring/admin/module-editor.html</a></li><li><a href="../../mocks/curriculum-authoring/admin/tracks.html">curriculum-authoring/admin/tracks.html</a></li><li><a href="../../mocks/learning-experience/youth/lesson.html">learning-experience/youth/lesson.html</a></li></ul><p>Drift fixed during extraction: Locked opacity .55 replaced with muted text on a subtle fill.</p></section>
+
+<footer class="ds-footer"><span>Waypoint design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-15</span><a href="#top">Back to top</a></footer>
+</main>
+</div>
+<script src="../assets/ds.js"></script>
+</body>
+</html>

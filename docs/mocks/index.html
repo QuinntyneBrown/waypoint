@@ -5,36 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Waypoint — Prototype Map</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="assets/css/waypoint.css">
+  <link rel="stylesheet" href="../design-system/assets/fonts.css"><link rel="stylesheet" href="../design-system/tokens/tokens.css"><link rel="stylesheet" href="../design-system/assets/components.css">
   <script defer src="assets/js/waypoint.js"></script>
   <style>
-    .hub-hero{background:var(--w-ink);color:#fff;padding:var(--w-s9) 0 var(--w-s8)}
+    .hub-hero{background:var(--color-bg-inverse);color:#fff;padding:var(--space-12) 0 var(--space-10)}
     .hub-hero h1{color:#fff;font-size:clamp(2rem,1.4rem + 3vw,3.2rem);max-width:18ch}
     .hub-hero .w-brand__mark{width:44px;height:44px;font-size:1.3rem}
-    .hub-controls{position:sticky;top:0;z-index:20;background:var(--w-white);border-bottom:var(--w-bw) solid var(--w-border);padding:14px 0}
-    .hub-sec{padding:var(--w-s7) 0;border-bottom:var(--w-bw) solid var(--w-border)}
-    .hub-sec__head{display:flex;align-items:center;gap:12px;margin-bottom:var(--w-s5)}
-    .hub-sec__icon{width:40px;height:40px;border-radius:10px;background:var(--w-lime);display:grid;place-items:center;flex:none}
-    .hub-card{display:block;border:var(--w-bw) solid var(--w-border);border-radius:var(--w-r-card);padding:14px 16px;background:var(--w-white);transition:border-color .15s,transform .12s}
-    .hub-card:hover{border-color:var(--w-ink);text-decoration:none;transform:translateY(-1px)}
-    .hub-card__name{font-family:var(--w-font-head);font-weight:500;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .hub-controls{position:sticky;top:0;z-index:20;background:var(--color-bg-surface);border-bottom:var(--border-width-hairline) solid var(--color-border-default);padding:14px 0}
+    .hub-sec{padding:var(--space-8) 0;border-bottom:var(--border-width-hairline) solid var(--color-border-default)}
+    .hub-sec__head{display:flex;align-items:center;gap:12px;margin-bottom:var(--space-5)}
+    .hub-sec__icon{width:40px;height:40px;border-radius:10px;background:var(--color-brand);display:grid;place-items:center;flex:none}
+    .hub-card{display:block;border:var(--border-width-hairline) solid var(--color-border-default);border-radius:var(--radius-lg);padding:14px 16px;background:var(--color-bg-surface);transition:border-color .15s,transform .12s}
+    .hub-card:hover{border-color:var(--color-fg-default);text-decoration:none;transform:translateY(-1px)}
+    .hub-card__name{font-family:var(--font-family-heading);font-weight:500;display:flex;align-items:center;justify-content:space-between;gap:8px}
     .hub-card__name .w-icon{opacity:.4}
-    .hub-card__path{font-size:.72rem;color:var(--w-muted);font-family:'JetBrains Mono',monospace;margin-top:2px}
+    .hub-card__path{font-size:.72rem;color:var(--color-fg-muted);font-family:'JetBrains Mono',monospace;margin-top:2px}
     .hub-variants{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-    .hub-chip{font-size:.68rem;font-weight:600;font-family:var(--w-font-head);padding:3px 8px;border-radius:var(--w-r-pill);background:var(--w-g200);color:var(--w-ink-80)}
-    .hub-chip:hover{background:var(--w-ink);color:#fff;text-decoration:none}
+    .hub-chip{font-size:.68rem;font-weight:600;font-family:var(--font-family-heading);padding:3px 8px;border-radius:var(--radius-full);background:var(--color-bg-subtle-hover);color:var(--color-fg-default)}
+    .hub-chip:hover{background:var(--color-bg-inverse);color:#fff;text-decoration:none}
   </style>
 </head>
 <body>
   <section class="hub-hero">
     <div class="w-container">
-      <div class="w-cluster w-gap-3 w-mb-6"><span class="w-brand__mark">W</span><span style="font-family:var(--w-font-head);font-weight:700;font-size:1.2rem">Waypoint</span><span class="w-badge w-badge--lime">Prototype</span></div>
+      <div class="w-cluster w-gap-3 w-mb-6"><span class="w-brand__mark">W</span><span style="font-family:var(--font-family-heading);font-weight:700;font-size:1.2rem">Waypoint</span><span class="w-badge w-badge--lime">Prototype</span></div>
       <h1>Every screen in the Waypoint app.</h1>
       <p class="w-text-lg" style="opacity:.8;max-width:60ch">A clickable prototype for raising up young leaders who love Jesus — styled with FaithTech's design system. Open any screen below. Works offline on any device.</p>
       <div class="w-cluster w-gap-3 w-mt-6">
         <a class="w-btn w-btn--primary" href="learning-experience/youth/home.html">Enter as a Youth Leader</a>
         <a class="w-btn w-btn--ghost" style="border-color:rgba(255,255,255,.4);color:#fff" href="reporting-and-data/admin/dashboard.html">Enter as Director (Shawn)</a>
-        <a class="w-btn w-btn--ghost" style="border-color:rgba(255,255,255,.4);color:#fff" href="styleguide.html">Design system</a>
+        <a class="w-btn w-btn--ghost" style="border-color:rgba(255,255,255,.4);color:#fff" href="../design-system/index.html">Design system</a>
       </div>
     </div>
   </section>
@@ -67,13 +67,11 @@
         { n: "Reset link sent", p: "authentication/auth/reset-link-sent.html" },
         { n: "Reset password", p: "authentication/auth/reset-password.html" },
         { n: "Password updated", p: "authentication/auth/reset-success.html" },
-        { n: "PIN sign-in", p: "authentication/auth/pin-login.html" },
         { n: "Accept invite", p: "authentication/auth/invite-accept.html" },
         { n: "Welcome setup", p: "authentication/auth/welcome-setup.html" },
         { n: "Guardian consent", p: "consent-and-safeguarding/auth/consent.html" },
         { n: "Account locked", p: "authentication/auth/account-locked.html" },
-        { n: "Signed out (shared device)", p: "authentication/auth/signed-out.html" },
-        { n: "Switch user", p: "authentication/auth/switch-user.html" }
+        { n: "Signed out (shared device)", p: "authentication/auth/signed-out.html" }
       ]},
       { group: "Youth Leader", key: "youth", icon: "compass", pages: [
         { n: "Home (Today)", p: "learning-experience/youth/home.html" },
@@ -144,7 +142,6 @@
         { n: "Cohort report", p: "reporting-and-data/admin/report-cohort.html" },
         { n: "Attendance report", p: "reporting-and-data/admin/report-attendance.html" },
         { n: "Staff report", p: "reporting-and-data/admin/report-staff.html" },
-        { n: "Report builder", p: "reporting-and-data/admin/report-builder.html" },
         { n: "Attendance admin", p: "engagement/admin/attendance-admin.html" },
         { n: "Calendar", p: "engagement/admin/calendar.html", v: [["new session","open=m-session"]] },
         { n: "Announcements", p: "engagement/admin/announcements.html", v: [["compose","open=m-announce"]] },
@@ -167,7 +164,6 @@
         { n: "Profile settings", p: "platform-services/shared/settings-profile.html" },
         { n: "Notification settings", p: "platform-services/shared/settings-notifications.html" },
         { n: "Display & accessibility", p: "platform-services/shared/settings-display.html" },
-        { n: "Global search", p: "platform-services/shared/search.html", v: [["no results","state=empty"]] },
         { n: "Help center", p: "platform-services/shared/help.html" },
         { n: "Contact support", p: "platform-services/shared/support.html" },
         { n: "About Waypoint", p: "platform-services/shared/about.html" }

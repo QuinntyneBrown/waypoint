@@ -446,4 +446,3 @@ Then redo §4.6 (about 10 minutes). If you demo often, consider snapshotting the
 - [ARCHITECTURE.md](ARCHITECTURE.md) — how it is built
 - [backend/src/Waypoint.Cli/README.md](../backend/src/Waypoint.Cli/README.md) — the `way` operational CLI
 - [implementation-plan.md](implementation-plan.md) — current implementation status and release boundary
-- [../user-guides/](../user-guides/) — role-by-role end-user documentation

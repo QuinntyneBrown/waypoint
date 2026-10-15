@@ -353,7 +353,6 @@
         '<div class="w-menu__sep"></div>' +
         '<a class="w-menu__item" href="' + Waypoint.href("platform-services/shared/settings-profile.html") + '">' + icon("user") + "Profile &amp; settings</a>" +
         '<a class="w-menu__item" href="' + Waypoint.href("platform-services/shared/help.html") + '">' + icon("help-circle") + "Help</a>" +
-        '<a class="w-menu__item" href="' + Waypoint.href("authentication/auth/switch-user.html") + '">' + icon("refresh") + "Switch user</a>" +
         '<div class="w-menu__sep"></div>' +
         '<a class="w-menu__item w-menu__item--danger" href="' + Waypoint.href("authentication/auth/signed-out.html") + '">' + icon("log-out") + "Sign out</a>" +
       "</div>";

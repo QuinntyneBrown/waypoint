@@ -2,14 +2,14 @@
 
 > The mock pages this contract governs live in **`docs/mocks/`**. Shared assets, templates, the style guide, and the product map live at that root. Screens are organized as `<subsystem>/<role>/<page>.html`, using the same subsystem names as `docs/specs/`.
 
-You are building **static HTML mockup pages** for the "Waypoint" youth-leadership app. They must all look like one product. Follow this contract verbatim. Do **not** invent CSS classes, do **not** add colors, do **not** add external resources. Look at `styleguide.html` for the rendered look and copy its markup patterns.
+You are building **static HTML mockup pages** for the "Waypoint" youth-leadership app. They must all look like one product. Follow this contract verbatim. Do **not** invent CSS classes, do **not** add colors, do **not** add external resources. Look at the design system (`docs/design-system/index.html`) for the rendered look and copy markup from each component page's Code section.
 
 ## Golden rules (breaking any of these breaks the prototype)
 1. **Runs from `file://` offline. ZERO network requests.** No `http://`/`https://` in any `src`/`href`. No Google Fonts link, no CDN, no analytics, no external images.
 2. **No `fetch`, no `XMLHttpRequest`, no ES modules, no `import`, no `<script type="module">`.** Behavior is declarative via `data-*` attributes handled by `waypoint.js`. Inline `<script>` for tiny page demos is OK but keep it minimal and classic.
 3. **All filenames and hrefs lowercase ASCII**, `.html` extension. (ChromeOS is case-sensitive.)
 4. **Two levels of screen nesting only.** Every screen lives directly in a role folder under its owning subsystem (e.g. `program-administration/admin/people.html`).
-5. **Do not create, edit, or touch:** `assets/css/waypoint.css`, `assets/js/waypoint.js`, `index.html`, `styleguide.html`, other agents' folders. Create only the files assigned to you.
+5. **Do not create, edit, or touch:** `docs/design-system/` (tokens and component CSS), `assets/js/waypoint.js`, `index.html`, other agents' folders. Create only the files assigned to you.
 6. **No inline hex colors / no `style="color:#..."`.** Use component classes and tokens. (A few layout-only inline styles like `style="max-width:52ch"` or `style="--val:64%"` are fine; color must come from classes.)
 7. **Use the shared sample data names** (below) so people/cohorts/lessons are consistent across every page.
 
@@ -22,7 +22,9 @@ You are building **static HTML mockup pages** for the "Waypoint" youth-leadershi
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PAGE NAME · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <link rel="stylesheet" href="../../../design-system/assets/fonts.css">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css">
+  <link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 ```
