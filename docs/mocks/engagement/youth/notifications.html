@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Notifications · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
   <style>
     .notif{display:flex;gap:14px;align-items:flex-start;padding:14px 4px}
-    .notif + .notif{border-top:var(--w-bw) solid var(--w-border)}
-    .notif__icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--w-g100);flex:none}
+    .notif + .notif{border-top:var(--border-width-hairline) solid var(--color-border-default)}
+    .notif__icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--color-bg-surface-sunken);flex:none}
     .notif__icon .w-icon{width:18px;height:18px}
     .notif__body{flex:1;min-width:0}
     .notif__title{font-weight:650;margin:0}
-    .notif__meta{font-size:.82rem;color:var(--w-muted);margin:2px 0 0}
-    .notif__time{font-size:.72rem;color:var(--w-muted);flex:none;white-space:nowrap}
-    .notif.is-unread .notif__icon{background:var(--w-lime)}
+    .notif__meta{font-size:.82rem;color:var(--color-fg-muted);margin:2px 0 0}
+    .notif__time{font-size:.72rem;color:var(--color-fg-muted);flex:none;white-space:nowrap}
+    .notif.is-unread .notif__icon{background:var(--color-brand)}
   </style>
 </head>
 <body data-role="youth" data-active="home" data-track="bible">

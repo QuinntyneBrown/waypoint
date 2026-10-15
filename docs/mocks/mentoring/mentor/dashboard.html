@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mentor dashboard · Waypoint</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../assets/css/waypoint.css">
+  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
   <style>
     .dash-youth{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
-    .dash-youth__meta{font-size:.82rem;color:var(--w-muted);margin:2px 0 0}
+    .dash-youth__meta{font-size:.82rem;color:var(--color-fg-muted);margin:2px 0 0}
     .dash-session{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
-    .dash-date{width:56px;border:var(--w-bw) solid var(--w-border);border-radius:12px;text-align:center;overflow:hidden;flex:none;font-family:var(--w-font-head)}
-    .dash-date span{display:block;padding:4px;background:var(--w-lime);font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em}
+    .dash-date{width:56px;border:var(--border-width-hairline) solid var(--color-border-default);border-radius:12px;text-align:center;overflow:hidden;flex:none;font-family:var(--font-family-heading)}
+    .dash-date span{display:block;padding:4px;background:var(--color-brand);font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em}
     .dash-date b{display:block;padding:6px 4px 7px;font-size:1.35rem;line-height:1}
-    .dash-review{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:var(--w-bw) solid var(--w-border)}
+    .dash-review{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:var(--border-width-hairline) solid var(--color-border-default)}
     .dash-review:last-child{border-bottom:0}
     @media(max-width:900px){.dash-main{grid-template-columns:1fr!important}}
   </style>
@@ -99,7 +99,7 @@
             <div class="w-card__body dash-session">
               <div class="dash-date"><span>Jul</span><b>18</b></div>
               <div>
-                <div class="w-eyebrow" style="color:var(--w-lime)">Today's session</div>
+                <div class="w-eyebrow" style="color:var(--color-brand)">Today's session</div>
                 <h3 class="w-mt-2 w-mb-0">Servant Leadership</h3>
                 <p class="dash-youth__meta" style="color:rgba(255,255,255,.72)">10:00 AM · Parkdale Community Hub · 5 youth</p>
               </div>

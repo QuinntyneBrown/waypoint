@@ -1,8 +1,0 @@
-{
-  "extends": ["html-validate:recommended"],
-  "rules": {
-    "no-inline-style": "error",
-    "doctype-style": "off",
-    "void-style": "off"
-  }
-}

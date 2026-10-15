@@ -1,8 +1,0 @@
-# Vendored design-system stylesheets are byte-identical copies of
-# frontend/projects/w-ui/src/styles/. Formatting them would introduce drift and
-# fail scripts/verify-waypoint-user-guide-assets.mjs. Never reformat them.
-assets/vendor/
-
-node_modules/
-playwright-report/
-test-results/
