@@ -97,3 +97,11 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** "Waypoint" said nothing about what the software does and carried an unrelated cultural reference. "Waypoint" describes the product: milestones, progression, and the journey a young person takes through the program. A single-word name also removes the six spelling variants that had accumulated.
 
 **Consequences.** The GitHub repository is `QuinntyneBrown/waypoint`; GitHub redirects the old `waypoint` URLs. The Azure resource group `waypoint-rg` keeps its original name because Azure resource groups cannot be renamed in place. Existing development databases named `Waypoint*` and tokens issued with the `Waypoint` JWT issuer are not migrated; recreate them. The rendered C4 diagrams under `docs/detailed-designs` were re-rendered with the new labels.
+
+## 13. Donations are monthly tiers handed off to an external provider
+
+**Decision.** The public site offers recurring monthly donation tiers of $20, $50 and $100 and hands the visitor off to an external PCI-compliant provider; Waypoint never collects or stores card data. The mock, the spec (`L2-PUB-003` AC3) and the code agree on these tiers.
+
+**Why.** The tiers disagreed between the mock ($25/$60/$150) and the code ($20/$50/$100). The code and its tests are the shipped behavior, so the mock follows it.
+
+**Consequences.** The provider has not been chosen: `donate.ts` still hands off to the placeholder `https://donate.example-pci-provider.org/waypoint`. The product owner must supply the real provider and URL before production; that is a one-line change to `providerUrl`.
