@@ -76,6 +76,24 @@ public sealed class TransportSecurityTests
         });
     }
 
+    [TestCase("Production", HttpStatusCode.NotFound)]
+    [TestCase("Development", HttpStatusCode.OK)]
+    public async Task Swagger_is_served_only_outside_production(string environment, HttpStatusCode expected)
+    {
+        await using var factory = new SecurityConfiguredFactory(
+            environment,
+            new[] { environment == "Production" ? "https://portal.waypoint.example" : "http://localhost:4300" });
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            BaseAddress = new Uri(environment == "Production" ? "https://localhost" : "http://localhost"),
+            AllowAutoRedirect = false,
+        });
+
+        var response = await client.GetAsync("/swagger/v1/swagger.json");
+
+        Assert.That(response.StatusCode, Is.EqualTo(expected));
+    }
+
     [Test]
     public void Production_refuses_a_configured_plain_http_cors_origin()
     {
