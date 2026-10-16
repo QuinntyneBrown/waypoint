@@ -20,9 +20,11 @@ import { finalize } from 'rxjs/operators';
       align-items: end;
     }
     .audit-target,
-    .audit-source,
     .audit-detail {
       overflow-wrap: anywhere;
+    }
+    .audit-source {
+      overflow-wrap: break-word;
     }
     .audit-private {
       display: inline-flex;

@@ -95,6 +95,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     }
     .report-ring strong {
       position: relative;
+      font-size: 1.1rem;
       z-index: 1;
     }
     .report-card {

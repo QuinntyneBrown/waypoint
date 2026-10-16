@@ -1292,9 +1292,12 @@ legend {
   position: relative;
   font-family: var(--w-font-head);
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   line-height: 1;
   text-align: center;
+}
+.w-ring--sm .w-ring__label {
+  font-size: 0.7rem;
 }
 .w-ring--lg .w-ring__label {
   font-size: 1.4rem;
