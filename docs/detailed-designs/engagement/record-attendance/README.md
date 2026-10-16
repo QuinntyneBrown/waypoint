@@ -22,7 +22,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Frontend page | [`VolunteerAttendance`](../../../../frontend/projects/volunteer/src/lib/attendance/volunteer-attendance.ts)<br>[`AttendanceQueueService`](../../../../frontend/projects/volunteer/src/lib/attendance/attendance-queue.service.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
+| Frontend page | [`VolunteerAttendance`](../../../../frontend/projects/volunteer/src/lib/attendance/volunteer-attendance.ts)<br>[`AttendanceQueueService`](../../../../frontend/projects/core/attendance/src/attendance-queue.service.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
 | Frontend API boundary | [`PublicSiteService`](../../../../frontend/projects/api/src/lib/services/public-site.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AttendanceController`](../../../../backend/src/Waypoint.Api/Controllers/Engagement/AttendanceController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AttendanceHistoryByYouthQuery`](../../../../backend/src/Waypoint.Application/Engagement/Attendance/AttendanceHistoryByYouthQuery.cs)<br>[`AttendanceHistoryByYouthQueryHandler`](../../../../backend/src/Waypoint.Application/Engagement/Attendance/AttendanceHistoryByYouthQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
