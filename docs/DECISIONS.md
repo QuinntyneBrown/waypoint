@@ -113,3 +113,11 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** Implementation is complete and every value is covered by tests; leaving the appendix titled "to Confirm" implied unfinished sign-off.
 
 **Consequences.** Changing any value now is a normal requirement change (L2, design, mock, tests), not a pending confirmation.
+
+## 15. Test rules match how the suite actually runs
+
+**Decision.** (1) Playwright acceptance tests run against the real API (DECISIONS #9); only Vitest unit tests are backend-free. (2) The no-selectors-in-tests rule applies to new and changed specs; legacy specs migrate to page objects when next touched. (3) The requirement traceability gate (`scripts/check-traceability.mjs --strict`) is the single allowed exception to the no-architecture-tests rule. It stays in both `backend.yml` and `frontend.yml` because each workflow's path filter would otherwise miss changes to the other side's tests. `--strict-ac` stays opt-in until legacy tests carry AC annotations.
+
+**Why.** `AGENTS.md` contradicted the Playwright config, the CI workflows, DECISIONS #9 and the traceability gate that CI already enforces.
+
+**Consequences.** Rewriting the e2e suite to route interception, or moving all 206 inline selectors at once, is not planned.
