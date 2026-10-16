@@ -28,9 +28,9 @@ Every L2 traces to an L1 **in the same subsystem**. Cross-subsystem dependencies
 | GUARDIAN | Guardian Portal | `guardian-portal/` | 1 | 3 |
 | VOLUNTEER | Volunteer Portal | `volunteer-portal/` | 1 | 2 |
 | REPORT | Reporting & Data | `reporting-and-data/` | 3 | 3 |
-| PLATFORM | Platform Services | `platform-services/` | 2 | 11 |
+| PLATFORM | Platform Services | `platform-services/` | 2 | 12 |
 | NFR | Non-Functional & Quality | `non-functional/` | 9 | 11 |
-| **Total** | **14 subsystems** | | **61** | **88** |
+| **Total** | **14 subsystems** | | **61** | **89** |
 
 Features intentionally excluded from v1 are recorded in **`out-of-scope.md`**, with the PRD rationale and the IDs they were removed from.
 
@@ -57,7 +57,7 @@ Each item below is the **canonical rule now stated in the owning subsystem's L2*
 - **A-7 · Progress/badge/streak counts.** Computed from a **single source of truth** (see `learning-experience/L2.md` L2-LEARN-009).
 - **A-8 · Federated sign-in.** Google/federated sign-in is **out of scope for v1** (see `out-of-scope.md`); v1 uses email/password invite-based authentication.
 - **A-9 · Donations.** The donation pathway uses an **external PCI-compliant provider** (no card data stored); the recurring/monthly-tier model is a product decision to confirm (see `public-site/L2.md` L2-PUB-003).
-- **A-10 · Theme.** No light/dark theme toggle in v1; display preferences cover text size, contrast, motion, and reading font.
+- **A-10 · Theme.** Light and dark themes are **in scope**: each user chooses System (default, follows the device), Light, or Dark in Display settings (see `platform-services/L2.md` L2-PLATFORM-013).
 
 ## Appendix B — Cross-subsystem dependency notes
 

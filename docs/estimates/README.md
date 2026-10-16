@@ -1,6 +1,6 @@
 # Estimates
 
-- Overall effort: 428 days
+- Overall effort: 432 days
 - Complete: 100%
 
 | Subsystem | Effort | Complete |
@@ -17,7 +17,7 @@
 | [guardian-portal](guardian-portal.md) | 17 days | 100% |
 | [volunteer-portal](volunteer-portal.md) | 12 days | 100% |
 | [reporting-and-data](reporting-and-data.md) | 26 days | 100% |
-| [platform-services](platform-services.md) | 53 days | 100% |
+| [platform-services](platform-services.md) | 57 days | 100% |
 | [non-functional](non-functional.md) | 36 days | 100% |
 
 ## Roadmap

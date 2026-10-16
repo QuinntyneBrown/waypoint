@@ -5,12 +5,13 @@ import {
   DisplayPreferencesService as DisplayPreferencesApiService,
   TEXT_SCALE_MAX,
   TEXT_SCALE_MIN,
+  Theme,
 } from '@waypoint/api';
 import { ToastService } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
 import { DisplayPreferencesService } from '@waypoint/core';
 
-// Traces to: L2-PLATFORM-004
+// Traces to: L2-PLATFORM-004, L2-PLATFORM-013
 @Component({
   selector: 'w-settings-display',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,6 +27,11 @@ export class SettingsDisplay {
   protected readonly saving = signal(false);
   protected readonly min = TEXT_SCALE_MIN;
   protected readonly max = TEXT_SCALE_MAX;
+  protected readonly themes: { value: Theme; label: string }[] = [
+    { value: 'system', label: 'System' },
+    { value: 'light', label: 'Light' },
+    { value: 'dark', label: 'Dark' },
+  ];
 
   constructor() {
     // Load and apply the saved preferences (also proves persistence on reload).
@@ -47,6 +53,9 @@ export class SettingsDisplay {
   protected changeScale(delta: number): void {
     const next = Math.min(this.max, Math.max(this.min, this.prefs().textScalePercent + delta));
     this.update({ textScalePercent: next });
+  }
+  protected setTheme(theme: Theme): void {
+    this.update({ theme });
   }
   protected toggleContrast(): void {
     this.update({ highContrast: !this.prefs().highContrast });

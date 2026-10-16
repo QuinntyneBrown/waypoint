@@ -9,4 +9,5 @@ public record SaveDisplayPreferenceCommand(
     bool HighContrast,
     bool ReduceMotion,
     bool UnderlineLinks,
-    string? ReadingFont) : IRequest<DisplayPreferenceView>;
+    string? ReadingFont,
+    string Theme) : IRequest<DisplayPreferenceView>;

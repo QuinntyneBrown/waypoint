@@ -153,7 +153,7 @@ public sealed class DatabaseLifecycleTests
                 Assert.That(application.GuardianUserId, Is.EqualTo(guardianId));
                 Assert.That(application.ApplicantUserId, Is.Null,
                     "the migration must not infer applicant ownership from submitted content");
-                Assert.That(applied.Last(), Does.EndWith("_EnforcePrivacyOwnershipIntegrity"));
+                Assert.That(applied, Has.Some.EndsWith("_EnforcePrivacyOwnershipIntegrity"));
             });
         }
         finally

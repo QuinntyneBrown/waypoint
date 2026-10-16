@@ -18,3 +18,4 @@
 | replace-expired-invitation | 3 days | 100% |
 | show-offline-sync-state | 3 days | 100% |
 | submit-support-request | 4 days | 100% |
+| switch-theme | 4 days | 100% |

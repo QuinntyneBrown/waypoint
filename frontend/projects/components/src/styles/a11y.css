@@ -11,11 +11,12 @@ body {
 }
 
 /* Higher-contrast borders, text, and focus. */
+/* Mixed from the theme's default text colour, so it strengthens light and dark. */
 .w-a11y-contrast {
-  --w-border: rgba(22, 22, 12, 0.55);
-  --w-border-strong: rgba(22, 22, 12, 0.75);
-  --w-muted: rgba(22, 22, 12, 0.82);
-  --w-ink-60: rgba(22, 22, 12, 0.82);
+  --w-border: color-mix(in srgb, var(--color-fg-default) 55%, transparent);
+  --w-border-strong: color-mix(in srgb, var(--color-fg-default) 75%, transparent);
+  --w-muted: color-mix(in srgb, var(--color-fg-default) 82%, transparent);
+  --w-ink-60: color-mix(in srgb, var(--color-fg-default) 82%, transparent);
 }
 
 /* Respect reduced-motion by neutralising animations/transitions. */

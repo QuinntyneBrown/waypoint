@@ -5,27 +5,31 @@
    ============================================================ */
 
 /* ---------- Tokens ---------- */
+/* Component aliases over the semantic tokens in tokens.css (load it first).
+   Colour aliases resolve to theme-aware semantic tokens, so every rule below
+   follows the light or dark theme (L2-PLATFORM-013). */
 :root {
   /* brand */
-  --w-lime: #c6fb50;
-  --w-lime-600: #b2e93a;
-  --w-lime-soft: rgba(198, 251, 80, 0.28);
-  --w-ink: #16160c;
-  --w-ink-80: rgba(22, 22, 12, 0.8);
-  --w-ink-60: rgba(22, 22, 12, 0.6);
-  --w-ink-45: rgba(22, 22, 12, 0.45);
-  --w-ink-24: rgba(22, 22, 12, 0.24);
-  --w-ink-14: rgba(22, 22, 12, 0.14);
-  --w-ink-08: rgba(22, 22, 12, 0.08);
-  --w-ink-04: rgba(22, 22, 12, 0.04);
-  --w-white: #ffffff;
+  --w-lime: var(--color-brand);
+  --w-lime-600: var(--color-brand-hover);
+  --w-lime-soft: var(--color-accent-subtle);
+  --w-on-lime: var(--color-fg-on-brand); /* text on lime fills, dark in both themes */
+  --w-ink: var(--color-fg-default);
+  --w-ink-80: color-mix(in srgb, var(--color-fg-default) 80%, transparent);
+  --w-ink-60: color-mix(in srgb, var(--color-fg-default) 60%, transparent);
+  --w-ink-45: color-mix(in srgb, var(--color-fg-default) 45%, transparent);
+  --w-ink-24: color-mix(in srgb, var(--color-fg-default) 24%, transparent);
+  --w-ink-14: color-mix(in srgb, var(--color-fg-default) 14%, transparent);
+  --w-ink-08: color-mix(in srgb, var(--color-fg-default) 8%, transparent);
+  --w-ink-04: color-mix(in srgb, var(--color-fg-default) 4%, transparent);
+  --w-white: var(--color-bg-surface);
   /* warm greige neutrals */
-  --w-g100: #f5f0f0;
-  --w-g200: #e9e7e4;
-  --w-g300: #e4e0d8;
-  --w-g400: #cdcdcd;
-  --w-g500: #c6c5bb;
-  /* accents */
+  --w-g100: var(--color-bg-subtle);
+  --w-g200: var(--color-bg-subtle-hover);
+  --w-g300: var(--color-border-default);
+  --w-g400: var(--color-fg-disabled);
+  --w-g500: var(--color-border-strong);
+  /* accents (decorative; same in both themes) */
   --w-green: #32a432;
   --w-yellow: #fff737;
   --w-gold: #ffd700;
@@ -34,22 +38,22 @@
   --w-sky: #8adfff;
   --w-teal: #1d8fb9;
   /* semantic */
-  --w-success: #2e8f2e;
-  --w-warning: #c77f00;
-  --w-error: #d5421b;
-  --w-info: #1d8fb9;
-  --w-success-bg: rgba(50, 164, 50, 0.14);
-  --w-warning-bg: rgba(255, 179, 0, 0.16);
-  --w-error-bg: rgba(240, 82, 40, 0.13);
-  --w-info-bg: rgba(29, 143, 185, 0.13);
+  --w-success: var(--color-success-icon);
+  --w-warning: var(--color-warning-icon);
+  --w-error: var(--color-danger-icon);
+  --w-info: var(--color-info-icon);
+  --w-success-bg: var(--color-success-bg);
+  --w-warning-bg: var(--color-warning-bg);
+  --w-error-bg: var(--color-danger-bg);
+  --w-info-bg: var(--color-info-bg);
   /* surfaces */
-  --w-bg: #ffffff;
-  --w-surface: #f5f0f0;
-  --w-surface-2: #e9e7e4;
-  --w-border: rgba(22, 22, 12, 0.14);
-  --w-border-strong: rgba(22, 22, 12, 0.28);
-  --w-text: #16160c;
-  --w-muted: rgba(22, 22, 12, 0.6);
+  --w-bg: var(--color-bg-canvas);
+  --w-surface: var(--color-bg-subtle);
+  --w-surface-2: var(--color-bg-subtle-hover);
+  --w-border: var(--color-border-default);
+  --w-border-strong: var(--color-border-strong);
+  --w-text: var(--color-fg-default);
+  --w-muted: var(--color-fg-muted);
   /* type */
   --w-font-head: 'Space Grotesk', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --w-font-body: 'Inter', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -79,8 +83,8 @@
   --w-container-wide: 1440px;
   --w-bw: 1.5px;
   /* elevation (flat aesthetic — used sparingly) */
-  --w-shadow-sm: 0 1px 2px rgba(22, 22, 12, 0.06);
-  --w-shadow-pop: 0 8px 28px rgba(22, 22, 12, 0.16);
+  --w-shadow-sm: var(--shadow-1);
+  --w-shadow-pop: var(--shadow-3);
 }
 
 /* ---------- Reset / base ---------- */
@@ -183,7 +187,7 @@ pre {
 }
 ::selection {
   background: var(--w-lime);
-  color: var(--w-ink);
+  color: var(--w-on-lime);
 }
 
 /* ---------- Layout primitives ---------- */
@@ -237,7 +241,7 @@ pre {
   margin-bottom: 0.5em;
 }
 .w-eyebrow--lime {
-  color: var(--w-ink);
+  color: var(--w-on-lime);
   background: var(--w-lime);
   padding: 0.25em 0.6em;
   border-radius: var(--w-r-pill);
@@ -380,7 +384,7 @@ pre {
   height: 30px;
   border-radius: 7px;
   background: var(--w-lime);
-  color: var(--w-ink);
+  color: var(--w-on-lime);
   display: grid;
   place-items: center;
   font-weight: 700;
@@ -500,8 +504,8 @@ pre {
   opacity: 0.8;
 }
 .w-sidenav__item.is-active {
-  background: var(--w-ink);
-  color: var(--w-white);
+  background: var(--color-accent);
+  color: var(--color-fg-on-accent);
 }
 .w-sidenav__item.is-active .w-icon {
   opacity: 1;
@@ -511,12 +515,13 @@ pre {
   font-size: 0.7rem;
   font-weight: 600;
   background: var(--w-lime);
-  color: var(--w-ink);
+  color: var(--w-on-lime);
   border-radius: var(--w-r-pill);
   padding: 1px 7px;
 }
 .w-sidenav__item.is-active .w-sidenav__badge {
   background: var(--w-lime);
+  color: var(--w-on-lime);
 }
 .w-sidenav__foot {
   margin-top: auto;
@@ -526,7 +531,7 @@ pre {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(22, 22, 12, 0.4);
+  background: var(--color-bg-backdrop);
   z-index: 39;
 }
 @media (max-width: 960px) {
@@ -632,7 +637,7 @@ pre {
 }
 .w-btn--primary {
   background: var(--w-lime);
-  color: var(--w-ink);
+  color: var(--w-on-lime);
 }
 .w-btn--primary:hover {
   background: var(--w-lime-600);
@@ -642,7 +647,7 @@ pre {
   color: var(--w-white);
 }
 .w-btn--secondary:hover {
-  background: #000;
+  background: var(--color-accent-active);
 }
 .w-btn--ghost {
   background: transparent;
@@ -660,11 +665,11 @@ pre {
   background: var(--w-g200);
 }
 .w-btn--danger {
-  background: var(--w-error);
-  color: #fff;
+  background: var(--color-danger-solid);
+  color: var(--color-fg-on-danger);
 }
 .w-btn--danger:hover {
-  background: #b8380f;
+  background: var(--color-danger-solid-hover);
 }
 .w-btn--sm {
   padding: 8px 14px;
@@ -841,7 +846,7 @@ pre {
 .w-check__box .w-icon {
   width: 14px;
   height: 14px;
-  color: var(--w-ink);
+  color: var(--w-on-lime);
   opacity: 0;
 }
 .w-check input:checked + .w-check__box {
@@ -893,7 +898,7 @@ pre {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--w-white);
   transition: transform 0.18s;
 }
 .w-switch input:checked + .w-switch__track {
@@ -925,7 +930,7 @@ pre {
 }
 .w-card--lime {
   background: var(--w-lime);
-  color: var(--w-ink);
+  color: var(--w-on-lime);
   border-color: transparent;
 }
 .w-card--flat {
@@ -965,10 +970,10 @@ pre {
 }
 .w-card--ink .w-card__footer,
 .w-card--lime .w-card__footer {
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: color-mix(in srgb, var(--w-white) 18%, transparent);
 }
 .w-card--lime .w-card__footer {
-  border-color: rgba(22, 22, 12, 0.18);
+  border-color: color-mix(in srgb, var(--w-on-lime) 18%, transparent);
 }
 .w-statcard {
   padding: var(--w-s5);
@@ -1130,27 +1135,27 @@ pre {
 }
 .w-badge--success {
   background: var(--w-success-bg);
-  color: #1c6b1c;
+  color: var(--color-success-fg);
 }
 .w-badge--warning {
   background: var(--w-warning-bg);
-  color: #8a5a00;
+  color: var(--color-warning-fg);
 }
 .w-badge--error {
   background: var(--w-error-bg);
-  color: #a5310f;
+  color: var(--color-danger-fg);
 }
 .w-badge--info {
   background: var(--w-info-bg);
-  color: #136080;
+  color: var(--color-info-fg);
 }
 .w-badge--lime {
   background: var(--w-lime);
-  color: var(--w-ink);
+  color: var(--w-on-lime);
 }
 .w-badge--ink {
   background: var(--w-ink);
-  color: #fff;
+  color: var(--w-white);
 }
 .w-badge--outline {
   background: transparent;
@@ -1177,7 +1182,7 @@ pre {
 }
 .w-pill.is-active {
   background: var(--w-ink);
-  color: #fff;
+  color: var(--w-white);
   border-color: var(--w-ink);
 }
 .w-pillrow {
@@ -1418,7 +1423,7 @@ pre {
 .w-modal__scrim {
   position: absolute;
   inset: 0;
-  background: rgba(22, 22, 12, 0.5);
+  background: var(--color-bg-backdrop);
 }
 .w-modal__panel {
   position: relative;
@@ -1495,6 +1500,7 @@ pre {
 }
 .w-modal__icon--lime {
   background: var(--w-lime);
+  color: var(--w-on-lime);
 }
 
 /* popover / menu */
@@ -1575,7 +1581,7 @@ pre {
   color: var(--w-lime);
 }
 .w-toast--error .w-toast__icon {
-  color: #ff8a6b;
+  color: var(--w-tomato);
 }
 .w-toast--warning .w-toast__icon {
   color: var(--w-gold);
@@ -1592,7 +1598,7 @@ pre {
 }
 .w-toast__close {
   margin-left: auto;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-fg-inverse-muted);
   cursor: pointer;
   background: 0;
   border: 0;
@@ -1898,6 +1904,7 @@ pre {
 }
 .w-lessonstep.is-done .w-lessonstep__num {
   background: var(--w-lime);
+  color: var(--w-on-lime);
 }
 .w-lessonstep.is-locked {
   opacity: 0.55;
@@ -1967,7 +1974,7 @@ pre {
 }
 .w-cell--done {
   background: var(--w-lime);
-  color: var(--w-ink);
+  color: var(--w-on-lime);
 }
 .w-cell--prog {
   background: var(--w-gold);
@@ -1995,7 +2002,7 @@ pre {
 .w-badgeitem__medal .w-icon {
   width: 34px;
   height: 34px;
-  color: var(--w-ink);
+  color: var(--w-on-lime);
 }
 .w-badgeitem.is-locked .w-badgeitem__medal {
   background: var(--w-g200);
@@ -2074,14 +2081,14 @@ pre {
 }
 .w-footer {
   background: var(--w-ink);
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-fg-inverse-muted);
   padding: var(--w-s9) 0 var(--w-s6);
 }
 .w-footer a {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-fg-inverse-muted);
 }
 .w-footer a:hover {
-  color: #fff;
+  color: var(--w-white);
 }
 
 /* utilities */

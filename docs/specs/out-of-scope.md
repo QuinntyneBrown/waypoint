@@ -20,5 +20,4 @@ Features below were present in the specification but are **not authorized by the
 
 ### Also noted
 - **Federated (Google) sign-in** — not specified as a requirement; v1 uses email/password invite-based auth. (Appendix A-8.)
-- **Light/dark theme toggle** — not in v1; display preferences cover text size, contrast, motion, and reading font. (Appendix A-10.)
 - **Operational admin CLI** (`L1-NFR-008` / `L2-NFR-011`) is retained but labelled **operational tooling (out-of-band)**, not product scope — it is an ops interface, not a user-facing capability.

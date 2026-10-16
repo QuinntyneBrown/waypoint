@@ -1,0 +1,13 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_LEFT_RIGHT()
+title C4 level 1 — Switch theme — system context
+Person(user, "Signed-in user", "Youth, mentor, guardian, volunteer, or program administrator")
+Person(visitor, "Public visitor", "Uses the public site and sign-in pages without an account")
+System(waypoint, "Waypoint software system", "Youth leadership, learning, mentoring, and program operations")
+System_Ext(device, "Device operating system", "Reports the light or dark colour scheme through prefers-color-scheme")
+Rel(user, waypoint, "Chooses System, Light, or Dark")
+Rel(visitor, waypoint, "Views pages in the device colour scheme")
+Rel(waypoint, device, "Reads colour scheme", "CSS media query")
+SHOW_LEGEND()
+@enduml

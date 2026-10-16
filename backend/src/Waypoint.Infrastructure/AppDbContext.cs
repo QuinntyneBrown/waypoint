@@ -499,6 +499,7 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<DisplayPreference>(b =>
         {
             b.Property(x => x.ReadingFont).HasMaxLength(64);
+            b.Property(x => x.Theme).HasMaxLength(16).IsRequired();
             b.HasIndex(x => x.UserId).IsUnique();
         });
         modelBuilder.Entity<SupportRequest>(b =>

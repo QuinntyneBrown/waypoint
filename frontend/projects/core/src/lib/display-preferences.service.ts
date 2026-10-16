@@ -18,5 +18,11 @@ export class DisplayPreferencesService {
     root.classList.toggle('w-a11y-reduce-motion', prefs.reduceMotion);
     root.classList.toggle('w-a11y-underline', prefs.underlineLinks);
     root.classList.toggle('w-a11y-reading-font', prefs.readingFont === 'serif');
+    // No data-theme means the tokens follow the device colour scheme.
+    if (prefs.theme === 'light' || prefs.theme === 'dark') {
+      root.setAttribute('data-theme', prefs.theme);
+    } else {
+      root.removeAttribute('data-theme');
+    }
   }
 }

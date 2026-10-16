@@ -5,4 +5,5 @@ public record SaveDisplayPreferenceRequest(
     bool HighContrast,
     bool ReduceMotion,
     bool UnderlineLinks,
-    string? ReadingFont);
+    string? ReadingFont,
+    string? Theme = null);

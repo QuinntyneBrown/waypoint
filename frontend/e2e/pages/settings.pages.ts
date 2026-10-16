@@ -1,6 +1,6 @@
 import { BasePage } from './base.page';
 
-/** `/settings/display` — text size, contrast, motion, reading font. */
+/** `/settings/display` — text size, theme, contrast, motion, reading font. */
 export class DisplaySettingsPage extends BasePage {
   static readonly path = '/settings/display';
 
@@ -40,6 +40,22 @@ export class DisplaySettingsPage extends BasePage {
     return this.page.evaluate(() =>
       document.documentElement.style.getPropertyValue('--w-text-scale'),
     );
+  }
+
+  /** A theme option (System, Light, Dark) in the Theme control. */
+  themeOption(name: 'System' | 'Light' | 'Dark') {
+    return this.page
+      .getByRole('group', { name: 'Theme' })
+      .getByRole('button', { name, exact: true });
+  }
+
+  async selectTheme(name: 'System' | 'Light' | 'Dark'): Promise<void> {
+    await this.themeOption(name).click();
+  }
+
+  /** The explicit theme on the document root (`null` when following the device). */
+  rootTheme(): Promise<string | null> {
+    return this.page.evaluate(() => document.documentElement.getAttribute('data-theme'));
   }
 
   /** Whether the app-wide high-contrast class is applied to the document root. */

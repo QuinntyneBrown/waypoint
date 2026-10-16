@@ -717,6 +717,7 @@ public sealed class PersonalDataExportQueryHandler
                         displayPreference.ReduceMotion,
                         displayPreference.UnderlineLinks,
                         displayPreference.ReadingFont,
+                        displayPreference.Theme,
                         displayPreference.UpdatedAt,
                     },
                 supportRequests = supportRequests.Select(item => new

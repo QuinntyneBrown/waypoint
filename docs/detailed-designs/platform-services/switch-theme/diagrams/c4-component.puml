@@ -1,0 +1,35 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 3 — Switch theme — components
+System_Boundary(waypoint, "Waypoint software system") {
+  Container_Boundary(frontend, "Frontend") {
+    Container_Boundary(portal, "Portal application") {
+      Component(page, "SettingsDisplay", "Angular page component", "Theme control with live preview and save")
+      Component(applier, "DisplayPreferencesService (core)", "Angular service", "Sets or removes data-theme on the html element")
+      Component(client, "DisplayPreferencesService (api)", "Typed API client", "Reads and saves display preferences")
+      Component(tokens, "tokens.css + core.css", "Global stylesheets", "Semantic tokens per theme; --w-* aliases consumed by components")
+    }
+  }
+  Container_Boundary(backend, "Backend") {
+    Container_Boundary(api_app, "Waypoint API application") {
+      Component(controller, "PreferencesController", "API controller", "Maps SaveDisplayPreferenceRequest")
+    }
+    Container_Boundary(application, "Waypoint Application") {
+      Component(validator, "SaveDisplayPreferenceCommandValidator", "FluentValidation", "Theme must be system, light, or dark")
+      Component(handler, "SaveDisplayPreferenceCommandHandler", "MediatR handler", "Upserts the user's preferences")
+    }
+    Container_Boundary(domain, "Waypoint Domain") {
+      Component(entity, "DisplayPreference", "Domain type", "Holds Theme with the other display preferences")
+    }
+  }
+}
+Rel(page, applier, "Applies preview")
+Rel(page, client, "Saves")
+Rel(applier, tokens, "Selects theme via data-theme")
+Rel(client, controller, "PUT", "HTTPS JSON")
+Rel(controller, validator, "Validated through MediatR pipeline")
+Rel(controller, handler, "Sends SaveDisplayPreferenceCommand")
+Rel(handler, entity, "Changes")
+SHOW_LEGEND()
+@enduml
