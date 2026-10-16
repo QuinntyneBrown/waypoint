@@ -65,14 +65,14 @@ The public marketing pages shall be served to anonymous visitors and shall not r
 
 Every UI shall render usably from XS to XL.
 
-### L2-NFR-010 — Accessibility (WCAG 2.1 AA)
+### L2-NFR-010 — Accessibility (WCAG 2.2 AA)
 
 | Field | Value |
 | --- | --- |
 | Relationship | Dependency |
 | L1 specification ID | `L1-NFR-007` |
 
-The UI shall be operable and perceivable per WCAG 2.1 AA.
+The UI shall be operable and perceivable per WCAG 2.2 AA.
 
 ## Diagrams
 

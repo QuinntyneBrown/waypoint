@@ -4,7 +4,7 @@
 
 Waypoint is a youth-leadership software system for program intake, learning, mentoring, safeguarding, and program operations. The Non-Functional and Quality subsystem owns this feature slice.
 
-The Meet the accessibility standard feature slice refines `L2-NFR-010` into one independently deliverable interaction. The UI shall be operable and perceivable per WCAG 2.1 AA.
+The Meet the accessibility standard feature slice refines `L2-NFR-010` into one independently deliverable interaction. The UI shall be operable and perceivable per WCAG 2.2 AA.
 
 A Waypoint participant starts this feature interaction through the Public Site application. The backend commits an authorized state change when applicable, and the frontend application presents the authoritative feature result.
 
@@ -47,14 +47,14 @@ A source link identifies an existing realization. An unlinked name identifies a 
 
 This section contains L2 specification text and L1 trace identifiers. It contains no L1 specification text. Normative wording uses `shall` in accordance with the architecture-description voice.
 
-### L2-NFR-010 — Accessibility (WCAG 2.1 AA)
+### L2-NFR-010 — Accessibility (WCAG 2.2 AA)
 
 | Field | Value |
 | --- | --- |
 | Relationship | Primary |
 | L1 specification ID | `L1-NFR-007` |
 
-The UI shall be operable and perceivable per WCAG 2.1 AA.
+The UI shall be operable and perceivable per WCAG 2.2 AA.
 
 ### L2-PLATFORM-004 — Display & accessibility preferences
 

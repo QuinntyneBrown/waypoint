@@ -372,7 +372,7 @@ Admin → *Privacy*: data export and removal requests. Then the audit log filter
 - 88 in-scope requirements in [`docs/specs`](specs/README.md), each traced to a passing acceptance test
 - CI gate refuses to build if a requirement loses its test, or a test loses its requirement
   (`node scripts/check-traceability.mjs --strict`)
-- Accessibility (WCAG 2.1 AA), responsive XS–XL, and load gates run on every change
+- Accessibility (WCAG 2.2 AA), responsive XS–XL, and load gates run on every change
 
 > "The reason I can say 'this works' rather than 'this demoed' is that every requirement on that
 > list has a test attached, and the build fails if that link ever breaks."
