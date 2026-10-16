@@ -1,19 +1,19 @@
 # Waypoint — Implementation Status
 
-Snapshot: **2026-07-20**
+Snapshot: **2026-10-16**
 
-Waypoint is a role-aware youth leadership platform derived from [PRD.md](PRD.md) and the 88 acceptance-testable L2 requirements under [`specs/`](specs/README.md). This document summarizes the implemented boundary; executable acceptance tests, the strict traceability gate, and Git history provide the detailed delivery record.
+Waypoint is a role-aware youth leadership platform derived from [PRD.md](PRD.md) and the 89 acceptance-testable L2 requirements under [`specs/`](specs/README.md). This document summarizes the implemented boundary; executable acceptance tests, the strict traceability gate, and Git history provide the detailed delivery record.
 
 ## Delivery status
 
 | Area                       | Implemented boundary                                                                                                                                                                                                                             | Evidence                                    |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| Product and requirements   | 61 L1 and 88 in-scope L2 requirements across 14 subsystems                                                                                                                                                                                       | `docs/specs/`, traceability gate            |
+| Product and requirements   | 61 L1 and 89 in-scope L2 requirements across 14 subsystems                                                                                                                                                                                       | `docs/specs/`, traceability gate            |
 | Backend                    | .NET 9 Clean Architecture API covering public, authentication, safeguarding, administration, curriculum, learning, engagement, role portals, reporting, privacy, and platform services                                                           | `backend/src`, HTTP integration tests       |
 | Persistence and operations | SQL Server EF migrations, in-memory development mode, encrypted sensitive fields, deterministic migration lifecycle, health probes, and the `way` operational CLI                                                                                 | `Waypoint.Infrastructure`, `Waypoint.Cli`       |
-| Frontend                   | Angular 21 authenticated portal, SSR public site, shared UI/API/auth libraries, and routed youth, mentor, administrator, guardian, and volunteer experiences                                                                                     | `frontend/projects`, Playwright tests       |
+| Frontend                   | Angular 21 authenticated portal, SSR public site, ten `@waypoint/*` libraries (DECISIONS #16), and routed youth, mentor, administrator, guardian, and volunteer experiences                                                                                     | `frontend/projects`, Playwright tests       |
 | Delivery services          | Absolute application links, configurable SMTP, encrypted durable email queue, retry/lease worker, and scheduled-notification dispatch independent of feed reads                                                                                  | infrastructure workers and completion tests |
-| Quality                    | Backend/unit/integration tests, frontend unit tests and production builds, Playwright E2E, throttled Youth interaction, XS–XL responsive checks, axe WCAG checks, route manifest, traceability, and a SQL-backed 50-user/20-RPS API load profile | local scripts and GitHub workflows          |
+| Quality                    | Backend/unit/integration tests, frontend unit tests and production builds, Playwright E2E, throttled Youth interaction, XS–XL responsive checks, axe WCAG 2.2 AA checks, ESLint and Storybook for the component library (not yet CI gates), route manifest, traceability, and a SQL-backed 50-user/20-RPS API load profile | local scripts and GitHub workflows          |
 
 ## Requirements-complete boundary
 

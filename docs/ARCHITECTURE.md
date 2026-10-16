@@ -1,6 +1,6 @@
 # Architecture
 
-Waypoint is an early full-stack application organized around a server-authoritative API, a requirements corpus, and a static interaction reference. This document describes the implemented layers and the intended client boundary. For delivery sequence and status, see the [implementation plan](implementation-plan.md); for rationale, see [DECISIONS.md](DECISIONS.md).
+Waypoint is an early full-stack application organized around a server-authoritative API, a requirements corpus, and a static interaction reference. This document describes the implemented layers and the client boundary. For delivery sequence and status, see the [implementation plan](implementation-plan.md); for rationale, see [DECISIONS.md](DECISIONS.md).
 
 ## System overview
 
@@ -86,7 +86,7 @@ A guardian-consent request illustrates the boundary between transport, policy, a
 5. `IAuditLogger` records the sensitive action with details appropriate for later redacted access.
 6. The API returns a typed result; application and validation exceptions are mapped to safe HTTP responses.
 
-Clients must treat the API result as authoritative. Hiding an action in a future Angular screen is not a substitute for server-side authorization or safeguarding checks.
+Clients must treat the API result as authoritative. Hiding an action in an Angular screen is not a substitute for server-side authorization or safeguarding checks.
 
 ## Authentication and sensitive data
 
