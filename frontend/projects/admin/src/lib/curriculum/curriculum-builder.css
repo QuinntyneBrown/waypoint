@@ -107,12 +107,21 @@
 .question-form {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--w-sp-4);
-  align-items: end;
+  gap: var(--w-s4);
+  align-items: start;
+}
+
+.question-form .w-field {
+  margin-bottom: 0;
 }
 
 .question-form__text {
   grid-column: span 2;
+}
+
+.question-form > .w-btn {
+  grid-column: 1 / -1;
+  justify-self: end;
 }
 
 .question-list {
