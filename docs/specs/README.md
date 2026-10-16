@@ -56,7 +56,7 @@ Each item below is the **canonical rule now stated in the owning subsystem's L2*
 - **A-6 · Quiz attempts & scoring.** Recorded score is the **best passing attempt within the configured attempt limit** (see `learning-experience/L2.md` L2-LEARN-004; authoring setting in `curriculum-authoring/L2.md` L2-CURRIC-003).
 - **A-7 · Progress/badge/streak counts.** Computed from a **single source of truth** (see `learning-experience/L2.md` L2-LEARN-009).
 - **A-8 · Federated sign-in.** Google/federated sign-in is **out of scope for v1** (see `out-of-scope.md`); v1 uses email/password invite-based authentication.
-- **A-9 · Donations.** The donation pathway uses an **external PCI-compliant provider** (no card data stored); the recurring/monthly-tier model is a product decision to confirm (see `public-site/L2.md` L2-PUB-003).
+- **A-9 · Donations.** The donation pathway uses an **external PCI-compliant provider** (no card data stored); the recurring monthly tiers are $20, $50 and $100 (see DECISIONS #13).
 - **A-10 · Theme.** Light and dark themes are **in scope**: each user chooses System (default, follows the device), Light, or Dark in Display settings (see `platform-services/L2.md` L2-PLATFORM-013).
 
 ## Appendix B — Cross-subsystem dependency notes
