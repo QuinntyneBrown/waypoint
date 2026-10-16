@@ -102,10 +102,14 @@ aligned until the entire feature or behavior change is complete.
 
 Front end tests use Playwright with the Page Object Model - one page object per
 screen, owning the selectors and the interactions. Tests state intent; page
-objects know the DOM. Never put a selector in a test.
+objects know the DOM. Never put a selector in a new or changed test. Existing
+specs that still hold selectors are moved into page objects when they are next
+changed (DECISIONS #15).
 
-Frontend tests never need the backend running: fake every API response with
-Playwright route interception. 
+Frontend unit tests (Vitest) never need the backend. Playwright acceptance tests
+run against the real API that `playwright.config.ts` starts, seeded through the
+Testing-only endpoints (DECISIONS #9, #15); do not add route interception for
+flows that already run against the real API.
 
 Run frontend tests in Chromium only. Do not configure or run Firefox, WebKit,
 or any other browser for frontend testing.
@@ -114,7 +118,9 @@ or any other browser for frontend testing.
 
 Never add a test that asserts the shape of the codebase rather than its behavior:
 no structure, layout, or naming tests; no banned-API scans; no traceability tests
-that parse the specifications. Those constraints belong to the compiler, the
+that parse the specifications. The one exception is the requirement traceability
+gate, `scripts/check-traceability.mjs --strict`, which CI runs (DECISIONS #1, #15);
+do not add other gates like it. Those constraints belong to the compiler, the
 formatter, and review. A test suite exists to prove behavior.
 
 ## Skills
