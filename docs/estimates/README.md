@@ -1,7 +1,7 @@
 # Estimates
 
 - Overall effort: 432 days
-- Complete: 99%
+- Complete: 100%
 
 | Subsystem | Effort | Complete |
 |---|---|---|
@@ -17,9 +17,9 @@
 | [guardian-portal](guardian-portal.md) | 17 days | 100% |
 | [volunteer-portal](volunteer-portal.md) | 12 days | 100% |
 | [reporting-and-data](reporting-and-data.md) | 26 days | 100% |
-| [platform-services](platform-services.md) | 57 days | 93% |
+| [platform-services](platform-services.md) | 57 days | 100% |
 | [non-functional](non-functional.md) | 36 days | 100% |
 
 ## Roadmap
 
-1. Implement switch-theme (platform-services): light and dark design tokens and the theme preference.
+1. Every subsystem is implemented and tested, so no work remains.

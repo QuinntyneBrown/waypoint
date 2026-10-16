@@ -14,7 +14,7 @@ The theme preference is stored with the other display and accessibility preferen
 
 ### Token tiers
 
-The frontend loads the design-system token file as `projects/components/src/styles/tokens.css`, a copy of [`docs/design-system/tokens/tokens.css`](../../../design-system/tokens/tokens.css). It has three tiers:
+The frontend loads the design-system token file as [`tokens.css`](../../../../frontend/projects/components/src/styles/tokens.css), a copy of [`docs/design-system/tokens/tokens.css`](../../../design-system/tokens/tokens.css). It has three tiers:
 
 1. **Primitives** (`--palette-*`) hold raw values and never change per theme.
 2. **Semantic tokens** (`--color-*`, `--shadow-*`) name a role, such as canvas, muted text, or border. The `:root` block holds light values. A `[data-theme="dark"]` block, and the same block inside `@media (prefers-color-scheme: dark)` guarded by `:root:not([data-theme="light"])`, hold dark values.
@@ -28,7 +28,7 @@ The high-contrast class `w-a11y-contrast` in [`a11y.css`](../../../../frontend/p
 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
-| Global styles | `tokens.css`, [`core.css`](../../../../frontend/projects/components/src/styles/core.css), [`a11y.css`](../../../../frontend/projects/components/src/styles/a11y.css) | Define light and dark token values and map component aliases onto them. Loaded by the portal, the public site, and Storybook. |
+| Global styles | [`tokens.css`](../../../../frontend/projects/components/src/styles/tokens.css), [`core.css`](../../../../frontend/projects/components/src/styles/core.css), [`a11y.css`](../../../../frontend/projects/components/src/styles/a11y.css) | Define light and dark token values and map component aliases onto them. Loaded by the portal, the public site, and Storybook. |
 | Frontend page | [`SettingsDisplay`](../../../../frontend/projects/account/src/lib/settings/display/settings-display.ts) | Shows a three-option theme control (System, Light, Dark), previews the selection, and saves it with the other preferences. |
 | Frontend service | [`DisplayPreferencesService`](../../../../frontend/projects/core/src/lib/display-preferences.service.ts) (core) | Sets `data-theme="light"` or `data-theme="dark"` on `<html>`, or removes the attribute for `system`. |
 | Frontend API boundary | [`DisplayPreferencesService`](../../../../frontend/projects/api/src/lib/services/display-preferences.service.ts) (api), [`DisplayPreferences`](../../../../frontend/projects/api/src/lib/models/preferences/display-preferences.ts) | Carries `theme: 'system' \| 'light' \| 'dark'` on `GET` and `PUT /api/me/display-preferences`. |
