@@ -94,7 +94,7 @@ export class PersonDetailPage {
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly outcome = signal<string | null>(null);
   protected readonly isOwnRecord = computed(() => this.auth.user()?.userId === this.detail()?.id);
-  protected readonly tabs: ReadonlyArray<{ key: PersonTab; label: string }> = [
+  protected readonly tabs: readonly { key: PersonTab; label: string }[] = [
     { key: 'profile', label: 'Profile' },
     { key: 'guardian', label: 'Guardian & consent' },
     { key: 'progress', label: 'Progress' },

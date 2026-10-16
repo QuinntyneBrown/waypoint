@@ -49,6 +49,7 @@ jobs:
       - name: Build applications and verify shared packages
         run: npm run build
       - run: npm test
+      - run: npm run lint
       - name: Build Storybook
         run: npm run build-storybook
 

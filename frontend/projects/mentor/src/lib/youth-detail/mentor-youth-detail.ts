@@ -58,7 +58,7 @@ export class MentorYouthDetailPage {
   protected readonly detail = signal<MentorYouthDetail | null>(null);
   protected readonly activeTab = signal<DetailTab>('profile');
   protected readonly errorMessage = signal<string | null>(null);
-  protected readonly tabs: ReadonlyArray<{ key: DetailTab; label: string }> = [
+  protected readonly tabs: readonly { key: DetailTab; label: string }[] = [
     { key: 'profile', label: 'Profile' },
     { key: 'progress', label: 'Progress' },
     { key: 'attendance', label: 'Attendance' },

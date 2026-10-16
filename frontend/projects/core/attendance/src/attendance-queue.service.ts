@@ -94,7 +94,7 @@ export class AttendanceQueueService {
   /** Rebase a rejected offline operation onto the versions the user has just reviewed. */
   retryConflicts(
     sessionId: string,
-    latestRoster: ReadonlyArray<{ youthUserId: string; version: string | null }>,
+    latestRoster: readonly { youthUserId: string; version: string | null }[],
   ): void {
     const ownerUserId = this.auth.user()?.userId;
     if (!ownerUserId) return;

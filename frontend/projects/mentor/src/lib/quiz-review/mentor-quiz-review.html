@@ -87,7 +87,7 @@
               </div>
             </div>
 
-            @if (item.approvedScore == null) {
+            @if (item.approvedScore === null || item.approvedScore === undefined) {
               <div class="w-field">
                 <label class="w-label" for="override-score">Override score (optional)</label>
                 <input
