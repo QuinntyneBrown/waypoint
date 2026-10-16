@@ -306,8 +306,11 @@ app.UseExceptionHandler(handler =>
 // Short-circuit to a 503 state while maintenance mode is on (L2-PLATFORM-009).
 app.UseMiddleware<MaintenanceMiddleware>();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+if (!app.Environment.IsProduction())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseCors();
 

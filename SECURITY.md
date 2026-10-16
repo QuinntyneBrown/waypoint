@@ -25,7 +25,8 @@ Waypoint is an early-stage project and has not completed an independent producti
 
 - The development `Jwt:SigningKey`, `AuditIntegrity:SigningKey` and `SensitiveData:EncryptionKey` in `appsettings.json` are placeholders and must each be replaced with a strong secret supplied through user secrets or environment configuration before any non-local use.
 - The default in-memory database is for local development only and provides no durable operational storage.
-- The local CORS origin, Swagger UI, SMTP email settings, and development diagnostics must be reviewed and restricted for deployment.
+- The local CORS origin, SMTP email settings, and development diagnostics must be reviewed and restricted for deployment.
+- Swagger UI and the OpenAPI document are served in every environment except Production.
 - Authentication, authorization, invitation tokens, refresh tokens, password-reset tokens, audit logs, and guardian-consent records require threat modelling and operational controls beyond application code.
 - Youth and guardian information is sensitive. Deployers must establish lawful collection, least-privilege access, retention, deletion, incident response, and safeguarding procedures before handling real data.
 
