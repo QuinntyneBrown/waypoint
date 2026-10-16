@@ -161,3 +161,11 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** The ATDD process in `AGENTS.md` drives every slice from an acceptance test; unit tests written afterward would duplicate that coverage and are barred by the incremental-implementation rule.
 
 **Consequences.** Low unit-test counts are not a gap by themselves. Add a unit test when a rule has many branches that acceptance tests cannot reach economically.
+
+## 21. The design system is documentation-only for v1
+
+**Decision.** `docs/design-system` is the design reference for the mocks and for future work. The frontend keeps its own `--w-*` tokens and its small `components` library (avatar, deployment, dialog, icon, offline, shell, states, toast); it is not migrated to the extracted tokens or to all 50 component pages in v1. The optional skill artifacts `docs/screen-composition.md`, `docs/specs/components/` (CRDs) and `docs/mocks/manifest.json` are not produced until a migration is planned.
+
+**Why.** The product works and is tested against the frontend's own styling. A token and component migration is a large behaviour-neutral change with no acceptance criterion behind it, which the scope rules in `AGENTS.md` do not allow without a request.
+
+**Consequences.** Frontend CSS bugs are fixed against the frontend's tokens, not the design system. Revisit with a migration plan (tokens first, then components) if the two diverge further.
