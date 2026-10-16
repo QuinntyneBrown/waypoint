@@ -73,6 +73,13 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/portal/**/*.ts", "projects/portal/**/*.html"],
+            "eslintConfig": "projects/portal/eslint.config.js"
+          }
         }
       }
     },
@@ -150,6 +157,13 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/public-site/**/*.ts", "projects/public-site/**/*.html"],
+            "eslintConfig": "projects/public-site/eslint.config.js"
+          }
         }
       }
     },
@@ -175,6 +189,13 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/api/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/api/**/*.ts", "projects/api/**/*.html"],
+            "eslintConfig": "projects/api/eslint.config.js"
           }
         }
       }
@@ -202,6 +223,41 @@
           "options": {
             "tsConfig": "projects/components/tsconfig.spec.json"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/components/**/*.ts", "projects/components/**/*.html"],
+            "eslintConfig": "projects/components/eslint.config.js"
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "projects/components/.storybook",
+            "browserTarget": "components:build",
+            "compodoc": false,
+            "styles": [
+              "projects/components/src/styles/fonts.css",
+              "projects/components/src/styles/core.css",
+              "projects/components/src/styles/a11y.css"
+            ],
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "projects/components/.storybook",
+            "browserTarget": "components:build",
+            "compodoc": false,
+            "styles": [
+              "projects/components/src/styles/fonts.css",
+              "projects/components/src/styles/core.css",
+              "projects/components/src/styles/a11y.css"
+            ],
+            "outputDir": "dist/storybook/components"
+          }
         }
       }
     },
@@ -227,6 +283,13 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/auth/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/auth/**/*.ts", "projects/auth/**/*.html"],
+            "eslintConfig": "projects/auth/eslint.config.js"
           }
         }
       }
@@ -254,6 +317,13 @@
           "options": {
             "tsConfig": "projects/core/tsconfig.spec.json"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/core/**/*.ts", "projects/core/**/*.html"],
+            "eslintConfig": "projects/core/eslint.config.js"
+          }
         }
       }
     },
@@ -280,6 +350,13 @@
           "options": {
             "tsConfig": "projects/account/tsconfig.spec.json"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/account/**/*.ts", "projects/account/**/*.html"],
+            "eslintConfig": "projects/account/eslint.config.js"
+          }
         }
       }
     },
@@ -300,6 +377,13 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/youth/**/*.ts", "projects/youth/**/*.html"],
+            "eslintConfig": "projects/youth/eslint.config.js"
+          }
         }
       }
     },
@@ -320,6 +404,13 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/mentor/**/*.ts", "projects/mentor/**/*.html"],
+            "eslintConfig": "projects/mentor/eslint.config.js"
+          }
         }
       }
     },
@@ -346,6 +437,13 @@
           "options": {
             "tsConfig": "projects/admin/tsconfig.spec.json"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/admin/**/*.ts", "projects/admin/**/*.html"],
+            "eslintConfig": "projects/admin/eslint.config.js"
+          }
         }
       }
     },
@@ -366,6 +464,13 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/guardian/**/*.ts", "projects/guardian/**/*.html"],
+            "eslintConfig": "projects/guardian/eslint.config.js"
+          }
         }
       }
     },
@@ -386,6 +491,13 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/volunteer/**/*.ts", "projects/volunteer/**/*.html"],
+            "eslintConfig": "projects/volunteer/eslint.config.js"
+          }
         }
       }
     }
