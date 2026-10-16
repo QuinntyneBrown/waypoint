@@ -7,5 +7,5 @@
 | explore-programs | 2 days | 100% |
 | navigate-public-site | 4 days | 100% |
 | register-volunteer-interest | 4 days | 100% |
-| start-donation | 3 days | 100% |
+| start-donation | 3 days | 100% (placeholder provider URL; DECISIONS #13) |
 | view-journey-and-impact | 3 days | 100% |
