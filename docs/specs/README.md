@@ -30,7 +30,8 @@ Every L2 traces to an L1 **in the same subsystem**. Cross-subsystem dependencies
 | REPORT | Reporting & Data | `reporting-and-data/` | 3 | 3 |
 | PLATFORM | Platform Services | `platform-services/` | 2 | 12 |
 | NFR | Non-Functional & Quality | `non-functional/` | 9 | 11 |
-| **Total** | **14 subsystems** | | **61** | **89** |
+| TENANCY | Multi-Tenancy | `tenancy/` | 3 | 9 |
+| **Total** | **15 subsystems** | | **64** | **98** |
 
 Features intentionally excluded from v1 are recorded in **`out-of-scope.md`**, with the PRD rationale and the IDs they were removed from.
 
@@ -40,7 +41,7 @@ Every acceptance test must carry a trace header identifying the L2(s) it covers,
 
 ## Source
 
-Requirements are derived from the **Waypoint PRD** (`docs/PRD.md`), the single source of truth. Personas: Youth, Mentor (**Lead Mentor** is a per-cohort designation, not a system role), Program Administrator, Guardian, Volunteer, plus unauthenticated Public visitors.
+Requirements are derived from the **Waypoint PRD** (`docs/PRD.md`), the single source of truth. Personas: Youth, Mentor (**Lead Mentor** is a per-cohort designation, not a system role), Program Administrator, Guardian, Volunteer, plus unauthenticated Public visitors. Multi-tenancy (`tenancy/`) adds a platform-level **Platform Operator** that provisions organizations but cannot see their data.
 
 ---
 
@@ -58,6 +59,7 @@ Each item below is the **canonical rule now stated in the owning subsystem's L2*
 - **A-8 · Federated sign-in.** Google/federated sign-in is **out of scope for v1** (see `out-of-scope.md`); v1 uses email/password invite-based authentication.
 - **A-9 · Donations.** The donation pathway uses an **external PCI-compliant provider** (no card data stored); the recurring/monthly-tier model is a product decision to confirm (see `public-site/L2.md` L2-PUB-003).
 - **A-10 · Theme.** Light and dark themes are **in scope**: each user chooses System (default, follows the device), Light, or Dark in Display settings (see `platform-services/L2.md` L2-PLATFORM-013).
+- **A-11 · Tenancy model.** Shared database with an organization identifier on every organization-owned row; each user belongs to **exactly one organization**; sign-in emails stay unique platform-wide (see `tenancy/L2.md` L2-TENANCY-001, L2-TENANCY-002). Which organization receives public-site applications, volunteer sign-ups, contact requests, and donations is a product decision to confirm before those flows are made tenant-aware.
 
 ## Appendix B — Cross-subsystem dependency notes
 
@@ -66,4 +68,5 @@ Each item below is the **canonical rule now stated in the owning subsystem's L2*
 - **Offline attendance** (`NFR` L2-NFR-004) underpins ENGAGE and VOLUNTEER attendance capture. Offline is limited to attendance (see `out-of-scope.md`).
 - **Near-real-time delivery** (`NFR` L2-NFR-005) delivers **notifications and messages** to LEARN, MENTOR, ENGAGE, and ADMIN clients. Broader live domain-event fan-out is out of scope (see `out-of-scope.md`).
 - **Data export** (`REPORT` L2-REPORT-003) — **CSV/PDF** — is invoked by the ADMIN progress board and ENGAGE attendance history.
+- **Tenant isolation** (`TENANCY` L2-TENANCY-002, L2-TENANCY-003) is enforced by every subsystem's server endpoints and background work, in addition to role scoping.
 - **Responsive** (`NFR` L2-NFR-009) and **accessibility** (`NFR` L2-NFR-010) apply to every UI-facing subsystem.
