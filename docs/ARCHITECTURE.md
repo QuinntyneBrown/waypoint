@@ -105,11 +105,11 @@ Local development resolves the sibling apps on ports 4200 and 4201. Dynamic publ
 call a private API origin through `WAYPOINT_API_BASE_URL`, while browser API requests remain
 same-origin.
 
-`docs/mocks/` contains the current responsive interaction reference: a product map, a living style guide, shared assets, templates, and role-specific screens. The mocks are intentionally framework-free and run directly from the filesystem. They contain fictional data and must not be mistaken for the production application.
+`docs/mocks/` contains the current responsive interaction reference: a product map, shared assets, templates, and role-specific screens. The mocks are intentionally framework-free and run directly from the filesystem. They contain fictional data and must not be mistaken for the production application.
 
 ## Testing strategy
 
-- **`Waypoint.UnitTests`** — validators and isolated business rules
+- **`Waypoint.UnitTests`** — validators and isolated business rules; deliberately small, because behaviour is proven through acceptance tests (DECISIONS #20)
 - **`Waypoint.IntegrationTests`** — full HTTP behaviour through `WebApplicationFactory` and a disposable SQL Server database
 - **Requirement traceability** — `scripts/check-traceability.mjs --strict` validates references and requires coverage for all in-scope L2 requirements
 - **Frontend quality** — production builds, unit tests, route-manifest validation, Playwright E2E, keyboard-dialog checks, XS–XL responsive checks, and axe WCAG checks

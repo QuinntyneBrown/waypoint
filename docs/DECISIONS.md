@@ -153,3 +153,11 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** The workflow and gate failed on every push once the tree was gone.
 
 **Consequences.** There is no hosted user guide. The narrated journey videos and `docs/demo-plan.md` are the walkthrough material.
+
+## 20. Acceptance tests are the main coverage strategy; unit tests are the exception
+
+**Decision.** Behaviour is proven by HTTP integration tests (backend) and Playwright acceptance tests (frontend), each traced to an L2 requirement. Unit tests are added where logic is isolated and cheap to test (validators, pure helpers). Libraries without specs (`youth`, `mentor`, `guardian`, `volunteer`) get a `test` target only when they gain one.
+
+**Why.** The ATDD process in `AGENTS.md` drives every slice from an acceptance test; unit tests written afterward would duplicate that coverage and are barred by the incremental-implementation rule.
+
+**Consequences.** Low unit-test counts are not a gap by themselves. Add a unit test when a rule has many branches that acceptance tests cannot reach economically.
