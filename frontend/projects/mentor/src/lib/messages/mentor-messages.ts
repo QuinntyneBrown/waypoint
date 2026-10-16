@@ -45,7 +45,7 @@ type MessageMode = 'thread' | 'broadcast';
     .conversation-head,
     .composer,
     .broadcast-panel {
-      padding: var(--w-sp-4);
+      padding: var(--w-s4);
     }
     .conversation-list {
       margin: 0;
@@ -57,7 +57,7 @@ type MessageMode = 'thread' | 'broadcast';
       display: block;
       width: 100%;
       min-height: 62px;
-      padding: var(--w-sp-3) var(--w-sp-4);
+      padding: var(--w-s3) var(--w-s4);
       border: 0;
       border-bottom: 1px solid var(--w-border);
       background: transparent;
@@ -95,9 +95,9 @@ type MessageMode = 'thread' | 'broadcast';
       min-height: 18rem;
       max-height: 32rem;
       margin: 0;
-      padding: var(--w-sp-5);
+      padding: var(--w-s5);
       flex-direction: column;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       overflow-y: auto;
       list-style: none;
     }
@@ -110,7 +110,7 @@ type MessageMode = 'thread' | 'broadcast';
     .message-bubble {
       width: fit-content;
       max-width: 75%;
-      padding: var(--w-sp-3) var(--w-sp-4);
+      padding: var(--w-s3) var(--w-s4);
       border: 1px solid var(--w-border);
       border-radius: var(--w-r-card);
       background: var(--w-white);

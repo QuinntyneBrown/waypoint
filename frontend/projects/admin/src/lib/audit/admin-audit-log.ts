@@ -16,7 +16,7 @@ import { finalize } from 'rxjs/operators';
     .audit-filters {
       display: grid;
       grid-template-columns: repeat(4, minmax(9rem, 1fr)) auto auto;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       align-items: end;
     }
     .audit-target,
@@ -26,7 +26,7 @@ import { finalize } from 'rxjs/operators';
     }
     .audit-private {
       display: inline-flex;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
       align-items: center;
       color: var(--w-muted);
       font-weight: 700;
@@ -34,13 +34,13 @@ import { finalize } from 'rxjs/operators';
     .audit-pagination {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       align-items: center;
       justify-content: space-between;
     }
     .audit-pagination__actions {
       display: flex;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
     }
     @media (max-width: 68rem) {
       .audit-filters {

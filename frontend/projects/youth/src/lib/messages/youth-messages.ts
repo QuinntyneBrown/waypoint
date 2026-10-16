@@ -20,12 +20,12 @@ import { RealtimeService } from '@waypoint/core/realtime';
     .thread-log {
       display: flex;
       flex-direction: column;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       min-height: 12rem;
       max-height: 34rem;
       overflow-y: auto;
       margin: 0;
-      padding: var(--w-sp-5);
+      padding: var(--w-s5);
       list-style: none;
       background: var(--w-g100);
     }
@@ -38,7 +38,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
     .message-bubble {
       width: fit-content;
       max-width: 75%;
-      padding: var(--w-sp-3) var(--w-sp-4);
+      padding: var(--w-s3) var(--w-s4);
       border: 1px solid var(--w-border);
       border-radius: var(--w-r-card);
       background: var(--w-white);
@@ -51,7 +51,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
       white-space: pre-wrap;
     }
     .composer {
-      padding: var(--w-sp-5);
+      padding: var(--w-s5);
       border-top: 1px solid var(--w-border);
     }
     @media (max-width: 40rem) {
@@ -60,7 +60,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
       }
       .thread-log,
       .composer {
-        padding: var(--w-sp-3);
+        padding: var(--w-s3);
       }
     }
   `,

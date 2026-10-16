@@ -14,7 +14,7 @@ import { WShell } from '@waypoint/components';
     .quiz-facts {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
     }
   `,
 })

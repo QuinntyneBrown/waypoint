@@ -19,7 +19,7 @@ import { finalize } from 'rxjs';
     .assignment-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-sp-5);
+      gap: var(--w-s5);
       align-items: start;
     }
     .assignment-card,
@@ -28,19 +28,19 @@ import { finalize } from 'rxjs';
     }
     .supporting-list {
       display: grid;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
       max-height: 16rem;
       overflow-y: auto;
-      padding: var(--w-sp-2);
+      padding: var(--w-s2);
       border: 1px solid var(--w-border);
       border-radius: var(--w-radius-md);
     }
     .supporting-option {
       display: flex;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       align-items: flex-start;
       min-height: 2.75rem;
-      padding: var(--w-sp-2);
+      padding: var(--w-s2);
       border-radius: var(--w-radius-sm);
     }
     .supporting-option:hover {
@@ -55,17 +55,17 @@ import { finalize } from 'rxjs';
     .load-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-      gap: var(--w-sp-4);
+      gap: var(--w-s4);
     }
     .load-card__head,
     .load-metrics {
       display: flex;
       justify-content: space-between;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       align-items: flex-start;
     }
     .load-metrics {
-      margin-top: var(--w-sp-4);
+      margin-top: var(--w-s4);
     }
     .load-metric {
       min-width: 0;

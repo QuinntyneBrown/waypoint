@@ -19,12 +19,12 @@ interface RsvpDraft {
   styles: `
     .schedule-list {
       display: grid;
-      gap: var(--w-sp-5);
+      gap: var(--w-s5);
     }
     .session-card__layout {
       display: grid;
       grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 1fr);
-      gap: var(--w-sp-6);
+      gap: var(--w-s6);
       align-items: start;
     }
     .session-meta {
@@ -35,12 +35,12 @@ interface RsvpDraft {
     .rsvp-options {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
     }
     .rsvp-option {
       min-width: 0;
       margin: 0;
-      padding: var(--w-sp-2);
+      padding: var(--w-s2);
       border: 1px solid var(--w-border);
       border-radius: var(--w-r-input);
     }

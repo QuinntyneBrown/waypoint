@@ -24,14 +24,14 @@ const OPTIONAL_PROMPT = 'One action I will take';
     .mood-options {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
     }
     .mood-option,
     .share-option {
       min-height: 2.75rem;
       display: flex;
       align-items: center;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
       cursor: pointer;
     }
     textarea {

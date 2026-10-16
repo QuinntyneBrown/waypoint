@@ -15,7 +15,7 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
   styles: `
     .progress-tabs {
       display: flex;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
       overflow-x: auto;
     }
     .progress-tab {

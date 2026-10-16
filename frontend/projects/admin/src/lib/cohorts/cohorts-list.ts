@@ -17,20 +17,20 @@ import { finalize } from 'rxjs';
     .cohort-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
-      gap: var(--w-sp-4);
+      gap: var(--w-s4);
     }
     .cohort-card {
       height: 100%;
     }
     .cohort-card__meta {
       display: grid;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
       overflow-wrap: anywhere;
     }
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-sp-4);
+      gap: var(--w-s4);
     }
     .form-grid__wide {
       grid-column: 1 / -1;
