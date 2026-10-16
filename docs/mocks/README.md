@@ -27,7 +27,7 @@ Screen mocks use the same top-level subsystem structure as [`../specs`](../specs
 | `reporting-and-data/`           |       7 | `admin/`                                | Dashboard, reports, exports, and data import                     |
 | `volunteer-portal/`             |       3 | `volunteer/`                            | Volunteer home, schedule, and attendance                         |
 
-The root also contains the product map, style guide, reusable page templates, and shared assets, bringing the complete reference to more than 120 HTML files.
+The root also contains the product map and reusable page templates, bringing the complete reference to 118 HTML files.
 
 ## Design system
 
