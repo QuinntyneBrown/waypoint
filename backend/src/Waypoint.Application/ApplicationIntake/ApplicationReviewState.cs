@@ -20,7 +20,6 @@ internal static class ApplicationReviewState
         return application.Status == ApplicationStatus.New ? "New" : "In review";
     }
 
-    public static bool CanApprove(YouthApplication application, bool hasValidConsent) =>
-        application.Status is not ApplicationStatus.Approved and not ApplicationStatus.Declined
-        && (!application.IsMinor || hasValidConsent);
+    public static bool CanApprove(YouthApplication application) =>
+        application.Status is not ApplicationStatus.Approved and not ApplicationStatus.Declined;
 }

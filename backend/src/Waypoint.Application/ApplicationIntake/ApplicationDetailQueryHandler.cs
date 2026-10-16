@@ -55,7 +55,7 @@ public sealed class ApplicationDetailQueryHandler
             application.PrivacyAck,
             ApplicationReviewState.EffectiveStatus(application, hasValidConsent),
             ApplicationReviewState.ConsentState(application, hasValidConsent),
-            ApplicationReviewState.CanApprove(application, hasValidConsent),
+            ApplicationReviewState.CanApprove(application),
             application.CohortId,
             application.MentorId,
             application.DecisionNote,

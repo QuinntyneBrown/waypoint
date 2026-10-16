@@ -61,18 +61,6 @@ public class ApproveApplicationCommandHandler : IRequestHandler<ApproveApplicati
         if (!mentorBelongsToCohort)
             throw new ConflictException("The selected mentor is not assigned to this cohort.");
 
-        var policy = await ConsentPolicyEvaluator.LoadAsync(_db, now, cancellationToken);
-        var consentRows = application.CreatedYouthUserId is { } consentYouthId
-            ? await _db.GuardianConsents.AsNoTracking()
-                .Where(consent => consent.YouthUserId == consentYouthId)
-                .ToListAsync(cancellationToken)
-            : [];
-        var hasValidConsent = consentRows.Any(consent =>
-            policy.IsParticipationValid(consent, now));
-        if (application.IsMinor && !hasValidConsent)
-            throw new ConflictException(
-                "Guardian participation consent must be recorded before approval.");
-
         // Provision the Youth account and enroll into the chosen cohort + mentor (L2-INTAKE-002 AC3).
         // No account existed prior to approval; there is no password yet — invite/onboarding sets it.
         var email = !string.IsNullOrWhiteSpace(application.GuardianEmail)

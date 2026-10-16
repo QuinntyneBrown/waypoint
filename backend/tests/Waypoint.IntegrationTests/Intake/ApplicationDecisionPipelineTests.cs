@@ -15,7 +15,7 @@ namespace Waypoint.IntegrationTests.Intake;
 public sealed class ApplicationDecisionPipelineTests : IntegrationTestBase
 {
     [Test]
-    public async Task Minor_detail_shows_needs_consent_and_full_approval_is_blocked()
+    public async Task Minor_detail_shows_needs_consent_and_can_still_be_approved()
     {
         var placement = await SeedPlacementAsync();
         var applicationId = await SubmitAsync(age: 15);
@@ -32,7 +32,7 @@ public sealed class ApplicationDecisionPipelineTests : IntegrationTestBase
         {
             Assert.That(detail!.Status, Is.EqualTo("Needs consent"));
             Assert.That(detail.ConsentState, Is.EqualTo("Needs consent"));
-            Assert.That(detail.CanApprove, Is.False);
+            Assert.That(detail.CanApprove, Is.True);
             Assert.That(detail.GuardianEmail, Is.EqualTo("guardian.pipeline@example.com"));
             Assert.That(detail.WhyInterested, Does.Contain("leadership"));
         });
@@ -67,7 +67,7 @@ public sealed class ApplicationDecisionPipelineTests : IntegrationTestBase
                 decisionNote = "Strong application.",
             },
             adminToken);
-        Assert.That(approval.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+        Assert.That(approval.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var scope = Factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -75,7 +75,7 @@ public sealed class ApplicationDecisionPipelineTests : IntegrationTestBase
             await db.Applications.Where(item => item.Id == applicationId)
                 .Select(item => item.CreatedYouthUserId)
                 .SingleAsync(),
-            Is.Null);
+            Is.Not.Null);
     }
 
     [Test]
