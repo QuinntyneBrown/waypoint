@@ -4,6 +4,8 @@ Extracted from [docs/mocks](../mocks/README.md) on 2026-10-15. Open [index.html]
 
 The system keeps the mocks' `w-*` class vocabulary, so mocks and product share one language, and replaces the mocks' `--w-*` draft tokens with a three-tier token set that passes WCAG 2.2 AA in light and dark.
 
+**Status (v1):** this system is the design reference for the mocks. The Angular frontend still styles itself with its own `--w-*` tokens in `frontend/projects/components/src/styles`; migrating it to these tokens is not planned for v1 (DECISIONS #21).
+
 ## Foundations
 
 | Page | Covers |
