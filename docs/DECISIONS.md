@@ -68,9 +68,9 @@ A running log of technical and product decisions worth recording. Each entry sta
 
 ## 9. Two-app Angular frontend on a same-origin proxy with in-memory access tokens
 
-**Decision.** Build the frontend as two applications — `portal` (authenticated SPA) and `public-site` (SSR/prerendered) — over shared `w-ui`/`w-api`/`w-auth` libraries consumed via `@w/*` TypeScript path aliases pointing at library **source** (no separate library build). E2E and dev run both apps behind an Angular dev-server proxy that forwards `/api` to the backend, so the browser makes same-origin requests and the 4200-only CORS policy never bites. The access token lives in memory only; the rotating refresh token + user snapshot persist in `sessionStorage` (or `localStorage` when "remember me" is checked), and a boot initializer re-mints the access token via refresh.
+**Decision.** Build the frontend as two applications — `portal` (authenticated SPA) and `public-site` (SSR/prerendered) — over shared libraries consumed via `@waypoint/*` TypeScript path aliases pointing at library **source** (the library layering is in #16; `npm run build` also runs `packages:build` and `packages:check`). E2E and dev run both apps behind an Angular dev-server proxy that forwards `/api` to the backend, so the browser makes same-origin requests and the 4200-only CORS policy never bites. The access token lives in memory only; the rotating refresh token + user snapshot persist in `sessionStorage` (or `localStorage` when "remember me" is checked), and a boot initializer re-mints the access token via refresh.
 
-**Why.** The public site needs SSR/SEO and must not carry auth/shell code, while all signed-in roles share one session, shell, and design system — so one authenticated app with lazy role areas plus one public app fits better than one-app or one-app-per-role. Source-aliased libraries keep the ATDD loop fast (no lib rebuild). A same-origin proxy matches production deployment and removes CORS from the test path. Keeping the access token out of persistent storage limits its exposure; XSS is the threat model, so Angular's default sanitization is never bypassed on user content.
+**Why.** The public site needs SSR/SEO and must not carry auth/shell code, while all signed-in roles share one session, shell, and design system — so one authenticated app with lazy role areas plus one public app fits better than one-app or one-app-per-role. Source-aliased libraries keep the ATDD loop fast (no lib rebuild during development). A same-origin proxy matches production deployment and removes CORS from the test path. Keeping the access token out of persistent storage limits its exposure; XSS is the threat model, so Angular's default sanitization is never bypassed on user content.
 
 **Consequences.** The original Tier A/Tier B delivery split is complete: Testing-only HTTP fixtures provision Admin/Mentor/Guardian/Volunteer identities for browser acceptance while production exposes no equivalent role-granting seam. Every acceptance slice is traced to an L2 requirement and driven through the real app against the real API. The client renders forbidden/gated/redacted responses faithfully but is never the access authority (see #5).
 
@@ -121,3 +121,35 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** `AGENTS.md` contradicted the Playwright config, the CI workflows, DECISIONS #9 and the traceability gate that CI already enforces.
 
 **Consequences.** Rewriting the e2e suite to route interception, or moving all 206 inline selectors at once, is not planned.
+
+## 16. The frontend workspace is layered into apps, feature libraries, and shared libraries
+
+**Decision.** Ten `@waypoint/*` libraries (`frontend/tsconfig.json`): `api` and `components` have no workspace dependencies; `auth`, `core`, `account` and the role libraries `youth`, `mentor`, `admin`, `guardian`, `volunteer` hold the portal's pages and services. Feature libraries may not depend on one another's role libraries; `packages:check` enforces this. Lazy-loaded code (auth pages, realtime, attendance queue) lives in secondary entry points. `npm run build` runs `packages:build`, the app builds, then `packages:check`.
+
+**Why.** One portal app with every role's pages in it was hard to navigate and let roles import each other's code. Secondary entry points keep the initial bundle at its previous size.
+
+**Consequences.** Supersedes the three-library description in #9. Adding a library means updating `tsconfig.json` paths, `packages:build` and the package check.
+
+## 17. The design system is extracted from the mocks
+
+**Decision.** `docs/design-system/` holds tokens (light and dark, DTCG export, checked contrast pairs), token-only component CSS, foundation, component and pattern pages. All mocks consume the design-system CSS; the old per-mock stylesheets and `styleguide.html` were deleted.
+
+**Why.** Mocks carried divergent page-local variables. One token source makes mocks and the frontend converge (see DECISIONS #6).
+
+**Consequences.** Design-system and mock work is design-artifact work: no tests are written for it. Whether the Angular components consume these tokens is tracked separately.
+
+## 18. The frontend uses ESLint, Storybook and Husky
+
+**Decision.** `angular-eslint` (`npm run lint`), Storybook for the `components` library (`npm run storybook`, `build-storybook`) and a Husky pre-commit hook running `lint-staged` (eslint --fix, prettier).
+
+**Why.** Catch template and accessibility mistakes before review, and give components an isolated place to be exercised.
+
+**Consequences.** Lint and Storybook are not CI gates yet. Which of Storybook and `docs/design-system` is the component reference is open.
+
+## 19. User guides were removed
+
+**Decision.** The `user-guides/` tree, its GitHub Actions workflow, the vendored-stylesheet gate script, and the references to them were deleted.
+
+**Why.** The workflow and gate failed on every push once the tree was gone.
+
+**Consequences.** There is no hosted user guide. The narrated journey videos and `docs/demo-plan.md` are the walkthrough material.
