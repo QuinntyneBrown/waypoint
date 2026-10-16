@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/youth/src/lib/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/youth/src/lib/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`AuthService`](../../../../frontend/projects/api/src/lib/services/auth.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`YouthProgressController`](../../../../backend/src/Waypoint.Api/Controllers/LearningExperience/YouthProgressController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`ProgressQuery`](../../../../backend/src/Waypoint.Application/LearningExperience/YouthCurriculum/ProgressQuery.cs)<br>[`ProgressQueryHandler`](../../../../backend/src/Waypoint.Application/LearningExperience/YouthCurriculum/ProgressQueryHandler.cs)<br>[`ProgressView`](../../../../backend/src/Waypoint.Application/LearningExperience/YouthCurriculum/ProgressQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`LessonProgress`](../../../../backend/src/Waypoint.Domain/LearningExperience/LessonProgress.cs)<br>[`QuizAttempt`](../../../../backend/src/Waypoint.Domain/LearningExperience/QuizAttempt.cs)<br>[`ProgressStatus`](../../../../backend/src/Waypoint.Domain/LearningExperience/ProgressStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `YouthAnnouncements.submit()` starts the browser interaction and maintains presentation state.
-- `AuthApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `AuthService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `YouthProgressController.PostAsync()` applies transport policy and constructs `ProgressQuery`.
 - `ProgressQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `LessonProgress`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

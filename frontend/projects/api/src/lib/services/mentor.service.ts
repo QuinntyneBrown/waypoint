@@ -21,7 +21,7 @@ import {
 } from '../models/mentoring/mentor';
 
 @Injectable({ providedIn: 'root' })
-export class MentorApi {
+export class MentorService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

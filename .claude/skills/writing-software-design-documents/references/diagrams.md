@@ -231,7 +231,7 @@ skinparam package {
 actor "Program administrator" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "ApplicationsList" as page
-  participant "ApplicationsApi" as client
+  participant "ApplicationsService" as client
 end box
 box "Backend — WordUp API application" #D1FADF
   participant "ApplicationsController" as controller

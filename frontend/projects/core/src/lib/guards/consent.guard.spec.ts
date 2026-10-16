@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, UrlTree } from '@angular/router';
-import { ConsentApi } from '@waypoint/api';
+import { ConsentService } from '@waypoint/api';
 import { firstValueFrom, isObservable, Observable, of, throwError } from 'rxjs';
 import { describe, expect, it } from 'vitest';
 import { consentGuard } from './consent.guard';
@@ -17,9 +17,9 @@ async function resolve(result: unknown): Promise<boolean | UrlTree> {
     : (result as boolean | UrlTree);
 }
 
-function configure(api: Partial<ConsentApi>) {
+function configure(api: Partial<ConsentService>) {
   TestBed.configureTestingModule({
-    providers: [provideRouter([]), { provide: ConsentApi, useValue: api }],
+    providers: [provideRouter([]), { provide: ConsentService, useValue: api }],
   });
 }
 

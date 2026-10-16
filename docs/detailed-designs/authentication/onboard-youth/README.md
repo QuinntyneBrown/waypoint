@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthNotifications`](../../../../frontend/projects/youth/src/lib/notifications/youth-notifications.ts)<br>[`YouthAnnouncements`](../../../../frontend/projects/youth/src/lib/announcements/youth-announcements.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`OnboardingApi`](../../../../frontend/projects/api/src/lib/services/onboarding-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`OnboardingService`](../../../../frontend/projects/api/src/lib/services/onboarding.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`OnboardingController`](../../../../backend/src/Waypoint.Api/Controllers/Authentication/OnboardingController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`SkipOnboardingCommand`](../../../../backend/src/Waypoint.Application/Authentication/Onboarding/SkipOnboardingCommand.cs)<br>[`SkipOnboardingCommandHandler`](../../../../backend/src/Waypoint.Application/Authentication/Onboarding/SkipOnboardingCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`User`](../../../../backend/src/Waypoint.Domain/Authentication/User.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `YouthNotifications.submit()` starts the browser interaction and maintains presentation state.
-- `OnboardingApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `OnboardingService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `OnboardingController.PostAsync()` applies transport policy and constructs `SkipOnboardingCommand`.
 - `SkipOnboardingCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `User`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

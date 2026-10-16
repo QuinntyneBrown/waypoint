@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import type { AbstractControl } from '@angular/forms';
-import { ApiError, PrivacyApi } from '@waypoint/api';
+import { ApiError, PrivacyService } from '@waypoint/api';
 import type { AdminDataSubjectRequest } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
@@ -89,7 +89,7 @@ import {
 })
 export class AdminPrivacyPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(PrivacyApi);
+  private readonly api = inject(PrivacyService);
   private readonly fb = inject(FormBuilder);
 
   protected readonly items = signal<AdminDataSubjectRequest[]>([]);

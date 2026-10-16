@@ -20,7 +20,7 @@ package "Frontend — Public Site application" {
     +submit(): void
     +renderResult(): void
   }
-  class "PasswordResetApi" as client_PasswordResetApi <<API client>> {
+  class "PasswordResetService" as client_PasswordResetApi <<API client>> {
     +execute(request): Observable
   }
 }

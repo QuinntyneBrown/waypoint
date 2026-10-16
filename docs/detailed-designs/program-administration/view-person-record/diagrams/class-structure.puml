@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +load(): void
     +renderResult(): void
   }
-  class "PasswordResetApi" as client_PasswordResetApi <<API client>> {
+  class "PasswordResetService" as client_PasswordResetApi <<API client>> {
     +get(request): Observable
   }
 }

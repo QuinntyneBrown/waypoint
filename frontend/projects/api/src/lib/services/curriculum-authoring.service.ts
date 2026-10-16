@@ -21,7 +21,7 @@ import {
 } from '../models/curriculum-authoring/curriculum-authoring';
 
 @Injectable({ providedIn: 'root' })
-export class CurriculumAuthoringApi {
+export class CurriculumAuthoringService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

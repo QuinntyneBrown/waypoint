@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, MentorApi, MentorYouthDetail } from '@waypoint/api';
+import { ApiError, MentorService, MentorYouthDetail } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -53,7 +53,7 @@ type DetailTab =
 export class MentorYouthDetailPage {
   protected readonly auth = inject(AuthStore);
   private readonly route = inject(ActivatedRoute);
-  private readonly api = inject(MentorApi);
+  private readonly api = inject(MentorService);
 
   protected readonly detail = signal<MentorYouthDetail | null>(null);
   protected readonly activeTab = signal<DetailTab>('profile');

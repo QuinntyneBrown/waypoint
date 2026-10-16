@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`AttendanceQueueService`](../../../../frontend/projects/volunteer/src/lib/attendance/attendance-queue.service.ts)<br>[`VolunteerAttendance`](../../../../frontend/projects/volunteer/src/lib/attendance/volunteer-attendance.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `MentoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `MentoringService` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`CompetenciesController`](../../../../backend/src/Waypoint.Api/Controllers/Mentoring/CompetenciesController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`YouthCompetenciesQuery`](../../../../backend/src/Waypoint.Application/Mentoring/Competencies/YouthCompetenciesQuery.cs)<br>[`YouthCompetenciesQueryHandler`](../../../../backend/src/Waypoint.Application/Mentoring/Competencies/YouthCompetenciesQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`CompetencyAssessment`](../../../../backend/src/Waypoint.Domain/Mentoring/CompetencyAssessment.cs)<br>[`CompetencyLevel`](../../../../backend/src/Waypoint.Domain/Mentoring/CompetencyLevel.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `AttendanceQueueService.submit()` starts the browser interaction and maintains presentation state.
-- `MentoringApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `MentoringService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `CompetenciesController.PostAsync()` applies transport policy and constructs `YouthCompetenciesQuery`.
 - `YouthCompetenciesQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `CompetencyAssessment`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, PeopleApi, PersonDetail } from '@waypoint/api';
+import { ApiError, PeopleService, PersonDetail } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
@@ -82,7 +82,7 @@ type LifecycleAction =
 export class PersonDetailPage {
   protected readonly auth = inject(AuthStore);
   private readonly route = inject(ActivatedRoute);
-  private readonly api = inject(PeopleApi);
+  private readonly api = inject(PeopleService);
   private readonly personId = this.route.snapshot.paramMap.get('id') ?? '';
 
   protected readonly detail = signal<PersonDetail | undefined>(undefined);

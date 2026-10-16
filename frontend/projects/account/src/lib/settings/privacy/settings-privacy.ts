@@ -6,7 +6,7 @@ import {
   DataSubjectAction,
   DataSubjectRequestResult,
   MyData,
-  PrivacyApi,
+  PrivacyService,
 } from '@waypoint/api';
 import { forkJoin } from 'rxjs';
 import { SettingsShell } from '../settings-shell';
@@ -51,7 +51,7 @@ import { SettingsShell } from '../settings-shell';
 export class SettingsPrivacyPage {
   private static readonly requestPageSize = 25;
   private readonly fb = inject(FormBuilder);
-  private readonly api = inject(PrivacyApi);
+  private readonly api = inject(PrivacyService);
 
   protected readonly data = signal<MyData | null>(null);
   protected readonly requests = signal<DataSubjectRequestResult[]>([]);

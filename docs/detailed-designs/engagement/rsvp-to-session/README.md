@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`SessionPersistence`](../../../../frontend/projects/auth/src/lib/session-persistence.ts)<br>[`SessionStore`](../../../../frontend/projects/auth/src/lib/session-store.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`NotificationPreferencesApi`](../../../../frontend/projects/api/src/lib/services/notification-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`NotificationPreferencesService`](../../../../frontend/projects/api/src/lib/services/notification-preferences.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`RsvpController`](../../../../backend/src/Waypoint.Api/Controllers/Engagement/RsvpController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`CreateSessionCommand`](../../../../backend/src/Waypoint.Application/Engagement/Sessions/CreateSessionCommand.cs)<br>[`CreateSessionCommandHandler`](../../../../backend/src/Waypoint.Application/Engagement/Sessions/CreateSessionCommandHandler.cs)<br>[`CreateSessionCommandValidator`](../../../../backend/src/Waypoint.Application/Engagement/Sessions/CreateSessionCommandValidator.cs)<br>[`CreateSessionResult`](../../../../backend/src/Waypoint.Application/Engagement/Sessions/CreateSessionCommand.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Session`](../../../../backend/src/Waypoint.Domain/Engagement/Session.cs)<br>[`SessionRsvp`](../../../../backend/src/Waypoint.Domain/Engagement/SessionRsvp.cs)<br>[`RsvpResponse`](../../../../backend/src/Waypoint.Domain/Engagement/RsvpResponse.cs)<br>[`Notification`](../../../../backend/src/Waypoint.Domain/Engagement/Notification.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `SessionPersistence.submit()` starts the browser interaction and maintains presentation state.
-- `NotificationPreferencesApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `NotificationPreferencesService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `RsvpController.PostAsync()` applies transport policy and constructs `CreateSessionCommand`.
 - `CreateSessionCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Session`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

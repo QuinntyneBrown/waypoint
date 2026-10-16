@@ -4,10 +4,10 @@ import { TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { API_BASE_URL } from '../api-base-url';
 import type { FulfillDataSubjectRequest } from '../models/platform/privacy';
-import { PrivacyApi } from './privacy-api';
+import { PrivacyService } from './privacy.service';
 
-describe('PrivacyApi', () => {
-  let api: PrivacyApi;
+describe('PrivacyService', () => {
+  let api: PrivacyService;
   let http: HttpTestingController;
 
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe('PrivacyApi', () => {
         { provide: API_BASE_URL, useValue: 'https://api.waypoint.test' },
       ],
     });
-    api = TestBed.inject(PrivacyApi);
+    api = TestBed.inject(PrivacyService);
     http = TestBed.inject(HttpTestingController);
   });
 

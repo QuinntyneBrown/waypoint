@@ -6,7 +6,7 @@ import { CompleteOnboardingRequest, OnboardingStatus } from '../models/onboardin
 
 /** Youth onboarding endpoints (`/api/onboarding`, Youth-only). */
 @Injectable({ providedIn: 'root' })
-export class OnboardingApi {
+export class OnboardingService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

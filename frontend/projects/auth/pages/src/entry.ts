@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { OnboardingApi } from '@waypoint/api';
+import { OnboardingService } from '@waypoint/api';
 import { roleHome } from '@waypoint/auth';
 import { catchError, map, Observable, of } from 'rxjs';
 
@@ -11,7 +11,7 @@ import { catchError, map, Observable, of } from 'rxjs';
  */
 @Injectable({ providedIn: 'root' })
 export class EntryResolver {
-  private readonly onboarding = inject(OnboardingApi);
+  private readonly onboarding = inject(OnboardingService);
 
   resolve(role: string): Observable<string> {
     if (role !== 'Youth') return of(roleHome(role));

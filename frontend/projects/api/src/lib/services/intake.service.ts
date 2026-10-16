@@ -6,7 +6,7 @@ import { SubmitApplicationRequest, SubmitApplicationResult } from '../models/int
 
 /** Anonymous application/referral intake (`POST /api/applications`). */
 @Injectable({ providedIn: 'root' })
-export class IntakeApi {
+export class IntakeService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

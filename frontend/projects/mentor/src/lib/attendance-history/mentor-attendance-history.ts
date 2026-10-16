@@ -5,7 +5,7 @@ import {
   ApiError,
   SessionAttendanceSummary,
   SessionSchedulingOptions,
-  StaffOperationsApi,
+  StaffOperationsService,
   YouthAttendanceSummary,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
@@ -70,7 +70,7 @@ type HistoryView = 'session' | 'youth';
 })
 export class MentorAttendanceHistoryPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(StaffOperationsApi);
+  private readonly api = inject(StaffOperationsService);
   private readonly doc = inject(DOCUMENT);
 
   protected readonly options = signal<SessionSchedulingOptions | null>(null);

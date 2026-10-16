@@ -18,7 +18,7 @@ skinparam package {
 actor "Authenticated participant" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "Support" as page
-  participant "SupportApi" as client
+  participant "SupportService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "SupportController" as controller

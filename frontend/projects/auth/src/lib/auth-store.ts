@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import {
   AcceptInvitationRequest,
   ApiError,
-  AuthApi,
+  AuthService,
   AuthResult,
-  InvitationsApi,
+  InvitationsService,
 } from '@waypoint/api';
 import {
   catchError,
@@ -35,8 +35,8 @@ const MIN_REFRESH_DELAY_MS = 5_000;
  */
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
-  private readonly api = inject(AuthApi);
-  private readonly invitations = inject(InvitationsApi);
+  private readonly api = inject(AuthService);
+  private readonly invitations = inject(InvitationsService);
   private readonly store = inject(SessionStore);
   private readonly persistence = inject(SessionPersistence);
   private readonly router = inject(Router);

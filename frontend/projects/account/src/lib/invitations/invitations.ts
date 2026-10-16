@@ -6,7 +6,7 @@ import {
   InvitationMentorOption,
   InvitationOption,
   InvitationSummary,
-  InvitationsApi,
+  InvitationsService,
   WRoleName,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
@@ -62,7 +62,7 @@ const ROLES: readonly WRoleName[] = [
 })
 export class InvitationsPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(InvitationsApi);
+  private readonly api = inject(InvitationsService);
   private readonly fb = inject(FormBuilder);
 
   protected readonly shellRole = computed(() => shellRole(this.auth.role()));

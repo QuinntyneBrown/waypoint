@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../api-base-url';
 import { AuditLogFilter, AuditLogPage } from '../models/consent/audit-log';
 
 @Injectable({ providedIn: 'root' })
-export class AuditApi {
+export class AuditService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

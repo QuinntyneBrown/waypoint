@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`ConsentRequired`](../../../../frontend/projects/account/src/lib/states/consent-required/consent-required.ts)<br>[`SessionExpired`](../../../../frontend/projects/account/src/lib/states/session-expired/session-expired.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`ConsentApi`](../../../../frontend/projects/api/src/lib/services/consent-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`ConsentService`](../../../../frontend/projects/api/src/lib/services/consent.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`ConsentController`](../../../../backend/src/Waypoint.Api/Controllers/ConsentAndSafeguarding/ConsentController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`CaptureConsentCommand`](../../../../backend/src/Waypoint.Application/ConsentAndSafeguarding/CaptureConsentCommand.cs)<br>[`CaptureConsentCommandHandler`](../../../../backend/src/Waypoint.Application/ConsentAndSafeguarding/CaptureConsentCommandHandler.cs)<br>[`CaptureConsentCommandValidator`](../../../../backend/src/Waypoint.Application/ConsentAndSafeguarding/CaptureConsentCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`GuardianConsent`](../../../../backend/src/Waypoint.Domain/ConsentAndSafeguarding/GuardianConsent.cs)<br>[`AuditEntry`](../../../../backend/src/Waypoint.Domain/ConsentAndSafeguarding/AuditEntry.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `ConsentRequired.submit()` starts the browser interaction and maintains presentation state.
-- `ConsentApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `ConsentService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `ConsentController.PostAsync()` applies transport policy and constructs `CaptureConsentCommand`.
 - `CaptureConsentCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `GuardianConsent`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

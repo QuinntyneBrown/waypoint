@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthSubmissionStatus } from '@waypoint/api';
+import { ApiError, LearningService, YouthSubmissionStatus } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -14,7 +14,7 @@ import { WShell } from '@waypoint/components';
 })
 export class YouthResubmitPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(LearningApi);
+  private readonly api = inject(LearningService);
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);

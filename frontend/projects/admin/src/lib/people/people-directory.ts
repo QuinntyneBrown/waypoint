@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { ApiError, DirectoryCohort, PagedPeople, PeopleApi } from '@waypoint/api';
+import { ApiError, DirectoryCohort, PagedPeople, PeopleService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
 import { catchError, debounceTime, of, switchMap, tap } from 'rxjs';
@@ -56,7 +56,7 @@ interface DirectoryQuery {
 })
 export class PeopleDirectory {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(PeopleApi);
+  private readonly api = inject(PeopleService);
   private static readonly pageSize = 10;
 
   protected readonly search = signal('');

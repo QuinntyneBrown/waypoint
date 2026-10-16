@@ -4,7 +4,7 @@ import {
   AssignableWorkItem,
   AssignWorkItemType,
   AssignWorkOptions,
-  MentorApi,
+  MentorService,
   ReminderCadence,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
@@ -67,7 +67,7 @@ type TargetMode = 'individual' | 'cohort';
 })
 export class MentorAssignWorkPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(MentorApi);
+  private readonly api = inject(MentorService);
 
   protected readonly options = signal<AssignWorkOptions | null>(null);
   protected readonly itemType = signal<AssignWorkItemType>('Lesson');

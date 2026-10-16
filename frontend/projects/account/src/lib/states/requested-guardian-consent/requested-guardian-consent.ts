@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
   ApiError,
-  ConsentApi,
+  ConsentService,
   ConsentReceipt,
   RequestedConsent,
   RequestedConsentCapture,
@@ -18,7 +18,7 @@ import {
   templateUrl: './requested-guardian-consent.html',
 })
 export class RequestedGuardianConsentPage {
-  private readonly api = inject(ConsentApi);
+  private readonly api = inject(ConsentService);
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
   private readonly token = this.route.snapshot.queryParamMap.get('token') ?? '';

@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`ConsentRequired`](../../../../frontend/projects/account/src/lib/states/consent-required/consent-required.ts)<br>[`AuthStore`](../../../../frontend/projects/auth/src/lib/auth-store.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`AuthService`](../../../../frontend/projects/api/src/lib/services/auth.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`InvitationsController`](../../../../backend/src/Waypoint.Api/Controllers/Authentication/InvitationsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AcceptInviteCommand`](../../../../backend/src/Waypoint.Application/Authentication/Invitations/AcceptInviteCommand.cs)<br>[`AcceptInviteCommandHandler`](../../../../backend/src/Waypoint.Application/Authentication/Invitations/AcceptInviteCommandHandler.cs)<br>[`AcceptInviteCommandValidator`](../../../../backend/src/Waypoint.Application/Authentication/Invitations/AcceptInviteCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Invitation`](../../../../backend/src/Waypoint.Domain/Authentication/Invitation.cs)<br>[`User`](../../../../backend/src/Waypoint.Domain/Authentication/User.cs)<br>[`InvitationStatus`](../../../../backend/src/Waypoint.Domain/Authentication/InvitationStatus.cs)<br>[`UserStatus`](../../../../backend/src/Waypoint.Domain/Authentication/UserStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `ConsentRequired.submit()` starts the browser interaction and maintains presentation state.
-- `AuthApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `AuthService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `InvitationsController.PostAsync()` applies transport policy and constructs `AcceptInviteCommand`.
 - `AcceptInviteCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Invitation`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

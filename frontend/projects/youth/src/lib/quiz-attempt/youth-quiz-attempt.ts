@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiError, LearningApi, YouthQuizAttempt, YouthQuizQuestion } from '@waypoint/api';
+import { ApiError, LearningService, YouthQuizAttempt, YouthQuizQuestion } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -28,7 +28,7 @@ type QuizAnswers = Record<string, number[] | string>;
 })
 export class YouthQuizAttemptPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(LearningApi);
+  private readonly api = inject(LearningService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly doc = inject(DOCUMENT);

@@ -18,7 +18,7 @@ skinparam package {
 actor "Anonymous visitor" as actor
 box "Frontend — Public Site application" #E0F2FE
   participant "NotFound" as page
-  participant "PublicSiteApi" as client
+  participant "PublicSiteService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "PublicController" as controller

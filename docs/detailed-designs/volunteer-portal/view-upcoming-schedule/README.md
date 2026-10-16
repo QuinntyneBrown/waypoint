@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`VolunteerSchedule`](../../../../frontend/projects/volunteer/src/lib/schedule/volunteer-schedule.ts)<br>[`VolunteerAttendance`](../../../../frontend/projects/volunteer/src/lib/attendance/volunteer-attendance.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`VolunteerApi`](../../../../frontend/projects/api/src/lib/services/volunteer-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`VolunteerService`](../../../../frontend/projects/api/src/lib/services/volunteer.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`VolunteerController`](../../../../backend/src/Waypoint.Api/Controllers/VolunteerPortal/VolunteerController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`VolunteerScheduleQuery`](../../../../backend/src/Waypoint.Application/VolunteerPortal/VolunteerScheduleQuery.cs)<br>[`VolunteerScheduleQueryHandler`](../../../../backend/src/Waypoint.Application/VolunteerPortal/VolunteerScheduleQueryHandler.cs)<br>[`VolunteerScheduleItem`](../../../../backend/src/Waypoint.Application/VolunteerPortal/VolunteerScheduleQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | `ViewUpcomingScheduleState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `VolunteerSchedule.load()` starts the browser interaction and maintains presentation state.
-- `VolunteerApi.get()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `VolunteerService.get()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `VolunteerController.GetAsync()` applies transport policy and constructs `VolunteerScheduleQuery`.
 - `VolunteerScheduleQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `ViewUpcomingScheduleState`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

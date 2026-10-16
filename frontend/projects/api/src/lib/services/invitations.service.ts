@@ -16,7 +16,7 @@ import {
 } from '../models/auth/invitations';
 
 @Injectable({ providedIn: 'root' })
-export class InvitationsApi {
+export class InvitationsService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

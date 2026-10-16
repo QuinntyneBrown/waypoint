@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`Support`](../../../../frontend/projects/account/src/lib/support/support.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`SupportApi`](../../../../frontend/projects/api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`SupportService`](../../../../frontend/projects/api/src/lib/services/engagement.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`FlagsController`](../../../../backend/src/Waypoint.Api/Controllers/Mentoring/FlagsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AtRiskListQuery`](../../../../backend/src/Waypoint.Application/Mentoring/Flags/AtRiskListQuery.cs)<br>[`AtRiskListQueryHandler`](../../../../backend/src/Waypoint.Application/Mentoring/Flags/AtRiskListQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Flag`](../../../../backend/src/Waypoint.Domain/Mentoring/Flag.cs)<br>[`CheckIn`](../../../../backend/src/Waypoint.Domain/Mentoring/CheckIn.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `Support.submit()` starts the browser interaction and maintains presentation state.
-- `SupportApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `SupportService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `FlagsController.PostAsync()` applies transport policy and constructs `AtRiskListQuery`.
 - `AtRiskListQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Flag`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

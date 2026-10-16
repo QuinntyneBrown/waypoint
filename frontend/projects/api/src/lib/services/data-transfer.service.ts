@@ -9,7 +9,7 @@ import {
 } from '../models/reporting/roster-import';
 
 @Injectable({ providedIn: 'root' })
-export class DataTransferApi {
+export class DataTransferService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

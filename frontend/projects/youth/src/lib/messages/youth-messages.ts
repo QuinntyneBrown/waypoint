@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiError, MessagingApi, YouthMessageThread } from '@waypoint/api';
+import { ApiError, MessagingService, YouthMessageThread } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
@@ -68,7 +68,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
 export class YouthMessagesPage {
   protected readonly auth = inject(AuthStore);
   protected readonly realtime = inject(RealtimeService);
-  private readonly api = inject(MessagingApi);
+  private readonly api = inject(MessagingService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
 

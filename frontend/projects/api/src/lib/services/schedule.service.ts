@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../api-base-url';
 import { RsvpResult, SubmitRsvpInput, YouthSession } from '../models/engagement/schedule';
 
 @Injectable({ providedIn: 'root' })
-export class ScheduleApi {
+export class ScheduleService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

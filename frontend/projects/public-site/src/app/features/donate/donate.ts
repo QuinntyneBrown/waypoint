@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ApiError, PublicSiteApi } from '@waypoint/api';
+import { ApiError, PublicSiteService } from '@waypoint/api';
 import { WIcon } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -17,7 +17,7 @@ function isEmail(value: string): boolean {
 })
 export class Donate {
   private readonly fb = inject(FormBuilder);
-  private readonly api = inject(PublicSiteApi);
+  private readonly api = inject(PublicSiteService);
 
   protected readonly tiers = [20, 50, 100] as const;
   protected readonly selected = signal<number | null>(null);

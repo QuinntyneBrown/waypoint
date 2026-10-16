@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`AttendanceQueueService`](../../../../frontend/projects/volunteer/src/lib/attendance/attendance-queue.service.ts)<br>[`VolunteerAttendance`](../../../../frontend/projects/volunteer/src/lib/attendance/volunteer-attendance.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `CurriculumAuthoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `CurriculumAuthoringService` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`ProgressionController`](../../../../backend/src/Waypoint.Api/Controllers/CurriculumAuthoring/ProgressionController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AddCompetencyCommand`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Progression/AddCompetencyCommand.cs)<br>[`AddCompetencyCommandHandler`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Progression/AddCompetencyCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Competency`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Competency.cs)<br>[`ProgressionStage`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/ProgressionStage.cs)<br>[`Assignment`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Assignment.cs)<br>[`Badge`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Badge.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `AttendanceQueueService.submit()` starts the browser interaction and maintains presentation state.
-- `CurriculumAuthoringApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `CurriculumAuthoringService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `ProgressionController.PostAsync()` applies transport policy and constructs `AddCompetencyCommand`.
 - `AddCompetencyCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Competency`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

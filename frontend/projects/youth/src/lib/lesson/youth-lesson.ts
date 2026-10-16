@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError, LearningApi, LessonReadingState, YouthLesson } from '@waypoint/api';
+import { ApiError, LearningService, LessonReadingState, YouthLesson } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -46,7 +46,7 @@ import { WShell } from '@waypoint/components';
 })
 export class YouthLessonPage implements OnDestroy {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(LearningApi);
+  private readonly api = inject(LearningService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly doc = inject(DOCUMENT);

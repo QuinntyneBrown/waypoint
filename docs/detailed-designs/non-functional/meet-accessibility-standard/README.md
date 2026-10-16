@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`DisplayPreferencesService`](../../../../frontend/projects/account/src/lib/settings/display-preferences.service.ts)<br>[`SettingsDisplay`](../../../../frontend/projects/account/src/lib/settings/display/settings-display.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`DisplayPreferencesApi`](../../../../frontend/projects/api/src/lib/services/display-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`DisplayPreferencesService`](../../../../frontend/projects/api/src/lib/services/display-preferences.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | `NonFunctionalController` *(planned boundary)* | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | `MeetAccessibilityStandardCommand` *(planned boundary)*<br>`MeetAccessibilityStandardCommandHandler` *(planned boundary)* | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | `MeetAccessibilityStandardState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `DisplayPreferencesService.submit()` starts the browser interaction and maintains presentation state.
-- `DisplayPreferencesApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `DisplayPreferencesService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `NonFunctionalController.PostAsync()` applies transport policy and constructs `MeetAccessibilityStandardCommand`.
 - `MeetAccessibilityStandardCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `MeetAccessibilityStandardState`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

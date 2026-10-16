@@ -5,9 +5,9 @@ import {
   ApiError,
   AtRiskYouth,
   FlagResolutionReason,
-  MentorApi,
+  MentorService,
   MentorRosterYouth,
-  MessagingApi,
+  MessagingService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
@@ -63,8 +63,8 @@ import { WIcon, WShell } from '@waypoint/components';
 })
 export class MentorFlagsPage {
   protected readonly auth = inject(AuthStore);
-  private readonly mentorApi = inject(MentorApi);
-  private readonly messagingApi = inject(MessagingApi);
+  private readonly mentorApi = inject(MentorService);
+  private readonly messagingApi = inject(MessagingService);
 
   protected readonly youth = signal<MentorRosterYouth[]>([]);
   protected readonly flags = signal<AtRiskYouth[] | null>(null);

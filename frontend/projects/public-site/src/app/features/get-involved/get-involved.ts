@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { ApiError, PublicSiteApi } from '@waypoint/api';
+import { ApiError, PublicSiteService } from '@waypoint/api';
 import { WIcon } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -18,7 +18,7 @@ function isEmail(value: string): boolean {
 })
 export class GetInvolved {
   private readonly fb = inject(FormBuilder);
-  private readonly api = inject(PublicSiteApi);
+  private readonly api = inject(PublicSiteService);
 
   protected readonly form = this.fb.nonNullable.group({
     name: [''],

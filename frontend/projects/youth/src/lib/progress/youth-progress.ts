@@ -1,6 +1,6 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ApiError, LearningApi, YouthProgress } from '@waypoint/api';
+import { ApiError, LearningService, YouthProgress } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -37,7 +37,7 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
 })
 export class YouthProgressPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(LearningApi);
+  private readonly api = inject(LearningService);
   protected readonly progress = signal<YouthProgress | undefined>(undefined);
   protected readonly activeTab = signal<ProgressTab>('overview');
   protected readonly errorMessage = signal<string | null>(null);

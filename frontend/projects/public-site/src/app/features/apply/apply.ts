@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { APPLICANT_MAX_AGE, APPLICANT_MIN_AGE, ApiError, IntakeApi } from '@waypoint/api';
+import { APPLICANT_MAX_AGE, APPLICANT_MIN_AGE, ApiError, IntakeService } from '@waypoint/api';
 import { WIcon } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -18,7 +18,7 @@ function isEmail(value: string): boolean {
 })
 export class Apply {
   private readonly fb = inject(FormBuilder);
-  private readonly intake = inject(IntakeApi);
+  private readonly intake = inject(IntakeService);
 
   protected readonly minAge = APPLICANT_MIN_AGE;
   protected readonly maxAge = APPLICANT_MAX_AGE;

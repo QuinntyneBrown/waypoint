@@ -29,7 +29,7 @@ import { YouthProgress } from '../models/learning/progress';
 import { YouthHomeView } from '../models/learning/home';
 
 @Injectable({ providedIn: 'root' })
-export class LearningApi {
+export class LearningService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

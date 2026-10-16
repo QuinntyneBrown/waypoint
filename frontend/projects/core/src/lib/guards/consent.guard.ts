@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { ConsentApi } from '@waypoint/api';
+import { ConsentService } from '@waypoint/api';
 import { catchError, map, of } from 'rxjs';
 
 /**
@@ -10,7 +10,7 @@ import { catchError, map, of } from 'rxjs';
  * redacts protected data regardless — so a transient status error fails open.
  */
 export const consentGuard: CanActivateFn = () => {
-  const consent = inject(ConsentApi);
+  const consent = inject(ConsentService);
   const router = inject(Router);
   return consent.status().pipe(
     map((status) => status.participationAllowed || router.parseUrl('/consent-required')),

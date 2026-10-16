@@ -10,8 +10,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   ApiError,
   BadgeDefinition,
-  CurriculumAuthoringApi,
-  PeopleApi,
+  CurriculumAuthoringService,
+  PeopleService,
   PersonSummary,
   ProgressionStage,
   SaveBadge,
@@ -43,8 +43,8 @@ interface BadgeTarget {
 })
 export class BadgeBuilderPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(CurriculumAuthoringApi);
-  private readonly peopleApi = inject(PeopleApi);
+  private readonly api = inject(CurriculumAuthoringService);
+  private readonly peopleApi = inject(PeopleService);
   private readonly fb = inject(FormBuilder);
   private readonly drafts = inject(EditorDraftService);
   private readonly unsavedChanges = inject(UnsavedChangesService);

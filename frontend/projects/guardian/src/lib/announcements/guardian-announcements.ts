@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { ApiError, GuardianAnnouncement, GuardianApi } from '@waypoint/api';
+import { ApiError, GuardianAnnouncement, GuardianService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -13,7 +13,7 @@ import { WShell } from '@waypoint/components';
 })
 export class GuardianAnnouncements {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(GuardianApi);
+  private readonly api = inject(GuardianService);
 
   protected readonly announcements = signal<GuardianAnnouncement[] | undefined>(undefined);
   protected readonly error = signal<string | null>(null);

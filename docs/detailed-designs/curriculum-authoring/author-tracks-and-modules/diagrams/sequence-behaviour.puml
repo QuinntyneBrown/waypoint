@@ -18,7 +18,7 @@ skinparam package {
 actor "Program administrator" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "ServerError" as page
-  participant "PublicSiteApi" as client
+  participant "PublicSiteService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "ModulesController" as controller

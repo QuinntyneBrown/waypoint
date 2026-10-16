@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/youth/src/lib/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/youth/src/lib/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AnnouncementsApi`](../../../../frontend/projects/api/src/lib/services/engagement-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`AnnouncementsService`](../../../../frontend/projects/api/src/lib/services/engagement.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`YouthCurriculumController`](../../../../backend/src/Waypoint.Api/Controllers/LearningExperience/YouthCurriculumController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`SubmitAssignmentCommand`](../../../../backend/src/Waypoint.Application/LearningExperience/Submissions/SubmitAssignmentCommand.cs)<br>[`SubmitAssignmentCommandHandler`](../../../../backend/src/Waypoint.Application/LearningExperience/Submissions/SubmitAssignmentCommandHandler.cs)<br>[`SubmitAssignmentCommandValidator`](../../../../backend/src/Waypoint.Application/LearningExperience/Submissions/SubmitAssignmentCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Submission`](../../../../backend/src/Waypoint.Domain/LearningExperience/Submission.cs)<br>[`SubmissionStatus`](../../../../backend/src/Waypoint.Domain/LearningExperience/SubmissionStatus.cs)<br>[`LessonProgress`](../../../../backend/src/Waypoint.Domain/LearningExperience/LessonProgress.cs)<br>[`LessonReadingState`](../../../../backend/src/Waypoint.Domain/LearningExperience/LessonReadingState.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `YouthAnnouncements.submit()` starts the browser interaction and maintains presentation state.
-- `AnnouncementsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `AnnouncementsService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `YouthCurriculumController.PostAsync()` applies transport policy and constructs `SubmitAssignmentCommand`.
 - `SubmitAssignmentCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Submission`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

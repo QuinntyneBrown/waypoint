@@ -18,7 +18,7 @@ skinparam package {
 actor "Waypoint participant" as actor
 box "Frontend — Public Site application" #E0F2FE
   participant "ConsentRequired" as page
-  participant "AuthApi" as client
+  participant "AuthService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "NonFunctionalController" as controller

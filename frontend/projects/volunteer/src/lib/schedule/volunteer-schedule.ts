@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { VolunteerApi, VolunteerScheduleItem } from '@waypoint/api';
+import { VolunteerService, VolunteerScheduleItem } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -13,7 +13,7 @@ import { WShell } from '@waypoint/components';
 })
 export class VolunteerSchedule {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(VolunteerApi);
+  private readonly api = inject(VolunteerService);
 
   /** undefined = still loading; array (possibly empty) = loaded. */
   protected readonly sessions = signal<VolunteerScheduleItem[] | undefined>(undefined);

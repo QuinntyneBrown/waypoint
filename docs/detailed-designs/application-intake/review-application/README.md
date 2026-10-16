@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`ApplicationsList`](../../../../frontend/projects/admin/src/lib/applications/applications-list.ts)<br>[`AccountDeactivated`](../../../../frontend/projects/account/src/lib/states/account-deactivated/account-deactivated.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`ApplicationsApi`](../../../../frontend/projects/api/src/lib/services/applications-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`ApplicationsService`](../../../../frontend/projects/api/src/lib/services/applications.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`ApplicationsController`](../../../../backend/src/Waypoint.Api/Controllers/ApplicationIntake/ApplicationsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`DeclineApplicationCommand`](../../../../backend/src/Waypoint.Application/ApplicationIntake/DeclineApplicationCommand.cs)<br>[`DeclineApplicationCommandHandler`](../../../../backend/src/Waypoint.Application/ApplicationIntake/DeclineApplicationCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`YouthApplication`](../../../../backend/src/Waypoint.Domain/ApplicationIntake/YouthApplication.cs)<br>[`ApplicationStatus`](../../../../backend/src/Waypoint.Domain/ApplicationIntake/ApplicationStatus.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `ApplicationsList.submit()` starts the browser interaction and maintains presentation state.
-- `ApplicationsApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `ApplicationsService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `ApplicationsController.PostAsync()` applies transport policy and constructs `DeclineApplicationCommand`.
 - `DeclineApplicationCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `YouthApplication`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

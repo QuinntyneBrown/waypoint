@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | `AuthorLessonsPage` *(planned boundary)* | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `CurriculumAuthoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `CurriculumAuthoringService` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`LessonsController`](../../../../backend/src/Waypoint.Api/Controllers/CurriculumAuthoring/LessonsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`CreateLessonCommand`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Curriculum/CreateLessonCommand.cs)<br>[`CreateLessonCommandHandler`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Curriculum/CreateLessonCommandHandler.cs)<br>[`CreateLessonCommandValidator`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Curriculum/CreateLessonCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Lesson`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Lesson.cs)<br>[`Module`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Module.cs)<br>[`PublishStatus`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/PublishStatus.cs)<br>[`LessonMedia`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/LessonMedia.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `AuthorLessonsPage.submit()` starts the browser interaction and maintains presentation state.
-- `CurriculumAuthoringApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `CurriculumAuthoringService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `LessonsController.PostAsync()` applies transport policy and constructs `CreateLessonCommand`.
 - `CreateLessonCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Lesson`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

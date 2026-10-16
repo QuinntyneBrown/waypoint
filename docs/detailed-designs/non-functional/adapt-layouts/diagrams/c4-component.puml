@@ -6,7 +6,7 @@ System_Boundary(waypoint, "Waypoint software system") {
   Container_Boundary(frontend, "Frontend") {
     Container_Boundary(frontend_app, "Public Site application") {
       Component(page, "AdaptLayoutsPage", "Angular page component", "Owns feature interaction state and presentation")
-      Component(client, "NonFunctionalApi", "Typed API client", "Calls the feature API with typed requests and results")
+      Component(client, "NonFunctionalService", "Typed API client", "Calls the feature API with typed requests and results")
     }
   }
   Container_Boundary(backend, "Backend") {

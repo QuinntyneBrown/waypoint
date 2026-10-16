@@ -3,7 +3,7 @@ import {
   ApiError,
   CohortMentorAssignment,
   MentorAssignmentOverview,
-  MentorAssignmentsApi,
+  MentorAssignmentsService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
@@ -90,7 +90,7 @@ import { finalize } from 'rxjs';
 })
 export class MentorAssignmentsPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(MentorAssignmentsApi);
+  private readonly api = inject(MentorAssignmentsService);
 
   protected readonly overview = signal<MentorAssignmentOverview | undefined>(undefined);
   protected readonly youthId = signal('');

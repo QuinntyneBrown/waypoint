@@ -1,7 +1,7 @@
 import { DOCUMENT, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, MentorApi, QuizAssessmentReview } from '@waypoint/api';
+import { ApiError, MentorService, QuizAssessmentReview } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -68,7 +68,7 @@ import { WShell } from '@waypoint/components';
 })
 export class MentorQuizReviewPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(MentorApi);
+  private readonly api = inject(MentorService);
   private readonly route = inject(ActivatedRoute);
   private readonly document = inject(DOCUMENT);
 

@@ -1,7 +1,7 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthHomeView } from '@waypoint/api';
+import { ApiError, LearningService, YouthHomeView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -55,7 +55,7 @@ import { WShell } from '@waypoint/components';
 })
 export class YouthHome {
   protected readonly auth = inject(AuthStore);
-  private readonly learning = inject(LearningApi);
+  private readonly learning = inject(LearningService);
 
   protected readonly firstName = computed(
     () => (this.auth.user()?.displayName ?? '').split(/\s+/)[0] || 'friend',

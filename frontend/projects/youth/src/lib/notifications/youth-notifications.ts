@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { ApiError, NotificationsApi, NotificationView } from '@waypoint/api';
+import { ApiError, NotificationsService, NotificationView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
@@ -35,7 +35,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
   `,
 })
 export class YouthNotifications {
-  private readonly api = inject(NotificationsApi);
+  private readonly api = inject(NotificationsService);
   private readonly auth = inject(AuthStore);
   private readonly destroyRef = inject(DestroyRef);
   protected readonly realtime = inject(RealtimeService);

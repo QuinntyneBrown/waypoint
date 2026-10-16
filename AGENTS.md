@@ -40,6 +40,10 @@ Run from the repository root unless noted.
 - `scripts/`
 - `scripts/performance/`
 
+## Naming Conventions
+
+- Frontend API services are named `<Name>Service` in `<name>.service.ts` (for example `AuditService` in `audit.service.ts`), never `<Name>Api` or `<name>-api.ts`.
+
 ## Testing
 
 - Backend tests use NUnit. Run them with `dotnet test backend/Waypoint.sln --no-build --configuration Release --logger "trx;LogFileName=test.trx"`.

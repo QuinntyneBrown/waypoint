@@ -14,7 +14,7 @@ import {
 } from '../models/reporting/reports';
 
 @Injectable({ providedIn: 'root' })
-export class ReportsApi {
+export class ReportsService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

@@ -36,7 +36,7 @@ database.
 
 - **`ApplicationsList`** — Angular page component in the Portal application. It
   lists submitted applications and offers the decline action.
-- **`ApplicationsApi`** — typed Angular HTTP client. It builds the request for
+- **`ApplicationsService`** — typed Angular HTTP client. It builds the request for
   the decline endpoint and returns a typed result to the page.
 - **`ApplicationsController`** — ASP.NET Core controller in the WordUp API. It
   exposes the `/applications` endpoints, authenticates the caller, applies the

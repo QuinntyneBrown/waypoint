@@ -18,7 +18,7 @@ skinparam package {
 actor "Waypoint participant" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "ProtectConcurrentUpdatesPage" as page
-  participant "NonFunctionalApi" as client
+  participant "NonFunctionalService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "NonFunctionalController" as controller

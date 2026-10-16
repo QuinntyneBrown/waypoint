@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +load(): void
     +renderResult(): void
   }
-  class "PeopleApi" as client_PeopleApi <<API client>> {
+  class "PeopleService" as client_PeopleApi <<API client>> {
     +get(request): Observable
   }
 }

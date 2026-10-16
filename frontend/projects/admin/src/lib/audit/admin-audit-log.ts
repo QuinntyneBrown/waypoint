@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ApiError, AuditApi, AuditLogFilter, AuditLogPage } from '@waypoint/api';
+import { ApiError, AuditService, AuditLogFilter, AuditLogPage } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
@@ -68,7 +68,7 @@ import { finalize } from 'rxjs/operators';
 export class AdminAuditLogPage {
   private static readonly pageSize = 10;
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(AuditApi);
+  private readonly api = inject(AuditService);
   private readonly fb = inject(FormBuilder);
 
   protected readonly result = signal<AuditLogPage | undefined>(undefined);

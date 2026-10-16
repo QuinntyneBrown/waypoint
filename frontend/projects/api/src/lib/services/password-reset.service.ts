@@ -6,7 +6,7 @@ import { ForgotPasswordRequest, ResetPasswordRequest } from '../models/auth/pass
 
 /** Password-reset endpoints (`/api/auth/password-reset/*`), both anonymous. */
 @Injectable({ providedIn: 'root' })
-export class PasswordResetApi {
+export class PasswordResetService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import {
   NOTIFICATION_CATEGORIES,
   NOTIFICATION_DEFAULTS,
-  NotificationPreferencesApi,
-  OnboardingApi,
-  ProfileApi,
+  NotificationPreferencesService,
+  OnboardingService,
+  ProfileService,
   ApiError,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
@@ -23,11 +23,11 @@ import { forkJoin, of, switchMap } from 'rxjs';
 })
 export class Onboarding implements OnDestroy {
   private readonly fb = inject(FormBuilder);
-  private readonly onboarding = inject(OnboardingApi);
-  private readonly notifications = inject(NotificationPreferencesApi);
+  private readonly onboarding = inject(OnboardingService);
+  private readonly notifications = inject(NotificationPreferencesService);
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
-  private readonly profileApi = inject(ProfileApi);
+  private readonly profileApi = inject(ProfileService);
   private readonly document = inject(DOCUMENT);
   private photoObjectUrl: string | null = null;
 

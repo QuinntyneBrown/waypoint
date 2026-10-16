@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`ForgotPassword`](../../../../frontend/projects/auth/pages/src/forgot-password/forgot-password.ts)<br>[`ResetPassword`](../../../../frontend/projects/auth/pages/src/reset-password/reset-password.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`PasswordResetApi`](../../../../frontend/projects/api/src/lib/services/password-reset-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`PasswordResetService`](../../../../frontend/projects/api/src/lib/services/password-reset.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`PasswordResetController`](../../../../backend/src/Waypoint.Api/Controllers/Authentication/PasswordResetController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`ForgotPasswordCommand`](../../../../backend/src/Waypoint.Application/Authentication/PasswordReset/ForgotPasswordCommand.cs)<br>[`ForgotPasswordCommandHandler`](../../../../backend/src/Waypoint.Application/Authentication/PasswordReset/ForgotPasswordCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`PasswordResetToken`](../../../../backend/src/Waypoint.Domain/Authentication/PasswordResetToken.cs)<br>[`User`](../../../../backend/src/Waypoint.Domain/Authentication/User.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `ForgotPassword.submit()` starts the browser interaction and maintains presentation state.
-- `PasswordResetApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `PasswordResetService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `PasswordResetController.PostAsync()` applies transport policy and constructs `ForgotPasswordCommand`.
 - `ForgotPasswordCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `PasswordResetToken`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

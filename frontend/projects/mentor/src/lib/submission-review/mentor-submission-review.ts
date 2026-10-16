@@ -9,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError, MentorApi, SubmissionReviewView } from '@waypoint/api';
+import { ApiError, MentorService, SubmissionReviewView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 import { catchError, map, Observable, of, tap } from 'rxjs';
@@ -75,7 +75,7 @@ interface GradingDraft {
 })
 export class MentorSubmissionReviewPage implements OnDestroy, UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(MentorApi);
+  private readonly api = inject(MentorService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly document = inject(DOCUMENT);

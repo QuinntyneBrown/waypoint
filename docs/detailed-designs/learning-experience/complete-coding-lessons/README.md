@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/youth/src/lib/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/youth/src/lib/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `LearningExperienceApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `LearningExperienceService` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`YouthCurriculumController`](../../../../backend/src/Waypoint.Api/Controllers/LearningExperience/YouthCurriculumController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`CompleteLessonCommand`](../../../../backend/src/Waypoint.Application/LearningExperience/YouthCurriculum/CompleteLessonCommand.cs)<br>[`CompleteLessonCommandHandler`](../../../../backend/src/Waypoint.Application/LearningExperience/YouthCurriculum/CompleteLessonCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`BadgeAward`](../../../../backend/src/Waypoint.Domain/LearningExperience/BadgeAward.cs)<br>[`LessonProgress`](../../../../backend/src/Waypoint.Domain/LearningExperience/LessonProgress.cs)<br>[`ProgressStatus`](../../../../backend/src/Waypoint.Domain/LearningExperience/ProgressStatus.cs)<br>[`LessonReadingState`](../../../../backend/src/Waypoint.Domain/LearningExperience/LessonReadingState.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `YouthAnnouncements.submit()` starts the browser interaction and maintains presentation state.
-- `LearningExperienceApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `LearningExperienceService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `YouthCurriculumController.PostAsync()` applies transport policy and constructs `CompleteLessonCommand`.
 - `CompleteLessonCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `BadgeAward`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

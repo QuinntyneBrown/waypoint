@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ApiError, RsvpResponse, ScheduleApi, YouthSession } from '@waypoint/api';
+import { ApiError, RsvpResponse, ScheduleService, YouthSession } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -59,7 +59,7 @@ interface RsvpDraft {
 })
 export class YouthSchedulePage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(ScheduleApi);
+  private readonly api = inject(ScheduleService);
 
   protected readonly sessions = signal<YouthSession[] | undefined>(undefined);
   protected readonly drafts = signal<Record<string, RsvpDraft>>({});

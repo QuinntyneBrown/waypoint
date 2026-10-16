@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | `AuthorBadgesPage` *(planned boundary)* | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `CurriculumAuthoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `CurriculumAuthoringService` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`BadgesController`](../../../../backend/src/Waypoint.Api/Controllers/CurriculumAuthoring/BadgesController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AwardBadgeCommand`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Badges/AwardBadgeCommand.cs)<br>[`AwardBadgeCommandHandler`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Badges/AwardBadgeCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Badge`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Badge.cs)<br>[`BadgeCriteriaKind`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/BadgeCriteriaKind.cs)<br>[`Competency`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Competency.cs)<br>[`Assignment`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Assignment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `AuthorBadgesPage.submit()` starts the browser interaction and maintains presentation state.
-- `CurriculumAuthoringApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `CurriculumAuthoringService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `BadgesController.PostAsync()` applies transport policy and constructs `AwardBadgeCommand`.
 - `AwardBadgeCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Badge`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

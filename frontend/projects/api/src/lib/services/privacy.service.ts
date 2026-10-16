@@ -12,7 +12,7 @@ import {
 } from '../models/platform/privacy';
 
 @Injectable({ providedIn: 'root' })
-export class PrivacyApi {
+export class PrivacyService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

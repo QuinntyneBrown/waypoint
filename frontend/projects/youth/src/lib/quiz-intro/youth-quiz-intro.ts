@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ApiError, LearningApi, QuizIntro } from '@waypoint/api';
+import { ApiError, LearningService, QuizIntro } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -20,7 +20,7 @@ import { WShell } from '@waypoint/components';
 })
 export class YouthQuizIntroPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(LearningApi);
+  private readonly api = inject(LearningService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly quizId = this.route.snapshot.paramMap.get('id') ?? '';

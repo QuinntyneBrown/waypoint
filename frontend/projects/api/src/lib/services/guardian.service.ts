@@ -13,7 +13,7 @@ import {
 } from '../models/guardian/guardian';
 
 @Injectable({ providedIn: 'root' })
-export class GuardianApi {
+export class GuardianService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

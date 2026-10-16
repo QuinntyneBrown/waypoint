@@ -1,7 +1,7 @@
 import { DatePipe, PercentPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, ReportsApi, ReportsHub } from '@waypoint/api';
+import { ApiError, ReportsService, ReportsHub } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
 
@@ -50,7 +50,7 @@ import { WIcon, WShell } from '@waypoint/components';
 })
 export class AdminDashboardPage {
   protected readonly auth = inject(AuthStore);
-  private readonly reports = inject(ReportsApi);
+  private readonly reports = inject(ReportsService);
   protected readonly hub = signal<ReportsHub | null>(null);
   protected readonly loading = signal(true);
   protected readonly errorMessage = signal<string | null>(null);

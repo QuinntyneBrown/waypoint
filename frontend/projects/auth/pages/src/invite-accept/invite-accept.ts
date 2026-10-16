@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthStore, roleHome } from '@waypoint/auth';
-import { ApiError, InvitationContext, InvitationsApi } from '@waypoint/api';
+import { ApiError, InvitationContext, InvitationsService } from '@waypoint/api';
 import { WIcon } from '@waypoint/components';
 
 // Traces to: L2-AUTH-004, L2-AUTH-008, L2-PLATFORM-011
@@ -16,7 +16,7 @@ export class InviteAcceptPage {
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly api = inject(InvitationsApi);
+  private readonly api = inject(InvitationsService);
   private readonly auth = inject(AuthStore);
 
   protected readonly token = this.route.snapshot.queryParamMap.get('token') ?? '';

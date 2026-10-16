@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthJourney } from '@waypoint/api';
+import { ApiError, LearningService, YouthJourney } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -39,7 +39,7 @@ import { WShell } from '@waypoint/components';
 })
 export class YouthJourneyPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(LearningApi);
+  private readonly api = inject(LearningService);
   protected readonly journey = signal<YouthJourney | undefined>(undefined);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly completedModules = computed(

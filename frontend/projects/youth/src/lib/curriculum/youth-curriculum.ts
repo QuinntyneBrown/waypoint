@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthCurriculum } from '@waypoint/api';
+import { ApiError, LearningService, YouthCurriculum } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -14,7 +14,7 @@ import { WShell } from '@waypoint/components';
 })
 export class YouthCurriculumPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(LearningApi);
+  private readonly api = inject(LearningService);
 
   protected readonly curriculum = signal<YouthCurriculum | undefined>(undefined);
   protected readonly errorMessage = signal<string | null>(null);

@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { ApiError, MentorApi, MentorRosterYouth } from '@waypoint/api';
+import { ApiError, MentorService, MentorRosterYouth } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
 import { debounceTime, switchMap, tap } from 'rxjs';
@@ -39,7 +39,7 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
 })
 export class MentorRosterPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(MentorApi);
+  private readonly api = inject(MentorService);
 
   protected readonly search = signal('');
   protected readonly filter = signal<RosterFilter>('all');

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormsModule } from '@angular/forms';
 import {
   ApiError,
-  DataTransferApi,
+  DataTransferService,
   RosterField,
   RosterImportRequest,
   RosterImportResult,
@@ -123,7 +123,7 @@ interface ImportColumn {
 })
 export class ImportRosterPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(DataTransferApi);
+  private readonly api = inject(DataTransferService);
 
   protected readonly fields: ReadonlyArray<{ value: RosterField; label: string }> = [
     { value: 'Name', label: 'Name' },

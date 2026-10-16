@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import {
   DEFAULT_DISPLAY_PREFERENCES,
   DisplayPreferences,
-  DisplayPreferencesApi,
+  DisplayPreferencesService as DisplayPreferencesApiService,
   TEXT_SCALE_MAX,
   TEXT_SCALE_MIN,
 } from '@waypoint/api';
@@ -18,7 +18,7 @@ import { DisplayPreferencesService } from '@waypoint/core';
   templateUrl: './settings-display.html',
 })
 export class SettingsDisplay {
-  private readonly api = inject(DisplayPreferencesApi);
+  private readonly api = inject(DisplayPreferencesApiService);
   private readonly applier = inject(DisplayPreferencesService);
   private readonly toasts = inject(ToastService);
 

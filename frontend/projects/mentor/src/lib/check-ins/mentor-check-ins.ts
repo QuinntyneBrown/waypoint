@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiError, MentorApi, MentorCheckIn, MentorRosterYouth } from '@waypoint/api';
+import { ApiError, MentorService, MentorCheckIn, MentorRosterYouth } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
 
@@ -45,7 +45,7 @@ type CheckInType = '1:1' | 'call' | 'session';
 })
 export class MentorCheckInsPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(MentorApi);
+  private readonly api = inject(MentorService);
   private readonly route = inject(ActivatedRoute);
 
   protected readonly youth = signal<MentorRosterYouth[]>([]);
