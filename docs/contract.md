@@ -39,7 +39,7 @@ You are building **static HTML mockup pages** for the "Waypoint" youth-leadershi
     <!-- page-scoped modals here -->
   </body>
   ```
-  `data-role` = youth | mentor | admin | guardian | volunteer. `data-active` = the nav key for this page (list below). Youth/guardian/volunteer use `.w-container--narrow` (mobile-first). Mentor/admin use full `.w-container`.
+  `data-role` = youth | mentor | admin | guardian | volunteer | platform. `data-active` = the nav key for this page (list below). Youth/guardian/volunteer use `.w-container--narrow` (mobile-first). Mentor/admin use full `.w-container`.
 - **Auth pages:** no shell. Copy `../../_template-auth.html`. Wrap in `.w-authpage` + `.w-authcard`.
 - **Public pages:** no shell. Copy `../../_template-public.html` (marketing nav + footer).
 - **States pages:** no shell. Copy `../../_template-state.html`.
@@ -50,6 +50,7 @@ You are building **static HTML mockup pages** for the "Waypoint" youth-leadershi
 - admin: `dashboard, people, cohorts, applications, invitations, users-roles, cohort-progress, reports, attendance, tracks, badges, progression, calendar, announcements, settings, audit`
 - guardian: `home, progress, announcements, consent`
 - volunteer: `home, attendance, schedule`
+- platform: `organizations`
 
 ## Component snippets (copy — these are the ONLY components)
 **Page header**

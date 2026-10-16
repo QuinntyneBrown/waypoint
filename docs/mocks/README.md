@@ -25,9 +25,19 @@ Screen mocks use the same top-level subsystem structure as [`../specs`](../specs
 | `program-administration/`       |       6 | `admin/`                                | People, cohorts, progress board, and organization settings       |
 | `public-site/`                  |       6 | `public/`                               | Landing, involvement, contact, about, programs, and privacy      |
 | `reporting-and-data/`           |       7 | `admin/`                                | Dashboard, reports, exports, and data import                     |
+| `tenancy/`                      |       1 | `platform/`                             | Platform Operator organizations list, create, invite, suspend, and reactivate |
 | `volunteer-portal/`             |       3 | `volunteer/`                            | Volunteer home, schedule, and attendance                         |
 
 The root also contains the product map, style guide, reusable page templates, and shared assets, bringing the complete reference to more than 120 HTML files.
+
+## Multi-tenancy sample data
+
+The `tenancy/` mocks use a platform-level cast in addition to the shared sample data in `../contract.md`:
+
+- **Platform Operator:** Avery Chen. Sees organization details only, never people or program data (L2-TENANCY-006).
+- **Organizations:** Waypoint Toronto (`default`, active, 142 users, the original organization), Northside Youth Collective (`northside-youth`, active, 38 users), Harbour City Church (`harbour-city`, suspended, 21 users), and Lakeshore Leaders (`lakeshore-leaders`, active, created July 2026, no users yet, administrator invitation to jordan.reyes@lakeshoreleaders.org).
+
+A member of a suspended organization sees `platform-services/states/account-deactivated.html?state=organization-suspended`. A Platform Operator who reaches an organization-data screen sees the existing 403 state.
 
 ## Design system
 

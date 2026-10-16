@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Organizations · Waypoint</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
+</head>
+<body data-role="platform" data-active="organizations">
+  <main class="w-main">
+    <div class="w-container w-page">
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">Platform</div>
+          <h1 class="w-page__title">Organizations</h1>
+          <p class="w-page__sub">Every organization on this Waypoint deployment. You can see each organization's details, but never its people or program data.</p>
+        </div>
+        <div class="w-page__actions">
+          <button class="w-btn w-btn--primary" data-open-modal="m-create"><svg class="w-icon"><use href="#i-plus"></use></svg>New organization</button>
+        </div>
+      </div>
+
+      <!-- ===== DEFAULT ===== -->
+      <div data-when-state="default">
+        <div class="w-grid w-grid--4 w-mb-6">
+          <div class="w-card w-statcard"><div class="w-statcard__label">Organizations</div><div class="w-statcard__value">4</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">Active</div><div class="w-statcard__value">3</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">Suspended</div><div class="w-statcard__value">1</div></div>
+          <div class="w-card w-statcard"><div class="w-statcard__label">User accounts</div><div class="w-statcard__value">201</div></div>
+        </div>
+        <div class="w-table-wrap">
+          <table class="w-table w-table--cards">
+            <caption class="w-sr-only">Organizations on this deployment</caption>
+          <thead><tr><th scope="col">Organization</th><th scope="col">Slug</th><th scope="col">State</th><th scope="col">Created</th><th scope="col">Users</th><th scope="col"><span class="w-sr-only">Actions</span></th></tr></thead>
+            <tbody>
+            <tr>
+              <td data-label="Organization"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Waypoint Toronto"></span>Waypoint Toronto</div></td>
+              <td data-label="Slug"><code>default</code></td>
+              <td data-label="State"><span class="w-badge w-badge--success w-badge--dot">Active</span></td>
+              <td data-label="Created">Jan 12, 2025</td>
+              <td data-label="Users">142</td>
+              <td data-label="Actions"><div class="w-cluster w-gap-2"><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-suspend-toronto" aria-label="Suspend Waypoint Toronto"><svg class="w-icon"><use href="#i-lock"></use></svg>Suspend</button></div></td>
+            </tr>
+            <tr>
+              <td data-label="Organization"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Northside Youth Collective"></span>Northside Youth Collective</div></td>
+              <td data-label="Slug"><code>northside-youth</code></td>
+              <td data-label="State"><span class="w-badge w-badge--success w-badge--dot">Active</span></td>
+              <td data-label="Created">Mar 3, 2026</td>
+              <td data-label="Users">38</td>
+              <td data-label="Actions"><div class="w-cluster w-gap-2"><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-suspend" aria-label="Suspend Northside Youth Collective"><svg class="w-icon"><use href="#i-lock"></use></svg>Suspend</button></div></td>
+            </tr>
+            <tr>
+              <td data-label="Organization"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Harbour City Church"></span>Harbour City Church</div></td>
+              <td data-label="Slug"><code>harbour-city</code></td>
+              <td data-label="State"><span class="w-badge w-badge--error w-badge--dot">Suspended</span></td>
+              <td data-label="Created">Nov 20, 2025</td>
+              <td data-label="Users">21</td>
+              <td data-label="Actions"><div class="w-cluster w-gap-2"><button class="w-btn w-btn--secondary w-btn--sm" data-open-modal="m-reactivate" aria-label="Reactivate Harbour City Church"><svg class="w-icon"><use href="#i-refresh"></use></svg>Reactivate</button></div></td>
+            </tr>
+            <tr>
+              <td data-label="Organization"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Lakeshore Leaders"></span>Lakeshore Leaders</div></td>
+              <td data-label="Slug"><code>lakeshore-leaders</code></td>
+              <td data-label="State"><span class="w-badge w-badge--success w-badge--dot">Active</span></td>
+              <td data-label="Created">Jul 14, 2026</td>
+              <td data-label="Users"><span>0 <span class="w-muted">· invitation pending</span></span></td>
+              <td data-label="Actions"><div class="w-cluster w-gap-2"><button class="w-btn w-btn--secondary w-btn--sm" data-open-modal="m-invite-row" aria-label="Invite first administrator for Lakeshore Leaders"><svg class="w-icon"><use href="#i-mail"></use></svg>Invite administrator</button><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-suspend-lakeshore" aria-label="Suspend Lakeshore Leaders"><svg class="w-icon"><use href="#i-lock"></use></svg>Suspend</button></div></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== LOADING ===== -->
+      <div data-when-state="loading" class="w-hide" aria-busy="true" aria-label="Loading organizations">
+        <div class="w-grid w-grid--4 w-mb-6">
+          <div class="w-card w-statcard"><span class="w-skeleton w-skeleton--text" style="width:60%"></span><span class="w-skeleton w-skeleton--title" style="width:30%"></span></div>
+          <div class="w-card w-statcard"><span class="w-skeleton w-skeleton--text" style="width:60%"></span><span class="w-skeleton w-skeleton--title" style="width:30%"></span></div>
+          <div class="w-card w-statcard"><span class="w-skeleton w-skeleton--text" style="width:60%"></span><span class="w-skeleton w-skeleton--title" style="width:30%"></span></div>
+          <div class="w-card w-statcard"><span class="w-skeleton w-skeleton--text" style="width:60%"></span><span class="w-skeleton w-skeleton--title" style="width:30%"></span></div>
+        </div>
+        <div class="w-table-wrap">
+          <table class="w-table w-table--cards">
+          <thead><tr><th scope="col">Organization</th><th scope="col">Slug</th><th scope="col">State</th><th scope="col">Created</th><th scope="col">Users</th><th scope="col"><span class="w-sr-only">Actions</span></th></tr></thead>
+            <tbody>
+            <tr>
+              <td data-label="Organization"><span class="w-skeleton w-skeleton--text" style="width:70%"></span></td>
+              <td data-label="Slug"><span class="w-skeleton w-skeleton--text" style="width:60%"></span></td>
+              <td data-label="State"><span class="w-skeleton w-skeleton--text" style="width:50%"></span></td>
+              <td data-label="Created"><span class="w-skeleton w-skeleton--text" style="width:60%"></span></td>
+              <td data-label="Users"><span class="w-skeleton w-skeleton--text" style="width:30%"></span></td>
+              <td data-label="Actions"><span class="w-skeleton w-skeleton--btn"></span></td>
+            </tr>
+            <tr>
+              <td data-label="Organization"><span class="w-skeleton w-skeleton--text" style="width:70%"></span></td>
+              <td data-label="Slug"><span class="w-skeleton w-skeleton--text" style="width:60%"></span></td>
+              <td data-label="State"><span class="w-skeleton w-skeleton--text" style="width:50%"></span></td>
+              <td data-label="Created"><span class="w-skeleton w-skeleton--text" style="width:60%"></span></td>
+              <td data-label="Users"><span class="w-skeleton w-skeleton--text" style="width:30%"></span></td>
+              <td data-label="Actions"><span class="w-skeleton w-skeleton--btn"></span></td>
+            </tr>
+            <tr>
+              <td data-label="Organization"><span class="w-skeleton w-skeleton--text" style="width:70%"></span></td>
+              <td data-label="Slug"><span class="w-skeleton w-skeleton--text" style="width:60%"></span></td>
+              <td data-label="State"><span class="w-skeleton w-skeleton--text" style="width:50%"></span></td>
+              <td data-label="Created"><span class="w-skeleton w-skeleton--text" style="width:60%"></span></td>
+              <td data-label="Users"><span class="w-skeleton w-skeleton--text" style="width:30%"></span></td>
+              <td data-label="Actions"><span class="w-skeleton w-skeleton--btn"></span></td>
+            </tr>
+            <tr>
+              <td data-label="Organization"><span class="w-skeleton w-skeleton--text" style="width:70%"></span></td>
+              <td data-label="Slug"><span class="w-skeleton w-skeleton--text" style="width:60%"></span></td>
+              <td data-label="State"><span class="w-skeleton w-skeleton--text" style="width:50%"></span></td>
+              <td data-label="Created"><span class="w-skeleton w-skeleton--text" style="width:60%"></span></td>
+              <td data-label="Users"><span class="w-skeleton w-skeleton--text" style="width:30%"></span></td>
+              <td data-label="Actions"><span class="w-skeleton w-skeleton--btn"></span></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== EMPTY ===== -->
+      <div data-when-state="empty" class="w-hide">
+        <div class="w-card"><div class="w-empty">
+          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-layers"></use></svg></div>
+          <h2 class="w-empty__title">No organizations yet</h2>
+          <p class="w-empty__text">Create the first organization, then invite the Program Administrator who will run it.</p>
+          <button class="w-btn w-btn--primary" data-open-modal="m-create"><svg class="w-icon"><use href="#i-plus"></use></svg>New organization</button>
+        </div></div>
+      </div>
+
+      <!-- ===== ERROR ===== -->
+      <div data-when-state="error" class="w-hide">
+        <div class="w-alert w-alert--error" role="alert">
+          <svg class="w-alert__icon w-icon"><use href="#i-alert-circle"></use></svg>
+          <div><div class="w-alert__title">Couldn't load organizations</div>Something went wrong on our end. Your organizations are safe. <a href="organizations.html">Try again</a>.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== Create organization: default, invalid, duplicate slug, busy ===== -->
+  <div class="w-modal w-modal--sm" id="m-create" role="dialog" aria-modal="true" aria-labelledby="m-create-title">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title" id="m-create-title">New organization</h2><p class="w-modal__sub">Step 1 of 2 · Name the organization. You'll invite its first administrator next.</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div class="w-field">
+          <label class="w-label" for="m-create-name">Organization name <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-create-name" value="" maxlength="100" aria-describedby="m-create-name-help">
+          <div class="w-help" id="m-create-name-help">Shown to the organization's members. Up to 100 characters.</div>
+        </div>
+        <div class="w-field w-mb-0">
+          <label class="w-label" for="m-create-slug">Slug <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-create-slug" value="" maxlength="40" autocapitalize="none" spellcheck="false" aria-describedby="m-create-slug-help">
+          <div class="w-help" id="m-create-slug-help">3–40 lowercase letters, numbers, and hyphens. It can't be changed later.</div>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <a class="w-btn w-btn--primary" href="organizations.html?open=m-invite">Create organization</a></div>
+    </div>
+  </div>
+
+  <div class="w-modal w-modal--sm" id="m-create-invalid" role="dialog" aria-modal="true" aria-labelledby="m-create-invalid-title">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title" id="m-create-invalid-title">New organization</h2><p class="w-modal__sub">Step 1 of 2 · Name the organization. You'll invite its first administrator next.</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div class="w-alert w-alert--error w-mb-4" role="alert"><svg class="w-alert__icon w-icon"><use href="#i-alert-circle"></use></svg><div><div class="w-alert__title">Fix 2 fields to continue</div>Organization name and Slug need attention.</div></div>
+        <div class="w-field is-error">
+          <label class="w-label" for="m-create-invalid-name">Organization name <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-create-invalid-name" value="" maxlength="100" aria-describedby="m-create-invalid-name-err" aria-invalid="true">
+          <div class="w-help" id="m-create-invalid-name-help">Shown to the organization's members. Up to 100 characters.</div>
+          <div class="w-error-text" id="m-create-invalid-name-err">Enter the organization's name.</div>
+        </div>
+        <div class="w-field w-mb-0 is-error">
+          <label class="w-label" for="m-create-invalid-slug">Slug <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-create-invalid-slug" value="Lakeshore Leaders!" maxlength="40" autocapitalize="none" spellcheck="false" aria-describedby="m-create-invalid-slug-help m-create-invalid-slug-err" aria-invalid="true">
+          <div class="w-help" id="m-create-invalid-slug-help">3–40 lowercase letters, numbers, and hyphens. It can't be changed later.</div>
+          <div class="w-error-text" id="m-create-invalid-slug-err">Use only lowercase letters, numbers, and hyphens.</div>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <a class="w-btn w-btn--primary" href="organizations.html?open=m-invite">Create organization</a></div>
+    </div>
+  </div>
+
+  <div class="w-modal w-modal--sm" id="m-create-duplicate" role="dialog" aria-modal="true" aria-labelledby="m-create-duplicate-title">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title" id="m-create-duplicate-title">New organization</h2><p class="w-modal__sub">Step 1 of 2 · Name the organization. You'll invite its first administrator next.</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div class="w-alert w-alert--error w-mb-4" role="alert"><svg class="w-alert__icon w-icon"><use href="#i-alert-circle"></use></svg><div><div class="w-alert__title">Choose a different slug</div>Another organization already uses harbour-city.</div></div>
+        <div class="w-field">
+          <label class="w-label" for="m-create-duplicate-name">Organization name <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-create-duplicate-name" value="Lakeshore Leaders" maxlength="100" aria-describedby="m-create-duplicate-name-help">
+          <div class="w-help" id="m-create-duplicate-name-help">Shown to the organization's members. Up to 100 characters.</div>
+        </div>
+        <div class="w-field w-mb-0 is-error">
+          <label class="w-label" for="m-create-duplicate-slug">Slug <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-create-duplicate-slug" value="harbour-city" maxlength="40" autocapitalize="none" spellcheck="false" aria-describedby="m-create-duplicate-slug-help m-create-duplicate-slug-err" aria-invalid="true">
+          <div class="w-help" id="m-create-duplicate-slug-help">3–40 lowercase letters, numbers, and hyphens. It can't be changed later.</div>
+          <div class="w-error-text" id="m-create-duplicate-slug-err">This slug is already in use</div>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <a class="w-btn w-btn--primary" href="organizations.html?open=m-invite">Create organization</a></div>
+    </div>
+  </div>
+
+  <div class="w-modal w-modal--sm" id="m-create-busy" role="dialog" aria-modal="true" aria-labelledby="m-create-busy-title">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title" id="m-create-busy-title">New organization</h2><p class="w-modal__sub">Step 1 of 2 · Name the organization. You'll invite its first administrator next.</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div class="w-field">
+          <label class="w-label" for="m-create-busy-name">Organization name <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-create-busy-name" value="Lakeshore Leaders" maxlength="100" aria-describedby="m-create-busy-name-help" disabled>
+          <div class="w-help" id="m-create-busy-name-help">Shown to the organization's members. Up to 100 characters.</div>
+        </div>
+        <div class="w-field w-mb-0">
+          <label class="w-label" for="m-create-busy-slug">Slug <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-create-busy-slug" value="lakeshore-leaders" maxlength="40" autocapitalize="none" spellcheck="false" aria-describedby="m-create-busy-slug-help" disabled>
+          <div class="w-help" id="m-create-busy-slug-help">3–40 lowercase letters, numbers, and hyphens. It can't be changed later.</div>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" disabled>Cancel</button>
+        <button class="w-btn w-btn--primary is-loading" disabled aria-busy="true">Creating…</button></div>
+    </div>
+  </div>
+
+  <!-- ===== Invite first administrator: after create, invalid, from row ===== -->
+  <div class="w-modal w-modal--sm" id="m-invite" role="dialog" aria-modal="true" aria-labelledby="m-invite-title">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title" id="m-invite-title">Invite first administrator</h2><p class="w-modal__sub">Step 2 of 2 · This person will run Lakeshore Leaders.</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div class="w-alert w-alert--success w-mb-4" role="status"><svg class="w-alert__icon w-icon"><use href="#i-check-circle"></use></svg><div><div class="w-alert__title">Lakeshore Leaders is ready</div>It's active with no members yet.</div></div>
+        <div class="w-field w-mb-0">
+          <label class="w-label" for="m-invite-email">Administrator's email <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-invite-email" type="email" value="jordan.reyes@lakeshoreleaders.org" autocomplete="off" aria-describedby="m-invite-help">
+          <div class="w-help" id="m-invite-help">They'll become a Program Administrator of Lakeshore Leaders only. The invitation expires in 14 days.</div>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal data-toast="Lakeshore Leaders created. Invite its administrator from the list any time." data-toast-type="info">Skip for now</button>
+        <button class="w-btn w-btn--primary" data-close-modal data-toast="We emailed an invitation to jordan.reyes@lakeshoreleaders.org." data-toast-type="success" data-toast-title="Invitation sent"><svg class="w-icon"><use href="#i-send"></use></svg>Send invitation</button></div>
+    </div>
+  </div>
+
+  <div class="w-modal w-modal--sm" id="m-invite-invalid" role="dialog" aria-modal="true" aria-labelledby="m-invite-invalid-title">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title" id="m-invite-invalid-title">Invite first administrator</h2><p class="w-modal__sub">Step 2 of 2 · This person will run Lakeshore Leaders.</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div class="w-alert w-alert--success w-mb-4" role="status"><svg class="w-alert__icon w-icon"><use href="#i-check-circle"></use></svg><div><div class="w-alert__title">Lakeshore Leaders is ready</div>It's active with no members yet.</div></div>
+        <div class="w-field w-mb-0 is-error">
+          <label class="w-label" for="m-invite-invalid-email">Administrator's email <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-invite-invalid-email" type="email" value="jordan.reyes@" autocomplete="off" aria-describedby="m-invite-invalid-help m-invite-invalid-err" aria-invalid="true">
+          <div class="w-help" id="m-invite-invalid-help">They'll become a Program Administrator of Lakeshore Leaders only. The invitation expires in 14 days.</div>
+          <div class="w-error-text" id="m-invite-invalid-err">Enter a valid email address, like name@example.org.</div>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal data-toast="Lakeshore Leaders created. Invite its administrator from the list any time." data-toast-type="info">Skip for now</button>
+        <button class="w-btn w-btn--primary" data-close-modal data-toast="We emailed an invitation to jordan.reyes@." data-toast-type="success" data-toast-title="Invitation sent"><svg class="w-icon"><use href="#i-send"></use></svg>Send invitation</button></div>
+    </div>
+  </div>
+
+  <div class="w-modal w-modal--sm" id="m-invite-row" role="dialog" aria-modal="true" aria-labelledby="m-invite-row-title">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title" id="m-invite-row-title">Invite first administrator</h2><p class="w-modal__sub">This person will run Lakeshore Leaders.</p></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div class="w-field w-mb-0">
+          <label class="w-label" for="m-invite-row-email">Administrator's email <span class="w-label__req">*</span></label>
+          <input class="w-input" id="m-invite-row-email" type="email" value="" autocomplete="off" aria-describedby="m-invite-row-help">
+          <div class="w-help" id="m-invite-row-help">They'll become a Program Administrator of Lakeshore Leaders only. The invitation expires in 14 days.</div>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <button class="w-btn w-btn--primary" data-close-modal data-toast="We emailed an invitation to the administrator." data-toast-type="success" data-toast-title="Invitation sent"><svg class="w-icon"><use href="#i-send"></use></svg>Send invitation</button></div>
+    </div>
+  </div>
+
+  <!-- ===== Suspend: confirm, busy, error ===== -->
+  <div class="w-modal w-modal--sm" id="m-suspend" role="alertdialog" aria-modal="true" aria-labelledby="m-suspend-title" aria-describedby="m-suspend-desc">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><div class="w-modal__icon w-modal__icon--danger"><svg class="w-icon"><use href="#i-lock"></use></svg></div>
+          <h2 class="w-modal__title" id="m-suspend-title">Suspend Northside Youth Collective?</h2></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div id="m-suspend-desc" class="w-stack w-stack--sm">
+          <p>All 38 members lose access on their next action, including anyone signed in now.</p>
+          <p>Reminders and email to its members stop while it's suspended.</p>
+          <p class="w-muted">No data is deleted. You can reactivate it at any time.</p>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <button class="w-btn w-btn--danger" data-close-modal data-toast="Northside Youth Collective is suspended. Its 38 members can no longer sign in." data-toast-type="success" data-toast-title="Organization suspended">Suspend organization</button></div>
+    </div>
+  </div>
+
+  <div class="w-modal w-modal--sm" id="m-suspend-toronto" role="alertdialog" aria-modal="true" aria-labelledby="m-suspend-toronto-title" aria-describedby="m-suspend-toronto-desc">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><div class="w-modal__icon w-modal__icon--danger"><svg class="w-icon"><use href="#i-lock"></use></svg></div>
+          <h2 class="w-modal__title" id="m-suspend-toronto-title">Suspend Waypoint Toronto?</h2></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div id="m-suspend-toronto-desc" class="w-stack w-stack--sm">
+          <p>All 142 members lose access on their next action, including anyone signed in now.</p>
+          <p>Reminders and email to its members stop while it's suspended.</p>
+          <p class="w-muted">No data is deleted. You can reactivate it at any time.</p>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <button class="w-btn w-btn--danger" data-close-modal data-toast="Waypoint Toronto is suspended. Its 142 members can no longer sign in." data-toast-type="success" data-toast-title="Organization suspended">Suspend organization</button></div>
+    </div>
+  </div>
+
+  <div class="w-modal w-modal--sm" id="m-suspend-lakeshore" role="alertdialog" aria-modal="true" aria-labelledby="m-suspend-lakeshore-title" aria-describedby="m-suspend-lakeshore-desc">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><div class="w-modal__icon w-modal__icon--danger"><svg class="w-icon"><use href="#i-lock"></use></svg></div>
+          <h2 class="w-modal__title" id="m-suspend-lakeshore-title">Suspend Lakeshore Leaders?</h2></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div id="m-suspend-lakeshore-desc" class="w-stack w-stack--sm">
+          <p>It has no members yet. Its pending administrator invitation can’t be accepted while it’s suspended.</p>
+          <p>Reminders and email to its members stop while it's suspended.</p>
+          <p class="w-muted">No data is deleted. You can reactivate it at any time.</p>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <button class="w-btn w-btn--danger" data-close-modal data-toast="Lakeshore Leaders is suspended." data-toast-type="success" data-toast-title="Organization suspended">Suspend organization</button></div>
+    </div>
+  </div>
+
+  <div class="w-modal w-modal--sm" id="m-suspend-busy" role="alertdialog" aria-modal="true" aria-labelledby="m-suspend-busy-title" aria-describedby="m-suspend-busy-desc">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><div class="w-modal__icon w-modal__icon--danger"><svg class="w-icon"><use href="#i-lock"></use></svg></div>
+          <h2 class="w-modal__title" id="m-suspend-busy-title">Suspend Northside Youth Collective?</h2></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div id="m-suspend-busy-desc" class="w-stack w-stack--sm">
+          <p>All 38 members lose access on their next action, including anyone signed in now.</p>
+          <p>Reminders and email to its members stop while it's suspended.</p>
+          <p class="w-muted">No data is deleted. You can reactivate it at any time.</p>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" disabled>Cancel</button>
+        <button class="w-btn w-btn--danger is-loading" disabled aria-busy="true">Suspending…</button></div>
+    </div>
+  </div>
+
+  <div class="w-modal w-modal--sm" id="m-suspend-error" role="alertdialog" aria-modal="true" aria-labelledby="m-suspend-error-title" aria-describedby="m-suspend-error-desc">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><div class="w-modal__icon w-modal__icon--danger"><svg class="w-icon"><use href="#i-lock"></use></svg></div>
+          <h2 class="w-modal__title" id="m-suspend-error-title">Suspend Northside Youth Collective?</h2></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div class="w-alert w-alert--error w-mb-4" role="alert"><svg class="w-alert__icon w-icon"><use href="#i-alert-circle"></use></svg><div><div class="w-alert__title">Couldn't suspend Northside Youth Collective</div>Nothing changed, and its members still have access. Try again.</div></div>
+        <div id="m-suspend-error-desc" class="w-stack w-stack--sm">
+          <p>All 38 members lose access on their next action, including anyone signed in now.</p>
+          <p>Reminders and email to its members stop while it's suspended.</p>
+          <p class="w-muted">No data is deleted. You can reactivate it at any time.</p>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <button class="w-btn w-btn--danger" data-close-modal data-toast="Northside Youth Collective is suspended. Its 38 members can no longer sign in." data-toast-type="success" data-toast-title="Organization suspended">Try again</button></div>
+    </div>
+  </div>
+
+  <!-- ===== Reactivate ===== -->
+  <div class="w-modal w-modal--sm" id="m-reactivate" role="dialog" aria-modal="true" aria-labelledby="m-reactivate-title" aria-describedby="m-reactivate-desc">
+    <div class="w-modal__scrim"></div>
+    <div class="w-modal__panel">
+      <div class="w-modal__header">
+        <div><h2 class="w-modal__title" id="m-reactivate-title">Reactivate Harbour City Church?</h2></div>
+        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="w-modal__body">
+        <div id="m-reactivate-desc" class="w-stack w-stack--sm">
+          <p>Its 21 members can sign in again and will find their data exactly as they left it.</p>
+          <p class="w-muted">Reminders that were due more than 24 hours ago are cancelled, so nobody gets a reminder for a session that already happened. Newer reminders and queued email are sent.</p>
+        </div>
+      </div>
+      <div class="w-modal__footer"><button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
+        <button class="w-btn w-btn--primary" data-close-modal data-toast="Harbour City Church is active again. Its members can sign in." data-toast-type="success" data-toast-title="Organization reactivated"><svg class="w-icon"><use href="#i-refresh"></use></svg>Reactivate organization</button></div>
+    </div>
+  </div>
+</body>
+</html>

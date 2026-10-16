@@ -160,6 +160,9 @@
         { n: "Take attendance", p: "volunteer-portal/volunteer/attendance.html" },
         { n: "Schedule & profile", p: "volunteer-portal/volunteer/schedule.html" }
       ]},
+      { group: "Platform Operator (Avery)", key: "platform", icon: "layers", pages: [
+        { n: "Organizations", p: "tenancy/platform/organizations.html", v: [["loading","state=loading"],["empty","state=empty"],["error","state=error"],["new organization","open=m-create"],["new — invalid","open=m-create-invalid"],["new — slug taken","open=m-create-duplicate"],["new — saving","open=m-create-busy"],["invite administrator","open=m-invite"],["invite — invalid","open=m-invite-invalid"],["invite from list","open=m-invite-row"],["suspend","open=m-suspend"],["suspend — no members","open=m-suspend-lakeshore"],["suspend — saving","open=m-suspend-busy"],["suspend — failed","open=m-suspend-error"],["reactivate","open=m-reactivate"]] }
+      ]},
       { group: "Shared / Settings", key: "shared", icon: "settings", pages: [
         { n: "Profile settings", p: "platform-services/shared/settings-profile.html" },
         { n: "Notification settings", p: "platform-services/shared/settings-notifications.html" },
@@ -176,7 +179,7 @@
         { n: "503 Maintenance", p: "platform-services/states/503-maintenance.html" },
         { n: "Offline", p: "platform-services/states/offline.html" },
         { n: "Session expired", p: "platform-services/states/session-expired.html" },
-        { n: "Account deactivated", p: "platform-services/states/account-deactivated.html" },
+        { n: "Account deactivated", p: "platform-services/states/account-deactivated.html", v: [["organization suspended","state=organization-suspended"]] },
         { n: "Invite expired", p: "platform-services/states/invite-expired.html" },
         { n: "Not in a cohort", p: "platform-services/states/no-cohort.html" },
         { n: "Consent required", p: "platform-services/states/consent-required.html" }

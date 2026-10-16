@@ -271,13 +271,19 @@
         { key: "attendance", label: "Attendance", icon: "user-check", path: "volunteer-portal/volunteer/attendance.html" },
         { key: "schedule", label: "Schedule", icon: "calendar", path: "volunteer-portal/volunteer/schedule.html" }
       ]
+    },
+    platform: {
+      brandHref: "tenancy/platform/organizations.html",
+      items: [
+        { key: "organizations", label: "Organizations", icon: "layers", path: "tenancy/platform/organizations.html" }
+      ]
     }
   };
 
-  var ROLE_LABEL = { youth: "Youth Leader", mentor: "Mentor", admin: "Director", guardian: "Guardian", volunteer: "Volunteer" };
+  var ROLE_LABEL = { youth: "Youth Leader", mentor: "Mentor", admin: "Director", guardian: "Guardian", volunteer: "Volunteer", platform: "Platform Operator" };
   var ROLE_USER = {
     youth: "Jayden Alcantara", mentor: "Marcus Bello", admin: "Shawn Peters",
-    guardian: "Ruth Alcantara", volunteer: "Chris Tan"
+    guardian: "Ruth Alcantara", volunteer: "Chris Tan", platform: "Avery Chen"
   };
 
   /* ---------------- Shell ---------------- */

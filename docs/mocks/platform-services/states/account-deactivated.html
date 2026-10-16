@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="w-authpage">
-    <div class="w-empty" style="max-width:480px">
+    <div class="w-empty" style="max-width:480px" data-when-state="default">
       <div class="w-empty__icon" style="width:80px;height:80px;background:var(--color-danger-bg)">
         <svg class="w-icon" style="width:38px;height:38px;color:var(--color-danger-fg)"><use href="#i-x-circle"></use></svg>
       </div>
@@ -23,6 +23,19 @@
       </div>
       <div class="w-cluster" style="justify-content:center">
         <a class="w-btn w-btn--primary" href="../../engagement/youth/messages.html"><svg class="w-icon"><use href="#i-mail"></use></svg>Contact Shawn</a>
+        <a class="w-btn w-btn--ghost" href="../../authentication/auth/login.html">Back to sign in</a>
+      </div>
+    </div>
+    <!-- Organization suspended by the Platform Operator (L2-TENANCY-002 AC4, L2-TENANCY-005) -->
+    <div class="w-empty w-hide" style="max-width:480px" data-when-state="organization-suspended">
+      <div class="w-empty__icon" style="width:80px;height:80px;background:var(--color-warning-bg)">
+        <svg class="w-icon" style="width:38px;height:38px;color:var(--color-warning-fg)"><use href="#i-lock"></use></svg>
+      </div>
+      <div class="w-eyebrow">Organization paused</div>
+      <h1 class="w-empty__title" style="font-size:1.6rem">Harbour City Church is paused</h1>
+      <p class="w-empty__text">Your organization’s access to Waypoint is paused, so you can’t sign in right now. Your work and progress are saved and will be here when access comes back.</p>
+      <p class="w-empty__text">Your program director knows why and can tell you when it will be back.</p>
+      <div class="w-cluster" style="justify-content:center">
         <a class="w-btn w-btn--ghost" href="../../authentication/auth/login.html">Back to sign in</a>
       </div>
     </div>
