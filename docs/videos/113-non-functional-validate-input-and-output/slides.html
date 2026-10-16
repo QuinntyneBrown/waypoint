@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video 113 Slides</title>
+<link rel="stylesheet" href="../assets/slides.css">
+</head>
+<body data-video-number="113" data-video-title="Checking what goes in and what comes out" data-parts="Welcome|Checking what goes in|Showing what comes out|Behind the scenes|Recap">
+
+<section id="title" data-part="0">
+  <div class="kicker">Waypoint · Video 113</div>
+  <h1>Checking what goes in and what comes out</h1>
+  <p class="lead">Validated on the way in, shown as plain text on the way out</p>
+</section>
+
+<section id="errors" data-part="1" data-cue="Sam Whitfield opens the sign-in page.">
+  <div class="heading-row"><h2>The form says what is wrong</h2></div>
+  <div class="pics">
+    <figure><img class="shot h680" src="images/errors-1280.png" alt="The sign-in form with sentences under each box saying enter a valid email address and enter your password"><figcaption>A short sentence under each box</figcaption></figure>
+  </div>
+</section>
+
+<section id="server" data-part="1" data-cue="That is the friendly part, and it helps people fix a mistake straight away.">
+  <h2>The server checks again</h2>
+  <ul>
+    <li>Type, length, range and format of every value</li>
+    <li>A refused request names each field and what is wrong</li>
+    <li>A request that skips the form is still checked</li>
+  </ul>
+</section>
+
+<section id="plain" data-part="2" data-cue="Now Amara Bell is messaging her mentor.">
+  <div class="heading-row"><h2>Shown exactly as typed</h2></div>
+  <div class="pics">
+    <figure><img class="shot h560" src="images/plain-text-1280.png" alt="The messages page showing a message containing bold tags and a script tag displayed as ordinary text"><figcaption>Tags and all, as ordinary words</figcaption></figure>
+  </div>
+</section>
+
+<section id="behind" data-part="3" data-cue="Two more protections work behind the scenes.">
+  <h2>Two quiet protections</h2>
+  <ul>
+    <li>Database queries use parameters, never glued-in text</li>
+    <li>Uploaded files are checked for type and size</li>
+    <li>Files are served with an instruction not to guess their type</li>
+  </ul>
+</section>
+
+<section id="recap" data-part="4" data-cue="Every request is checked on the server">
+  <h2>Things to remember</h2>
+  <ul>
+    <li>The server checks every request, whatever the form did</li>
+    <li>Mistakes come back as plain messages naming the field</li>
+    <li>Typed text is shown as text, never as code</li>
+    <li>Queries use parameters; uploads are checked</li>
+  </ul>
+</section>
+
+<script src="../assets/slides.js"></script>
+</body>
+</html>

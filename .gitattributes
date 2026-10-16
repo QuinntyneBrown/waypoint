@@ -21,3 +21,6 @@ frontend/** text eol=lf
 *.webp  binary
 *.avif  binary
 *.pdf   binary
+
+# Narrated videos: MP4 only through LFS; MP3s are build outputs.
+docs/videos/**/*.mp4 filter=lfs diff=lfs merge=lfs -text

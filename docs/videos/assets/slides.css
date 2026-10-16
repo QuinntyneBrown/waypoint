@@ -1,0 +1,152 @@
+/* Shared 1920x1080 slide deck styles for every video's slides.html.
+   Colour, type, radius and shadow come from the Waypoint design system tokens
+   (docs/design-system/tokens/tokens.css); nothing here is a raw colour value.
+   Text is large and high contrast on purpose: the audience is program staff
+   watching on a meeting-room screen. All text pairs are at least 4.5:1. */
+@import url("../../design-system/assets/fonts.css");
+@import url("../../design-system/tokens/tokens.css");
+
+:root {
+  /* Every value below aliases a semantic token from the design system. */
+  --bg: var(--color-bg-canvas);
+  --bg-sunken: var(--color-bg-surface-sunken);
+  --ink: var(--color-fg-default);
+  --ink-soft: var(--color-fg-muted);
+  --line: var(--color-border-default);
+  --brand: var(--color-brand);
+  --brand-ink: var(--palette-ink-900);
+  --shadow: var(--shadow-3);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-family-sans);
+  font-size: 44px;
+  line-height: 1.3;
+}
+
+/* ---- header and progress ---- */
+.deck-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 76px;
+  padding: 0 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-bg-surface-sunken);
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  z-index: 10;
+}
+.deck-header .deck-part { color: var(--brand); font-weight: 600; }
+.deck-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 8px; background: var(--line); }
+.deck-progress i { display: block; height: 100%; width: 0; background: var(--brand); }
+
+/* ---- slides ---- */
+section {
+  position: absolute;
+  inset: 76px 0 0 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  /* Bottom padding leaves room for the burned-in captions. */
+  padding: 30px 110px 170px;
+}
+section.active { display: flex; }
+
+.kicker { font-size: 36px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand-ink); background: var(--brand); display: inline-block; align-self: flex-start; padding: 6px 24px; border-radius: var(--radius-full); margin: 0 0 20px; }
+h1, h2, h3 { font-family: var(--font-family-heading); }
+h1 { font-size: 112px; line-height: 1.05; margin: 0 0 24px; font-weight: 700; }
+h2 { font-size: 72px; line-height: 1.1; margin: 0 0 20px; font-weight: 700; }
+.lead { font-size: 56px; line-height: 1.25; margin: 0; color: var(--ink-soft); }
+.muted { color: var(--ink-soft); }
+.small { font-size: 36px; }
+
+/* ---- status chips: shape and words, never colour alone ---- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 28px;
+  border-radius: 999px;
+  border: 4px solid;
+  font-size: 38px;
+  font-weight: 600;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.chip::before { content: ""; width: 20px; height: 20px; border-radius: 50%; background: currentColor; }
+.chip-now { background: var(--color-success-bg); color: var(--color-success-fg); border-color: var(--color-success-border); }
+.chip-next { background: var(--color-warning-bg); color: var(--color-warning-fg); border-color: var(--color-warning-border); }
+.chip-next::before { background: transparent; border: 5px solid currentColor; }
+
+.heading-row { display: flex; align-items: center; gap: 40px; flex-wrap: nowrap; margin-bottom: 24px; }
+.heading-row h2 { margin: 0; }
+
+/* ---- layout helpers ---- */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.center { text-align: center; align-items: center; }
+
+.card {
+  background: var(--color-bg-surface);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 36px 40px;
+  box-shadow: var(--shadow);
+}
+.card h3 { font-size: 52px; margin: 0 0 10px; }
+.card p { margin: 0; font-size: 42px; color: var(--ink-soft); }
+
+.num {
+  display: inline-grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: var(--brand-ink);
+  font-size: 52px;
+  font-weight: 700;
+  flex: none;
+}
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; }
+.steps li { display: flex; align-items: center; gap: 32px; font-size: 56px; font-weight: 500; }
+
+.six { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+.six .card { display: flex; align-items: center; gap: 28px; padding: 30px 34px; }
+.six .card span.t { font-size: 46px; font-weight: 600; line-height: 1.15; }
+
+/* ---- pictures ---- */
+.pics { display: flex; align-items: center; justify-content: center; gap: 56px; }
+figure { margin: 0; text-align: center; }
+figcaption { margin-top: 18px; font-size: 38px; font-weight: 500; color: var(--ink-soft); }
+.pics img, .shot {
+  display: block;
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--line);
+  box-shadow: var(--shadow);
+  background: var(--color-bg-surface);
+}
+.h560 { height: 560px; width: auto; }
+.h620 { height: 620px; width: auto; }
+.h680 { height: 680px; width: auto; }
+.h440 { height: 440px; width: auto; }
+.art { display: block; max-height: 640px; max-width: 100%; border-radius: var(--radius-xl); box-shadow: var(--shadow); }
+.arrow { font-size: 110px; color: var(--ink); line-height: 1; font-weight: 700; }
+
+.legend { display: flex; gap: 40px; margin-top: 36px; justify-content: center; }
+.coming { display: grid; gap: 22px; }
+.coming .card { display: flex; align-items: center; gap: 28px; padding: 22px 30px; }
+.coming .card span.t { font-size: 44px; font-weight: 600; line-height: 1.15; }
+.pict { width: 96px; height: 96px; flex: none; }

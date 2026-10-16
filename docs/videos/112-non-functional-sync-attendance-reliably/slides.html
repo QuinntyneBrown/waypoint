@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video 112 Slides</title>
+<link rel="stylesheet" href="../assets/slides.css">
+</head>
+<body data-video-number="112" data-video-title="Syncing attendance reliably" data-parts="Welcome|Taking attendance offline|Coming back online|When two people change the same record|Recap">
+
+<section id="title" data-part="0">
+  <div class="kicker">Waypoint · Video 112</div>
+  <h1>Syncing attendance reliably</h1>
+  <p class="lead">Marked offline, saved once, never lost</p>
+</section>
+
+<section id="offline" data-part="1" data-cue="A dark bar appears across the top of the screen.">
+  <div class="heading-row"><h2>The offline bar</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/offline-banner-1280.png" alt="The attendance page with a bar saying you are offline and changes will save when you reconnect"><figcaption>You&#x27;re offline: changes will save when you reconnect</figcaption></figure>
+  </div>
+</section>
+
+<section id="queued" data-part="1" data-cue="Waypoint cannot send the marks yet">
+  <div class="heading-row"><h2>Saved on the device</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/queued-1280.png" alt="The attendance page saying saved offline, one attendance update waiting to sync, with a one pending sync badge"><figcaption>Saved offline, waiting to sync</figcaption></figure>
+  </div>
+</section>
+
+<section id="synced" data-part="2" data-cue="When the connection returns, Sam does not press anything.">
+  <div class="heading-row"><h2>Synced by itself</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/synced-1280.png" alt="The attendance page saying all attendance changes synced"><figcaption>All attendance changes synced</figcaption></figure>
+  </div>
+</section>
+
+<section id="key" data-part="2" data-cue="Each saved update carries its own unique key.">
+  <h2>Never counted twice</h2>
+  <ul>
+    <li>One unique key for every saved update</li>
+    <li>A retry is applied only once</li>
+    <li>Saved marks stay private to the person who made them</li>
+  </ul>
+</section>
+
+<section id="conflict" data-part="3" data-cue="Now picture Grace Adeyemi, a mentor">
+  <div class="heading-row"><h2>A clash is shown, not hidden</h2></div>
+  <div class="pics">
+    <figure><img class="shot h560" src="images/conflict-1280.png" alt="The attendance page asking which attendance to keep, with apply my changes and keep server attendance buttons"><figcaption>Apply my changes, or keep the server attendance</figcaption></figure>
+  </div>
+</section>
+
+<section id="recap" data-part="4" data-cue="Attendance marked offline is kept on the device">
+  <h2>Things to remember</h2>
+  <ul>
+    <li>Offline marks are kept and shown as waiting to sync</li>
+    <li>They upload by themselves when the connection returns</li>
+    <li>A unique key means a retry never counts anyone twice</li>
+    <li>A clash is shown for review, never silently overwritten</li>
+  </ul>
+</section>
+
+<script src="../assets/slides.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video 108 Slides</title>
+<link rel="stylesheet" href="../assets/slides.css">
+</head>
+<body data-video-number="108" data-video-title="Protecting against overwritten work" data-parts="Welcome|Two people, one session|The save is refused|Why this matters|Recap">
+
+<section id="title" data-part="0">
+  <div class="kicker">Waypoint · Video 108</div>
+  <h1>Protecting against overwritten work</h1>
+  <p class="lead">A stale save is refused, never silently merged</p>
+</section>
+
+<section id="editing" data-part="1" data-cue="Grace Adeyemi is a mentor.">
+  <div class="heading-row"><h2>Marked, not yet saved</h2></div>
+  <div class="pics">
+    <figure><img class="shot h440" src="images/editing-1280.png" alt="The mentor attendance page with Amara Bell marked and a note, showing unsaved changes"><figcaption>Unsaved changes on Grace&#x27;s page</figcaption></figure>
+  </div>
+</section>
+
+<section id="conflict" data-part="2" data-cue="Grace presses save attendance.">
+  <div class="heading-row"><h2>The save is refused</h2></div>
+  <div class="pics">
+    <figure><img class="shot h440" src="images/conflict-1280.png" alt="The attendance page showing the message attendance changed on the server, with Grace&#x27;s selections still on screen"><figcaption>Her selections remain; review and reconcile them</figcaption></figure>
+  </div>
+</section>
+
+<section id="why" data-part="3" data-cue="This is called optimistic concurrency.">
+  <h2>Check at the moment of saving</h2>
+  <ul>
+    <li>No record is locked while someone looks at it</li>
+    <li>A stale save is refused with a plain message</li>
+    <li>A successful save moves the version marker forward</li>
+  </ul>
+</section>
+
+<section id="recap" data-part="4" data-cue="Two people can work on the same record">
+  <h2>Things to remember</h2>
+  <ul>
+    <li>Two people can edit one record; neither silently erases the other</li>
+    <li>A stale save is refused with a plain message</li>
+    <li>Your own work stays on screen so you can reconcile</li>
+    <li>Offline attendance asks which version to keep</li>
+  </ul>
+</section>
+
+<script src="../assets/slides.js"></script>
+</body>
+</html>
