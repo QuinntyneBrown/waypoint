@@ -334,6 +334,9 @@ Run the 15-minute core **unchanged**, then add the modules below in this order. 
 25 minutes and leave 5 for questions.
 
 ### 6.1 Volunteer — the narrowest door (2 min)
+> Session assignment has no product path in v1 (see `docs/specs/out-of-scope.md` #14); the session is
+> assigned by the Testing-only fixture, so this beat needs the seeded environment.
+
 Sign in as Sam. He sees *only* his assigned session and its roster — no curriculum, no progress, no
 other youth. Mark attendance.
 > "Sam is a Saturday volunteer. He sees the eleven names in the room and nothing else. That's not a
