@@ -2306,3 +2306,7 @@ legend {
   white-space: nowrap;
   border: 0;
 }
+
+dd {
+  margin: 0;
+}

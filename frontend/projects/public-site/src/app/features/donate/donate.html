@@ -31,7 +31,7 @@
             type="button"
             class="w-btn"
             [class.w-btn--primary]="selected() === tier"
-            [class.w-btn--secondary]="selected() !== tier"
+            [class.w-btn--ghost]="selected() !== tier"
             [attr.aria-pressed]="selected() === tier"
             (click)="select(tier)"
           >
