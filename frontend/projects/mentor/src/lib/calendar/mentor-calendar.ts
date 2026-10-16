@@ -40,8 +40,7 @@ type CalendarView = 'month' | 'week' | 'agenda';
     .month-grid,
     .week-grid {
       display: grid;
-      grid-template-columns: repeat(7, minmax(6.5rem, 1fr));
-      min-width: 48rem;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
       border: 1px solid var(--w-border);
       border-radius: var(--w-r-lg);
       overflow: hidden;
@@ -69,12 +68,13 @@ type CalendarView = 'month' | 'week' | 'agenda';
     .calendar-event {
       display: block;
       margin-top: var(--w-s2);
-      padding: var(--w-s2);
+      padding: var(--w-s1) var(--w-s2);
       border-radius: var(--w-r-card);
       background: var(--w-info-bg);
       color: inherit;
+      font-size: 0.85rem;
       text-decoration: none;
-      overflow-wrap: anywhere;
+      overflow-wrap: break-word;
     }
     .calendar-event:hover,
     .calendar-event:focus-visible {
@@ -101,7 +101,14 @@ type CalendarView = 'month' | 'week' | 'agenda';
         position: static;
       }
     }
+    .session-form .w-grid--2 {
+      grid-template-columns: minmax(0, 1fr);
+    }
     @media (max-width: 36rem) {
+      .month-grid,
+      .week-grid {
+        min-width: 36rem;
+      }
       .calendar-toolbar > *,
       .session-form .w-btn {
         width: 100%;
