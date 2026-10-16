@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video 107 Slides</title>
+<link rel="stylesheet" href="../assets/slides.css">
+</head>
+<body data-video-number="107" data-video-title="Running and watching Waypoint" data-parts="Welcome|Is it up?|Leaving a trail|Operating the system|Recap">
+
+<section id="title" data-part="0">
+  <div class="kicker">Waypoint · Video 107</div>
+  <h1>Running and watching Waypoint</h1>
+  <p class="lead">Health checks, logs, tools and maintenance mode</p>
+</section>
+
+<section id="health" data-part="1" data-cue="Waypoint answers two simple questions about itself.">
+  <div class="heading-row"><h2>Alive, and ready</h2></div>
+  <div class="pics">
+    <figure><img class="shot h440" src="images/live-1280.png" alt="The live health address showing the word Healthy"><figcaption>Alive: the process is running</figcaption></figure>
+    <figure><img class="shot h440" src="images/ready-1280.png" alt="The ready health address showing the word Healthy"><figcaption>Ready: the database is reachable</figcaption></figure>
+  </div>
+</section>
+
+<section id="trail" data-part="2" data-cue="Every request to Waypoint carries a reference number">
+  <h2>A trail for every request</h2>
+  <ul>
+    <li>A correlation id comes back with every response</li>
+    <li>The same id is attached to the log entries for that request</li>
+    <li>Error reports in the log are redacted</li>
+  </ul>
+</section>
+
+<section id="cli" data-part="3" data-cue="Some jobs are done by technical staff">
+  <h2>Operational jobs</h2>
+  <ul>
+    <li>A command line tool for the database, users, invitations and cohorts</li>
+    <li>Imports, reports and badge awards</li>
+    <li>The same rules and checks as the website</li>
+    <li>In production, missing settings stop the start-up</li>
+  </ul>
+</section>
+
+<section id="maintenance" data-part="3" data-cue="Finally, there is a maintenance mode.">
+  <div class="heading-row"><h2>Maintenance mode</h2></div>
+  <div class="pics">
+    <figure><img class="shot h560" src="images/maintenance-1280.png" alt="The maintenance page saying we&#x27;ll be right back and nothing you&#x27;ve done is lost, with a try again button"><figcaption>Nothing you&#x27;ve done is lost</figcaption></figure>
+  </div>
+</section>
+
+<section id="recap" data-part="4" data-cue="Two health checks tell tools">
+  <h2>Things to remember</h2>
+  <ul>
+    <li>Two health checks: alive, and ready</li>
+    <li>A reference number follows every request through the logs</li>
+    <li>A command line tool applies the same rules as the website</li>
+    <li>People see a plain page during maintenance</li>
+  </ul>
+</section>
+
+<script src="../assets/slides.js"></script>
+</body>
+</html>

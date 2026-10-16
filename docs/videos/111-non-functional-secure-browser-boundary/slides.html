@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video 111 Slides</title>
+<link rel="stylesheet" href="../assets/slides.css">
+</head>
+<body data-video-number="111" data-video-title="Securing the browser boundary" data-parts="Welcome|Who may talk to Waypoint|Safety labels on every answer|Slowing down guessers|Recap">
+
+<section id="title" data-part="0">
+  <div class="kicker">Waypoint · Video 111</div>
+  <h1>Securing the browser boundary</h1>
+  <p class="lead">Protections that work quietly between browser and server</p>
+</section>
+
+<section id="who" data-part="1" data-cue="When Amara Bell signs in, her browser holds a sign-in token">
+  <h2>Who may talk to Waypoint</h2>
+  <ul>
+    <li>The page attaches the sign-in token to each request</li>
+    <li>It is not a cookie the browser sends by itself</li>
+    <li>Other websites cannot borrow it</li>
+    <li>Only trusted web addresses are accepted by the server</li>
+  </ul>
+</section>
+
+<section id="labels" data-part="2" data-cue="Every answer the server sends comes with a set of safety instructions">
+  <h2>Safety instructions on every response</h2>
+  <ul>
+    <li>Never shown inside another site&#x27;s frame</li>
+    <li>Do not guess the type of a file</li>
+    <li>Reveal as little as possible about where the visitor came from</li>
+    <li>Always use a secure connection</li>
+    <li>A content security policy limits what may run</li>
+  </ul>
+</section>
+
+<section id="limits" data-part="3" data-cue="The pages that matter most to attackers">
+  <h2>Rate limits on the busiest doors</h2>
+  <ul>
+    <li>Sign-in, password reset and invitations</li>
+    <li>By default, twenty requests a minute from one address</li>
+    <li>Too many requests, please try again later</li>
+    <li>Works alongside the account lock</li>
+  </ul>
+</section>
+
+<section id="recap" data-part="4" data-cue="The sign-in token is attached by the page">
+  <h2>Things to remember</h2>
+  <ul>
+    <li>The token is attached by the page, not by a cookie</li>
+    <li>Only trusted web addresses may talk to the server</li>
+    <li>Every response carries safety instructions</li>
+    <li>Sign-in, reset and invitations are rate limited</li>
+  </ul>
+</section>
+
+<script src="../assets/slides.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video 010 Slides</title>
+<link rel="stylesheet" href="../assets/slides.css">
+</head>
+<body data-video-number="010" data-video-title="Keeping a session safe" data-parts="Welcome|Two keys|A copied key|Signing out|In transit|Things to remember">
+
+<section id="title" data-part="0">
+  <div class="kicker">Waypoint · Video 010</div>
+  <h1>Keeping a session safe</h1>
+  <p class="lead">Short-lived keys, rotation and revocation</p>
+</section>
+
+<section id="home" data-part="1" data-cue="Meet Amara.">
+  <div class="heading-row"><h2>Two keys behind the scenes</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/signed-in-1280.png" alt="The youth home page after signing in"><figcaption>Signing in issues an access token and a refresh token</figcaption></figure>
+  </div>
+</section>
+
+<section id="expired" data-part="2" data-cue="Now suppose someone copies an old refresh token">
+  <div class="heading-row"><h2>A reused token ends the session</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/session-expired-1280.png" alt="The you have been signed out page with a sign in again button"><figcaption>Work in progress is saved</figcaption></figure>
+  </div>
+</section>
+
+<section id="signout" data-part="3" data-cue="Many young people use shared computers">
+  <div class="heading-row"><h2>Sign out means sign out</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/signed-out-1280.png" alt="The sign-in page shown after signing out"><figcaption>Refresh tokens are cancelled straight away</figcaption></figure>
+  </div>
+</section>
+
+<section id="transit" data-part="4" data-cue="Tokens only travel over secure connections">
+  <h2>In transit</h2>
+  <ul>
+    <li>Production refuses connections that are not secure</li>
+    <li>Security headers are set on responses</li>
+  </ul>
+</section>
+
+<section id="recap" data-part="5" data-cue="The access token is short-lived. The refresh token is rotated">
+  <h2>Things to remember</h2>
+  <ul>
+    <li>The access token is short-lived</li>
+    <li>The refresh token is rotated and stored scrambled</li>
+    <li>A reused token ends the whole session family</li>
+    <li>Signing out and changing a password cancel refresh tokens</li>
+  </ul>
+</section>
+
+<script src="../assets/slides.js"></script>
+</body>
+</html>
