@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Display &amp; accessibility (dark theme) · Waypoint</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <script defer src="../../assets/js/waypoint.js"></script>
+  <style>
+    .set-tabs{display:flex;gap:4px;overflow-x:auto}
+    .set-tabs a{text-decoration:none}
+    .disp-preview .w-scripture{margin:0}
+  </style>
+</head>
+<body data-role="youth" data-active="profile" data-track="bible">
+  <main class="w-main">
+    <div class="w-container w-container--narrow w-page">
+
+      <div class="w-page__head">
+        <div class="w-page__titles">
+          <div class="w-eyebrow">Settings</div>
+          <h1 class="w-page__title">Settings</h1>
+          <p class="w-page__sub">Manage your account, notifications, and display.</p>
+        </div>
+      </div>
+
+      <div class="w-tabs set-tabs w-mb-6" role="tablist" aria-label="Settings sections">
+        <a class="w-tab" href="settings-profile.html">Profile</a>
+        <a class="w-tab" href="settings-notifications.html">Notifications</a>
+        <a class="w-tab is-active" href="settings-display.html" aria-current="page">Display</a>
+      </div>
+
+      <div class="w-alert w-alert--lime w-mb-6">
+        <svg class="w-alert__icon w-icon"><use href="#i-book-open"></use></svg>
+        <div><div class="w-alert__title">Made for reading the Word</div>These settings make Scripture and lessons easier on your eyes.</div>
+      </div>
+
+      <form class="w-stack" onsubmit="return false">
+
+        <section class="w-card" aria-labelledby="sec-size">
+          <div class="w-card__header"><h3 class="w-card__title" id="sec-size">Text size</h3></div>
+          <div class="w-card__body">
+            <div class="w-segment" role="group" aria-label="Text size">
+              <button type="button" class="w-segment__item" aria-pressed="false">Small</button>
+              <button type="button" class="w-segment__item is-active" aria-pressed="true">Default</button>
+              <button type="button" class="w-segment__item" aria-pressed="false">Large</button>
+              <button type="button" class="w-segment__item" aria-pressed="false">Largest</button>
+            </div>
+            <div class="w-card w-card--greige w-mt-4 disp-preview">
+              <div class="w-card__body">
+                <div class="w-eyebrow">Preview</div>
+                <div class="w-scripture w-mt-2">"For even the Son of Man did not come to be served, but to serve."<span class="w-scripture__ref">Mark 10:45</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="w-card" aria-labelledby="sec-theme">
+          <div class="w-card__header"><h3 class="w-card__title" id="sec-theme">Theme</h3></div>
+          <div class="w-card__body">
+            <div class="w-segment" role="group" aria-label="Theme" data-theme-control>
+              <button type="button" class="w-segment__item" aria-pressed="false" data-theme-value="system">System</button>
+              <button type="button" class="w-segment__item" aria-pressed="false" data-theme-value="light">Light</button>
+              <button type="button" class="w-segment__item is-active" aria-pressed="true" data-theme-value="dark">Dark</button>
+            </div>
+            <div class="w-help w-mt-2">System matches your device. Changes preview straight away; save to keep them.</div>
+          </div>
+        </section>
+
+        <section class="w-card" aria-labelledby="sec-access">
+          <div class="w-card__header"><h3 class="w-card__title" id="sec-access">Accessibility</h3></div>
+          <div class="w-card__body w-stack w-stack--sm">
+            <label class="w-switch"><input type="checkbox"><span class="w-switch__track"></span><span>High contrast — stronger borders and darker text</span></label>
+            <div class="w-divider"></div>
+            <label class="w-switch"><input type="checkbox"><span class="w-switch__track"></span><span>Reduce motion — turn off animations and transitions</span></label>
+            <div class="w-divider"></div>
+            <label class="w-switch"><input type="checkbox"><span class="w-switch__track"></span><span>Underline all links</span></label>
+          </div>
+        </section>
+
+        <section class="w-card" aria-labelledby="sec-lang">
+          <div class="w-card__header"><h3 class="w-card__title" id="sec-lang">Language &amp; region</h3></div>
+          <div class="w-card__body">
+            <div class="w-field">
+              <label class="w-label" for="d-lang">Display language</label>
+              <select class="w-select" id="d-lang">
+                <option selected>English</option>
+                <option>Français</option>
+                <option>Español</option>
+                <option>Português</option>
+              </select>
+            </div>
+            <div class="w-field">
+              <label class="w-label" for="d-font">Reading font</label>
+              <select class="w-select" id="d-font">
+                <option selected>Default (Inter + Fraunces)</option>
+                <option>Sans-serif only</option>
+                <option>Dyslexia-friendly</option>
+              </select>
+              <div class="w-help">Changes how lesson body text and Scripture are shown.</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="w-cluster w-justify-between w-mt-2">
+          <a class="w-btn w-btn--ghost" href="../youth/profile.html">Cancel</a>
+          <button type="submit" class="w-btn w-btn--primary" data-toast="Display settings saved" data-toast-type="success">Save changes</button>
+        </div>
+      </form>
+
+    </div>
+  </main>
+  <script>
+    // Mock-only live preview: set data-theme on <html>; System removes it.
+    document.querySelector('[data-theme-control]').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-theme-value]');
+      if (!b) return;
+      this.querySelectorAll('[data-theme-value]').forEach(function (x) {
+        x.classList.toggle('is-active', x === b);
+        x.setAttribute('aria-pressed', String(x === b));
+      });
+      var v = b.getAttribute('data-theme-value');
+      if (v === 'system') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', v);
+    });
+  </script>
+</body>
+</html>

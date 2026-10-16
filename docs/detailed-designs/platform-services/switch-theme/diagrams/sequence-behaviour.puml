@@ -1,0 +1,52 @@
+@startuml
+title UML sequence behaviour — Switch theme
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+actor "Signed-in user" as user
+box "Frontend — Portal application" #E0F2FE
+  participant "SettingsDisplay" as page
+  participant "DisplayPreferencesService (core)" as applier
+  participant "DisplayPreferencesService (api)" as client
+  participant "html element + tokens.css" as root
+end box
+box "Backend — Waypoint API application" #D1FADF
+  participant "PreferencesController" as controller
+end box
+box "Backend — Waypoint Application and Domain" #ECFDF3
+  participant "SaveDisplayPreferenceCommandValidator" as validator
+  participant "SaveDisplayPreferenceCommandHandler" as handler
+end box
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  database "Waypoint database" as db
+end box
+== Sign-in (L2-PLATFORM-013 AC3) ==
+client -> controller : GET /api/me/display-preferences
+controller --> client : DisplayPreferenceView (theme)
+client --> applier : apply(prefs)
+applier -> root : set data-theme="light|dark" or remove it for system
+note right of root : No data-theme: prefers-color-scheme selects tokens (AC1)
+== Preview (AC2) ==
+user -> page : Select Light, Dark, or System
+page -> applier : apply(prefs with theme)
+applier -> root : update data-theme
+== Save (AC3, AC4) ==
+user -> page : Save settings
+page -> client : save(prefs)
+client -> controller : PUT /api/me/display-preferences
+controller -> validator : Theme in {system, light, dark}
+alt invalid theme
+  validator --> controller : ValidationException
+  controller --> client : 400 ProblemDetails
+else valid
+  controller -> handler : SaveDisplayPreferenceCommand
+  handler -> db : Upsert DisplayPreference.Theme
+  db --> handler : Committed
+  handler --> controller : DisplayPreferenceView
+  controller --> client : 200 OK
+  client --> page : Saved preferences
+  page -> applier : apply(saved prefs)
+end
+@enduml

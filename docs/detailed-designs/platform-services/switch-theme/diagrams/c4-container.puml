@@ -1,0 +1,20 @@
+@startuml
+!include <C4/C4_Container>
+LAYOUT_LEFT_RIGHT()
+title C4 level 2 — Switch theme — containers
+Person(user, "Signed-in user", "Chooses a theme")
+System_Boundary(waypoint, "Waypoint software system") {
+  Container_Boundary(frontend, "Frontend") {
+    Container(portal, "Portal application", "Angular", "Applies the theme and offers the theme control in Display settings")
+    Container(publicsite, "Public site application", "Angular", "Follows the device colour scheme")
+  }
+  Container_Boundary(backend, "Backend") {
+    Container(api, "Waypoint API application", "ASP.NET Core", "Validates and stores the theme with display preferences")
+  }
+  ContainerDb(db, "Waypoint database", "SQL Server", "DisplayPreferences.Theme column")
+}
+Rel(user, portal, "Uses")
+Rel(portal, api, "GET and PUT /api/me/display-preferences", "HTTPS JSON")
+Rel(api, db, "Reads and writes", "EF Core")
+SHOW_LEGEND()
+@enduml

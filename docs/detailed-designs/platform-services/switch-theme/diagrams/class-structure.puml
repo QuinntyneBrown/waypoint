@@ -1,0 +1,64 @@
+@startuml
+left to right direction
+title UML class structure — Switch theme
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class SettingsDisplay <<Angular component>> {
+    #prefs: Signal<DisplayPreferences>
+    #setTheme(theme: Theme): void
+    #save(): void
+  }
+  class "DisplayPreferencesService (core)" as applier <<service>> {
+    +apply(prefs: DisplayPreferences): void
+  }
+  class "DisplayPreferencesService (api)" as client <<API client>> {
+    +get(): Observable<DisplayPreferences>
+    +save(prefs): Observable<DisplayPreferences>
+  }
+  class DisplayPreferences <<interface>> {
+    +theme: 'system' | 'light' | 'dark'
+  }
+}
+package "Backend — Waypoint API application" {
+  class PreferencesController <<controller>> {
+    +GetDisplayPreferences(): DisplayPreferenceView
+    +SaveDisplayPreference(request): DisplayPreferenceView
+  }
+  class SaveDisplayPreferenceRequest <<record>> {
+    +Theme: string
+  }
+}
+package "Backend — Waypoint Application" {
+  class SaveDisplayPreferenceCommand <<record>> {
+    +Theme: string
+  }
+  class SaveDisplayPreferenceCommandValidator <<validator>>
+  class SaveDisplayPreferenceCommandHandler <<handler>>
+  class DisplayPreferenceView <<record>> {
+    +Theme: string
+  }
+}
+package "Backend — Waypoint Domain" {
+  class DisplayPreference <<entity>> {
+    +Theme: string = "system"
+  }
+}
+SettingsDisplay --> applier : previews
+SettingsDisplay --> client : saves
+client ..> DisplayPreferences : sends
+client --> PreferencesController : calls
+PreferencesController ..> SaveDisplayPreferenceCommand : creates
+SaveDisplayPreferenceCommandValidator --> SaveDisplayPreferenceCommand : validates
+SaveDisplayPreferenceCommand --> SaveDisplayPreferenceCommandHandler : dispatched to
+SaveDisplayPreferenceCommandHandler --> DisplayPreference : changes
+SaveDisplayPreferenceCommandHandler ..> DisplayPreferenceView : returns
+@enduml

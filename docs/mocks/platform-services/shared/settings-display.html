@@ -56,6 +56,18 @@
           </div>
         </section>
 
+        <section class="w-card" aria-labelledby="sec-theme">
+          <div class="w-card__header"><h3 class="w-card__title" id="sec-theme">Theme</h3></div>
+          <div class="w-card__body">
+            <div class="w-segment" role="group" aria-label="Theme" data-theme-control>
+              <button type="button" class="w-segment__item is-active" aria-pressed="true" data-theme-value="system">System</button>
+              <button type="button" class="w-segment__item" aria-pressed="false" data-theme-value="light">Light</button>
+              <button type="button" class="w-segment__item" aria-pressed="false" data-theme-value="dark">Dark</button>
+            </div>
+            <div class="w-help w-mt-2">System matches your device. Changes preview straight away; save to keep them.</div>
+          </div>
+        </section>
+
         <section class="w-card" aria-labelledby="sec-access">
           <div class="w-card__header"><h3 class="w-card__title" id="sec-access">Accessibility</h3></div>
           <div class="w-card__body w-stack w-stack--sm">
@@ -99,5 +111,19 @@
 
     </div>
   </main>
+  <script>
+    // Mock-only live preview: set data-theme on <html>; System removes it.
+    document.querySelector('[data-theme-control]').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-theme-value]');
+      if (!b) return;
+      this.querySelectorAll('[data-theme-value]').forEach(function (x) {
+        x.classList.toggle('is-active', x === b);
+        x.setAttribute('aria-pressed', String(x === b));
+      });
+      var v = b.getAttribute('data-theme-value');
+      if (v === 'system') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', v);
+    });
+  </script>
 </body>
 </html>
