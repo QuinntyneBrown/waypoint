@@ -3,13 +3,13 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthCurriculum } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import { WIcon, WShell } from '@waypoint/components';
 
 // Traces to: L2-LEARN-001
 @Component({
   selector: 'w-youth-curriculum',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DecimalPipe],
+  imports: [WShell, RouterLink, DecimalPipe, WIcon],
   templateUrl: './youth-curriculum.html',
 })
 export class YouthCurriculumPage {

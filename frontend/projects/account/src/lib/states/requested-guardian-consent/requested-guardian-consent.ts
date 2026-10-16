@@ -1,3 +1,4 @@
+import { WIcon } from '@waypoint/components';
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -14,7 +15,7 @@ import {
 @Component({
   selector: 'w-requested-guardian-consent',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, DatePipe],
+  imports: [ReactiveFormsModule, DatePipe, WIcon],
   templateUrl: './requested-guardian-consent.html',
 })
 export class RequestedGuardianConsentPage {

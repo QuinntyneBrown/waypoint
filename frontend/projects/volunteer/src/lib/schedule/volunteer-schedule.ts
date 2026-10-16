@@ -2,13 +2,13 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { VolunteerService, VolunteerScheduleItem } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import { WIcon, WShell } from '@waypoint/components';
 
 // Traces to: L2-VOLUNTEER-002
 @Component({
   selector: 'w-volunteer-schedule',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe],
+  imports: [WShell, DatePipe, WIcon],
   templateUrl: './volunteer-schedule.html',
 })
 export class VolunteerSchedule {
