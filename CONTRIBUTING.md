@@ -69,11 +69,11 @@ npm run e2e:performance
 
 Integration tests require SQL Server. They use `(localdb)\MSSQLLocalDB` by default; override the target with `WAYPOINT_TEST_SQLSERVER` and `WAYPOINT_TEST_SQLAUTH` when necessary.
 
-`npm run build` builds the three shared libraries in dependency order, builds both applications, and validates the generated package metadata and tarball contents. Run the Playwright gates relevant to a UI change; changes to Youth interaction performance must include the isolated performance project.
+`npm run build` builds the ten shared `@waypoint/*` libraries in dependency order, builds both applications, and validates the generated package metadata and tarball contents. Run the Playwright gates relevant to a UI change; changes to Youth interaction performance must include the isolated performance project.
 
 ## Requirements traceability
 
-- Every acceptance test must include `// Traces to: L2-SUBSYSTEM-NNN` for each requirement it verifies.
+- Every acceptance test must name the requirement it verifies: `// Traces to: L2-SUBSYSTEM-NNN` in frontend e2e tests, or `[Property("Req", "L2-SUBSYSTEM-NNN")]` on backend NUnit tests.
 - Do not invent or reuse requirement IDs. Follow the stable-ID rules in [`docs/specs/README.md`](docs/specs/README.md).
 - A test name is not sufficient traceability; the trace comment is the machine-readable contract.
 - Update an owning L2 document and its acceptance criteria before intentionally changing required behaviour.
