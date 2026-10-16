@@ -68,7 +68,7 @@ npm run packages:check
 
 ## Tests and quality gates
 
-Angular unit tests use Vitest. A library gets a `test` target in `angular.json` once it has a spec (`youth`, `mentor`, `guardian`, and `volunteer` have none yet):
+Angular unit tests use Vitest. A library gets a `test` target in `angular.json` once it has a spec (`youth`, `mentor`, `guardian`, and `volunteer` have none by design: their behaviour is covered by Playwright acceptance tests, DECISIONS #20):
 
 ```bash
 npm test
