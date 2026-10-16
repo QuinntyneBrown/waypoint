@@ -72,7 +72,7 @@ describe('WShell', () => {
     const fixture = await render();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('.w-menu')).toBeNull();
-    (el.querySelector('button[aria-label="Account"]') as HTMLButtonElement).click();
+    [...el.querySelectorAll('button')].find((b) => b.textContent?.includes('Account'))!.click();
     await fixture.whenStable();
     const danger = el.querySelector('.w-menu__item--danger') as HTMLButtonElement;
     expect(danger).toBeTruthy();
