@@ -50,7 +50,7 @@ The high-contrast class `w-a11y-contrast` in [`a11y.css`](../../../../frontend/p
 |-------|--------------|-------------|
 | `L2-PLATFORM-013` | `L1-PLATFORM-002` | Every page shall render from one set of design tokens in a light theme and a dark theme. Each user shall choose System, Light, or Dark; System follows the device colour scheme and is the default. |
 | `L2-PLATFORM-004` | `L1-PLATFORM-002` | Users shall set text size, high contrast, reduced motion, underline links, and reading font. |
-| `L2-NFR-010` | `L1-NFR-007` | The UI shall be operable and perceivable per WCAG 2.1 AA. |
+| `L2-NFR-010` | `L1-NFR-007` | The UI shall be operable and perceivable per WCAG 2.2 AA. |
 
 ## Diagrams
 

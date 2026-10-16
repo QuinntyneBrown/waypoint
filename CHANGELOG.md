@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file. The format 
 - Role-tailored searchable help center plus self-service and administrator data-rights request workflows
 - Configurable SMTP delivery through an encrypted durable email outbox, absolute application links, and independent background workers for email and scheduled notifications
 - Authenticated AES-GCM protection and legacy-plaintext backfill for sensitive participant fields and uploaded files, with subject-linked delivery erasure, comprehensive redacted access exports, and data-minimized device/network audit sources
-- SQL-backed fixed-arrival-rate API load gates (50 distinct cohort-scoped users / 20 RPS), a throttled primary-Youth-screen budget, XS–XL responsive checks, WCAG 2.1 AA axe checks, and a route/navigation manifest gate
+- SQL-backed fixed-arrival-rate API load gates (50 distinct cohort-scoped users / 20 RPS), a throttled primary-Youth-screen budget, XS–XL responsive checks, WCAG 2.2 AA axe checks, and a route/navigation manifest gate
 - Stable .NET 9 SDK selection and production fail-fast validation for database, HTTPS application URLs, secrets, and SMTP configuration
 - Playwright e2e acceptance harness (real API + both apps behind a dev-server proxy) with a mobile-viewport project, plus a frontend CI workflow
 - Product requirements covering 14 subsystems and a requirement traceability gate

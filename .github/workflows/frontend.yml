@@ -65,7 +65,7 @@ jobs:
         run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: E2E, responsive breakpoint, and WCAG 2.1 AA gates
+      - name: E2E, responsive breakpoint, and WCAG 2.2 AA gates
         run: npm run e2e:ci
       - name: Isolated Chromebook-class youth performance gate
         run: npm run e2e:performance

@@ -8,7 +8,7 @@ import {
 } from '../support/quality';
 
 // Traces to: L2-NFR-009 AC1/AC3; L2-NFR-010 AC1/AC3/AC5
-test('authenticated shell is responsive and WCAG 2.1 AA clean', async ({ page, request }) => {
+test('authenticated shell is responsive and WCAG 2.2 AA clean', async ({ page, request }) => {
   const viewport = page.viewportSize();
   expect([375, 768, 992, 1200]).toContain(viewport?.width);
 
@@ -21,7 +21,7 @@ test('authenticated shell is responsive and WCAG 2.1 AA clean', async ({ page, r
 });
 
 // Traces to: L2-NFR-009 AC1/AC3; L2-NFR-010 AC1/AC3/AC5
-test('public landing page is responsive and WCAG 2.1 AA clean', async ({ page }) => {
+test('public landing page is responsive and WCAG 2.2 AA clean', async ({ page }) => {
   await page.goto('http://localhost:4201/');
   await expect(page.locator('main')).toBeVisible();
 

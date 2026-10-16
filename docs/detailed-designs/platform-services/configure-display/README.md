@@ -56,14 +56,14 @@ This section contains L2 specification text and L1 trace identifiers. It contain
 
 Users shall set text size, high contrast, reduced motion, underline links, and reading font.
 
-### L2-NFR-010 — Accessibility (WCAG 2.1 AA)
+### L2-NFR-010 — Accessibility (WCAG 2.2 AA)
 
 | Field | Value |
 | --- | --- |
 | Relationship | Dependency |
 | L1 specification ID | `L1-NFR-007` |
 
-The UI shall be operable and perceivable per WCAG 2.1 AA.
+The UI shall be operable and perceivable per WCAG 2.2 AA.
 
 ## Diagrams
 

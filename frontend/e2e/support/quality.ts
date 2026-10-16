@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, Page } from '@playwright/test';
 
-const WCAG_21_AA_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
+const WCAG_22_AA_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
 /** Assert that the page, rather than a deliberately scrollable child, does not overflow. */
 export async function expectNoPageOverflow(page: Page): Promise<void> {
@@ -31,7 +31,7 @@ export async function expectGridColumns(
  * The compact failure message keeps CI logs actionable without hiding nodes.
  */
 export async function expectNoWcag21AaViolations(page: Page): Promise<void> {
-  const results = await new AxeBuilder({ page }).withTags(WCAG_21_AA_TAGS).analyze();
+  const results = await new AxeBuilder({ page }).withTags(WCAG_22_AA_TAGS).analyze();
   const summary = results.violations
     .map(
       (violation) =>
@@ -42,5 +42,5 @@ export async function expectNoWcag21AaViolations(page: Page): Promise<void> {
     )
     .join('\n\n');
 
-  expect(results.violations, summary || 'expected no WCAG 2.1 A/AA violations').toEqual([]);
+  expect(results.violations, summary || 'expected no WCAG 2.2 A/AA violations').toEqual([]);
 }
