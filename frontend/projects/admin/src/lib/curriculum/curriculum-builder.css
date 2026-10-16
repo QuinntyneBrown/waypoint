@@ -76,7 +76,7 @@
 .assessment-row,
 .question-row {
   border: 1px solid var(--w-border);
-  border-radius: var(--w-radius-md);
+  border-radius: var(--w-r-card);
   background: var(--w-surface-subtle);
   padding: var(--w-s4);
 }
@@ -138,6 +138,7 @@
 }
 
 .check-row input {
+  margin: 0;
   width: 1.25rem;
   height: 1.25rem;
   flex: 0 0 auto;
@@ -158,9 +159,9 @@
   width: min(100%, 34rem);
   max-height: calc(100dvh - 2rem);
   overflow-y: auto;
-  border-radius: var(--w-radius-lg);
+  border-radius: var(--w-r-lg);
   background: var(--w-surface);
-  box-shadow: var(--w-shadow-lg);
+  box-shadow: var(--w-shadow-pop);
   padding: var(--w-s5);
 }
 
@@ -182,6 +183,10 @@
   grid-column: 1 / -1;
 }
 
+.dialog-grid legend {
+  padding: 0;
+}
+
 .submission-types {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -196,7 +201,7 @@
   gap: var(--w-s3);
   margin: 0;
   border: 1px solid var(--w-border);
-  border-radius: var(--w-radius-md);
+  border-radius: var(--w-r-card);
   padding: var(--w-s4);
 }
 
@@ -205,6 +210,20 @@
   grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.25fr) auto;
   gap: var(--w-s3);
   align-items: end;
+}
+
+.dialog-grid .w-field {
+  margin-bottom: 0;
+}
+
+.rubric-editor > .w-btn {
+  justify-self: start;
+}
+
+.w-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--w-s3);
 }
 
 @media (max-width: 64rem) {
