@@ -35,23 +35,23 @@ interface AttendanceRow extends VolunteerRosterEntry {
       .attendance-summary {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: var(--w-space-3);
+        gap: var(--w-s3);
       }
       .attendance-summary > div {
-        padding: var(--w-space-3);
+        padding: var(--w-s3);
         text-align: center;
       }
       .attendance-summary strong {
         display: block;
-        font-size: var(--w-text-xl);
+        font-size: 1.25rem;
       }
       .attendance-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--w-space-4);
-        padding: var(--w-space-4) 0;
-        border-bottom: 1px solid var(--w-color-border);
+        gap: var(--w-s4);
+        padding: var(--w-s4) 0;
+        border-bottom: 1px solid var(--w-border);
       }
       .attendance-row:last-child {
         border-bottom: 0;
@@ -61,10 +61,10 @@ interface AttendanceRow extends VolunteerRosterEntry {
       }
       .attendance-actions {
         display: flex;
-        gap: var(--w-space-2);
+        gap: var(--w-s2);
       }
       .attendance-actions .is-selected {
-        outline: 3px solid var(--w-color-ink);
+        outline: 3px solid var(--w-ink);
         outline-offset: 2px;
       }
       .attendance-actions .w-btn {

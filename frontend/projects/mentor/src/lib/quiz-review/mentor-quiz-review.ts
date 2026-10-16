@@ -41,7 +41,7 @@ import { WShell } from '@waypoint/components';
       gap: var(--w-s3);
       padding: var(--w-s3);
       border: 1px solid var(--w-border);
-      border-radius: var(--w-radius-sm);
+      border-radius: var(--w-r-sm);
     }
     .answer-option--selected {
       border-width: 2px;

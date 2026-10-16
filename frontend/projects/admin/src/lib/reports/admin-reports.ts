@@ -67,7 +67,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       height: 0.75rem;
       overflow: hidden;
       border-radius: 999px;
-      background: var(--w-surface-subtle);
+      background: var(--w-g100);
     }
     .report-bar > span {
       display: block;
@@ -83,7 +83,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       margin-inline: auto;
       place-items: center;
       border-radius: 50%;
-      background: conic-gradient(var(--w-teal) var(--report-value), var(--w-surface-subtle) 0);
+      background: conic-gradient(var(--w-teal) var(--report-value), var(--w-g100) 0);
       position: relative;
     }
     .report-ring::before {
@@ -112,7 +112,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       gap: var(--w-s3);
     }
     .report-status--risk {
-      color: var(--w-danger);
+      color: var(--w-error);
       font-weight: 700;
     }
     @media (max-width: 72rem) {

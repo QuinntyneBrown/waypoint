@@ -36,8 +36,8 @@ import { finalize, forkJoin, map } from 'rxjs';
       min-height: 6rem;
       padding: var(--w-s3);
       border: 1px dashed var(--w-border);
-      border-radius: var(--w-radius-md);
-      background: var(--w-surface-subtle);
+      border-radius: var(--w-r-card);
+      background: var(--w-g100);
     }
     .logo-preview img {
       max-width: 12rem;

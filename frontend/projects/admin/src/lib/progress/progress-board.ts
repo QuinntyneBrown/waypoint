@@ -42,7 +42,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
       overflow-x: auto;
       overscroll-behavior-inline: contain;
       border: 1px solid var(--w-border);
-      border-radius: var(--w-radius-lg);
+      border-radius: var(--w-r-lg);
     }
     .matrix {
       width: 100%;
@@ -78,16 +78,16 @@ import { RealtimeService } from '@waypoint/core/realtime';
     .module-cell__name {
       display: block;
       margin-bottom: var(--w-s1);
-      color: var(--w-text-muted);
-      font-size: var(--w-text-sm);
+      color: var(--w-muted);
+      font-size: 0.875rem;
     }
     .state {
       display: inline-flex;
       align-items: center;
       min-height: 2rem;
       padding: 0 var(--w-s2);
-      border-radius: var(--w-radius-pill);
-      background: var(--w-surface-subtle);
+      border-radius: var(--w-r-pill);
+      background: var(--w-g100);
       font-weight: 700;
       white-space: nowrap;
     }
@@ -98,13 +98,13 @@ import { RealtimeService } from '@waypoint/core/realtime';
       color: var(--w-info);
     }
     .state--unassigned {
-      color: var(--w-text-muted);
+      color: var(--w-muted);
       font-weight: 500;
     }
     .matrix tfoot th,
     .matrix tfoot td {
       border-bottom: 0;
-      background: var(--w-surface-subtle);
+      background: var(--w-g100);
       font-weight: 700;
     }
     @media (max-width: 42rem) {

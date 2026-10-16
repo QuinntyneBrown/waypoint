@@ -46,7 +46,7 @@ type HistoryView = 'session' | 'youth';
     .history-table th,
     .history-table td {
       padding: var(--w-s3);
-      border-bottom: 1px solid var(--w-color-border);
+      border-bottom: 1px solid var(--w-border);
       text-align: left;
       vertical-align: middle;
     }
