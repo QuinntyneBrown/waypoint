@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`AuthStore`](../../../../frontend/projects/auth/src/lib/auth-store.ts)<br>[`YouthAnnouncements`](../../../../frontend/projects/youth/src/lib/announcements/youth-announcements.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`AuthApi`](../../../../frontend/projects/api/src/lib/services/auth-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`AuthService`](../../../../frontend/projects/api/src/lib/services/auth.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`MentorController`](../../../../backend/src/Waypoint.Api/Controllers/Mentoring/MentorController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`MentorDashboardQuery`](../../../../backend/src/Waypoint.Application/Mentoring/MentorRoster/MentorDashboardQuery.cs)<br>[`MentorDashboardQueryHandler`](../../../../backend/src/Waypoint.Application/Mentoring/MentorRoster/MentorDashboardQueryHandler.cs)<br>[`MentorDashboard`](../../../../backend/src/Waypoint.Application/Mentoring/MentorRoster/MentorDashboardQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Flag`](../../../../backend/src/Waypoint.Domain/Mentoring/Flag.cs)<br>[`AssignedWork`](../../../../backend/src/Waypoint.Domain/Mentoring/AssignedWork.cs)<br>[`CheckIn`](../../../../backend/src/Waypoint.Domain/Mentoring/CheckIn.cs)<br>[`CompetencyAssessment`](../../../../backend/src/Waypoint.Domain/Mentoring/CompetencyAssessment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `AuthStore.submit()` starts the browser interaction and maintains presentation state.
-- `AuthApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `AuthService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `MentorController.PostAsync()` applies transport policy and constructs `MentorDashboardQuery`.
 - `MentorDashboardQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Flag`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

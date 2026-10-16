@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | `AuthorAssignmentsPage` *(planned boundary)* | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `CurriculumAuthoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `CurriculumAuthoringService` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AssignmentsController`](../../../../backend/src/Waypoint.Api/Controllers/CurriculumAuthoring/AssignmentsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`CreateAssignmentCommand`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Assessments/CreateAssignmentCommand.cs)<br>[`CreateAssignmentCommandHandler`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Assessments/CreateAssignmentCommandHandler.cs)<br>[`CreateAssignmentCommandValidator`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Assessments/CreateAssignmentCommandValidator.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Assignment`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Assignment.cs)<br>[`RubricCriterion`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/RubricCriterion.cs)<br>[`Badge`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Badge.cs)<br>[`Competency`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Competency.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `AuthorAssignmentsPage.submit()` starts the browser interaction and maintains presentation state.
-- `CurriculumAuthoringApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `CurriculumAuthoringService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `AssignmentsController.PostAsync()` applies transport policy and constructs `CreateAssignmentCommand`.
 - `CreateAssignmentCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Assignment`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

@@ -7,7 +7,13 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ApiError, CohortOptions, CohortsApi, CohortSummary, ProgressBoard } from '@waypoint/api';
+import {
+  ApiError,
+  CohortOptions,
+  CohortsService,
+  CohortSummary,
+  ProgressBoard,
+} from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
 import { debounceTime, filter, finalize, forkJoin, merge } from 'rxjs';
@@ -115,7 +121,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
 export class ProgressBoardPage {
   protected readonly auth = inject(AuthStore);
   protected readonly realtime = inject(RealtimeService);
-  private readonly api = inject(CohortsApi);
+  private readonly api = inject(CohortsService);
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly cohorts = signal<CohortSummary[]>([]);

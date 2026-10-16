@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/youth/src/lib/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/youth/src/lib/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `CurriculumAuthoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `CurriculumAuthoringService` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`QuizzesController`](../../../../backend/src/Waypoint.Api/Controllers/CurriculumAuthoring/QuizzesController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AddQuizQuestionCommand`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Assessments/AddQuizQuestionCommand.cs)<br>[`AddQuizQuestionCommandHandler`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Assessments/AddQuizQuestionCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Quiz`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Quiz.cs)<br>[`QuizQuestion`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/QuizQuestion.cs)<br>[`QuestionType`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/QuestionType.cs)<br>[`Assignment`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Assignment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `YouthAnnouncements.submit()` starts the browser interaction and maintains presentation state.
-- `CurriculumAuthoringApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `CurriculumAuthoringService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `QuizzesController.PostAsync()` applies transport policy and constructs `AddQuizQuestionCommand`.
 - `AddQuizQuestionCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Quiz`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

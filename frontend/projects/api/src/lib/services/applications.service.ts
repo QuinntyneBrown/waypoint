@@ -12,7 +12,7 @@ import {
 
 /** Admin application review (`/api/applications`, admin only for reads). */
 @Injectable({ providedIn: 'root' })
-export class ApplicationsApi {
+export class ApplicationsService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

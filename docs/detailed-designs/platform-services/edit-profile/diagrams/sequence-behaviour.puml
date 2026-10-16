@@ -18,7 +18,7 @@ skinparam package {
 actor "Authenticated participant" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "SettingsProfile" as page
-  participant "ProfileApi" as client
+  participant "ProfileService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "ProfileController" as controller

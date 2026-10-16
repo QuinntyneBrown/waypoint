@@ -6,7 +6,7 @@ import {
   CohortReport,
   ReportFilter,
   ReportOptions,
-  ReportsApi,
+  ReportsService,
   ReportsHub,
   YouthReport,
 } from '@waypoint/api';
@@ -145,7 +145,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
 })
 export class AdminReportsPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(ReportsApi);
+  private readonly api = inject(ReportsService);
   private readonly fb = inject(FormBuilder);
 
   protected readonly view = signal<ReportView>('overview');

@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { maskEmail, PasswordResetApi } from '@waypoint/api';
+import { maskEmail, PasswordResetService } from '@waypoint/api';
 import { ToastService, WStatePage } from '@waypoint/components';
 
 // Traces to: L2-AUTH-005
@@ -22,7 +22,7 @@ import { ToastService, WStatePage } from '@waypoint/components';
 })
 export class ResetLinkSent {
   private readonly doc = inject(DOCUMENT);
-  private readonly api = inject(PasswordResetApi);
+  private readonly api = inject(PasswordResetService);
   private readonly toasts = inject(ToastService);
   private readonly email = (this.doc.defaultView?.history.state?.['email'] as string) ?? '';
 

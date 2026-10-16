@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +submit(): void
     +renderResult(): void
   }
-  class "AnnouncementsApi" as client_AnnouncementsApi <<API client>> {
+  class "AnnouncementsService" as client_AnnouncementsApi <<API client>> {
     +execute(request): Observable
   }
 }

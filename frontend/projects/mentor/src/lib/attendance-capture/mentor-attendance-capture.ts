@@ -12,7 +12,7 @@ import {
   ApiError,
   AttendanceStatus,
   StaffAttendanceRosterEntry,
-  StaffOperationsApi,
+  StaffOperationsService,
   StaffSessionAttendance,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
@@ -91,7 +91,7 @@ import { AttendanceQueueService } from '@waypoint/core/attendance';
 export class MentorAttendanceCapturePage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
   protected readonly queue = inject(AttendanceQueueService);
-  private readonly api = inject(StaffOperationsApi);
+  private readonly api = inject(StaffOperationsService);
   private readonly route = inject(ActivatedRoute);
   private readonly drafts = inject(EditorDraftService);
   private readonly unsavedChanges = inject(UnsavedChangesService);

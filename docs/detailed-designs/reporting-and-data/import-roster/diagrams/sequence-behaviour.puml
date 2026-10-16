@@ -18,7 +18,7 @@ skinparam package {
 actor "Program administrator" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "ImportRosterPage" as page
-  participant "ReportingAndDataApi" as client
+  participant "ReportingAndDataService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "DataController" as controller

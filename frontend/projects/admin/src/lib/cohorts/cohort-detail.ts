@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, CohortDetail, CohortOptions, CohortsApi } from '@waypoint/api';
+import { ApiError, CohortDetail, CohortOptions, CohortsService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
 import { finalize } from 'rxjs';
@@ -65,7 +65,7 @@ import { finalize } from 'rxjs';
 export class CohortDetailPage {
   protected readonly auth = inject(AuthStore);
   private readonly route = inject(ActivatedRoute);
-  private readonly api = inject(CohortsApi);
+  private readonly api = inject(CohortsService);
   private readonly fb = inject(FormBuilder);
   private readonly cohortId = this.route.snapshot.paramMap.get('id') ?? '';
 

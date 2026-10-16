@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { AnnouncementsApi, AnnouncementView } from '@waypoint/api';
+import { AnnouncementsService, AnnouncementView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
@@ -12,7 +12,7 @@ import { shellRole } from '@waypoint/core';
   templateUrl: './youth-announcements.html',
 })
 export class YouthAnnouncements {
-  private readonly api = inject(AnnouncementsApi);
+  private readonly api = inject(AnnouncementsService);
   private readonly auth = inject(AuthStore);
 
   protected readonly role = computed(() => shellRole(this.auth.role()));

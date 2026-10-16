@@ -13,7 +13,7 @@ import {
   ApiError,
   ApplicationDetail,
   ApplicationReviewOptions,
-  ApplicationsApi,
+  ApplicationsService,
   ApplicationSummary,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
@@ -62,7 +62,7 @@ type Decision = 'approve' | 'decline';
 })
 export class ApplicationsList {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(ApplicationsApi);
+  private readonly api = inject(ApplicationsService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
 

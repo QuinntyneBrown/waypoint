@@ -14,7 +14,7 @@ import { AttendanceTally, AttendanceWrite } from '../models/engagement/operation
  * youth records are ever returned (L2-VOLUNTEER-001).
  */
 @Injectable({ providedIn: 'root' })
-export class VolunteerApi {
+export class VolunteerService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | `ImportRosterPage` *(planned boundary)* | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `ReportingAndDataApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `ReportingAndDataService` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`DataController`](../../../../backend/src/Waypoint.Api/Controllers/ReportingAndData/DataController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`CommitRosterImportCommand`](../../../../backend/src/Waypoint.Application/ReportingAndData/DataTransfer/CommitRosterImportCommand.cs)<br>[`CommitRosterImportCommandHandler`](../../../../backend/src/Waypoint.Application/ReportingAndData/DataTransfer/CommitRosterImportCommand.cs)<br>[`CommitRosterImportCommandValidator`](../../../../backend/src/Waypoint.Application/ReportingAndData/DataTransfer/CommitRosterImportCommand.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | `ImportRosterState` *(planned boundary)* | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `ImportRosterPage.submit()` starts the browser interaction and maintains presentation state.
-- `ReportingAndDataApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `ReportingAndDataService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `DataController.PostAsync()` applies transport policy and constructs `CommitRosterImportCommand`.
 - `CommitRosterImportCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `ImportRosterState`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

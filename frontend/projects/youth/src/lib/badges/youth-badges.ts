@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, LearningApi, YouthJourney } from '@waypoint/api';
+import { ApiError, LearningService, YouthJourney } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -14,7 +14,7 @@ import { WShell } from '@waypoint/components';
 })
 export class YouthBadgesPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(LearningApi);
+  private readonly api = inject(LearningService);
   protected readonly journey = signal<YouthJourney | undefined>(undefined);
   protected readonly errorMessage = signal<string | null>(null);
 

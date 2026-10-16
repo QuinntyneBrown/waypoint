@@ -6,7 +6,7 @@ import {
   ApiError,
   isPasswordCompliant,
   PASSWORD_POLICY_MESSAGE,
-  PasswordResetApi,
+  PasswordResetService,
 } from '@waypoint/api';
 import { WIcon } from '@waypoint/components';
 
@@ -19,7 +19,7 @@ import { WIcon } from '@waypoint/components';
 })
 export class ResetPassword {
   private readonly fb = inject(FormBuilder);
-  private readonly api = inject(PasswordResetApi);
+  private readonly api = inject(PasswordResetService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 

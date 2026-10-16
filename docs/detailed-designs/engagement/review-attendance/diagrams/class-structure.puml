@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +submit(): void
     +renderResult(): void
   }
-  class "EngagementApi" as client_EngagementApi <<API client>> {
+  class "EngagementService" as client_EngagementApi <<API client>> {
     +execute(request): Observable
   }
 }

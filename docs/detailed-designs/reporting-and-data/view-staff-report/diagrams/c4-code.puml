@@ -6,7 +6,7 @@ System_Boundary(waypoint, "Waypoint software system") {
   Container_Boundary(frontend, "Frontend") {
     Container_Boundary(frontend_app, "Portal application") {
       Component(page, "AttendanceQueueService", "Angular component", "Feature page code element")
-      Component(client, "ReportingAndDataApi", "TypeScript API client", "Typed API boundary code element")
+      Component(client, "ReportingAndDataService", "TypeScript API client", "Typed API boundary code element")
     }
   }
   Container_Boundary(backend, "Backend") {

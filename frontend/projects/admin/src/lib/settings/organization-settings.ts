@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   ApiError,
   OrganizationSettings,
-  OrganizationSettingsApi,
+  OrganizationSettingsService,
   ProgramTerm,
   ProgramTrackSetting,
   SaveProgramTerm,
@@ -113,7 +113,7 @@ import { finalize, forkJoin, map } from 'rxjs';
 })
 export class OrganizationSettingsPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(OrganizationSettingsApi);
+  private readonly api = inject(OrganizationSettingsService);
   private readonly fb = inject(FormBuilder);
 
   protected readonly loaded = signal(false);

@@ -17,7 +17,7 @@ import {
  * donation pledge). Every endpoint is `AllowAnonymous` on the server.
  */
 @Injectable({ providedIn: 'root' })
-export class PublicSiteApi {
+export class PublicSiteService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

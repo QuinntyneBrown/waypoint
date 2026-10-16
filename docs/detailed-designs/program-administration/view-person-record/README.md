@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`ResetPassword`](../../../../frontend/projects/auth/pages/src/reset-password/reset-password.ts)<br>[`PeopleDirectory`](../../../../frontend/projects/admin/src/lib/people/people-directory.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`PasswordResetApi`](../../../../frontend/projects/api/src/lib/services/password-reset-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`PasswordResetService`](../../../../frontend/projects/api/src/lib/services/password-reset.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`OrgSettingsController`](../../../../backend/src/Waypoint.Api/Controllers/ProgramAdministration/OrgSettingsController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`SendPasswordResetForPersonCommand`](../../../../backend/src/Waypoint.Application/ProgramAdministration/People/SendPasswordResetForPersonCommand.cs)<br>[`SendPasswordResetForPersonCommandHandler`](../../../../backend/src/Waypoint.Application/ProgramAdministration/People/SendPasswordResetForPersonCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Cohort`](../../../../backend/src/Waypoint.Domain/ProgramAdministration/Cohort.cs)<br>[`CohortMentor`](../../../../backend/src/Waypoint.Domain/ProgramAdministration/CohortMentor.cs)<br>[`OrgSettings`](../../../../backend/src/Waypoint.Domain/ProgramAdministration/OrgSettings.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `ResetPassword.load()` starts the browser interaction and maintains presentation state.
-- `PasswordResetApi.get()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `PasswordResetService.get()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `OrgSettingsController.GetAsync()` applies transport policy and constructs `SendPasswordResetForPersonCommand`.
 - `SendPasswordResetForPersonCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Cohort`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

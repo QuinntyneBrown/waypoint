@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthAnnouncements`](../../../../frontend/projects/youth/src/lib/announcements/youth-announcements.ts)<br>[`YouthHome`](../../../../frontend/projects/youth/src/lib/home/youth-home.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `MentoringApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `MentoringService` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`QuizApprovalController`](../../../../backend/src/Waypoint.Api/Controllers/Mentoring/QuizApprovalController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`ApproveAllQuizAttemptsCommand`](../../../../backend/src/Waypoint.Application/Mentoring/QuizApproval/ApproveAllQuizAttemptsCommand.cs)<br>[`ApproveAllQuizAttemptsCommandHandler`](../../../../backend/src/Waypoint.Application/Mentoring/QuizApproval/ApproveAllQuizAttemptsCommandHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`CompetencyAssessment`](../../../../backend/src/Waypoint.Domain/Mentoring/CompetencyAssessment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `YouthAnnouncements.submit()` starts the browser interaction and maintains presentation state.
-- `MentoringApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `MentoringService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `QuizApprovalController.PostAsync()` applies transport policy and constructs `ApproveAllQuizAttemptsCommand`.
 - `ApproveAllQuizAttemptsCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `CompetencyAssessment`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

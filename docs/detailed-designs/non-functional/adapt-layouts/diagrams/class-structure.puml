@@ -20,7 +20,7 @@ package "Frontend — Public Site application" {
     +submit(): void
     +renderResult(): void
   }
-  class "NonFunctionalApi" as client_NonFunctionalApi <<API client>> {
+  class "NonFunctionalService" as client_NonFunctionalApi <<API client>> {
     +execute(request): Observable
   }
 }

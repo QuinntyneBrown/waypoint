@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { ApiError, AttendanceTally, AttendanceWrite, VolunteerApi } from '@waypoint/api';
+import { ApiError, AttendanceTally, AttendanceWrite, VolunteerService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { OfflineService } from '@waypoint/components';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
@@ -24,7 +24,7 @@ export type AttendanceSaveOutcome = { kind: 'saved'; tally: AttendanceTally } | 
 @Injectable({ providedIn: 'root' })
 export class AttendanceQueueService {
   private readonly doc = inject(DOCUMENT);
-  private readonly api = inject(VolunteerApi);
+  private readonly api = inject(VolunteerService);
   private readonly auth = inject(AuthStore);
   private readonly offline = inject(OfflineService);
 

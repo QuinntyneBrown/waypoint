@@ -6,7 +6,7 @@ import { NotificationPreference } from '../models/preferences/notification-prefe
 
 /** Per-user notification preferences (`/api/me/notification-preferences`). */
 @Injectable({ providedIn: 'root' })
-export class NotificationPreferencesApi {
+export class NotificationPreferencesService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

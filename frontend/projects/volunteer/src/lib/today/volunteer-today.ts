@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { VolunteerApi, VolunteerTodayView } from '@waypoint/api';
+import { VolunteerService, VolunteerTodayView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 
@@ -14,7 +14,7 @@ import { WShell } from '@waypoint/components';
 })
 export class VolunteerToday {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(VolunteerApi);
+  private readonly api = inject(VolunteerService);
 
   /** undefined = still loading; null = no session today; object = today's session. */
   protected readonly today = signal<VolunteerTodayView | null | undefined>(undefined);

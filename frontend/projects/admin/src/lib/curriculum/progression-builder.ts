@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   ApiError,
-  CurriculumAuthoringApi,
+  CurriculumAuthoringService,
   ProgressionCompetency,
   ProgressionStage,
 } from '@waypoint/api';
@@ -38,7 +38,7 @@ type ProgressionAuthoringDraft =
 })
 export class ProgressionBuilderPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(CurriculumAuthoringApi);
+  private readonly api = inject(CurriculumAuthoringService);
   private readonly fb = inject(FormBuilder);
   private readonly drafts = inject(EditorDraftService);
   private readonly unsavedChanges = inject(UnsavedChangesService);

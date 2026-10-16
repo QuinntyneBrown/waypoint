@@ -16,7 +16,7 @@ import {
   MentorMessageConversation,
   MentorMessageInbox,
   MessageView,
-  MessagingApi,
+  MessagingService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
@@ -158,7 +158,7 @@ type MessageMode = 'thread' | 'broadcast';
 export class MentorMessagesPage {
   protected readonly auth = inject(AuthStore);
   protected readonly realtime = inject(RealtimeService);
-  private readonly api = inject(MessagingApi);
+  private readonly api = inject(MessagingService);
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);

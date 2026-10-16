@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   ApiError,
   CompetencyLevel,
-  MentorApi,
+  MentorService,
   MentorCompetencyItem,
   MentorCompetencySummary,
 } from '@waypoint/api';
@@ -54,7 +54,7 @@ interface CompetencyDraft {
 })
 export class MentorCompetenciesPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(MentorApi);
+  private readonly api = inject(MentorService);
   private readonly route = inject(ActivatedRoute);
 
   protected readonly levels: { value: CompetencyLevel; label: string }[] = [

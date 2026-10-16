@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import {
   NOTIFICATION_CATEGORIES,
   NOTIFICATION_DEFAULTS,
-  NotificationPreferencesApi,
+  NotificationPreferencesService,
 } from '@waypoint/api';
 import { ToastService } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
@@ -21,7 +21,7 @@ interface PrefRow {
   templateUrl: './settings-notifications.html',
 })
 export class SettingsNotifications {
-  private readonly api = inject(NotificationPreferencesApi);
+  private readonly api = inject(NotificationPreferencesService);
   private readonly toasts = inject(ToastService);
 
   protected readonly categories = NOTIFICATION_CATEGORIES;

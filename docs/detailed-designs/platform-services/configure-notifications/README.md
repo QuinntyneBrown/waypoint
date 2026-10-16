@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`SettingsNotifications`](../../../../frontend/projects/account/src/lib/settings/notifications/settings-notifications.ts)<br>[`YouthNotifications`](../../../../frontend/projects/youth/src/lib/notifications/youth-notifications.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`NotificationPreferencesApi`](../../../../frontend/projects/api/src/lib/services/notification-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`NotificationPreferencesService`](../../../../frontend/projects/api/src/lib/services/notification-preferences.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`PreferencesController`](../../../../backend/src/Waypoint.Api/Controllers/PlatformServices/PreferencesController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`NotificationPreferencesQuery`](../../../../backend/src/Waypoint.Application/PlatformServices/NotificationPreferences/NotificationPreferencesQuery.cs)<br>[`NotificationPreferencesQueryHandler`](../../../../backend/src/Waypoint.Application/PlatformServices/NotificationPreferences/NotificationPreferencesQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`NotificationPreference`](../../../../backend/src/Waypoint.Domain/PlatformServices/NotificationPreference.cs)<br>[`SupportRequest`](../../../../backend/src/Waypoint.Domain/PlatformServices/SupportRequest.cs)<br>[`DisplayPreference`](../../../../backend/src/Waypoint.Domain/PlatformServices/DisplayPreference.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `SettingsNotifications.submit()` starts the browser interaction and maintains presentation state.
-- `NotificationPreferencesApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `NotificationPreferencesService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `PreferencesController.PostAsync()` applies transport policy and constructs `NotificationPreferencesQuery`.
 - `NotificationPreferencesQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `NotificationPreference`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

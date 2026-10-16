@@ -12,7 +12,7 @@ import {
 
 /** Youth consent status (`/api/consent/status`, Youth-only). Server-authoritative gate. */
 @Injectable({ providedIn: 'root' })
-export class ConsentApi {
+export class ConsentService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

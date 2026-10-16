@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`YouthNotifications`](../../../../frontend/projects/youth/src/lib/notifications/youth-notifications.ts)<br>[`SettingsNotifications`](../../../../frontend/projects/account/src/lib/settings/notifications/settings-notifications.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`NotificationPreferencesApi`](../../../../frontend/projects/api/src/lib/services/notification-preferences-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`NotificationPreferencesService`](../../../../frontend/projects/api/src/lib/services/notification-preferences.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AssignWorkController`](../../../../backend/src/Waypoint.Api/Controllers/Mentoring/AssignWorkController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AssignWorkCommand`](../../../../backend/src/Waypoint.Application/Mentoring/AssignWork/AssignWorkCommand.cs)<br>[`AssignWorkCommandHandler`](../../../../backend/src/Waypoint.Application/Mentoring/AssignWork/AssignWorkCommandHandler.cs)<br>[`AssignWorkCommandValidator`](../../../../backend/src/Waypoint.Application/Mentoring/AssignWork/AssignWorkCommandValidator.cs)<br>[`AssignWorkResult`](../../../../backend/src/Waypoint.Application/Mentoring/AssignWork/AssignWorkCommand.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`AssignedWork`](../../../../backend/src/Waypoint.Domain/Mentoring/AssignedWork.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `YouthNotifications.submit()` starts the browser interaction and maintains presentation state.
-- `NotificationPreferencesApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `NotificationPreferencesService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `AssignWorkController.PostAsync()` applies transport policy and constructs `AssignWorkCommand`.
 - `AssignWorkCommandHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `AssignedWork`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

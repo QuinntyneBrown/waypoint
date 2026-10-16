@@ -18,7 +18,7 @@ skinparam package {
 actor "Authenticated participant" as actor
 box "Frontend — Public Site application" #E0F2FE
   participant "ServerError" as page
-  participant "DisplayPreferencesApi" as client
+  participant "DisplayPreferencesService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "AccessController" as controller

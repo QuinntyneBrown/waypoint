@@ -18,7 +18,7 @@ skinparam package {
 actor "Program administrator" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "SettingsNotifications" as page
-  participant "NotificationPreferencesApi" as client
+  participant "NotificationPreferencesService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "BadgesController" as controller

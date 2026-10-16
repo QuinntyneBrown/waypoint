@@ -34,7 +34,7 @@ import {
 
 /** Staff session scheduling, attendance capture, history, and filtered exports. */
 @Injectable({ providedIn: 'root' })
-export class StaffOperationsApi {
+export class StaffOperationsService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 
@@ -99,7 +99,7 @@ export class StaffOperationsApi {
 
 /** Assigned-mentor messaging (`/api/me/messages`, Youth). */
 @Injectable({ providedIn: 'root' })
-export class MessagingApi {
+export class MessagingService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 
@@ -131,7 +131,7 @@ export class MessagingApi {
 
 /** Own notification feed (`/api/notifications`, any authenticated user). */
 @Injectable({ providedIn: 'root' })
-export class NotificationsApi {
+export class NotificationsService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 
@@ -145,7 +145,7 @@ export class NotificationsApi {
 
 /** Own announcements feed (`/api/announcements`, any authenticated user). */
 @Injectable({ providedIn: 'root' })
-export class AnnouncementsApi {
+export class AnnouncementsService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 
@@ -168,7 +168,7 @@ export class AnnouncementsApi {
 
 /** Help/support requests (`/api/support`, any authenticated user). */
 @Injectable({ providedIn: 'root' })
-export class SupportApi {
+export class SupportService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

@@ -13,7 +13,7 @@ import {
 } from '../models/cohorts/cohorts';
 
 @Injectable({ providedIn: 'root' })
-export class CohortsApi {
+export class CohortsService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

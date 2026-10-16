@@ -20,7 +20,7 @@ package "Frontend — Portal application" {
     +submit(): void
     +renderResult(): void
   }
-  class "ConsentApi" as client_ConsentApi <<API client>> {
+  class "ConsentService" as client_ConsentApi <<API client>> {
     +execute(request): Observable
   }
 }

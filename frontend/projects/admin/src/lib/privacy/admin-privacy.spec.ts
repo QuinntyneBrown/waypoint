@@ -2,7 +2,7 @@ import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import type { ComponentFixture } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { PrivacyApi } from '@waypoint/api';
+import { PrivacyService } from '@waypoint/api';
 import type { AdminDataSubjectRequest } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { of } from 'rxjs';
@@ -49,7 +49,7 @@ describe('AdminPrivacyPage verified ownership controls', () => {
           },
         },
         {
-          provide: PrivacyApi,
+          provide: PrivacyService,
           useValue: {
             adminRequests: vi.fn(() => of({ items: [REQUEST], page: 1, pageSize: 25, total: 1 })),
             fulfill,

@@ -20,7 +20,7 @@ package "Frontend — Public Site application" {
     +submit(): void
     +renderResult(): void
   }
-  class "ApplicationsApi" as client_ApplicationsApi <<API client>> {
+  class "ApplicationsService" as client_ApplicationsApi <<API client>> {
     +execute(request): Observable
   }
 }

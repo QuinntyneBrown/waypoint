@@ -1,7 +1,7 @@
 import { DatePipe, DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiError, GuardianApi, GuardianConsentRecord } from '@waypoint/api';
+import { ApiError, GuardianService, GuardianConsentRecord } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 import { GuardianContextService } from '../guardian-context.service';
@@ -16,7 +16,7 @@ import { GuardianContextService } from '../guardian-context.service';
 export class GuardianConsent {
   protected readonly auth = inject(AuthStore);
   protected readonly context = inject(GuardianContextService);
-  private readonly api = inject(GuardianApi);
+  private readonly api = inject(GuardianService);
   private readonly fb = inject(FormBuilder);
   private readonly doc = inject(DOCUMENT);
 

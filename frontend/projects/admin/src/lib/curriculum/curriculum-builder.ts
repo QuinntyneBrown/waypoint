@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angula
 import {
   ApiError,
   AssignmentWorkspace,
-  CurriculumAuthoringApi,
+  CurriculumAuthoringService,
   LessonWorkspace,
   ModuleWorkspace,
   QuizDetail,
@@ -104,7 +104,7 @@ interface CurriculumAuthoringDraft {
 })
 export class CurriculumBuilderPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(CurriculumAuthoringApi);
+  private readonly api = inject(CurriculumAuthoringService);
   private readonly fb = inject(FormBuilder);
   private readonly drafts = inject(EditorDraftService);
   private readonly unsavedChanges = inject(UnsavedChangesService);

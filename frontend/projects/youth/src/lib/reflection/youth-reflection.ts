@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, LearningApi, ReflectionEditor, SaveReflectionInput } from '@waypoint/api';
+import { ApiError, LearningService, ReflectionEditor, SaveReflectionInput } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 import { catchError, map, Observable, of, tap } from 'rxjs';
@@ -42,7 +42,7 @@ const OPTIONAL_PROMPT = 'One action I will take';
 })
 export class YouthReflectionPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(LearningApi);
+  private readonly api = inject(LearningService);
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly drafts = inject(FormDraftService);

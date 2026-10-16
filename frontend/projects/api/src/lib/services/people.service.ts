@@ -11,7 +11,7 @@ import {
 
 /** Program-administration people directory (`/api/people`, admin only). */
 @Injectable({ providedIn: 'root' })
-export class PeopleApi {
+export class PeopleService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

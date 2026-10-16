@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { PasswordResetApi } from '@waypoint/api';
+import { PasswordResetService } from '@waypoint/api';
 
 // Traces to: L2-AUTH-005
 @Component({
@@ -12,7 +12,7 @@ import { PasswordResetApi } from '@waypoint/api';
 })
 export class ForgotPassword {
   private readonly fb = inject(FormBuilder);
-  private readonly api = inject(PasswordResetApi);
+  private readonly api = inject(PasswordResetService);
   private readonly router = inject(Router);
 
   protected readonly form = this.fb.nonNullable.group({

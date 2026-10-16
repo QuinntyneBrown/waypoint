@@ -18,7 +18,7 @@ skinparam package {
 actor "Program administrator" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "PeopleDirectory" as page
-  participant "PeopleApi" as client
+  participant "PeopleService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "OrgSettingsController" as controller

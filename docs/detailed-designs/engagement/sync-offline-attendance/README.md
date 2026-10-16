@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`AttendanceQueueService`](../../../../frontend/projects/volunteer/src/lib/attendance/attendance-queue.service.ts)<br>[`OfflineState`](../../../../frontend/projects/account/src/lib/states/offline/offline-state.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | `EngagementApi` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | `EngagementService` *(planned boundary)* | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`AttendanceController`](../../../../backend/src/Waypoint.Api/Controllers/Engagement/AttendanceController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`AttendanceHistoryBySessionQuery`](../../../../backend/src/Waypoint.Application/Engagement/Attendance/AttendanceHistoryBySessionQuery.cs)<br>[`AttendanceHistoryBySessionQueryHandler`](../../../../backend/src/Waypoint.Application/Engagement/Attendance/AttendanceHistoryBySessionQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`AttendanceRecord`](../../../../backend/src/Waypoint.Domain/Engagement/AttendanceRecord.cs)<br>[`Session`](../../../../backend/src/Waypoint.Domain/Engagement/Session.cs)<br>[`AttendanceStatus`](../../../../backend/src/Waypoint.Domain/Engagement/AttendanceStatus.cs)<br>[`AttendanceWriteReceipt`](../../../../backend/src/Waypoint.Domain/Engagement/AttendanceWriteReceipt.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `AttendanceQueueService.submit()` starts the browser interaction and maintains presentation state.
-- `EngagementApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `EngagementService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `AttendanceController.PostAsync()` applies transport policy and constructs `AttendanceHistoryBySessionQuery`.
 - `AttendanceHistoryBySessionQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `AttendanceRecord`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

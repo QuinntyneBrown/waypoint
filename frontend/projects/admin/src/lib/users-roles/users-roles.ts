@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, PeopleApi, PersonSummary, WRoleName } from '@waypoint/api';
+import { ApiError, PeopleService, PersonSummary, WRoleName } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WAvatar, WIcon, WShell } from '@waypoint/components';
 
@@ -47,7 +47,7 @@ const ROLES: readonly WRoleName[] = [
 })
 export class UsersRolesPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(PeopleApi);
+  private readonly api = inject(PeopleService);
   protected readonly roles = ROLES;
   protected readonly people = signal<PersonSummary[]>([]);
   protected readonly selectedRoles = signal<Record<string, string>>({});

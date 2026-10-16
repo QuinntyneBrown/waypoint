@@ -20,7 +20,7 @@ package "Frontend — Public Site application" {
     +submit(): void
     +renderResult(): void
   }
-  class "DisplayPreferencesApi" as client_DisplayPreferencesApi <<API client>> {
+  class "DisplayPreferencesService" as client_DisplayPreferencesApi <<API client>> {
     +execute(request): Observable
   }
 }

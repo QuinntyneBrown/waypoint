@@ -1,7 +1,7 @@
 import { DOCUMENT, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, MentorApi, MentorReviewPreview } from '@waypoint/api';
+import { ApiError, MentorService, MentorReviewPreview } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
 
@@ -40,7 +40,7 @@ import { WIcon, WShell } from '@waypoint/components';
 })
 export class MentorReviewsPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(MentorApi);
+  private readonly api = inject(MentorService);
   private readonly document = inject(DOCUMENT);
   protected readonly items = signal<MentorReviewPreview[] | null>(null);
   protected readonly errorMessage = signal<string | null>(null);

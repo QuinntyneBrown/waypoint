@@ -4,9 +4,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   AnnouncementRoleTarget,
-  AnnouncementsApi,
+  AnnouncementsService,
   ApiError,
-  CohortsApi,
+  CohortsService,
   CohortSummary,
   ManagedAnnouncement,
 } from '@waypoint/api';
@@ -103,8 +103,8 @@ import { finalize, forkJoin } from 'rxjs';
 })
 export class AdminAnnouncementsPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(AnnouncementsApi);
-  private readonly cohortsApi = inject(CohortsApi);
+  private readonly api = inject(AnnouncementsService);
+  private readonly cohortsApi = inject(CohortsService);
   private readonly fb = inject(FormBuilder);
 
   protected readonly announcements = signal<ManagedAnnouncement[] | undefined>(undefined);

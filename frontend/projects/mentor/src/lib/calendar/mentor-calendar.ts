@@ -6,7 +6,7 @@ import {
   CalendarSession,
   SessionCohortOption,
   SessionSchedulingOptions,
-  StaffOperationsApi,
+  StaffOperationsService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WRole, WShell } from '@waypoint/components';
@@ -111,7 +111,7 @@ type CalendarView = 'month' | 'week' | 'agenda';
 })
 export class MentorCalendarPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(StaffOperationsApi);
+  private readonly api = inject(StaffOperationsService);
 
   protected readonly options = signal<SessionSchedulingOptions | null>(null);
   protected readonly sessions = signal<CalendarSession[]>([]);

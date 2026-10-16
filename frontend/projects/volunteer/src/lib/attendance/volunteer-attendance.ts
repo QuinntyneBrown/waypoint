@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiError, VolunteerApi, VolunteerRosterEntry } from '@waypoint/api';
+import { ApiError, VolunteerService, VolunteerRosterEntry } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WShell } from '@waypoint/components';
 import {
@@ -86,7 +86,7 @@ interface AttendanceRow extends VolunteerRosterEntry {
 export class VolunteerAttendance implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);
   protected readonly queue = inject(AttendanceQueueService);
-  private readonly api = inject(VolunteerApi);
+  private readonly api = inject(VolunteerService);
   private readonly route = inject(ActivatedRoute);
   private readonly drafts = inject(EditorDraftService);
   private readonly unsavedChanges = inject(UnsavedChangesService);

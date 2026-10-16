@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`ConsentRequired`](../../../../frontend/projects/account/src/lib/states/consent-required/consent-required.ts)<br>[`SettingsDisplay`](../../../../frontend/projects/account/src/lib/settings/display/settings-display.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`ConsentApi`](../../../../frontend/projects/api/src/lib/services/consent-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`ConsentService`](../../../../frontend/projects/api/src/lib/services/consent.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`GuardianController`](../../../../backend/src/Waypoint.Api/Controllers/GuardianPortal/GuardianController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`GuardianConsentRecordQuery`](../../../../backend/src/Waypoint.Application/GuardianPortal/GuardianConsentRecordQuery.cs)<br>[`GuardianConsentRecordQueryHandler`](../../../../backend/src/Waypoint.Application/GuardianPortal/GuardianConsentRecordQueryHandler.cs)<br>[`GuardianConsentRecordView`](../../../../backend/src/Waypoint.Application/GuardianPortal/GuardianConsentRecordQuery.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`GuardianProfile`](../../../../backend/src/Waypoint.Domain/GuardianPortal/GuardianProfile.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `ConsentRequired.submit()` starts the browser interaction and maintains presentation state.
-- `ConsentApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `ConsentService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `GuardianController.PostAsync()` applies transport policy and constructs `GuardianConsentRecordQuery`.
 - `GuardianConsentRecordQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `GuardianProfile`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import {
   ApiError,
-  MentorApi,
+  MentorService,
   MentorDashboardView,
   MentorReviewPreview,
   MentorRosterYouth,
@@ -70,7 +70,7 @@ import { forkJoin } from 'rxjs';
 })
 export class MentorDashboardPage {
   protected readonly auth = inject(AuthStore);
-  private readonly api = inject(MentorApi);
+  private readonly api = inject(MentorService);
 
   protected readonly summary = signal<MentorDashboardView | null>(null);
   protected readonly youth = signal<MentorRosterYouth[]>([]);

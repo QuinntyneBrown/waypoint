@@ -1,10 +1,15 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { ApiError, GuardianApi, GuardianChildProgress, GuardianChildSummary } from '@waypoint/api';
+import {
+  ApiError,
+  GuardianService,
+  GuardianChildProgress,
+  GuardianChildSummary,
+} from '@waypoint/api';
 
 // Shared linked-child state across Guardian home/progress routes.
 @Injectable({ providedIn: 'root' })
 export class GuardianContextService {
-  private readonly api = inject(GuardianApi);
+  private readonly api = inject(GuardianService);
   private loaded = false;
 
   readonly children = signal<GuardianChildSummary[] | undefined>(undefined);

@@ -6,7 +6,7 @@ import { DisplayPreferences } from '../models/preferences/display-preferences';
 
 /** Per-user display & accessibility preferences (`/api/me/display-preferences`). */
 @Injectable({ providedIn: 'root' })
-export class DisplayPreferencesApi {
+export class DisplayPreferencesService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

@@ -23,7 +23,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | Layer | Components, types, and classes | Responsibility |
 | --- | --- | --- |
 | Frontend page | [`ServerError`](../../../../frontend/projects/account/src/lib/states/server-error/server-error.ts) | Collects feature input, invokes the typed client, and renders loading, success, empty, forbidden, and error states. |
-| Frontend API boundary | [`PublicSiteApi`](../../../../frontend/projects/api/src/lib/services/public-site-api.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
+| Frontend API boundary | [`PublicSiteService`](../../../../frontend/projects/api/src/lib/services/public-site.service.ts) | Serializes requests, deserializes typed results, and maps safe API errors for the page. |
 | API transport | [`ModulesController`](../../../../backend/src/Waypoint.Api/Controllers/CurriculumAuthoring/ModulesController.cs) | Applies endpoint authentication and policy, maps request contracts, and sends the application request through MediatR. |
 | Application slice | [`ListTracksQuery`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Curriculum/ListTracksQuery.cs)<br>[`ListTracksQueryHandler`](../../../../backend/src/Waypoint.Application/CurriculumAuthoring/Curriculum/ListTracksQueryHandler.cs) | Coordinates the use case, performs resource-level scoping, invokes domain behavior, and returns the result. |
 | Domain state | [`Track`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Track.cs)<br>[`Module`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Module.cs)<br>[`PublishStatus`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/PublishStatus.cs)<br>[`Assignment`](../../../../backend/src/Waypoint.Domain/CurriculumAuthoring/Assignment.cs) | Holds persistent state and lifecycle invariants used by the feature. |
@@ -32,7 +32,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 ### Functions and data flow
 
 - `ServerError.submit()` starts the browser interaction and maintains presentation state.
-- `PublicSiteApi.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
+- `PublicSiteService.execute()` crosses the frontend-to-backend boundary with a typed HTTP request.
 - `ModulesController.PostAsync()` applies transport policy and constructs `ListTracksQuery`.
 - `ListTracksQueryHandler.Handle()` loads authorized state through `IAppDbContext`, applies feature rules through `Track`, and returns a typed result.
 - `IAppDbContext.SaveChangesAsync()` commits one unit of work when the feature changes state. Read-only flows use bounded, no-tracking projections.

@@ -11,7 +11,7 @@ import {
 
 /** Current-user profile + credentials (`/api/me/*`, any authenticated user). */
 @Injectable({ providedIn: 'root' })
-export class ProfileApi {
+export class ProfileService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

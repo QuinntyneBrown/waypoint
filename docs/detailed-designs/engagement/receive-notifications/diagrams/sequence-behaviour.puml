@@ -18,7 +18,7 @@ skinparam package {
 actor "Authenticated participant" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "SettingsNotifications" as page
-  participant "NotificationsApi" as client
+  participant "NotificationsService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "NotificationsController" as controller

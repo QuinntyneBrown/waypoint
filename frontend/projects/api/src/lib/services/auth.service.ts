@@ -10,7 +10,7 @@ import { AuthResult, RefreshRequest, RegisterRequest, SignInRequest } from '../m
  * it exists here for the e2e data channel and future flows.
  */
 @Injectable({ providedIn: 'root' })
-export class AuthApi {
+export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

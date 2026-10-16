@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ApiError, ConsentApi } from '@waypoint/api';
+import { ApiError, ConsentService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WStatePage } from '@waypoint/components';
 
@@ -37,7 +37,7 @@ import { WStatePage } from '@waypoint/components';
   </w-state-page>`,
 })
 export class ConsentRequired {
-  private readonly api = inject(ConsentApi);
+  private readonly api = inject(ConsentService);
   private readonly auth = inject(AuthStore);
   protected readonly notifying = signal(false);
   protected readonly deliveryMessage = signal<string | null>(null);

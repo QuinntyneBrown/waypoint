@@ -9,7 +9,12 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiError, isPasswordCompliant, PASSWORD_POLICY_MESSAGE, ProfileApi } from '@waypoint/api';
+import {
+  ApiError,
+  isPasswordCompliant,
+  PASSWORD_POLICY_MESSAGE,
+  ProfileService,
+} from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { ToastService, WIcon } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
@@ -23,7 +28,7 @@ import { SettingsShell } from '../settings-shell';
 })
 export class SettingsProfile implements OnDestroy {
   private readonly fb = inject(FormBuilder);
-  private readonly api = inject(ProfileApi);
+  private readonly api = inject(ProfileService);
   private readonly auth = inject(AuthStore);
   private readonly toasts = inject(ToastService);
   private readonly document = inject(DOCUMENT);

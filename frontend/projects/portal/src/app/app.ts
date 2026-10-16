@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, effect, EnvironmentInjector, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DisplayPreferencesApi } from '@waypoint/api';
+import { DisplayPreferencesService as DisplayPreferencesApiService } from '@waypoint/api';
 import { SessionStore } from '@waypoint/auth';
 import { WToastHost } from '@waypoint/components';
 import { DisplayPreferencesService, IdleSessionService } from '@waypoint/core';
@@ -15,7 +15,7 @@ const NON_CRITICAL_RUNTIME_DELAY_MS = 1_500;
 })
 export class App {
   private readonly session = inject(SessionStore);
-  private readonly displayApi = inject(DisplayPreferencesApi);
+  private readonly displayApi = inject(DisplayPreferencesApiService);
   private readonly applier = inject(DisplayPreferencesService);
   private readonly environment = inject(EnvironmentInjector);
   private readonly window = inject(DOCUMENT).defaultView;

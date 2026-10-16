@@ -18,7 +18,7 @@ skinparam package {
 actor "Account holder" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "ResetPassword" as page
-  participant "PasswordResetApi" as client
+  participant "PasswordResetService" as client
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "PasswordResetController" as controller

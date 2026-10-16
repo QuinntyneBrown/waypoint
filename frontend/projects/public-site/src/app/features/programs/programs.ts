@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ApiError, PublicContentView, PublicSiteApi } from '@waypoint/api';
+import { ApiError, PublicContentView, PublicSiteService } from '@waypoint/api';
 
 // Traces to: L2-PUB-002
 @Component({
@@ -10,7 +10,7 @@ import { ApiError, PublicContentView, PublicSiteApi } from '@waypoint/api';
   templateUrl: './programs.html',
 })
 export class Programs {
-  private readonly api = inject(PublicSiteApi);
+  private readonly api = inject(PublicSiteService);
 
   protected readonly content = signal<PublicContentView | null>(null);
   protected readonly loading = signal(true);

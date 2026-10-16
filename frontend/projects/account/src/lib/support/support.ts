@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { ApiError, SUPPORT_CATEGORIES, SupportApi, SupportScreenshot } from '@waypoint/api';
+import { ApiError, SUPPORT_CATEGORIES, SupportService, SupportScreenshot } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import { WIcon, WShell } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
@@ -23,7 +23,7 @@ import { shellRole } from '@waypoint/core';
 })
 export class Support implements OnDestroy {
   private readonly fb = inject(FormBuilder);
-  private readonly api = inject(SupportApi);
+  private readonly api = inject(SupportService);
   private readonly auth = inject(AuthStore);
   private readonly document = inject(DOCUMENT);
   private previewObjectUrl: string | undefined;

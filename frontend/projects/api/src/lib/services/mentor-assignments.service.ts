@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../api-base-url';
 import { MentorAssignmentOverview } from '../models/mentor-assignments/mentor-assignments';
 
 @Injectable({ providedIn: 'root' })
-export class MentorAssignmentsApi {
+export class MentorAssignmentsService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 

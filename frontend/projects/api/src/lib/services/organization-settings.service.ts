@@ -11,7 +11,7 @@ import {
 } from '../models/settings/organization-settings';
 
 @Injectable({ providedIn: 'root' })
-export class OrganizationSettingsApi {
+export class OrganizationSettingsService {
   private readonly http = inject(HttpClient);
   private readonly base = inject(API_BASE_URL);
 
