@@ -17,10 +17,10 @@
     <button
       class="w-iconbtn"
       type="button"
-      aria-label="Account"
       [attr.aria-expanded]="accountOpen()"
       (click)="toggleAccount()"
     >
+      <span class="w-shell__account-label">Account</span>
       <w-avatar [name]="userName()" size="sm" />
     </button>
   </div>

@@ -34,6 +34,17 @@ import { isNavGroup, W_NAV, W_ROLE_LABEL, WNavItem, WRole } from './nav-config';
     '[class.is-offline]': 'showOffline()',
   },
   templateUrl: './w-shell.html',
+  // Visually hidden name, so the visible avatar initials don't contradict an aria-label.
+  styles: `
+    .w-shell__account-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  `,
 })
 export class WShell {
   readonly role = input.required<WRole>();
