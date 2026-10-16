@@ -16,7 +16,7 @@ Waypoint is a youth leadership platform for Bible study, mentoring, leadership d
 
 Waypoint is designed to bring youth applications, consent and safeguarding, cohort operations, learning, mentoring, attendance, communication, and reporting into one role-aware system. It serves youth, mentors, guardians, volunteers, program administrators, and public visitors.
 
-The repository contains a .NET 9 API and operational CLI, an Angular 21 authenticated portal and public SSR site, shared frontend libraries, SQL Server persistence, automated acceptance tests, and static interaction references. The product scope comes from the [product requirements](docs/PRD.md) and 88 in-scope, acceptance-testable requirements under [`docs/specs`](docs/specs/README.md).
+The repository contains a .NET 9 API and operational CLI, an Angular 21 authenticated portal and public SSR site, layered frontend feature and component libraries, SQL Server persistence, automated acceptance tests, and static interaction references. The product scope comes from the [product requirements](docs/PRD.md) and 88 in-scope, acceptance-testable requirements under [`docs/specs`](docs/specs/README.md).
 
 ## Capabilities
 
@@ -76,7 +76,7 @@ npm --prefix frontend run start:public
 | Health checks        | `http://127.0.0.1:5211/health`       |
 | Readiness check      | `http://127.0.0.1:5211/health/ready` |
 
-Both web applications proxy `/api` and `/hubs` to the API. Development starts with an empty, process-local database and does not create demo accounts outside the `Testing` environment. This quick start lets you inspect the API, browse the public site, and reach the portal sign-in screen; it does not bootstrap an authenticated user. The HTML files under [`docs/mocks`](docs/mocks/README.md) are interaction references, not the running application.
+Both web applications proxy `/api`, `/hubs`, and `/health` to the API. Development starts with an empty, process-local database and does not create demo accounts outside the `Testing` environment. This quick start lets you inspect the API, browse the public site, and reach the portal sign-in screen; it does not bootstrap an authenticated user. The HTML files under [`docs/mocks`](docs/mocks/README.md) are interaction references, not the running application.
 
 ### Configuration
 
@@ -137,42 +137,50 @@ npm run e2e:ci
 npm run e2e:performance
 ```
 
-`npm run api:build` creates the Debug API build expected by the Playwright web server on a clean checkout. The [backend](.github/workflows/backend.yml), [frontend](.github/workflows/frontend.yml), and [performance](.github/workflows/performance.yml) workflows define the authoritative CI gates, including the SQL-backed API load profile. See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and change-specific test expectations.
+`npm run api:build` creates the Debug API build that the Playwright web server starts on a clean checkout. The [backend](.github/workflows/backend.yml), [frontend](.github/workflows/frontend.yml), and [performance](.github/workflows/performance.yml) workflows define the authoritative CI gates, including the SQL-backed API load profile. See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and change-specific test expectations.
 
 ## Repository layout
 
 ```text
 backend/
-  src/                 Domain, Application, Infrastructure, API, and operational CLI
-  tests/               Unit and SQL-backed integration tests
+  src/                     Domain, Application, Infrastructure, API, and operational CLI
+  tests/                   Unit and SQL-backed integration tests
 frontend/
-  projects/portal/     Authenticated role-aware application
-  projects/public-site/ SSR public site and intake experience
-  projects/w-api/     Typed API client and models
-  projects/w-auth/    Session state, guards, and authentication integration
-  projects/w-ui/      Shared design system and application shell
-  e2e/                 Playwright acceptance and quality gates
+  projects/portal/         Authenticated role-aware application
+  projects/public-site/    SSR public site and intake experience
+  projects/api/            @waypoint/api: typed API client and models
+  projects/components/     @waypoint/components: presentation components and application shell
+  projects/auth/           @waypoint/auth: session state, guards, and sign-in pages
+  projects/core/           @waypoint/core: portal-wide services, realtime, and offline attendance
+  projects/account/        @waypoint/account: settings, onboarding, help, and state pages
+  projects/<role>/         youth, mentor, admin, guardian, and volunteer feature libraries
+  e2e/                     Playwright acceptance and quality gates
 docs/
-  specs/               L1/L2 requirements and acceptance criteria
-  detailed-designs/    Feature-level designs and diagrams
-  mocks/               Static interaction references
-scripts/               Traceability, documentation, and performance tooling
+  specs/                   L1/L2 requirements and acceptance criteria
+  detailed-designs/        Feature-level designs and diagrams
+  mocks/                   Static interaction references
+  design-system/           Design tokens, foundations, components, and patterns
+  estimates/               Per-subsystem effort and completion estimates
+scripts/                   Requirements traceability and performance tooling
 ```
 
 ## Documentation
 
-| Document                                             | Purpose                                                           |
-| ---------------------------------------------------- | ----------------------------------------------------------------- |
-| [Implementation status](docs/implementation-plan.md) | Implemented boundary, verification commands, and release work     |
-| [Product requirements](docs/PRD.md)                  | Product goals, users, scope, and constraints                      |
-| [Requirements specification](docs/specs/README.md)   | Stable requirement IDs, acceptance criteria, and traceability     |
-| [Architecture](docs/ARCHITECTURE.md)                 | System layers, request flow, persistence, and security boundaries |
-| [Architecture decisions](docs/DECISIONS.md)          | Durable technical and product decisions                           |
-| [Frontend guide](frontend/README.md)                 | Angular applications, libraries, and frontend commands            |
-| [Operational CLI](backend/src/Waypoint.Cli/README.md)  | CLI commands and production configuration                         |
-| [Design references](docs/mocks/README.md)            | Static product map and role-based interaction references          |
-| [Waypoint in pictures](docs/waypoint-in-pictures.html) | Plain-language picture explainer of what the repository does and how it is built; open the file locally in a browser |
-| [Changelog](CHANGELOG.md)                            | Notable contributor-visible changes                               |
+| Document                                               | Purpose                                                           |
+| ------------------------------------------------------ | ----------------------------------------------------------------- |
+| [Implementation status](docs/implementation-plan.md)   | Implemented boundary, verification commands, and release work     |
+| [Product requirements](docs/PRD.md)                    | Product goals, users, scope, and constraints                      |
+| [Requirements specification](docs/specs/README.md)     | Stable requirement IDs, acceptance criteria, and traceability     |
+| [Architecture](docs/ARCHITECTURE.md)                   | System layers, request flow, persistence, and security boundaries |
+| [Architecture decisions](docs/DECISIONS.md)            | Durable technical and product decisions                           |
+| [Design system](docs/design-system/README.md)          | Tokens, foundations, components, and patterns used by the mocks   |
+| [Design references](docs/mocks/README.md)              | Static product map and role-based interaction references          |
+| [Estimates](docs/estimates/README.md)                  | Per-subsystem effort, percent complete, and roadmap               |
+| [Frontend guide](frontend/README.md)                   | Angular applications, libraries, and frontend commands            |
+| [Operational CLI](backend/src/Waypoint.Cli/README.md)  | `way` CLI commands and production configuration                   |
+| [Demo plan](docs/demo-plan.md)                         | Scripted 15- and 30-minute stakeholder walkthrough                |
+| [Waypoint in pictures](docs/waypoint-in-pictures.html) | Plain-language visual overview; open the file in a browser        |
+| [Changelog](CHANGELOG.md)                              | Notable contributor-visible changes                               |
 
 ## Contributing
 

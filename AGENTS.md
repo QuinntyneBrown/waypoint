@@ -1,13 +1,19 @@
 ## Project Overview
 
-This repository is `waypoint`.
-It is built with dotnet.
+This repository is `waypoint`, a youth leadership platform.
+It is built with a .NET 9 backend (`backend/`) and an Angular 21 frontend (`frontend/`).
 
 ## Commands
 
+Run from the repository root unless noted.
+
+- Restore: `dotnet tool restore && dotnet restore backend/Waypoint.sln`
 - Build: `dotnet build backend/Waypoint.sln --no-restore --configuration Release`
 - Test: `dotnet test backend/Waypoint.sln --no-build --configuration Release --logger "trx;LogFileName=test.trx"`
-- Lint: `npm run format:check`
+- Traceability: `node scripts/check-traceability.mjs --strict`
+- Frontend (from `frontend/`): `npm ci`, `npm run build`, `npm test`, `npm run e2e:ci`
+- Lint (from `frontend/`): `npm run format:check`, `npm run lint`
+- Storybook (from `frontend/`): `npm run storybook`, `npm run build-storybook`
 
 ## Project Structure
 
@@ -22,7 +28,9 @@ It is built with dotnet.
 - `backend/src/`
 - `backend/tests/`
 - `docs/`
+- `docs/design-system/`
 - `docs/detailed-designs/`
+- `docs/estimates/`
 - `docs/mocks/`
 - `docs/specs/`
 - `frontend/`
@@ -34,8 +42,10 @@ It is built with dotnet.
 
 ## Testing
 
-- Tests use nunit.
-- Run them with `dotnet test backend/Waypoint.sln --no-build --configuration Release --logger "trx;LogFileName=test.trx"`.
+- Backend tests use NUnit. Run them with `dotnet test backend/Waypoint.sln --no-build --configuration Release --logger "trx;LogFileName=test.trx"`.
+- Integration tests use SQL Server: `(localdb)\MSSQLLocalDB` by default, or set `WAYPOINT_TEST_SQLSERVER` and `WAYPOINT_TEST_SQLAUTH`.
+- Frontend unit tests use Vitest (`npm test` from `frontend/`).
+- Frontend acceptance tests use Playwright (`npm run e2e:ci` from `frontend/`).
 
 ## Git Workflow
 
