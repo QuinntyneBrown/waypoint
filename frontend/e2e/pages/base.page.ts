@@ -19,4 +19,14 @@ export abstract class BasePage {
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
   }
+
+  /** The page canvas colour: the computed `<body>` background (theme check). */
+  canvasBackground(): Promise<string> {
+    return this.page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  }
+
+  /** The `color-scheme` in effect on the document root (native controls). */
+  colorScheme(): Promise<string> {
+    return this.page.evaluate(() => getComputedStyle(document.documentElement).colorScheme);
+  }
 }
