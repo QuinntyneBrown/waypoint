@@ -20,7 +20,7 @@ Role feature libraries never import each other; where one role reuses another ro
 
 ## Prerequisites
 
-Use Node.js `^20.19.0`, `^22.12.0`, or `>=24.0.0` and npm 10.9.4. From this directory, install the locked dependencies with:
+Use Node.js `^22.12.0` or `>=24.0.0` and npm 10.9.4. From this directory, install the locked dependencies with:
 
 ```bash
 npm ci
