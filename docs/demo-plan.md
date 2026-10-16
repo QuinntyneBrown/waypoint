@@ -385,7 +385,6 @@ These are the things that will actually bite you. Read this section before your 
 
 | Risk | Why it happens | What to do |
 |---|---|---|
-| **A minor's application cannot be approved** | Approval requires a recorded guardian consent, and there is no implemented path to record consent for an applicant who has no account yet. Applications accept ages **12–18**; only an **18-year-old** can be approved end to end. | Use **age 18** for the live intake beat. Demo the consent gate separately through Imani and Ruth (§5), where it works properly. |
 | **Demo data vanishes** | The default database is in-memory and dies with the API process. | Use SQL Server (§4.2). |
 | **Invitation link is unobtainable** | `Smtp:Enabled` is `false` by default and the transport throws; the fallback sender logs no token. | Run a mail catcher (§4.3), or skip the invite beat — every persona has a password. |
 | **Cohort creation fails** | `way cohort create` requires a **published** track id and an **active mentor** id. | The seed script publishes track, module, and lessons before creating the cohort. Keep that order. |
