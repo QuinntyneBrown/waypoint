@@ -115,8 +115,7 @@ export ConnectionStrings__Default='Server=localhost;Database=WaypointDemo;Truste
 
 Invitation links, password resets, and consent request links are **emailed**. With the shipped
 defaults (`Smtp:Enabled = false`) the SMTP transport throws and **no link is ever retrievable** —
-the default `LoggingEmailSender` logs only "Email queued through the configured delivery channel",
-with no token. If you plan to show invitation acceptance, you need a catcher.
+nothing is delivered and no log line carries a token. If you plan to show invitation acceptance, you need a catcher.
 
 ```bash
 # e.g. smtp4dev on 2525, web UI on 5000
@@ -148,7 +147,7 @@ npm --prefix frontend run start:public
 
 ### 4.5 Seed the skeleton
 
-Save as `scripts/demo/seed-demo.sh`. It builds everything that cannot be created quickly by hand:
+Save the script below as `seed-demo.sh` (it is deliberately not committed to the repository). It builds everything that cannot be created quickly by hand:
 the operator account, a published curriculum, the staff accounts, and the cohort.
 
 ```bash
@@ -263,7 +262,7 @@ rehearsal. Do these in order, ~10 minutes:
 | 1 | Amara | Complete **lesson 1**, take the quiz, **pass** it | The on-track youth with real progress |
 | 2 | David | Open the quiz, answer wrong, **fail** it | The struggling youth with evidence |
 | 3 | Grace | Open David → raise a **risk flag**, log a **check-in** | The mentor's early-warning trail |
-| 4 | Grace | Schedule a **session** this week; mark David absent for a past one | Attendance history + something for Sam |
+| 4 | Grace | Schedule a **session** this week; mark David absent for a past one | Attendance history (Sam's assignment is seeded only; see §6.1) |
 | 5 | Amara | Start (don't finish) **lesson 2** | A live finish during the demo → badge |
 
 > **Guardian linkage.** The seed script already links Ruth to Imani with
@@ -402,7 +401,7 @@ These are the things that will actually bite you. Read this section before your 
 ```bash
 # Destructive — drops and recreates the demo database, then re-seeds from scratch.
 dotnet run --project backend/src/Waypoint.Cli -- db reset --confirm RESET
-./scripts/demo/seed-demo.sh
+./seed-demo.sh   # the script saved in §4.5
 ```
 
 `db reset` refuses to run without the exact option `--confirm RESET`. Make sure
