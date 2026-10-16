@@ -983,6 +983,21 @@ legend {
   color: var(--w-on-lime);
   border-color: transparent;
 }
+/* Primary buttons on a lime card would be lime-on-lime; invert them. */
+.w-card--lime .w-btn--primary {
+  background: var(--w-ink);
+  color: var(--w-white);
+}
+.w-card--lime .w-btn--primary:hover {
+  background: var(--w-ink-80);
+}
+/* Headings default to ink; on an ink card they must follow the card colour. */
+.w-card--ink :is(h1, h2, h3, h4, h5, h6) {
+  color: inherit;
+}
+.w-card--ink .w-eyebrow {
+  color: color-mix(in srgb, var(--w-white) 75%, transparent);
+}
 .w-card--flat {
   border: 0;
   background: var(--w-surface);
