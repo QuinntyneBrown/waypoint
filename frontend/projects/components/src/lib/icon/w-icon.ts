@@ -16,7 +16,7 @@ import { W_ICONS } from './w-icons';
  * written to the svg via a browser-only `afterRenderEffect`. This keeps the
  * component SSR-safe — the server renders an empty svg (no innerHTML on the
  * server DOM), the browser fills it after hydration — and avoids any
- * sanitizer bypass (Risks #11).
+ * sanitizer bypass for user content.
  */
 @Component({
   selector: 'w-icon',

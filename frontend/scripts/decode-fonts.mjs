@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // One-time / reproducible: decode the six base64 `data:font/woff2` URIs in
-// docs/mocks/assets/css/_fonts.css into real .woff2 binaries under an app's
+// docs/design-system/assets/fonts.css into real .woff2 binaries under an app's
 // public/fonts/ directory. Keeps ~178 KB of base64 out of the JS/CSS bundle.
 // Idempotent.
 //
@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FRONTEND = join(HERE, '..');
 const REPO = join(FRONTEND, '..');
-const SRC = join(REPO, 'docs', 'mocks', 'assets', 'css', '_fonts.css');
+const SRC = join(REPO, 'docs', 'design-system', 'assets', 'fonts.css');
 const target = process.argv[2] ?? join(FRONTEND, 'projects', 'portal', 'public', 'fonts');
 
 const slug = (family) =>

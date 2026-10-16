@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // Reproducible: extract the ICONS map from docs/mocks/assets/js/waypoint.js into a
-// typed TS registry consumed by w-ui's <w-icon>. The icon inner-SVG markup is
+// typed TS registry consumed by the components library's <w-icon>. The icon inner-SVG markup is
 // a build-time constant from our own design system (never user input), so it is
-// safe to render via bypassSecurityTrustHtml in the component (Risks #11 forbids
-// bypass on USER content only).
+// safe to render via bypassSecurityTrustHtml in the component (bypass is forbidden on
+// USER content only).
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
