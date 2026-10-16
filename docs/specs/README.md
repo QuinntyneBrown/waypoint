@@ -36,7 +36,7 @@ Features intentionally excluded from v1 are recorded in **`out-of-scope.md`**, w
 
 ## ATDD convention
 
-Every acceptance test must carry a trace header identifying the L2(s) it covers, e.g. `// Traces to: L2-AUTH-001` (TypeScript) or `# Traces to: L2-AUTH-001` (Python). The trace comment is mandatory — it is how requirement coverage is verified.
+Every acceptance test must carry a trace header identifying the L2(s) it covers, e.g. `// Traces to: L2-AUTH-001` (frontend e2e) or `[Property("Req", "L2-AUTH-001")]` (backend NUnit). The trace comment is mandatory — it is how requirement coverage is verified.
 
 ## Source
 
