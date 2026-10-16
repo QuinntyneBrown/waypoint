@@ -2198,3 +2198,15 @@ pre {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Button rows: a gap between actions wherever .w-actions is used. */
+.w-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--w-s3);
+}
+
+.w-actions--between {
+  justify-content: space-between;
+}
