@@ -53,7 +53,8 @@ public class PreferencesController : ControllerBase
                 request.HighContrast,
                 request.ReduceMotion,
                 request.UnderlineLinks,
-                request.ReadingFont),
+                request.ReadingFont,
+                request.Theme ?? "system"),
             cancellationToken);
         return Ok(result);
     }

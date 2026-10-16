@@ -25,12 +25,13 @@ public class DisplayPreferenceQueryHandler : IRequestHandler<DisplayPreferenceQu
 
         // Defaults when the user has never saved a preference.
         return pref is null
-            ? new DisplayPreferenceView(100, false, false, false, null)
+            ? new DisplayPreferenceView(100, false, false, false, null, "system")
             : new DisplayPreferenceView(
                 pref.TextScalePercent,
                 pref.HighContrast,
                 pref.ReduceMotion,
                 pref.UnderlineLinks,
-                pref.ReadingFont);
+                pref.ReadingFont,
+                pref.Theme);
     }
 }

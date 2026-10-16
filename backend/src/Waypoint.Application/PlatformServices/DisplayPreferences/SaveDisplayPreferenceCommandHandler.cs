@@ -38,6 +38,7 @@ public class SaveDisplayPreferenceCommandHandler
         pref.ReduceMotion = request.ReduceMotion;
         pref.UnderlineLinks = request.UnderlineLinks;
         pref.ReadingFont = request.ReadingFont;
+        pref.Theme = request.Theme;
         pref.UpdatedAt = _clock.UtcNow;
 
         await _db.SaveChangesAsync(cancellationToken);
@@ -47,6 +48,7 @@ public class SaveDisplayPreferenceCommandHandler
             pref.HighContrast,
             pref.ReduceMotion,
             pref.UnderlineLinks,
-            pref.ReadingFont);
+            pref.ReadingFont,
+            pref.Theme);
     }
 }

@@ -2072,6 +2072,11 @@ namespace Waypoint.Infrastructure.Migrations
                     b.Property<int>("TextScalePercent")
                         .HasColumnType("int");
 
+                    b.Property<string>("Theme")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
                     b.Property<bool>("UnderlineLinks")
                         .HasColumnType("bit");
 
