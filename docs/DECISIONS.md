@@ -105,3 +105,11 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** The tiers disagreed between the mock ($25/$60/$150) and the code ($20/$50/$100). The code and its tests are the shipped behavior, so the mock follows it.
 
 **Consequences.** The provider has not been chosen: `donate.ts` still hands off to the placeholder `https://donate.example-pci-provider.org/waypoint`. The product owner must supply the real provider and URL before production; that is a one-line change to `providerUrl`.
+
+## 14. Spec Appendix A values are confirmed as built
+
+**Decision.** The ten values in `docs/specs/README.md` Appendix A are accepted as implemented: cohort status from one source (A-1), youth ages 12-18 (A-2), 14-day invitation expiry (A-3), passwords of 8+ characters with a letter and a number (A-4), the six system roles (A-5), best passing quiz attempt (A-6), single-source progress counts (A-7), no federated sign-in (A-8), external-provider monthly donations (A-9, DECISIONS #13) and System/Light/Dark themes (A-10).
+
+**Why.** Implementation is complete and every value is covered by tests; leaving the appendix titled "to Confirm" implied unfinished sign-off.
+
+**Consequences.** Changing any value now is a normal requirement change (L2, design, mock, tests), not a pending confirmation.

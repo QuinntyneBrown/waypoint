@@ -44,9 +44,9 @@ Requirements are derived from the **Waypoint PRD** (`docs/PRD.md`), the single s
 
 ---
 
-## Appendix A — Product Decisions to Confirm
+## Appendix A — Product Decisions (confirmed as built)
 
-Each item below is the **canonical rule now stated in the owning subsystem's L2**; the product owner should confirm the chosen value before implementation.
+Each item below is the **canonical rule now stated in the owning subsystem's L2**; these values are the implemented behavior and are recorded as confirmed in DECISIONS #14.
 
 - **A-1 · Cohort status.** Cohort status has a single authoritative source (see `public-site/L2.md` L2-PUB-002).
 - **A-2 · Youth eligibility age.** Ages **12–18 inclusive** (see `application-intake/L2.md` L2-INTAKE-001).
