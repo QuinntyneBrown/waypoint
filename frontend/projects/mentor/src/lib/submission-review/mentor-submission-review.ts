@@ -11,7 +11,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, MentorService, SubmissionReviewView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import { WIcon, WShell } from '@waypoint/components';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { UnsavedChangesAware, DraftSaveResult, UnsavedChangesService } from '@waypoint/core';
 
@@ -27,7 +27,7 @@ interface GradingDraft {
 @Component({
   selector: 'w-mentor-submission-review',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DatePipe],
+  imports: [WShell, RouterLink, DatePipe, WIcon],
   templateUrl: './mentor-submission-review.html',
   styles: `
     .review-layout {

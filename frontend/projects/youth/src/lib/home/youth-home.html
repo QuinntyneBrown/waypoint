@@ -21,7 +21,7 @@
       @if (!view.placed) {
         <div class="w-empty">
           <div class="w-empty__icon">
-            <svg class="w-icon"><use href="#i-users"></use></svg>
+            <w-icon name="users" />
           </div>
           <h2 class="w-empty__title">You’re not in a cohort yet</h2>
           <p class="w-empty__text">
@@ -29,7 +29,7 @@
             journey unlock here. Reach out if you have questions.
           </p>
           <a class="w-btn w-btn--primary" routerLink="/youth/messages">
-            <svg class="w-icon"><use href="#i-message-square"></use></svg>Message your mentor
+            <w-icon name="message-square" />Message your mentor
           </a>
         </div>
       } @else {

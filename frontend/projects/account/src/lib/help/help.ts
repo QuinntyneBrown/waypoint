@@ -16,8 +16,10 @@ import { helpTopicsFor } from './help-content';
       max-width: 44rem;
       position: relative;
     }
-    .help-search w-icon {
+    .help-search__icon {
       left: var(--w-s4);
+      display: grid;
+      pointer-events: none;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);

@@ -26,9 +26,7 @@
             }
           </p>
           @if (session.location) {
-            <p>
-              <svg class="w-icon"><use href="#i-map-pin"></use></svg> {{ session.location }}
-            </p>
+            <p><w-icon name="map-pin" /> {{ session.location }}</p>
           }
           <p>{{ session.rosterCount }} on the roster</p>
           <a
@@ -42,7 +40,7 @@
     } @else {
       <div class="w-empty">
         <div class="w-empty__icon">
-          <svg class="w-icon"><use href="#i-calendar"></use></svg>
+          <w-icon name="calendar" />
         </div>
         <h3 class="w-empty__title">No session today</h3>
         <p class="w-empty__text">
