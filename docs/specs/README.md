@@ -59,7 +59,7 @@ Each item below is the **canonical rule now stated in the owning subsystem's L2*
 - **A-8 · Federated sign-in.** Google/federated sign-in is **out of scope for v1** (see `out-of-scope.md`); v1 uses email/password invite-based authentication.
 - **A-9 · Donations.** The donation pathway uses an **external PCI-compliant provider** (no card data stored); the recurring/monthly-tier model is a product decision to confirm (see `public-site/L2.md` L2-PUB-003).
 - **A-10 · Theme.** Light and dark themes are **in scope**: each user chooses System (default, follows the device), Light, or Dark in Display settings (see `platform-services/L2.md` L2-PLATFORM-013).
-- **A-11 · Tenancy model.** Shared database with an organization identifier on every organization-owned row; each user belongs to **exactly one organization**; sign-in emails stay unique platform-wide (see `tenancy/L2.md` L2-TENANCY-001, L2-TENANCY-002). Which organization receives public-site applications, volunteer sign-ups, contact requests, and donations is a product decision to confirm before those flows are made tenant-aware.
+- **A-11 · Tenancy model.** Shared database with an organization identifier on every organization-owned row; each user belongs to **exactly one organization**; sign-in emails stay unique platform-wide (see `tenancy/L2.md` L2-TENANCY-001, L2-TENANCY-002). Public-site applications, volunteer sign-ups, contact requests, and donation pledges belong to the **default organization** (the original organization, see L2-TENANCY-009), configurable per deployment (see L2-TENANCY-001).
 
 ## Appendix B — Cross-subsystem dependency notes
 

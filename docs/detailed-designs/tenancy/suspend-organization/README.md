@@ -25,7 +25,7 @@ The slice adds two actions to the Organizations screen and two endpoints to the 
 | Frontend dialog | `ConfirmSuspendOrganizationDialog` | Names the organization and states that its users lose access immediately. It requires an explicit confirm. Focus returns to the row action on close. |
 | Frontend API boundary | `OrganizationsService` | Adds `suspend(id)` and `reactivate(id)`. |
 | API transport | `OrganizationsController` | Adds `POST /api/platform/organizations/{id}/suspend` and `POST /{id}/reactivate` under the `ManageOrganizations` policy. |
-| Application | `SuspendOrganizationCommand` and `ReactivateOrganizationCommand` with handlers | Load the organization, apply the transition, write `organization.suspended` or `organization.reactivated` to the audit log, and save in one unit of work. |
+| Application | `SuspendOrganizationCommand` and `ReactivateOrganizationCommand` with handlers | Load the organization, apply the transition, write `organization.suspended` or `organization.reactivated` to the audit log, and save in one unit of work. The reactivation handler also cancels stale reminders in the same unit of work. |
 | Domain | `Organization` | Gains `Suspend()` and `Reactivate()`. Each is a no-op when the organization is already in the target state, so retries are safe. |
 | API | `OrganizationStatusMiddleware` | Introduced by the isolation slice. It reads `Organization.Status` from the same projection that `OnTokenValidated` loads. A suspended organization yields `403` with problem type `organization-suspended` on the next request (`L2-TENANCY-002` criterion 4). |
 | Application | Sign-in handler | Rejects sign-in for a user of a suspended organization with the existing account-deactivated outcome. |
@@ -36,7 +36,7 @@ The slice adds two actions to the Organizations screen and two endpoints to the 
 
 - Suspension does not bump each user's `SessionVersion`. The per-request status check rejects existing tokens without writing to every user row, and reactivation restores them while they remain unexpired.
 - Each request already loads one user projection in `OnTokenValidated`. This slice joins the organization status into that projection, so the status check adds no extra database round trip.
-- Reminders that fall due during suspension stay unclaimed. After reactivation, rows that are still due are delivered on the next poll. `<TO SUPPLY>`: whether reminders more than 24 hours past due shall be cancelled on reactivation instead of delivered late.
+- Reminders that fall due during suspension stay unclaimed. On reactivation, `ReactivateOrganizationCommandHandler` cancels the organization's undelivered `ScheduledNotification` rows that fell due more than 24 hours earlier, by setting `CancelledAt`. A reminder for a session that has already happened is noise. Rows that are still due, or that fell due less than 24 hours ago, are delivered on the next poll (`L2-TENANCY-005` criterion 5). Queued `OutboundEmail` rows, such as invitations, are never cancelled and are sent on the next poll.
 
 ### Behavior
 

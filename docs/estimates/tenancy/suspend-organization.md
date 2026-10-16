@@ -11,16 +11,17 @@ The estimate assumes an intermediate full-stack developer in ASP.NET Core 9 and 
 | `Organization.Suspend()` and `Reactivate()` with idempotent transitions | 1 |
 | Suspend and reactivate commands, handlers, endpoints, and audit | 4 |
 | Sign-in rejection for suspended organizations | 2 |
+| Cancel reminders more than 24 hours past due on reactivation | 2 |
 | Real-time publisher status revalidation | 2 |
 | Row actions, state badge, and `ConfirmSuspendOrganizationDialog` | 5 |
 | Backend tests: `403` after suspend, sign-in blocked, workers skip, data unchanged after reactivate | 5 |
 | Playwright acceptance tests for suspend and reactivate | 3 |
 | Review fixes | 2 |
-| **Total** | **24** |
+| **Total** | **26** |
 
 ## Minimal scope
 
-The minimal scope keeps the domain transitions, the two endpoints with audit, and the status checks that already exist from earlier slices. It drops the Portal row actions and dialog and exposes suspend and reactivate as CLI commands. It still satisfies `L2-TENANCY-005` criteria 1–4, with the confirm step taken at the CLI prompt. Total: 14 hours.
+The minimal scope keeps the domain transitions, the two endpoints with audit, and the status checks that already exist from earlier slices. It drops the Portal row actions and dialog and exposes suspend and reactivate as CLI commands. It still satisfies `L2-TENANCY-005` criteria 1–5, with the confirm step taken at the CLI prompt. Total: 16 hours.
 
 ## Partial descoping
 

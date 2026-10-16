@@ -14,13 +14,14 @@ The estimate assumes an intermediate EF Core and SQL Server developer who does n
 | Integration test: seed at the previous migration, migrate, compare row counts and ownership | 5 |
 | Integration test: sign-in and dashboard parity after migration | 2 |
 | Fault-injection rollback test and second-run no-op test | 3 |
+| `AuditEntry.HashVersion` and version 2 hash that covers `OrganizationId`, with verification tests | 3 |
 | Rehearsal against a copy of production-sized data and timing | 3 |
 | Review fixes | 2 |
-| **Total** | **26** |
+| **Total** | **29** |
 
 ## Minimal scope
 
-The minimal scope keeps the migration in full, the row-count test, and the second-run test. It drops the fault-injection test and relies on EF Core's transaction-per-migration behaviour. It also drops the production-sized rehearsal. It satisfies `L2-TENANCY-009` criteria 1, 2, 3, and 5, and leaves criterion 4 untested. Total: 18 hours.
+The minimal scope keeps the migration in full, the row-count test, and the second-run test. It drops the fault-injection test and relies on EF Core's transaction-per-migration behaviour. It also drops the production-sized rehearsal. It satisfies `L2-TENANCY-009` criteria 1, 2, 3, and 5, and leaves criterion 4 untested. Total: 21 hours.
 
 ## Partial descoping
 
@@ -29,3 +30,4 @@ The minimal scope keeps the migration in full, the row-count test, and the secon
 | Production-sized rehearsal | No measured migration duration before release | 3 |
 | Fault-injection rollback test | Criterion 4 rests on EF Core behaviour without a direct test | 2 |
 | Dashboard parity test | Criterion 3 rests on the row-count test and manual sign-in | 2 |
+| Version 2 audit hash | The owning organization of an audit entry is not covered by tamper evidence | 3 |

@@ -1,6 +1,6 @@
 # Estimates
 
-- Overall effort: 456 days
+- Overall effort: 457 days
 - Complete: 95%
 
 | Subsystem | Effort | Complete |
@@ -19,7 +19,7 @@
 | [reporting-and-data](reporting-and-data.md) | 26 days | 100% |
 | [platform-services](platform-services.md) | 57 days | 100% |
 | [non-functional](non-functional.md) | 36 days | 100% |
-| [tenancy](tenancy.md) | 24 days | 0% |
+| [tenancy](tenancy.md) | 25 days | 0% |
 
 ## Roadmap
 
