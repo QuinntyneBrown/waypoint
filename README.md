@@ -33,7 +33,7 @@ The repository contains a .NET 9 API and operational CLI, an Angular 21 authenti
 ### Prerequisites
 
 - [.NET SDK 9](https://dotnet.microsoft.com/) (selected by [`global.json`](global.json))
-- [Node.js](https://nodejs.org/) `^20.19.0`, `^22.12.0`, or `>=24.0.0`
+- [Node.js](https://nodejs.org/) `^22.12.0` or `>=24.0.0`
 - npm 10.9.4
 - SQL Server only for integration tests or persistent local data; the default development setup uses an in-memory database
 
