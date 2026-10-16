@@ -102,6 +102,9 @@
                 [checked]="guardianNotified()"
                 (change)="guardianNotified.set($any($event.target).checked)"
               />
+              <span class="w-check__box">
+                <svg class="w-icon" aria-hidden="true"><use href="#i-check"></use></svg>
+              </span>
               <span>Notify guardian about the outcome</span>
             </label>
             <div class="w-actions review-actions">

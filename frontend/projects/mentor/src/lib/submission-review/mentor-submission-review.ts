@@ -54,8 +54,9 @@ interface GradingDraft {
       padding: var(--w-s4) 0;
       border-bottom: 1px solid var(--w-border);
     }
-    .review-actions .w-btn {
-      min-height: 44px;
+    .review-actions {
+      display: grid;
+      gap: var(--w-s3);
     }
     @media (max-width: 52rem) {
       .review-layout {
@@ -64,10 +65,6 @@ interface GradingDraft {
     }
     @media (max-width: 32rem) {
       .rubric-row {
-        grid-template-columns: 1fr;
-      }
-      .review-actions {
-        display: grid;
         grid-template-columns: 1fr;
       }
     }
