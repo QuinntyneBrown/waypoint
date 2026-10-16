@@ -1685,6 +1685,9 @@ legend {
 .w-shell.is-offline .w-main {
   padding-top: calc(var(--w-topbar-h) + 34px);
 }
+.w-shell.is-offline .w-sidenav {
+  top: calc(var(--w-topbar-h) + 34px);
+}
 
 /* ---------- Skeleton ---------- */
 .w-skeleton {
