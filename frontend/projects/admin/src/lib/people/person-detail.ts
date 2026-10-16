@@ -58,7 +58,7 @@ type LifecycleAction =
       min-height: 45px;
     }
     .danger-zone {
-      border-color: var(--w-danger);
+      border-color: var(--w-error);
     }
     .confirmation-copy {
       overflow-wrap: anywhere;

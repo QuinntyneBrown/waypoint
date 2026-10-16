@@ -33,7 +33,7 @@ import { finalize } from 'rxjs';
       overflow-y: auto;
       padding: var(--w-s2);
       border: 1px solid var(--w-border);
-      border-radius: var(--w-radius-md);
+      border-radius: var(--w-r-card);
     }
     .supporting-option {
       display: flex;
@@ -41,10 +41,10 @@ import { finalize } from 'rxjs';
       align-items: flex-start;
       min-height: 2.75rem;
       padding: var(--w-s2);
-      border-radius: var(--w-radius-sm);
+      border-radius: var(--w-r-sm);
     }
     .supporting-option:hover {
-      background: var(--w-surface-subtle);
+      background: var(--w-g100);
     }
     .supporting-option input {
       width: 1.25rem;
@@ -72,7 +72,7 @@ import { finalize } from 'rxjs';
     }
     .load-metric strong {
       display: block;
-      font-size: var(--w-text-xl);
+      font-size: 1.25rem;
     }
     @media (max-width: 48rem) {
       .assignment-grid {

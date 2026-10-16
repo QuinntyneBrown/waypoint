@@ -42,43 +42,43 @@ type CalendarView = 'month' | 'week' | 'agenda';
       display: grid;
       grid-template-columns: repeat(7, minmax(6.5rem, 1fr));
       min-width: 48rem;
-      border: 1px solid var(--w-color-border);
-      border-radius: var(--w-radius-lg);
+      border: 1px solid var(--w-border);
+      border-radius: var(--w-r-lg);
       overflow: hidden;
     }
     .calendar-weekday {
       padding: var(--w-s2);
-      background: var(--w-color-greige-100);
-      border-bottom: 1px solid var(--w-color-border);
+      background: var(--w-g100);
+      border-bottom: 1px solid var(--w-border);
       font-weight: 700;
       text-align: center;
     }
     .calendar-day {
       min-height: 8rem;
       padding: var(--w-s2);
-      border-right: 1px solid var(--w-color-border);
-      border-bottom: 1px solid var(--w-color-border);
+      border-right: 1px solid var(--w-border);
+      border-bottom: 1px solid var(--w-border);
     }
     .calendar-day:nth-child(7n) {
       border-right: 0;
     }
     .calendar-day.is-outside {
-      color: var(--w-color-text-muted);
-      background: var(--w-color-greige-50);
+      color: var(--w-muted);
+      background: var(--w-surface);
     }
     .calendar-event {
       display: block;
       margin-top: var(--w-s2);
       padding: var(--w-s2);
-      border-radius: var(--w-radius-md);
-      background: var(--w-color-lilac-100);
+      border-radius: var(--w-r-card);
+      background: var(--w-info-bg);
       color: inherit;
       text-decoration: none;
       overflow-wrap: anywhere;
     }
     .calendar-event:hover,
     .calendar-event:focus-visible {
-      background: var(--w-color-lilac-200);
+      background: var(--w-surface-2);
     }
     .agenda-list {
       display: grid;

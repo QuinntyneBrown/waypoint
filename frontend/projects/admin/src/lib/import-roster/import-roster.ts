@@ -66,7 +66,7 @@ interface ImportColumn {
       color: var(--w-warning);
     }
     .import-status--invalid {
-      color: var(--w-danger);
+      color: var(--w-error);
     }
     .import-dialog-backdrop {
       position: fixed;
@@ -109,7 +109,7 @@ interface ImportColumn {
       .import-columns td::before,
       .import-preview td::before {
         content: attr(data-label);
-        color: var(--w-text-muted);
+        color: var(--w-muted);
         font-weight: 700;
       }
       .import-columns .w-select,

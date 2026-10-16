@@ -44,12 +44,12 @@ import { finalize, forkJoin } from 'rxjs';
       min-height: 2.75rem;
       padding: var(--w-s2) var(--w-s3);
       border: 1px solid var(--w-border);
-      border-radius: var(--w-radius-md);
+      border-radius: var(--w-r-card);
       cursor: pointer;
     }
     .announcement-option:has(input:checked) {
-      border-color: var(--w-navy);
-      background: var(--w-surface-subtle);
+      border-color: var(--w-ink);
+      background: var(--w-g100);
     }
     .announcement-option input {
       width: 1.25rem;
@@ -82,7 +82,7 @@ import { finalize, forkJoin } from 'rxjs';
     }
     .announcement-stat strong {
       display: block;
-      font-size: var(--w-text-lg);
+      font-size: 1.125rem;
     }
     @media (max-width: 58rem) {
       .announcement-layout {

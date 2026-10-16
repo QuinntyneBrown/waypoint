@@ -77,7 +77,7 @@
 .question-row {
   border: 1px solid var(--w-border);
   border-radius: var(--w-r-card);
-  background: var(--w-surface-subtle);
+  background: var(--w-g100);
   padding: var(--w-s4);
 }
 

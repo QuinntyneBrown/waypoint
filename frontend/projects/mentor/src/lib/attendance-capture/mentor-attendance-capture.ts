@@ -43,7 +43,7 @@ import { AttendanceQueueService } from '@waypoint/core/attendance';
     }
     .attendance-summary strong {
       display: block;
-      font-size: var(--w-text-xl);
+      font-size: 1.25rem;
     }
     .attendance-row {
       display: grid;
@@ -51,7 +51,7 @@ import { AttendanceQueueService } from '@waypoint/core/attendance';
       gap: var(--w-s4);
       align-items: center;
       padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-color-border);
+      border-bottom: 1px solid var(--w-border);
     }
     .attendance-row:last-child {
       border-bottom: 0;
@@ -67,7 +67,7 @@ import { AttendanceQueueService } from '@waypoint/core/attendance';
       flex: 1 1 auto;
     }
     .attendance-actions .is-selected {
-      outline: 3px solid var(--w-color-ink);
+      outline: 3px solid var(--w-ink);
       outline-offset: 1px;
     }
     @media (max-width: 64rem) {
