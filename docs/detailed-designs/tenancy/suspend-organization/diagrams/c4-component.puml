@@ -1,0 +1,27 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+title Components — Suspend an organization
+
+
+Container_Boundary(portal, "Portal application") {
+  Component(page, "OrganizationsPage", "Angular standalone component", "Suspend and Reactivate row actions")
+  Component(dialog, "ConfirmSuspendOrganizationDialog", "Angular standalone component", "Names the organization")
+  Component(interceptor, "api-state interceptor", "Angular HTTP interceptor", "organization-suspended to account-deactivated")
+}
+Container_Boundary(api, "Waypoint API application") {
+  Component(ctrl, "OrganizationsController", "ASP.NET Core controller", "suspend and reactivate endpoints")
+  Component(handler, "SuspendOrganizationCommandHandler", "MediatR handler", "Transition and audit")
+  Component(mw, "OrganizationStatusMiddleware", "ASP.NET Core middleware", "403 for suspended organizations")
+  Component(proc, "Background processors", "Hosted-service processors", "Claim Active organizations only")
+}
+ContainerDb(db, "Waypoint database", "SQL Server", "Organizations, AuditEntries")
+Rel(page, dialog, "Opens")
+Rel(dialog, ctrl, "POST suspend", "JSON/HTTPS")
+Rel(ctrl, handler, "Sends SuspendOrganizationCommand")
+Rel(handler, db, "Updates Status; appends audit", "EF Core")
+Rel(mw, db, "Reads Status with the user projection", "EF Core")
+Rel(proc, db, "Filters by Status", "EF Core")
+Rel(mw, interceptor, "Returns 403 organization-suspended", "HTTPS")
+
+@enduml

@@ -1,0 +1,48 @@
+@startuml
+title UML sequence behaviour — Suspend an organization and its effect
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam sequence {
+  ParticipantBorderColor #344054
+  LifeLineBorderColor #667085
+}
+
+
+actor "Platform Operator" as op
+actor "Member of Organization A" as member
+box "Frontend — Portal application" #E0F2FE
+  participant "ConfirmSuspendOrganizationDialog" as dialog
+  participant "Member's feature page" as page
+end box
+box "Backend — Waypoint API application" #D1FADF
+  participant "OrganizationsController" as ctrl
+  participant "OrganizationStatusMiddleware" as mw
+end box
+box "Backend — Waypoint Application and Domain" #ECFDF3
+  participant "SuspendOrganizationCommandHandler" as handler
+  participant "Organization" as org
+end box
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  database "Waypoint database" as db
+end box
+op -> dialog : Confirm suspend "Organization A"
+dialog -> ctrl : POST /api/platform/organizations/{id}/suspend
+ctrl -> handler : Send SuspendOrganizationCommand
+handler -> db : Load Organization
+handler -> org : Suspend() (L2-TENANCY-005 AC1)
+handler -> db : Save status and audit organization.suspended (AC4)
+db --> handler : Commit
+handler --> ctrl : Summary (Suspended)
+ctrl --> dialog : 200
+dialog --> op : Row shows Suspended
+member -> page : Next action
+page -> mw : Request with valid token
+mw -> db : User projection with organization Status
+db --> mw : Suspended
+mw --> page : 403 organization-suspended (L2-TENANCY-002 AC4)
+page --> member : Account-deactivated state
+
+@enduml

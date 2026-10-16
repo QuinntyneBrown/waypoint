@@ -1,0 +1,52 @@
+@startuml
+title UML sequence behaviour — Apply the AddMultiTenancy migration
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam sequence {
+  ParticipantBorderColor #344054
+  LifeLineBorderColor #667085
+}
+
+
+actor "Deployment engineer" as actor
+box "Backend — Waypoint API application (startup) or Waypoint CLI" #D1FADF
+  participant "Host" as host
+end box
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  participant "DatabaseLifecycle" as life
+  participant "EF Core migrator" as migrator
+  participant "AddMultiTenancy" as mig
+  database "Waypoint database" as db
+end box
+actor -> host : Deploy build / run db migrate
+host -> life : MigrateAsync()
+life -> migrator : Database.MigrateAsync()
+migrator -> db : Read __EFMigrationsHistory
+alt AddMultiTenancy already applied
+  db --> migrator : Applied
+  migrator --> life : No change (L2-TENANCY-009 AC5)
+else pending
+  migrator -> db : BEGIN TRANSACTION
+  migrator -> mig : Up()
+  mig -> db : CREATE TABLE Organizations
+  mig -> db : INSERT default organization from OrgSettings (AC1)
+  mig -> db : ADD OrganizationId NULL to each table
+  mig -> db : UPDATE each table SET OrganizationId = default (AC1, AC2)
+  mig -> db : ALTER NOT NULL, FK, check constraint
+  mig -> db : Recreate unique and lookup indexes leading with OrganizationId
+  alt any step fails
+    db --> migrator : Error
+    migrator -> db : ROLLBACK (AC4)
+    migrator --> life : Exception; database unchanged
+  else all steps succeed
+    migrator -> db : INSERT history row; COMMIT
+    migrator --> life : Applied
+  end
+end
+life --> host : Done
+host --> actor : Startup continues; users see same data (AC3)
+
+@enduml

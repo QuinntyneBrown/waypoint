@@ -1,0 +1,75 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+  BorderColor #344054
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+hide empty members
+title Class structure — Isolate organization data
+
+
+enum OrganizationStatus {
+  Active
+  Suspended
+}
+class Organization {
+  +Guid Id
+  +string Name
+  +string Slug
+  +OrganizationStatus Status
+  +DateTime CreatedAt
+}
+interface IOrganizationOwned {
+  +Guid OrganizationId
+}
+class User {
+  +Guid Id
+  +string Email
+  +string Role
+  +Guid? OrganizationId
+}
+class Cohort {
+  +Guid Id
+  +Guid OrganizationId
+}
+interface ITenantContext {
+  +Guid? OrganizationId
+  +BeginScope(organizationId: Guid): IDisposable
+}
+class TenantContext {
+  -IHttpContextAccessor accessor
+  -Guid? scopedOrganizationId
+  +Guid? OrganizationId
+  +BeginScope(organizationId: Guid): IDisposable
+}
+class AppDbContext {
+  -ITenantContext tenant
+  #OnModelCreating(builder: ModelBuilder): void
+  +SaveChangesAsync(token: CancellationToken): Task<int>
+  -StampOrganizationOwnedEntries(): void
+}
+class OwnedRecordLookup {
+  +FindAsync<T>(id: Guid, token: CancellationToken): Task<T?>
+}
+class JwtTokenIssuer {
+  +Issue(user: User): (string, DateTime)
+}
+class OrganizationStatusMiddleware {
+  +InvokeAsync(context: HttpContext): Task
+}
+Organization --> OrganizationStatus : has
+IOrganizationOwned <|.. Cohort
+Cohort "*" --> "1" Organization : owned by
+User "*" --> "0..1" Organization : belongs to
+ITenantContext <|.. TenantContext
+AppDbContext --> ITenantContext : filters and stamps with
+OwnedRecordLookup ..> AppDbContext : queries
+JwtTokenIssuer ..> User : reads OrganizationId
+OrganizationStatusMiddleware ..> AppDbContext : reads Organization.Status
+
+@enduml

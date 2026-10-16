@@ -1,0 +1,13 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+title System Context — Suspend an organization
+
+
+Person(op, "Platform Operator", "Suspends and reactivates organizations")
+Person(member, "Member of the suspended organization", "Any organization role")
+System(waypoint, "Waypoint", "Youth-leadership platform shared by many organizations")
+Rel(op, waypoint, "Suspends or reactivates an organization in")
+Rel(member, waypoint, "Is blocked while suspended by")
+
+@enduml

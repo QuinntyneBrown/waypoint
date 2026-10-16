@@ -1,0 +1,41 @@
+@startuml
+title UML sequence behaviour — Scheduled reminder delivery
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam sequence {
+  ParticipantBorderColor #344054
+  LifeLineBorderColor #667085
+}
+
+
+box "Backend — Waypoint API application (hosted services)" #D1FADF
+  participant "ScheduledNotificationWorker" as worker
+end box
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  participant "ScheduledNotificationProcessor" as proc
+  participant "TenantContext" as tenant
+  participant "AppDbContext" as ctx
+  participant "SignalRChangePublisher" as pub
+  database "Waypoint database" as db
+end box
+worker -> proc : RunOnceAsync()
+proc -> ctx : IgnoreQueryFilters claim query
+ctx -> db : Due rows JOIN Organizations WHERE Status = Active
+db --> ctx : Rows for Organization A and Organization B
+loop each claimed row
+  proc -> tenant : BeginScope(row.OrganizationId) (L2-TENANCY-003)
+  proc -> ctx : Load recipient and session in scope
+  ctx -> db : WHERE OrganizationId = @row.org
+  db --> ctx : Same-organization records only
+  proc -> ctx : Write Notification and OutboundEmail, mark delivered
+  ctx -> db : Commit (rows stamped with row.org)
+  proc -> pub : PublishToUserAsync(recipient)
+  pub -> tenant : Capture OrganizationId
+  proc -> tenant : Dispose scope
+end
+proc --> worker : Delivered count
+
+@enduml

@@ -1,0 +1,65 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+  BorderColor #344054
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+hide empty members
+title Class structure — Scope background work
+
+
+interface ITenantContext {
+  +Guid? OrganizationId
+  +BeginScope(organizationId: Guid): IDisposable
+}
+class ScheduledNotificationProcessor {
+  -AppDbContext db
+  -ITenantContext tenant
+  +RunOnceAsync(token: CancellationToken): Task<int>
+  -ClaimDueAsync(now: DateTime): Task<List<ClaimedRow>>
+}
+class OutboundEmailProcessor {
+  -AppDbContext db
+  -ITenantContext tenant
+  +RunOnceAsync(token: CancellationToken): Task<int>
+}
+class ClaimedRow {
+  +Guid Id
+  +Guid OrganizationId
+}
+interface IChangePublisher {
+  +PublishToUserAsync(userId: Guid, eventName: string, payload: object): Task
+  +PublishToRoleAsync(role: string, eventName: string, payload: object): Task
+  +PublishToCohortAsync(cohortId: Guid, eventName: string, payload: object): Task
+}
+class SignalRChangePublisher {
+  -ITenantContext tenant
+  -RealtimeConnectionRegistry connections
+  -PublishAsync(organizationId: Guid, isInAudience: Func, eventName: string, payload: object): Task
+}
+class CurrentRealtimeUser {
+  +Guid Id
+  +string Role
+  +Guid? CohortId
+  +Guid OrganizationId
+}
+class ScheduledNotification {
+  +Guid Id
+  +Guid OrganizationId
+  +DateTime DeliverAt
+}
+ScheduledNotificationProcessor --> ITenantContext : opens scope with
+OutboundEmailProcessor --> ITenantContext : opens scope with
+ScheduledNotificationProcessor ..> ClaimedRow : claims
+ScheduledNotificationProcessor ..> ScheduledNotification : processes
+ScheduledNotificationProcessor ..> IChangePublisher : publishes via
+IChangePublisher <|.. SignalRChangePublisher
+SignalRChangePublisher --> ITenantContext : captures organization from
+SignalRChangePublisher ..> CurrentRealtimeUser : filters audience by
+
+@enduml

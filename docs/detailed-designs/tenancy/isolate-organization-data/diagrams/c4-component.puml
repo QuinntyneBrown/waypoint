@@ -1,0 +1,29 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+title Components — Isolate organization data
+
+
+Container(portal, "Portal application", "Angular 21", "Maps organization-suspended to the account-deactivated state")
+Container_Boundary(api, "Waypoint API application") {
+  Component(jwt, "JwtBearer OnTokenValidated", "ASP.NET Core authentication", "Checks user status, session version, and organization claim")
+  Component(mw, "OrganizationStatusMiddleware", "ASP.NET Core middleware", "Rejects suspended organizations with 403")
+  Component(ctrl, "Feature controllers", "ASP.NET Core controllers", "Existing endpoints, unchanged")
+  Component(handler, "Feature handlers", "MediatR handlers", "Existing use cases, unchanged")
+  Component(lookup, "OwnedRecordLookup", "Application service", "Load by id; audit cross-organization attempts")
+  Component(tenant, "TenantContext", "ITenantContext", "Resolves organization from org_id claim or explicit scope")
+  Component(ctx, "AppDbContext", "EF Core DbContext", "Query filters and save-time stamping")
+  Component(audit, "AuditLogger", "IAuditLogger", "Appends audit entries")
+}
+ContainerDb(db, "Waypoint database", "SQL Server", "Organization-owned tables")
+Rel(portal, jwt, "Sends bearer token", "HTTPS")
+Rel(jwt, mw, "Passes validated principal")
+Rel(mw, ctrl, "Forwards active-organization requests")
+Rel(ctrl, handler, "Sends commands and queries")
+Rel(handler, lookup, "Loads records by id")
+Rel(handler, ctx, "Queries and saves")
+Rel(lookup, audit, "Writes tenant.cross_access_denied")
+Rel(ctx, tenant, "Reads OrganizationId")
+Rel(ctx, db, "Filtered SQL", "EF Core")
+
+@enduml

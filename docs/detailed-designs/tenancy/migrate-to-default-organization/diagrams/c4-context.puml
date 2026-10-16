@@ -1,0 +1,13 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+title System Context — Migrate to a default organization
+
+
+Person(deployer, "Deployment engineer", "Deploys new Waypoint builds")
+Person(member, "Existing user", "Any role in the original organization")
+System(waypoint, "Waypoint", "Youth-leadership platform")
+Rel(deployer, waypoint, "Deploys the multi-tenancy build of")
+Rel(member, waypoint, "Continues to use without change")
+
+@enduml

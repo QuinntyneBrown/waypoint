@@ -1,0 +1,16 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+title System Context — Isolate organization data
+
+
+Person(member, "Organization member", "Youth, Mentor, Program Administrator, Guardian, or Volunteer")
+Person(other, "Member of another organization", "Any role in a different organization")
+System(waypoint, "Waypoint", "Youth-leadership platform shared by many organizations")
+System_Ext(email, "Email provider", "Delivers notification email")
+
+Rel(member, waypoint, "Reads and changes own organization's data in")
+Rel(other, waypoint, "Is denied the first organization's data by")
+Rel(waypoint, email, "Sends email via", "SMTP")
+
+@enduml

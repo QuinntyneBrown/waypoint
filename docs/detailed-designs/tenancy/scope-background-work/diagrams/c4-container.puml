@@ -1,0 +1,21 @@
+@startuml
+!include <C4/C4_Container>
+LAYOUT_WITH_LEGEND()
+title Containers — Scope background work
+
+
+Person(member, "Organization member", "Any organization role")
+System_Boundary(waypoint, "Waypoint") {
+  Container(portal, "Portal application", "Angular 21", "Receives SignalR events")
+  Container(api, "Waypoint API application", "ASP.NET Core 9", "Request pipeline and SignalR hub")
+  Container(workers, "Background workers", "ASP.NET Core hosted services", "ScheduledNotificationWorker, OutboundEmailWorker")
+  ContainerDb(db, "Waypoint database", "SQL Server", "Queue tables carry OrganizationId")
+}
+System_Ext(email, "Email provider", "SMTP relay")
+Rel(member, portal, "Uses", "HTTPS")
+Rel(api, portal, "Pushes organization-scoped events", "SignalR")
+Rel(workers, db, "Claims due rows of active organizations", "EF Core")
+Rel(workers, api, "Publishes notifications through IChangePublisher", "in-process")
+Rel(workers, email, "Sends", "SMTP")
+
+@enduml

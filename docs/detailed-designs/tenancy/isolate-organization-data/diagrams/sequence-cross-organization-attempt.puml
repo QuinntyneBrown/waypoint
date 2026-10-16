@@ -1,0 +1,47 @@
+@startuml
+title UML sequence behaviour — Cross-organization access attempt
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam sequence {
+  ParticipantBorderColor #344054
+  LifeLineBorderColor #667085
+}
+
+
+actor "Member of Organization A" as actor
+box "Frontend — Portal application" #E0F2FE
+  participant "Feature service" as client
+end box
+box "Backend — Waypoint API application" #D1FADF
+  participant "Feature controller" as ctrl
+end box
+box "Backend — Waypoint Application and Domain" #ECFDF3
+  participant "Feature handler" as handler
+  participant "OwnedRecordLookup" as lookup
+end box
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  participant "AppDbContext" as ctx
+  participant "AuditLogger" as audit
+  database "Waypoint database" as db
+end box
+actor -> client : Request record id owned by Organization B
+client -> ctrl : GET /api/.../{id}
+ctrl -> handler : Send query
+handler -> lookup : FindAsync<T>(id)
+lookup -> ctx : Filtered lookup by id
+ctx -> db : WHERE Id = @id AND OrganizationId = @orgA
+db --> ctx : No row
+lookup -> ctx : IgnoreQueryFilters existence check
+ctx -> db : WHERE Id = @id
+db --> ctx : Row exists in Organization B
+lookup -> audit : Write tenant.cross_access_denied (L2-TENANCY-002)
+audit -> db : Append audit entry for Organization A
+lookup --> handler : null
+handler --> ctrl : NotFound
+ctrl --> client : 404 Not Found (existence not revealed)
+client --> actor : Present not-found state
+
+@enduml

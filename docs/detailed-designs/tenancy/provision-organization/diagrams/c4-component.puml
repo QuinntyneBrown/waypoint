@@ -1,0 +1,32 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+title Components — Provision an organization
+
+
+Container_Boundary(portal, "Portal application") {
+  Component(page, "OrganizationsPage", "Angular standalone component", "List, empty, loading, error states")
+  Component(dialog, "CreateOrganizationDialog", "Angular standalone component", "Name, slug, invitation step")
+  Component(svc, "OrganizationsService", "Angular service", "Typed HTTP client")
+}
+Container_Boundary(api, "Waypoint API application") {
+  Component(ctrl, "OrganizationsController", "ASP.NET Core controller", "ManageOrganizations policy")
+  Component(list, "ListOrganizationsQueryHandler", "MediatR handler", "Metadata only")
+  Component(create, "CreateOrganizationCommandHandler", "MediatR handler", "Validate, create, audit")
+  Component(invite, "InviteFirstAdministratorCommandHandler", "MediatR handler", "Scope then delegate")
+  Component(existing, "InviteCommandHandler", "MediatR handler", "Existing invitation flow")
+  Component(tenant, "TenantContext", "ITenantContext", "Explicit organization scope")
+}
+ContainerDb(db, "Waypoint database", "SQL Server", "Organizations, Invitations, AuditEntries")
+Rel(page, dialog, "Opens")
+Rel(page, svc, "Lists organizations")
+Rel(dialog, svc, "Creates and invites")
+Rel(svc, ctrl, "Calls", "JSON/HTTPS")
+Rel(ctrl, list, "GET")
+Rel(ctrl, create, "POST")
+Rel(ctrl, invite, "POST /{id}/invitations")
+Rel(invite, tenant, "BeginScope(organizationId)")
+Rel(invite, existing, "Sends InviteCommand(ProgramAdministrator)")
+Rel(create, db, "Inserts Organization and audit entry", "EF Core")
+
+@enduml

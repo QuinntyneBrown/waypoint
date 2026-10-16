@@ -1,0 +1,18 @@
+@startuml
+!include <C4/C4_Container>
+LAYOUT_WITH_LEGEND()
+title Containers — Migrate to a default organization
+
+
+Person(deployer, "Deployment engineer", "Operates the deployment")
+System_Boundary(waypoint, "Waypoint") {
+  Container(api, "Waypoint API application", "ASP.NET Core 9", "Applies pending migrations at startup")
+  Container(cli, "Waypoint CLI", ".NET 9 console", "waypoint db migrate")
+  ContainerDb(db, "Waypoint database", "SQL Server", "Schema and data")
+}
+Rel(deployer, api, "Starts new build")
+Rel(deployer, cli, "Runs db migrate")
+Rel(api, db, "Applies AddMultiTenancy", "EF Core migrations")
+Rel(cli, db, "Applies AddMultiTenancy", "EF Core migrations")
+
+@enduml

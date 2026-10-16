@@ -1,0 +1,23 @@
+@startuml
+!include <C4/C4_Container>
+LAYOUT_WITH_LEGEND()
+title Containers — Provision an organization
+
+
+Person(op, "Platform Operator", "Platform-level role")
+Person(deployer, "Deployment engineer", "Operates the deployment")
+System_Boundary(waypoint, "Waypoint") {
+  Container(portal, "Portal application", "Angular 21", "Organizations screen")
+  Container(api, "Waypoint API application", "ASP.NET Core 9", "Platform endpoints and invitation flow")
+  Container(cli, "Waypoint CLI", ".NET 9 console", "Grants the Platform Operator role")
+  ContainerDb(db, "Waypoint database", "SQL Server", "Organizations, Invitations, AuditEntries")
+}
+System_Ext(email, "Email provider", "SMTP relay")
+Rel(op, portal, "Uses", "HTTPS")
+Rel(portal, api, "Calls /api/platform/organizations", "JSON/HTTPS")
+Rel(deployer, cli, "Runs user create --role PlatformOperator")
+Rel(cli, db, "Creates operator account", "EF Core")
+Rel(api, db, "Reads and writes", "EF Core")
+Rel(api, email, "Sends invitation", "SMTP")
+
+@enduml

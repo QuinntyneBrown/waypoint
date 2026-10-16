@@ -1,0 +1,26 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+title Components — Scope background work
+
+
+Container_Boundary(api, "Waypoint API application") {
+  Component(snp, "ScheduledNotificationProcessor", "Background processor", "Claims due reminders; one scope per row")
+  Component(oep, "OutboundEmailProcessor", "Background processor", "Claims due email; one scope per row")
+  Component(tenant, "TenantContext", "ITenantContext", "Holds the explicit organization scope")
+  Component(ctx, "AppDbContext", "EF Core DbContext", "Filters by the scoped organization")
+  Component(pub, "SignalRChangePublisher", "IChangePublisher", "Adds organization to every audience predicate")
+  Component(hub, "RealtimeHub", "SignalR hub", "Registers connections with org_id")
+}
+ContainerDb(db, "Waypoint database", "SQL Server", "ScheduledNotifications, OutboundEmails, Organizations")
+System_Ext(email, "Email provider", "SMTP relay")
+Rel(snp, tenant, "BeginScope(row.OrganizationId)")
+Rel(oep, tenant, "BeginScope(row.OrganizationId)")
+Rel(snp, ctx, "Loads recipients in scope")
+Rel(oep, email, "Sends", "SMTP")
+Rel(snp, pub, "Publishes notification events")
+Rel(pub, tenant, "Captures OrganizationId at call time")
+Rel(pub, hub, "Sends to matching connections")
+Rel(ctx, db, "Filtered SQL", "EF Core")
+
+@enduml

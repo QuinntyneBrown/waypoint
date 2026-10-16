@@ -1,0 +1,43 @@
+@startuml
+title UML sequence behaviour — Real-time role fan-out
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam sequence {
+  ParticipantBorderColor #344054
+  LifeLineBorderColor #667085
+}
+
+
+actor "Program Administrator (Organization A)" as actor
+box "Frontend — Portal application" #E0F2FE
+  participant "Announcements page" as page
+end box
+box "Backend — Waypoint API application" #D1FADF
+  participant "Feature controller" as ctrl
+  participant "SignalRChangePublisher" as pub
+  participant "RealtimeHub" as hub
+end box
+box "Backend — Waypoint Application and Domain" #ECFDF3
+  participant "Feature handler" as handler
+end box
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  participant "TenantContext" as tenant
+end box
+actor -> page : Publish announcement to all mentors
+page -> ctrl : POST with bearer token (org_id = A)
+ctrl -> handler : Send command
+handler -> pub : PublishToRoleAsync("Mentor", ...)
+pub -> tenant : OrganizationId
+tenant --> pub : A
+pub -> pub : Audience = role Mentor AND OrganizationId = A (L2-TENANCY-003)
+pub -> hub : Send to Organization A mentor connections only
+hub --> page : Event to Organization A mentors
+note right of hub : Organization B mentors receive nothing
+handler --> ctrl : Result
+ctrl --> page : 200
+page --> actor : Announcement published
+
+@enduml

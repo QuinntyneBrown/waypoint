@@ -1,0 +1,17 @@
+@startuml
+!include <C4/C4_Container>
+LAYOUT_WITH_LEGEND()
+title Containers — Isolate organization data
+
+
+Person(member, "Organization member", "Any organization role")
+System_Boundary(waypoint, "Waypoint") {
+  Container(portal, "Portal application", "Angular 21", "Role-based user interface")
+  Container(api, "Waypoint API application", "ASP.NET Core 9", "Authentication, authorization, organization scoping, domain logic")
+  ContainerDb(db, "Waypoint database", "SQL Server", "Shared schema; OrganizationId on every organization-owned table")
+}
+Rel(member, portal, "Uses", "HTTPS")
+Rel(portal, api, "Calls with bearer token carrying org_id", "JSON/HTTPS")
+Rel(api, db, "Reads and writes filtered by OrganizationId", "EF Core")
+
+@enduml

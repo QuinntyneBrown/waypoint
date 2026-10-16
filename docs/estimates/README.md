@@ -1,7 +1,7 @@
 # Estimates
 
-- Overall effort: 432 days
-- Complete: 100%
+- Overall effort: 456 days
+- Complete: 95%
 
 | Subsystem | Effort | Complete |
 |---|---|---|
@@ -19,7 +19,9 @@
 | [reporting-and-data](reporting-and-data.md) | 26 days | 100% |
 | [platform-services](platform-services.md) | 57 days | 100% |
 | [non-functional](non-functional.md) | 36 days | 100% |
+| [tenancy](tenancy.md) | 24 days | 0% |
 
 ## Roadmap
 
-1. Every subsystem is implemented and tested, so no work remains.
+1. Tenancy: create mocks for the Organizations screen and dialogs, then implement in this order: isolate organization data and migrate to a default organization together, then scope background work, provision an organization, and suspend an organization.
+2. Every other subsystem is implemented and tested.

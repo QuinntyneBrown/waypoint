@@ -1,0 +1,19 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+title Components — Migrate to a default organization
+
+
+Container_Boundary(infra, "Waypoint Infrastructure") {
+  Component(life, "DatabaseLifecycle", "IDatabaseLifecycle", "MigrateAsync")
+  Component(migrator, "EF Core migrator", "Microsoft.EntityFrameworkCore.Migrations", "Transaction per migration; history table")
+  Component(mig, "AddMultiTenancy", "EF Core migration", "Create, backfill, constrain, index")
+  Component(backfill, "SensitiveDataBackfill", "Existing post-migration step", "Unchanged")
+}
+ContainerDb(db, "Waypoint database", "SQL Server", "Organizations, organization-owned tables, __EFMigrationsHistory")
+Rel(life, migrator, "Database.MigrateAsync()")
+Rel(migrator, mig, "Runs Up() if pending")
+Rel(mig, db, "DDL and backfill in one transaction", "SQL")
+Rel(life, backfill, "RunAsync() after migrations")
+
+@enduml

@@ -1,0 +1,65 @@
+@startuml
+title UML sequence behaviour — Create an organization and invite its first administrator
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam sequence {
+  ParticipantBorderColor #344054
+  LifeLineBorderColor #667085
+}
+
+
+actor "Platform Operator" as actor
+box "Frontend — Portal application" #E0F2FE
+  participant "CreateOrganizationDialog" as dialog
+  participant "OrganizationsService" as svc
+end box
+box "Backend — Waypoint API application" #D1FADF
+  participant "OrganizationsController" as ctrl
+end box
+box "Backend — Waypoint Application and Domain" #ECFDF3
+  participant "CreateOrganizationCommandHandler" as create
+  participant "InviteFirstAdministratorCommandHandler" as invite
+  participant "InviteCommandHandler" as existing
+end box
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  participant "TenantContext" as tenant
+  database "Waypoint database" as db
+end box
+actor -> dialog : Enter name and slug, submit
+dialog -> svc : create({ name, slug })
+svc -> ctrl : POST /api/platform/organizations
+ctrl -> ctrl : Require ManageOrganizations (L2-TENANCY-004 AC5)
+ctrl -> create : Send CreateOrganizationCommand
+create -> create : Validate name 1-100, slug 3-40 [a-z0-9-] (AC3)
+create -> db : Slug exists?
+alt slug in use
+  db --> create : Yes
+  create --> ctrl : Conflict
+  ctrl --> svc : 409 ProblemDetails
+  svc --> dialog : Duplicate slug
+  dialog --> actor : "This slug is already in use" (AC2)
+else slug free
+  create -> db : Insert Organization (Active), OrgSettings, audit organization.created (AC1, AC6)
+  db --> create : Commit
+  create --> ctrl : OrganizationSummary
+  ctrl --> svc : 201 Created
+  svc --> dialog : Created
+  actor -> dialog : Enter first administrator email
+  dialog -> svc : inviteFirstAdministrator(id, email)
+  svc -> ctrl : POST /api/platform/organizations/{id}/invitations
+  ctrl -> invite : Send InviteFirstAdministratorCommand
+  invite -> tenant : BeginScope(id)
+  invite -> existing : InviteCommand(email, ProgramAdministrator) (AC4)
+  existing -> db : Insert Invitation stamped with id; queue email
+  existing --> invite : InviteResult
+  invite -> db : Append audit organization.administrator_invited (AC6)
+  invite --> ctrl : InviteResult
+  ctrl --> svc : 201 Created
+  svc --> dialog : Invitation sent
+  dialog --> actor : Organization listed; invitation sent
+end
+
+@enduml

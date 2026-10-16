@@ -1,0 +1,56 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+  BorderColor #344054
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+hide empty members
+title Class structure — Suspend an organization
+
+
+enum OrganizationStatus {
+  Active
+  Suspended
+}
+class Organization {
+  +Guid Id
+  +string Name
+  +OrganizationStatus Status
+  +Suspend(): void
+  +Reactivate(): void
+}
+class SuspendOrganizationCommand {
+  +Guid OrganizationId
+}
+class ReactivateOrganizationCommand {
+  +Guid OrganizationId
+}
+class SuspendOrganizationCommandHandler {
+  +Handle(command: SuspendOrganizationCommand): Task<OrganizationSummary>
+}
+class ReactivateOrganizationCommandHandler {
+  +Handle(command: ReactivateOrganizationCommand): Task<OrganizationSummary>
+}
+class OrganizationStatusMiddleware {
+  +InvokeAsync(context: HttpContext): Task
+}
+class AuditEntry {
+  +Guid OrganizationId
+  +Guid? ActorUserId
+  +string Action
+}
+Organization --> OrganizationStatus : has
+SuspendOrganizationCommandHandler ..> SuspendOrganizationCommand : handles
+ReactivateOrganizationCommandHandler ..> ReactivateOrganizationCommand : handles
+SuspendOrganizationCommandHandler --> Organization : Suspend()
+ReactivateOrganizationCommandHandler --> Organization : Reactivate()
+SuspendOrganizationCommandHandler ..> AuditEntry : appends
+ReactivateOrganizationCommandHandler ..> AuditEntry : appends
+OrganizationStatusMiddleware ..> OrganizationStatus : reads
+
+@enduml

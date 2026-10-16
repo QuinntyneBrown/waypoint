@@ -1,0 +1,62 @@
+@startuml
+title UML sequence behaviour — Scoped read and write
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam sequence {
+  ParticipantBorderColor #344054
+  LifeLineBorderColor #667085
+}
+
+
+actor "Organization member" as actor
+box "Frontend — Portal application" #E0F2FE
+  participant "Feature page" as page
+  participant "Feature service" as client
+end box
+box "Backend — Waypoint API application" #D1FADF
+  participant "OnTokenValidated" as jwt
+  participant "OrganizationStatusMiddleware" as mw
+  participant "Feature controller" as ctrl
+end box
+box "Backend — Waypoint Application and Domain" #ECFDF3
+  participant "Feature handler" as handler
+end box
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  participant "TenantContext" as tenant
+  participant "AppDbContext" as ctx
+  database "Waypoint database" as db
+end box
+actor -> page : Open a screen or save a change
+page -> client : Build typed request (no organization id)
+client -> ctrl : HTTPS request with bearer token
+ctrl -> jwt : Validate token
+jwt -> db : Load user status, session version, OrganizationId, organization status
+db --> jwt : Projection
+jwt --> mw : Principal with org_id (L2-TENANCY-002)
+alt organization suspended
+  mw --> client : 403 organization-suspended
+else organization active
+  mw -> ctrl : Continue
+  ctrl -> handler : Send query or command
+  handler -> ctx : Query organization-owned set
+  ctx -> tenant : OrganizationId
+  tenant --> ctx : org_id from claim
+  ctx -> db : SELECT ... WHERE OrganizationId = @org (L2-TENANCY-002)
+  db --> ctx : Rows of caller's organization only
+  opt command adds or changes rows
+    handler -> ctx : SaveChangesAsync
+    ctx -> ctx : Stamp added rows; reject OrganizationId change (L2-TENANCY-001)
+    ctx -> db : INSERT / UPDATE in one unit of work
+    db --> ctx : Commit result
+  end
+  ctx --> handler : Result
+  handler --> ctrl : Typed result
+  ctrl --> client : 200 response
+end
+client --> page : Feature result
+page --> actor : Present result
+
+@enduml

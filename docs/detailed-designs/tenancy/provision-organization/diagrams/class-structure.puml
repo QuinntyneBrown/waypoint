@@ -1,0 +1,76 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+  BorderColor #344054
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+hide empty members
+title Class structure — Provision an organization
+
+
+class Organization {
+  +Guid Id
+  +string Name
+  +string Slug
+  +OrganizationStatus Status
+  +DateTime CreatedAt
+}
+class CreateOrganizationCommand {
+  +string Name
+  +string Slug
+}
+class CreateOrganizationValidator {
+  +Validate(command: CreateOrganizationCommand): ValidationResult
+}
+class CreateOrganizationCommandHandler {
+  +Handle(command: CreateOrganizationCommand): Task<OrganizationSummary>
+}
+class ListOrganizationsQuery
+class ListOrganizationsQueryHandler {
+  +Handle(query: ListOrganizationsQuery): Task<List<OrganizationSummary>>
+}
+class OrganizationSummary {
+  +Guid Id
+  +string Name
+  +string Slug
+  +string Status
+  +DateTime CreatedAt
+  +int UserCount
+}
+class InviteFirstAdministratorCommand {
+  +Guid OrganizationId
+  +string Email
+}
+class InviteFirstAdministratorCommandHandler {
+  +Handle(command: InviteFirstAdministratorCommand): Task<InviteResult>
+}
+class InviteCommand {
+  +string Email
+  +string Role
+  +Guid? CohortId
+  +Guid? MentorId
+}
+interface ITenantContext {
+  +BeginScope(organizationId: Guid): IDisposable
+}
+class OrganizationsController {
+  +List(): Task<IActionResult>
+  +Create(request: CreateOrganizationRequest): Task<IActionResult>
+  +InviteFirstAdministrator(id: Guid, request: InviteRequest): Task<IActionResult>
+}
+OrganizationsController ..> CreateOrganizationCommand : sends
+OrganizationsController ..> ListOrganizationsQuery : sends
+OrganizationsController ..> InviteFirstAdministratorCommand : sends
+CreateOrganizationCommandHandler ..> CreateOrganizationCommand : handles
+CreateOrganizationValidator ..> CreateOrganizationCommand : validates
+CreateOrganizationCommandHandler --> Organization : creates
+ListOrganizationsQueryHandler ..> OrganizationSummary : returns
+InviteFirstAdministratorCommandHandler --> ITenantContext : opens scope with
+InviteFirstAdministratorCommandHandler ..> InviteCommand : sends
+
+@enduml

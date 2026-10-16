@@ -1,0 +1,14 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+title System Context — Scope background work
+
+
+Person(member, "Organization member", "Receives reminders, email, and live updates")
+System(waypoint, "Waypoint", "Youth-leadership platform shared by many organizations")
+System_Ext(email, "Email provider", "Delivers notification email")
+Rel(waypoint, member, "Pushes in-app notifications and live events to")
+Rel(waypoint, email, "Sends one organization's email per message via", "SMTP")
+Rel(email, member, "Delivers email to")
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+!include <C4/C4_Container>
+LAYOUT_WITH_LEGEND()
+title Containers — Suspend an organization
+
+
+Person(op, "Platform Operator", "Platform-level role")
+Person(member, "Organization member", "Any organization role")
+System_Boundary(waypoint, "Waypoint") {
+  Container(portal, "Portal application", "Angular 21", "Organizations screen; account-deactivated state")
+  Container(api, "Waypoint API application", "ASP.NET Core 9", "Platform endpoints; status check per request")
+  Container(workers, "Background workers", "ASP.NET Core hosted services", "Skip suspended organizations")
+  ContainerDb(db, "Waypoint database", "SQL Server", "Organizations.Status")
+}
+Rel(op, portal, "Uses", "HTTPS")
+Rel(member, portal, "Uses", "HTTPS")
+Rel(portal, api, "Calls", "JSON/HTTPS")
+Rel(api, db, "Writes and reads status", "EF Core")
+Rel(workers, db, "Claims rows of Active organizations", "EF Core")
+
+@enduml

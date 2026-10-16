@@ -1,0 +1,16 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+title System Context — Provision an organization
+
+
+Person(op, "Platform Operator", "Provisions organizations; no organization data access")
+Person(admin, "Program Administrator", "Runs one organization")
+System(waypoint, "Waypoint", "Youth-leadership platform shared by many organizations")
+System_Ext(email, "Email provider", "Delivers invitation email")
+Rel(op, waypoint, "Creates organizations and invites first administrators in")
+Rel(waypoint, email, "Sends invitation via", "SMTP")
+Rel(email, admin, "Delivers invitation to")
+Rel(admin, waypoint, "Accepts invitation and administers own organization in")
+
+@enduml

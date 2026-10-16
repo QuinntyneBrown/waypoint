@@ -1,0 +1,56 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+  BorderColor #344054
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+hide empty members
+title Class structure — Migrate to a default organization
+
+
+interface IDatabaseLifecycle {
+  +MigrateAsync(token: CancellationToken): Task
+}
+class DatabaseLifecycle {
+  +MigrateAsync(token: CancellationToken): Task
+}
+class AddMultiTenancy {
+  +Up(builder: MigrationBuilder): void
+  +Down(builder: MigrationBuilder): void
+}
+class Migration {
+  +Up(builder: MigrationBuilder): void
+  +Down(builder: MigrationBuilder): void
+}
+class Organization {
+  +Guid Id
+  +string Name
+  +string Slug
+  +OrganizationStatus Status
+}
+class OrgSettings {
+  +Guid Id
+  +Guid OrganizationId
+  +string Name
+  +string? DisplayName
+  +string? LogoUrl
+}
+class User {
+  +Guid Id
+  +Guid? OrganizationId
+}
+IDatabaseLifecycle <|.. DatabaseLifecycle
+Migration <|-- AddMultiTenancy
+DatabaseLifecycle ..> AddMultiTenancy : applies via EF Core
+AddMultiTenancy ..> Organization : creates default
+AddMultiTenancy ..> OrgSettings : reads name, backfills
+AddMultiTenancy ..> User : backfills
+OrgSettings "1" --> "1" Organization : owned by
+User "*" --> "0..1" Organization : belongs to
+
+@enduml
