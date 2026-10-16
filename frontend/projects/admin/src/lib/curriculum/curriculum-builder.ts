@@ -7,7 +7,6 @@ import {
   LessonWorkspace,
   ModuleWorkspace,
   QuizDetail,
-  QuizWorkspace,
   SaveAssignment,
   SaveLesson,
   SaveModule,

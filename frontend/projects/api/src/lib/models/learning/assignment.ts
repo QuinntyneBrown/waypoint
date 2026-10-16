@@ -10,7 +10,7 @@ export interface AssignmentBrief {
   title: string;
   taskDescription: string;
   dueDate: string | null;
-  allowedSubmissionTypes: Array<'text' | 'photo' | 'link' | 'file'>;
+  allowedSubmissionTypes: ('text' | 'photo' | 'link' | 'file')[];
   rubric: AssignmentRubricItem[];
   totalPoints: number;
   maxUploadBytes: number;

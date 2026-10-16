@@ -41,7 +41,7 @@ export class YouthProgressPage {
   protected readonly progress = signal<YouthProgress | undefined>(undefined);
   protected readonly activeTab = signal<ProgressTab>('overview');
   protected readonly errorMessage = signal<string | null>(null);
-  protected readonly tabs: ReadonlyArray<{ id: ProgressTab; label: string }> = [
+  protected readonly tabs: readonly { id: ProgressTab; label: string }[] = [
     { id: 'overview', label: 'Overview' },
     { id: 'quizzes', label: 'Quizzes' },
     { id: 'attendance', label: 'Attendance' },

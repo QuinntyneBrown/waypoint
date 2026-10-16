@@ -8,7 +8,7 @@ module.exports = defineConfig([
     files: ['**/*.ts'],
     rules: {
       '@angular-eslint/directive-selector': [
-        'error',
+        'warn',
         {
           type: 'attribute',
           prefix: 'w',

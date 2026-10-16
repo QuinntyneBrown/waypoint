@@ -125,7 +125,7 @@ export class ImportRosterPage {
   protected readonly auth = inject(AuthStore);
   private readonly api = inject(DataTransferService);
 
-  protected readonly fields: ReadonlyArray<{ value: RosterField; label: string }> = [
+  protected readonly fields: readonly { value: RosterField; label: string }[] = [
     { value: 'Name', label: 'Name' },
     { value: 'Email', label: 'Email' },
     { value: 'Cohort', label: 'Cohort' },

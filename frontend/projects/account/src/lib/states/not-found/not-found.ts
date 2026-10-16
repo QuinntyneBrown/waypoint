@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthStore, roleHome } from '@waypoint/auth';
 import { WStatePage } from '@waypoint/components';
 
