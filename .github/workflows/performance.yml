@@ -15,6 +15,13 @@ on:
       - ".github/workflows/performance.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   api-load:
     runs-on: ubuntu-latest
