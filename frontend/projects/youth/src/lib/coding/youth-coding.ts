@@ -17,7 +17,7 @@ import { WShell } from '@waypoint/components';
     .coding-layout {
       display: grid;
       grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.6fr);
-      gap: var(--w-sp-5);
+      gap: var(--w-s5);
       align-items: start;
     }
     .coding-step-button {
@@ -34,7 +34,7 @@ import { WShell } from '@waypoint/components';
     .coding-sample {
       overflow-x: auto;
       white-space: pre-wrap;
-      padding: var(--w-sp-4);
+      padding: var(--w-s4);
       background: #17202a;
       color: #f8f9f9;
       border-radius: var(--w-r-input);

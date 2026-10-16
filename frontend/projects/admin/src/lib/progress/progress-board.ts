@@ -29,13 +29,13 @@ import { RealtimeService } from '@waypoint/core/realtime';
     .board-filters {
       display: grid;
       grid-template-columns: repeat(2, minmax(13rem, 1fr));
-      gap: var(--w-sp-4);
+      gap: var(--w-s4);
       align-items: end;
     }
     .board-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
     }
     .matrix-wrap {
       max-width: 100%;
@@ -50,7 +50,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
     }
     .matrix th,
     .matrix td {
-      padding: var(--w-sp-3);
+      padding: var(--w-s3);
       border-bottom: 1px solid var(--w-border);
       text-align: left;
       vertical-align: middle;
@@ -77,7 +77,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
     }
     .module-cell__name {
       display: block;
-      margin-bottom: var(--w-sp-1);
+      margin-bottom: var(--w-s1);
       color: var(--w-text-muted);
       font-size: var(--w-text-sm);
     }
@@ -85,7 +85,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
       display: inline-flex;
       align-items: center;
       min-height: 2rem;
-      padding: 0 var(--w-sp-2);
+      padding: 0 var(--w-s2);
       border-radius: var(--w-radius-pill);
       background: var(--w-surface-subtle);
       font-weight: 700;
@@ -112,7 +112,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
         grid-template-columns: 1fr;
       }
       .board-actions .w-btn {
-        flex: 1 1 calc(50% - var(--w-sp-3));
+        flex: 1 1 calc(50% - var(--w-s3));
         min-height: 45px;
       }
     }

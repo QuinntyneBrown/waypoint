@@ -24,7 +24,7 @@ interface DirectoryQuery {
     .directory-filters {
       display: grid;
       grid-template-columns: minmax(14rem, 1fr) minmax(13rem, 0.5fr);
-      gap: var(--w-sp-4);
+      gap: var(--w-s4);
       align-items: end;
     }
     .role-filters {
@@ -36,10 +36,10 @@ interface DirectoryQuery {
     .role-filter-list {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
     }
     .pager {
-      margin-top: var(--w-sp-4);
+      margin-top: var(--w-s4);
     }
     @media (max-width: 42rem) {
       .directory-filters {
@@ -49,7 +49,7 @@ interface DirectoryQuery {
         grid-column: auto;
       }
       .role-filter-list .w-btn {
-        flex: 1 1 calc(50% - var(--w-sp-2));
+        flex: 1 1 calc(50% - var(--w-s2));
       }
     }
   `,

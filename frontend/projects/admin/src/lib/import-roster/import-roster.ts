@@ -34,7 +34,7 @@ interface ImportColumn {
     .import-columns td,
     .import-preview th,
     .import-preview td {
-      padding: var(--w-sp-3);
+      padding: var(--w-s3);
       border-bottom: 1px solid var(--w-border);
       text-align: left;
       vertical-align: top;
@@ -42,14 +42,14 @@ interface ImportColumn {
     .import-file {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       align-items: center;
       justify-content: space-between;
     }
     .import-counts {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
     }
     .import-count strong {
       display: block;
@@ -73,7 +73,7 @@ interface ImportColumn {
       z-index: 1000;
       inset: 0;
       display: grid;
-      padding: var(--w-sp-4);
+      padding: var(--w-s4);
       place-items: center;
       background: rgb(0 0 0 / 55%);
     }
@@ -93,15 +93,15 @@ interface ImportColumn {
       .import-columns tr,
       .import-preview tr {
         display: grid;
-        gap: var(--w-sp-2);
-        padding: var(--w-sp-3);
+        gap: var(--w-s2);
+        padding: var(--w-s3);
         border-bottom: 1px solid var(--w-border);
       }
       .import-columns td,
       .import-preview td {
         display: grid;
         grid-template-columns: minmax(7rem, 0.8fr) minmax(0, 1.2fr);
-        gap: var(--w-sp-2);
+        gap: var(--w-s2);
         padding: 0;
         border: 0;
         overflow-wrap: anywhere;

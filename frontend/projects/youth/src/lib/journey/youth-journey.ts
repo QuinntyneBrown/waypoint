@@ -13,7 +13,7 @@ import { WShell } from '@waypoint/components';
   styles: `
     .journey-timeline {
       border-inline-start: 3px solid var(--w-border);
-      padding-inline-start: var(--w-sp-5);
+      padding-inline-start: var(--w-s5);
     }
     .journey-module {
       position: relative;
@@ -25,7 +25,7 @@ import { WShell } from '@waypoint/components';
       block-size: 0.9rem;
       border-radius: 50%;
       background: var(--w-border);
-      inset-inline-start: calc(-1 * var(--w-sp-5) - 0.55rem);
+      inset-inline-start: calc(-1 * var(--w-s5) - 0.55rem);
       inset-block-start: 1.35rem;
     }
     .journey-module--current::before {

@@ -24,7 +24,7 @@ import { finalize, forkJoin } from 'rxjs';
     .announcement-layout {
       display: grid;
       grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.35fr);
-      gap: var(--w-sp-5);
+      gap: var(--w-s5);
       align-items: start;
     }
     .announcement-layout > * {
@@ -33,16 +33,16 @@ import { finalize, forkJoin } from 'rxjs';
     .announcement-options {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       padding: 0;
       border: 0;
     }
     .announcement-option {
       display: flex;
       align-items: center;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
       min-height: 2.75rem;
-      padding: var(--w-sp-2) var(--w-sp-3);
+      padding: var(--w-s2) var(--w-s3);
       border: 1px solid var(--w-border);
       border-radius: var(--w-radius-md);
       cursor: pointer;
@@ -67,14 +67,14 @@ import { finalize, forkJoin } from 'rxjs';
     .announcement-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
       align-items: center;
     }
     .announcement-stats {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-sp-3);
-      padding-top: var(--w-sp-3);
+      gap: var(--w-s3);
+      padding-top: var(--w-s3);
       border-top: 1px solid var(--w-border);
     }
     .announcement-stat {

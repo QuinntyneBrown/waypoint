@@ -15,7 +15,7 @@ import { WShell } from '@waypoint/components';
     .home-hero {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: var(--w-sp-5);
+      gap: var(--w-s5);
       align-items: center;
     }
     .home-progress {
@@ -34,9 +34,9 @@ import { WShell } from '@waypoint/components';
     .assignment-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: var(--w-sp-4);
+      gap: var(--w-s4);
       align-items: center;
-      padding-block: var(--w-sp-4);
+      padding-block: var(--w-s4);
       border-top: 1px solid var(--w-border);
     }
     .assignment-row:first-child {

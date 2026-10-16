@@ -27,20 +27,20 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     .report-filters {
       display: grid;
       grid-template-columns: repeat(5, minmax(8.5rem, 1fr)) auto;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       align-items: end;
     }
     .report-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--w-sp-2) var(--w-sp-5);
+      gap: var(--w-s2) var(--w-s5);
       align-items: center;
     }
     .report-tabs {
       display: flex;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
       overflow-x: auto;
-      padding-bottom: var(--w-sp-1);
+      padding-bottom: var(--w-s1);
     }
     .report-tabs .w-btn {
       flex: 0 0 auto;
@@ -50,7 +50,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     .report-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--w-sp-4);
+      gap: var(--w-s4);
     }
     .report-kpi strong {
       display: block;
@@ -60,7 +60,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     .report-chart-row {
       display: grid;
       grid-template-columns: minmax(8rem, 1fr) minmax(8rem, 3fr) auto;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       align-items: center;
     }
     .report-bar {
@@ -109,7 +109,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     .report-stat-line {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
     }
     .report-status--risk {
       color: var(--w-danger);

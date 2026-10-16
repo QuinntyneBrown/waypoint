@@ -17,12 +17,12 @@ import { finalize } from 'rxjs';
     .cohort-summary {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-sp-4);
+      gap: var(--w-s4);
     }
     .member-layout {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(17rem, 1fr);
-      gap: var(--w-sp-5);
+      gap: var(--w-s5);
       align-items: start;
     }
     .member-list {
@@ -34,8 +34,8 @@ import { finalize } from 'rxjs';
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--w-sp-4);
-      padding: var(--w-sp-4) 0;
+      gap: var(--w-s4);
+      padding: var(--w-s4) 0;
       border-bottom: 1px solid var(--w-border);
       overflow-wrap: anywhere;
     }
@@ -44,7 +44,7 @@ import { finalize } from 'rxjs';
     }
     .member-actions {
       display: grid;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
     }
     @media (max-width: 48rem) {
       .member-layout,

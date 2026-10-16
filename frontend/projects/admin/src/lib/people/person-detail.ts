@@ -22,9 +22,9 @@ type LifecycleAction =
   styles: `
     .record-tabs {
       display: flex;
-      gap: var(--w-sp-2);
+      gap: var(--w-s2);
       overflow-x: auto;
-      padding-block: var(--w-sp-2);
+      padding-block: var(--w-s2);
     }
     .record-tab {
       min-height: 44px;
@@ -33,7 +33,7 @@ type LifecycleAction =
     .record-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-sp-5);
+      gap: var(--w-s5);
     }
     .record-list {
       margin: 0;
@@ -41,7 +41,7 @@ type LifecycleAction =
       list-style: none;
     }
     .record-row {
-      padding: var(--w-sp-4) 0;
+      padding: var(--w-s4) 0;
       border-bottom: 1px solid var(--w-border);
       overflow-wrap: anywhere;
     }
@@ -51,7 +51,7 @@ type LifecycleAction =
     .account-actions {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-sp-4);
+      gap: var(--w-s4);
     }
     .account-actions .w-btn {
       justify-content: center;

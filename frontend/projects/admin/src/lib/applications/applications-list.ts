@@ -35,7 +35,7 @@ type Decision = 'approve' | 'decline';
     .review-detail {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-sp-4);
+      gap: var(--w-s4);
     }
     .review-detail__wide {
       grid-column: 1 / -1;

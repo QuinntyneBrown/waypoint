@@ -23,7 +23,7 @@ import { finalize, forkJoin, map } from 'rxjs';
     .settings-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-sp-5);
+      gap: var(--w-s5);
       align-items: start;
     }
     .settings-card {
@@ -34,7 +34,7 @@ import { finalize, forkJoin, map } from 'rxjs';
       align-items: center;
       justify-content: center;
       min-height: 6rem;
-      padding: var(--w-sp-3);
+      padding: var(--w-s3);
       border: 1px dashed var(--w-border);
       border-radius: var(--w-radius-md);
       background: var(--w-surface-subtle);
@@ -47,7 +47,7 @@ import { finalize, forkJoin, map } from 'rxjs';
     .term-form {
       display: grid;
       grid-template-columns: minmax(12rem, 2fr) repeat(3, minmax(9rem, 1fr)) auto;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       align-items: end;
     }
     .term-list,
@@ -61,8 +61,8 @@ import { finalize, forkJoin, map } from 'rxjs';
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: var(--w-sp-4);
-      padding: var(--w-sp-4) 0;
+      gap: var(--w-s4);
+      padding: var(--w-s4) 0;
       border-bottom: 1px solid var(--w-border);
       overflow-wrap: anywhere;
     }
@@ -77,7 +77,7 @@ import { finalize, forkJoin, map } from 'rxjs';
     .policy-check {
       display: flex;
       align-items: flex-start;
-      gap: var(--w-sp-3);
+      gap: var(--w-s3);
       min-height: 2.75rem;
     }
     .policy-check input {
