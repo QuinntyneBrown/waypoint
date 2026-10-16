@@ -169,3 +169,11 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** The product works and is tested against the frontend's own styling. A token and component migration is a large behaviour-neutral change with no acceptance criterion behind it, which the scope rules in `AGENTS.md` do not allow without a request.
 
 **Consequences.** Frontend CSS bugs are fixed against the frontend's tokens, not the design system. Revisit with a migration plan (tokens first, then components) if the two diverge further.
+
+## 22. Design system is the spec; Storybook shows the implemented components
+
+**Decision.** `docs/design-system` is the specification for how components look and behave. Storybook (`components` library, `npm run storybook`) is the catalogue of components that are actually implemented in the frontend; it is expected to be a small subset of the design system (DECISIONS #21). Where they differ, the design system is the target and the story documents current behaviour.
+
+**Why.** Two catalogues are fine when each has one job. This keeps contributors from treating Storybook as the full component list or from editing the design system to match code.
+
+**Consequences.** Build output goes to `dist/storybook/components`; the unused `storybook-static` entry was removed from `frontend/.gitignore`.
