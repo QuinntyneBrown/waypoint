@@ -9,7 +9,7 @@ System_Boundary(waypoint, "Waypoint software system") {
       Component(client, "LearningService", "TypeScript API client", "Typed API boundary code element")
     }
     Container_Boundary(components_lib, "Components library") {
-      Component(player, "WVideoPlayer", "Angular component", "Player shell code element")
+      Component(player, "VideoPlayer", "Angular component", "Player shell code element")
       Component(vod, "HlsVodSession", "TypeScript class", "On-demand session code element")
       Component(factory, "HLS_FACTORY", "Injection token", "Creates an hls.js instance lazily")
       Component(live, "VideoStreamSession", "TypeScript class", "Existing live session, unchanged")

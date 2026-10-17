@@ -27,7 +27,7 @@ package "Frontend — Portal application" {
   }
 }
 package "Frontend — Components library" {
-  class "WVideoPlayer" as player <<Angular component>> {
+  class "VideoPlayer" as player <<Angular component>> {
     +src: string | null
     +poster: string | null
     +streamId: string | null
