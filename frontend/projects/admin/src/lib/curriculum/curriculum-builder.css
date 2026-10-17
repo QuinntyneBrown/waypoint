@@ -144,35 +144,6 @@
   flex: 0 0 auto;
 }
 
-.dialog-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  padding: var(--w-s4);
-  overflow-y: auto;
-  background: rgb(15 23 42 / 65%);
-}
-
-.dialog-panel {
-  width: min(100%, 34rem);
-  max-height: calc(100dvh - 2rem);
-  overflow-y: auto;
-  border-radius: var(--w-r-lg);
-  background: var(--w-surface);
-  box-shadow: var(--w-shadow-pop);
-  padding: var(--w-s5);
-}
-
-.dialog-panel--wide {
-  width: min(100%, 52rem);
-}
-
-.dialog-panel > h2 {
-  margin-top: 0;
-}
-
 .dialog-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -279,15 +250,5 @@
   input[type='file'] {
     width: 100%;
     min-height: 45px;
-  }
-
-  .dialog-backdrop {
-    align-items: start;
-    padding: var(--w-s2);
-  }
-
-  .dialog-panel {
-    max-height: calc(100dvh - 1rem);
-    padding: var(--w-s4);
   }
 }

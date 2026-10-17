@@ -55,20 +55,6 @@ interface ImportColumn {
       display: block;
       font-size: 1.5rem;
     }
-    .import-dialog-backdrop {
-      position: fixed;
-      z-index: 1000;
-      inset: 0;
-      display: grid;
-      padding: var(--w-s4);
-      place-items: center;
-      background: rgb(0 0 0 / 55%);
-    }
-    .import-dialog {
-      width: min(32rem, 100%);
-      margin: 0;
-      border: 0;
-    }
     @media (max-width: 48rem) {
       .import-counts {
         grid-template-columns: repeat(2, minmax(0, 1fr));

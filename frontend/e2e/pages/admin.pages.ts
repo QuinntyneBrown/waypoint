@@ -346,6 +346,9 @@ export class CurriculumBuilderPage extends BasePage {
   get newTrack() {
     return this.page.getByRole('button', { name: 'New track' });
   }
+  get dialogBackdrop() {
+    return this.page.locator('.w-modal__scrim');
+  }
   get trackDialog() {
     return this.page.getByRole('dialog', { name: 'Create track' });
   }

@@ -176,35 +176,39 @@
   </main>
 
   @if (awardBadge(); as badge) {
-    <div class="dialog-backdrop" (click)="awardBadge.set(null)">
-      <section
-        class="dialog-panel"
-        wuAccessibleDialog
-        [attr.aria-label]="'Award ' + badge.name"
-        (click)="$event.stopPropagation()"
-        (wuDialogEscape)="awardBadge.set(null)"
-      >
-        <h2>Award {{ badge.name }}</h2>
-        <form class="w-stack" [formGroup]="awardForm" (ngSubmit)="confirmAward()">
-          <div class="w-field">
-            <label class="w-label" for="youth-recipient">Youth recipient</label>
-            <select class="w-select" id="youth-recipient" formControlName="youthUserId">
-              <option value="">Choose a youth</option>
-              @for (person of youth(); track person.id) {
-                <option [value]="person.id">{{ person.displayName }}</option>
-              }
-            </select>
-          </div>
-          <div class="w-actions">
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
-              Confirm award
-            </button>
-            <button class="w-btn w-btn--ghost" type="button" (click)="awardBadge.set(null)">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </section>
+    <div
+      class="w-modal is-open"
+      wuAccessibleDialog
+      [attr.aria-label]="'Award ' + badge.name"
+      (wuDialogEscape)="awardBadge.set(null)"
+    >
+      <div class="w-modal__scrim" (click)="awardBadge.set(null)"></div>
+      <div class="w-modal__panel">
+        <div class="w-modal__header">
+          <h2 class="w-modal__title">Award {{ badge.name }}</h2>
+        </div>
+        <div class="w-modal__body">
+          <form class="w-stack" [formGroup]="awardForm" (ngSubmit)="confirmAward()">
+            <div class="w-field">
+              <label class="w-label" for="youth-recipient">Youth recipient</label>
+              <select class="w-select" id="youth-recipient" formControlName="youthUserId">
+                <option value="">Choose a youth</option>
+                @for (person of youth(); track person.id) {
+                  <option [value]="person.id">{{ person.displayName }}</option>
+                }
+              </select>
+            </div>
+            <div class="w-actions">
+              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+                Confirm award
+              </button>
+              <button class="w-btn w-btn--ghost" type="button" (click)="awardBadge.set(null)">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   }
 </w-shell>

@@ -534,290 +534,306 @@
   </main>
 
   @if (trackDialogOpen()) {
-    <div class="dialog-backdrop" (click)="trackDialogOpen.set(false)">
-      <section
-        class="dialog-panel"
-        wuAccessibleDialog
-        aria-label="Create track"
-        (click)="$event.stopPropagation()"
-        (wuDialogEscape)="trackDialogOpen.set(false)"
-      >
-        <h2>Create track</h2>
-        <form class="w-stack" [formGroup]="trackForm" (ngSubmit)="createTrack()">
-          <div class="w-field">
-            <label class="w-label" for="track-name">Track name</label>
-            <input class="w-input" id="track-name" formControlName="name" />
-          </div>
-          <div class="w-field">
-            <label class="w-label" for="track-key">Track key</label>
-            <input class="w-input" id="track-key" formControlName="key" />
-          </div>
-          <div class="w-field">
-            <label class="w-label" for="track-description">Track description</label>
-            <textarea
-              class="w-textarea"
-              id="track-description"
-              rows="4"
-              formControlName="description"
-            ></textarea>
-          </div>
-          <div class="w-actions">
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
-              Create track
-            </button>
-            <button class="w-btn w-btn--ghost" type="button" (click)="trackDialogOpen.set(false)">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </section>
+    <div
+      class="w-modal is-open"
+      wuAccessibleDialog
+      aria-label="Create track"
+      (wuDialogEscape)="trackDialogOpen.set(false)"
+    >
+      <div class="w-modal__scrim" (click)="trackDialogOpen.set(false)"></div>
+      <div class="w-modal__panel">
+        <div class="w-modal__header"><h2 class="w-modal__title">Create track</h2></div>
+        <div class="w-modal__body">
+          <form class="w-stack" [formGroup]="trackForm" (ngSubmit)="createTrack()">
+            <div class="w-field">
+              <label class="w-label" for="track-name">Track name</label>
+              <input class="w-input" id="track-name" formControlName="name" />
+            </div>
+            <div class="w-field">
+              <label class="w-label" for="track-key">Track key</label>
+              <input class="w-input" id="track-key" formControlName="key" />
+            </div>
+            <div class="w-field">
+              <label class="w-label" for="track-description">Track description</label>
+              <textarea
+                class="w-textarea"
+                id="track-description"
+                rows="4"
+                formControlName="description"
+              ></textarea>
+            </div>
+            <div class="w-actions">
+              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+                Create track
+              </button>
+              <button class="w-btn w-btn--ghost" type="button" (click)="trackDialogOpen.set(false)">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   }
 
   @if (lessonModuleId()) {
-    <div class="dialog-backdrop" (click)="closeLesson()">
-      <section
-        class="dialog-panel dialog-panel--wide"
-        wuAccessibleDialog
-        [attr.aria-label]="editingLessonId() ? 'Edit lesson' : 'Add lesson'"
-        (click)="$event.stopPropagation()"
-        (wuDialogEscape)="closeLesson()"
-      >
-        <h2>{{ editingLessonId() ? 'Edit lesson' : 'Add lesson' }}</h2>
-        <form class="dialog-grid" [formGroup]="lessonForm" (ngSubmit)="saveLesson()">
-          <div class="w-field dialog-grid__wide">
-            <label class="w-label" for="lesson-title">Lesson title</label>
-            <input class="w-input" id="lesson-title" formControlName="title" />
-          </div>
-          <div class="w-field">
-            <label class="w-label" for="lesson-scripture">Scripture reference</label>
-            <input class="w-input" id="lesson-scripture" formControlName="scriptureReference" />
-          </div>
-          <div class="w-field">
-            <label class="w-label" for="lesson-minutes">Estimated minutes</label>
-            <input
-              class="w-input"
-              id="lesson-minutes"
-              type="number"
-              min="1"
-              formControlName="estimatedMinutes"
-            />
-          </div>
-          <div class="w-field dialog-grid__wide">
-            <label class="w-label" for="learning-objectives">Learning objectives</label>
-            <textarea
-              class="w-textarea"
-              id="learning-objectives"
-              rows="3"
-              formControlName="learningObjectives"
-            ></textarea>
-          </div>
-          <div class="w-field dialog-grid__wide">
-            <label class="w-label" for="teaching-body">Teaching body</label>
-            <textarea
-              class="w-textarea"
-              id="teaching-body"
-              rows="6"
-              formControlName="teachingBody"
-            ></textarea>
-          </div>
-          <div class="w-field">
-            <label class="w-label" for="reflection-prompts">Reflection prompts</label>
-            <textarea
-              class="w-textarea"
-              id="reflection-prompts"
-              rows="4"
-              formControlName="reflectionPrompts"
-            ></textarea>
-          </div>
-          <div class="w-field">
-            <label class="w-label" for="leader-guide-notes">Leader guide notes</label>
-            <textarea
-              class="w-textarea"
-              id="leader-guide-notes"
-              rows="4"
-              formControlName="leaderGuideNotes"
-            ></textarea>
-          </div>
-          <div class="w-actions dialog-grid__wide">
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
-              {{ editingLessonId() ? 'Save lesson' : 'Create lesson' }}
-            </button>
-            <button class="w-btn w-btn--ghost" type="button" (click)="closeLesson()">Cancel</button>
-          </div>
-        </form>
-      </section>
+    <div
+      class="w-modal is-open w-modal--lg"
+      wuAccessibleDialog
+      [attr.aria-label]="editingLessonId() ? 'Edit lesson' : 'Add lesson'"
+      (wuDialogEscape)="closeLesson()"
+    >
+      <div class="w-modal__scrim" (click)="closeLesson()"></div>
+      <div class="w-modal__panel">
+        <div class="w-modal__header">
+          <h2 class="w-modal__title">{{ editingLessonId() ? 'Edit lesson' : 'Add lesson' }}</h2>
+        </div>
+        <div class="w-modal__body">
+          <form class="dialog-grid" [formGroup]="lessonForm" (ngSubmit)="saveLesson()">
+            <div class="w-field dialog-grid__wide">
+              <label class="w-label" for="lesson-title">Lesson title</label>
+              <input class="w-input" id="lesson-title" formControlName="title" />
+            </div>
+            <div class="w-field">
+              <label class="w-label" for="lesson-scripture">Scripture reference</label>
+              <input class="w-input" id="lesson-scripture" formControlName="scriptureReference" />
+            </div>
+            <div class="w-field">
+              <label class="w-label" for="lesson-minutes">Estimated minutes</label>
+              <input
+                class="w-input"
+                id="lesson-minutes"
+                type="number"
+                min="1"
+                formControlName="estimatedMinutes"
+              />
+            </div>
+            <div class="w-field dialog-grid__wide">
+              <label class="w-label" for="learning-objectives">Learning objectives</label>
+              <textarea
+                class="w-textarea"
+                id="learning-objectives"
+                rows="3"
+                formControlName="learningObjectives"
+              ></textarea>
+            </div>
+            <div class="w-field dialog-grid__wide">
+              <label class="w-label" for="teaching-body">Teaching body</label>
+              <textarea
+                class="w-textarea"
+                id="teaching-body"
+                rows="6"
+                formControlName="teachingBody"
+              ></textarea>
+            </div>
+            <div class="w-field">
+              <label class="w-label" for="reflection-prompts">Reflection prompts</label>
+              <textarea
+                class="w-textarea"
+                id="reflection-prompts"
+                rows="4"
+                formControlName="reflectionPrompts"
+              ></textarea>
+            </div>
+            <div class="w-field">
+              <label class="w-label" for="leader-guide-notes">Leader guide notes</label>
+              <textarea
+                class="w-textarea"
+                id="leader-guide-notes"
+                rows="4"
+                formControlName="leaderGuideNotes"
+              ></textarea>
+            </div>
+            <div class="w-actions dialog-grid__wide">
+              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+                {{ editingLessonId() ? 'Save lesson' : 'Create lesson' }}
+              </button>
+              <button class="w-btn w-btn--ghost" type="button" (click)="closeLesson()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   }
 
   @if (quizModuleId()) {
-    <div class="dialog-backdrop" (click)="closeQuizDialog()">
-      <section
-        class="dialog-panel"
-        wuAccessibleDialog
-        aria-label="Add quiz"
-        (click)="$event.stopPropagation()"
-        (wuDialogEscape)="closeQuizDialog()"
-      >
-        <h2>Add quiz</h2>
-        <form class="w-stack" [formGroup]="quizForm" (ngSubmit)="createQuiz()">
-          <div class="w-field">
-            <label class="w-label" for="quiz-pass-mark">Pass mark</label>
-            <input class="w-input" id="quiz-pass-mark" type="number" formControlName="passMark" />
-          </div>
-          <div class="w-field">
-            <label class="w-label" for="quiz-attempts">Attempts allowed</label>
-            <input
-              class="w-input"
-              id="quiz-attempts"
-              type="number"
-              formControlName="attemptsAllowed"
-            />
-          </div>
-          <div class="w-field">
-            <label class="w-label" for="quiz-feedback">Feedback mode</label>
-            <select class="w-select" id="quiz-feedback" formControlName="feedbackMode">
-              <option value="show-correct">Show correct answers</option>
-              <option value="score-only">Show score only</option>
-              <option value="after-all-attempts">After all attempts</option>
-            </select>
-          </div>
-          <label class="check-row">
-            <input type="checkbox" formControlName="shuffle" />
-            Shuffle questions
-          </label>
-          <label class="check-row">
-            <input type="checkbox" formControlName="requiredToCompleteModule" />
-            Required for module completion
-          </label>
-          <div class="w-actions">
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
-              Create quiz
-            </button>
-            <button class="w-btn w-btn--ghost" type="button" (click)="closeQuizDialog()">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </section>
+    <div
+      class="w-modal is-open"
+      wuAccessibleDialog
+      aria-label="Add quiz"
+      (wuDialogEscape)="closeQuizDialog()"
+    >
+      <div class="w-modal__scrim" (click)="closeQuizDialog()"></div>
+      <div class="w-modal__panel">
+        <div class="w-modal__header"><h2 class="w-modal__title">Add quiz</h2></div>
+        <div class="w-modal__body">
+          <form class="w-stack" [formGroup]="quizForm" (ngSubmit)="createQuiz()">
+            <div class="w-field">
+              <label class="w-label" for="quiz-pass-mark">Pass mark</label>
+              <input class="w-input" id="quiz-pass-mark" type="number" formControlName="passMark" />
+            </div>
+            <div class="w-field">
+              <label class="w-label" for="quiz-attempts">Attempts allowed</label>
+              <input
+                class="w-input"
+                id="quiz-attempts"
+                type="number"
+                formControlName="attemptsAllowed"
+              />
+            </div>
+            <div class="w-field">
+              <label class="w-label" for="quiz-feedback">Feedback mode</label>
+              <select class="w-select" id="quiz-feedback" formControlName="feedbackMode">
+                <option value="show-correct">Show correct answers</option>
+                <option value="score-only">Show score only</option>
+                <option value="after-all-attempts">After all attempts</option>
+              </select>
+            </div>
+            <label class="check-row">
+              <input type="checkbox" formControlName="shuffle" />
+              Shuffle questions
+            </label>
+            <label class="check-row">
+              <input type="checkbox" formControlName="requiredToCompleteModule" />
+              Required for module completion
+            </label>
+            <div class="w-actions">
+              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+                Create quiz
+              </button>
+              <button class="w-btn w-btn--ghost" type="button" (click)="closeQuizDialog()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   }
 
   @if (assignmentModuleId()) {
-    <div class="dialog-backdrop" (click)="closeAssignment()">
-      <section
-        class="dialog-panel dialog-panel--wide"
-        wuAccessibleDialog
-        [attr.aria-label]="editingAssignmentId() ? 'Edit assignment' : 'Add assignment'"
-        (click)="$event.stopPropagation()"
-        (wuDialogEscape)="closeAssignment()"
-      >
-        <h2>{{ editingAssignmentId() ? 'Edit assignment' : 'Add assignment' }}</h2>
-        <form class="dialog-grid" [formGroup]="assignmentForm" (ngSubmit)="saveAssignment()">
-          <div class="w-field dialog-grid__wide">
-            <label class="w-label" for="assignment-title">Assignment title</label>
-            <input class="w-input" id="assignment-title" formControlName="title" />
-          </div>
-          <div class="w-field dialog-grid__wide">
-            <label class="w-label" for="assignment-task">Task description</label>
-            <textarea
-              class="w-textarea"
-              id="assignment-task"
-              rows="5"
-              formControlName="taskDescription"
-            ></textarea>
-          </div>
-          <fieldset class="submission-types dialog-grid__wide">
-            <legend class="w-label">Allowed submission types</legend>
+    <div
+      class="w-modal is-open w-modal--lg"
+      wuAccessibleDialog
+      [attr.aria-label]="editingAssignmentId() ? 'Edit assignment' : 'Add assignment'"
+      (wuDialogEscape)="closeAssignment()"
+    >
+      <div class="w-modal__scrim" (click)="closeAssignment()"></div>
+      <div class="w-modal__panel">
+        <div class="w-modal__header">
+          <h2 class="w-modal__title">
+            {{ editingAssignmentId() ? 'Edit assignment' : 'Add assignment' }}
+          </h2>
+        </div>
+        <div class="w-modal__body">
+          <form class="dialog-grid" [formGroup]="assignmentForm" (ngSubmit)="saveAssignment()">
+            <div class="w-field dialog-grid__wide">
+              <label class="w-label" for="assignment-title">Assignment title</label>
+              <input class="w-input" id="assignment-title" formControlName="title" />
+            </div>
+            <div class="w-field dialog-grid__wide">
+              <label class="w-label" for="assignment-task">Task description</label>
+              <textarea
+                class="w-textarea"
+                id="assignment-task"
+                rows="5"
+                formControlName="taskDescription"
+              ></textarea>
+            </div>
+            <fieldset class="submission-types dialog-grid__wide">
+              <legend class="w-label">Allowed submission types</legend>
+              <label class="check-row">
+                <input type="checkbox" formControlName="textResponse" />
+                Text response
+              </label>
+              <label class="check-row">
+                <input type="checkbox" formControlName="photoUpload" />
+                Photo upload
+              </label>
+              <label class="check-row">
+                <input type="checkbox" formControlName="link" />
+                Link
+              </label>
+              <label class="check-row">
+                <input type="checkbox" formControlName="fileUpload" />
+                File upload
+              </label>
+            </fieldset>
+            <div class="w-field">
+              <label class="w-label" for="assignment-due">Due date</label>
+              <input class="w-input" id="assignment-due" type="date" formControlName="dueDate" />
+            </div>
+            <div class="w-field">
+              <label class="w-label" for="assignment-grace">Grace period days</label>
+              <input
+                class="w-input"
+                id="assignment-grace"
+                type="number"
+                min="0"
+                formControlName="gracePeriodDays"
+              />
+            </div>
             <label class="check-row">
-              <input type="checkbox" formControlName="textResponse" />
-              Text response
+              <input type="checkbox" formControlName="allowLate" />
+              Allow late submissions
             </label>
             <label class="check-row">
-              <input type="checkbox" formControlName="photoUpload" />
-              Photo upload
+              <input type="checkbox" formControlName="requireMentorApproval" />
+              Require mentor approval
             </label>
-            <label class="check-row">
-              <input type="checkbox" formControlName="link" />
-              Link
-            </label>
-            <label class="check-row">
-              <input type="checkbox" formControlName="fileUpload" />
-              File upload
-            </label>
-          </fieldset>
-          <div class="w-field">
-            <label class="w-label" for="assignment-due">Due date</label>
-            <input class="w-input" id="assignment-due" type="date" formControlName="dueDate" />
-          </div>
-          <div class="w-field">
-            <label class="w-label" for="assignment-grace">Grace period days</label>
-            <input
-              class="w-input"
-              id="assignment-grace"
-              type="number"
-              min="0"
-              formControlName="gracePeriodDays"
-            />
-          </div>
-          <label class="check-row">
-            <input type="checkbox" formControlName="allowLate" />
-            Allow late submissions
-          </label>
-          <label class="check-row">
-            <input type="checkbox" formControlName="requireMentorApproval" />
-            Require mentor approval
-          </label>
-          <fieldset class="rubric-editor dialog-grid__wide" formArrayName="rubric">
-            <legend class="w-label">Rubric</legend>
-            @for (row of rubric.controls; track row; let rubricIndex = $index) {
-              <div class="rubric-row" [formGroupName]="rubricIndex">
-                <div class="w-field">
-                  <label class="w-label" [for]="'rubric-description-' + rubricIndex">
-                    Rubric criterion
-                  </label>
-                  <input
-                    class="w-input"
-                    [id]="'rubric-description-' + rubricIndex"
-                    formControlName="description"
-                  />
+            <fieldset class="rubric-editor dialog-grid__wide" formArrayName="rubric">
+              <legend class="w-label">Rubric</legend>
+              @for (row of rubric.controls; track row; let rubricIndex = $index) {
+                <div class="rubric-row" [formGroupName]="rubricIndex">
+                  <div class="w-field">
+                    <label class="w-label" [for]="'rubric-description-' + rubricIndex">
+                      Rubric criterion
+                    </label>
+                    <input
+                      class="w-input"
+                      [id]="'rubric-description-' + rubricIndex"
+                      formControlName="description"
+                    />
+                  </div>
+                  <div class="w-field">
+                    <label class="w-label" [for]="'rubric-points-' + rubricIndex">
+                      Criterion points
+                    </label>
+                    <input
+                      class="w-input"
+                      [id]="'rubric-points-' + rubricIndex"
+                      type="number"
+                      min="1"
+                      formControlName="points"
+                    />
+                  </div>
+                  <button
+                    class="w-btn w-btn--ghost"
+                    type="button"
+                    [disabled]="rubric.length === 1"
+                    (click)="removeRubricRow(rubricIndex)"
+                  >
+                    Remove criterion
+                  </button>
                 </div>
-                <div class="w-field">
-                  <label class="w-label" [for]="'rubric-points-' + rubricIndex">
-                    Criterion points
-                  </label>
-                  <input
-                    class="w-input"
-                    [id]="'rubric-points-' + rubricIndex"
-                    type="number"
-                    min="1"
-                    formControlName="points"
-                  />
-                </div>
-                <button
-                  class="w-btn w-btn--ghost"
-                  type="button"
-                  [disabled]="rubric.length === 1"
-                  (click)="removeRubricRow(rubricIndex)"
-                >
-                  Remove criterion
-                </button>
-              </div>
-            }
-            <button class="w-btn w-btn--secondary" type="button" (click)="addRubricRow()">
-              Add rubric criterion
-            </button>
-          </fieldset>
-          <div class="w-actions dialog-grid__wide">
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
-              {{ editingAssignmentId() ? 'Save assignment' : 'Create assignment' }}
-            </button>
-            <button class="w-btn w-btn--ghost" type="button" (click)="closeAssignment()">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </section>
+              }
+              <button class="w-btn w-btn--secondary" type="button" (click)="addRubricRow()">
+                Add rubric criterion
+              </button>
+            </fieldset>
+            <div class="w-actions dialog-grid__wide">
+              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+                {{ editingAssignmentId() ? 'Save assignment' : 'Create assignment' }}
+              </button>
+              <button class="w-btn w-btn--ghost" type="button" (click)="closeAssignment()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   }
 </w-shell>
