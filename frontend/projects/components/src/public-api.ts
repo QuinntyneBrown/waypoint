@@ -43,3 +43,7 @@ export * from './lib/list/w-list-item';
 export * from './lib/timeline/w-timeline';
 export * from './lib/message-thread/w-message-thread';
 export * from './lib/quiz-option/w-quiz-option';
+export * from './lib/brand/w-brand';
+export * from './lib/skip-link/w-skip-link';
+export * from './lib/marketing-nav/w-marketing-nav';
+export * from './lib/footer/w-footer';

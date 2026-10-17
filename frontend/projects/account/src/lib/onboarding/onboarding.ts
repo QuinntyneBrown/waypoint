@@ -23,6 +23,7 @@ import {
   WSwitch,
   WSwitchTrack,
   WAlert,
+  WBrand,
 } from '@waypoint/components';
 import { forkJoin, of, switchMap } from 'rxjs';
 
@@ -43,6 +44,7 @@ import { forkJoin, of, switchMap } from 'rxjs';
     WSwitch,
     WSwitchTrack,
     WAlert,
+    WBrand,
   ],
   templateUrl: './onboarding.html',
 })
