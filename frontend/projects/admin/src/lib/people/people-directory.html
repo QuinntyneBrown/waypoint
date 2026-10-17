@@ -112,28 +112,29 @@
           </tbody>
         </table>
       </div>
-      <nav class="pager w-cluster w-cluster--between" aria-label="People pages">
-        <button
-          class="w-btn w-btn--secondary"
-          type="button"
-          aria-label="Previous page"
-          [disabled]="page() <= 1"
-          (click)="previousPage()"
-        >
-          Previous
-        </button>
+      <nav class="w-pagination" aria-label="People pages">
         <strong data-testid="people-page-status">
           Page {{ page() }} of {{ totalPages() }} · {{ result()?.total }} people
         </strong>
-        <button
-          class="w-btn w-btn--secondary"
-          type="button"
-          aria-label="Next page"
-          [disabled]="page() >= totalPages()"
-          (click)="nextPage()"
-        >
-          Next
-        </button>
+        <div class="w-cluster">
+          <button
+            class="w-btn w-btn--secondary"
+            type="button"
+            aria-label="Previous page"
+            [disabled]="page() <= 1"
+            (click)="previousPage()"
+          >
+            Previous</button
+          ><button
+            class="w-btn w-btn--secondary"
+            type="button"
+            aria-label="Next page"
+            [disabled]="page() >= totalPages()"
+            (click)="nextPage()"
+          >
+            Next
+          </button>
+        </div>
       </nav>
     } @else {
       <div class="w-empty">

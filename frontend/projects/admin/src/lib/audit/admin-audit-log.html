@@ -178,14 +178,14 @@
           </div>
         </div>
 
-        <div class="audit-pagination w-mt-4">
+        <nav class="w-pagination" aria-label="Audit pages">
           <p class="w-muted" data-testid="audit-page-summary">
             Page {{ audit.page }} of {{ pageCount() }} · Showing {{ firstShown() }}–{{
               lastShown()
             }}
             of {{ audit.total }} events
           </p>
-          <div class="audit-pagination__actions">
+          <div class="w-cluster">
             <button
               class="w-btn w-btn--ghost"
               type="button"
@@ -205,7 +205,7 @@
               Next
             </button>
           </div>
-        </div>
+        </nav>
       }
     }
   </div>
