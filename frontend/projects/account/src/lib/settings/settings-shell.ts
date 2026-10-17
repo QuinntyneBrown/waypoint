@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import { WShell, WTabs, WTab } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 
 /** Shared layout for the settings pages: app shell + settings tab nav + content. */
 @Component({
   selector: 'w-settings-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, RouterLinkActive],
+  imports: [WShell, RouterLink, RouterLinkActive, WTabs, WTab],
   template: `<w-shell
     [role]="role()"
     active="profile"
@@ -22,13 +22,40 @@ import { shellRole } from '@waypoint/core';
           <h1 class="w-page__title">{{ heading() }}</h1>
         </div>
       </div>
-      <nav class="w-tabs w-mb-6" aria-label="Settings">
-        <a class="w-tab" routerLink="/settings/profile" routerLinkActive="is-active">Profile</a>
-        <a class="w-tab" routerLink="/settings/notifications" routerLinkActive="is-active">
+      <nav w-tabs class="w-mb-6" aria-label="Settings">
+        <a
+          w-tab
+          routerLink="/settings/profile"
+          routerLinkActive
+          #profile="routerLinkActive"
+          [active]="profile.isActive"
+          >Profile</a
+        >
+        <a
+          w-tab
+          routerLink="/settings/notifications"
+          routerLinkActive
+          #notifications="routerLinkActive"
+          [active]="notifications.isActive"
+        >
           Notifications
         </a>
-        <a class="w-tab" routerLink="/settings/display" routerLinkActive="is-active">Display</a>
-        <a class="w-tab" routerLink="/settings/privacy" routerLinkActive="is-active">Privacy</a>
+        <a
+          w-tab
+          routerLink="/settings/display"
+          routerLinkActive
+          #display="routerLinkActive"
+          [active]="display.isActive"
+          >Display</a
+        >
+        <a
+          w-tab
+          routerLink="/settings/privacy"
+          routerLinkActive
+          #privacy="routerLinkActive"
+          [active]="privacy.isActive"
+          >Privacy</a
+        >
       </nav>
       <ng-content />
     </div>

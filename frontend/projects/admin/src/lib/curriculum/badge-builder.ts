@@ -33,6 +33,7 @@ import {
   WEmptyState,
   WEmptyStateTitle,
   WEmptyStateText,
+  WDescriptionList,
 } from '@waypoint/components';
 import { finalize, forkJoin, of, switchMap } from 'rxjs';
 import {
@@ -68,6 +69,7 @@ interface BadgeTarget {
     WEmptyState,
     WEmptyStateTitle,
     WEmptyStateText,
+    WDescriptionList,
   ],
   templateUrl: './badge-builder.html',
   styleUrl: './curriculum-admin.css',

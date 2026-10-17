@@ -25,6 +25,8 @@ import {
   WBadge,
   WTableWrap,
   WTable,
+  WTabs,
+  WTab,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
@@ -52,6 +54,8 @@ type HistoryView = 'session' | 'youth';
     WBadge,
     WTableWrap,
     WTable,
+    WTabs,
+    WTab,
   ],
   templateUrl: './mentor-attendance-history.html',
   styles: `

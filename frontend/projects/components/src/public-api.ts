@@ -36,3 +36,5 @@ export * from './lib/stat/w-stat';
 export * from './lib/progress/w-progress';
 export * from './lib/table/w-table';
 export * from './lib/pagination/w-pagination';
+export * from './lib/tabs/w-tabs';
+export * from './lib/description-list/w-description-list';
