@@ -25,39 +25,39 @@
           (input)="onSearch($any($event.target).value)"
         />
       </div>
-      <div class="w-pillrow" aria-label="Roster status filter">
+      <div w-chip-row aria-label="Roster status filter">
         <button
-          class="w-pill filter-button"
+          w-chip
+          class="filter-button"
           type="button"
-          [class.is-active]="filter() === 'all'"
-          [attr.aria-pressed]="filter() === 'all'"
+          [active]="filter() === 'all'"
           (click)="setFilter('all')"
         >
           All
         </button>
         <button
-          class="w-pill filter-button"
+          w-chip
+          class="filter-button"
           type="button"
-          [class.is-active]="filter() === 'on-track'"
-          [attr.aria-pressed]="filter() === 'on-track'"
+          [active]="filter() === 'on-track'"
           (click)="setFilter('on-track')"
         >
           On track
         </button>
         <button
-          class="w-pill filter-button"
+          w-chip
+          class="filter-button"
           type="button"
-          [class.is-active]="filter() === 'at-risk'"
-          [attr.aria-pressed]="filter() === 'at-risk'"
+          [active]="filter() === 'at-risk'"
           (click)="setFilter('at-risk')"
         >
           At risk
         </button>
         <button
-          class="w-pill filter-button"
+          w-chip
+          class="filter-button"
           type="button"
-          [class.is-active]="filter() === 'new'"
-          [attr.aria-pressed]="filter() === 'new'"
+          [active]="filter() === 'new'"
           (click)="setFilter('new')"
         >
           New

@@ -34,7 +34,8 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Divider | 25 | to build (DECISIONS #23) |
 | List | 20 | to build (DECISIONS #23) |
 | Scripture | 19 | to build (DECISIONS #23) |
-| Button group | 18 | to build (DECISIONS #23) |
+| Button group | 18 | in library |
+| Chip | — | in library |
 | Checkbox | 18 | in library |
 | Switch | 17 | in library |
 | Link | — | in library |

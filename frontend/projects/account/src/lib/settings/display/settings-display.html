@@ -28,13 +28,12 @@
 
     <div w-form-field>
       <span w-label id="theme-label">Theme</span>
-      <div class="w-segment" role="group" aria-labelledby="theme-label">
+      <div w-button-group role="group" aria-labelledby="theme-label">
         @for (option of themes; track option.value) {
           <button
-            class="w-segment__item"
+            w-button-group-item
             type="button"
-            [class.is-active]="prefs().theme === option.value"
-            [attr.aria-pressed]="prefs().theme === option.value"
+            [active]="prefs().theme === option.value"
             (click)="setTheme(option.value)"
           >
             {{ option.label }}
