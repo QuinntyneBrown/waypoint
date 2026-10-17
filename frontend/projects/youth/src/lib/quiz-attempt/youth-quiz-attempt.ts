@@ -13,18 +13,6 @@ type QuizAnswers = Record<string, number[] | string>;
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [WShell],
   templateUrl: './youth-quiz-attempt.html',
-  styles: `
-    .quiz-option {
-      min-height: 2.75rem;
-      display: flex;
-      align-items: center;
-      gap: var(--w-s3);
-      padding: var(--w-s3);
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-input);
-      cursor: pointer;
-    }
-  `,
 })
 export class YouthQuizAttemptPage {
   protected readonly auth = inject(AuthStore);

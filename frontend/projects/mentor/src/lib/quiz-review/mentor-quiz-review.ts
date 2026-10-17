@@ -30,17 +30,6 @@ import { WShell } from '@waypoint/components';
       display: grid;
       gap: var(--w-s3);
     }
-    .answer-option {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--w-s3);
-      padding: var(--w-s3);
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-sm);
-    }
-    .answer-option--selected {
-      border-width: 2px;
-    }
     .answer-copy {
       min-width: 0;
       flex: 1;
