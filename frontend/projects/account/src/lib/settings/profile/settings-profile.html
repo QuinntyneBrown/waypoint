@@ -1,28 +1,21 @@
 <w-settings-shell heading="Profile">
   <form [formGroup]="profile" (ngSubmit)="saveProfile()" novalidate class="w-stack">
     <div
-      class="w-field"
-      [class.is-error]="
-        profile.controls.displayName.touched && profile.controls.displayName.invalid
-      "
+      w-form-field
+      [invalid]="profile.controls.displayName.touched && profile.controls.displayName.invalid"
     >
-      <label class="w-label" for="displayName"
-        >Display name <span class="w-label__req">*</span></label
-      >
+      <label w-label for="displayName">Display name <span w-label-required>*</span></label>
       <input class="w-input" id="displayName" formControlName="displayName" />
     </div>
-    <div
-      class="w-field"
-      [class.is-error]="profile.controls.email.touched && profile.controls.email.invalid"
-    >
-      <label class="w-label" for="email">Email <span class="w-label__req">*</span></label>
+    <div w-form-field [invalid]="profile.controls.email.touched && profile.controls.email.invalid">
+      <label w-label for="email">Email <span w-label-required>*</span></label>
       <input class="w-input" id="email" type="email" formControlName="email" />
       @if (profile.controls.email.touched && profile.controls.email.invalid) {
-        <div class="w-error-text">Enter a valid email address.</div>
+        <div w-error-text>Enter a valid email address.</div>
       }
     </div>
-    <div class="w-field">
-      <label class="w-label" for="pronouns">Pronouns</label>
+    <div w-form-field>
+      <label w-label for="pronouns">Pronouns</label>
       <input
         class="w-input"
         id="pronouns"
@@ -30,8 +23,8 @@
         placeholder="e.g. they/them"
       />
     </div>
-    <div class="w-field">
-      <label class="w-label" for="profilePhoto">Profile photo</label>
+    <div w-form-field>
+      <label w-label for="profilePhoto">Profile photo</label>
       <input
         class="w-input"
         id="profilePhoto"
@@ -40,7 +33,7 @@
         [disabled]="uploadingPhoto()"
         (change)="photoSelected($event)"
       />
-      <div class="w-help">JPG or PNG, up to 5 MB. Stored privately.</div>
+      <div w-help>JPG or PNG, up to 5 MB. Stored privately.</div>
     </div>
     @if (photoError(); as error) {
       <div class="w-alert w-alert--error" role="alert">{{ error }}</div>
@@ -89,8 +82,8 @@
     </div>
   }
   <form [formGroup]="password" (ngSubmit)="changePassword()" novalidate class="w-stack">
-    <div class="w-field">
-      <label class="w-label" for="currentPassword">Current password</label>
+    <div w-form-field>
+      <label w-label for="currentPassword">Current password</label>
       <input
         class="w-input"
         id="currentPassword"
@@ -99,8 +92,8 @@
         formControlName="currentPassword"
       />
     </div>
-    <div class="w-field" [class.is-error]="confirmTouched() && !policyOk()">
-      <label class="w-label" for="newPassword">New password</label>
+    <div w-form-field [invalid]="confirmTouched() && !policyOk()">
+      <label w-label for="newPassword">New password</label>
       <div style="position: relative">
         <input
           class="w-input"
@@ -119,12 +112,14 @@
           <w-icon [name]="showNew() ? 'eye-off' : 'eye'" />
         </button>
       </div>
-      <div class="w-help" [class.w-error-text]="confirmTouched() && !policyOk()">
-        {{ policyMessage }}
-      </div>
+      @if (confirmTouched() && !policyOk()) {
+        <div w-error-text>{{ policyMessage }}</div>
+      } @else {
+        <div w-help>{{ policyMessage }}</div>
+      }
     </div>
-    <div class="w-field" [class.is-error]="confirmTouched() && !matches()">
-      <label class="w-label" for="confirmPassword">Confirm new password</label>
+    <div w-form-field [invalid]="confirmTouched() && !matches()">
+      <label w-label for="confirmPassword">Confirm new password</label>
       <input
         class="w-input"
         id="confirmPassword"
@@ -133,7 +128,7 @@
         formControlName="confirmPassword"
       />
       @if (confirmTouched() && !matches()) {
-        <div class="w-error-text">Passwords do not match.</div>
+        <div w-error-text>Passwords do not match.</div>
       }
     </div>
     <div>

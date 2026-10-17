@@ -7,7 +7,7 @@ import {
   TEXT_SCALE_MIN,
   Theme,
 } from '@waypoint/api';
-import { ToastService, WButton } from '@waypoint/components';
+import { ToastService, WButton, WFormField, WHelp, WLabel } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
 import { DisplayPreferencesService } from '@waypoint/core';
 
@@ -15,7 +15,7 @@ import { DisplayPreferencesService } from '@waypoint/core';
 @Component({
   selector: 'w-settings-display',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SettingsShell, WButton],
+  imports: [SettingsShell, WButton, WFormField, WLabel, WHelp],
   templateUrl: './settings-display.html',
 })
 export class SettingsDisplay {

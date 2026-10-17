@@ -27,8 +27,8 @@
             <h2 class="w-card__title" id="assignment-details-heading">Assignment details</h2>
           </div>
           <div class="w-card__body w-stack">
-            <div class="w-field">
-              <label class="w-label" for="assign-item-type">What are you assigning?</label>
+            <div w-form-field>
+              <label w-label for="assign-item-type">What are you assigning?</label>
               <select
                 class="w-select"
                 id="assign-item-type"
@@ -40,8 +40,8 @@
                 <option value="Project">Project / assignment</option>
               </select>
             </div>
-            <div class="w-field">
-              <label class="w-label" for="assign-item">Item</label>
+            <div w-form-field>
+              <label w-label for="assign-item">Item</label>
               <select
                 class="w-select"
                 id="assign-item"
@@ -55,15 +55,13 @@
                 }
               </select>
               @if (filteredItems().length === 0) {
-                <p class="w-help">
-                  No published {{ itemType().toLowerCase() }} items are available.
-                </p>
+                <p w-help>No published {{ itemType().toLowerCase() }} items are available.</p>
               }
             </div>
 
             <div class="w-divider"></div>
             <fieldset class="w-stack">
-              <legend class="w-label">Who is this for?</legend>
+              <legend w-label>Who is this for?</legend>
               <div class="w-cluster">
                 <label class="w-radio">
                   <input
@@ -114,8 +112,8 @@
                   }
                 </div>
               } @else {
-                <div class="w-field w-mb-0">
-                  <label class="w-label" for="assign-cohort">Cohort</label>
+                <div w-form-field class="w-mb-0">
+                  <label w-label for="assign-cohort">Cohort</label>
                   <select
                     class="w-select"
                     id="assign-cohort"
@@ -135,8 +133,8 @@
 
             <div class="w-divider"></div>
             <div class="w-grid w-grid--2">
-              <div class="w-field">
-                <label class="w-label" for="assign-due-date">Due date</label>
+              <div w-form-field>
+                <label w-label for="assign-due-date">Due date</label>
                 <input
                   class="w-input"
                   id="assign-due-date"
@@ -145,8 +143,8 @@
                   (input)="dueDate.set($any($event.target).value)"
                 />
               </div>
-              <div class="w-field">
-                <label class="w-label" for="assign-reminder">Reminder</label>
+              <div w-form-field>
+                <label w-label for="assign-reminder">Reminder</label>
                 <select
                   class="w-select"
                   id="assign-reminder"
@@ -159,8 +157,8 @@
                 </select>
               </div>
             </div>
-            <div class="w-field">
-              <label class="w-label" for="assign-message">Message to youth</label>
+            <div w-form-field>
+              <label w-label for="assign-message">Message to youth</label>
               <textarea
                 class="w-textarea"
                 id="assign-message"
@@ -170,7 +168,7 @@
                 [value]="message()"
                 (input)="message.set($any($event.target).value)"
               ></textarea>
-              <p class="w-help">Each recipient receives this in their mentor message thread.</p>
+              <p w-help>Each recipient receives this in their mentor message thread.</p>
             </div>
             <div class="w-actions">
               <button

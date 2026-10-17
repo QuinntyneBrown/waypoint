@@ -59,16 +59,16 @@
           <p class="w-muted">Every overview and staff metric uses this exact scope.</p>
         </div>
         <form class="report-filters" [formGroup]="filterForm" (ngSubmit)="applyFilters()">
-          <div class="w-field">
-            <label class="w-label" for="report-from">Date from</label>
+          <div w-form-field>
+            <label w-label for="report-from">Date from</label>
             <input class="w-input" id="report-from" type="date" formControlName="from" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="report-to">Date to</label>
+          <div w-form-field>
+            <label w-label for="report-to">Date to</label>
             <input class="w-input" id="report-to" type="date" formControlName="to" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="report-cohort">Report cohort</label>
+          <div w-form-field>
+            <label w-label for="report-cohort">Report cohort</label>
             <select class="w-select" id="report-cohort" formControlName="cohortId">
               <option value="">All cohorts</option>
               @for (cohort of options()?.cohorts ?? []; track cohort.id) {
@@ -76,8 +76,8 @@
               }
             </select>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="report-track">Report track</label>
+          <div w-form-field>
+            <label w-label for="report-track">Report track</label>
             <select class="w-select" id="report-track" formControlName="trackId">
               <option value="">All tracks</option>
               @for (track of options()?.tracks ?? []; track track.id) {
@@ -85,8 +85,8 @@
               }
             </select>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="report-mentor">Report mentor</label>
+          <div w-form-field>
+            <label w-label for="report-mentor">Report mentor</label>
             <select class="w-select" id="report-mentor" formControlName="mentorId">
               <option value="">All mentors</option>
               @for (mentor of options()?.mentors ?? []; track mentor.id) {
@@ -97,7 +97,7 @@
           <button w-button variant="primary" type="submit">Apply report filters</button>
         </form>
         @if (dateError(); as message) {
-          <p class="w-error" role="alert">{{ message }}</p>
+          <p w-error-text role="alert">{{ message }}</p>
         }
         @if (hub(); as summary) {
           <div class="report-meta">
@@ -239,8 +239,8 @@
       <section class="w-stack" role="tabpanel">
         <form class="w-card report-selector" [formGroup]="youthForm" (ngSubmit)="generateYouth()">
           <div class="w-card__body report-grid">
-            <div class="w-field">
-              <label class="w-label" for="report-youth">Youth</label>
+            <div w-form-field>
+              <label w-label for="report-youth">Youth</label>
               <select class="w-select" id="report-youth" formControlName="youthId">
                 <option value="">Choose a youth</option>
                 @for (person of options()?.youth ?? []; track person.id) {
@@ -375,8 +375,8 @@
       <section class="w-stack" role="tabpanel">
         <form class="w-card report-selector" [formGroup]="cohortForm" (ngSubmit)="generateCohort()">
           <div class="w-card__body report-grid">
-            <div class="w-field">
-              <label class="w-label" for="cohort-report-selection">Cohort report selection</label
+            <div w-form-field>
+              <label w-label for="cohort-report-selection">Cohort report selection</label
               ><select class="w-select" id="cohort-report-selection" formControlName="cohortId">
                 <option value="">Choose a cohort</option>
                 @for (cohort of options()?.cohorts ?? []; track cohort.id) {
@@ -384,8 +384,8 @@
                 }
               </select>
             </div>
-            <div class="w-field">
-              <label class="w-label" for="cohort-comparison">Compare with</label
+            <div w-form-field>
+              <label w-label for="cohort-comparison">Compare with</label
               ><select class="w-select" id="cohort-comparison" formControlName="compareCohortId">
                 <option value="">Program average / previous term</option>
                 @for (cohort of options()?.cohorts ?? []; track cohort.id) {

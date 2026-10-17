@@ -7,8 +7,11 @@ import { AuthStore } from '@waypoint/auth';
 import {
   WAccessibleDialog,
   WButton,
+  WErrorText,
+  WFormField,
   WIcon,
   WIconButton,
+  WLabel,
   WLink,
   WShell,
 } from '@waypoint/components';
@@ -28,6 +31,9 @@ import { finalize } from 'rxjs';
     WButton,
     WIconButton,
     WLink,
+    WFormField,
+    WLabel,
+    WErrorText,
   ],
   templateUrl: './cohort-detail.html',
   styles: `

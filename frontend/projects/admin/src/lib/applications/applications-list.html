@@ -14,8 +14,8 @@
         </p>
       </div>
       <div class="w-page__actions">
-        <div class="w-field">
-          <label class="w-label" for="application-status">Application status</label>
+        <div w-form-field>
+          <label w-label for="application-status">Application status</label>
           <select id="application-status" class="w-select" [formControl]="statusFilter">
             <option value="">All statuses</option>
             <option value="New">New</option>
@@ -189,8 +189,8 @@
           </section>
 
           <form class="w-stack" [formGroup]="form">
-            <div class="w-field">
-              <label class="w-label" for="application-track">Interest track</label>
+            <div w-form-field>
+              <label w-label for="application-track">Interest track</label>
               <input
                 id="application-track"
                 class="w-input"
@@ -205,9 +205,9 @@
               </datalist>
             </div>
             <div class="w-grid w-grid--2">
-              <div class="w-field">
-                <label class="w-label" for="application-cohort">
-                  Assign cohort <span class="w-label__req">*</span>
+              <div w-form-field>
+                <label w-label for="application-cohort">
+                  Assign cohort <span w-label-required>*</span>
                 </label>
                 <select id="application-cohort" class="w-select" formControlName="cohortId">
                   <option value="">Choose a cohort</option>
@@ -216,12 +216,12 @@
                   }
                 </select>
                 @if (form.controls.cohortId.touched && form.controls.cohortId.invalid) {
-                  <p class="w-field__error">Choose a cohort before approval.</p>
+                  <p w-error-text>Choose a cohort before approval.</p>
                 }
               </div>
-              <div class="w-field">
-                <label class="w-label" for="application-mentor">
-                  Assign mentor <span class="w-label__req">*</span>
+              <div w-form-field>
+                <label w-label for="application-mentor">
+                  Assign mentor <span w-label-required>*</span>
                 </label>
                 <select id="application-mentor" class="w-select" formControlName="mentorId">
                   <option value="">Choose a mentor</option>
@@ -230,12 +230,12 @@
                   }
                 </select>
                 @if (form.controls.mentorId.touched && form.controls.mentorId.invalid) {
-                  <p class="w-field__error">Choose a mentor assigned to the cohort.</p>
+                  <p w-error-text>Choose a mentor assigned to the cohort.</p>
                 }
               </div>
             </div>
-            <div class="w-field">
-              <label class="w-label" for="application-decision-note">Decision note</label>
+            <div w-form-field>
+              <label w-label for="application-decision-note">Decision note</label>
               <textarea
                 id="application-decision-note"
                 class="w-textarea"

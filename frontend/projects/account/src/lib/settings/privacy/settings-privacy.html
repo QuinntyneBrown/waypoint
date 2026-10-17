@@ -79,8 +79,8 @@
         <div class="w-card__body">
           <h2 class="w-card__title">Make a data-rights request</h2>
           <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
-            <div class="w-field">
-              <label class="w-label" for="privacy-action">Request type</label>
+            <div w-form-field>
+              <label w-label for="privacy-action">Request type</label>
               <select class="w-select" id="privacy-action" formControlName="actionType">
                 <option value="access">Access a copy of my data</option>
                 <option value="correction">Correct my information</option>
@@ -90,19 +90,19 @@
             </div>
 
             @if (form.controls.actionType.value === 'correction') {
-              <div class="w-field">
-                <label class="w-label" for="privacy-name">Correct name</label>
+              <div w-form-field>
+                <label w-label for="privacy-name">Correct name</label>
                 <input class="w-input" id="privacy-name" formControlName="displayName" />
               </div>
-              <div class="w-field">
-                <label class="w-label" for="privacy-email">Correct email</label>
+              <div w-form-field>
+                <label w-label for="privacy-email">Correct email</label>
                 <input class="w-input" id="privacy-email" type="email" formControlName="email" />
                 @if (form.controls.email.touched && form.controls.email.invalid) {
-                  <p class="w-error-text">Enter a valid email address.</p>
+                  <p w-error-text>Enter a valid email address.</p>
                 }
               </div>
-              <div class="w-field">
-                <label class="w-label" for="privacy-pronouns">Correct pronouns</label>
+              <div w-form-field>
+                <label w-label for="privacy-pronouns">Correct pronouns</label>
                 <input
                   class="w-input"
                   id="privacy-pronouns"
@@ -110,7 +110,7 @@
                   [disabled]="form.controls.clearPronouns.value"
                 />
               </div>
-              <div class="w-field">
+              <div w-form-field>
                 <label class="w-check" for="privacy-clear-pronouns">
                   <input
                     id="privacy-clear-pronouns"
@@ -123,8 +123,8 @@
               </div>
             }
 
-            <div class="w-field">
-              <label class="w-label" for="privacy-details">Details</label>
+            <div w-form-field>
+              <label w-label for="privacy-details">Details</label>
               <textarea
                 class="w-textarea"
                 id="privacy-details"

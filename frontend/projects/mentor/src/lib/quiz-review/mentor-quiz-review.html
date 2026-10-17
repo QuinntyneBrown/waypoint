@@ -95,8 +95,8 @@
             </div>
 
             @if (item.approvedScore === null || item.approvedScore === undefined) {
-              <div class="w-field">
-                <label class="w-label" for="override-score">Override score (optional)</label>
+              <div w-form-field>
+                <label w-label for="override-score">Override score (optional)</label>
                 <input
                   class="w-input"
                   id="override-score"
@@ -108,7 +108,7 @@
                   [value]="overrideScore()"
                   (input)="setOverrideScore($any($event.target).value)"
                 />
-                <p class="w-help">Leave blank to approve the {{ item.autoScore }}% auto-score.</p>
+                <p w-help>Leave blank to approve the {{ item.autoScore }}% auto-score.</p>
               </div>
               <button
                 w-button

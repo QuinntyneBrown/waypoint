@@ -17,14 +17,10 @@
       <p class="w-muted w-mb-6">This is how you’ll show up across Waypoint.</p>
       <form [formGroup]="profile">
         <div
-          class="w-field"
-          [class.is-error]="
-            profile.controls.displayName.touched && profile.controls.displayName.invalid
-          "
+          w-form-field
+          [invalid]="profile.controls.displayName.touched && profile.controls.displayName.invalid"
         >
-          <label class="w-label" for="displayName"
-            >Display name <span class="w-label__req">*</span></label
-          >
+          <label w-label for="displayName">Display name <span w-label-required>*</span></label>
           <input
             class="w-input"
             id="displayName"
@@ -32,11 +28,11 @@
             autocomplete="name"
           />
           @if (profile.controls.displayName.touched && profile.controls.displayName.invalid) {
-            <div class="w-error-text">Please enter a display name.</div>
+            <div w-error-text>Please enter a display name.</div>
           }
         </div>
-        <div class="w-field">
-          <label class="w-label" for="pronouns">Pronouns</label>
+        <div w-form-field>
+          <label w-label for="pronouns">Pronouns</label>
           <input
             class="w-input"
             id="pronouns"
@@ -44,8 +40,8 @@
             placeholder="e.g. she/her, he/him, they/them"
           />
         </div>
-        <div class="w-field">
-          <label class="w-label" for="profilePhoto">Profile photo</label>
+        <div w-form-field>
+          <label w-label for="profilePhoto">Profile photo</label>
           <input
             class="w-input"
             id="profilePhoto"
@@ -54,7 +50,7 @@
             [disabled]="uploadingPhoto()"
             (change)="photoSelected($event)"
           />
-          <div class="w-help">Optional JPG or PNG, up to 5 MB. Stored privately.</div>
+          <div w-help>Optional JPG or PNG, up to 5 MB. Stored privately.</div>
         </div>
         @if (photoError(); as error) {
           <div class="w-alert w-alert--error" role="alert">{{ error }}</div>

@@ -11,14 +11,31 @@ import {
   ApiError,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon } from '@waypoint/components';
+import {
+  WButton,
+  WErrorText,
+  WFormField,
+  WHelp,
+  WIcon,
+  WLabel,
+  WLabelRequired,
+} from '@waypoint/components';
 import { forkJoin, of, switchMap } from 'rxjs';
 
 // Traces to: L2-AUTH-011
 @Component({
   selector: 'w-onboarding',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, WIcon, WButton],
+  imports: [
+    ReactiveFormsModule,
+    WIcon,
+    WButton,
+    WFormField,
+    WLabel,
+    WLabelRequired,
+    WHelp,
+    WErrorText,
+  ],
   templateUrl: './onboarding.html',
 })
 export class Onboarding implements OnDestroy {

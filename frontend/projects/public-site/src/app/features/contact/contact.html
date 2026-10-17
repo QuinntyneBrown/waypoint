@@ -39,39 +39,39 @@
     }
 
     <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="w-stack w-mt-6">
-      <div class="w-field" [class.is-error]="error('name')">
-        <label class="w-label" for="name">Your name <span class="w-label__req">*</span></label>
+      <div w-form-field [invalid]="error('name')">
+        <label w-label for="name">Your name <span w-label-required>*</span></label>
         <input class="w-input" id="name" formControlName="name" />
         @if (error('name')) {
-          <div class="w-error-text">{{ error('name') }}</div>
+          <div w-error-text>{{ error('name') }}</div>
         }
       </div>
 
-      <div class="w-field" [class.is-error]="error('email')">
-        <label class="w-label" for="email">Email <span class="w-label__req">*</span></label>
+      <div w-form-field [invalid]="error('email')">
+        <label w-label for="email">Email <span w-label-required>*</span></label>
         <input class="w-input" id="email" type="email" formControlName="email" />
         @if (error('email')) {
-          <div class="w-error-text">{{ error('email') }}</div>
+          <div w-error-text>{{ error('email') }}</div>
         }
       </div>
 
-      <div class="w-field" [class.is-error]="error('topic')">
-        <label class="w-label" for="topic">Topic <span class="w-label__req">*</span></label>
+      <div w-form-field [invalid]="error('topic')">
+        <label w-label for="topic">Topic <span w-label-required>*</span></label>
         <select class="w-select" id="topic" formControlName="topic">
           @for (topic of topics; track topic) {
             <option [value]="topic">{{ topic }}</option>
           }
         </select>
         @if (error('topic')) {
-          <div class="w-error-text">{{ error('topic') }}</div>
+          <div w-error-text>{{ error('topic') }}</div>
         }
       </div>
 
-      <div class="w-field" [class.is-error]="error('message')">
-        <label class="w-label" for="message">Message <span class="w-label__req">*</span></label>
+      <div w-form-field [invalid]="error('message')">
+        <label w-label for="message">Message <span w-label-required>*</span></label>
         <textarea class="w-textarea" id="message" rows="5" formControlName="message"></textarea>
         @if (error('message')) {
-          <div class="w-error-text">{{ error('message') }}</div>
+          <div w-error-text>{{ error('message') }}</div>
         }
       </div>
 

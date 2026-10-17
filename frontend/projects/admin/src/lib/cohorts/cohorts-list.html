@@ -102,18 +102,16 @@
             </div>
           }
           <form class="form-grid" [formGroup]="form" (ngSubmit)="create()">
-            <div class="w-field form-grid__wide">
-              <label class="w-label" for="cohort-name">
-                Cohort name <span class="w-label__req">*</span>
-              </label>
+            <div w-form-field class="form-grid__wide">
+              <label w-label for="cohort-name"> Cohort name <span w-label-required>*</span> </label>
               <input class="w-input" id="cohort-name" formControlName="name" maxlength="128" />
               @if (form.controls.name.touched && form.controls.name.invalid) {
-                <p class="w-field__error">Enter a cohort name.</p>
+                <p w-error-text>Enter a cohort name.</p>
               }
             </div>
-            <div class="w-field">
-              <label class="w-label" for="cohort-track">
-                Curriculum track <span class="w-label__req">*</span>
+            <div w-form-field>
+              <label w-label for="cohort-track">
+                Curriculum track <span w-label-required>*</span>
               </label>
               <select class="w-select" id="cohort-track" formControlName="trackId">
                 <option value="">Choose a track</option>
@@ -122,12 +120,12 @@
                 }
               </select>
               @if (form.controls.trackId.touched && form.controls.trackId.invalid) {
-                <p class="w-field__error">Choose a curriculum track.</p>
+                <p w-error-text>Choose a curriculum track.</p>
               }
             </div>
-            <div class="w-field">
-              <label class="w-label" for="cohort-mentor">
-                Lead mentor <span class="w-label__req">*</span>
+            <div w-form-field>
+              <label w-label for="cohort-mentor">
+                Lead mentor <span w-label-required>*</span>
               </label>
               <select class="w-select" id="cohort-mentor" formControlName="leadMentorId">
                 <option value="">Choose a mentor</option>
@@ -136,22 +134,22 @@
                 }
               </select>
               @if (form.controls.leadMentorId.touched && form.controls.leadMentorId.invalid) {
-                <p class="w-field__error">Choose an active lead mentor.</p>
+                <p w-error-text>Choose an active lead mentor.</p>
               }
             </div>
-            <div class="w-field">
-              <label class="w-label" for="cohort-start">Start date</label>
+            <div w-form-field>
+              <label w-label for="cohort-start">Start date</label>
               <input class="w-input" id="cohort-start" type="date" formControlName="startDate" />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="cohort-end">End date</label>
+            <div w-form-field>
+              <label w-label for="cohort-end">End date</label>
               <input class="w-input" id="cohort-end" type="date" formControlName="endDate" />
               @if (dateError()) {
-                <p class="w-field__error">End date must be after start date.</p>
+                <p w-error-text>End date must be after start date.</p>
               }
             </div>
-            <div class="w-field form-grid__wide">
-              <label class="w-label" for="cohort-location">Meeting location</label>
+            <div w-form-field class="form-grid__wide">
+              <label w-label for="cohort-location">Meeting location</label>
               <input
                 class="w-input"
                 id="cohort-location"

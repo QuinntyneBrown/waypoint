@@ -16,3 +16,4 @@ export * from './lib/dialog/w-accessible-dialog';
 export * from './lib/button/w-button';
 export * from './lib/icon-button/w-icon-button';
 export * from './lib/link/w-link';
+export * from './lib/form-field/w-form-field';

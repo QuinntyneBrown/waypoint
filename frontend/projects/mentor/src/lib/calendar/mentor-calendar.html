@@ -45,8 +45,8 @@
             </div>
           </div>
           <div class="w-cluster">
-            <div class="w-field w-mb-0">
-              <label class="w-label" for="calendar-cohort-filter">Calendar cohort</label>
+            <div w-form-field class="w-mb-0">
+              <label w-label for="calendar-cohort-filter">Calendar cohort</label>
               <select
                 class="w-select"
                 id="calendar-cohort-filter"
@@ -149,8 +149,8 @@
           <h2 class="w-card__title" id="new-session-heading">New session</h2>
         </div>
         <div class="w-card__body w-stack">
-          <div class="w-field">
-            <label class="w-label" for="session-title">Title</label>
+          <div w-form-field>
+            <label w-label for="session-title">Title</label>
             <input
               class="w-input"
               id="session-title"
@@ -159,8 +159,8 @@
               (input)="title.set($any($event.target).value)"
             />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="session-cohort">Cohort</label>
+          <div w-form-field>
+            <label w-label for="session-cohort">Cohort</label>
             <select
               class="w-select"
               id="session-cohort"
@@ -173,8 +173,8 @@
               }
             </select>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="session-mentor">Mentor</label>
+          <div w-form-field>
+            <label w-label for="session-mentor">Mentor</label>
             <select
               class="w-select"
               id="session-mentor"
@@ -188,8 +188,8 @@
             </select>
           </div>
           <div class="w-grid w-grid--2">
-            <div class="w-field">
-              <label class="w-label" for="session-date">Date</label>
+            <div w-form-field>
+              <label w-label for="session-date">Date</label>
               <input
                 class="w-input"
                 id="session-date"
@@ -200,8 +200,8 @@
                 (input)="date.set($any($event.target).value)"
               />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="session-time">Time</label>
+            <div w-form-field>
+              <label w-label for="session-time">Time</label>
               <input
                 class="w-input"
                 id="session-time"
@@ -212,8 +212,8 @@
             </div>
           </div>
           <div class="w-grid w-grid--2">
-            <div class="w-field">
-              <label class="w-label" for="session-duration">Minutes</label>
+            <div w-form-field>
+              <label w-label for="session-duration">Minutes</label>
               <input
                 class="w-input"
                 id="session-duration"
@@ -224,8 +224,8 @@
                 (input)="durationMinutes.set($any($event.target).value)"
               />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="session-location">Location</label>
+            <div w-form-field>
+              <label w-label for="session-location">Location</label>
               <input
                 class="w-input"
                 id="session-location"

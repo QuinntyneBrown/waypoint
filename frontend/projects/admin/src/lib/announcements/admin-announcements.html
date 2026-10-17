@@ -34,8 +34,8 @@
             <p class="w-muted">Choose exactly who should receive this update.</p>
           </div>
           <form class="w-stack" [formGroup]="form" (ngSubmit)="compose()">
-            <div class="w-field">
-              <label class="w-label" for="announcement-title">Title</label>
+            <div w-form-field>
+              <label w-label for="announcement-title">Title</label>
               <input
                 class="w-input"
                 id="announcement-title"
@@ -43,11 +43,11 @@
                 formControlName="title"
               />
               @if (form.controls.title.touched && form.controls.title.invalid) {
-                <p class="w-error">Enter a title up to 200 characters.</p>
+                <p w-error-text>Enter a title up to 200 characters.</p>
               }
             </div>
-            <div class="w-field">
-              <label class="w-label" for="announcement-message">Message</label>
+            <div w-form-field>
+              <label w-label for="announcement-message">Message</label>
               <textarea
                 class="w-textarea"
                 id="announcement-message"
@@ -56,19 +56,19 @@
                 formControlName="message"
               ></textarea>
               @if (form.controls.message.touched && form.controls.message.invalid) {
-                <p class="w-error">Enter an announcement message.</p>
+                <p w-error-text>Enter an announcement message.</p>
               }
             </div>
-            <div class="w-field">
-              <label class="w-label" for="announcement-audience">Audience</label>
+            <div w-form-field>
+              <label w-label for="announcement-audience">Audience</label>
               <select class="w-select" id="announcement-audience" formControlName="audienceScope">
                 <option value="org">Organization</option>
                 <option value="cohort">Cohort</option>
               </select>
             </div>
             @if (isCohort()) {
-              <div class="w-field">
-                <label class="w-label" for="announcement-cohort">Cohort</label>
+              <div w-form-field>
+                <label w-label for="announcement-cohort">Cohort</label>
                 <select class="w-select" id="announcement-cohort" formControlName="cohortId">
                   <option value="">Choose a cohort</option>
                   @for (cohort of cohorts(); track cohort.id) {
@@ -76,12 +76,12 @@
                   }
                 </select>
                 @if (targetError(); as message) {
-                  <p class="w-error">{{ message }}</p>
+                  <p w-error-text>{{ message }}</p>
                 }
               </div>
             }
-            <div class="w-field">
-              <label class="w-label" for="announcement-recipients">Recipients</label>
+            <div w-form-field>
+              <label w-label for="announcement-recipients">Recipients</label>
               <select class="w-select" id="announcement-recipients" formControlName="roleTargeting">
                 <option value="Youth">Youth</option>
                 <option value="YouthGuardians">Youth + guardians</option>
@@ -91,7 +91,7 @@
               </select>
             </div>
             <fieldset class="announcement-options">
-              <legend class="w-label">Delivery</legend>
+              <legend w-label>Delivery</legend>
               <label class="announcement-option">
                 <input type="radio" value="now" formControlName="delivery" />
                 <span>Send now</span>
@@ -102,8 +102,8 @@
               </label>
             </fieldset>
             @if (schedulesLater()) {
-              <div class="w-field">
-                <label class="w-label" for="announcement-scheduled-at">Send date and time</label>
+              <div w-form-field>
+                <label w-label for="announcement-scheduled-at">Send date and time</label>
                 <input
                   class="w-input"
                   id="announcement-scheduled-at"
@@ -111,7 +111,7 @@
                   formControlName="scheduledAt"
                 />
                 @if (scheduleError(); as message) {
-                  <p class="w-error">{{ message }}</p>
+                  <p w-error-text>{{ message }}</p>
                 }
               </div>
             }

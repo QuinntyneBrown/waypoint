@@ -65,7 +65,7 @@
                 Broadcast to my group
               </button>
               @if (view.groups.length === 0) {
-                <p class="w-help">Assign youth to a cohort before broadcasting.</p>
+                <p w-help>Assign youth to a cohort before broadcasting.</p>
               }
             </div>
             <ul class="conversation-list">
@@ -124,8 +124,8 @@
                 [formGroup]="broadcastForm"
                 (ngSubmit)="reviewBroadcast()"
               >
-                <div class="w-field">
-                  <label class="w-label" for="broadcast-cohort">Cohort</label>
+                <div w-form-field>
+                  <label w-label for="broadcast-cohort">Cohort</label>
                   <select id="broadcast-cohort" class="w-select" formControlName="cohortId">
                     @for (group of view.groups; track group.cohortId) {
                       <option [value]="group.cohortId">
@@ -134,8 +134,8 @@
                     }
                   </select>
                 </div>
-                <div class="w-field">
-                  <label class="w-label" for="broadcast-body">Message</label>
+                <div w-form-field>
+                  <label w-label for="broadcast-body">Message</label>
                   <textarea
                     id="broadcast-body"
                     class="w-textarea"
@@ -144,11 +144,11 @@
                     rows="8"
                     aria-describedby="broadcast-help"
                   ></textarea>
-                  <p id="broadcast-help" class="w-help">
+                  <p w-help id="broadcast-help">
                     Review the recipient count before the broadcast is sent.
                   </p>
                   @if (broadcastForm.controls.body.touched && broadcastForm.controls.body.invalid) {
-                    <p class="w-field__error">Write a message before continuing.</p>
+                    <p w-error-text>Write a message before continuing.</p>
                   }
                 </div>
                 <div class="w-actions w-actions--between">
@@ -205,8 +205,8 @@
                 }
               </div>
               <form class="composer w-stack" [formGroup]="composer" (ngSubmit)="send()">
-                <div class="w-field">
-                  <label class="w-label" for="mentor-message-body">
+                <div w-form-field>
+                  <label w-label for="mentor-message-body">
                     Message {{ conversation.youthName }}
                   </label>
                   <textarea
@@ -218,9 +218,9 @@
                     aria-describedby="mentor-message-help"
                     (keydown.control.enter)="send()"
                   ></textarea>
-                  <p id="mentor-message-help" class="w-help">Ctrl + Enter also sends.</p>
+                  <p w-help id="mentor-message-help">Ctrl + Enter also sends.</p>
                   @if (composer.controls.body.touched && composer.controls.body.invalid) {
-                    <p class="w-field__error">Write a message before sending.</p>
+                    <p w-error-text>Write a message before sending.</p>
                   }
                 </div>
                 <div class="w-actions w-actions--between">

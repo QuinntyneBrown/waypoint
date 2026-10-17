@@ -238,8 +238,8 @@
                     <section class="w-card w-mb-5" aria-labelledby="account-access-heading">
                       <div class="w-card__body w-stack">
                         <h3 id="account-access-heading">Access and role</h3>
-                        <div class="w-field">
-                          <label class="w-label" for="person-role">Account role</label>
+                        <div w-form-field>
+                          <label w-label for="person-role">Account role</label>
                           <select
                             #roleSelect
                             class="w-select"
@@ -407,8 +407,8 @@
                 Permanent removal cannot be undone. Access will be revoked and the person will be
                 removed from active use; progress and reporting records will be retained.
               </div>
-              <div class="w-field">
-                <label class="w-label" for="remove-person-confirmation">
+              <div w-form-field>
+                <label w-label for="remove-person-confirmation">
                   Type {{ detail()?.displayName }} to confirm
                 </label>
                 <input

@@ -125,12 +125,12 @@
         </div>
         <div class="w-modal__body">
           <form class="w-stack" [formGroup]="stageForm" (ngSubmit)="saveStage()">
-            <div class="w-field">
-              <label class="w-label" for="stage-name">Stage name</label>
+            <div w-form-field>
+              <label w-label for="stage-name">Stage name</label>
               <input class="w-input" id="stage-name" formControlName="name" />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="stage-description">Stage description</label>
+            <div w-form-field>
+              <label w-label for="stage-description">Stage description</label>
               <textarea
                 class="w-textarea"
                 id="stage-description"
@@ -162,8 +162,8 @@
         <div class="w-modal__header"><h2 class="w-modal__title">Add competency</h2></div>
         <div class="w-modal__body">
           <form class="w-stack" [formGroup]="competencyForm" (ngSubmit)="addCompetency()">
-            <div class="w-field">
-              <label class="w-label" for="competency-name">Competency name</label>
+            <div w-form-field>
+              <label w-label for="competency-name">Competency name</label>
               <input class="w-input" id="competency-name" formControlName="name" />
             </div>
             <div class="w-actions">

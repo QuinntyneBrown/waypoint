@@ -35,8 +35,8 @@
         <h2 class="w-card__title" id="import-upload-heading">1 · Upload CSV</h2>
       </div>
       <div class="w-card__body w-stack">
-        <div class="w-field">
-          <label class="w-label" for="roster-file">Roster CSV</label>
+        <div w-form-field>
+          <label w-label for="roster-file">Roster CSV</label>
           <input
             #fileInput
             class="w-input"
@@ -45,7 +45,7 @@
             accept=".csv,text/csv,application/vnd.ms-excel"
             (change)="chooseFile($event)"
           />
-          <p class="w-hint">CSV only, up to 2 MB. The file is validated before it is sent.</p>
+          <p w-help>CSV only, up to 2 MB. The file is validated before it is sent.</p>
         </div>
         @if (fileName(); as name) {
           <div class="import-file" data-testid="import-file-summary">
@@ -110,7 +110,7 @@
         </div>
         <div class="w-card__footer w-stack">
           @if (mappingError(); as mappingMessage) {
-            <p class="w-error">{{ mappingMessage }}</p>
+            <p w-error-text>{{ mappingMessage }}</p>
           }
           <button
             w-button

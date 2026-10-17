@@ -31,8 +31,8 @@
             <h2 class="w-card__title">{{ question.text }}</h2>
             <div class="w-stack">
               @if (question.type === 'ShortAnswer') {
-                <div class="w-field">
-                  <label class="w-label" [for]="'short-answer-' + question.id"> Your answer </label>
+                <div w-form-field>
+                  <label w-label [for]="'short-answer-' + question.id"> Your answer </label>
                   <input
                     class="w-input"
                     [id]="'short-answer-' + question.id"
@@ -42,7 +42,7 @@
                     [value]="textAnswer(question.id)"
                     (change)="writeText(question.id, $any($event.target).value)"
                   />
-                  <p class="w-help">Your answer saves when you leave this field.</p>
+                  <p w-help>Your answer saves when you leave this field.</p>
                 </div>
               } @else {
                 @for (option of question.options; track $index) {

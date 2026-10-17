@@ -3,13 +3,13 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthSubmissionStatus } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WShell } from '@waypoint/components';
+import { WButton, WFormField, WLabel, WShell } from '@waypoint/components';
 
 // Traces to: L2-LEARN-007
 @Component({
   selector: 'w-youth-resubmit',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, ReactiveFormsModule, WButton],
+  imports: [WShell, RouterLink, ReactiveFormsModule, WButton, WFormField, WLabel],
   templateUrl: './youth-resubmit.html',
 })
 export class YouthResubmitPage {

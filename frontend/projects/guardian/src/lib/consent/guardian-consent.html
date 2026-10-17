@@ -17,32 +17,32 @@
       <section class="w-card">
         <form class="w-card__body w-stack" [formGroup]="contactForm" (ngSubmit)="saveContact()">
           <h2 class="w-card__title">Contact details</h2>
-          <div class="w-field">
-            <label class="w-label" for="guardian-name">Name</label>
+          <div w-form-field>
+            <label w-label for="guardian-name">Name</label>
             <input class="w-input" id="guardian-name" formControlName="displayName" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="guardian-email">Email</label>
+          <div w-form-field>
+            <label w-label for="guardian-email">Email</label>
             <input class="w-input" id="guardian-email" type="email" formControlName="email" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="guardian-relationship">Relationship</label>
+          <div w-form-field>
+            <label w-label for="guardian-relationship">Relationship</label>
             <input class="w-input" id="guardian-relationship" formControlName="relationship" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="guardian-phone">Phone</label>
+          <div w-form-field>
+            <label w-label for="guardian-phone">Phone</label>
             <input class="w-input" id="guardian-phone" type="tel" formControlName="phone" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="guardian-emergency-name">Emergency contact name</label>
+          <div w-form-field>
+            <label w-label for="guardian-emergency-name">Emergency contact name</label>
             <input
               class="w-input"
               id="guardian-emergency-name"
               formControlName="emergencyContactName"
             />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="guardian-emergency-phone">Emergency contact phone</label>
+          <div w-form-field>
+            <label w-label for="guardian-emergency-phone">Emergency contact phone</label>
             <input
               class="w-input"
               id="guardian-emergency-phone"

@@ -75,8 +75,8 @@
       } @else {
         <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
           @if (view.allowedSubmissionTypes.includes('text')) {
-            <div class="w-field">
-              <label class="w-field__label" for="assignment-text">Written response</label
+            <div w-form-field>
+              <label w-label for="assignment-text">Written response</label
               ><textarea
                 id="assignment-text"
                 class="w-input"
@@ -86,8 +86,8 @@
             </div>
           }
           @if (view.allowedSubmissionTypes.includes('photo')) {
-            <div class="w-field">
-              <label class="w-field__label" for="assignment-photo">Evidence photo</label>
+            <div w-form-field>
+              <label w-label for="assignment-photo">Evidence photo</label>
               <input
                 id="assignment-photo"
                 class="w-input"
@@ -95,12 +95,12 @@
                 accept="image/jpeg,image/png,.jpg,.jpeg,.png"
                 (change)="photoSelected($event)"
               />
-              <p class="w-field__hint">JPG or PNG, up to 10 MB.</p>
+              <p w-help>JPG or PNG, up to 10 MB.</p>
             </div>
           }
           @if (view.allowedSubmissionTypes.includes('file')) {
-            <div class="w-field">
-              <label class="w-field__label" for="assignment-file">Evidence file</label>
+            <div w-form-field>
+              <label w-label for="assignment-file">Evidence file</label>
               <input
                 id="assignment-file"
                 class="w-input"
@@ -108,12 +108,12 @@
                 accept="application/pdf,.pdf"
                 (change)="fileSelected($event)"
               />
-              <p class="w-field__hint">PDF, up to 10 MB.</p>
+              <p w-help>PDF, up to 10 MB.</p>
             </div>
           }
           @if (view.allowedSubmissionTypes.includes('link')) {
-            <div class="w-field">
-              <label class="w-field__label" for="assignment-link">Evidence link</label
+            <div w-form-field>
+              <label w-label for="assignment-link">Evidence link</label
               ><input id="assignment-link" class="w-input" type="url" formControlName="linkUrl" />
             </div>
           }
@@ -125,7 +125,7 @@
             ></label
           >
           @if (form.controls.attest.touched && form.controls.attest.hasError('required')) {
-            <p class="w-field__error">Confirm this is your own work before submitting.</p>
+            <p w-error-text>Confirm this is your own work before submitting.</p>
           }
           <button
             w-button

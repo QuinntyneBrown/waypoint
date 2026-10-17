@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { ApiError, MentorService, MentorCheckIn, MentorRosterYouth } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell } from '@waypoint/components';
+import { WButton, WFormField, WHelp, WIcon, WLabel, WShell } from '@waypoint/components';
 
 type CheckInType = '1:1' | 'call' | 'session';
 
@@ -11,7 +11,7 @@ type CheckInType = '1:1' | 'call' | 'session';
 @Component({
   selector: 'w-mentor-check-ins',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, DatePipe, WButton],
+  imports: [WShell, WIcon, DatePipe, WButton, WFormField, WLabel, WHelp],
   templateUrl: './mentor-check-ins.html',
   styles: `
     .check-in-layout {

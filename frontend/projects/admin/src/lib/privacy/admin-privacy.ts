@@ -5,7 +5,7 @@ import type { AbstractControl } from '@angular/forms';
 import { ApiError, PrivacyService } from '@waypoint/api';
 import type { AdminDataSubjectRequest } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell } from '@waypoint/components';
+import { WButton, WFormField, WHelp, WIcon, WLabel, WShell } from '@waypoint/components';
 import {
   buildVerifiedOwnershipPayload,
   verifiedRecordCount as countVerifiedRecordIds,
@@ -17,7 +17,7 @@ import {
 @Component({
   selector: 'w-admin-privacy',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, ReactiveFormsModule, WIcon, WShell, WButton],
+  imports: [DatePipe, ReactiveFormsModule, WIcon, WShell, WButton, WFormField, WLabel, WHelp],
   templateUrl: './admin-privacy.html',
   styles: `
     .privacy-layout {

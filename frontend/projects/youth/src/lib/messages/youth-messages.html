@@ -74,8 +74,8 @@
           </div>
 
           <form class="composer w-stack" [formGroup]="form" (ngSubmit)="send()">
-            <div class="w-field">
-              <label class="w-label" for="message-body">Message your mentor</label>
+            <div w-form-field>
+              <label w-label for="message-body">Message your mentor</label>
               <textarea
                 id="message-body"
                 class="w-textarea"
@@ -85,9 +85,9 @@
                 aria-describedby="message-help"
                 (keydown.control.enter)="send()"
               ></textarea>
-              <p id="message-help" class="w-help">Ctrl + Enter also sends your message.</p>
+              <p w-help id="message-help">Ctrl + Enter also sends your message.</p>
               @if (form.controls.body.touched && form.controls.body.invalid) {
-                <p class="w-field__error">Write a message before sending.</p>
+                <p w-error-text>Write a message before sending.</p>
               }
             </div>
             <div class="w-actions w-actions--between">

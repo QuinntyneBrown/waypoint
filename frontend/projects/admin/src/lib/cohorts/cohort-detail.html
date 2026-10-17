@@ -94,8 +94,8 @@
           <div class="w-card__body member-actions">
             <h2 id="add-member-heading">Add members</h2>
             @if (cohort.availableYouth.length > 0) {
-              <div class="w-field">
-                <label class="w-label" for="available-youth">Add existing youth</label>
+              <div w-form-field>
+                <label w-label for="available-youth">Add existing youth</label>
                 <select
                   #youthSelect
                   class="w-select"
@@ -158,15 +158,15 @@
         </div>
         <div class="w-modal__body">
           <form class="w-stack" [formGroup]="editForm" (ngSubmit)="saveEdit()">
-            <div class="w-field">
-              <label class="w-label" for="edit-cohort-name">Cohort name</label>
+            <div w-form-field>
+              <label w-label for="edit-cohort-name">Cohort name</label>
               <input class="w-input" id="edit-cohort-name" formControlName="name" maxlength="128" />
               @if (editForm.controls.name.touched && editForm.controls.name.invalid) {
-                <p class="w-field__error">Enter a cohort name.</p>
+                <p w-error-text>Enter a cohort name.</p>
               }
             </div>
-            <div class="w-field">
-              <label class="w-label" for="edit-cohort-mentor">Lead mentor</label>
+            <div w-form-field>
+              <label w-label for="edit-cohort-mentor">Lead mentor</label>
               <select class="w-select" id="edit-cohort-mentor" formControlName="leadMentorId">
                 <option value="">Choose a mentor</option>
                 @for (mentor of options()?.mentors ?? []; track mentor.id) {
@@ -176,11 +176,11 @@
               @if (
                 editForm.controls.leadMentorId.touched && editForm.controls.leadMentorId.invalid
               ) {
-                <p class="w-field__error">Choose an active lead mentor.</p>
+                <p w-error-text>Choose an active lead mentor.</p>
               }
             </div>
-            <div class="w-field">
-              <label class="w-label" for="edit-cohort-location">Meeting location</label>
+            <div w-form-field>
+              <label w-label for="edit-cohort-location">Meeting location</label>
               <input
                 class="w-input"
                 id="edit-cohort-location"

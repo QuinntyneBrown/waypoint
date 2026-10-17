@@ -26,12 +26,10 @@
         }
         <form [formGroup]="form" (ngSubmit)="accept()" novalidate>
           <div
-            class="w-field"
-            [class.is-error]="
-              form.controls.displayName.touched && form.controls.displayName.invalid
-            "
+            w-form-field
+            [invalid]="form.controls.displayName.touched && form.controls.displayName.invalid"
           >
-            <label class="w-label" for="invite-name">Display name</label>
+            <label w-label for="invite-name">Display name</label>
             <input
               class="w-input"
               id="invite-name"
@@ -39,14 +37,14 @@
               formControlName="displayName"
             />
             @if (form.controls.displayName.touched && form.controls.displayName.invalid) {
-              <p class="w-error-text">Enter the name you want people to see.</p>
+              <p w-error-text>Enter the name you want people to see.</p>
             }
           </div>
           <div
-            class="w-field"
-            [class.is-error]="form.controls.password.touched && form.controls.password.invalid"
+            w-form-field
+            [invalid]="form.controls.password.touched && form.controls.password.invalid"
           >
-            <label class="w-label" for="invite-password">Create password</label>
+            <label w-label for="invite-password">Create password</label>
             <div style="position: relative">
               <input
                 class="w-input"
@@ -67,11 +65,11 @@
               </button>
             </div>
             @if (form.controls.password.touched && form.controls.password.invalid) {
-              <p class="w-error-text">Use at least 8 characters with a letter and a number.</p>
+              <p w-error-text>Use at least 8 characters with a letter and a number.</p>
             }
           </div>
-          <div class="w-field">
-            <label class="w-label" for="invite-confirm">Confirm password</label>
+          <div w-form-field>
+            <label w-label for="invite-confirm">Confirm password</label>
             <input
               class="w-input"
               id="invite-confirm"
@@ -86,7 +84,7 @@
             <span>I agree to follow the Waypoint community guidelines.</span>
           </label>
           @if (form.controls.agreeToGuidelines.touched && form.controls.agreeToGuidelines.invalid) {
-            <p class="w-error-text">Agreement is required to join.</p>
+            <p w-error-text>Agreement is required to join.</p>
           }
           <button
             w-button
