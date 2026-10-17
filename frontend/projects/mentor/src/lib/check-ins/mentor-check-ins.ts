@@ -15,6 +15,7 @@ import {
   WTextField,
   WCheckbox,
   WCheckboxBox,
+  WAlert,
 } from '@waypoint/components';
 
 type CheckInType = '1:1' | 'call' | 'session';
@@ -36,6 +37,7 @@ type CheckInType = '1:1' | 'call' | 'session';
     WSelect,
     WCheckbox,
     WCheckboxBox,
+    WAlert,
   ],
   templateUrl: './mentor-check-ins.html',
   styles: `

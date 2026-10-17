@@ -7,6 +7,7 @@ import {
   WTextField,
   WCheckbox,
   WCheckboxBox,
+  WAlert,
 } from '@waypoint/components';
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
@@ -35,6 +36,7 @@ import {
     WTextField,
     WCheckbox,
     WCheckboxBox,
+    WAlert,
   ],
   templateUrl: './requested-guardian-consent.html',
 })

@@ -12,6 +12,7 @@ import {
   WSelect,
   WShell,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 import { catchError, debounceTime, of, switchMap, tap } from 'rxjs';
 
@@ -26,7 +27,18 @@ interface DirectoryQuery {
 @Component({
   selector: 'w-people-directory',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, DatePipe, WButton, WFormField, WLabel, WTextField, WSelect],
+  imports: [
+    WShell,
+    WIcon,
+    RouterLink,
+    DatePipe,
+    WButton,
+    WFormField,
+    WLabel,
+    WTextField,
+    WSelect,
+    WAlert,
+  ],
   templateUrl: './people-directory.html',
   styles: `
     .directory-filters {

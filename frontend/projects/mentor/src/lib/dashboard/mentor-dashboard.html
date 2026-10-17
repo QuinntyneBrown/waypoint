@@ -14,7 +14,7 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (loading()) {
       <p class="w-muted" role="status">Loading your dashboard…</p>

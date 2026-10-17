@@ -27,6 +27,7 @@ import {
   WLabel,
   WLabelRequired,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
 
@@ -46,6 +47,7 @@ import { SettingsShell } from '../settings-shell';
     WHelp,
     WErrorText,
     WTextField,
+    WAlert,
   ],
   templateUrl: './settings-profile.html',
 })

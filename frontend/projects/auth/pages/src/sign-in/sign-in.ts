@@ -14,6 +14,7 @@ import {
   WTextField,
   WCheckbox,
   WCheckboxBox,
+  WAlert,
 } from '@waypoint/components';
 import { switchMap } from 'rxjs';
 import { EntryResolver } from '../entry';
@@ -34,6 +35,7 @@ import { EntryResolver } from '../entry';
     WTextField,
     WCheckbox,
     WCheckboxBox,
+    WAlert,
   ],
   templateUrl: './sign-in.html',
 })

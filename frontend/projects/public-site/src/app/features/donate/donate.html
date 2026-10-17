@@ -46,10 +46,7 @@
     </p>
 
     @if (serverError()) {
-      <div class="w-alert w-alert--error" role="alert">
-        <w-icon name="alert-circle" iconClass="w-alert__icon" />
-        <div>{{ serverError() }}</div>
-      </div>
+      <div w-alert variant="error" icon="alert-circle" role="alert">{{ serverError() }}</div>
     }
 
     <button
@@ -65,9 +62,9 @@
   </form>
 
   @if (confirmed()) {
-    <div class="w-alert w-alert--success w-mt-6" role="status">
+    <div w-alert variant="success" class="w-mt-6" role="status">
       <div>
-        <div class="w-alert__title">Thank you!</div>
+        <div w-alert-title>Thank you!</div>
         You’re giving ${{ selected() }} monthly. Finish your donation with our secure provider — it
         opens in a new tab.
       </div>

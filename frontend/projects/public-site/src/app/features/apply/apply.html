@@ -19,9 +19,8 @@
     </p>
 
     @if (serverError()) {
-      <div class="w-alert w-alert--error w-mt-4" role="alert">
-        <w-icon name="alert-circle" iconClass="w-alert__icon" />
-        <div>{{ serverError() }}</div>
+      <div w-alert variant="error" icon="alert-circle" class="w-mt-4" role="alert">
+        {{ serverError() }}
       </div>
     }
 

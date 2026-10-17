@@ -20,7 +20,7 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
 
@@ -254,7 +254,7 @@
             {{ saving() ? 'Scheduling…' : 'Schedule session' }}
           </button>
           @if (statusMessage(); as message) {
-            <p class="w-alert w-alert--success">{{ message }}</p>
+            <p w-alert variant="success">{{ message }}</p>
           }
         </div>
       </aside>

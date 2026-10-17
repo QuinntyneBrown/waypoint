@@ -14,6 +14,8 @@ import {
   WSelect,
   WShell,
   WTextField,
+  WAlert,
+  WAlertTitle,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 
@@ -41,6 +43,8 @@ type LifecycleAction =
     WLabel,
     WTextField,
     WSelect,
+    WAlert,
+    WAlertTitle,
   ],
   templateUrl: './person-detail.html',
   styles: `

@@ -28,13 +28,13 @@
     </div>
 
     @if (exportStatus(); as status) {
-      <p class="w-alert w-alert--success" role="status">{{ status }}</p>
+      <p w-alert variant="success" role="status">{{ status }}</p>
     }
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <div>
-          <div class="w-alert__title">{{ error }}</div>
+          <div w-alert-title>{{ error }}</div>
           Audit activity could not be loaded.
         </div>
         <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
@@ -43,9 +43,9 @@
 
     @if (result(); as audit) {
       @if (!audit.integrityValid) {
-        <div class="w-alert w-alert--error" role="alert" data-testid="audit-integrity-warning">
+        <div w-alert variant="error" role="alert" data-testid="audit-integrity-warning">
           <div>
-            <div class="w-alert__title">Audit integrity check failed</div>
+            <div w-alert-title>Audit integrity check failed</div>
             One or more audit records may have been changed, removed, or inserted outside the
             protected audit writer. Escalate this incident before relying on the log.
           </div>
@@ -107,7 +107,7 @@
           </button>
         </form>
         @if (dateError(); as error) {
-          <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+          <p w-alert variant="error" role="alert">{{ error }}</p>
         }
       </div>
     </section>

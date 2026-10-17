@@ -31,10 +31,10 @@
       <div w-help>JPG or PNG, up to 5 MB. Stored privately.</div>
     </div>
     @if (photoError(); as error) {
-      <div class="w-alert w-alert--error" role="alert">{{ error }}</div>
+      <div w-alert variant="error" role="alert">{{ error }}</div>
     }
     @if (photoStatus(); as status) {
-      <p class="w-alert w-alert--success" role="status">{{ status }}</p>
+      <p w-alert variant="success" role="status">{{ status }}</p>
     }
     @if (photoPreview(); as photo) {
       <img
@@ -71,10 +71,7 @@
 
   <h2>Change password</h2>
   @if (passwordError()) {
-    <div class="w-alert w-alert--error" role="alert">
-      <w-icon name="alert-circle" iconClass="w-alert__icon" />
-      <div>{{ passwordError() }}</div>
-    </div>
+    <div w-alert variant="error" icon="alert-circle" role="alert">{{ passwordError() }}</div>
   }
   <form [formGroup]="password" (ngSubmit)="changePassword()" novalidate class="w-stack">
     <div w-form-field>

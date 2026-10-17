@@ -158,12 +158,12 @@
     </div>
 
     @if (statusMessage(); as message) {
-      <p class="w-alert w-alert--success" role="status" aria-live="polite">{{ message }}</p>
+      <p w-alert variant="success" role="status" aria-live="polite">{{ message }}</p>
     } @else {
       <p role="status" aria-live="polite"></p>
     }
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
   </div>
 </w-shell>

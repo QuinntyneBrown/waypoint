@@ -6,7 +6,7 @@
 >
   <div class="w-container w-container--narrow w-page">
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (saveStatus(); as status) {
       <p class="w-muted" role="status">{{ status }}</p>

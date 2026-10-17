@@ -7,7 +7,7 @@
   <div class="w-container w-container--narrow w-page">
     <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (intro(); as view) {
@@ -57,7 +57,7 @@
       }
 
       @if (view.attemptsExhausted) {
-        <p class="w-alert w-alert--warning">You have used all attempts for this quiz.</p>
+        <p w-alert variant="warning">You have used all attempts for this quiz.</p>
       } @else {
         <button w-button variant="primary" block type="button" (click)="begin()">
           {{ view.hasInProgressAttempt ? 'Resume attempt' : 'Start attempt' }}

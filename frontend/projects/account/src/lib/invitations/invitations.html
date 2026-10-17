@@ -20,10 +20,10 @@
     </header>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
 
     <div class="invite-layout">
@@ -60,7 +60,7 @@
                 </select>
               </div>
             } @else {
-              <div class="w-alert w-alert--info">
+              <div w-alert variant="info">
                 Invitations you send create Youth accounts assigned to you.
               </div>
               <div w-form-field>

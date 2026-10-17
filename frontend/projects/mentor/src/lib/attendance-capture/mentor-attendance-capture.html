@@ -103,10 +103,10 @@
       </div>
 
       @if (queue.message(); as message) {
-        <p class="w-alert w-alert--info" role="status" aria-live="polite">{{ message }}</p>
+        <p w-alert variant="info" role="status" aria-live="polite">{{ message }}</p>
       }
       @if (queue.hasConflictForSession(sessionId)) {
-        <div class="w-alert w-alert--warning">
+        <div w-alert variant="warning">
           <div class="w-stack w-stack--sm">
             <strong>Choose which attendance to keep</strong>
             <p>A newer server edit conflicts with your queued change. Review before choosing.</p>
@@ -122,7 +122,7 @@
         </div>
       }
       @if (errorMessage(); as error) {
-        <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+        <p w-alert variant="error" role="alert">{{ error }}</p>
       }
 
       <div class="w-cluster w-cluster--between">

@@ -19,7 +19,7 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ liveStatus() }}</p>
 
@@ -33,7 +33,7 @@
         </section>
       } @else {
         @if (view.unreadCount > 0) {
-          <p class="w-alert w-alert--info" role="status">
+          <p w-alert variant="info" role="status">
             {{ view.unreadCount }} new {{ view.unreadCount === 1 ? 'message' : 'messages' }} from
             your mentor.
           </p>

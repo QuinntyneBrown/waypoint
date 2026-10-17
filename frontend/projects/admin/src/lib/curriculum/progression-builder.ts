@@ -15,6 +15,7 @@ import {
   WShell,
   WTextarea,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 import {
@@ -49,6 +50,7 @@ type ProgressionAuthoringDraft =
     WLabel,
     WTextField,
     WTextarea,
+    WAlert,
   ],
   templateUrl: './progression-builder.html',
   styleUrl: './curriculum-admin.css',

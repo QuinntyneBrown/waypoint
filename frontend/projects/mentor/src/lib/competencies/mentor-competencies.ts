@@ -18,6 +18,7 @@ import {
   WSelect,
   WShell,
   WTextarea,
+  WAlert,
 } from '@waypoint/components';
 
 interface CompetencyDraft {
@@ -40,6 +41,7 @@ interface CompetencyDraft {
     WLabel,
     WTextarea,
     WSelect,
+    WAlert,
   ],
   templateUrl: './mentor-competencies.html',
   styles: `

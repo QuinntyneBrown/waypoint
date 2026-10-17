@@ -21,6 +21,8 @@ import {
   WShell,
   WTextarea,
   WTextField,
+  WAlert,
+  WAlertTitle,
 } from '@waypoint/components';
 import { finalize, forkJoin } from 'rxjs';
 
@@ -41,6 +43,8 @@ import { finalize, forkJoin } from 'rxjs';
     WTextField,
     WTextarea,
     WSelect,
+    WAlert,
+    WAlertTitle,
   ],
   templateUrl: './admin-announcements.html',
   styles: `

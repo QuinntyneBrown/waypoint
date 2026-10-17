@@ -19,13 +19,13 @@
     </header>
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <span>{{ error }}</span>
         <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p class="w-alert w-alert--success" data-testid="curriculum-outcome" role="status">
+      <p w-alert variant="success" data-testid="curriculum-outcome" role="status">
         {{ message }}
       </p>
     }

@@ -17,6 +17,7 @@ import {
   WSelect,
   WShell,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
@@ -36,6 +37,7 @@ type HistoryView = 'session' | 'youth';
     WLabel,
     WTextField,
     WSelect,
+    WAlert,
   ],
   templateUrl: './mentor-attendance-history.html',
   styles: `

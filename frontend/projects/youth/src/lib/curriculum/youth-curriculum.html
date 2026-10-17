@@ -14,7 +14,7 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (curriculum(); as view) {
@@ -74,7 +74,7 @@
                   <p class="w-muted">Scripture anchor: {{ module.scriptureAnchor }}</p>
                 }
                 @if (module.unlockCondition) {
-                  <p class="w-alert w-alert--info">{{ module.unlockCondition }}</p>
+                  <p w-alert variant="info">{{ module.unlockCondition }}</p>
                 }
 
                 @if (module.items.length > 0) {

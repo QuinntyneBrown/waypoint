@@ -3,7 +3,16 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ApiError, AuditService, AuditLogFilter, AuditLogPage } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WFormField, WLabel, WSelect, WShell, WTextField } from '@waypoint/components';
+import {
+  WButton,
+  WFormField,
+  WLabel,
+  WSelect,
+  WShell,
+  WTextField,
+  WAlert,
+  WAlertTitle,
+} from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
 // Traces to: L2-CONSENT-003, L2-REPORT-003, L2-AUTH-009, L2-NFR-009/010
@@ -19,6 +28,8 @@ import { finalize } from 'rxjs/operators';
     WLabel,
     WTextField,
     WSelect,
+    WAlert,
+    WAlertTitle,
   ],
   templateUrl: './admin-audit-log.html',
   styles: `

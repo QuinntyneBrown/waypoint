@@ -7,10 +7,11 @@ import {
   WErrorText,
   WFormField,
   WHelp,
-  WIcon,
   WLabel,
   WLabelRequired,
   WTextField,
+  WAlert,
+  WAlertTitle,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -23,7 +24,6 @@ function isEmail(value: string): boolean {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
-    WIcon,
     WButton,
     WFormField,
     WLabel,
@@ -31,6 +31,8 @@ function isEmail(value: string): boolean {
     WHelp,
     WErrorText,
     WTextField,
+    WAlert,
+    WAlertTitle,
   ],
   templateUrl: './donate.html',
 })

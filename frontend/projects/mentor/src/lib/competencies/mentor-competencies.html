@@ -7,7 +7,7 @@
   <div class="w-container w-page">
     <a w-link standalone [routerLink]="['/mentor/youth', youthId]">Back to youth record</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
     @if (summary(); as view) {

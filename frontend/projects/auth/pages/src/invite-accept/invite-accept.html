@@ -22,7 +22,7 @@
           }
         </p>
         @if (errorMessage(); as error) {
-          <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+          <p w-alert variant="error" role="alert">{{ error }}</p>
         }
         <form [formGroup]="form" (ngSubmit)="accept()" novalidate>
           <div
@@ -112,7 +112,7 @@
               Your account already exists. Sign in with the password you created.
             </p>
           } @else if (replacementRequested()) {
-            <p class="w-alert w-alert--success" role="status">
+            <p w-alert variant="success" role="status">
               If a replacement can be sent, the person who invited you has been notified.
             </p>
           } @else {

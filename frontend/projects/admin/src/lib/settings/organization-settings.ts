@@ -20,6 +20,8 @@ import {
   WShell,
   WTextarea,
   WTextField,
+  WAlert,
+  WAlertTitle,
 } from '@waypoint/components';
 import { finalize, forkJoin, map } from 'rxjs';
 
@@ -39,6 +41,8 @@ import { finalize, forkJoin, map } from 'rxjs';
     WTextField,
     WTextarea,
     WSelect,
+    WAlert,
+    WAlertTitle,
   ],
   templateUrl: './organization-settings.html',
   styles: `

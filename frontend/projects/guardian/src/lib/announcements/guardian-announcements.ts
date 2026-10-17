@@ -2,13 +2,13 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ApiError, GuardianAnnouncement, GuardianService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell } from '@waypoint/components';
+import { WButton, WIcon, WShell, WAlert } from '@waypoint/components';
 
 // Traces to: L2-GUARDIAN-002
 @Component({
   selector: 'w-guardian-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, WIcon, WButton],
+  imports: [WShell, DatePipe, WIcon, WButton, WAlert],
   templateUrl: './guardian-announcements.html',
 })
 export class GuardianAnnouncements {

@@ -13,7 +13,7 @@
       </div>
     </div>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
 
@@ -129,7 +129,7 @@
             <span>Share this check-in with the youth and guardian</span>
           </label>
           @if (share()) {
-            <p class="w-alert">
+            <p w-alert>
               All entered fields, including prayer requests, will be visible to the youth and their
               linked guardian.
             </p>

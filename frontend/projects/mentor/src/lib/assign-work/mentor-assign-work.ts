@@ -24,6 +24,7 @@ import {
   WCheckboxBox,
   WRadio,
   WRadioBox,
+  WAlert,
 } from '@waypoint/components';
 
 type TargetMode = 'individual' | 'cohort';
@@ -48,6 +49,7 @@ type TargetMode = 'individual' | 'cohort';
     WCheckboxBox,
     WRadio,
     WRadioBox,
+    WAlert,
   ],
   templateUrl: './mentor-assign-work.html',
   styles: `

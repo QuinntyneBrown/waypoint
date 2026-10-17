@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiError, PublicContentView, PublicSiteService } from '@waypoint/api';
-import { WButton } from '@waypoint/components';
+import { WButton, WAlert } from '@waypoint/components';
 
 // Traces to: L2-PUB-002
 @Component({
   selector: 'w-programs',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, WButton],
+  imports: [RouterLink, WButton, WAlert],
   templateUrl: './programs.html',
 })
 export class Programs {

@@ -22,6 +22,7 @@ import {
   WTextField,
   WSwitch,
   WSwitchTrack,
+  WAlert,
 } from '@waypoint/components';
 import { forkJoin, of, switchMap } from 'rxjs';
 
@@ -41,6 +42,7 @@ import { forkJoin, of, switchMap } from 'rxjs';
     WTextField,
     WSwitch,
     WSwitchTrack,
+    WAlert,
   ],
   templateUrl: './onboarding.html',
 })

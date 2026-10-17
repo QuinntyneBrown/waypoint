@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ApiError, ConsentService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WStatePage } from '@waypoint/components';
+import { WButton, WStatePage, WAlert } from '@waypoint/components';
 
 // Traces to: L2-CONSENT-002
 @Component({
   selector: 'w-consent-required',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, WButton],
+  imports: [WStatePage, WButton, WAlert],
   template: `<w-state-page
     icon="shield"
     tone="warning"
@@ -30,10 +30,10 @@ import { WButton, WStatePage } from '@waypoint/components';
     </button>
     <button w-button variant="subtle" type="button" (click)="signOut()">Sign out</button>
     @if (deliveryMessage(); as message) {
-      <p class="w-alert w-alert--success" role="status" aria-live="polite">{{ message }}</p>
+      <p w-alert variant="success" role="status" aria-live="polite">{{ message }}</p>
     }
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
   </w-state-page>`,
 })
