@@ -5,19 +5,3 @@
 .w-section {
   padding-block: var(--w-s9);
 }
-
-/* Accessible skip link: off-screen until focused (keyboard users). */
-.w-skip-link {
-  position: absolute;
-  left: var(--w-s4);
-  top: -60px;
-  z-index: 100;
-  padding: var(--w-s2) var(--w-s4);
-  background: var(--w-ink);
-  color: var(--w-white);
-  border-radius: var(--w-r-input);
-  transition: top 0.15s ease;
-}
-.w-skip-link:focus {
-  top: var(--w-s3);
-}
