@@ -52,11 +52,6 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--w-s4);
     }
-    .report-kpi strong {
-      display: block;
-      font-size: clamp(1.5rem, 3vw, 2.25rem);
-      line-height: 1.1;
-    }
     .report-chart-row {
       display: grid;
       grid-template-columns: minmax(8rem, 1fr) minmax(8rem, 3fr) auto;

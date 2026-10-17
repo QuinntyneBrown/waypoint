@@ -67,13 +67,6 @@ import { finalize } from 'rxjs';
     .load-metrics {
       margin-top: var(--w-s4);
     }
-    .load-metric {
-      min-width: 0;
-    }
-    .load-metric strong {
-      display: block;
-      font-size: 1.25rem;
-    }
     @media (max-width: 48rem) {
       .assignment-grid {
         grid-template-columns: 1fr;

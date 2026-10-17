@@ -46,38 +46,23 @@
           data-testid="progress-overview"
         >
           <div class="w-grid w-grid--2">
-            <article class="w-card progress-stat">
-              <div class="w-card__body w-stack">
-                <span class="w-muted">Overall progress</span
-                ><strong class="progress-stat__value"
-                  >{{ view.overallPercent | number: '1.0-0' }}%</strong
-                >
+            <article class="w-card w-statcard">
+              <div class="w-statcard__label">Overall progress</div>
+              <div class="w-statcard__value">{{ view.overallPercent | number: '1.0-0' }}%</div>
+            </article>
+            <article class="w-card w-statcard">
+              <div class="w-statcard__label">Quiz average</div>
+              <div class="w-statcard__value">{{ view.quizAverage | number: '1.0-0' }}%</div>
+            </article>
+            <article class="w-card w-statcard">
+              <div class="w-statcard__label">Lessons done</div>
+              <div class="w-statcard__value">
+                {{ view.lessonsCompleted }}<span class="w-muted">/{{ view.lessonsTotal }}</span>
               </div>
             </article>
-            <article class="w-card progress-stat">
-              <div class="w-card__body w-stack">
-                <span class="w-muted">Quiz average</span
-                ><strong class="progress-stat__value"
-                  >{{ view.quizAverage | number: '1.0-0' }}%</strong
-                >
-              </div>
-            </article>
-            <article class="w-card progress-stat">
-              <div class="w-card__body w-stack">
-                <span class="w-muted">Lessons done</span
-                ><strong class="progress-stat__value"
-                  >{{ view.lessonsCompleted
-                  }}<span class="w-muted">/{{ view.lessonsTotal }}</span></strong
-                >
-              </div>
-            </article>
-            <article class="w-card w-card--lime progress-stat">
-              <div class="w-card__body w-stack">
-                <span>Attendance</span
-                ><strong class="progress-stat__value"
-                  >{{ view.attendanceRate | number: '1.0-0' }}%</strong
-                >
-              </div>
+            <article class="w-card w-card--lime w-statcard">
+              <div class="w-statcard__label">Attendance</div>
+              <div class="w-statcard__value">{{ view.attendanceRate | number: '1.0-0' }}%</div>
             </article>
           </div>
           <section class="w-card">

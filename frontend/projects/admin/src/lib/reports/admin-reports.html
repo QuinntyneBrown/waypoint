@@ -169,41 +169,35 @@
           </div>
         } @else {
           <div class="report-kpis">
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.activeYouth }}</strong
-                ><span>Active youth</span>
+            <article class="w-card w-statcard">
+              <div class="w-statcard__label">Active youth</div>
+              <div class="w-statcard__value">{{ hub()!.kpis.activeYouth }}</div>
+            </article>
+            <article class="w-card w-statcard">
+              <div class="w-statcard__label">Average completion</div>
+              <div class="w-statcard__value">
+                {{ hub()!.kpis.avgCompletion | percent: '1.0-0' }}
               </div>
             </article>
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.avgCompletion | percent: '1.0-0' }}</strong
-                ><span>Average completion</span>
+            <article class="w-card w-statcard">
+              <div class="w-statcard__label">Attendance</div>
+              <div class="w-statcard__value">
+                {{ hub()!.kpis.attendanceRate | percent: '1.0-0' }}
               </div>
             </article>
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.attendanceRate | percent: '1.0-0' }}</strong
-                ><span>Attendance</span>
+            <article class="w-card w-statcard">
+              <div class="w-statcard__label">Retention</div>
+              <div class="w-statcard__value">
+                {{ hub()!.kpis.retentionRate | percent: '1.0-0' }}
               </div>
             </article>
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.retentionRate | percent: '1.0-0' }}</strong
-                ><span>Retention</span>
-              </div>
+            <article class="w-card w-statcard">
+              <div class="w-statcard__label">Cohorts</div>
+              <div class="w-statcard__value">{{ hub()!.kpis.cohorts }}</div>
             </article>
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.cohorts }}</strong
-                ><span>Cohorts</span>
-              </div>
-            </article>
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.activeMentors }}</strong
-                ><span>Active mentors</span>
-              </div>
+            <article class="w-card w-statcard">
+              <div class="w-statcard__label">Active mentors</div>
+              <div class="w-statcard__value">{{ hub()!.kpis.activeMentors }}</div>
             </article>
           </div>
           <div class="report-grid">
@@ -416,23 +410,17 @@
               </p>
             </div>
             <div class="report-kpis">
-              <article class="w-card report-kpi">
-                <div class="w-card__body">
-                  <strong>{{ report.avgCompletion | percent: '1.0-0' }}</strong
-                  ><span>Average completion</span>
-                </div>
+              <article class="w-card w-statcard">
+                <div class="w-statcard__label">Average completion</div>
+                <div class="w-statcard__value">{{ report.avgCompletion | percent: '1.0-0' }}</div>
               </article>
-              <article class="w-card report-kpi">
-                <div class="w-card__body">
-                  <strong>{{ report.attendanceRate | percent: '1.0-0' }}</strong
-                  ><span>Attendance</span>
-                </div>
+              <article class="w-card w-statcard">
+                <div class="w-statcard__label">Attendance</div>
+                <div class="w-statcard__value">{{ report.attendanceRate | percent: '1.0-0' }}</div>
               </article>
-              <article class="w-card report-kpi">
-                <div class="w-card__body">
-                  <strong>{{ report.retentionRate | percent: '1.0-0' }}</strong
-                  ><span>Retention</span>
-                </div>
+              <article class="w-card w-statcard">
+                <div class="w-statcard__label">Retention</div>
+                <div class="w-statcard__value">{{ report.retentionRate | percent: '1.0-0' }}</div>
               </article>
             </div>
             <div class="report-grid">

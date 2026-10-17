@@ -77,13 +77,6 @@ import { finalize, forkJoin } from 'rxjs';
       padding-top: var(--w-s3);
       border-top: 1px solid var(--w-border);
     }
-    .announcement-stat {
-      min-width: 0;
-    }
-    .announcement-stat strong {
-      display: block;
-      font-size: 1.125rem;
-    }
     @media (max-width: 58rem) {
       .announcement-layout {
         grid-template-columns: 1fr;

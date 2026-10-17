@@ -180,15 +180,17 @@
                     </span>
                   </div>
                   <div class="announcement-stats">
-                    <div class="announcement-stat">
-                      <strong
+                    <div class="w-kpi">
+                      <span class="w-statcard__label">Recipient opens</span
+                      ><strong class="w-statcard__value"
                         >{{ announcement.reads }} of {{ announcement.recipients }} read</strong
                       >
-                      <span class="w-muted">Recipient opens</span>
                     </div>
-                    <div class="announcement-stat">
-                      <strong>{{ announcement.readRate | percent: '1.0-0' }} read</strong>
-                      <span class="w-muted">Aggregate read rate</span>
+                    <div class="w-kpi">
+                      <span class="w-statcard__label">Aggregate read rate</span
+                      ><strong class="w-statcard__value"
+                        >{{ announcement.readRate | percent: '1.0-0' }} read</strong
+                      >
                     </div>
                   </div>
                 </div>
