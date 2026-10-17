@@ -48,6 +48,14 @@ export interface VideoPlayerStrings {
   errorSource: string;
   errorDecode: string;
   errorStalled: string;
+  errorConfiguration: string;
+  /** On-demand playback. */
+  playing: string;
+  seekLabel: string;
+  /** Spoken position for the seek bar, e.g. "23 minutes 41 seconds of 1 hour 12 minutes". */
+  seekValue: (elapsedSeconds: number, totalSeconds: number) => string;
+  quality: (height: number) => string;
+  renewingLink: string;
 }
 
 /** English defaults; consumers can replace any subset through VIDEO_PLAYER_I18N. */
@@ -97,6 +105,12 @@ export const DEFAULT_VIDEO_PLAYER_STRINGS: VideoPlayerStrings = {
   errorSource: 'The video source stopped unexpectedly.',
   errorDecode: "The video couldn't be decoded.",
   errorStalled: 'The source stopped sending video.',
+  errorConfiguration: 'Set either src or streamId on the video player, not both.',
+  playing: 'Playing.',
+  seekLabel: 'Seek',
+  seekValue: (elapsed, total) => `${spokenTime(elapsed)} of ${spokenTime(total)}`,
+  quality: (height) => `Quality ${height}p`,
+  renewingLink: 'Renewing your video link',
 };
 
 /** Partial string overrides merged over the English defaults. */
@@ -117,4 +131,17 @@ export function formatDuration(totalSeconds: number): string {
   return hours
     ? `${plural(hours, 'hour')} ${plural(minutes % 60, 'minute')}`
     : plural(minutes, 'minute');
+}
+
+/** Spoken clock time: "1 hour 12 minutes 8 seconds"; zero parts are left out. */
+export function spokenTime(totalSeconds: number): string {
+  const seconds = Math.max(0, Math.floor(totalSeconds));
+  const plural = (count: number, unit: string) => `${count} ${unit}${count === 1 ? '' : 's'}`;
+  const parts = [
+    [Math.floor(seconds / 3600), 'hour'],
+    [Math.floor((seconds % 3600) / 60), 'minute'],
+    [seconds % 60, 'second'],
+  ] as const;
+  const spoken = parts.filter(([count]) => count > 0).map(([count, unit]) => plural(count, unit));
+  return spoken.length ? spoken.join(' ') : plural(0, 'second');
 }

@@ -16,6 +16,7 @@
       class="w-video-player__video"
       playsinline
       #video
+      [attr.poster]="poster()"
       (playing)="onPlaying()"
       (waiting)="onWaiting()"
       (ended)="onEnded()"
@@ -59,7 +60,18 @@
         </div>
       </div>
     }
-    @if (state() === 'ended') {
+    @if (renewing()) {
+      <div class="w-video-player__renewing" role="status">
+        <span class="w-video-player__renewing-chip">
+          <span
+            class="w-video-player__spinner w-video-player__spinner--small"
+            aria-hidden="true"
+          ></span>
+          {{ strings.renewingLink }}
+        </span>
+      </div>
+    }
+    @if (state() === 'ended' && !isVod()) {
       <div class="w-video-player__ended">
         <h2>{{ strings.streamEnded }}</h2>
         @if (title(); as title) {
@@ -88,7 +100,7 @@
         <h2 class="w-video-player__error-heading" tabindex="-1" #errorHeading>
           {{ error.message }}
         </h2>
-        @if (error.code !== 'unsupported') {
+        @if (error.code !== 'unsupported' && error.code !== 'configuration') {
           <button type="button" class="w-video-player__retry" (click)="retry()">
             {{ strings.retry }}
           </button>
@@ -106,6 +118,21 @@
     (pointerleave)="visibility.setHovered(false)"
     (pointerdown)="visibility.show()"
   >
+    @if (isVod()) {
+      <input
+        type="range"
+        class="w-video-player__seek"
+        data-control="seek"
+        min="0"
+        step="1"
+        [max]="mediaDuration()"
+        [attr.aria-label]="strings.seekLabel"
+        [attr.aria-valuetext]="strings.seekValue(currentTime(), mediaDuration())"
+        [attr.aria-disabled]="mediaDuration() ? null : 'true'"
+        [value]="currentTime()"
+        (input)="seekTo($any($event.target).valueAsNumber)"
+      />
+    }
     <button
       type="button"
       class="w-video-player__control"
@@ -143,7 +170,11 @@
       (input)="setVolume($any($event.target).valueAsNumber, $any($event.target))"
     />
     @if (
-      state() !== 'idle' && state() !== 'connecting' && state() !== 'ended' && state() !== 'error'
+      !isVod() &&
+      state() !== 'idle' &&
+      state() !== 'connecting' &&
+      state() !== 'ended' &&
+      state() !== 'error'
     ) {
       <button
         type="button"
@@ -170,7 +201,18 @@
         <w-icon name="captions" />
       </button>
     }
-    <span class="w-video-player__elapsed" aria-hidden="true">{{ elapsed() }}</span>
+    @if (isVod()) {
+      <span class="w-video-player__elapsed w-video-player__time" aria-hidden="true">{{
+        timeText()
+      }}</span>
+      @if (quality(); as height) {
+        <span class="w-video-player__quality" [attr.aria-label]="strings.quality(height)"
+          >{{ height }}p</span
+        >
+      }
+    } @else {
+      <span class="w-video-player__elapsed" aria-hidden="true">{{ elapsed() }}</span>
+    }
     @if (fullscreenSupported) {
       <button
         type="button"

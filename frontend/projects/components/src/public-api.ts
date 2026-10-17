@@ -89,5 +89,7 @@ export * from './lib/footer/footer';
 export * from './lib/video-player/video-player';
 export * from './lib/video-player/i18n';
 export * from './lib/video-player/types';
+export { HLS_FACTORY } from './lib/video-player/hls-vod-session';
+export type { HlsFactory, HlsLike } from './lib/video-player/hls-vod-session';
 export * from './lib/video-player/video-stream-transport';
 export * from './lib/video-player/signalr-video-stream-transport';
