@@ -266,30 +266,28 @@
             <div class="report-rings">
               <div class="w-card report-card">
                 <div class="w-card__body w-stack w-stack--sm">
-                  <div
-                    class="report-ring"
-                    [style.--report-value]="report.completionRate * 100 + '%'"
-                  >
-                    <strong>{{ report.completionRate | percent: '1.0-0' }}</strong>
+                  <div class="w-ring w-ring--lg" [style.--val]="report.completionRate * 100">
+                    <span class="w-ring__label">{{
+                      report.completionRate | percent: '1.0-0'
+                    }}</span>
                   </div>
                   <span>Curriculum progress</span>
                 </div>
               </div>
               <div class="w-card report-card">
                 <div class="w-card__body w-stack w-stack--sm">
-                  <div class="report-ring" [style.--report-value]="report.avgQuizScore + '%'">
-                    <strong>{{ report.avgQuizScore | number: '1.0-0' }}%</strong>
+                  <div class="w-ring w-ring--lg" [style.--val]="report.avgQuizScore">
+                    <span class="w-ring__label">{{ report.avgQuizScore | number: '1.0-0' }}%</span>
                   </div>
                   <span>Average quiz score</span>
                 </div>
               </div>
               <div class="w-card report-card">
                 <div class="w-card__body w-stack w-stack--sm">
-                  <div
-                    class="report-ring"
-                    [style.--report-value]="report.attendance.rate * 100 + '%'"
-                  >
-                    <strong>{{ report.attendance.rate | percent: '1.0-0' }}</strong>
+                  <div class="w-ring w-ring--lg" [style.--val]="report.attendance.rate * 100">
+                    <span class="w-ring__label">{{
+                      report.attendance.rate | percent: '1.0-0'
+                    }}</span>
                   </div>
                   <span>Attendance rate</span>
                 </div>

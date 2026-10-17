@@ -75,29 +75,6 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       border-radius: inherit;
       background: var(--w-teal);
     }
-    .report-ring {
-      --report-value: 0%;
-      display: grid;
-      width: 7rem;
-      height: 7rem;
-      margin-inline: auto;
-      place-items: center;
-      border-radius: 50%;
-      background: conic-gradient(var(--w-teal) var(--report-value), var(--w-g100) 0);
-      position: relative;
-    }
-    .report-ring::before {
-      content: '';
-      position: absolute;
-      inset: 0.65rem;
-      border-radius: 50%;
-      background: var(--w-surface);
-    }
-    .report-ring strong {
-      position: relative;
-      font-size: 1.1rem;
-      z-index: 1;
-    }
     .report-card {
       min-width: 0;
       overflow-wrap: anywhere;
