@@ -48,6 +48,13 @@ public sealed class FileSystemMediaStore : IMediaStore, IUploadStore
         Directory.Move(Folder("work", mediaId), published);
     }
 
+    public string? ResolvePublished(Guid mediaId, string relativePath)
+    {
+        var root = Path.GetFullPath(Folder("hls", mediaId)) + Path.DirectorySeparatorChar;
+        var full = Path.GetFullPath(Path.Combine(root, relativePath));
+        return full.StartsWith(root, StringComparison.Ordinal) && File.Exists(full) ? full : null;
+    }
+
     public void MoveToTrash(Guid mediaId)
     {
         var trash = Folder("trash", mediaId);

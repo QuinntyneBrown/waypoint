@@ -20,6 +20,12 @@ public interface IMediaStore
     /// <summary>Moves <c>work/{mediaId}</c> to <c>hls/{mediaId}</c> in one step.</summary>
     void Publish(Guid mediaId);
 
+    /// <summary>
+    /// Full path of a published file, or null when it does not exist or would lie outside
+    /// <c>hls/{mediaId}</c>.
+    /// </summary>
+    string? ResolvePublished(Guid mediaId, string relativePath);
+
     /// <summary>Moves the published ladder and the source to <c>trash/{mediaId}</c>.</summary>
     void MoveToTrash(Guid mediaId);
 
