@@ -12,6 +12,7 @@ import { WAvatar } from '../avatar/w-avatar';
 import { WIcon } from '../icon/w-icon';
 import { OfflineService } from '../offline/offline.service';
 import { isNavGroup, W_NAV, W_ROLE_LABEL, WNavItem, WRole } from './nav-config';
+import { WIconButton } from '../icon-button/w-icon-button';
 
 /**
  * Authenticated app shell: fixed topbar, role-aware sidenav (+ mobile bottom
@@ -22,7 +23,7 @@ import { isNavGroup, W_NAV, W_ROLE_LABEL, WNavItem, WRole } from './nav-config';
 @Component({
   selector: 'w-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, WIcon, WAvatar],
+  imports: [RouterLink, WIcon, WAvatar, WIconButton],
   host: {
     class: 'w-shell',
     // `role` is the product-role input name, not an ARIA role. Static Angular

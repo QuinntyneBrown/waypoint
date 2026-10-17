@@ -4,14 +4,23 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ApiError, CohortOptions, CohortsService, CohortSummary } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WButton, WIcon, WShell } from '@waypoint/components';
+import { WAccessibleDialog, WButton, WIcon, WIconButton, WShell } from '@waypoint/components';
 import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-003
 @Component({
   selector: 'w-cohorts-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe, ReactiveFormsModule, WButton],
+  imports: [
+    WShell,
+    WIcon,
+    WAccessibleDialog,
+    RouterLink,
+    DatePipe,
+    ReactiveFormsModule,
+    WButton,
+    WIconButton,
+  ],
   templateUrl: './cohorts-list.html',
   styles: `
     .cohort-grid {

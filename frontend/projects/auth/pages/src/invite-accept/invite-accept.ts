@@ -3,13 +3,13 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthStore, roleHome } from '@waypoint/auth';
 import { ApiError, InvitationContext, InvitationsService } from '@waypoint/api';
-import { WButton, WIcon } from '@waypoint/components';
+import { WButton, WIcon, WIconButton } from '@waypoint/components';
 
 // Traces to: L2-AUTH-004, L2-AUTH-008, L2-PLATFORM-011
 @Component({
   selector: 'w-invite-accept',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WIcon, WButton],
+  imports: [ReactiveFormsModule, RouterLink, WIcon, WButton, WIconButton],
   templateUrl: './invite-accept.html',
 })
 export class InviteAcceptPage {

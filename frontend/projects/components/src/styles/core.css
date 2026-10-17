@@ -412,26 +412,6 @@ pre {
   gap: var(--w-s2);
   margin-left: auto;
 }
-.w-iconbtn {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--w-r-pill);
-  border: 0;
-  background: transparent;
-  color: var(--w-ink);
-  display: inline-grid;
-  place-items: center;
-  cursor: pointer;
-  position: relative;
-  flex: none;
-}
-.w-iconbtn:hover {
-  background: var(--w-g200);
-}
-.w-iconbtn .w-icon {
-  width: 20px;
-  height: 20px;
-}
 .w-dot {
   position: absolute;
   top: 7px;
