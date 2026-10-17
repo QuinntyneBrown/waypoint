@@ -27,9 +27,14 @@ test('coding editor, preview, steps, and checklist remain contained and keyboard
   await page.keyboard.type('<h1>Mobile coding works</h1>');
   await page.getByRole('checkbox', { name: /welcome heading/i }).focus();
   await page.keyboard.press('Space');
+  // Let the toggle's re-render settle before the next keyboard action, or focus can be lost.
+  await expect(coding.progress).toHaveText('50%');
   await coding.step(seeded.codingSecondStepTitle).focus();
   await page.keyboard.press('Enter');
-  await page.getByRole('checkbox', { name: /introduction paragraph/i }).focus();
+  const introduction = page.getByRole('checkbox', { name: /introduction paragraph/i });
+  await expect(introduction).toBeVisible();
+  await introduction.focus();
+  await expect(introduction).toBeFocused();
   await page.keyboard.press('Space');
   await expect(coding.progress).toHaveText('100%');
   expect((await coding.submitButton.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
