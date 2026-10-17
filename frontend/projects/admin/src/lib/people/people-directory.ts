@@ -38,9 +38,6 @@ interface DirectoryQuery {
       flex-wrap: wrap;
       gap: var(--w-s2);
     }
-    .pager {
-      margin-top: var(--w-s4);
-    }
     @media (max-width: 42rem) {
       .directory-filters {
         grid-template-columns: 1fr;

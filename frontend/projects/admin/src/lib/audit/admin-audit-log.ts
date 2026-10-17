@@ -33,17 +33,6 @@ import { finalize } from 'rxjs/operators';
       color: var(--w-muted);
       font-weight: 700;
     }
-    .audit-pagination {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s3);
-      align-items: center;
-      justify-content: space-between;
-    }
-    .audit-pagination__actions {
-      display: flex;
-      gap: var(--w-s2);
-    }
     @media (max-width: 68rem) {
       .audit-filters {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -54,15 +43,9 @@ import { finalize } from 'rxjs/operators';
         grid-template-columns: 1fr;
       }
       .audit-filters .w-btn,
-      .audit-pagination .w-btn,
       .w-page__actions .w-btn {
         width: 100%;
         min-height: 45px;
-      }
-      .audit-pagination,
-      .audit-pagination__actions {
-        align-items: stretch;
-        flex-direction: column;
       }
     }
   `,
