@@ -22,6 +22,8 @@ import {
   WTextField,
   WAlert,
   WAlertTitle,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import { finalize, forkJoin, map } from 'rxjs';
 
@@ -43,6 +45,8 @@ import { finalize, forkJoin, map } from 'rxjs';
     WSelect,
     WAlert,
     WAlertTitle,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './organization-settings.html',
   styles: `

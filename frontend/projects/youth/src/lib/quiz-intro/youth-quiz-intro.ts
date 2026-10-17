@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, LearningService, QuizIntro } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WShell, WAlert } from '@waypoint/components';
+import { WButton, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@waypoint/components';
 
 // Traces to: L2-LEARN-004
 @Component({
   selector: 'w-youth-quiz-intro',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, WButton, WAlert],
+  imports: [WShell, RouterLink, WButton, WAlert, WCard, WCardBody, WCardTitle],
   templateUrl: './youth-quiz-intro.html',
   styles: `
     .quiz-facts {

@@ -28,17 +28,17 @@
         <section class="w-stack" aria-labelledby="answers-heading">
           <h2 id="answers-heading">Submitted answers</h2>
           @if (item.questions.length === 0) {
-            <div class="w-card w-empty">
+            <div w-card class="w-empty">
               <h3 class="w-empty__title">No question detail available</h3>
               <p class="w-empty__text">The auto-scored result can still be reviewed.</p>
             </div>
           }
           @for (question of item.questions; track question.questionId; let number = $index) {
-            <article class="w-card">
-              <div class="w-card__header">
+            <article w-card>
+              <div w-card-header>
                 <div>
                   <p class="w-eyebrow">Question {{ number + 1 }}</p>
-                  <h3 class="w-card__title">{{ question.text }}</h3>
+                  <h3 w-card-title>{{ question.text }}</h3>
                 </div>
                 <span
                   class="w-badge"
@@ -48,7 +48,7 @@
                   {{ question.isCorrect ? 'Correct' : 'Incorrect' }}
                 </span>
               </div>
-              <div class="w-card__body">
+              <div w-card-body>
                 <ul class="answer-list">
                   @for (option of question.options; track $index; let optionIndex = $index) {
                     <li
@@ -71,9 +71,9 @@
           }
         </section>
 
-        <aside class="w-card">
-          <div class="w-card__header"><h2 class="w-card__title">Score approval</h2></div>
-          <div class="w-card__body w-stack">
+        <aside w-card>
+          <div w-card-header><h2 w-card-title>Score approval</h2></div>
+          <div w-card-body class="w-stack">
             <div class="score-grid">
               <div>
                 <div class="w-kpi">
@@ -122,7 +122,7 @@
               </button>
             } @else {
               <div class="w-stack" data-testid="quiz-approval-record">
-                <h3 class="w-card__title">Approval record</h3>
+                <h3 w-card-title>Approval record</h3>
                 <p>Auto-scored {{ item.autoScore }}%</p>
                 <p>Approved {{ item.approvedScore }}%</p>
                 <p class="w-muted">

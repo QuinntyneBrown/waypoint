@@ -13,6 +13,8 @@ import {
   WShell,
   WTextField,
   WAlert,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import { catchError, debounceTime, of, switchMap, tap } from 'rxjs';
 
@@ -38,6 +40,8 @@ interface DirectoryQuery {
     WTextField,
     WSelect,
     WAlert,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './people-directory.html',
   styles: `

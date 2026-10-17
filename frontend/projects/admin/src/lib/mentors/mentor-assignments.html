@@ -30,8 +30,8 @@
 
     @if (overview(); as view) {
       <div class="assignment-grid w-mb-6">
-        <section class="w-card assignment-card" aria-labelledby="pair-youth-heading">
-          <div class="w-card__body w-stack">
+        <section w-card class="assignment-card" aria-labelledby="pair-youth-heading">
+          <div w-card-body class="w-stack">
             <div>
               <h2 id="pair-youth-heading">Pair a youth</h2>
               <p class="w-muted">The change is visible on the mentor's roster after saving.</p>
@@ -89,8 +89,8 @@
           </div>
         </section>
 
-        <section class="w-card assignment-card" aria-labelledby="cohort-team-heading">
-          <div class="w-card__body w-stack">
+        <section w-card class="assignment-card" aria-labelledby="cohort-team-heading">
+          <div w-card-body class="w-stack">
             <div>
               <h2 id="cohort-team-heading">Cohort mentor team</h2>
               <p class="w-muted">Set one lead and any number of supporting mentors.</p>
@@ -182,11 +182,12 @@
         <div class="load-grid">
           @for (mentor of view.mentors; track mentor.mentorId) {
             <article
-              class="w-card load-card"
+              w-card
+              class="load-card"
               data-testid="mentor-load-card"
               [attr.data-mentor-id]="mentor.mentorId"
             >
-              <div class="w-card__body">
+              <div w-card-body>
                 <div class="load-card__head">
                   <div>
                     <h3>{{ mentor.mentorName }}</h3>

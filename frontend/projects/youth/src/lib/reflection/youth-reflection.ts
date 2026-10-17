@@ -12,6 +12,8 @@ import {
   WShell,
   WTextarea,
   WAlert,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import {
@@ -38,6 +40,8 @@ const OPTIONAL_PROMPT = 'One action I will take';
     WErrorText,
     WTextarea,
     WAlert,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './youth-reflection.html',
   styles: `

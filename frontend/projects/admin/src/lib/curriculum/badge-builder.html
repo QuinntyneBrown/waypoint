@@ -27,8 +27,8 @@
       </p>
     }
 
-    <section class="w-card w-mb-5">
-      <form class="w-card__body admin-form" [formGroup]="form" (ngSubmit)="saveBadge()">
+    <section w-card class="w-mb-5">
+      <form w-card-body class="admin-form" [formGroup]="form" (ngSubmit)="saveBadge()">
         <div class="admin-form__wide">
           <h2>New badge definition</h2>
           <p class="w-muted">Archived badges remain on youth records but stop earning.</p>
@@ -115,11 +115,12 @@
       <section class="card-grid" aria-label="Badge definitions">
         @for (badge of badges(); track badge.id) {
           <article
-            class="w-card admin-card"
+            w-card
+            class="admin-card"
             data-testid="badge-definition"
             [attr.data-badge-id]="badge.id"
           >
-            <div class="w-card__body w-stack">
+            <div w-card-body class="w-stack">
               <header class="card-head">
                 <div>
                   <p class="w-eyebrow">{{ badge.criteriaKind }}</p>

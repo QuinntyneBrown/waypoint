@@ -1,7 +1,15 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell, WTextField } from '@waypoint/components';
+import {
+  WButton,
+  WIcon,
+  WShell,
+  WTextField,
+  WCard,
+  WCardBody,
+  WCardTitle,
+} from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 import { helpTopicsFor } from './help-content';
 
@@ -9,7 +17,7 @@ import { helpTopicsFor } from './help-content';
 @Component({
   selector: 'w-help',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, WIcon, WShell, WButton, WTextField],
+  imports: [RouterLink, WIcon, WShell, WButton, WTextField, WCard, WCardBody, WCardTitle],
   templateUrl: './help.html',
   styles: `
     .help-search {

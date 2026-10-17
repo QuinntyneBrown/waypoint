@@ -35,9 +35,9 @@
     } @else {
       <div class="help-grid">
         @for (topic of topics(); track topic.title) {
-          <section class="w-card">
-            <div class="w-card__body">
-              <h2 class="w-card__title help-topic__title">
+          <section w-card>
+            <div w-card-body>
+              <h2 w-card-title class="help-topic__title">
                 <w-icon [name]="topic.icon" />{{ topic.title }}
               </h2>
               @for (article of topic.articles; track article.question) {
@@ -52,10 +52,10 @@
       </div>
     }
 
-    <aside class="w-card w-mt-6">
-      <div class="w-card__body w-cluster w-cluster--between">
+    <aside w-card class="w-mt-6">
+      <div w-card-body class="w-cluster w-cluster--between">
         <div>
-          <h2 class="w-card__title">Still need a hand?</h2>
+          <h2 w-card-title>Still need a hand?</h2>
           <p class="w-muted">Send a private request and the program team will follow up.</p>
         </div>
         <a w-button variant="primary" routerLink="/support">Contact support</a>

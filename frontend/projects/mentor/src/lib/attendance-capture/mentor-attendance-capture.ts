@@ -24,6 +24,8 @@ import {
   WShell,
   WTextField,
   WAlert,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import {
   EditorDraftService,
@@ -37,7 +39,18 @@ import { AttendanceQueueService } from '@waypoint/core/attendance';
 @Component({
   selector: 'w-mentor-attendance-capture',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, RouterLink, WButton, WFormField, WLabel, WTextField, WAlert],
+  imports: [
+    WShell,
+    DatePipe,
+    RouterLink,
+    WButton,
+    WFormField,
+    WLabel,
+    WTextField,
+    WAlert,
+    WCard,
+    WCardBody,
+  ],
   templateUrl: './mentor-attendance-capture.html',
   styles: `
     .attendance-summary {

@@ -32,8 +32,8 @@
     } @else if (cohorts()!.length > 0) {
       <div class="cohort-grid">
         @for (cohort of cohorts(); track cohort.id) {
-          <article class="w-card cohort-card" data-testid="cohort-card">
-            <div class="w-card__body w-stack">
+          <article w-card class="cohort-card" data-testid="cohort-card">
+            <div w-card-body class="w-stack">
               <div>
                 <div class="w-eyebrow">{{ cohort.trackName ?? 'Track not assigned' }}</div>
                 <h2>

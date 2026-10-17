@@ -17,8 +17,8 @@
           <p class="w-badge" data-testid="submission-status">{{ displayStatus(view.status) }}</p>
         </div>
       </div>
-      <section class="w-card">
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-body class="w-stack">
           <h2>Your submitted copy</h2>
           @if (view.bodyText) {
             @if (view.isCodingProject) {
@@ -28,8 +28,8 @@
             }
           }
           @if (view.youthNote) {
-            <div class="w-card w-card--greige">
-              <div class="w-card__body">
+            <div w-card variant="greige">
+              <div w-card-body>
                 <strong>Your note to the mentor</strong>
                 <p>{{ view.youthNote }}</p>
               </div>
@@ -54,8 +54,8 @@
           }
         </div>
       </section>
-      <section class="w-card w-card--greige">
-        <div class="w-card__body w-stack">
+      <section w-card variant="greige">
+        <div w-card-body class="w-stack">
           <h2>Timeline</h2>
           <ol class="w-stack">
             @for (item of view.timeline; track $index) {
@@ -76,8 +76,8 @@
         </section>
       }
       @if (view.totalAwarded !== null) {
-        <section class="w-card">
-          <div class="w-card__body w-stack">
+        <section w-card>
+          <div w-card-body class="w-stack">
             <h2>Rubric result</h2>
             <p>
               <strong>{{ view.totalAwarded }} of {{ view.totalPossible }} points</strong>
@@ -92,8 +92,8 @@
         </section>
       }
       @if (view.earnedBadge; as badge) {
-        <section class="w-card w-card--greige">
-          <div class="w-card__body">
+        <section w-card variant="greige">
+          <div w-card-body>
             <div class="w-eyebrow">Badge unlocked</div>
             <h2>{{ badge.name }}</h2>
             @if (badge.description) {

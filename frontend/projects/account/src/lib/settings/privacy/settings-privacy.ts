@@ -20,6 +20,9 @@ import {
   WTextField,
   WCheckbox,
   WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
 } from '@waypoint/components';
 
 // Traces to: L2-NFR-003
@@ -39,6 +42,9 @@ import {
     WSelect,
     WCheckbox,
     WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
   ],
   templateUrl: './settings-privacy.html',
   styles: `

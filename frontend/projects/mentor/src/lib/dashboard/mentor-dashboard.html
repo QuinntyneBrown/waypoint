@@ -20,26 +20,26 @@
       <p class="w-muted" role="status">Loading your dashboard…</p>
     } @else if (summary(); as view) {
       <div class="w-grid w-grid--4" aria-label="Mentor summary">
-        <div class="w-card w-statcard">
+        <div w-card class="w-statcard">
           <div class="w-statcard__label">My youth</div>
           <div class="w-statcard__value" data-testid="mentor-youth-count">
             {{ view.youthCount }}
           </div>
         </div>
-        <div class="w-card w-statcard" data-testid="mentor-pending-reviews">
+        <div w-card class="w-statcard" data-testid="mentor-pending-reviews">
           <div class="w-statcard__label">Pending reviews</div>
           <div class="w-statcard__value">{{ view.pendingReviews }}</div>
           <div class="w-statcard__delta" [class.is-down]="view.overdueReviews > 0">
             {{ view.overdueReviews }} overdue
           </div>
         </div>
-        <div class="w-card w-statcard">
+        <div w-card class="w-statcard">
           <div class="w-statcard__label">Average progress</div>
           <div class="w-statcard__value" data-testid="mentor-average-progress">
             {{ percent(view.averageProgress) }}%
           </div>
         </div>
-        <div class="w-card w-statcard">
+        <div w-card class="w-statcard">
           <div class="w-statcard__label">At risk</div>
           <div class="w-statcard__value" data-testid="mentor-at-risk-count">
             {{ view.atRiskCount }}
@@ -53,7 +53,7 @@
           <a w-button variant="ghost" routerLink="/mentor/my-youth">View all youth</a>
         </div>
         @if (youth().length === 0) {
-          <div class="w-card w-empty">
+          <div w-card class="w-empty">
             <div class="w-empty__icon"><w-icon name="users" /></div>
             <h3 class="w-empty__title">No youth assigned yet</h3>
             <p class="w-empty__text">
@@ -63,8 +63,8 @@
         } @else {
           <div class="mentor-preview-grid">
             @for (person of youth().slice(0, 4); track person.id) {
-              <article class="w-card">
-                <div class="w-card__body youth-preview">
+              <article w-card>
+                <div w-card-body class="youth-preview">
                   <div
                     class="progress-number"
                     role="img"
@@ -73,7 +73,7 @@
                     {{ percent(person.progress) }}%
                   </div>
                   <div>
-                    <a class="w-card__title" [routerLink]="['/mentor/youth', person.id]">
+                    <a w-card-title [routerLink]="['/mentor/youth', person.id]">
                       {{ person.displayName }}
                     </a>
                     <p class="w-muted">{{ person.cohortName ?? 'Cohort not assigned' }}</p>
@@ -94,18 +94,18 @@
           <a w-button variant="ghost" routerLink="/mentor/reviews">Open queue</a>
         </div>
         @if (reviews().length === 0) {
-          <div class="w-card w-empty">
+          <div w-card class="w-empty">
             <div class="w-empty__icon"><w-icon name="file-text" /></div>
             <h3 class="w-empty__title">No reviews waiting</h3>
             <p class="w-empty__text">New submissions and quiz assessments will appear here.</p>
           </div>
         } @else {
-          <div class="w-card">
-            <div class="w-card__body">
+          <div w-card>
+            <div w-card-body>
               @for (review of reviews(); track review.reviewId) {
                 <article class="review-row" data-testid="mentor-review-item">
                   <div>
-                    <h3 class="w-card__title">{{ review.youthName }}</h3>
+                    <h3 w-card-title>{{ review.youthName }}</h3>
                     <p>{{ review.itemType }} · {{ review.itemTitle }}</p>
                   </div>
                   <div class="w-cluster">

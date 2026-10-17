@@ -18,15 +18,15 @@
       <p class="w-muted">Loading roster…</p>
     } @else {
       <div class="attendance-summary" aria-label="Attendance tallies">
-        <div class="w-card" data-testid="marked-tally">
+        <div w-card data-testid="marked-tally">
           <strong>{{ marked() }} of {{ total() }}</strong>
           <span>marked</span>
         </div>
-        <div class="w-card" data-testid="present-tally">
+        <div w-card data-testid="present-tally">
           <strong>{{ present() }}</strong>
           <span>present</span>
         </div>
-        <div class="w-card" data-testid="absent-tally">
+        <div w-card data-testid="absent-tally">
           <strong>{{ absent() }}</strong>
           <span>absent</span>
         </div>
@@ -44,8 +44,8 @@
         }
       </div>
 
-      <div class="w-card">
-        <div class="w-card__body">
+      <div w-card>
+        <div w-card-body>
           @for (row of rows(); track row.youthUserId) {
             <div class="attendance-row" data-testid="attendance-row">
               <span class="attendance-name">{{ row.name }}</span>

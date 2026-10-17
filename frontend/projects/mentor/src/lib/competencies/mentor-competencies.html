@@ -21,8 +21,8 @@
         </div>
       </div>
 
-      <section class="w-card" data-testid="competency-summary" aria-label="Competency summary">
-        <div class="w-card__body summary-grid">
+      <section w-card data-testid="competency-summary" aria-label="Competency summary">
+        <div w-card-body class="summary-grid">
           <div>
             <div class="w-kpi">
               <span class="w-statcard__label">Proficient or mastered</span
@@ -50,7 +50,7 @@
       </section>
 
       @if (view.items.length === 0) {
-        <div class="w-card w-empty">
+        <div w-card class="w-empty">
           <div class="w-empty__icon"><w-icon name="award" /></div>
           <h2 class="w-empty__title">No competencies configured</h2>
           <p class="w-empty__text">A program administrator can add the progression framework.</p>
@@ -59,18 +59,18 @@
         <div class="competency-grid">
           @for (item of view.items; track item.competencyId) {
             <article
-              class="w-card"
+              w-card
               data-testid="competency-card"
               [attr.data-competency-id]="item.competencyId"
             >
-              <div class="w-card__header">
+              <div w-card-header>
                 <div>
                   <p class="w-eyebrow">{{ item.stageName }}</p>
-                  <h2 class="w-card__title">{{ item.name }}</h2>
+                  <h2 w-card-title>{{ item.name }}</h2>
                 </div>
                 <span class="w-badge">{{ levelLabel(draft(item).level) }}</span>
               </div>
-              <div class="w-card__body w-stack">
+              <div w-card-body class="w-stack">
                 <div w-form-field>
                   <label w-label [for]="'level-' + item.competencyId">
                     {{ item.name }} level

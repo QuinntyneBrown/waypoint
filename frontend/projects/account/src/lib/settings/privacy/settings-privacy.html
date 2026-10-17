@@ -16,9 +16,9 @@
     <p class="w-muted" role="status">Loading your privacy information…</p>
   } @else {
     <div class="privacy-grid">
-      <section class="w-card">
-        <div class="w-card__body">
-          <h2 class="w-card__title">Your stored account data</h2>
+      <section w-card>
+        <div w-card-body>
+          <h2 w-card-title>Your stored account data</h2>
           <p class="w-muted w-mb-4">Placement identifiers are managed by program staff.</p>
           @if (data(); as person) {
             <dl class="privacy-data">
@@ -75,9 +75,9 @@
         </div>
       </section>
 
-      <section class="w-card">
-        <div class="w-card__body">
-          <h2 class="w-card__title">Make a data-rights request</h2>
+      <section w-card>
+        <div w-card-body>
+          <h2 w-card-title>Make a data-rights request</h2>
           <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
             <div w-form-field>
               <label w-label for="privacy-action">Request type</label>
@@ -145,9 +145,9 @@
       </section>
     </div>
 
-    <section class="w-card w-mt-6">
-      <div class="w-card__body">
-        <h2 class="w-card__title">Your requests</h2>
+    <section w-card class="w-mt-6">
+      <div w-card-body>
+        <h2 w-card-title>Your requests</h2>
         @if (requestTotal() > 0) {
           <p class="w-muted w-text-sm">
             Showing {{ requests().length }} of {{ requestTotal() }} requests.

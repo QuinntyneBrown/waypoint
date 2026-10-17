@@ -28,6 +28,8 @@ import {
   WTextarea,
   WTextField,
   WAlert,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import { finalize, forkJoin, of, switchMap } from 'rxjs';
 import {
@@ -58,6 +60,8 @@ interface BadgeTarget {
     WTextarea,
     WSelect,
     WAlert,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './badge-builder.html',
   styleUrl: './curriculum-admin.css',

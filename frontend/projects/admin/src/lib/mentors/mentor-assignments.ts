@@ -15,6 +15,8 @@ import {
   WShell,
   WAlert,
   WAlertTitle,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import { finalize } from 'rxjs';
 
@@ -22,7 +24,18 @@ import { finalize } from 'rxjs';
 @Component({
   selector: 'w-mentor-assignments',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WButton, WFormField, WLabel, WSelect, WAlert, WAlertTitle],
+  imports: [
+    WShell,
+    WIcon,
+    WButton,
+    WFormField,
+    WLabel,
+    WSelect,
+    WAlert,
+    WAlertTitle,
+    WCard,
+    WCardBody,
+  ],
   templateUrl: './mentor-assignments.html',
   styles: `
     .assignment-grid {

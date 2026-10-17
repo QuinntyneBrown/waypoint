@@ -19,6 +19,9 @@ import {
   WCheckboxBox,
   WAlert,
   WAlertTitle,
+  WCard,
+  WCardBody,
+  WCardTitle,
 } from '@waypoint/components';
 import {
   buildVerifiedOwnershipPayload,
@@ -47,6 +50,9 @@ import {
     WCheckboxBox,
     WAlert,
     WAlertTitle,
+    WCard,
+    WCardBody,
+    WCardTitle,
   ],
   templateUrl: './admin-privacy.html',
   styles: `

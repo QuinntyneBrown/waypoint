@@ -27,8 +27,8 @@
     }
 
     <div class="announcement-layout">
-      <section class="w-card" aria-labelledby="compose-announcement-heading">
-        <div class="w-card__body w-stack">
+      <section w-card aria-labelledby="compose-announcement-heading">
+        <div w-card-body class="w-stack">
           <div>
             <h2 id="compose-announcement-heading">Compose announcement</h2>
             <p class="w-muted">Choose exactly who should receive this update.</p>
@@ -148,10 +148,10 @@
         } @else {
           <ol class="announcement-list w-stack">
             @for (announcement of announcements(); track announcement.id) {
-              <li class="w-card announcement-item" data-testid="admin-announcement">
-                <div class="w-card__body w-stack w-stack--sm">
+              <li w-card class="announcement-item" data-testid="admin-announcement">
+                <div w-card-body class="w-stack w-stack--sm">
                   <div class="w-cluster w-cluster--between">
-                    <h3 class="w-card__title">{{ announcement.title }}</h3>
+                    <h3 w-card-title>{{ announcement.title }}</h3>
                     <span
                       class="w-badge"
                       [class.w-badge--lime]="announcement.sentAt"

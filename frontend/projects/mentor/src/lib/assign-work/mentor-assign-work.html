@@ -22,11 +22,11 @@
 
     @if (options(); as view) {
       <div class="assign-layout">
-        <section class="w-card" aria-labelledby="assignment-details-heading">
-          <div class="w-card__header">
-            <h2 class="w-card__title" id="assignment-details-heading">Assignment details</h2>
+        <section w-card aria-labelledby="assignment-details-heading">
+          <div w-card-header>
+            <h2 w-card-title id="assignment-details-heading">Assignment details</h2>
           </div>
-          <div class="w-card__body w-stack">
+          <div w-card-body class="w-stack">
             <div w-form-field>
               <label w-label for="assign-item-type">What are you assigning?</label>
               <select
@@ -185,11 +185,16 @@
           </div>
         </section>
 
-        <aside class="w-card w-card--greige summary-card" aria-labelledby="assign-summary-heading">
-          <div class="w-card__header">
-            <h2 class="w-card__title" id="assign-summary-heading">Summary</h2>
+        <aside
+          w-card
+          variant="greige"
+          class="summary-card"
+          aria-labelledby="assign-summary-heading"
+        >
+          <div w-card-header>
+            <h2 w-card-title id="assign-summary-heading">Summary</h2>
           </div>
-          <div class="w-card__body w-stack selection-summary">
+          <div w-card-body class="w-stack selection-summary">
             <div>
               <p class="w-eyebrow">Item</p>
               <p>

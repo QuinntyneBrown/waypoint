@@ -118,8 +118,8 @@
         } @else {
           <div class="agenda-list" data-testid="agenda-calendar">
             @for (session of agendaSessions(); track session.id) {
-              <article class="w-card">
-                <div class="w-card__body w-cluster w-cluster--between">
+              <article w-card>
+                <div w-card-body class="w-cluster w-cluster--between">
                   <div>
                     <p class="w-eyebrow">{{ session.startsAt | date: 'EEEE, MMM d' }}</p>
                     <h3>{{ session.title }}</h3>
@@ -144,11 +144,11 @@
         }
       </section>
 
-      <aside class="w-card session-form" aria-labelledby="new-session-heading">
-        <div class="w-card__header">
-          <h2 class="w-card__title" id="new-session-heading">New session</h2>
+      <aside w-card class="session-form" aria-labelledby="new-session-heading">
+        <div w-card-header>
+          <h2 w-card-title id="new-session-heading">New session</h2>
         </div>
-        <div class="w-card__body w-stack">
+        <div w-card-body class="w-stack">
           <div w-form-field>
             <label w-label for="session-title">Title</label>
             <input

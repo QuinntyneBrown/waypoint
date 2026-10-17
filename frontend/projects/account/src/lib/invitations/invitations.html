@@ -27,9 +27,9 @@
     }
 
     <div class="invite-layout">
-      <section class="w-card">
-        <div class="w-card__body">
-          <h2 class="w-card__title">Send invitations</h2>
+      <section w-card>
+        <div w-card-body>
+          <h2 w-card-title>Send invitations</h2>
           <p class="w-muted w-mb-4">Enter one email per line. Links expire after 14 days.</p>
           <form class="w-stack" [formGroup]="form" (ngSubmit)="send()">
             @if (isAdmin()) {
@@ -96,8 +96,8 @@
         </div>
       </section>
 
-      <section class="w-card">
-        <div class="w-card__body">
+      <section w-card>
+        <div w-card-body>
           <div class="invite-filters w-mb-4">
             <div w-form-field>
               <label w-label for="invite-search">Search invitations</label>

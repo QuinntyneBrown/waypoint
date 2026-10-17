@@ -53,8 +53,8 @@
       }
     }
 
-    <section class="w-card w-mb-4" aria-labelledby="audit-filters-heading">
-      <div class="w-card__body w-stack">
+    <section w-card class="w-mb-4" aria-labelledby="audit-filters-heading">
+      <div w-card-body class="w-stack">
         <div>
           <h2 id="audit-filters-heading">Audit filters</h2>
           <p class="w-muted">Filter the view and CSV export by user, action, or inclusive dates.</p>
@@ -113,8 +113,8 @@
     </section>
 
     @if (loading() && !result()) {
-      <div class="w-card" aria-label="Loading audit activity">
-        <div class="w-card__body w-stack">
+      <div w-card aria-label="Loading audit activity">
+        <div w-card-body class="w-stack">
           <span class="w-skeleton w-skeleton--title"></span>
           <span class="w-skeleton w-skeleton--block"></span>
           <span class="w-skeleton w-skeleton--block"></span>
@@ -123,7 +123,7 @@
       </div>
     } @else if (result(); as audit) {
       @if (audit.items.length === 0) {
-        <div class="w-card">
+        <div w-card>
           <div class="w-empty">
             <h2 class="w-empty__title">No activity for this filter</h2>
             <p class="w-empty__text">
@@ -141,7 +141,7 @@
           </div>
         </div>
       } @else {
-        <div class="w-card">
+        <div w-card>
           <div class="w-table-wrap">
             <table class="w-table w-table--cards">
               <thead>

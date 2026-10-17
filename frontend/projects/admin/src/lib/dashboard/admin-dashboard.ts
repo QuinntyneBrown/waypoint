@@ -3,13 +3,24 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, ReportsService, ReportsHub } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell, WAlert } from '@waypoint/components';
+import { WButton, WIcon, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@waypoint/components';
 
 // Traces to: L2-ADMIN-004, L2-REPORT-001
 @Component({
   selector: 'w-admin-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, PercentPipe, RouterLink, WIcon, WShell, WButton, WAlert],
+  imports: [
+    DatePipe,
+    PercentPipe,
+    RouterLink,
+    WIcon,
+    WShell,
+    WButton,
+    WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
+  ],
   templateUrl: './admin-dashboard.html',
   styles: `
     .dashboard-grid {
@@ -34,6 +45,7 @@ import { WButton, WIcon, WShell, WAlert } from '@waypoint/components';
       display: flex;
       gap: var(--w-s3);
       min-height: 56px;
+      padding: var(--w-s5);
     }
     @media (max-width: 62rem) {
       .dashboard-actions {

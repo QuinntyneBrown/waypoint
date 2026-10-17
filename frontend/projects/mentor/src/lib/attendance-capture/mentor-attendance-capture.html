@@ -26,23 +26,23 @@
       <p class="w-muted" role="status">Loading roster…</p>
     } @else {
       <div class="attendance-summary" aria-label="Attendance tallies">
-        <div class="w-card" data-testid="mentor-marked-tally">
+        <div w-card data-testid="mentor-marked-tally">
           <strong>{{ marked() }} of {{ total() }}</strong
           ><span>marked</span>
         </div>
-        <div class="w-card">
+        <div w-card>
           <strong>{{ present() }}</strong
           ><span>present</span>
         </div>
-        <div class="w-card">
+        <div w-card>
           <strong>{{ late() }}</strong
           ><span>late</span>
         </div>
-        <div class="w-card">
+        <div w-card>
           <strong>{{ excused() }}</strong
           ><span>excused</span>
         </div>
-        <div class="w-card">
+        <div w-card>
           <strong>{{ absent() }}</strong
           ><span>absent</span>
         </div>
@@ -60,8 +60,8 @@
         }
       </div>
 
-      <div class="w-card">
-        <div class="w-card__body">
+      <div w-card>
+        <div w-card-body>
           @for (row of rows(); track row.youthUserId) {
             <div class="attendance-row" data-testid="mentor-attendance-row">
               <strong>{{ row.name }}</strong>

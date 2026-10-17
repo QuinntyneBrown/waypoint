@@ -19,6 +19,10 @@ import {
   WShell,
   WTextarea,
   WAlert,
+  WCard,
+  WCardBody,
+  WCardHeader,
+  WCardTitle,
 } from '@waypoint/components';
 
 interface CompetencyDraft {
@@ -42,6 +46,10 @@ interface CompetencyDraft {
     WTextarea,
     WSelect,
     WAlert,
+    WCard,
+    WCardBody,
+    WCardHeader,
+    WCardTitle,
   ],
   templateUrl: './mentor-competencies.html',
   styles: `

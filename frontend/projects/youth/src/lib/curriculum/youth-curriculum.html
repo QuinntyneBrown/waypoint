@@ -20,7 +20,7 @@
     @if (curriculum(); as view) {
       @if (view.tracks.length > 1) {
         <div class="w-stack">
-          <h2 class="w-card__title">Your tracks</h2>
+          <h2 w-card-title>Your tracks</h2>
           <div class="w-cluster" aria-label="Choose curriculum track">
             @for (track of view.tracks; track track.trackId) {
               <button
@@ -50,12 +50,12 @@
       } @else {
         <div class="w-stack">
           @for (module of view.modules; track module.moduleId) {
-            <section class="w-card" data-testid="curriculum-module">
-              <div class="w-card__body w-stack">
+            <section w-card data-testid="curriculum-module">
+              <div w-card-body class="w-stack">
                 <div class="w-cluster w-cluster--between">
                   <div>
                     <div class="w-eyebrow">Module {{ module.order }}</div>
-                    <h2 class="w-card__title">{{ module.name }}</h2>
+                    <h2 w-card-title>{{ module.name }}</h2>
                   </div>
                   <span
                     class="w-badge"
@@ -80,8 +80,8 @@
                 @if (module.items.length > 0) {
                   <ol class="w-stack">
                     @for (item of module.items; track item.itemId) {
-                      <li class="w-card w-card--greige" data-testid="curriculum-item">
-                        <div class="w-card__body w-cluster w-cluster--between">
+                      <li w-card variant="greige" data-testid="curriculum-item">
+                        <div w-card-body class="w-cluster w-cluster--between">
                           <div>
                             @if (!item.locked) {
                               <a

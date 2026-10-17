@@ -18,6 +18,10 @@ import {
   WShell,
   WTextField,
   WAlert,
+  WCard,
+  WCardHeader,
+  WCardTitle,
+  WCardBody,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
@@ -38,6 +42,10 @@ type HistoryView = 'session' | 'youth';
     WTextField,
     WSelect,
     WAlert,
+    WCard,
+    WCardHeader,
+    WCardTitle,
+    WCardBody,
   ],
   templateUrl: './mentor-attendance-history.html',
   styles: `

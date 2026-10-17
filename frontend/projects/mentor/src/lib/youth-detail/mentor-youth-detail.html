@@ -51,12 +51,13 @@
       @for (tab of tabs; track tab.key) {
         @if (activeTab() === tab.key) {
           <section
-            class="w-card w-mt-4"
+            w-card
+            class="w-mt-4"
             role="tabpanel"
             [id]="'detail-panel-' + tab.key"
             [attr.aria-labelledby]="'detail-tab-' + tab.key"
           >
-            <div class="w-card__body">
+            <div w-card-body>
               @switch (tab.key) {
                 @case ('profile') {
                   <div class="detail-grid">

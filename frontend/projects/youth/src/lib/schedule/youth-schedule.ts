@@ -14,6 +14,9 @@ import {
   WRadio,
   WRadioBox,
   WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
 } from '@waypoint/components';
 
 interface RsvpDraft {
@@ -39,6 +42,9 @@ interface RsvpDraft {
     WRadio,
     WRadioBox,
     WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
   ],
   templateUrl: './youth-schedule.html',
   styles: `

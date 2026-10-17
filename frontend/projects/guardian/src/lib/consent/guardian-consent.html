@@ -14,9 +14,9 @@
     </div>
 
     <div class="w-grid w-grid--2">
-      <section class="w-card">
-        <form class="w-card__body w-stack" [formGroup]="contactForm" (ngSubmit)="saveContact()">
-          <h2 class="w-card__title">Contact details</h2>
+      <section w-card>
+        <form w-card-body class="w-stack" [formGroup]="contactForm" (ngSubmit)="saveContact()">
+          <h2 w-card-title>Contact details</h2>
           <div w-form-field>
             <label w-label for="guardian-name">Name</label>
             <input w-text-field id="guardian-name" formControlName="displayName" />
@@ -60,10 +60,10 @@
         @if (records() === undefined) {
           <p class="w-muted">Loading consent record…</p>
         } @else if (records()![0]; as record) {
-          <section class="w-card">
-            <div class="w-card__body w-stack">
+          <section w-card>
+            <div w-card-body class="w-stack">
               <div class="w-cluster w-cluster--between">
-                <h2 class="w-card__title">Participation consent</h2>
+                <h2 w-card-title>Participation consent</h2>
                 <span
                   class="w-badge"
                   [class.w-badge--success]="record.withdrawnAt === null"
@@ -110,9 +110,9 @@
             </div>
           </section>
 
-          <section class="w-card">
-            <form class="w-card__body w-stack" [formGroup]="mediaForm" (ngSubmit)="saveMedia()">
-              <h2 class="w-card__title">Media consent</h2>
+          <section w-card>
+            <form w-card-body class="w-stack" [formGroup]="mediaForm" (ngSubmit)="saveMedia()">
+              <h2 w-card-title>Media consent</h2>
               <label w-checkbox>
                 <input type="checkbox" formControlName="mediaConsent" />
                 <span w-checkbox-box>

@@ -26,14 +26,14 @@
           }
         </div>
       </div>
-      <section class="w-card">
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-body class="w-stack">
           <h2>Task</h2>
           <p>{{ view.taskDescription }}</p>
         </div>
       </section>
-      <section class="w-card w-card--greige">
-        <div class="w-card__body w-stack">
+      <section w-card variant="greige">
+        <div w-card-body class="w-stack">
           <h2>What you can submit</h2>
           <ul>
             @for (type of view.allowedSubmissionTypes; track type) {
@@ -52,8 +52,8 @@
           </ul>
         </div>
       </section>
-      <section class="w-card">
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-body class="w-stack">
           <h2>Rubric preview</h2>
           @for (criterion of view.rubric; track criterion.id) {
             <div class="w-cluster w-cluster--between">
@@ -117,8 +117,8 @@
               ><input w-text-field id="assignment-link" type="url" formControlName="linkUrl" />
             </div>
           }
-          <label class="w-card w-card--greige"
-            ><span class="w-card__body w-cluster"
+          <label w-card variant="greige"
+            ><span w-card-body class="w-cluster"
               ><input type="checkbox" formControlName="attest" /><strong
                 >This is my own work and the evidence is truthful.</strong
               ></span

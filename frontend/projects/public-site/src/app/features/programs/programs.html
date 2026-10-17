@@ -22,11 +22,11 @@
     } @else {
       <div class="w-grid w-grid--2 w-mt-6">
         @for (track of publicContent.tracks; track track.id) {
-          <div class="w-card">
-            <div class="w-card__header">
-              <h2 class="w-card__title">{{ track.name }}</h2>
+          <div w-card>
+            <div w-card-header>
+              <h2 w-card-title>{{ track.name }}</h2>
             </div>
-            <div class="w-card__body">
+            <div w-card-body>
               <p class="w-muted">{{ track.description }}</p>
               <h3 class="w-text-base">Modules</h3>
               <ol>
@@ -54,8 +54,8 @@
     <p class="w-text-lg w-muted">{{ publicContent.mentorship.summary }}</p>
     <div class="w-grid w-grid--3 w-mt-6">
       @for (feature of publicContent.mentorship.features; track feature) {
-        <div class="w-card">
-          <div class="w-card__body">
+        <div w-card>
+          <div w-card-body>
             <p>{{ feature }}</p>
           </div>
         </div>

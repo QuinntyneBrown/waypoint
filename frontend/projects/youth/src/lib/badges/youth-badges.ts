@@ -1,15 +1,15 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthJourney } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WShell, WAlert } from '@waypoint/components';
+import { WButton, WShell, WAlert, WCard, WCardBody } from '@waypoint/components';
 
 // Traces to: L2-LEARN-009
 @Component({
   selector: 'w-youth-badges',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DatePipe, WButton, WAlert],
+  imports: [WShell, RouterLink, DatePipe, NgTemplateOutlet, WButton, WAlert, WCard, WCardBody],
   templateUrl: './youth-badges.html',
 })
 export class YouthBadgesPage {

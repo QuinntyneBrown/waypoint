@@ -12,6 +12,8 @@ import {
   WTextField,
   WAlert,
   WAlertTitle,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -30,6 +32,8 @@ import { finalize } from 'rxjs/operators';
     WSelect,
     WAlert,
     WAlertTitle,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './admin-audit-log.html',
   styles: `

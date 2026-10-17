@@ -33,8 +33,8 @@
         <button w-button variant="secondary" type="button" (click)="openEdit()">Edit cohort</button>
       </div>
 
-      <section class="w-card w-mb-5" aria-labelledby="cohort-overview-heading">
-        <div class="w-card__body">
+      <section w-card class="w-mb-5" aria-labelledby="cohort-overview-heading">
+        <div w-card-body>
           <h2 id="cohort-overview-heading">Cohort details</h2>
           <div class="cohort-summary">
             <div>
@@ -59,8 +59,8 @@
       </section>
 
       <div class="member-layout">
-        <section class="w-card" aria-labelledby="cohort-members-heading">
-          <div class="w-card__body">
+        <section w-card aria-labelledby="cohort-members-heading">
+          <div w-card-body>
             <h2 id="cohort-members-heading">Members</h2>
             <ul class="member-list">
               @for (member of cohort.members; track member.id) {
@@ -90,8 +90,8 @@
           </div>
         </section>
 
-        <aside class="w-card" aria-labelledby="add-member-heading">
-          <div class="w-card__body member-actions">
+        <aside w-card aria-labelledby="add-member-heading">
+          <div w-card-body class="member-actions">
             <h2 id="add-member-heading">Add members</h2>
             @if (cohort.availableYouth.length > 0) {
               <div w-form-field>

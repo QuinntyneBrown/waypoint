@@ -23,8 +23,8 @@
 
     @if (inbox(); as view) {
       @if (view.conversations.length === 0) {
-        <section class="w-card w-empty">
-          <div class="w-card__body">
+        <section w-card class="w-empty">
+          <div w-card-body>
             <div class="w-empty__icon"><w-icon name="message-square" /></div>
             <h2 class="w-empty__title">No youth conversations yet</h2>
             <p class="w-empty__text">Threads appear when active youth are assigned to you.</p>
@@ -32,7 +32,8 @@
         </section>
       } @else {
         <section
-          class="w-card messages-layout"
+          w-card
+          class="messages-layout"
           [class.show-thread]="selectedYouthId() || mode() === 'broadcast'"
           aria-label="Mentor messaging workspace"
         >

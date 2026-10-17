@@ -28,6 +28,11 @@ import {
   WShell,
   WTextField,
   WAlert,
+  WCard,
+  WCardHeader,
+  WCardTitle,
+  WCardBody,
+  WCardFooter,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -54,6 +59,11 @@ interface ImportColumn {
     WTextField,
     WSelect,
     WAlert,
+    WCard,
+    WCardHeader,
+    WCardTitle,
+    WCardBody,
+    WCardFooter,
   ],
   templateUrl: './import-roster.html',
   styles: `

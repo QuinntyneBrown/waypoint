@@ -23,6 +23,10 @@ import {
   WCheckbox,
   WCheckboxBox,
   WAlert,
+  WCard,
+  WCardHeader,
+  WCardTitle,
+  WCardBody,
 } from '@waypoint/components';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { UnsavedChangesAware, DraftSaveResult, UnsavedChangesService } from '@waypoint/core';
@@ -53,6 +57,10 @@ interface GradingDraft {
     WCheckbox,
     WCheckboxBox,
     WAlert,
+    WCard,
+    WCardHeader,
+    WCardTitle,
+    WCardBody,
   ],
   templateUrl: './mentor-submission-review.html',
   styles: `

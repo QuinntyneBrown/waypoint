@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell, WAlert } from '@waypoint/components';
+import { WButton, WIcon, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@waypoint/components';
 import { GuardianContextService } from '../guardian-context.service';
 
 // Traces to: L2-GUARDIAN-001
 @Component({
   selector: 'w-guardian-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, WIcon, WButton, WAlert],
+  imports: [WShell, RouterLink, WIcon, WButton, WAlert, WCard, WCardBody, WCardTitle],
   templateUrl: './guardian-home.html',
 })
 export class GuardianHome {

@@ -15,7 +15,17 @@ import {
   ProgressBoard,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WFormField, WIcon, WLabel, WSelect, WShell, WAlert } from '@waypoint/components';
+import {
+  WButton,
+  WFormField,
+  WIcon,
+  WLabel,
+  WSelect,
+  WShell,
+  WAlert,
+  WCard,
+  WCardBody,
+} from '@waypoint/components';
 import { debounceTime, filter, finalize, forkJoin, merge } from 'rxjs';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -23,7 +33,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
 @Component({
   selector: 'w-progress-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WButton, WFormField, WLabel, WSelect, WAlert],
+  imports: [WShell, WIcon, WButton, WFormField, WLabel, WSelect, WAlert, WCard, WCardBody],
   templateUrl: './progress-board.html',
   styles: `
     .board-filters {

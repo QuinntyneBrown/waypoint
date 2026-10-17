@@ -21,6 +21,9 @@ import {
   WTextarea,
   WTextField,
   WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
 } from '@waypoint/components';
 import { Observable } from 'rxjs';
 import { shellRole } from '@waypoint/core';
@@ -50,6 +53,9 @@ const ROLES: readonly WRoleName[] = [
     WTextarea,
     WSelect,
     WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
   ],
   templateUrl: './invitations.html',
   styles: `

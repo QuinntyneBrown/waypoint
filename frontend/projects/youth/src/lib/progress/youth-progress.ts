@@ -2,7 +2,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ApiError, LearningService, YouthProgress } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell, WAlert } from '@waypoint/components';
+import { WShell, WAlert, WCard, WCardBody } from '@waypoint/components';
 
 type ProgressTab = 'overview' | 'quizzes' | 'attendance';
 
@@ -10,7 +10,7 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
 @Component({
   selector: 'w-youth-progress',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DecimalPipe, DatePipe, WAlert],
+  imports: [WShell, DecimalPipe, DatePipe, WAlert, WCard, WCardBody],
   templateUrl: './youth-progress.html',
 })
 export class YouthProgressPage {

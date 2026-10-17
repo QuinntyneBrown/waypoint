@@ -33,8 +33,8 @@
     @if (loaded()) {
       <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
         <div class="settings-grid w-mb-5">
-          <section class="w-card settings-card" aria-labelledby="identity-heading">
-            <div class="w-card__body w-stack">
+          <section w-card class="settings-card" aria-labelledby="identity-heading">
+            <div w-card-body class="w-stack">
               <div>
                 <h2 id="identity-heading">Organization identity</h2>
                 <p class="w-muted">The platform colour palette remains fixed for accessibility.</p>
@@ -76,8 +76,8 @@
             </div>
           </section>
 
-          <section class="w-card settings-card" aria-labelledby="consent-policy-heading">
-            <div class="w-card__body w-stack">
+          <section w-card class="settings-card" aria-labelledby="consent-policy-heading">
+            <div w-card-body class="w-stack">
               <div>
                 <h2 id="consent-policy-heading">Guardian consent policy</h2>
                 <p class="w-muted">These settings drive term access and youth-media safeguards.</p>
@@ -123,8 +123,8 @@
         </button>
       </form>
 
-      <section class="w-card w-mb-5" aria-labelledby="terms-heading">
-        <div class="w-card__body w-stack">
+      <section w-card class="w-mb-5" aria-labelledby="terms-heading">
+        <div w-card-body class="w-stack">
           <div>
             <h2 id="terms-heading">Terms and cohort cycles</h2>
             <p class="w-muted">Maintain date ranges and advance each term through its lifecycle.</p>
@@ -207,8 +207,8 @@
         </div>
       </section>
 
-      <section class="w-card" aria-labelledby="tracks-heading">
-        <div class="w-card__body">
+      <section w-card aria-labelledby="tracks-heading">
+        <div w-card-body>
           <h2 id="tracks-heading">Track availability</h2>
           <p class="w-muted">
             Pausing a track preserves existing progress but blocks new enrolment and work

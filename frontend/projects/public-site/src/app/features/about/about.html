@@ -26,12 +26,12 @@
       } @else {
         <div class="w-grid w-grid--2 w-mt-6">
           @for (cohort of publicContent.cohorts; track cohort.id) {
-            <article class="w-card">
-              <div class="w-card__header w-cluster w-justify-between">
-                <h3 class="w-card__title">{{ cohort.name }}</h3>
+            <article w-card>
+              <div w-card-header class="w-cluster w-justify-between">
+                <h3 w-card-title>{{ cohort.name }}</h3>
                 <span class="w-badge">{{ cohort.status }}</span>
               </div>
-              <div class="w-card__body">
+              <div w-card-body>
                 <dl class="w-stack w-gap-3">
                   <div>
                     <dt class="w-text-sm w-muted">Neighbourhood</dt>

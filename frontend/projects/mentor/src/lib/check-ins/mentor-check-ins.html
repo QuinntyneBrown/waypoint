@@ -18,9 +18,9 @@
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
 
     <div class="check-in-layout">
-      <section class="w-card">
-        <div class="w-card__header"><h2 class="w-card__title">Log check-in</h2></div>
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-header><h2 w-card-title>Log check-in</h2></div>
+        <div w-card-body class="w-stack">
           <div w-form-field>
             <label w-label for="check-in-youth">Youth</label>
             <select
@@ -196,19 +196,17 @@
         </div>
         @if (history(); as items) {
           @for (item of items; track item.id) {
-            <article class="w-card history-card" data-testid="check-in-history-item">
-              <div class="w-card__header">
+            <article w-card class="history-card" data-testid="check-in-history-item">
+              <div w-card-header>
                 <div>
                   <p class="w-eyebrow">{{ item.youthName }}</p>
-                  <h3 class="w-card__title">
-                    {{ item.type }} · {{ item.date | date: 'mediumDate' }}
-                  </h3>
+                  <h3 w-card-title>{{ item.type }} · {{ item.date | date: 'mediumDate' }}</h3>
                 </div>
                 <span class="w-badge">
                   {{ item.visibility === 'Private' ? 'Private mentor note' : 'Shared' }}
                 </span>
               </div>
-              <div class="w-card__body w-stack">
+              <div w-card-body class="w-stack">
                 @if (item.engagement) {
                   <p><strong>Engagement:</strong> {{ item.engagement }}</p>
                 }
@@ -230,7 +228,7 @@
               </div>
             </article>
           } @empty {
-            <div class="w-card w-empty">
+            <div w-card class="w-empty">
               <div class="w-empty__icon"><w-icon name="clipboard-check" /></div>
               <h3 class="w-empty__title">No matching check-ins</h3>
               <p class="w-empty__text">Adjust the youth or type filter.</p>
