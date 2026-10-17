@@ -37,8 +37,8 @@
               <p class="w-muted">The change is visible on the mentor's roster after saving.</p>
             </div>
             @if (view.youth.length > 0 && view.mentors.length > 0) {
-              <div class="w-field">
-                <label class="w-label" for="assignment-youth">Youth</label>
+              <div w-form-field>
+                <label w-label for="assignment-youth">Youth</label>
                 <select
                   #youthSelect
                   class="w-select"
@@ -55,8 +55,8 @@
                   }
                 </select>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="assignment-mentor">Assigned mentor</label>
+              <div w-form-field>
+                <label w-label for="assignment-mentor">Assigned mentor</label>
                 <select
                   #mentorSelect
                   class="w-select"
@@ -98,8 +98,8 @@
               <p class="w-muted">Set one lead and any number of supporting mentors.</p>
             </div>
             @if (view.cohorts.length > 0 && view.mentors.length > 0) {
-              <div class="w-field">
-                <label class="w-label" for="assignment-cohort">Cohort team</label>
+              <div w-form-field>
+                <label w-label for="assignment-cohort">Cohort team</label>
                 <select
                   #cohortSelect
                   class="w-select"
@@ -113,8 +113,8 @@
                   }
                 </select>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="lead-mentor">Lead mentor</label>
+              <div w-form-field>
+                <label w-label for="lead-mentor">Lead mentor</label>
                 <select
                   #leadSelect
                   class="w-select"
@@ -128,8 +128,8 @@
                   }
                 </select>
               </div>
-              <fieldset class="w-field">
-                <legend class="w-label">Supporting mentors</legend>
+              <fieldset w-form-field>
+                <legend w-label>Supporting mentors</legend>
                 <div class="supporting-list">
                   @for (mentor of view.mentors; track mentor.mentorId) {
                     <label class="supporting-option">

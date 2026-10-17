@@ -8,13 +8,30 @@ import {
   PASSWORD_POLICY_MESSAGE,
   PasswordResetService,
 } from '@waypoint/api';
-import { WButton, WIcon, WIconButton } from '@waypoint/components';
+import {
+  WButton,
+  WErrorText,
+  WFormField,
+  WHelp,
+  WIcon,
+  WIconButton,
+  WLabel,
+} from '@waypoint/components';
 
 // Traces to: L2-AUTH-005
 @Component({
   selector: 'w-reset-password',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, WIcon, WButton, WIconButton],
+  imports: [
+    ReactiveFormsModule,
+    WIcon,
+    WButton,
+    WIconButton,
+    WFormField,
+    WLabel,
+    WHelp,
+    WErrorText,
+  ],
   templateUrl: './reset-password.html',
 })
 export class ResetPassword {

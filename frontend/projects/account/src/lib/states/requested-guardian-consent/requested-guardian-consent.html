@@ -52,8 +52,8 @@
           </div>
         </div>
 
-        <div class="w-field">
-          <label class="w-label" for="requested-guardian-name">Guardian full name</label>
+        <div w-form-field>
+          <label w-label for="requested-guardian-name">Guardian full name</label>
           <input
             class="w-input"
             id="requested-guardian-name"
@@ -61,8 +61,8 @@
             formControlName="guardianName"
           />
         </div>
-        <div class="w-field">
-          <label class="w-label" for="requested-relationship">Relationship to youth</label>
+        <div w-form-field>
+          <label w-label for="requested-relationship">Relationship to youth</label>
           <input class="w-input" id="requested-relationship" formControlName="relationship" />
         </div>
 
@@ -110,17 +110,15 @@
           <span>First-name captions</span>
         </label>
 
-        <div class="w-field">
-          <label class="w-label" for="requested-signature">
-            Type your full name as your signature
-          </label>
+        <div w-form-field>
+          <label w-label for="requested-signature"> Type your full name as your signature </label>
           <input
             class="w-input"
             id="requested-signature"
             autocomplete="name"
             formControlName="signature"
           />
-          <p class="w-help">Typing your name creates an electronic signature with date and time.</p>
+          <p w-help>Typing your name creates an electronic signature with date and time.</p>
         </div>
 
         <button w-button variant="primary" type="submit" [disabled]="submitting()">

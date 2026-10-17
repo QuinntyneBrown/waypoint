@@ -21,8 +21,8 @@
       <section class="w-card">
         <div class="w-card__header"><h2 class="w-card__title">Log check-in</h2></div>
         <div class="w-card__body w-stack">
-          <div class="w-field">
-            <label class="w-label" for="check-in-youth">Youth</label>
+          <div w-form-field>
+            <label w-label for="check-in-youth">Youth</label>
             <select
               class="w-select"
               id="check-in-youth"
@@ -38,8 +38,8 @@
             </select>
           </div>
           <div class="w-grid w-grid--2">
-            <div class="w-field">
-              <label class="w-label" for="check-in-date">Date</label>
+            <div w-form-field>
+              <label w-label for="check-in-date">Date</label>
               <input
                 class="w-input"
                 id="check-in-date"
@@ -48,8 +48,8 @@
                 (input)="date.set($any($event.target).value)"
               />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="check-in-type">Type</label>
+            <div w-form-field>
+              <label w-label for="check-in-type">Type</label>
               <select
                 class="w-select"
                 id="check-in-type"
@@ -62,8 +62,8 @@
               </select>
             </div>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="engagement">Engagement / mood</label>
+          <div w-form-field>
+            <label w-label for="engagement">Engagement / mood</label>
             <textarea
               class="w-textarea"
               id="engagement"
@@ -73,8 +73,8 @@
               (input)="engagement.set($any($event.target).value)"
             ></textarea>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="goals-discussed">Goals discussed</label>
+          <div w-form-field>
+            <label w-label for="goals-discussed">Goals discussed</label>
             <textarea
               class="w-textarea"
               id="goals-discussed"
@@ -84,8 +84,8 @@
               (input)="goalsDiscussed.set($any($event.target).value)"
             ></textarea>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="prayer-requests">Prayer requests</label>
+          <div w-form-field>
+            <label w-label for="prayer-requests">Prayer requests</label>
             <textarea
               class="w-textarea"
               id="prayer-requests"
@@ -94,10 +94,10 @@
               [value]="prayerRequests()"
               (input)="prayerRequests.set($any($event.target).value)"
             ></textarea>
-            <p class="w-help">Private unless you explicitly enable sharing below.</p>
+            <p w-help>Private unless you explicitly enable sharing below.</p>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="action-items">Action items</label>
+          <div w-form-field>
+            <label w-label for="action-items">Action items</label>
             <textarea
               class="w-textarea"
               id="action-items"
@@ -107,8 +107,8 @@
               (input)="actionItems.set($any($event.target).value)"
             ></textarea>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="next-follow-up">Next follow-up</label>
+          <div w-form-field>
+            <label w-label for="next-follow-up">Next follow-up</label>
             <input
               class="w-input"
               id="next-follow-up"
@@ -162,8 +162,8 @@
         <div>
           <h2 id="history-heading">Check-in history</h2>
           <div class="history-filters">
-            <div class="w-field">
-              <label class="w-label" for="filter-youth">Filter by youth</label>
+            <div w-form-field>
+              <label w-label for="filter-youth">Filter by youth</label>
               <select
                 class="w-select"
                 id="filter-youth"
@@ -178,8 +178,8 @@
                 }
               </select>
             </div>
-            <div class="w-field">
-              <label class="w-label" for="filter-type">Filter by type</label>
+            <div w-form-field>
+              <label w-label for="filter-type">Filter by type</label>
               <select
                 class="w-select"
                 id="filter-type"

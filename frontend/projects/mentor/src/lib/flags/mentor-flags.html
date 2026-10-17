@@ -28,8 +28,8 @@
         </div>
       </div>
       <div class="w-card__body raise-grid">
-        <div class="w-field w-mb-0">
-          <label class="w-label" for="flag-youth">Youth</label>
+        <div w-form-field class="w-mb-0">
+          <label w-label for="flag-youth">Youth</label>
           <select
             class="w-select"
             id="flag-youth"
@@ -44,8 +44,8 @@
             }
           </select>
         </div>
-        <div class="w-field w-mb-0">
-          <label class="w-label" for="manual-flag-reason">Reason</label>
+        <div w-form-field class="w-mb-0">
+          <label w-label for="manual-flag-reason">Reason</label>
           <input
             class="w-input"
             id="manual-flag-reason"
@@ -120,8 +120,8 @@
 
               @if (messageFlagId() === flag.flagId) {
                 <div class="inline-action w-stack" data-testid="flag-message-composer">
-                  <div class="w-field action-field w-mb-0">
-                    <label class="w-label" [for]="'flag-message-' + flag.flagId">
+                  <div w-form-field class="action-field w-mb-0">
+                    <label w-label [for]="'flag-message-' + flag.flagId">
                       Message {{ flag.displayName }}
                     </label>
                     <textarea
@@ -153,10 +153,8 @@
               @if (resolvingFlagId() === flag.flagId) {
                 <div class="inline-action w-stack" data-testid="flag-resolution">
                   <p><strong>Confirm this flag can be removed.</strong></p>
-                  <div class="w-field action-field w-mb-0">
-                    <label class="w-label" [for]="'resolution-' + flag.flagId">
-                      Resolution reason
-                    </label>
+                  <div w-form-field class="action-field w-mb-0">
+                    <label w-label [for]="'resolution-' + flag.flagId"> Resolution reason </label>
                     <select
                       class="w-select"
                       [id]="'resolution-' + flag.flagId"

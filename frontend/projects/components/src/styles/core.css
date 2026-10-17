@@ -597,24 +597,6 @@ pre {
 }
 
 /* ---------- Forms ---------- */
-.w-field {
-  display: block;
-  margin-bottom: var(--w-s5);
-}
-.w-label {
-  display: block;
-  font-weight: 600;
-  font-size: 0.85rem;
-  margin-bottom: 6px;
-  color: var(--w-ink);
-}
-.w-label__req {
-  color: var(--w-error);
-}
-.w-label__opt {
-  color: var(--w-muted);
-  font-weight: 400;
-}
 .w-input,
 .w-select,
 .w-textarea {
@@ -653,27 +635,6 @@ pre {
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 38px;
-}
-.w-help {
-  font-size: 0.8rem;
-  color: var(--w-muted);
-  margin-top: 5px;
-}
-.w-error-text {
-  display: none;
-  font-size: 0.8rem;
-  color: var(--w-error);
-  margin-top: 5px;
-  font-weight: 500;
-}
-.w-field.is-error .w-input,
-.w-field.is-error .w-select,
-.w-field.is-error .w-textarea {
-  border-color: var(--w-error);
-  box-shadow: 0 0 0 3px var(--w-error-bg);
-}
-.w-field.is-error .w-error-text {
-  display: block;
 }
 .w-inputgroup {
   display: flex;

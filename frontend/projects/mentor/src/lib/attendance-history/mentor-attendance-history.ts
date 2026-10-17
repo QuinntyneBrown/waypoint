@@ -9,7 +9,7 @@ import {
   YouthAttendanceSummary,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WRole, WShell } from '@waypoint/components';
+import { WButton, WFormField, WLabel, WRole, WShell } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
 type HistoryView = 'session' | 'youth';
@@ -18,7 +18,7 @@ type HistoryView = 'session' | 'youth';
 @Component({
   selector: 'w-mentor-attendance-history',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, PercentPipe, RouterLink, WButton],
+  imports: [WShell, DatePipe, PercentPipe, RouterLink, WButton, WFormField, WLabel],
   templateUrl: './mentor-attendance-history.html',
   styles: `
     .history-toolbar {

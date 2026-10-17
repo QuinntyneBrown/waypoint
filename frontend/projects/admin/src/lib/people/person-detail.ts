@@ -6,8 +6,10 @@ import { AuthStore } from '@waypoint/auth';
 import {
   WAccessibleDialog,
   WButton,
+  WFormField,
   WIcon,
   WIconButton,
+  WLabel,
   WLink,
   WShell,
 } from '@waypoint/components';
@@ -24,7 +26,18 @@ type LifecycleAction =
 @Component({
   selector: 'w-person-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe, WButton, WIconButton, WLink],
+  imports: [
+    WShell,
+    WIcon,
+    WAccessibleDialog,
+    RouterLink,
+    DatePipe,
+    WButton,
+    WIconButton,
+    WLink,
+    WFormField,
+    WLabel,
+  ],
   templateUrl: './person-detail.html',
   styles: `
     .record-grid {

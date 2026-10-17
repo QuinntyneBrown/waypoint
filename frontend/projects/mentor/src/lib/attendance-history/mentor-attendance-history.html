@@ -73,8 +73,8 @@
       </div>
       <div class="w-card__body w-stack">
         <div class="history-filters" aria-label="Attendance filters">
-          <div class="w-field w-mb-0">
-            <label class="w-label" for="attendance-cohort-filter">Cohort</label>
+          <div w-form-field class="w-mb-0">
+            <label w-label for="attendance-cohort-filter">Cohort</label>
             <select
               class="w-select"
               id="attendance-cohort-filter"
@@ -87,8 +87,8 @@
               }
             </select>
           </div>
-          <div class="w-field w-mb-0">
-            <label class="w-label" for="attendance-from">From</label>
+          <div w-form-field class="w-mb-0">
+            <label w-label for="attendance-from">From</label>
             <input
               class="w-input"
               id="attendance-from"
@@ -97,8 +97,8 @@
               (input)="from.set($any($event.target).value)"
             />
           </div>
-          <div class="w-field w-mb-0">
-            <label class="w-label" for="attendance-to">To</label>
+          <div w-form-field class="w-mb-0">
+            <label w-label for="attendance-to">To</label>
             <input
               class="w-input"
               id="attendance-to"

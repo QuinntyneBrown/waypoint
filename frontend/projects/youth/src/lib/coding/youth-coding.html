@@ -93,8 +93,8 @@
         </aside>
 
         <section class="w-stack" aria-label="Coding workspace">
-          <div class="w-field">
-            <label class="w-field__label" for="coding-editor">Code editor</label>
+          <div w-form-field>
+            <label w-label for="coding-editor">Code editor</label>
             <textarea
               id="coding-editor"
               class="w-input coding-editor"
@@ -104,8 +104,8 @@
               (input)="updateCode($event)"
             ></textarea>
           </div>
-          <div class="w-field">
-            <span class="w-field__label">Live preview</span>
+          <div w-form-field>
+            <span w-label>Live preview</span>
             <iframe
               class="coding-preview"
               data-testid="coding-preview"
@@ -133,8 +133,8 @@
               <h2>Send your project for mentor review</h2>
               <p>Your current editor code will become the read-only submitted copy.</p>
             </div>
-            <div class="w-field">
-              <label class="w-field__label" for="mentor-note">Note to your mentor (optional)</label>
+            <div w-form-field>
+              <label w-label for="mentor-note">Note to your mentor (optional)</label>
               <textarea
                 id="mentor-note"
                 class="w-input"
@@ -152,7 +152,7 @@
             @if (
               submitForm.controls.attest.touched && submitForm.controls.attest.hasError('required')
             ) {
-              <p class="w-field__error">Confirm this is your own work before submitting.</p>
+              <p w-error-text>Confirm this is your own work before submitting.</p>
             }
             <button w-button variant="primary" block type="submit" [disabled]="submitting()">
               Submit coding project

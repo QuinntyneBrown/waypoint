@@ -71,8 +71,8 @@
                 <span class="w-badge">{{ levelLabel(draft(item).level) }}</span>
               </div>
               <div class="w-card__body w-stack">
-                <div class="w-field">
-                  <label class="w-label" [for]="'level-' + item.competencyId">
+                <div w-form-field>
+                  <label w-label [for]="'level-' + item.competencyId">
                     {{ item.name }} level
                   </label>
                   <select
@@ -87,8 +87,8 @@
                     }
                   </select>
                 </div>
-                <div class="w-field">
-                  <label class="w-label" [for]="'notes-' + item.competencyId">
+                <div w-form-field>
+                  <label w-label [for]="'notes-' + item.competencyId">
                     {{ item.name }} notes
                   </label>
                   <textarea

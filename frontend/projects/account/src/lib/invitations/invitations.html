@@ -33,16 +33,16 @@
           <p class="w-muted w-mb-4">Enter one email per line. Links expire after 14 days.</p>
           <form class="w-stack" [formGroup]="form" (ngSubmit)="send()">
             @if (isAdmin()) {
-              <div class="w-field">
-                <label class="w-label" for="invite-role">Role</label>
+              <div w-form-field>
+                <label w-label for="invite-role">Role</label>
                 <select class="w-select" id="invite-role" formControlName="role">
                   @for (role of roles; track role) {
                     <option [value]="role">{{ role }}</option>
                   }
                 </select>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="invite-cohort">Cohort (optional)</label>
+              <div w-form-field>
+                <label w-label for="invite-cohort">Cohort (optional)</label>
                 <select class="w-select" id="invite-cohort" formControlName="cohortId">
                   <option value="">No cohort yet</option>
                   @for (cohort of cohorts(); track cohort.id) {
@@ -50,8 +50,8 @@
                   }
                 </select>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="invite-mentor">Mentor (optional)</label>
+              <div w-form-field>
+                <label w-label for="invite-mentor">Mentor (optional)</label>
                 <select class="w-select" id="invite-mentor" formControlName="mentorId">
                   <option value="">Assign later</option>
                   @for (mentor of mentors(); track mentor.id) {
@@ -63,8 +63,8 @@
               <div class="w-alert w-alert--info">
                 Invitations you send create Youth accounts assigned to you.
               </div>
-              <div class="w-field">
-                <label class="w-label" for="mentor-invite-cohort">Cohort (optional)</label>
+              <div w-form-field>
+                <label w-label for="mentor-invite-cohort">Cohort (optional)</label>
                 <select class="w-select" id="mentor-invite-cohort" formControlName="cohortId">
                   <option value="">Assign later</option>
                   @for (cohort of cohorts(); track cohort.id) {
@@ -74,10 +74,10 @@
               </div>
             }
             <div
-              class="w-field"
-              [class.is-error]="form.controls.emails.touched && form.controls.emails.invalid"
+              w-form-field
+              [invalid]="form.controls.emails.touched && form.controls.emails.invalid"
             >
-              <label class="w-label" for="invite-emails">Email addresses</label>
+              <label w-label for="invite-emails">Email addresses</label>
               <textarea
                 class="w-textarea"
                 id="invite-emails"
@@ -86,7 +86,7 @@
                 placeholder="name@example.com"
               ></textarea>
               @if (form.controls.emails.touched && form.controls.emails.invalid) {
-                <p class="w-error-text">Enter at least one email address.</p>
+                <p w-error-text>Enter at least one email address.</p>
               }
             </div>
             <button w-button variant="primary" type="submit" [disabled]="submitting()">
@@ -99,8 +99,8 @@
       <section class="w-card">
         <div class="w-card__body">
           <div class="invite-filters w-mb-4">
-            <div class="w-field">
-              <label class="w-label" for="invite-search">Search invitations</label>
+            <div w-form-field>
+              <label w-label for="invite-search">Search invitations</label>
               <input
                 class="w-input"
                 id="invite-search"
@@ -110,8 +110,8 @@
                 (keyup.enter)="applyFilters()"
               />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="invite-status">Status</label>
+            <div w-form-field>
+              <label w-label for="invite-status">Status</label>
               <select
                 class="w-select"
                 id="invite-status"
@@ -126,8 +126,8 @@
               </select>
             </div>
             @if (isAdmin()) {
-              <div class="w-field">
-                <label class="w-label" for="invite-role-filter">Role</label>
+              <div w-form-field>
+                <label w-label for="invite-role-filter">Role</label>
                 <select
                   class="w-select"
                   id="invite-role-filter"

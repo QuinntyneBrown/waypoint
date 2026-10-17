@@ -52,29 +52,29 @@
       <h2>Volunteer with us</h2>
 
       <div class="w-grid w-grid--2">
-        <div class="w-field" [class.is-error]="error('name')">
-          <label class="w-label" for="name">Your name <span class="w-label__req">*</span></label>
+        <div w-form-field [invalid]="error('name')">
+          <label w-label for="name">Your name <span w-label-required>*</span></label>
           <input class="w-input" id="name" formControlName="name" />
           @if (error('name')) {
-            <div class="w-error-text">{{ error('name') }}</div>
+            <div w-error-text>{{ error('name') }}</div>
           }
         </div>
-        <div class="w-field" [class.is-error]="error('email')">
-          <label class="w-label" for="email">Email <span class="w-label__req">*</span></label>
+        <div w-form-field [invalid]="error('email')">
+          <label w-label for="email">Email <span w-label-required>*</span></label>
           <input class="w-input" id="email" type="email" formControlName="email" />
           @if (error('email')) {
-            <div class="w-error-text">{{ error('email') }}</div>
+            <div w-error-text>{{ error('email') }}</div>
           }
         </div>
       </div>
 
-      <div class="w-field">
-        <label class="w-label" for="phone">Phone</label>
+      <div w-form-field>
+        <label w-label for="phone">Phone</label>
         <input class="w-input" id="phone" formControlName="phone" />
       </div>
 
-      <div class="w-field">
-        <label class="w-label" for="areasOfInterest">How would you like to help?</label>
+      <div w-form-field>
+        <label w-label for="areasOfInterest">How would you like to help?</label>
         <textarea
           class="w-textarea"
           id="areasOfInterest"
@@ -83,7 +83,7 @@
         ></textarea>
       </div>
 
-      <div class="w-field" [class.is-error]="error('screeningConsentAck')">
+      <div w-form-field [invalid]="error('screeningConsentAck')">
         <label class="w-check">
           <input type="checkbox" formControlName="screeningConsentAck" />
           <span class="w-check__box"><w-icon name="check" /></span>
@@ -93,7 +93,7 @@
           </span>
         </label>
         @if (error('screeningConsentAck')) {
-          <div class="w-error-text">{{ error('screeningConsentAck') }}</div>
+          <div w-error-text>{{ error('screeningConsentAck') }}</div>
         }
       </div>
 

@@ -1,7 +1,7 @@
 <w-settings-shell heading="Display & accessibility">
   <div class="w-stack w-stack--lg">
-    <div class="w-field">
-      <span class="w-label">Text size</span>
+    <div w-form-field>
+      <span w-label>Text size</span>
       <div class="w-cluster">
         <button
           w-button
@@ -23,11 +23,11 @@
           A+
         </button>
       </div>
-      <div class="w-help">Changes preview instantly across the app.</div>
+      <div w-help>Changes preview instantly across the app.</div>
     </div>
 
-    <div class="w-field">
-      <span class="w-label" id="theme-label">Theme</span>
+    <div w-form-field>
+      <span w-label id="theme-label">Theme</span>
       <div class="w-segment" role="group" aria-labelledby="theme-label">
         @for (option of themes; track option.value) {
           <button
@@ -41,7 +41,7 @@
           </button>
         }
       </div>
-      <div class="w-help">System matches your device. Save to keep your choice.</div>
+      <div w-help>System matches your device. Save to keep your choice.</div>
     </div>
 
     <div class="w-cluster w-cluster--between">

@@ -65,7 +65,7 @@
           <div class="w-card__body w-stack">
             @for (criterion of item.rubric; track criterion.criterionId) {
               <div class="rubric-row">
-                <label class="w-label" [for]="'score-' + criterion.criterionId">
+                <label w-label [for]="'score-' + criterion.criterionId">
                   {{ criterion.description }} (0–{{ criterion.possiblePoints }})
                 </label>
                 <input
@@ -83,8 +83,8 @@
             <p class="w-card__title" data-testid="rubric-total">
               {{ total() }} / {{ item.totalPossible }}
             </p>
-            <div class="w-field">
-              <label class="w-label" for="mentor-feedback">Feedback for the youth</label>
+            <div w-form-field>
+              <label w-label for="mentor-feedback">Feedback for the youth</label>
               <textarea
                 id="mentor-feedback"
                 class="w-textarea"

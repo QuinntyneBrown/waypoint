@@ -17,11 +17,8 @@
     }
 
     <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-      <div
-        class="w-field"
-        [class.is-error]="form.controls.email.touched && form.controls.email.invalid"
-      >
-        <label class="w-label" for="email">Email</label>
+      <div w-form-field [invalid]="form.controls.email.touched && form.controls.email.invalid">
+        <label w-label for="email">Email</label>
         <input
           class="w-input"
           id="email"
@@ -31,15 +28,15 @@
           placeholder="you@example.com"
         />
         @if (form.controls.email.touched && form.controls.email.invalid) {
-          <div class="w-error-text">Enter a valid email address.</div>
+          <div w-error-text>Enter a valid email address.</div>
         }
       </div>
 
       <div
-        class="w-field"
-        [class.is-error]="form.controls.password.touched && form.controls.password.invalid"
+        w-form-field
+        [invalid]="form.controls.password.touched && form.controls.password.invalid"
       >
-        <label class="w-label" for="password">Password</label>
+        <label w-label for="password">Password</label>
         <div style="position: relative">
           <input
             class="w-input"
@@ -61,7 +58,7 @@
           </button>
         </div>
         @if (form.controls.password.touched && form.controls.password.invalid) {
-          <div class="w-error-text">Enter your password.</div>
+          <div w-error-text>Enter your password.</div>
         }
       </div>
 
@@ -71,7 +68,7 @@
         <span>Keep me signed in</span>
       </label>
       @if (form.controls.remember.value) {
-        <p class="w-help w-mt-2">Not recommended on shared or public devices.</p>
+        <p w-help class="w-mt-2">Not recommended on shared or public devices.</p>
       }
 
       <button

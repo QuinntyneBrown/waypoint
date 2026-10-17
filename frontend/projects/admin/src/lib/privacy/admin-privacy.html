@@ -11,8 +11,8 @@
         <h1 class="w-page__title">Privacy requests</h1>
         <p class="w-page__sub">Review and fulfil trackable data-subject requests.</p>
       </div>
-      <div class="w-field">
-        <label class="w-label" for="privacy-status">Status</label>
+      <div w-form-field>
+        <label w-label for="privacy-status">Status</label>
         <select
           class="w-select"
           id="privacy-status"
@@ -125,16 +125,16 @@
             </p>
             <form class="w-stack" [formGroup]="form" (ngSubmit)="fulfill()">
               @if (item.actionType === 'correction') {
-                <div class="w-field">
-                  <label class="w-label" for="fulfil-name">Corrected name</label
+                <div w-form-field>
+                  <label w-label for="fulfil-name">Corrected name</label
                   ><input class="w-input" id="fulfil-name" formControlName="displayName" />
                 </div>
-                <div class="w-field">
-                  <label class="w-label" for="fulfil-email">Corrected email</label
+                <div w-form-field>
+                  <label w-label for="fulfil-email">Corrected email</label
                   ><input class="w-input" id="fulfil-email" type="email" formControlName="email" />
                 </div>
-                <div class="w-field">
-                  <label class="w-label" for="fulfil-pronouns">Corrected pronouns</label
+                <div w-form-field>
+                  <label w-label for="fulfil-pronouns">Corrected pronouns</label
                   ><input
                     class="w-input"
                     id="fulfil-pronouns"
@@ -142,7 +142,7 @@
                     [disabled]="form.controls.clearPronouns.value"
                   />
                 </div>
-                <div class="w-field">
+                <div w-form-field>
                   <label class="w-check" for="fulfil-clear-pronouns">
                     <input
                       id="fulfil-clear-pronouns"
@@ -176,12 +176,10 @@
 
                 <div class="verified-records__grid">
                   <div
-                    class="w-field"
-                    [class.is-error]="referenceInvalid(form.controls.verifiedContactRequestIds)"
+                    w-form-field
+                    [invalid]="referenceInvalid(form.controls.verifiedContactRequestIds)"
                   >
-                    <label class="w-label" for="verified-contact-requests"
-                      >Contact request IDs</label
-                    >
+                    <label w-label for="verified-contact-requests">Contact request IDs</label>
                     <textarea
                       class="w-textarea"
                       id="verified-contact-requests"
@@ -198,7 +196,7 @@
                           : 'verified-contact-help'
                       "
                     ></textarea>
-                    <p class="w-help" id="verified-contact-help">
+                    <p w-help id="verified-contact-help">
                       References from the public contact form.
                     </p>
                     @if (referenceInvalid(form.controls.verifiedContactRequestIds)) {
@@ -209,12 +207,10 @@
                   </div>
 
                   <div
-                    class="w-field"
-                    [class.is-error]="referenceInvalid(form.controls.verifiedVolunteerSignupIds)"
+                    w-form-field
+                    [invalid]="referenceInvalid(form.controls.verifiedVolunteerSignupIds)"
                   >
-                    <label class="w-label" for="verified-volunteer-signups"
-                      >Volunteer signup IDs</label
-                    >
+                    <label w-label for="verified-volunteer-signups">Volunteer signup IDs</label>
                     <textarea
                       class="w-textarea"
                       id="verified-volunteer-signups"
@@ -231,7 +227,7 @@
                           : 'verified-volunteer-help'
                       "
                     ></textarea>
-                    <p class="w-help" id="verified-volunteer-help">
+                    <p w-help id="verified-volunteer-help">
                       References from the public volunteer form.
                     </p>
                     @if (referenceInvalid(form.controls.verifiedVolunteerSignupIds)) {
@@ -242,12 +238,10 @@
                   </div>
 
                   <div
-                    class="w-field"
-                    [class.is-error]="referenceInvalid(form.controls.verifiedDonationPledgeIds)"
+                    w-form-field
+                    [invalid]="referenceInvalid(form.controls.verifiedDonationPledgeIds)"
                   >
-                    <label class="w-label" for="verified-donation-pledges"
-                      >Donation pledge IDs</label
-                    >
+                    <label w-label for="verified-donation-pledges">Donation pledge IDs</label>
                     <textarea
                       class="w-textarea"
                       id="verified-donation-pledges"
@@ -264,7 +258,7 @@
                           : 'verified-donation-help'
                       "
                     ></textarea>
-                    <p class="w-help" id="verified-donation-help">
+                    <p w-help id="verified-donation-help">
                       References from the public donation pledge form.
                     </p>
                     @if (referenceInvalid(form.controls.verifiedDonationPledgeIds)) {
@@ -275,13 +269,13 @@
                   </div>
 
                   <div
-                    class="w-field"
-                    [class.is-error]="
+                    w-form-field
+                    [invalid]="
                       referenceInvalid(form.controls.verifiedApplicantApplicationIds) ||
                       applicationOwnershipConflict()
                     "
                   >
-                    <label class="w-label" for="verified-applicant-applications"
+                    <label w-label for="verified-applicant-applications"
                       >Application IDs owned as applicant</label
                     >
                     <textarea
@@ -303,7 +297,7 @@
                           : 'verified-applicant-help application-ownership-error'
                       "
                     ></textarea>
-                    <p class="w-help" id="verified-applicant-help">
+                    <p w-help id="verified-applicant-help">
                       Applications submitted by this person as the applicant.
                     </p>
                     @if (referenceInvalid(form.controls.verifiedApplicantApplicationIds)) {
@@ -314,13 +308,13 @@
                   </div>
 
                   <div
-                    class="w-field"
-                    [class.is-error]="
+                    w-form-field
+                    [invalid]="
                       referenceInvalid(form.controls.verifiedGuardianApplicationIds) ||
                       applicationOwnershipConflict()
                     "
                   >
-                    <label class="w-label" for="verified-guardian-applications"
+                    <label w-label for="verified-guardian-applications"
                       >Application IDs owned as guardian</label
                     >
                     <textarea
@@ -342,7 +336,7 @@
                           : 'verified-guardian-help application-ownership-error'
                       "
                     ></textarea>
-                    <p class="w-help" id="verified-guardian-help">
+                    <p w-help id="verified-guardian-help">
                       Applications submitted or managed by this person as guardian.
                     </p>
                     @if (referenceInvalid(form.controls.verifiedGuardianApplicationIds)) {
@@ -393,7 +387,7 @@
                       an email-address match.
                     </span>
                   </label>
-                  <p class="w-help" id="ownership-attestation-help">
+                  <p w-help id="ownership-attestation-help">
                     Required whenever any legacy record ID is supplied. This decision is audited.
                   </p>
                   @if (attestationInvalid()) {
@@ -403,8 +397,8 @@
                   }
                 </div>
               </fieldset>
-              <div class="w-field">
-                <label class="w-label" for="resolution-note">Resolution note</label>
+              <div w-form-field>
+                <label w-label for="resolution-note">Resolution note</label>
                 <textarea
                   class="w-textarea"
                   id="resolution-note"

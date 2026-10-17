@@ -9,7 +9,7 @@ import {
   MentorCompetencySummary,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WLink, WShell } from '@waypoint/components';
+import { WButton, WFormField, WIcon, WLabel, WLink, WShell } from '@waypoint/components';
 
 interface CompetencyDraft {
   level: CompetencyLevel;
@@ -20,7 +20,7 @@ interface CompetencyDraft {
 @Component({
   selector: 'w-mentor-competencies',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, DatePipe, WButton, WLink],
+  imports: [WShell, WIcon, RouterLink, DatePipe, WButton, WLink, WFormField, WLabel],
   templateUrl: './mentor-competencies.html',
   styles: `
     .summary-grid {

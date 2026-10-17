@@ -39,20 +39,20 @@
                 <h2 id="identity-heading">Organization identity</h2>
                 <p class="w-muted">The platform colour palette remains fixed for accessibility.</p>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="organization-name">Organization name</label>
+              <div w-form-field>
+                <label w-label for="organization-name">Organization name</label>
                 <input class="w-input" id="organization-name" formControlName="name" />
               </div>
-              <div class="w-field">
-                <label class="w-label" for="organization-display-name">Display name</label>
+              <div w-form-field>
+                <label w-label for="organization-display-name">Display name</label>
                 <input
                   class="w-input"
                   id="organization-display-name"
                   formControlName="displayName"
                 />
               </div>
-              <div class="w-field">
-                <label class="w-label" for="organization-logo">Logo URL</label>
+              <div w-form-field>
+                <label w-label for="organization-logo">Logo URL</label>
                 <input class="w-input" id="organization-logo" formControlName="logoUrl" />
               </div>
               @if (settingsForm.controls.logoUrl.value) {
@@ -63,19 +63,19 @@
                   />
                 </div>
               }
-              <div class="w-field">
-                <label class="w-label" for="organization-city">City</label>
+              <div w-form-field>
+                <label w-label for="organization-city">City</label>
                 <input class="w-input" id="organization-city" formControlName="city" />
               </div>
-              <div class="w-field">
-                <label class="w-label" for="organization-contact">Contact email</label>
+              <div w-form-field>
+                <label w-label for="organization-contact">Contact email</label>
                 <input
                   class="w-input"
                   id="organization-contact"
                   type="email"
                   formControlName="contactEmail"
                 />
-                <p class="w-help">Shown to guardians on consent forms and emailed records.</p>
+                <p w-help>Shown to guardians on consent forms and emailed records.</p>
               </div>
             </div>
           </section>
@@ -86,8 +86,8 @@
                 <h2 id="consent-policy-heading">Guardian consent policy</h2>
                 <p class="w-muted">These settings drive term access and youth-media safeguards.</p>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="consent-statement">Consent statement</label>
+              <div w-form-field>
+                <label w-label for="consent-statement">Consent statement</label>
                 <textarea
                   class="w-textarea"
                   id="consent-statement"
@@ -134,20 +134,20 @@
             <p class="w-muted">Maintain date ranges and advance each term through its lifecycle.</p>
           </div>
           <form class="term-form" [formGroup]="termForm" (ngSubmit)="saveTerm()">
-            <div class="w-field">
-              <label class="w-label" for="term-name">Term name</label>
+            <div w-form-field>
+              <label w-label for="term-name">Term name</label>
               <input class="w-input" id="term-name" formControlName="name" />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="term-start">Start date</label>
+            <div w-form-field>
+              <label w-label for="term-start">Start date</label>
               <input class="w-input" id="term-start" type="date" formControlName="startDate" />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="term-end">End date</label>
+            <div w-form-field>
+              <label w-label for="term-end">End date</label>
               <input class="w-input" id="term-end" type="date" formControlName="endDate" />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="term-status">Term status</label>
+            <div w-form-field>
+              <label w-label for="term-status">Term status</label>
               <select class="w-select" id="term-status" formControlName="status">
                 <option value="Upcoming">Upcoming</option>
                 <option value="Active">Active</option>

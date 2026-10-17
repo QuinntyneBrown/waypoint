@@ -33,16 +33,16 @@
           <h2>New badge definition</h2>
           <p class="w-muted">Archived badges remain on youth records but stop earning.</p>
         </div>
-        <div class="w-field">
-          <label class="w-label" for="badge-name">Badge name</label>
+        <div w-form-field>
+          <label w-label for="badge-name">Badge name</label>
           <input class="w-input" id="badge-name" formControlName="name" />
         </div>
-        <div class="w-field">
-          <label class="w-label" for="badge-icon">Badge icon</label>
+        <div w-form-field>
+          <label w-label for="badge-icon">Badge icon</label>
           <input class="w-input" id="badge-icon" formControlName="icon" />
         </div>
-        <div class="w-field">
-          <label class="w-label" for="criteria-kind">Criteria kind</label>
+        <div w-form-field>
+          <label w-label for="criteria-kind">Criteria kind</label>
           <select
             class="w-select"
             id="criteria-kind"
@@ -53,8 +53,8 @@
             <option value="Manual">Manual</option>
           </select>
         </div>
-        <div class="w-field admin-form__wide">
-          <label class="w-label" for="badge-description">Badge description</label>
+        <div w-form-field class="admin-form__wide">
+          <label w-label for="badge-description">Badge description</label>
           <textarea
             class="w-textarea"
             id="badge-description"
@@ -63,8 +63,8 @@
           ></textarea>
         </div>
         @if (form.controls.criteriaKind.value === 'Auto') {
-          <div class="w-field">
-            <label class="w-label" for="automatic-rule">Automatic rule</label>
+          <div w-form-field>
+            <label w-label for="automatic-rule">Automatic rule</label>
             <select
               class="w-select"
               id="automatic-rule"
@@ -79,8 +79,8 @@
             </select>
           </div>
           @if (form.controls.autoRule.value !== 'attendance-streak') {
-            <div class="w-field">
-              <label class="w-label" for="rule-target">Rule target</label>
+            <div w-form-field>
+              <label w-label for="rule-target">Rule target</label>
               <select class="w-select" id="rule-target" formControlName="targetRefId">
                 <option value="">Choose a curriculum item</option>
                 @for (target of targets(); track target.id) {
@@ -90,8 +90,8 @@
             </div>
           }
         }
-        <div class="w-field">
-          <label class="w-label" for="mapped-competency">Mapped competency</label>
+        <div w-form-field>
+          <label w-label for="mapped-competency">Mapped competency</label>
           <select class="w-select" id="mapped-competency" formControlName="competencyId">
             <option value="">No competency mapping</option>
             @for (stage of stages(); track stage.id) {
@@ -184,8 +184,8 @@
         </div>
         <div class="w-modal__body">
           <form class="w-stack" [formGroup]="awardForm" (ngSubmit)="confirmAward()">
-            <div class="w-field">
-              <label class="w-label" for="youth-recipient">Youth recipient</label>
+            <div w-form-field>
+              <label w-label for="youth-recipient">Youth recipient</label>
               <select class="w-select" id="youth-recipient" formControlName="youthUserId">
                 <option value="">Choose a youth</option>
                 @for (person of youth(); track person.id) {
