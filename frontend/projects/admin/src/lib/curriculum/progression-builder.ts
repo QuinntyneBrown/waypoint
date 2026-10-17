@@ -7,7 +7,15 @@ import {
   ProgressionStage,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WButton, WFormField, WLabel, WShell } from '@waypoint/components';
+import {
+  WAccessibleDialog,
+  WButton,
+  WFormField,
+  WLabel,
+  WShell,
+  WTextarea,
+  WTextField,
+} from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 import {
   EditorDraftService,
@@ -32,7 +40,16 @@ type ProgressionAuthoringDraft =
 @Component({
   selector: 'w-progression-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WAccessibleDialog, ReactiveFormsModule, WButton, WFormField, WLabel],
+  imports: [
+    WShell,
+    WAccessibleDialog,
+    ReactiveFormsModule,
+    WButton,
+    WFormField,
+    WLabel,
+    WTextField,
+    WTextarea,
+  ],
   templateUrl: './progression-builder.html',
   styleUrl: './curriculum-admin.css',
 })

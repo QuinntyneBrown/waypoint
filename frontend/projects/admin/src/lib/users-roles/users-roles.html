@@ -33,7 +33,7 @@
           <div w-form-field>
             <label w-label for="users-search">Search users</label>
             <input
-              class="w-input"
+              w-text-field
               id="users-search"
               type="search"
               [value]="search()"
@@ -44,7 +44,7 @@
           <div w-form-field>
             <label w-label for="users-role-filter">Current role</label>
             <select
-              class="w-select"
+              w-select
               id="users-role-filter"
               [value]="roleFilter()"
               (change)="roleFilterChanged($event)"
@@ -101,7 +101,7 @@
                           >Role for {{ person.displayName }}</label
                         >
                         <select
-                          class="w-select"
+                          w-select
                           [id]="'role-' + person.id"
                           [value]="selectedRoles()[person.id]"
                           (change)="selectedRoleChanged(person, $event)"

@@ -28,7 +28,7 @@
     <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="w-stack w-mt-6">
       <div w-form-field>
         <label w-label for="whoIsFilling">Who’s filling this out?</label>
-        <select class="w-select" id="whoIsFilling" formControlName="whoIsFilling">
+        <select w-select id="whoIsFilling" formControlName="whoIsFilling">
           <option value="self">I’m applying for myself</option>
           <option value="guardian">I’m a parent or guardian</option>
           <option value="referrer">I’m referring someone</option>
@@ -40,7 +40,7 @@
           >Cohort you’re interested in <span w-label-required>*</span></label
         >
         <input
-          class="w-input"
+          w-text-field
           id="cohortInterest"
           formControlName="cohortInterest"
           placeholder="For example, Regent Park autumn cohort"
@@ -53,14 +53,14 @@
       <div class="w-grid w-grid--2">
         <div w-form-field [invalid]="error('firstName')">
           <label w-label for="firstName">First name <span w-label-required>*</span></label>
-          <input class="w-input" id="firstName" formControlName="firstName" />
+          <input w-text-field id="firstName" formControlName="firstName" />
           @if (error('firstName')) {
             <div w-error-text>{{ error('firstName') }}</div>
           }
         </div>
         <div w-form-field [invalid]="error('lastName')">
           <label w-label for="lastName">Last name <span w-label-required>*</span></label>
-          <input class="w-input" id="lastName" formControlName="lastName" />
+          <input w-text-field id="lastName" formControlName="lastName" />
           @if (error('lastName')) {
             <div w-error-text>{{ error('lastName') }}</div>
           }
@@ -71,7 +71,7 @@
         <div w-form-field [invalid]="ageGateError() || error('age')">
           <label w-label for="age">Age <span w-label-required>*</span></label>
           <input
-            class="w-input"
+            w-text-field
             id="age"
             type="number"
             formControlName="age"
@@ -84,7 +84,7 @@
         </div>
         <div w-form-field [invalid]="error('neighbourhood')">
           <label w-label for="neighbourhood">Neighbourhood <span w-label-required>*</span></label>
-          <input class="w-input" id="neighbourhood" formControlName="neighbourhood" />
+          <input w-text-field id="neighbourhood" formControlName="neighbourhood" />
           @if (error('neighbourhood')) {
             <div w-error-text>{{ error('neighbourhood') }}</div>
           }
@@ -93,7 +93,7 @@
 
       <div w-form-field>
         <label w-label for="trackInterest">Track you’re most interested in</label>
-        <select class="w-select" id="trackInterest" formControlName="trackInterest">
+        <select w-select id="trackInterest" formControlName="trackInterest">
           <option value="">No preference yet</option>
           <option value="Bible &amp; Leadership">Bible &amp; Leadership</option>
           <option value="Coding for Kingdom">Coding for Kingdom</option>
@@ -104,12 +104,7 @@
         <label w-label for="whyInterested"
           >Why are you interested? <span w-label-required>*</span></label
         >
-        <textarea
-          class="w-textarea"
-          id="whyInterested"
-          rows="4"
-          formControlName="whyInterested"
-        ></textarea>
+        <textarea w-textarea id="whyInterested" rows="4" formControlName="whyInterested"></textarea>
         @if (error('whyInterested')) {
           <div w-error-text>{{ error('whyInterested') }}</div>
         }
@@ -121,7 +116,7 @@
         <p class="w-muted w-text-sm">Required for applicants under 18.</p>
         <div w-form-field [invalid]="error('guardianName')">
           <label w-label for="guardianName">Guardian name <span w-label-required>*</span></label>
-          <input class="w-input" id="guardianName" formControlName="guardianName" />
+          <input w-text-field id="guardianName" formControlName="guardianName" />
           @if (error('guardianName')) {
             <div w-error-text>{{ error('guardianName') }}</div>
           }
@@ -131,12 +126,7 @@
             <label w-label for="guardianEmail"
               >Guardian email <span w-label-required>*</span></label
             >
-            <input
-              class="w-input"
-              id="guardianEmail"
-              type="email"
-              formControlName="guardianEmail"
-            />
+            <input w-text-field id="guardianEmail" type="email" formControlName="guardianEmail" />
             @if (error('guardianEmail')) {
               <div w-error-text>{{ error('guardianEmail') }}</div>
             }
@@ -145,7 +135,7 @@
             <label w-label for="guardianPhone"
               >Guardian phone <span w-label-required>*</span></label
             >
-            <input class="w-input" id="guardianPhone" formControlName="guardianPhone" />
+            <input w-text-field id="guardianPhone" formControlName="guardianPhone" />
             @if (error('guardianPhone')) {
               <div w-error-text>{{ error('guardianPhone') }}</div>
             }

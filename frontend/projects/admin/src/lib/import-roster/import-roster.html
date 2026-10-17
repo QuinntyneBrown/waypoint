@@ -38,8 +38,8 @@
         <div w-form-field>
           <label w-label for="roster-file">Roster CSV</label>
           <input
+            w-text-field
             #fileInput
-            class="w-input"
             id="roster-file"
             type="file"
             accept=".csv,text/csv,application/vnd.ms-excel"
@@ -59,7 +59,7 @@
                 }}
               </div>
             </div>
-            <button w-button variant="secondary" type="button" (click)="removeFile(fileInput)">
+            <button w-button variant="secondary" type="button" (click)="removeFile()">
               Remove file
             </button>
           </div>
@@ -93,7 +93,7 @@
                   <td data-label="Sample value" class="w-muted">{{ column.sample }}</td>
                   <td data-label="Waypoint field">
                     <select
-                      class="w-select"
+                      w-select
                       [attr.aria-label]="'Map ' + column.header"
                       [ngModel]="column.field"
                       (ngModelChange)="updateMapping(column.header, $event)"

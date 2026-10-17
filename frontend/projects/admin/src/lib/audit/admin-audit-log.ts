@@ -3,14 +3,23 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ApiError, AuditService, AuditLogFilter, AuditLogPage } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WFormField, WLabel, WShell } from '@waypoint/components';
+import { WButton, WFormField, WLabel, WSelect, WShell, WTextField } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
 // Traces to: L2-CONSENT-003, L2-REPORT-003, L2-AUTH-009, L2-NFR-009/010
 @Component({
   selector: 'w-admin-audit-log',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, ReactiveFormsModule, DatePipe, WButton, WFormField, WLabel],
+  imports: [
+    WShell,
+    ReactiveFormsModule,
+    DatePipe,
+    WButton,
+    WFormField,
+    WLabel,
+    WTextField,
+    WSelect,
+  ],
   templateUrl: './admin-audit-log.html',
   styles: `
     .audit-filters {

@@ -11,7 +11,9 @@ import {
   WIconButton,
   WLabel,
   WLink,
+  WSelect,
   WShell,
+  WTextField,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 
@@ -37,6 +39,8 @@ type LifecycleAction =
     WLink,
     WFormField,
     WLabel,
+    WTextField,
+    WSelect,
   ],
   templateUrl: './person-detail.html',
   styles: `

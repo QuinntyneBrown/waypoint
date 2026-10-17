@@ -31,7 +31,7 @@
           >
             <label w-label for="invite-name">Display name</label>
             <input
-              class="w-input"
+              w-text-field
               id="invite-name"
               autocomplete="name"
               formControlName="displayName"
@@ -47,7 +47,7 @@
             <label w-label for="invite-password">Create password</label>
             <div style="position: relative">
               <input
-                class="w-input"
+                w-text-field
                 id="invite-password"
                 [type]="showPassword() ? 'text' : 'password'"
                 autocomplete="new-password"
@@ -71,7 +71,7 @@
           <div w-form-field>
             <label w-label for="invite-confirm">Confirm password</label>
             <input
-              class="w-input"
+              w-text-field
               id="invite-confirm"
               [type]="showPassword() ? 'text' : 'password'"
               autocomplete="new-password"

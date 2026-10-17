@@ -35,16 +35,16 @@
         </div>
         <div w-form-field>
           <label w-label for="badge-name">Badge name</label>
-          <input class="w-input" id="badge-name" formControlName="name" />
+          <input w-text-field id="badge-name" formControlName="name" />
         </div>
         <div w-form-field>
           <label w-label for="badge-icon">Badge icon</label>
-          <input class="w-input" id="badge-icon" formControlName="icon" />
+          <input w-text-field id="badge-icon" formControlName="icon" />
         </div>
         <div w-form-field>
           <label w-label for="criteria-kind">Criteria kind</label>
           <select
-            class="w-select"
+            w-select
             id="criteria-kind"
             formControlName="criteriaKind"
             (change)="criteriaChanged()"
@@ -56,7 +56,7 @@
         <div w-form-field class="admin-form__wide">
           <label w-label for="badge-description">Badge description</label>
           <textarea
-            class="w-textarea"
+            w-textarea
             id="badge-description"
             rows="3"
             formControlName="description"
@@ -66,7 +66,7 @@
           <div w-form-field>
             <label w-label for="automatic-rule">Automatic rule</label>
             <select
-              class="w-select"
+              w-select
               id="automatic-rule"
               formControlName="autoRule"
               (change)="ruleChanged()"
@@ -81,7 +81,7 @@
           @if (form.controls.autoRule.value !== 'attendance-streak') {
             <div w-form-field>
               <label w-label for="rule-target">Rule target</label>
-              <select class="w-select" id="rule-target" formControlName="targetRefId">
+              <select w-select id="rule-target" formControlName="targetRefId">
                 <option value="">Choose a curriculum item</option>
                 @for (target of targets(); track target.id) {
                   <option [value]="target.id">{{ target.label }}</option>
@@ -92,7 +92,7 @@
         }
         <div w-form-field>
           <label w-label for="mapped-competency">Mapped competency</label>
-          <select class="w-select" id="mapped-competency" formControlName="competencyId">
+          <select w-select id="mapped-competency" formControlName="competencyId">
             <option value="">No competency mapping</option>
             @for (stage of stages(); track stage.id) {
               <optgroup [label]="stage.name">
@@ -186,7 +186,7 @@
           <form class="w-stack" [formGroup]="awardForm" (ngSubmit)="confirmAward()">
             <div w-form-field>
               <label w-label for="youth-recipient">Youth recipient</label>
-              <select class="w-select" id="youth-recipient" formControlName="youthUserId">
+              <select w-select id="youth-recipient" formControlName="youthUserId">
                 <option value="">Choose a youth</option>
                 @for (person of youth(); track person.id) {
                   <option [value]="person.id">{{ person.displayName }}</option>

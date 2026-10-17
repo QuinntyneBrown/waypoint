@@ -41,19 +41,15 @@
               </div>
               <div w-form-field>
                 <label w-label for="organization-name">Organization name</label>
-                <input class="w-input" id="organization-name" formControlName="name" />
+                <input w-text-field id="organization-name" formControlName="name" />
               </div>
               <div w-form-field>
                 <label w-label for="organization-display-name">Display name</label>
-                <input
-                  class="w-input"
-                  id="organization-display-name"
-                  formControlName="displayName"
-                />
+                <input w-text-field id="organization-display-name" formControlName="displayName" />
               </div>
               <div w-form-field>
                 <label w-label for="organization-logo">Logo URL</label>
-                <input class="w-input" id="organization-logo" formControlName="logoUrl" />
+                <input w-text-field id="organization-logo" formControlName="logoUrl" />
               </div>
               @if (settingsForm.controls.logoUrl.value) {
                 <div class="logo-preview" aria-label="Logo preview">
@@ -65,12 +61,12 @@
               }
               <div w-form-field>
                 <label w-label for="organization-city">City</label>
-                <input class="w-input" id="organization-city" formControlName="city" />
+                <input w-text-field id="organization-city" formControlName="city" />
               </div>
               <div w-form-field>
                 <label w-label for="organization-contact">Contact email</label>
                 <input
-                  class="w-input"
+                  w-text-field
                   id="organization-contact"
                   type="email"
                   formControlName="contactEmail"
@@ -89,7 +85,7 @@
               <div w-form-field>
                 <label w-label for="consent-statement">Consent statement</label>
                 <textarea
-                  class="w-textarea"
+                  w-textarea
                   id="consent-statement"
                   rows="7"
                   formControlName="consentStatement"
@@ -136,19 +132,19 @@
           <form class="term-form" [formGroup]="termForm" (ngSubmit)="saveTerm()">
             <div w-form-field>
               <label w-label for="term-name">Term name</label>
-              <input class="w-input" id="term-name" formControlName="name" />
+              <input w-text-field id="term-name" formControlName="name" />
             </div>
             <div w-form-field>
               <label w-label for="term-start">Start date</label>
-              <input class="w-input" id="term-start" type="date" formControlName="startDate" />
+              <input w-text-field id="term-start" type="date" formControlName="startDate" />
             </div>
             <div w-form-field>
               <label w-label for="term-end">End date</label>
-              <input class="w-input" id="term-end" type="date" formControlName="endDate" />
+              <input w-text-field id="term-end" type="date" formControlName="endDate" />
             </div>
             <div w-form-field>
               <label w-label for="term-status">Term status</label>
-              <select class="w-select" id="term-status" formControlName="status">
+              <select w-select id="term-status" formControlName="status">
                 <option value="Upcoming">Upcoming</option>
                 <option value="Active">Active</option>
                 <option value="Completed">Completed</option>

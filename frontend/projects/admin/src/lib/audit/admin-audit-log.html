@@ -62,7 +62,7 @@
         <form class="audit-filters" [formGroup]="filterForm" (ngSubmit)="applyFilters()">
           <div w-form-field class="w-mb-0">
             <label w-label for="audit-user">Audit user</label>
-            <select class="w-select" id="audit-user" formControlName="actorUserId">
+            <select w-select id="audit-user" formControlName="actorUserId">
               <option value="">All users</option>
               @for (actor of result()?.actors ?? []; track actor.id) {
                 <option [value]="actor.id">{{ actor.name }}</option>
@@ -71,7 +71,7 @@
           </div>
           <div w-form-field class="w-mb-0">
             <label w-label for="audit-action">Audit action</label>
-            <select class="w-select" id="audit-action" formControlName="action">
+            <select w-select id="audit-action" formControlName="action">
               <option value="">All actions</option>
               @for (action of result()?.actions ?? []; track action) {
                 <option [value]="action">{{ actionLabel(action) }}</option>
@@ -80,11 +80,11 @@
           </div>
           <div w-form-field class="w-mb-0">
             <label w-label for="audit-from">Audit date from</label>
-            <input class="w-input" id="audit-from" type="date" formControlName="from" />
+            <input w-text-field id="audit-from" type="date" formControlName="from" />
           </div>
           <div w-form-field class="w-mb-0">
             <label w-label for="audit-to">Audit date to</label>
-            <input class="w-input" id="audit-to" type="date" formControlName="to" />
+            <input w-text-field id="audit-to" type="date" formControlName="to" />
           </div>
           <button
             w-button

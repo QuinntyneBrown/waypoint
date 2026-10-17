@@ -10,6 +10,8 @@ import {
   WIcon,
   WLabel,
   WLabelRequired,
+  WTextarea,
+  WTextField,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -29,6 +31,8 @@ function isEmail(value: string): boolean {
     WLabel,
     WLabelRequired,
     WErrorText,
+    WTextField,
+    WTextarea,
   ],
   templateUrl: './get-involved.html',
 })

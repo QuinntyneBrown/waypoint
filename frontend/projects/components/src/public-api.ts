@@ -17,3 +17,6 @@ export * from './lib/button/w-button';
 export * from './lib/icon-button/w-icon-button';
 export * from './lib/link/w-link';
 export * from './lib/form-field/w-form-field';
+export * from './lib/text-field/w-text-field';
+export * from './lib/textarea/w-textarea';
+export * from './lib/select/w-select';

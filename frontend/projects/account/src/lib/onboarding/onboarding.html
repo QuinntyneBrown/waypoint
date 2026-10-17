@@ -21,12 +21,7 @@
           [invalid]="profile.controls.displayName.touched && profile.controls.displayName.invalid"
         >
           <label w-label for="displayName">Display name <span w-label-required>*</span></label>
-          <input
-            class="w-input"
-            id="displayName"
-            formControlName="displayName"
-            autocomplete="name"
-          />
+          <input w-text-field id="displayName" formControlName="displayName" autocomplete="name" />
           @if (profile.controls.displayName.touched && profile.controls.displayName.invalid) {
             <div w-error-text>Please enter a display name.</div>
           }
@@ -34,7 +29,7 @@
         <div w-form-field>
           <label w-label for="pronouns">Pronouns</label>
           <input
-            class="w-input"
+            w-text-field
             id="pronouns"
             formControlName="pronouns"
             placeholder="e.g. she/her, he/him, they/them"
@@ -43,7 +38,7 @@
         <div w-form-field>
           <label w-label for="profilePhoto">Profile photo</label>
           <input
-            class="w-input"
+            w-text-field
             id="profilePhoto"
             type="file"
             accept="image/jpeg,image/png,.jpg,.jpeg,.png"

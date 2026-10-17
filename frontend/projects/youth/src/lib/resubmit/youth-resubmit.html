@@ -35,16 +35,11 @@
       <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
         <div w-form-field>
           <label w-label for="revised-text">Revised response</label
-          ><textarea
-            id="revised-text"
-            class="w-input"
-            rows="8"
-            formControlName="bodyText"
-          ></textarea>
+          ><textarea w-textarea id="revised-text" rows="8" formControlName="bodyText"></textarea>
         </div>
         <div w-form-field>
           <label w-label for="revised-link">Evidence link</label
-          ><input id="revised-link" class="w-input" type="url" formControlName="linkUrl" />
+          ><input w-text-field id="revised-link" type="url" formControlName="linkUrl" />
         </div>
         <button w-button variant="primary" block type="submit" [disabled]="saving()">
           Resubmit assignment

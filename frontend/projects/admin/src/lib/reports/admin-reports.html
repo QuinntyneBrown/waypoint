@@ -61,15 +61,15 @@
         <form class="report-filters" [formGroup]="filterForm" (ngSubmit)="applyFilters()">
           <div w-form-field>
             <label w-label for="report-from">Date from</label>
-            <input class="w-input" id="report-from" type="date" formControlName="from" />
+            <input w-text-field id="report-from" type="date" formControlName="from" />
           </div>
           <div w-form-field>
             <label w-label for="report-to">Date to</label>
-            <input class="w-input" id="report-to" type="date" formControlName="to" />
+            <input w-text-field id="report-to" type="date" formControlName="to" />
           </div>
           <div w-form-field>
             <label w-label for="report-cohort">Report cohort</label>
-            <select class="w-select" id="report-cohort" formControlName="cohortId">
+            <select w-select id="report-cohort" formControlName="cohortId">
               <option value="">All cohorts</option>
               @for (cohort of options()?.cohorts ?? []; track cohort.id) {
                 <option [value]="cohort.id">{{ cohort.name }}</option>
@@ -78,7 +78,7 @@
           </div>
           <div w-form-field>
             <label w-label for="report-track">Report track</label>
-            <select class="w-select" id="report-track" formControlName="trackId">
+            <select w-select id="report-track" formControlName="trackId">
               <option value="">All tracks</option>
               @for (track of options()?.tracks ?? []; track track.id) {
                 <option [value]="track.id">{{ track.name }}</option>
@@ -87,7 +87,7 @@
           </div>
           <div w-form-field>
             <label w-label for="report-mentor">Report mentor</label>
-            <select class="w-select" id="report-mentor" formControlName="mentorId">
+            <select w-select id="report-mentor" formControlName="mentorId">
               <option value="">All mentors</option>
               @for (mentor of options()?.mentors ?? []; track mentor.id) {
                 <option [value]="mentor.id">{{ mentor.name }}</option>
@@ -241,7 +241,7 @@
           <div class="w-card__body report-grid">
             <div w-form-field>
               <label w-label for="report-youth">Youth</label>
-              <select class="w-select" id="report-youth" formControlName="youthId">
+              <select w-select id="report-youth" formControlName="youthId">
                 <option value="">Choose a youth</option>
                 @for (person of options()?.youth ?? []; track person.id) {
                   <option [value]="person.id">{{ person.name }}</option>
@@ -377,7 +377,7 @@
           <div class="w-card__body report-grid">
             <div w-form-field>
               <label w-label for="cohort-report-selection">Cohort report selection</label
-              ><select class="w-select" id="cohort-report-selection" formControlName="cohortId">
+              ><select w-select id="cohort-report-selection" formControlName="cohortId">
                 <option value="">Choose a cohort</option>
                 @for (cohort of options()?.cohorts ?? []; track cohort.id) {
                   <option [value]="cohort.id">{{ cohort.name }}</option>
@@ -386,7 +386,7 @@
             </div>
             <div w-form-field>
               <label w-label for="cohort-comparison">Compare with</label
-              ><select class="w-select" id="cohort-comparison" formControlName="compareCohortId">
+              ><select w-select id="cohort-comparison" formControlName="compareCohortId">
                 <option value="">Program average / previous term</option>
                 @for (cohort of options()?.cohorts ?? []; track cohort.id) {
                   <option [value]="cohort.id">{{ cohort.name }}</option>

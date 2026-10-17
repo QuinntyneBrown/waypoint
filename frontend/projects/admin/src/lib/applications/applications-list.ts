@@ -26,7 +26,10 @@ import {
   WIconButton,
   WLabel,
   WLabelRequired,
+  WSelect,
   WShell,
+  WTextarea,
+  WTextField,
 } from '@waypoint/components';
 import { Observable } from 'rxjs';
 
@@ -48,6 +51,9 @@ type Decision = 'approve' | 'decline';
     WLabel,
     WLabelRequired,
     WErrorText,
+    WTextField,
+    WTextarea,
+    WSelect,
   ],
   templateUrl: './applications-list.html',
   styles: `

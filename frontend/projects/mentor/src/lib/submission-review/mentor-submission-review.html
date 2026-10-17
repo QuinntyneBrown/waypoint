@@ -69,7 +69,7 @@
                   {{ criterion.description }} (0–{{ criterion.possiblePoints }})
                 </label>
                 <input
-                  class="w-input"
+                  w-text-field
                   type="number"
                   [id]="'score-' + criterion.criterionId"
                   min="0"
@@ -86,8 +86,8 @@
             <div w-form-field>
               <label w-label for="mentor-feedback">Feedback for the youth</label>
               <textarea
+                w-textarea
                 id="mentor-feedback"
-                class="w-textarea"
                 rows="5"
                 maxlength="4000"
                 [value]="comment()"

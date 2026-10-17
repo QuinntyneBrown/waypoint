@@ -16,7 +16,7 @@
       <div class="w-page__actions">
         <div w-form-field>
           <label w-label for="application-status">Application status</label>
-          <select id="application-status" class="w-select" [formControl]="statusFilter">
+          <select w-select id="application-status" [formControl]="statusFilter">
             <option value="">All statuses</option>
             <option value="New">New</option>
             <option value="In review">In review</option>
@@ -192,8 +192,8 @@
             <div w-form-field>
               <label w-label for="application-track">Interest track</label>
               <input
+                w-text-field
                 id="application-track"
-                class="w-input"
                 formControlName="trackInterest"
                 maxlength="200"
                 list="application-track-options"
@@ -209,7 +209,7 @@
                 <label w-label for="application-cohort">
                   Assign cohort <span w-label-required>*</span>
                 </label>
-                <select id="application-cohort" class="w-select" formControlName="cohortId">
+                <select w-select id="application-cohort" formControlName="cohortId">
                   <option value="">Choose a cohort</option>
                   @for (cohort of options()?.cohorts ?? []; track cohort.id) {
                     <option [value]="cohort.id">{{ cohort.name }}</option>
@@ -223,7 +223,7 @@
                 <label w-label for="application-mentor">
                   Assign mentor <span w-label-required>*</span>
                 </label>
-                <select id="application-mentor" class="w-select" formControlName="mentorId">
+                <select w-select id="application-mentor" formControlName="mentorId">
                   <option value="">Choose a mentor</option>
                   @for (mentor of eligibleMentors(); track mentor.id) {
                     <option [value]="mentor.id">{{ mentor.name }}</option>
@@ -237,8 +237,8 @@
             <div w-form-field>
               <label w-label for="application-decision-note">Decision note</label>
               <textarea
+                w-textarea
                 id="application-decision-note"
-                class="w-textarea"
                 formControlName="decisionNote"
                 maxlength="2000"
                 rows="4"

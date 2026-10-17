@@ -5,28 +5,23 @@
       [invalid]="profile.controls.displayName.touched && profile.controls.displayName.invalid"
     >
       <label w-label for="displayName">Display name <span w-label-required>*</span></label>
-      <input class="w-input" id="displayName" formControlName="displayName" />
+      <input w-text-field id="displayName" formControlName="displayName" />
     </div>
     <div w-form-field [invalid]="profile.controls.email.touched && profile.controls.email.invalid">
       <label w-label for="email">Email <span w-label-required>*</span></label>
-      <input class="w-input" id="email" type="email" formControlName="email" />
+      <input w-text-field id="email" type="email" formControlName="email" />
       @if (profile.controls.email.touched && profile.controls.email.invalid) {
         <div w-error-text>Enter a valid email address.</div>
       }
     </div>
     <div w-form-field>
       <label w-label for="pronouns">Pronouns</label>
-      <input
-        class="w-input"
-        id="pronouns"
-        formControlName="pronouns"
-        placeholder="e.g. they/them"
-      />
+      <input w-text-field id="pronouns" formControlName="pronouns" placeholder="e.g. they/them" />
     </div>
     <div w-form-field>
       <label w-label for="profilePhoto">Profile photo</label>
       <input
-        class="w-input"
+        w-text-field
         id="profilePhoto"
         type="file"
         accept="image/jpeg,image/png,.jpg,.jpeg,.png"
@@ -85,7 +80,7 @@
     <div w-form-field>
       <label w-label for="currentPassword">Current password</label>
       <input
-        class="w-input"
+        w-text-field
         id="currentPassword"
         type="password"
         autocomplete="current-password"
@@ -96,7 +91,7 @@
       <label w-label for="newPassword">New password</label>
       <div style="position: relative">
         <input
-          class="w-input"
+          w-text-field
           id="newPassword"
           [type]="showNew() ? 'text' : 'password'"
           autocomplete="new-password"
@@ -121,7 +116,7 @@
     <div w-form-field [invalid]="confirmTouched() && !matches()">
       <label w-label for="confirmPassword">Confirm new password</label>
       <input
-        class="w-input"
+        w-text-field
         id="confirmPassword"
         type="password"
         autocomplete="new-password"

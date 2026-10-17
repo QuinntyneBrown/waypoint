@@ -13,7 +13,9 @@ import {
   WIconButton,
   WLabel,
   WLink,
+  WSelect,
   WShell,
+  WTextField,
 } from '@waypoint/components';
 import { finalize } from 'rxjs';
 
@@ -34,6 +36,8 @@ import { finalize } from 'rxjs';
     WFormField,
     WLabel,
     WErrorText,
+    WTextField,
+    WSelect,
   ],
   templateUrl: './cohort-detail.html',
   styles: `

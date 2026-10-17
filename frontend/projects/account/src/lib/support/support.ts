@@ -18,7 +18,10 @@ import {
   WHelp,
   WIcon,
   WLabel,
+  WSelect,
   WShell,
+  WTextarea,
+  WTextField,
 } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 
@@ -36,6 +39,9 @@ import { shellRole } from '@waypoint/core';
     WLabel,
     WHelp,
     WErrorText,
+    WTextField,
+    WTextarea,
+    WSelect,
   ],
   templateUrl: './support.html',
 })

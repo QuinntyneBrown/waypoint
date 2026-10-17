@@ -48,8 +48,8 @@
               </div>
               <label class="w-sr-only" for="conversation-search">Search conversations</label>
               <input
+                w-text-field
                 id="conversation-search"
-                class="w-input"
                 type="search"
                 placeholder="Search youth or cohort"
                 [formControl]="search"
@@ -126,7 +126,7 @@
               >
                 <div w-form-field>
                   <label w-label for="broadcast-cohort">Cohort</label>
-                  <select id="broadcast-cohort" class="w-select" formControlName="cohortId">
+                  <select w-select id="broadcast-cohort" formControlName="cohortId">
                     @for (group of view.groups; track group.cohortId) {
                       <option [value]="group.cohortId">
                         {{ group.cohortName }} · {{ group.recipientCount }} youth
@@ -137,8 +137,8 @@
                 <div w-form-field>
                   <label w-label for="broadcast-body">Message</label>
                   <textarea
+                    w-textarea
                     id="broadcast-body"
-                    class="w-textarea"
                     formControlName="body"
                     maxlength="4000"
                     rows="8"
@@ -210,8 +210,8 @@
                     Message {{ conversation.youthName }}
                   </label>
                   <textarea
+                    w-textarea
                     id="mentor-message-body"
-                    class="w-textarea"
                     formControlName="body"
                     maxlength="4000"
                     rows="4"

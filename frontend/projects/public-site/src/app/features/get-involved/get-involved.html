@@ -54,14 +54,14 @@
       <div class="w-grid w-grid--2">
         <div w-form-field [invalid]="error('name')">
           <label w-label for="name">Your name <span w-label-required>*</span></label>
-          <input class="w-input" id="name" formControlName="name" />
+          <input w-text-field id="name" formControlName="name" />
           @if (error('name')) {
             <div w-error-text>{{ error('name') }}</div>
           }
         </div>
         <div w-form-field [invalid]="error('email')">
           <label w-label for="email">Email <span w-label-required>*</span></label>
-          <input class="w-input" id="email" type="email" formControlName="email" />
+          <input w-text-field id="email" type="email" formControlName="email" />
           @if (error('email')) {
             <div w-error-text>{{ error('email') }}</div>
           }
@@ -70,13 +70,13 @@
 
       <div w-form-field>
         <label w-label for="phone">Phone</label>
-        <input class="w-input" id="phone" formControlName="phone" />
+        <input w-text-field id="phone" formControlName="phone" />
       </div>
 
       <div w-form-field>
         <label w-label for="areasOfInterest">How would you like to help?</label>
         <textarea
-          class="w-textarea"
+          w-textarea
           id="areasOfInterest"
           rows="4"
           formControlName="areasOfInterest"

@@ -40,12 +40,11 @@
               <div w-form-field>
                 <label w-label for="assignment-youth">Youth</label>
                 <select
-                  #youthSelect
-                  class="w-select"
+                  w-select
                   id="assignment-youth"
                   [value]="youthId()"
                   [disabled]="saving() !== null"
-                  (change)="selectYouth(youthSelect.value)"
+                  (change)="selectYouth($any($event.target).value)"
                 >
                   @for (youth of view.youth; track youth.id) {
                     <option [value]="youth.id">
@@ -58,12 +57,11 @@
               <div w-form-field>
                 <label w-label for="assignment-mentor">Assigned mentor</label>
                 <select
-                  #mentorSelect
-                  class="w-select"
+                  w-select
                   id="assignment-mentor"
                   [value]="mentorId()"
                   [disabled]="saving() !== null"
-                  (change)="selectMentor(mentorSelect.value)"
+                  (change)="selectMentor($any($event.target).value)"
                 >
                   @for (mentor of view.mentors; track mentor.mentorId) {
                     <option [value]="mentor.mentorId">
@@ -101,12 +99,11 @@
               <div w-form-field>
                 <label w-label for="assignment-cohort">Cohort team</label>
                 <select
-                  #cohortSelect
-                  class="w-select"
+                  w-select
                   id="assignment-cohort"
                   [value]="cohortId()"
                   [disabled]="saving() !== null"
-                  (change)="selectCohort(cohortSelect.value)"
+                  (change)="selectCohort($any($event.target).value)"
                 >
                   @for (cohort of view.cohorts; track cohort.id) {
                     <option [value]="cohort.id">{{ cohort.name }}</option>
@@ -116,12 +113,11 @@
               <div w-form-field>
                 <label w-label for="lead-mentor">Lead mentor</label>
                 <select
-                  #leadSelect
-                  class="w-select"
+                  w-select
                   id="lead-mentor"
                   [value]="leadMentorId()"
                   [disabled]="saving() !== null"
-                  (change)="selectLeadMentor(leadSelect.value)"
+                  (change)="selectLeadMentor($any($event.target).value)"
                 >
                   @for (mentor of view.mentors; track mentor.mentorId) {
                     <option [value]="mentor.mentorId">{{ mentor.mentorName }}</option>

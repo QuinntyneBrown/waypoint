@@ -31,7 +31,7 @@
         <div w-form-field class="w-mb-0">
           <label w-label for="flag-youth">Youth</label>
           <select
-            class="w-select"
+            w-select
             id="flag-youth"
             [value]="selectedYouthId()"
             (change)="selectedYouthId.set($any($event.target).value)"
@@ -47,7 +47,7 @@
         <div w-form-field class="w-mb-0">
           <label w-label for="manual-flag-reason">Reason</label>
           <input
-            class="w-input"
+            w-text-field
             id="manual-flag-reason"
             maxlength="1000"
             [value]="manualReason()"
@@ -125,7 +125,7 @@
                       Message {{ flag.displayName }}
                     </label>
                     <textarea
-                      class="w-textarea"
+                      w-textarea
                       [id]="'flag-message-' + flag.flagId"
                       rows="3"
                       maxlength="4000"
@@ -156,7 +156,7 @@
                   <div w-form-field class="action-field w-mb-0">
                     <label w-label [for]="'resolution-' + flag.flagId"> Resolution reason </label>
                     <select
-                      class="w-select"
+                      w-select
                       [id]="'resolution-' + flag.flagId"
                       [value]="resolutionReason()"
                       (change)="setResolution($any($event.target).value)"

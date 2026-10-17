@@ -36,7 +36,7 @@
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="w-stack">
         <div w-form-field>
           <label w-label for="category">What’s this about?</label>
-          <select class="w-select" id="category" formControlName="category">
+          <select w-select id="category" formControlName="category">
             @for (cat of categories; track cat) {
               <option [value]="cat">{{ cat }}</option>
             }
@@ -47,12 +47,7 @@
           [invalid]="form.controls.description.touched && form.controls.description.invalid"
         >
           <label w-label for="description">How can we help?</label>
-          <textarea
-            class="w-textarea"
-            id="description"
-            rows="5"
-            formControlName="description"
-          ></textarea>
+          <textarea w-textarea id="description" rows="5" formControlName="description"></textarea>
           @if (form.controls.description.touched && form.controls.description.invalid) {
             <div w-error-text>Please describe your issue (at least 10 characters).</div>
           }
@@ -62,7 +57,7 @@
           [invalid]="form.controls.replyToEmail.touched && form.controls.replyToEmail.invalid"
         >
           <label w-label for="replyToEmail">Reply-to email</label>
-          <input class="w-input" id="replyToEmail" type="email" formControlName="replyToEmail" />
+          <input w-text-field id="replyToEmail" type="email" formControlName="replyToEmail" />
           @if (form.controls.replyToEmail.touched && form.controls.replyToEmail.invalid) {
             <div w-error-text>Enter a valid email address.</div>
           }
@@ -70,7 +65,7 @@
         <div w-form-field>
           <label w-label for="support-screenshot">Optional screenshot</label>
           <input
-            class="w-input"
+            w-text-field
             id="support-screenshot"
             type="file"
             accept="image/jpeg,image/png,.jpg,.jpeg,.png"

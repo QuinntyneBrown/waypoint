@@ -104,7 +104,7 @@
           <form class="form-grid" [formGroup]="form" (ngSubmit)="create()">
             <div w-form-field class="form-grid__wide">
               <label w-label for="cohort-name"> Cohort name <span w-label-required>*</span> </label>
-              <input class="w-input" id="cohort-name" formControlName="name" maxlength="128" />
+              <input w-text-field id="cohort-name" formControlName="name" maxlength="128" />
               @if (form.controls.name.touched && form.controls.name.invalid) {
                 <p w-error-text>Enter a cohort name.</p>
               }
@@ -113,7 +113,7 @@
               <label w-label for="cohort-track">
                 Curriculum track <span w-label-required>*</span>
               </label>
-              <select class="w-select" id="cohort-track" formControlName="trackId">
+              <select w-select id="cohort-track" formControlName="trackId">
                 <option value="">Choose a track</option>
                 @for (track of options()?.tracks ?? []; track track.id) {
                   <option [value]="track.id">{{ track.name }}</option>
@@ -127,7 +127,7 @@
               <label w-label for="cohort-mentor">
                 Lead mentor <span w-label-required>*</span>
               </label>
-              <select class="w-select" id="cohort-mentor" formControlName="leadMentorId">
+              <select w-select id="cohort-mentor" formControlName="leadMentorId">
                 <option value="">Choose a mentor</option>
                 @for (mentor of options()?.mentors ?? []; track mentor.id) {
                   <option [value]="mentor.id">{{ mentor.name }}</option>
@@ -139,23 +139,18 @@
             </div>
             <div w-form-field>
               <label w-label for="cohort-start">Start date</label>
-              <input class="w-input" id="cohort-start" type="date" formControlName="startDate" />
+              <input w-text-field id="cohort-start" type="date" formControlName="startDate" />
             </div>
             <div w-form-field>
               <label w-label for="cohort-end">End date</label>
-              <input class="w-input" id="cohort-end" type="date" formControlName="endDate" />
+              <input w-text-field id="cohort-end" type="date" formControlName="endDate" />
               @if (dateError()) {
                 <p w-error-text>End date must be after start date.</p>
               }
             </div>
             <div w-form-field class="form-grid__wide">
               <label w-label for="cohort-location">Meeting location</label>
-              <input
-                class="w-input"
-                id="cohort-location"
-                formControlName="location"
-                maxlength="256"
-              />
+              <input w-text-field id="cohort-location" formControlName="location" maxlength="256" />
             </div>
           </form>
         </div>
