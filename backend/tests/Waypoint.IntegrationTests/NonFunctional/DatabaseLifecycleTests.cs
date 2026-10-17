@@ -186,6 +186,41 @@ public sealed class DatabaseLifecycleTests
 
     [Test]
     [Property("Req", "L2-NFR-011")]
+    public void Production_refuses_lesson_video_without_a_real_signing_key_or_media_root()
+    {
+        // Traces to: L2-NFR-011 AC4 (production refuses weak or missing secrets and settings)
+        void AssertRefused(Action<Dictionary<string, string?>> change, string expected)
+        {
+            var settings = ProductionSettings();
+            change(settings);
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection(settings).Build();
+            var error = Assert.Throws<InvalidOperationException>(() =>
+                InfrastructureStartupValidator.Validate(configuration, "Production"));
+            Assert.That(error!.Message, Does.Contain(expected));
+        }
+
+        AssertRefused(s =>
+        {
+            s["Media:Enabled"] = "true";
+            s["Media:RootPath"] = "/var/waypoint/media";
+            s["Media:PlaybackSigningKey"] = "REPLACE_WITH_AT_LEAST_32_CHARACTER_RANDOM_SECRET_VALUE";
+        }, "Media:PlaybackSigningKey");
+        AssertRefused(s =>
+        {
+            s["Media:Enabled"] = "true";
+            s["Media:PlaybackSigningKey"] = new string('k', 40);
+        }, "Media:RootPath");
+
+        var valid = ProductionSettings();
+        valid["Media:Enabled"] = "true";
+        valid["Media:RootPath"] = "/var/waypoint/media";
+        valid["Media:PlaybackSigningKey"] = new string('k', 40);
+        Assert.DoesNotThrow(() => InfrastructureStartupValidator.Validate(
+            new ConfigurationBuilder().AddInMemoryCollection(valid).Build(), "Production"));
+    }
+
+    [Test]
+    [Property("Req", "L2-NFR-011")]
     public void Production_refuses_to_start_without_a_durable_connection_string()
     {
         // Traces to: L2-NFR-011 AC4

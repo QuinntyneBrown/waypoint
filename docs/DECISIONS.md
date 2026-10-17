@@ -189,3 +189,11 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** Apps hand-write the same markup (`w-btn` about 360 times, `w-card` about 220, `w-alert` about 130), so a single pattern change needed edits in many places and drifted between apps. The user asked for a component for each design-system component, used across projects. This is the explicit request #21 required before a migration.
 
 **Consequences.** `docs/screen-composition.md` is now produced; component requirements documents are not used. `AGENTS.md` gains the "Components library is mandatory" rule, enforced in review, not by a scan test. Storybook becomes the catalogue of implemented components, which grows toward the used subset of the design system. The design system remains the specification; where they differ, the design system is the target. The frontend keeps its own `--w-*` tokens; migrating to the extracted tokens is still a separate decision.
+
+## 24. Lesson video is transcoded to HLS by a self-hosted worker and served through signed paths
+
+**Decision.** Lesson videos of 2 minutes to 3 hours are uploaded in resumable chunks, transcoded once by a self-hosted `ffmpeg` worker into an adaptive HLS ladder on a configurable file-system media root, and served through an anonymous route whose path carries an expiring HMAC token. The `w-video-player` component gains an on-demand mode that uses native HLS where available and a lazily loaded hls.js otherwise. Documents and videos stored before this change keep the existing database-backed endpoint.
+
+**Why.** The owner wants efficient streaming with no vendor or subscription. The previous path stored at most 25 MB in SQL Server and loaded the whole file per request, and a bare video tag cannot send the in-memory bearer token (#4, #9). Putting the token in the path lets relative playlist addresses carry it, so one authorization decision covers a viewing session and segment delivery needs no database.
+
+**Consequences.** `ffmpeg`, `ffprobe`, a media root and a playback signing key become deployment prerequisites (see the architecture overview). Segments are authored curriculum rather than participant data, so they are not encrypted at rest under #11. Anyone holding a valid address can fetch that video until it expires (8 hours by default). The media root must be shared if the API is scaled out.
