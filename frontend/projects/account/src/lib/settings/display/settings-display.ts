@@ -15,6 +15,8 @@ import {
   WLabel,
   WSwitch,
   WSwitchTrack,
+  WButtonGroup,
+  WButtonGroupItem,
 } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
 import { DisplayPreferencesService } from '@waypoint/core';
@@ -23,7 +25,17 @@ import { DisplayPreferencesService } from '@waypoint/core';
 @Component({
   selector: 'w-settings-display',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SettingsShell, WButton, WFormField, WLabel, WHelp, WSwitch, WSwitchTrack],
+  imports: [
+    SettingsShell,
+    WButton,
+    WFormField,
+    WLabel,
+    WHelp,
+    WSwitch,
+    WSwitchTrack,
+    WButtonGroup,
+    WButtonGroupItem,
+  ],
   templateUrl: './settings-display.html',
 })
 export class SettingsDisplay {

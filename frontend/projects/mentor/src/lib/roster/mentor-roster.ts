@@ -4,7 +4,16 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { ApiError, MentorService, MentorRosterYouth } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WFormField, WIcon, WLabel, WShell, WTextField } from '@waypoint/components';
+import {
+  WButton,
+  WFormField,
+  WIcon,
+  WLabel,
+  WShell,
+  WTextField,
+  WChip,
+  WChipRow,
+} from '@waypoint/components';
 import { debounceTime, switchMap, tap } from 'rxjs';
 
 type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
@@ -13,7 +22,18 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
 @Component({
   selector: 'w-mentor-roster',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, DatePipe, WButton, WFormField, WLabel, WTextField],
+  imports: [
+    WShell,
+    WIcon,
+    RouterLink,
+    DatePipe,
+    WButton,
+    WFormField,
+    WLabel,
+    WTextField,
+    WChip,
+    WChipRow,
+  ],
   templateUrl: './mentor-roster.html',
   styles: `
     .roster-controls {
