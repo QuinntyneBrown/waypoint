@@ -34,25 +34,9 @@ type HistoryView = 'session' | 'youth';
       align-items: end;
       gap: var(--w-s3);
     }
-    .history-table-wrap {
-      max-width: 100%;
-      overflow-x: auto;
-    }
-    .history-table {
-      width: 100%;
-      min-width: 52rem;
-      border-collapse: collapse;
-    }
-    .history-table th,
-    .history-table td {
-      padding: var(--w-s3);
-      border-bottom: 1px solid var(--w-border);
-      text-align: left;
-      vertical-align: middle;
-    }
     [role='tab'],
     .history-toolbar .w-btn,
-    .history-table .w-btn {
+    .w-table .w-btn {
       min-height: 44px;
     }
     @media (max-width: 42rem) {

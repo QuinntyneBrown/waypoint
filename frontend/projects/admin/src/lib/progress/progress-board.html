@@ -96,8 +96,8 @@
           </p>
         </div>
       } @else {
-        <div class="matrix-wrap" data-testid="progress-matrix">
-          <table class="matrix" aria-label="Progress board" [style.min-width.px]="matrixWidth()">
+        <div class="w-table-wrap" data-testid="progress-matrix">
+          <table class="w-matrix" aria-label="Progress board" [style.min-width.px]="matrixWidth()">
             <thead>
               <tr>
                 <th scope="col">Youth</th>
@@ -113,8 +113,9 @@
                 <tr data-testid="progress-row">
                   <th scope="row">{{ row.youthName }}</th>
                   @for (cell of row.cells; track cell.moduleId; let index = $index) {
-                    <td class="module-cell">
-                      <span class="module-cell__name">{{ result.modules[index].name }}</span>
+                    <td>
+                      <span class="w-muted">{{ result.modules[index].name }}</span
+                      ><br />
                       <span
                         class="w-badge"
                         [class.w-badge--success]="cell.state === 'Done'"

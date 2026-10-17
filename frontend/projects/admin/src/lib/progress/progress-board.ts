@@ -37,56 +37,6 @@ import { RealtimeService } from '@waypoint/core/realtime';
       flex-wrap: wrap;
       gap: var(--w-s3);
     }
-    .matrix-wrap {
-      max-width: 100%;
-      overflow-x: auto;
-      overscroll-behavior-inline: contain;
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-lg);
-    }
-    .matrix {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .matrix th,
-    .matrix td {
-      padding: var(--w-s3);
-      border-bottom: 1px solid var(--w-border);
-      text-align: left;
-      vertical-align: middle;
-    }
-    .matrix thead th {
-      position: sticky;
-      top: 0;
-      background: var(--w-surface);
-      z-index: 1;
-    }
-    .matrix th:first-child,
-    .matrix td:first-child {
-      position: sticky;
-      left: 0;
-      min-width: 13rem;
-      background: var(--w-surface);
-      z-index: 2;
-    }
-    .matrix thead th:first-child {
-      z-index: 3;
-    }
-    .module-cell {
-      min-width: 9rem;
-    }
-    .module-cell__name {
-      display: block;
-      margin-bottom: var(--w-s1);
-      color: var(--w-muted);
-      font-size: 0.875rem;
-    }
-    .matrix tfoot th,
-    .matrix tfoot td {
-      border-bottom: 0;
-      background: var(--w-g100);
-      font-weight: 700;
-    }
     @media (max-width: 42rem) {
       .board-filters {
         grid-template-columns: 1fr;
