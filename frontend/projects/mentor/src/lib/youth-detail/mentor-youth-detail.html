@@ -30,17 +30,17 @@
         </aside>
       }
 
-      <div class="w-tabs" role="tablist" aria-label="Youth record sections">
+      <div w-tabs role="tablist" aria-label="Youth record sections">
         @for (tab of tabs; track tab.key) {
           <button
-            class="w-tab"
+            w-tab
+            [active]="activeTab() === tab.key"
             type="button"
             role="tab"
             [id]="'detail-tab-' + tab.key"
             [attr.aria-controls]="'detail-panel-' + tab.key"
             [attr.aria-selected]="activeTab() === tab.key"
             [attr.tabindex]="activeTab() === tab.key ? 0 : -1"
-            [class.is-active]="activeTab() === tab.key"
             (click)="selectTab(tab.key)"
           >
             {{ tab.label }}
@@ -101,7 +101,7 @@
                 @case ('attendance') {
                   <h2>Attendance</h2>
                   @if (youth.attendance.length) {
-                    <dl class="w-dl w-dl--vertical">
+                    <dl w-description-list vertical>
                       @for (item of youth.attendance; track item.sessionId) {
                         <dt>{{ item.sessionTitle }}</dt>
                         <dd>{{ item.status }} · {{ item.startsAt | date: 'mediumDate' }}</dd>
@@ -124,7 +124,7 @@
                     </a>
                   </p>
                   @if (youth.checkIns.length) {
-                    <dl class="w-dl w-dl--vertical">
+                    <dl w-description-list vertical>
                       @for (item of youth.checkIns; track item.id) {
                         <dt>{{ item.type }}</dt>
                         <dd>{{ item.visibility }} · {{ item.date | date: 'mediumDate' }}</dd>
@@ -137,7 +137,7 @@
                 @case ('submissions') {
                   <h2>Submissions</h2>
                   @if (youth.submissions.length) {
-                    <dl class="w-dl w-dl--vertical">
+                    <dl w-description-list vertical>
                       @for (item of youth.submissions; track item.id) {
                         <dt>
                           <a [routerLink]="['/mentor/reviews/submissions', item.id]">{{
@@ -163,7 +163,7 @@
                     </a>
                   </p>
                   @if (youth.competencies.length) {
-                    <dl class="w-dl w-dl--vertical">
+                    <dl w-description-list vertical>
                       @for (item of youth.competencies; track item.competencyId) {
                         <dt>{{ item.name }}</dt>
                         <dd>

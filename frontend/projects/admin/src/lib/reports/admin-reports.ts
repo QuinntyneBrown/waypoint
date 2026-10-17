@@ -35,6 +35,8 @@ import {
   WStatValue,
   WProgressRing,
   WProgressRingLabel,
+  WTabs,
+  WTab,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -73,6 +75,8 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     WStatValue,
     WProgressRing,
     WProgressRingLabel,
+    WTabs,
+    WTab,
   ],
   templateUrl: './admin-reports.html',
   styles: `

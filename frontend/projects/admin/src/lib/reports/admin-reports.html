@@ -112,10 +112,10 @@
       </div>
     </section>
 
-    <div class="w-tabs" role="tablist" aria-label="Report views">
+    <div w-tabs role="tablist" aria-label="Report views">
       <button
-        class="w-tab"
-        [class.is-active]="view() === 'overview'"
+        w-tab
+        [active]="view() === 'overview'"
         type="button"
         role="tab"
         [attr.aria-selected]="view() === 'overview'"
@@ -124,8 +124,8 @@
         Overview
       </button>
       <button
-        class="w-tab"
-        [class.is-active]="view() === 'youth'"
+        w-tab
+        [active]="view() === 'youth'"
         type="button"
         role="tab"
         [attr.aria-selected]="view() === 'youth'"
@@ -134,8 +134,8 @@
         Youth report
       </button>
       <button
-        class="w-tab"
-        [class.is-active]="view() === 'cohort'"
+        w-tab
+        [active]="view() === 'cohort'"
         type="button"
         role="tab"
         [attr.aria-selected]="view() === 'cohort'"
@@ -144,8 +144,8 @@
         Cohort report
       </button>
       <button
-        class="w-tab"
-        [class.is-active]="view() === 'staff'"
+        w-tab
+        [active]="view() === 'staff'"
         type="button"
         role="tab"
         [attr.aria-selected]="view() === 'staff'"

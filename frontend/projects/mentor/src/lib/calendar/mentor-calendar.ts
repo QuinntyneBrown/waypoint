@@ -25,6 +25,8 @@ import {
   WCardHeader,
   WCardTitle,
   WEmptyState,
+  WTabs,
+  WTab,
 } from '@waypoint/components';
 
 type CalendarView = 'month' | 'week' | 'agenda';
@@ -50,6 +52,8 @@ type CalendarView = 'month' | 'week' | 'agenda';
     WCardHeader,
     WCardTitle,
     WEmptyState,
+    WTabs,
+    WTab,
   ],
   templateUrl: './mentor-calendar.html',
   styles: `

@@ -29,14 +29,14 @@
         <div class="calendar-toolbar">
           <div>
             <h2 id="calendar-view-heading">{{ rangeLabel() }}</h2>
-            <div class="w-tabs" role="tablist" aria-label="Calendar view">
+            <div w-tabs role="tablist" aria-label="Calendar view">
               @for (mode of ['month', 'week', 'agenda']; track mode) {
                 <button
-                  class="w-tab"
+                  w-tab
+                  [active]="view() === mode"
                   type="button"
                   role="tab"
                   [attr.aria-selected]="view() === mode"
-                  [class.is-active]="view() === mode"
                   (click)="setView($any(mode))"
                 >
                   {{ mode[0].toUpperCase() + mode.slice(1) }}
