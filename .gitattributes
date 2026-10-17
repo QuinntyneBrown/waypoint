@@ -16,6 +16,7 @@ frontend/** text eol=lf
 *.ico   binary
 *.png   binary
 *.jpg   binary
+*.fmp4 binary
 *.jpeg  binary
 *.gif   binary
 *.webp  binary

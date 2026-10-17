@@ -57,6 +57,7 @@ describe('WVideoPlayer', () => {
     expect(player.getAttribute('data-state')).toBe('error');
     expect(player.querySelector('[role="alert"]')).not.toBeNull();
     expect(player.querySelector('.w-video-player__retry')).not.toBeNull();
+    expect(player.querySelector('[data-control="live"]')).toBeNull();
     expect(fixture.componentInstance.errors.map((e) => e.code)).toEqual(['unauthorized']);
   });
 });

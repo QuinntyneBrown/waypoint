@@ -184,3 +184,9 @@ Narrated videos made from a script, a slide deck and captions, one per detailed 
 | [111 · Securing the browser boundary](111-non-functional-secure-browser-boundary/README.md) | secure browser boundary | 3 min 11 s |
 | [112 · Syncing attendance reliably](112-non-functional-sync-attendance-reliably/README.md) | sync attendance reliably | 3 min 19 s |
 | [113 · Checking what goes in and what comes out](113-non-functional-validate-input-and-output/README.md) | validate input and output | 2 min 56 s |
+
+## Components
+
+| Video | Topic | Runtime |
+| --- | --- | --- |
+| [114 · The Waypoint video player](114-components-video-player/README.md) | video player | 5 min 27 s |

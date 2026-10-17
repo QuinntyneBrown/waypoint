@@ -142,7 +142,9 @@
       [attr.aria-disabled]="controlsDisabled() ? 'true' : null"
       (input)="setVolume($any($event.target).valueAsNumber, $any($event.target))"
     />
-    @if (state() !== 'idle' && state() !== 'connecting') {
+    @if (
+      state() !== 'idle' && state() !== 'connecting' && state() !== 'ended' && state() !== 'error'
+    ) {
       <button
         type="button"
         class="w-video-player__live"
