@@ -64,7 +64,7 @@
                   <fieldset class="w-stack">
                     <legend><strong>Your RSVP</strong></legend>
                     <div class="rsvp-options">
-                      <label class="w-radio rsvp-option">
+                      <label w-radio class="rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -72,9 +72,9 @@
                           [checked]="draft(session.sessionId).response === 'going'"
                           (change)="setResponse(session.sessionId, 'going')"
                         />
-                        <span class="w-radio__box"></span><span>Going</span>
+                        <span w-radio-box></span><span>Going</span>
                       </label>
-                      <label class="w-radio rsvp-option">
+                      <label w-radio class="rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -82,9 +82,9 @@
                           [checked]="draft(session.sessionId).response === 'maybe'"
                           (change)="setResponse(session.sessionId, 'maybe')"
                         />
-                        <span class="w-radio__box"></span><span>Maybe</span>
+                        <span w-radio-box></span><span>Maybe</span>
                       </label>
-                      <label class="w-radio rsvp-option">
+                      <label w-radio class="rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -92,7 +92,7 @@
                           [checked]="draft(session.sessionId).response === 'can\'t make it'"
                           (change)="setResponse(session.sessionId, 'can\'t make it')"
                         />
-                        <span class="w-radio__box"></span><span>Can’t make it</span>
+                        <span w-radio-box></span><span>Can’t make it</span>
                       </label>
                     </div>
                   </fieldset>

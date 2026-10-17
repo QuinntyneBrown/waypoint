@@ -63,7 +63,7 @@
             <fieldset class="w-stack">
               <legend w-label>Who is this for?</legend>
               <div class="w-cluster">
-                <label class="w-radio">
+                <label w-radio>
                   <input
                     type="radio"
                     name="target-mode"
@@ -71,10 +71,10 @@
                     [checked]="targetMode() === 'individual'"
                     (change)="setTargetMode('individual')"
                   />
-                  <span class="w-radio__box"></span>
+                  <span w-radio-box></span>
                   <span>Selected youth</span>
                 </label>
-                <label class="w-radio">
+                <label w-radio>
                   <input
                     type="radio"
                     name="target-mode"
@@ -82,7 +82,7 @@
                     [checked]="targetMode() === 'cohort'"
                     (change)="setTargetMode('cohort')"
                   />
-                  <span class="w-radio__box"></span>
+                  <span w-radio-box></span>
                   <span>Whole cohort</span>
                 </label>
               </div>
