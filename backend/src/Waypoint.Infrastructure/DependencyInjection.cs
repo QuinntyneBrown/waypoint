@@ -36,7 +36,14 @@ public static class InfrastructureDependencyInjection
         services.AddOptions<MediaOptions>()
             .Bind(configuration.GetSection("Media"))
             .ValidateDataAnnotations()
+            .Validate(
+                options => !options.Enabled || !string.IsNullOrWhiteSpace(options.RootPath),
+                "Media:RootPath is required when Media:Enabled is true.")
+            .Validate(
+                options => !options.Enabled || options.PlaybackSigningKey.Length >= 32,
+                "Media:PlaybackSigningKey must be at least 32 characters when Media:Enabled is true.")
             .ValidateOnStart();
+        services.AddSingleton<IPlaybackUrlSigner, HmacPlaybackUrlSigner>();
         services.AddSingleton<IMediaSettings>(sp =>
             sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<MediaOptions>>().Value);
         services.AddSingleton<FileSystemMediaStore>();

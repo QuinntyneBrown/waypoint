@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Waypoint.Api.Authorization;
+using Waypoint.Application.CurriculumAuthoring.Curriculum;
 using Waypoint.Application.LearningExperience.YouthCurriculum;
 
 namespace Waypoint.Api.Controllers.LearningExperience;
@@ -40,6 +41,11 @@ public class YouthCurriculumController : ControllerBase
         await _mediator.Send(new CompleteLessonCommand(id), cancellationToken);
         return NoContent();
     }
+
+    [HttpGet("lessons/{id:guid}/media/{mediaId:guid}/playback")]
+    public async Task<ActionResult<VideoPlaybackResult>> VideoPlayback(
+        Guid id, Guid mediaId, CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new LessonVideoPlaybackQuery(mediaId, id), cancellationToken));
 
     [HttpGet("lessons/{id:guid}")]
     public async Task<ActionResult<LessonView>> Lesson(Guid id, CancellationToken cancellationToken)
