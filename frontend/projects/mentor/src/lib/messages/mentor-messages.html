@@ -157,39 +157,40 @@
                 <h2 class="w-h3">{{ conversation.youthName }}</h2>
                 <p class="w-muted">{{ conversation.cohortName ?? 'No cohort' }}</p>
               </div>
-              <ol
-                class="thread-log"
+              <div
+                class="w-thread thread-log"
                 role="log"
                 aria-live="polite"
                 aria-relevant="additions text"
                 data-testid="mentor-message-thread"
               >
                 @if (loadingThread()) {
-                  <li class="w-muted" role="status">Loading conversation…</li>
+                  <p class="w-muted" role="status">Loading conversation…</p>
                 } @else if (thread()?.length === 0) {
-                  <li class="w-empty">
+                  <div class="w-empty">
                     <h3 class="w-empty__title">Start the conversation</h3>
                     <p class="w-empty__text">Send encouragement, a reminder, or a check-in.</p>
-                  </li>
+                  </div>
                 }
                 @for (message of thread() ?? []; track message.id) {
-                  <li
-                    class="message-row"
-                    [class.message-row--mine]="message.senderId === auth.user()?.userId"
+                  <article
+                    class="w-bubble"
+                    [class.w-bubble--out]="message.senderId === auth.user()?.userId"
+                    [class.w-bubble--in]="message.senderId !== auth.user()?.userId"
                     [attr.data-message-id]="message.id"
                   >
-                    <article class="message-bubble">
-                      <strong>{{
+                    <span class="w-sr-only"
+                      >{{
                         message.senderId === auth.user()?.userId ? 'You' : conversation.youthName
-                      }}</strong>
-                      <p class="message-body">{{ message.body }}</p>
-                      <time class="w-muted w-text-sm" [attr.datetime]="message.sentAt">
-                        {{ message.sentAt | date: 'medium' }}
-                      </time>
-                    </article>
-                  </li>
+                      }}:</span
+                    >
+                    <span class="message-body">{{ message.body }}</span>
+                    <time class="w-bubble__time" [attr.datetime]="message.sentAt">{{
+                      message.sentAt | date: 'medium'
+                    }}</time>
+                  </article>
                 }
-              </ol>
+              </div>
               <form class="composer w-stack" [formGroup]="composer" (ngSubmit)="send()">
                 <div class="w-field">
                   <label class="w-label" for="mentor-message-body">
