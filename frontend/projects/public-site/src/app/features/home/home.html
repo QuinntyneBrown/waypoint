@@ -43,21 +43,29 @@
   <h2>Growing leaders across the city</h2>
   @if (content(); as publicContent) {
     <div class="w-grid w-grid--4 w-mt-6">
-      <div w-card class="w-statcard">
-        <div class="w-statcard__value">{{ publicContent.impact.tracks }}</div>
-        <div class="w-statcard__label">Learning tracks</div>
+      <div w-card>
+        <div w-stat>
+          <div w-stat-value>{{ publicContent.impact.tracks }}</div>
+          <div w-stat-label>Learning tracks</div>
+        </div>
       </div>
-      <div w-card class="w-statcard">
-        <div class="w-statcard__value">{{ publicContent.impact.cohorts }}</div>
-        <div class="w-statcard__label">Cohorts</div>
+      <div w-card>
+        <div w-stat>
+          <div w-stat-value>{{ publicContent.impact.cohorts }}</div>
+          <div w-stat-label>Cohorts</div>
+        </div>
       </div>
-      <div w-card class="w-statcard">
-        <div class="w-statcard__value">{{ publicContent.impact.modules }}</div>
-        <div class="w-statcard__label">Published modules</div>
+      <div w-card>
+        <div w-stat>
+          <div w-stat-value>{{ publicContent.impact.modules }}</div>
+          <div w-stat-label>Published modules</div>
+        </div>
       </div>
-      <div w-card class="w-statcard">
-        <div class="w-statcard__value">{{ publicContent.impact.neighbourhoods }}</div>
-        <div class="w-statcard__label">Neighbourhoods</div>
+      <div w-card>
+        <div w-stat>
+          <div w-stat-value>{{ publicContent.impact.neighbourhoods }}</div>
+          <div w-stat-label>Neighbourhoods</div>
+        </div>
       </div>
     </div>
   }

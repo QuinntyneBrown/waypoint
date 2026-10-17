@@ -11,6 +11,10 @@ import {
   WEmptyState,
   WEmptyStateTitle,
   WEmptyStateText,
+  WProgress,
+  WStat,
+  WStatLabel,
+  WStatValue,
 } from '@waypoint/components';
 
 type ProgressTab = 'overview' | 'quizzes' | 'attendance';
@@ -30,6 +34,10 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
     WEmptyState,
     WEmptyStateTitle,
     WEmptyStateText,
+    WProgress,
+    WStat,
+    WStatLabel,
+    WStatValue,
   ],
   templateUrl: './youth-progress.html',
 })

@@ -12,6 +12,9 @@ import {
   WCardBody,
   WCardTitle,
   WBadge,
+  WStat,
+  WStatLabel,
+  WStatValue,
 } from '@waypoint/components';
 
 // Traces to: L2-ADMIN-004, L2-REPORT-001
@@ -30,6 +33,9 @@ import {
     WCardBody,
     WCardTitle,
     WBadge,
+    WStat,
+    WStatLabel,
+    WStatValue,
   ],
   templateUrl: './admin-dashboard.html',
   styles: `

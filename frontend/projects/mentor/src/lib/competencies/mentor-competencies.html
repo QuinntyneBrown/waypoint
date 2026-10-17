@@ -25,24 +25,20 @@
         <div w-card-body class="summary-grid">
           <div>
             <div class="w-kpi">
-              <span class="w-statcard__label">Proficient or mastered</span
-              ><span class="w-statcard__value"
-                >{{ view.masteredOrProficient }} of {{ view.total }}</span
-              >
+              <span w-stat-label>Proficient or mastered</span
+              ><span w-stat-value>{{ view.masteredOrProficient }} of {{ view.total }}</span>
             </div>
           </div>
           <div>
             <div class="w-kpi">
-              <span class="w-statcard__label">Framework coverage</span
-              ><span class="w-statcard__value">{{ view.total }} competencies</span>
+              <span w-stat-label>Framework coverage</span
+              ><span w-stat-value>{{ view.total }} competencies</span>
             </div>
           </div>
           <div>
             <div class="w-kpi">
-              <span class="w-statcard__label">Current stage</span
-              ><span class="w-statcard__value">{{
-                view.currentStageName ?? 'Not configured'
-              }}</span>
+              <span w-stat-label>Current stage</span
+              ><span w-stat-value>{{ view.currentStageName ?? 'Not configured' }}</span>
             </div>
             <p class="w-muted">{{ view.currentStageProgress }}% complete</p>
           </div>

@@ -167,16 +167,10 @@
                     lessons complete
                   </p>
                   <div
-                    class="w-progress"
-                    role="progressbar"
-                    aria-label="Lesson progress"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    [attr.aria-valuenow]="percent(person.progress.percent)"
-                    [style.--val]="percent(person.progress.percent) + '%'"
-                  >
-                    <div class="w-progress__fill"></div>
-                  </div>
+                    w-progress
+                    label="Lesson progress"
+                    [value]="percent(person.progress.percent)"
+                  ></div>
                   <p class="w-muted">{{ percent(person.progress.percent) }}% complete</p>
                 }
                 @case ('attendance') {

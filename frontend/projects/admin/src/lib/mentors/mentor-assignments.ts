@@ -22,6 +22,8 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WStatLabel,
+  WStatValue,
 } from '@waypoint/components';
 import { finalize } from 'rxjs';
 
@@ -45,6 +47,8 @@ import { finalize } from 'rxjs';
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WStatLabel,
+    WStatValue,
   ],
   templateUrl: './mentor-assignments.html',
   styles: `

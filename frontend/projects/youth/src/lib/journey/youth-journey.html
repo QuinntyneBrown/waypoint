@@ -26,17 +26,7 @@
               You are in <strong>{{ current.name }}</strong> now.
             </p>
           }
-          <div
-            class="w-progress"
-            role="progressbar"
-            aria-label="Overall progress"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            [attr.aria-valuenow]="overallPercent()"
-            [style.--val]="overallPercent() + '%'"
-          >
-            <div class="w-progress__fill"></div>
-          </div>
+          <div w-progress label="Overall progress" [value]="overallPercent()"></div>
           <strong>{{ overallPercent() }}%</strong>
         </div>
       </section>

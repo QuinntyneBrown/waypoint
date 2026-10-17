@@ -31,6 +31,8 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WStatLabel,
+  WStatValue,
 } from '@waypoint/components';
 import { finalize, forkJoin } from 'rxjs';
 
@@ -61,6 +63,8 @@ import { finalize, forkJoin } from 'rxjs';
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WStatLabel,
+    WStatValue,
   ],
   templateUrl: './admin-announcements.html',
   styles: `

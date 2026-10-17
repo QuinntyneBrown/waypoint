@@ -105,17 +105,7 @@
                 <td data-label="Cohort">{{ person.cohortName ?? 'Not assigned' }}</td>
                 <td data-label="Progress">
                   <div class="w-cluster">
-                    <div
-                      class="w-progress"
-                      role="progressbar"
-                      aria-label="Progress"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                      [attr.aria-valuenow]="percent(person.progress)"
-                      [style.--val]="percent(person.progress) + '%'"
-                    >
-                      <div class="w-progress__fill"></div>
-                    </div>
+                    <div w-progress label="Progress" [value]="percent(person.progress)"></div>
                     <span>{{ percent(person.progress) }}%</span>
                   </div>
                 </td>

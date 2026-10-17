@@ -22,6 +22,10 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WStat,
+  WStatLabel,
+  WStatValue,
+  WStatDelta,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
@@ -44,6 +48,10 @@ import { forkJoin } from 'rxjs';
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WStat,
+    WStatLabel,
+    WStatValue,
+    WStatDelta,
   ],
   templateUrl: './mentor-dashboard.html',
   styles: `
