@@ -24,16 +24,26 @@
       <section class="w-card" data-testid="competency-summary" aria-label="Competency summary">
         <div class="w-card__body summary-grid">
           <div>
-            <p class="w-muted">Proficient or mastered</p>
-            <p class="summary-value">{{ view.masteredOrProficient }} of {{ view.total }}</p>
+            <div class="w-kpi">
+              <span class="w-statcard__label">Proficient or mastered</span
+              ><span class="w-statcard__value"
+                >{{ view.masteredOrProficient }} of {{ view.total }}</span
+              >
+            </div>
           </div>
           <div>
-            <p class="w-muted">Framework coverage</p>
-            <p class="summary-value">{{ view.total }} competencies</p>
+            <div class="w-kpi">
+              <span class="w-statcard__label">Framework coverage</span
+              ><span class="w-statcard__value">{{ view.total }} competencies</span>
+            </div>
           </div>
           <div>
-            <p class="w-muted">Current stage</p>
-            <p class="summary-value">{{ view.currentStageName ?? 'Not configured' }}</p>
+            <div class="w-kpi">
+              <span class="w-statcard__label">Current stage</span
+              ><span class="w-statcard__value">{{
+                view.currentStageName ?? 'Not configured'
+              }}</span>
+            </div>
             <p class="w-muted">{{ view.currentStageProgress }}% complete</p>
           </div>
         </div>

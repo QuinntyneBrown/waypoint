@@ -23,11 +23,6 @@ import { WShell } from '@waypoint/components';
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--w-s4);
     }
-    .score-value {
-      font-size: 2rem;
-      font-weight: 800;
-      margin: 0;
-    }
     .answer-list {
       list-style: none;
       padding: 0;

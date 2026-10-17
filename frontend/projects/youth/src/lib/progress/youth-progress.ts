@@ -22,14 +22,6 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
       min-height: 2.75rem;
       flex: 1 0 auto;
     }
-    .progress-stat {
-      min-height: 8rem;
-    }
-    .progress-stat__value {
-      font-size: clamp(2rem, 8vw, 3.25rem);
-      font-weight: 800;
-      line-height: 1;
-    }
   `,
 })
 export class YouthProgressPage {

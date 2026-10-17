@@ -28,11 +28,6 @@ interface CompetencyDraft {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--w-s4);
     }
-    .summary-value {
-      margin: 0;
-      font-size: 2rem;
-      font-weight: 800;
-    }
     .competency-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));

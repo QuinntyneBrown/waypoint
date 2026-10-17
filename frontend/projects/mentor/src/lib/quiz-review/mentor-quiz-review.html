@@ -75,15 +75,21 @@
           <div class="w-card__body w-stack">
             <div class="score-grid">
               <div>
-                <p class="w-muted">Auto-scored</p>
-                <p class="score-value" data-testid="quiz-auto-score">{{ item.autoScore }}%</p>
+                <div class="w-kpi">
+                  <span class="w-statcard__label">Auto-scored</span
+                  ><span class="w-statcard__value" data-testid="quiz-auto-score"
+                    >{{ item.autoScore }}%</span
+                  >
+                </div>
                 <span class="w-badge" [class.w-badge--success]="item.autoPassed">
                   {{ item.autoPassed ? 'Pass' : 'Below pass mark' }}
                 </span>
               </div>
               <div>
-                <p class="w-muted">Pass mark</p>
-                <p class="score-value">{{ item.passMark }}%</p>
+                <div class="w-kpi">
+                  <span class="w-statcard__label">Pass mark</span
+                  ><span class="w-statcard__value">{{ item.passMark }}%</span>
+                </div>
               </div>
             </div>
 
