@@ -51,24 +51,24 @@ public sealed class CompleteVideoUploadCommandHandler
             .Count(index => (session.ReceivedChunks[index / 8] & (1 << (index % 8))) == 0);
         if (missing > 0)
         {
-            throw new ValidationException($"{missing} chunk(s) have not been received yet.");
+            throw VideoUploadRejection.Because($"{missing} chunk(s) have not been received yet.");
         }
 
         if (_uploads.Length(session.Id) != session.ExpectedBytes)
         {
-            throw new ValidationException("The uploaded file is not the expected size.");
+            throw VideoUploadRejection.Because("The uploaded file is not the expected size.");
         }
 
         var head = await _uploads.ReadHeadAsync(session.Id, 12, cancellationToken);
         if (!LessonVideoUploadPolicy.HasMp4Signature(head))
         {
-            throw new ValidationException("The file content does not match a valid MP4 file.");
+            throw VideoUploadRejection.Because("The file content does not match a valid MP4 file.");
         }
 
         var probe = await _transcoder.ProbeAsync(_uploads.PartPath(session.Id), cancellationToken);
         if (probe is null)
         {
-            throw new ValidationException("This file is not a video we can read.");
+            throw VideoUploadRejection.Because("This file is not a video we can read.");
         }
 
         var media = new LessonMedia

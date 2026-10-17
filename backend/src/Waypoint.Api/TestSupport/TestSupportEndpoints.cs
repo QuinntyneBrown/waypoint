@@ -412,6 +412,12 @@ internal static class TestSupportEndpoints
             });
         });
 
+        // The video worker is idle in Testing, so browser tests run one transcode pass on demand.
+        app.MapPost("/api/_test/video-transcodes/run", async (
+            Waypoint.Infrastructure.VideoTranscodeProcessor processor,
+            CancellationToken cancellationToken) =>
+            Results.Ok(new { processed = await processor.RunOnceAsync(cancellationToken) }));
+
         app.MapGet("/api/_test/emails/latest", (
             string to,
             Waypoint.Api.TestSupport.TestingEmailSender emails) =>

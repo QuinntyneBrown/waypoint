@@ -39,7 +39,7 @@ public sealed class ReceiveVideoChunkCommandHandler : IRequestHandler<ReceiveVid
 
         if (request.Index < 0 || request.Index >= session.ChunkCount)
         {
-            throw new ValidationException("The chunk index is outside the upload.");
+            throw VideoUploadRejection.Because("The chunk index is outside the upload.");
         }
 
         var expected = request.Index < session.ChunkCount - 1
@@ -47,7 +47,7 @@ public sealed class ReceiveVideoChunkCommandHandler : IRequestHandler<ReceiveVid
             : session.ExpectedBytes - (long)(session.ChunkCount - 1) * session.ChunkSizeBytes;
         if (request.ContentLength != expected)
         {
-            throw new ValidationException($"The chunk must be exactly {expected} bytes.");
+            throw VideoUploadRejection.Because($"The chunk must be exactly {expected} bytes.");
         }
 
         // The write is idempotent: a retried chunk overwrites identical bytes at the same offset.
