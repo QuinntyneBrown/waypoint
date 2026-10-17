@@ -11,7 +11,7 @@ import {
   YouthReport,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import { WButton, WIcon, WShell } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -21,7 +21,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
 @Component({
   selector: 'w-admin-reports',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, ReactiveFormsModule, DatePipe, DecimalPipe, PercentPipe],
+  imports: [WShell, WIcon, ReactiveFormsModule, DatePipe, DecimalPipe, PercentPipe, WButton],
   templateUrl: './admin-reports.html',
   styles: `
     .report-filters {

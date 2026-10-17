@@ -11,7 +11,7 @@
         <h1 class="w-page__title">People directory</h1>
         <p class="w-page__sub">Search and filter everyone in the program.</p>
       </div>
-      <a class="w-btn w-btn--primary" routerLink="/admin/invitations">Invite people</a>
+      <a w-button variant="primary" routerLink="/admin/invitations">Invite people</a>
     </div>
 
     @if (errorMessage(); as error) {
@@ -62,9 +62,9 @@
               track option.value
             ) {
               <button
-                class="w-btn w-btn--sm"
-                [class.w-btn--primary]="role() === option.value"
-                [class.w-btn--secondary]="role() !== option.value"
+                w-button
+                size="sm"
+                [variant]="role() === option.value ? 'primary' : 'secondary'"
                 type="button"
                 [attr.aria-pressed]="role() === option.value"
                 (click)="setRole(option.value)"
@@ -118,7 +118,8 @@
         </strong>
         <div class="w-cluster">
           <button
-            class="w-btn w-btn--secondary"
+            w-button
+            variant="secondary"
             type="button"
             aria-label="Previous page"
             [disabled]="page() <= 1"
@@ -126,7 +127,8 @@
           >
             Previous</button
           ><button
-            class="w-btn w-btn--secondary"
+            w-button
+            variant="secondary"
             type="button"
             aria-label="Next page"
             [disabled]="page() >= totalPages()"
@@ -143,11 +145,11 @@
         <p class="w-empty__text">No one matches the current directory filters.</p>
         <div class="w-actions">
           @if (hasFilters()) {
-            <button class="w-btn w-btn--secondary" type="button" (click)="clearFilters()">
+            <button w-button variant="secondary" type="button" (click)="clearFilters()">
               Clear filters
             </button>
           }
-          <a class="w-btn w-btn--primary" routerLink="/admin/invitations">Invite people</a>
+          <a w-button variant="primary" routerLink="/admin/invitations">Invite people</a>
         </div>
       </div>
     }

@@ -13,7 +13,7 @@
           <div class="w-alert__title">{{ error }}</div>
           Cohort details could not be loaded or saved.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
@@ -30,9 +30,7 @@
             {{ cohort.leadMentorName ?? 'not assigned' }}
           </p>
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="openEdit()">
-          Edit cohort
-        </button>
+        <button w-button variant="secondary" type="button" (click)="openEdit()">Edit cohort</button>
       </div>
 
       <section class="w-card w-mb-5" aria-labelledby="cohort-overview-heading">
@@ -76,7 +74,9 @@
                       <span class="w-badge w-badge--warning">{{ member.status }}</span>
                     }
                     <a
-                      class="w-btn w-btn--ghost w-btn--sm"
+                      w-button
+                      variant="ghost"
+                      size="sm"
                       [routerLink]="['/admin/people', member.id]"
                     >
                       View record
@@ -111,7 +111,8 @@
                 </select>
               </div>
               <button
-                class="w-btn w-btn--primary"
+                w-button
+                variant="primary"
                 type="button"
                 [disabled]="!selectedYouthId() || saving()"
                 (click)="addYouth()"
@@ -121,7 +122,7 @@
             } @else {
               <p class="w-muted">No unassigned active youth are available.</p>
             }
-            <a class="w-btn w-btn--secondary" routerLink="/admin/invitations">Invite a youth</a>
+            <a w-button variant="secondary" routerLink="/admin/invitations">Invite a youth</a>
           </div>
         </aside>
       </div>
@@ -190,7 +191,8 @@
         </div>
         <div class="w-modal__footer">
           <button
-            class="w-btn w-btn--ghost"
+            w-button
+            variant="ghost"
             type="button"
             [disabled]="saving()"
             (click)="closeEdit()"
@@ -198,7 +200,8 @@
             Cancel
           </button>
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="button"
             [disabled]="saving()"
             (click)="saveEdit()"

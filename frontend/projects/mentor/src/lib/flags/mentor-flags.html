@@ -55,7 +55,9 @@
           />
         </div>
         <button
-          class="w-btn w-btn--primary raise-button"
+          w-button
+          variant="primary"
+          class="raise-button"
           type="button"
           [disabled]="busy()"
           (click)="raise()"
@@ -96,20 +98,21 @@
                   }
                 </ul>
                 <div class="w-actions flag-actions">
-                  <a class="w-btn w-btn--ghost" [routerLink]="['/mentor/youth', flag.youthId]">
+                  <a w-button variant="ghost" [routerLink]="['/mentor/youth', flag.youthId]">
                     View youth
                   </a>
                   <a
-                    class="w-btn w-btn--ghost"
+                    w-button
+                    variant="ghost"
                     [routerLink]="['/mentor/check-ins']"
                     [queryParams]="{ youthId: flag.youthId }"
                   >
                     Log check-in
                   </a>
-                  <button class="w-btn w-btn--ghost" type="button" (click)="toggleMessage(flag)">
+                  <button w-button variant="ghost" type="button" (click)="toggleMessage(flag)">
                     Message
                   </button>
-                  <button class="w-btn w-btn--danger" type="button" (click)="startResolve(flag)">
+                  <button w-button variant="danger" type="button" (click)="startResolve(flag)">
                     Unflag
                   </button>
                 </div>
@@ -132,14 +135,15 @@
                   </div>
                   <div class="w-actions flag-actions">
                     <button
-                      class="w-btn w-btn--primary"
+                      w-button
+                      variant="primary"
                       type="button"
                       [disabled]="busy()"
                       (click)="sendMessage(flag)"
                     >
                       Send message
                     </button>
-                    <button class="w-btn w-btn--ghost" type="button" (click)="toggleMessage(flag)">
+                    <button w-button variant="ghost" type="button" (click)="toggleMessage(flag)">
                       Cancel
                     </button>
                   </div>
@@ -167,14 +171,15 @@
                   </div>
                   <div class="w-actions flag-actions">
                     <button
-                      class="w-btn w-btn--danger"
+                      w-button
+                      variant="danger"
                       type="button"
                       [disabled]="busy()"
                       (click)="confirmResolve(flag)"
                     >
                       Confirm unflag
                     </button>
-                    <button class="w-btn w-btn--ghost" type="button" (click)="cancelResolve()">
+                    <button w-button variant="ghost" type="button" (click)="cancelResolve()">
                       Keep flag
                     </button>
                   </div>

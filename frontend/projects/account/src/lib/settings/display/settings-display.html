@@ -4,7 +4,8 @@
       <span class="w-label">Text size</span>
       <div class="w-cluster">
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           aria-label="Decrease text size"
           (click)="changeScale(-10)"
@@ -13,7 +14,8 @@
         </button>
         <span aria-live="polite" data-testid="text-scale">{{ prefs().textScalePercent }}%</span>
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           aria-label="Increase text size"
           (click)="changeScale(10)"
@@ -108,7 +110,8 @@
 
     <div>
       <button
-        class="w-btn w-btn--primary"
+        w-button
+        variant="primary"
         type="button"
         [class.is-loading]="saving()"
         [disabled]="saving()"

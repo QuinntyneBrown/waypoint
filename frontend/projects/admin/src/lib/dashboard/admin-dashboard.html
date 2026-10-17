@@ -13,14 +13,14 @@
           A current view of program participation, progress, and staff load.
         </p>
       </div>
-      <button class="w-btn w-btn--ghost" type="button" [disabled]="loading()" (click)="load()">
+      <button w-button variant="ghost" type="button" [disabled]="loading()" (click)="load()">
         <w-icon name="refresh-cw" />Refresh
       </button>
     </header>
     @if (errorMessage(); as error) {
       <div class="w-alert w-alert--error" role="alert">
         {{ error }}
-        <button class="w-btn w-btn--ghost" type="button" (click)="load()">Try again</button>
+        <button w-button variant="ghost" type="button" (click)="load()">Try again</button>
       </div>
     }
     @if (loading()) {

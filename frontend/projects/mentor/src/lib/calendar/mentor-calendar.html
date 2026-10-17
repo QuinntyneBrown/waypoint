@@ -59,9 +59,9 @@
                 }
               </select>
             </div>
-            <button class="w-btn w-btn--ghost" type="button" (click)="shift(-1)">Previous</button>
-            <button class="w-btn w-btn--ghost" type="button" (click)="today()">Today</button>
-            <button class="w-btn w-btn--ghost" type="button" (click)="shift(1)">Next</button>
+            <button w-button variant="ghost" type="button" (click)="shift(-1)">Previous</button>
+            <button w-button variant="ghost" type="button" (click)="today()">Today</button>
+            <button w-button variant="ghost" type="button" (click)="shift(1)">Next</button>
           </div>
         </div>
 
@@ -132,7 +132,7 @@
                       {{ session.rosterCount }} youth
                     </p>
                   </div>
-                  <a class="w-btn w-btn--secondary" [routerLink]="[attendanceBase(), session.id]">
+                  <a w-button variant="secondary" [routerLink]="[attendanceBase(), session.id]">
                     {{ session.attendanceTaken ? 'Edit attendance' : 'Take attendance' }}
                   </a>
                 </div>
@@ -245,7 +245,8 @@
             <span>Repeat weekly through the cohort term</span>
           </label>
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="button"
             [disabled]="saving() || !options()?.cohorts?.length"
             (click)="createSession()"

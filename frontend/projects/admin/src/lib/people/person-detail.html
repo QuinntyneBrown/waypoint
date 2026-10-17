@@ -255,7 +255,8 @@
                         </div>
                         <div class="account-actions">
                           <button
-                            class="w-btn w-btn--secondary"
+                            w-button
+                            variant="secondary"
                             type="button"
                             [disabled]="saving() || roleSelection() === person.role"
                             (click)="openRoleChange()"
@@ -263,7 +264,8 @@
                             Change role
                           </button>
                           <button
-                            class="w-btn w-btn--secondary"
+                            w-button
+                            variant="secondary"
                             type="button"
                             [disabled]="saving()"
                             (click)="sendPasswordReset()"
@@ -283,7 +285,8 @@
                             sessions stay revoked.
                           </p>
                           <button
-                            class="w-btn w-btn--primary"
+                            w-button
+                            variant="primary"
                             type="button"
                             [disabled]="saving()"
                             (click)="openAction('reactivate')"
@@ -296,7 +299,8 @@
                             records. It can be reversed.
                           </p>
                           <button
-                            class="w-btn w-btn--secondary"
+                            w-button
+                            variant="secondary"
                             type="button"
                             [disabled]="saving()"
                             (click)="openAction('deactivate')"
@@ -312,7 +316,8 @@
                             reversed.
                           </p>
                           <button
-                            class="w-btn w-btn--danger"
+                            w-button
+                            variant="danger"
                             type="button"
                             [disabled]="saving()"
                             (click)="openAction('remove')"
@@ -420,7 +425,8 @@
         </div>
         <div class="w-modal__footer">
           <button
-            class="w-btn w-btn--ghost"
+            w-button
+            variant="ghost"
             type="button"
             [disabled]="saving()"
             (click)="cancelAction()"
@@ -428,9 +434,14 @@
             Cancel
           </button>
           <button
-            class="w-btn"
-            [class.w-btn--danger]="action.kind === 'remove' || action.kind === 'deactivate'"
-            [class.w-btn--primary]="action.kind === 'role' || action.kind === 'reactivate'"
+            w-button
+            [variant]="
+              action.kind === 'remove' || action.kind === 'deactivate'
+                ? 'danger'
+                : action.kind === 'role' || action.kind === 'reactivate'
+                  ? 'primary'
+                  : 'neutral'
+            "
             type="button"
             [disabled]="
               saving() ||

@@ -50,7 +50,7 @@
               formControlName="emergencyContactPhone"
             />
           </div>
-          <button class="w-btn w-btn--primary" type="submit" [disabled]="saving()">
+          <button w-button variant="primary" type="submit" [disabled]="saving()">
             Save contact details
           </button>
         </form>
@@ -87,7 +87,8 @@
               </dl>
               <div class="w-cluster">
                 <button
-                  class="w-btn w-btn--secondary"
+                  w-button
+                  variant="secondary"
                   type="button"
                   [disabled]="saving()"
                   (click)="emailCopy(record.consentId)"
@@ -96,7 +97,8 @@
                 </button>
                 @if (!record.withdrawnAt) {
                   <button
-                    class="w-btn w-btn--danger"
+                    w-button
+                    variant="danger"
                     type="button"
                     [disabled]="saving()"
                     (click)="withdraw(record.consentId)"
@@ -139,7 +141,7 @@
                 </span>
                 <span>First-name captions</span>
               </label>
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="saving()">
+              <button w-button variant="primary" type="submit" [disabled]="saving()">
                 Save media consent
               </button>
             </form>

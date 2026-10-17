@@ -50,7 +50,7 @@
       <section class="w-mt-6" data-testid="mentor-roster-preview">
         <div class="w-cluster w-cluster--between w-mb-4">
           <h2 class="w-mb-0">My youth</h2>
-          <a class="w-btn w-btn--ghost" routerLink="/mentor/my-youth">View all youth</a>
+          <a w-button variant="ghost" routerLink="/mentor/my-youth">View all youth</a>
         </div>
         @if (youth().length === 0) {
           <div class="w-card w-empty">
@@ -91,7 +91,7 @@
       <section class="w-mt-6">
         <div class="w-cluster w-cluster--between w-mb-4">
           <h2 class="w-mb-0">Reviews queue</h2>
-          <a class="w-btn w-btn--ghost" routerLink="/mentor/reviews">Open queue</a>
+          <a w-button variant="ghost" routerLink="/mentor/reviews">Open queue</a>
         </div>
         @if (reviews().length === 0) {
           <div class="w-card w-empty">
@@ -116,7 +116,12 @@
                     } @else {
                       <span class="w-badge">No due date</span>
                     }
-                    <a class="w-btn w-btn--primary review-link" [routerLink]="review.reviewPath">
+                    <a
+                      w-button
+                      variant="primary"
+                      class="review-link"
+                      [routerLink]="review.reviewPath"
+                    >
                       Review
                     </a>
                   </div>

@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ApiError, ConsentService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WStatePage } from '@waypoint/components';
+import { WButton, WStatePage } from '@waypoint/components';
 
 // Traces to: L2-CONSENT-002
 @Component({
   selector: 'w-consent-required',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage],
+  imports: [WStatePage, WButton],
   template: `<w-state-page
     icon="shield"
     tone="warning"
@@ -16,7 +16,8 @@ import { WStatePage } from '@waypoint/components';
     text="Before you can start lessons, a parent or guardian needs to give participation consent. It only takes a minute — send them a secure link, or have them sign now."
   >
     <button
-      class="w-btn w-btn--primary"
+      w-button
+      variant="primary"
       type="button"
       [class.is-loading]="notifying()"
       (click)="notifyGuardian()"
@@ -24,10 +25,10 @@ import { WStatePage } from '@waypoint/components';
     >
       Notify my guardian
     </button>
-    <button class="w-btn w-btn--ghost" type="button" (click)="guardianSignNow()">
+    <button w-button variant="ghost" type="button" (click)="guardianSignNow()">
       My guardian can sign now
     </button>
-    <button class="w-btn w-btn--subtle" type="button" (click)="signOut()">Sign out</button>
+    <button w-button variant="subtle" type="button" (click)="signOut()">Sign out</button>
     @if (deliveryMessage(); as message) {
       <p class="w-alert w-alert--success" role="status" aria-live="polite">{{ message }}</p>
     }

@@ -5,13 +5,13 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, CodingLesson, CodingLessonStep, LearningService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import { WButton, WShell } from '@waypoint/components';
 
 // Traces to: L2-LEARN-008
 @Component({
   selector: 'w-youth-coding',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, ReactiveFormsModule],
+  imports: [WShell, RouterLink, ReactiveFormsModule, WButton],
   templateUrl: './youth-coding.html',
   styles: `
     .coding-layout {

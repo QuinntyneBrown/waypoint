@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, LearningService, ReflectionEditor, SaveReflectionInput } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import { WButton, WShell } from '@waypoint/components';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import {
   UnsavedChangesAware,
@@ -18,7 +18,7 @@ const OPTIONAL_PROMPT = 'One action I will take';
 @Component({
   selector: 'w-youth-reflection',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, ReactiveFormsModule],
+  imports: [WShell, RouterLink, ReactiveFormsModule, WButton],
   templateUrl: './youth-reflection.html',
   styles: `
     .mood-options {

@@ -24,11 +24,10 @@
           <div class="w-cluster" aria-label="Choose curriculum track">
             @for (track of view.tracks; track track.trackId) {
               <button
-                class="w-btn"
+                w-button
                 type="button"
                 data-testid="curriculum-track"
-                [class.w-btn--primary]="track.selected"
-                [class.w-btn--ghost]="!track.selected"
+                [variant]="track.selected ? 'primary' : 'ghost'"
                 [attr.aria-pressed]="track.selected"
                 [disabled]="switching()"
                 (click)="switchTrack(track.trackId)"

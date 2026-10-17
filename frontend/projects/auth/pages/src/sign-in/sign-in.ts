@@ -3,14 +3,14 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon } from '@waypoint/components';
+import { WButton, WIcon } from '@waypoint/components';
 import { switchMap } from 'rxjs';
 import { EntryResolver } from '../entry';
 
 @Component({
   selector: 'w-sign-in',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WIcon],
+  imports: [ReactiveFormsModule, RouterLink, WIcon, WButton],
   templateUrl: './sign-in.html',
 })
 export class SignIn {

@@ -16,7 +16,7 @@ import {
   StaffSessionAttendance,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WRole, WShell } from '@waypoint/components';
+import { WButton, WRole, WShell } from '@waypoint/components';
 import {
   EditorDraftService,
   UnsavedChangesAware,
@@ -29,7 +29,7 @@ import { AttendanceQueueService } from '@waypoint/core/attendance';
 @Component({
   selector: 'w-mentor-attendance-capture',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, RouterLink],
+  imports: [WShell, DatePipe, RouterLink, WButton],
   templateUrl: './mentor-attendance-capture.html',
   styles: `
     .attendance-summary {

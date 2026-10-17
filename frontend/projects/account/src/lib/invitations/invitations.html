@@ -89,7 +89,7 @@
                 <p class="w-error-text">Enter at least one email address.</p>
               }
             </div>
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="submitting()">
+            <button w-button variant="primary" type="submit" [disabled]="submitting()">
               <w-icon name="send" />{{ submitting() ? 'Sending…' : 'Send invitation' }}
             </button>
           </form>
@@ -142,7 +142,7 @@
               </div>
             }
           </div>
-          <button class="w-btn w-btn--ghost w-mb-4" type="button" (click)="applyFilters()">
+          <button w-button variant="ghost" class="w-mb-4" type="button" (click)="applyFilters()">
             Apply search
           </button>
 
@@ -183,7 +183,9 @@
                         @if (item.status === 'Pending' || item.status === 'Expired') {
                           <div class="invite-actions">
                             <button
-                              class="w-btn w-btn--ghost w-btn--sm"
+                              w-button
+                              variant="ghost"
+                              size="sm"
                               type="button"
                               (click)="resend(item)"
                             >
@@ -192,14 +194,18 @@
                             @if (revokeCandidate() === item.id) {
                               <span>Revoke now?</span>
                               <button
-                                class="w-btn w-btn--danger w-btn--sm"
+                                w-button
+                                variant="danger"
+                                size="sm"
                                 type="button"
                                 (click)="revoke(item)"
                               >
                                 Confirm
                               </button>
                               <button
-                                class="w-btn w-btn--ghost w-btn--sm"
+                                w-button
+                                variant="ghost"
+                                size="sm"
                                 type="button"
                                 (click)="revokeCandidate.set(null)"
                               >
@@ -207,7 +213,9 @@
                               </button>
                             } @else {
                               <button
-                                class="w-btn w-btn--ghost w-btn--sm"
+                                w-button
+                                variant="ghost"
+                                size="sm"
                                 type="button"
                                 (click)="confirmRevoke(item)"
                               >
@@ -236,7 +244,8 @@
             </div>
             <div class="w-cluster w-cluster--between w-mt-4">
               <button
-                class="w-btn w-btn--ghost"
+                w-button
+                variant="ghost"
                 type="button"
                 [disabled]="page() <= 1"
                 (click)="previous()"
@@ -245,7 +254,8 @@
               </button>
               <span class="w-muted">Page {{ page() }} · {{ total() }} total</span>
               <button
-                class="w-btn w-btn--ghost"
+                w-button
+                variant="ghost"
                 type="button"
                 [disabled]="page() * 25 >= total()"
                 (click)="next()"

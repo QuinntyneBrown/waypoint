@@ -7,8 +7,8 @@
       young people in our neighbourhoods can grow, belong, and lead.
     </p>
     <div class="w-cluster w-mt-6">
-      <a class="w-btn w-btn--primary w-btn--lg" routerLink="/apply">Apply now</a>
-      <a class="w-btn w-btn--ghost w-btn--lg" routerLink="/programs">Explore the programs</a>
+      <a w-button variant="primary" size="lg" routerLink="/apply">Apply now</a>
+      <a w-button variant="ghost" size="lg" routerLink="/programs">Explore the programs</a>
     </div>
   </div>
 </section>
@@ -21,7 +21,7 @@
   } @else if (error()) {
     <div class="w-alert w-alert--danger" role="alert">
       <p>{{ error() }}</p>
-      <button class="w-btn w-btn--ghost w-btn--sm" type="button" (click)="load()">Try again</button>
+      <button w-button variant="ghost" size="sm" type="button" (click)="load()">Try again</button>
     </div>
   } @else if (content(); as publicContent) {
     <div class="w-grid w-grid--4 w-mt-6">
@@ -62,7 +62,7 @@
     </div>
   }
   <div class="w-cluster w-mt-6">
-    <a class="w-btn w-btn--primary" routerLink="/apply">Start your application</a>
-    <a class="w-btn w-btn--ghost" routerLink="/get-involved">Get involved</a>
+    <a w-button variant="primary" routerLink="/apply">Start your application</a>
+    <a w-button variant="ghost" routerLink="/get-involved">Get involved</a>
   </div>
 </section>

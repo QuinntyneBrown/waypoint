@@ -13,13 +13,13 @@
           Keep growth stages in order and define the competencies mentors assess.
         </p>
       </div>
-      <button class="w-btn w-btn--primary" type="button" (click)="openStage()">Add stage</button>
+      <button w-button variant="primary" type="button" (click)="openStage()">Add stage</button>
     </header>
 
     @if (errorMessage(); as error) {
       <div class="w-alert w-alert--error" role="alert">
         <span>{{ error }}</span>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
@@ -49,7 +49,8 @@
                 </div>
                 <div class="w-actions stage-actions">
                   <button
-                    class="w-btn w-btn--ghost"
+                    w-button
+                    variant="ghost"
                     type="button"
                     [disabled]="stageIndex === 0 || busy()"
                     (click)="moveStage(stage.id, -1)"
@@ -57,18 +58,20 @@
                     Move stage up
                   </button>
                   <button
-                    class="w-btn w-btn--ghost"
+                    w-button
+                    variant="ghost"
                     type="button"
                     [disabled]="stageIndex === stages().length - 1 || busy()"
                     (click)="moveStage(stage.id, 1)"
                   >
                     Move stage down
                   </button>
-                  <button class="w-btn w-btn--secondary" type="button" (click)="openStage(stage)">
+                  <button w-button variant="secondary" type="button" (click)="openStage(stage)">
                     Edit stage
                   </button>
                   <button
-                    class="w-btn w-btn--primary"
+                    w-button
+                    variant="primary"
                     type="button"
                     (click)="openCompetency(stage.id)"
                   >
@@ -82,7 +85,9 @@
                   <li class="competency-row">
                     <span>{{ competency.name }}</span>
                     <button
-                      class="w-btn w-btn--danger w-btn--sm"
+                      w-button
+                      variant="danger"
+                      size="sm"
                       type="button"
                       [disabled]="busy()"
                       (click)="removeCompetency(competency)"
@@ -134,12 +139,10 @@
               ></textarea>
             </div>
             <div class="w-actions">
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+              <button w-button variant="primary" type="submit" [disabled]="busy()">
                 Save stage
               </button>
-              <button class="w-btn w-btn--ghost" type="button" (click)="closeStage()">
-                Cancel
-              </button>
+              <button w-button variant="ghost" type="button" (click)="closeStage()">Cancel</button>
             </div>
           </form>
         </div>
@@ -164,10 +167,10 @@
               <input class="w-input" id="competency-name" formControlName="name" />
             </div>
             <div class="w-actions">
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+              <button w-button variant="primary" type="submit" [disabled]="busy()">
                 Add competency
               </button>
-              <button class="w-btn w-btn--ghost" type="button" (click)="closeCompetency()">
+              <button w-button variant="ghost" type="button" (click)="closeCompetency()">
                 Cancel
               </button>
             </div>

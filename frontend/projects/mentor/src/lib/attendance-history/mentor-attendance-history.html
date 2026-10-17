@@ -13,7 +13,7 @@
         </h1>
         <p class="w-page__sub">Review turnout by session or attendance patterns by youth.</p>
       </div>
-      <a class="w-btn w-btn--primary" [routerLink]="calendarPath()">Open calendar</a>
+      <a w-button variant="primary" [routerLink]="calendarPath()">Open calendar</a>
     </div>
 
     @if (errorMessage(); as error) {
@@ -51,7 +51,8 @@
           </div>
           <div class="w-cluster">
             <button
-              class="w-btn w-btn--secondary"
+              w-button
+              variant="secondary"
               type="button"
               [disabled]="exporting()"
               (click)="export('csv')"
@@ -59,7 +60,8 @@
               Export CSV
             </button>
             <button
-              class="w-btn w-btn--secondary"
+              w-button
+              variant="secondary"
               type="button"
               [disabled]="exporting()"
               (click)="export('pdf')"
@@ -105,7 +107,7 @@
               (input)="to.set($any($event.target).value)"
             />
           </div>
-          <button class="w-btn w-btn--primary" type="button" (click)="load()">Apply filters</button>
+          <button w-button variant="primary" type="button" (click)="load()">Apply filters</button>
         </div>
 
         @if (loading()) {
@@ -148,7 +150,9 @@
                     </td>
                     <td>
                       <a
-                        class="w-btn w-btn--ghost w-btn--sm"
+                        w-button
+                        variant="ghost"
+                        size="sm"
                         [routerLink]="[attendanceBase(), row.sessionId]"
                       >
                         {{ row.marked ? 'Edit' : 'Take attendance' }}

@@ -15,7 +15,7 @@ import {
   ProgressBoard,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import { WButton, WIcon, WShell } from '@waypoint/components';
 import { debounceTime, filter, finalize, forkJoin, merge } from 'rxjs';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -23,7 +23,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
 @Component({
   selector: 'w-progress-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon],
+  imports: [WShell, WIcon, WButton],
   templateUrl: './progress-board.html',
   styles: `
     .board-filters {

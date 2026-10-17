@@ -10,7 +10,7 @@ import {
   WRoleName,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import { WButton, WIcon, WShell } from '@waypoint/components';
 import { Observable } from 'rxjs';
 import { shellRole } from '@waypoint/core';
 
@@ -26,7 +26,7 @@ const ROLES: readonly WRoleName[] = [
 @Component({
   selector: 'w-invitations',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, ReactiveFormsModule, WIcon, WShell],
+  imports: [DatePipe, ReactiveFormsModule, WIcon, WShell, WButton],
   templateUrl: './invitations.html',
   styles: `
     .invite-layout {

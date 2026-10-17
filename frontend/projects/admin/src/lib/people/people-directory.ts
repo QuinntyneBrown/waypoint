@@ -4,7 +4,7 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { ApiError, DirectoryCohort, PagedPeople, PeopleService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import { WButton, WIcon, WShell } from '@waypoint/components';
 import { catchError, debounceTime, of, switchMap, tap } from 'rxjs';
 
 interface DirectoryQuery {
@@ -18,7 +18,7 @@ interface DirectoryQuery {
 @Component({
   selector: 'w-people-directory',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, DatePipe],
+  imports: [WShell, WIcon, RouterLink, DatePipe, WButton],
   templateUrl: './people-directory.html',
   styles: `
     .directory-filters {

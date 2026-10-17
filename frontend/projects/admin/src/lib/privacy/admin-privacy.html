@@ -73,7 +73,9 @@
                 }
                 @if (item.status !== 'Completed') {
                   <button
-                    class="w-btn w-btn--secondary w-mt-3"
+                    w-button
+                    variant="secondary"
+                    class="w-mt-3"
                     type="button"
                     (click)="review(item)"
                   >
@@ -90,7 +92,8 @@
             }
             <div class="w-cluster w-cluster--between w-mt-4">
               <button
-                class="w-btn w-btn--ghost"
+                w-button
+                variant="ghost"
                 type="button"
                 [disabled]="page() <= 1"
                 (click)="previous()"
@@ -99,7 +102,8 @@
               </button>
               <span class="w-muted">Page {{ page() }} · {{ total() }} total</span>
               <button
-                class="w-btn w-btn--ghost"
+                w-button
+                variant="ghost"
                 type="button"
                 [disabled]="page() * 25 >= total()"
                 (click)="next()"
@@ -409,10 +413,10 @@
                 ></textarea>
               </div>
               <div class="w-cluster">
-                <button class="w-btn w-btn--primary" type="submit" [disabled]="submitting()">
+                <button w-button variant="primary" type="submit" [disabled]="submitting()">
                   {{ submitting() ? 'Completing…' : 'Complete request' }}
                 </button>
-                <button class="w-btn w-btn--ghost" type="button" (click)="selected.set(null)">
+                <button w-button variant="ghost" type="button" (click)="selected.set(null)">
                   Cancel
                 </button>
               </div>

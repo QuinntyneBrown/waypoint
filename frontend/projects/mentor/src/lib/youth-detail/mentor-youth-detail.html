@@ -120,7 +120,8 @@
                   <h2>Check-ins</h2>
                   <p>
                     <a
-                      class="w-btn w-btn--primary"
+                      w-button
+                      variant="primary"
                       [routerLink]="['/mentor/check-ins']"
                       [queryParams]="{ youthId: youth.id }"
                     >
@@ -159,7 +160,8 @@
                   <h2>Competencies</h2>
                   <p>
                     <a
-                      class="w-btn w-btn--primary"
+                      w-button
+                      variant="primary"
                       [routerLink]="['/mentor/youth', youth.id, 'competencies']"
                     >
                       Open competency tracker

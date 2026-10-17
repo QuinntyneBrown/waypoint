@@ -5,7 +5,7 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-container--narrow w-page">
-    <a class="w-btn w-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+    <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
 
     @if (errorMessage(); as error) {
       <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
@@ -29,7 +29,9 @@
         <div class="w-card__body w-cluster w-cluster--between">
           <div class="w-cluster" aria-label="Reading text size">
             <button
-              class="w-btn w-btn--sm reading-size-button"
+              w-button
+              size="sm"
+              class="reading-size-button"
               type="button"
               aria-label="Small text"
               [attr.aria-pressed]="textSize() === 'small'"
@@ -38,7 +40,9 @@
               A
             </button>
             <button
-              class="w-btn w-btn--sm reading-size-button"
+              w-button
+              size="sm"
+              class="reading-size-button"
               type="button"
               aria-label="Medium text"
               [attr.aria-pressed]="textSize() === 'medium'"
@@ -47,7 +51,9 @@
               A
             </button>
             <button
-              class="w-btn w-btn--sm reading-size-button"
+              w-button
+              size="sm"
+              class="reading-size-button"
               type="button"
               aria-label="Large text"
               [attr.aria-pressed]="textSize() === 'large'"
@@ -57,7 +63,8 @@
             </button>
           </div>
           <button
-            class="w-btn w-btn--ghost"
+            w-button
+            variant="ghost"
             type="button"
             aria-label="Bookmark lesson"
             [attr.aria-pressed]="bookmarked()"
@@ -106,7 +113,8 @@
                 <div class="w-alert w-alert--warning">
                   <p>The media could not be loaded. The full lesson text remains available.</p>
                   <button
-                    class="w-btn w-btn--ghost"
+                    w-button
+                    variant="ghost"
                     type="button"
                     (click)="retryMedia(media.mediaId)"
                   >
@@ -123,7 +131,7 @@
                   (error)="mediaFailed(media.mediaId)"
                 ></video>
               } @else {
-                <a class="w-btn w-btn--secondary" [href]="media.url" target="_blank" rel="noopener">
+                <a w-button variant="secondary" [href]="media.url" target="_blank" rel="noopener">
                   Open optional resource
                 </a>
               }
@@ -143,7 +151,9 @@
 
       @if (view.status !== 'done') {
         <button
-          class="w-btn w-btn--primary w-btn--block"
+          w-button
+          variant="primary"
+          block
           type="button"
           [disabled]="saving()"
           (click)="markComplete()"
@@ -151,7 +161,7 @@
           Mark lesson complete
         </button>
       } @else {
-        <a class="w-btn w-btn--primary w-btn--block" [routerLink]="['reflection']">
+        <a w-button variant="primary" block [routerLink]="['reflection']">
           Continue to reflection
         </a>
       }

@@ -29,10 +29,7 @@
             <p><w-icon name="map-pin" /> {{ session.location }}</p>
           }
           <p>{{ session.rosterCount }} on the roster</p>
-          <a
-            class="w-btn w-btn--primary"
-            [routerLink]="['/volunteer/attendance', session.sessionId]"
-          >
+          <a w-button variant="primary" [routerLink]="['/volunteer/attendance', session.sessionId]">
             Take attendance
           </a>
         </div>
@@ -46,7 +43,7 @@
         <p class="w-empty__text">
           You have no assigned session today. Check your schedule for what’s coming up.
         </p>
-        <a class="w-btn w-btn--secondary" routerLink="/volunteer/schedule">View schedule</a>
+        <a w-button variant="secondary" routerLink="/volunteer/schedule">View schedule</a>
       </div>
     }
   </div>

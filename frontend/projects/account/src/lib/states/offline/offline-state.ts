@@ -1,12 +1,12 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { WStatePage } from '@waypoint/components';
+import { WButton, WStatePage } from '@waypoint/components';
 
 // Traces to: L2-PLATFORM-012
 @Component({
   selector: 'w-offline-state',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage],
+  imports: [WStatePage, WButton],
   template: `<w-state-page
     icon="wifi-off"
     tone="warning"
@@ -14,7 +14,7 @@ import { WStatePage } from '@waypoint/components';
     title="No connection right now"
     text="Check your internet connection. Anything already loaded stays available, and we’ll reconnect automatically."
   >
-    <button class="w-btn w-btn--primary" type="button" (click)="retry()">Retry</button>
+    <button w-button variant="primary" type="button" (click)="retry()">Retry</button>
   </w-state-page>`,
 })
 export class OfflineState {

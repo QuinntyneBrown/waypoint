@@ -10,13 +10,13 @@ import {
   MessagingService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import { WButton, WIcon, WShell } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-007, L2-ENGAGE-007, L2-AUTH-010
 @Component({
   selector: 'w-mentor-flags',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, DatePipe],
+  imports: [WShell, WIcon, RouterLink, DatePipe, WButton],
   templateUrl: './mentor-flags.html',
   styles: `
     .raise-grid {

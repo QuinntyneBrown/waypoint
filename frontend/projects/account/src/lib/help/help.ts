@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import { WButton, WIcon, WShell } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 import { helpTopicsFor } from './help-content';
 
@@ -9,7 +9,7 @@ import { helpTopicsFor } from './help-content';
 @Component({
   selector: 'w-help',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, WIcon, WShell],
+  imports: [RouterLink, WIcon, WShell, WButton],
   templateUrl: './help.html',
   styles: `
     .help-search {

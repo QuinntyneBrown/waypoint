@@ -81,7 +81,9 @@
                 <td data-label="Submitted">{{ application.createdAt | date: 'MMM d, y' }}</td>
                 <td data-label="Action">
                   <button
-                    class="w-btn w-btn--secondary w-btn--sm"
+                    w-button
+                    variant="secondary"
+                    size="sm"
                     type="button"
                     (click)="openReview(application)"
                   >
@@ -246,11 +248,12 @@
         </div>
         <div class="w-modal__footer">
           @if (application.status !== 'Approved' && application.status !== 'Declined') {
-            <button class="w-btn w-btn--danger" type="button" (click)="reviewDecline()">
+            <button w-button variant="danger" type="button" (click)="reviewDecline()">
               Decline
             </button>
             <button
-              class="w-btn w-btn--primary"
+              w-button
+              variant="primary"
               type="button"
               [disabled]="!application.canApprove"
               (click)="reviewApproval()"
@@ -259,7 +262,7 @@
             </button>
           } @else {
             <span class="w-badge">{{ application.status }}</span>
-            <button class="w-btn w-btn--primary" type="button" (click)="closeReview()">Done</button>
+            <button w-button variant="primary" type="button" (click)="closeReview()">Done</button>
           }
         </div>
       </div>
@@ -308,13 +311,16 @@
           }
         </div>
         <div class="w-modal__footer">
-          <button class="w-btn w-btn--ghost" type="button" (click)="cancelDecision()">
-            Cancel
-          </button>
+          <button w-button variant="ghost" type="button" (click)="cancelDecision()">Cancel</button>
           <button
-            class="w-btn"
-            [class.w-btn--primary]="pendingDecision === 'approve'"
-            [class.w-btn--danger]="pendingDecision === 'decline'"
+            w-button
+            [variant]="
+              pendingDecision === 'decline'
+                ? 'danger'
+                : pendingDecision === 'approve'
+                  ? 'primary'
+                  : 'neutral'
+            "
             type="button"
             [disabled]="saving()"
             (click)="confirmDecision()"

@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthStore, roleHome } from '@waypoint/auth';
-import { WStatePage } from '@waypoint/components';
+import { WButton, WStatePage } from '@waypoint/components';
 import { FormDraftService } from '@waypoint/core';
 
 // Traces to: L2-PLATFORM-008
 @Component({
   selector: 'w-server-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink],
+  imports: [WStatePage, RouterLink, WButton],
   template: `<w-state-page
     icon="alert-triangle"
     tone="error"
@@ -16,8 +16,8 @@ import { FormDraftService } from '@waypoint/core';
     title="Something went wrong"
     text="We hit a snag on our end — nothing you did caused it. Please try again in a moment."
   >
-    <button class="w-btn w-btn--primary" type="button" (click)="retry()">Try again</button>
-    <a class="w-btn w-btn--ghost" [routerLink]="home">Back to home</a>
+    <button w-button variant="primary" type="button" (click)="retry()">Try again</button>
+    <a w-button variant="ghost" [routerLink]="home">Back to home</a>
   </w-state-page>`,
 })
 export class ServerError {

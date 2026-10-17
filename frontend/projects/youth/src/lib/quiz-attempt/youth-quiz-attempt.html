@@ -71,13 +71,14 @@
 
         <div class="w-actions w-actions--between">
           @if (currentIndex() > 0) {
-            <button class="w-btn w-btn--ghost" type="button" (click)="move(-1)">
+            <button w-button variant="ghost" type="button" (click)="move(-1)">
               Previous question
             </button>
           }
           @if (currentIndex() < view.questionCount - 1) {
             <button
-              class="w-btn w-btn--primary"
+              w-button
+              variant="primary"
               type="button"
               [disabled]="!answered(question.id) || saveStatus() === 'Saving answer…'"
               (click)="move(1)"
@@ -86,7 +87,8 @@
             </button>
           } @else {
             <button
-              class="w-btn w-btn--primary"
+              w-button
+              variant="primary"
               type="button"
               [disabled]="
                 !answered(question.id) || submitting() || saveStatus() === 'Saving answer…'

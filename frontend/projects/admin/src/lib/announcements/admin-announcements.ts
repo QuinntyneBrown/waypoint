@@ -11,14 +11,14 @@ import {
   ManagedAnnouncement,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import { WButton, WIcon, WShell } from '@waypoint/components';
 import { finalize, forkJoin } from 'rxjs';
 
 // Traces to: L2-ENGAGE-006, L2-AUTH-010, L2-NFR-001/009/010
 @Component({
   selector: 'w-admin-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, ReactiveFormsModule, DatePipe, PercentPipe],
+  imports: [WShell, WIcon, ReactiveFormsModule, DatePipe, PercentPipe, WButton],
   templateUrl: './admin-announcements.html',
   styles: `
     .announcement-layout {

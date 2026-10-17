@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ApiError, PublicSiteService } from '@waypoint/api';
-import { WIcon } from '@waypoint/components';
+import { WButton, WIcon } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -13,7 +13,7 @@ function isEmail(value: string): boolean {
 @Component({
   selector: 'w-contact',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WIcon],
+  imports: [ReactiveFormsModule, RouterLink, WIcon, WButton],
   templateUrl: './contact.html',
 })
 export class Contact {

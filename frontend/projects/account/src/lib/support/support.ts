@@ -11,14 +11,14 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ApiError, SUPPORT_CATEGORIES, SupportService, SupportScreenshot } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import { WButton, WIcon, WShell } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 
 // Traces to: L2-PLATFORM-005
 @Component({
   selector: 'w-support',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, ReactiveFormsModule, RouterLink, WIcon],
+  imports: [WShell, ReactiveFormsModule, RouterLink, WIcon, WButton],
   templateUrl: './support.html',
 })
 export class Support implements OnDestroy {

@@ -19,7 +19,7 @@
           <div class="w-alert__title">{{ error }}</div>
           Announcement information could not be loaded or saved.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
@@ -116,7 +116,9 @@
               </div>
             }
             <button
-              class="w-btn w-btn--primary announcement-submit"
+              w-button
+              variant="primary"
+              class="announcement-submit"
               type="submit"
               [disabled]="saving()"
             >

@@ -56,7 +56,9 @@
               </div>
             </dl>
             <button
-              class="w-btn w-btn--secondary w-mt-4"
+              w-button
+              variant="secondary"
+              class="w-mt-4"
               type="button"
               [disabled]="!canExport() || downloading()"
               (click)="downloadPersonalData()"
@@ -135,7 +137,7 @@
               Removal and consent requests may require follow-up so safeguarding and legal records
               are handled correctly.
             </p>
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="submitting()">
+            <button w-button variant="primary" type="submit" [disabled]="submitting()">
               {{ submitting() ? 'Sending…' : 'Submit request' }}
             </button>
           </form>
@@ -173,7 +175,9 @@
         }
         @if (hasMoreRequests()) {
           <button
-            class="w-btn w-btn--secondary w-mt-3"
+            w-button
+            variant="secondary"
+            class="w-mt-3"
             type="button"
             [disabled]="loadingMore()"
             (click)="loadMoreRequests()"

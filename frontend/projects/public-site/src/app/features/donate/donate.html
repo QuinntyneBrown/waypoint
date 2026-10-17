@@ -28,10 +28,9 @@
       <div class="w-cluster w-mt-2">
         @for (tier of tiers; track tier) {
           <button
+            w-button
             type="button"
-            class="w-btn"
-            [class.w-btn--primary]="selected() === tier"
-            [class.w-btn--ghost]="selected() !== tier"
+            [variant]="selected() === tier ? 'primary' : 'ghost'"
             [attr.aria-pressed]="selected() === tier"
             (click)="select(tier)"
           >
@@ -54,7 +53,9 @@
     }
 
     <button
-      class="w-btn w-btn--primary w-btn--lg"
+      w-button
+      variant="primary"
+      size="lg"
       type="submit"
       [class.is-loading]="submitting()"
       [disabled]="selected() === null || submitting()"
@@ -72,7 +73,10 @@
       </div>
     </div>
     <a
-      class="w-btn w-btn--primary w-btn--lg w-mt-4"
+      w-button
+      variant="primary"
+      size="lg"
+      class="w-mt-4"
       [href]="providerUrl()"
       target="_blank"
       rel="noopener noreferrer"

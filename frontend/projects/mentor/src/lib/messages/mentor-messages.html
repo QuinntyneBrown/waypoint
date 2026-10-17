@@ -55,7 +55,8 @@
                 [formControl]="search"
               />
               <button
-                class="w-btn w-btn--secondary"
+                w-button
+                variant="secondary"
                 type="button"
                 data-testid="open-broadcast"
                 [disabled]="view.groups.length === 0"
@@ -103,7 +104,13 @@
           <div class="thread-panel">
             @if (mode() === 'broadcast') {
               <div class="conversation-head">
-                <button class="w-btn w-btn--ghost mobile-back" type="button" (click)="showInbox()">
+                <button
+                  w-button
+                  variant="ghost"
+                  class="mobile-back"
+                  type="button"
+                  (click)="showInbox()"
+                >
                   Back to inbox
                 </button>
                 <h2 class="w-h3">Broadcast to my group</h2>
@@ -146,12 +153,18 @@
                 </div>
                 <div class="w-actions w-actions--between">
                   <span class="w-muted">{{ broadcastForm.controls.body.value.length }}/4000</span>
-                  <button class="w-btn w-btn--primary" type="submit">Review broadcast</button>
+                  <button w-button variant="primary" type="submit">Review broadcast</button>
                 </div>
               </form>
             } @else if (selectedConversation(); as conversation) {
               <div class="conversation-head">
-                <button class="w-btn w-btn--ghost mobile-back" type="button" (click)="showInbox()">
+                <button
+                  w-button
+                  variant="ghost"
+                  class="mobile-back"
+                  type="button"
+                  (click)="showInbox()"
+                >
                   Back to inbox
                 </button>
                 <h2 class="w-h3">{{ conversation.youthName }}</h2>
@@ -212,7 +225,7 @@
                 </div>
                 <div class="w-actions w-actions--between">
                   <span class="w-muted">{{ composer.controls.body.value.length }}/4000</span>
-                  <button class="w-btn w-btn--primary" type="submit" [disabled]="sending()">
+                  <button w-button variant="primary" type="submit" [disabled]="sending()">
                     {{ sending() ? 'Sending…' : 'Send message' }}
                   </button>
                 </div>
@@ -257,11 +270,12 @@
           <p class="message-body">{{ broadcastForm.controls.body.value }}</p>
         </div>
         <div class="w-modal__footer">
-          <button class="w-btn w-btn--ghost" type="button" (click)="reviewingBroadcast.set(false)">
+          <button w-button variant="ghost" type="button" (click)="reviewingBroadcast.set(false)">
             Cancel
           </button>
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="button"
             data-testid="confirm-broadcast"
             [disabled]="broadcasting()"

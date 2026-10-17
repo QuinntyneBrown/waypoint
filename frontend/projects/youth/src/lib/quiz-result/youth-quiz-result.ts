@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthQuizResult } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import { WButton, WShell } from '@waypoint/components';
 
 // Traces to: L2-LEARN-005
 @Component({
   selector: 'w-youth-quiz-result',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink],
+  imports: [WShell, RouterLink, WButton],
   templateUrl: './youth-quiz-result.html',
 })
 export class YouthQuizResultPage {

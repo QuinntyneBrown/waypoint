@@ -123,7 +123,7 @@
           <p class="w-help">Typing your name creates an electronic signature with date and time.</p>
         </div>
 
-        <button class="w-btn w-btn--primary" type="submit" [disabled]="submitting()">
+        <button w-button variant="primary" type="submit" [disabled]="submitting()">
           Sign and submit consent
         </button>
         @if (submitError(); as error) {

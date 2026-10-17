@@ -9,7 +9,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, VolunteerService, VolunteerRosterEntry } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import { WButton, WShell } from '@waypoint/components';
 import {
   EditorDraftService,
   UnsavedChangesAware,
@@ -28,7 +28,7 @@ interface AttendanceRow extends VolunteerRosterEntry {
 @Component({
   selector: 'w-volunteer-attendance',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink],
+  imports: [WShell, RouterLink, WButton],
   templateUrl: './volunteer-attendance.html',
   styles: [
     `

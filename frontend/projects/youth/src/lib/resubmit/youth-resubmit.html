@@ -12,16 +12,14 @@
       <div class="w-alert w-alert--warning w-stack" role="alert" data-testid="submission-conflict">
         <p>{{ conflict }}</p>
         <div>
-          <button class="w-btn w-btn--secondary" type="button" (click)="reviewLatest()">
+          <button w-button variant="secondary" type="button" (click)="reviewLatest()">
             Review latest feedback
           </button>
         </div>
       </div>
     }
     @if (submission(); as view) {
-      <a class="w-btn w-btn--ghost" [routerLink]="['/youth/submissions', view.id]"
-        >Back to status</a
-      >
+      <a w-button variant="ghost" [routerLink]="['/youth/submissions', view.id]">Back to status</a>
       <div class="w-page__head">
         <div class="w-page__titles">
           <div class="w-eyebrow">Needs revision</div>
@@ -48,7 +46,7 @@
           <label class="w-field__label" for="revised-link">Evidence link</label
           ><input id="revised-link" class="w-input" type="url" formControlName="linkUrl" />
         </div>
-        <button class="w-btn w-btn--primary w-btn--block" type="submit" [disabled]="saving()">
+        <button w-button variant="primary" block type="submit" [disabled]="saving()">
           Resubmit assignment
         </button>
       </form>

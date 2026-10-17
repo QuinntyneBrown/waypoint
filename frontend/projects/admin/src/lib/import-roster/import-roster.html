@@ -59,7 +59,7 @@
                 }}
               </div>
             </div>
-            <button class="w-btn w-btn--secondary" type="button" (click)="removeFile(fileInput)">
+            <button w-button variant="secondary" type="button" (click)="removeFile(fileInput)">
               Remove file
             </button>
           </div>
@@ -113,7 +113,8 @@
             <p class="w-error">{{ mappingMessage }}</p>
           }
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="button"
             [disabled]="mappingError() !== null || loading()"
             (click)="previewRoster()"
@@ -193,7 +194,8 @@
         </div>
         <div class="w-card__footer import-actions">
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="button"
             [disabled]="roster.ready === 0 || loading()"
             (click)="requestConfirmation()"
@@ -225,7 +227,7 @@
               <strong>{{ imported.invalid }}</strong> invalid
             </div>
           </div>
-          <a class="w-btn w-btn--secondary" href="/admin/people">View people</a>
+          <a w-button variant="secondary" href="/admin/people">View people</a>
         </div>
       </section>
     }
@@ -250,11 +252,12 @@
           </p>
         </div>
         <div class="w-modal__footer">
-          <button class="w-btn w-btn--ghost" type="button" (click)="cancelConfirmation()">
+          <button w-button variant="ghost" type="button" (click)="cancelConfirmation()">
             Cancel
           </button>
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="button"
             wuDialogInitialFocus
             [disabled]="loading()"

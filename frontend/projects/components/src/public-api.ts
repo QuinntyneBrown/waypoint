@@ -13,3 +13,4 @@ export * from './lib/states/w-state-page';
 export * from './lib/offline/offline.service';
 export * from './lib/deployment/deployment-urls';
 export * from './lib/dialog/w-accessible-dialog';
+export * from './lib/button/w-button';

@@ -3,13 +3,13 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink } from '@angular/router';
 import { VolunteerService, VolunteerTodayView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import { WButton, WIcon, WShell } from '@waypoint/components';
 
 // Traces to: L2-VOLUNTEER-001
 @Component({
   selector: 'w-volunteer-today',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DatePipe, WIcon],
+  imports: [WShell, RouterLink, DatePipe, WIcon, WButton],
   templateUrl: './volunteer-today.html',
 })
 export class VolunteerToday {

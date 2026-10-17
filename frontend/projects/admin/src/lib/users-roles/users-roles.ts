@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, PeopleService, PersonSummary, WRoleName } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAvatar, WIcon, WShell } from '@waypoint/components';
+import { WAvatar, WButton, WIcon, WShell } from '@waypoint/components';
 
 const ROLES: readonly WRoleName[] = [
   'Youth',
@@ -17,7 +17,7 @@ const ROLES: readonly WRoleName[] = [
 @Component({
   selector: 'w-users-roles',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, RouterLink, WAvatar, WIcon, WShell],
+  imports: [DatePipe, RouterLink, WAvatar, WIcon, WShell, WButton],
   templateUrl: './users-roles.html',
   styles: `
     .users-filters {

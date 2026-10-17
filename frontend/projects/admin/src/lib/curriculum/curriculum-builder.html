@@ -13,7 +13,7 @@
           Build tracks, ordered modules, lessons, assessments, and downloadable resources.
         </p>
       </div>
-      <button class="w-btn w-btn--primary" type="button" (click)="openTrackDialog()">
+      <button w-button variant="primary" type="button" (click)="openTrackDialog()">
         New track
       </button>
     </header>
@@ -21,7 +21,7 @@
     @if (errorMessage(); as error) {
       <div class="w-alert w-alert--error" role="alert">
         <span>{{ error }}</span>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
@@ -55,7 +55,8 @@
             </span>
             <span class="w-muted">{{ track.modules.length }} modules</span>
             <button
-              class="w-btn w-btn--primary"
+              w-button
+              variant="primary"
               type="button"
               [disabled]="busy()"
               (click)="publishTrack()"
@@ -105,11 +106,11 @@
             </select>
           </div>
           <div class="w-actions module-form__actions">
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+            <button w-button variant="primary" type="submit" [disabled]="busy()">
               {{ editingModuleId() ? 'Save module' : 'Add module' }}
             </button>
             @if (editingModuleId()) {
-              <button class="w-btn w-btn--ghost" type="button" (click)="cancelModuleEdit()">
+              <button w-button variant="ghost" type="button" (click)="cancelModuleEdit()">
                 Cancel edit
               </button>
             }
@@ -142,32 +143,31 @@
               </header>
 
               <div class="w-actions item-actions">
-                <button
-                  class="w-btn w-btn--secondary"
-                  type="button"
-                  (click)="openLesson(module.id)"
-                >
+                <button w-button variant="secondary" type="button" (click)="openLesson(module.id)">
                   Add lesson
                 </button>
                 <button
-                  class="w-btn w-btn--secondary"
+                  w-button
+                  variant="secondary"
                   type="button"
                   (click)="openQuizDialog(module.id)"
                 >
                   Add quiz
                 </button>
                 <button
-                  class="w-btn w-btn--secondary"
+                  w-button
+                  variant="secondary"
                   type="button"
                   (click)="openAssignment(module.id)"
                 >
                   Add assignment
                 </button>
-                <button class="w-btn w-btn--secondary" type="button" (click)="editModule(module)">
+                <button w-button variant="secondary" type="button" (click)="editModule(module)">
                   Edit module
                 </button>
                 <button
-                  class="w-btn w-btn--ghost"
+                  w-button
+                  variant="ghost"
                   type="button"
                   [disabled]="moduleIndex === 0 || busy()"
                   (click)="moveModule(module.id, -1)"
@@ -175,7 +175,8 @@
                   Move module up
                 </button>
                 <button
-                  class="w-btn w-btn--ghost"
+                  w-button
+                  variant="ghost"
                   type="button"
                   [disabled]="moduleIndex === track.modules.length - 1 || busy()"
                   (click)="moveModule(module.id, 1)"
@@ -183,7 +184,8 @@
                   Move module down
                 </button>
                 <button
-                  class="w-btn w-btn--primary"
+                  w-button
+                  variant="primary"
                   type="button"
                   [disabled]="busy()"
                   (click)="publishModule(module)"
@@ -220,7 +222,9 @@
                               {{ media.fileName }}
                             </a>
                             <button
-                              class="w-btn w-btn--ghost w-btn--sm"
+                              w-button
+                              variant="ghost"
+                              size="sm"
                               type="button"
                               (click)="removeMedia(lesson.id, media.id)"
                             >
@@ -241,14 +245,18 @@
                       />
                       <div class="w-actions">
                         <button
-                          class="w-btn w-btn--secondary w-btn--sm"
+                          w-button
+                          variant="secondary"
+                          size="sm"
                           type="button"
                           (click)="openLesson(module.id, lesson)"
                         >
                           Edit lesson
                         </button>
                         <button
-                          class="w-btn w-btn--ghost w-btn--sm"
+                          w-button
+                          variant="ghost"
+                          size="sm"
                           type="button"
                           [disabled]="lessonIndex === 0"
                           (click)="moveLesson(module, lesson.id, -1)"
@@ -256,7 +264,9 @@
                           Move lesson up
                         </button>
                         <button
-                          class="w-btn w-btn--ghost w-btn--sm"
+                          w-button
+                          variant="ghost"
+                          size="sm"
                           type="button"
                           [disabled]="lessonIndex === module.lessons.length - 1"
                           (click)="moveLesson(module, lesson.id, 1)"
@@ -264,14 +274,18 @@
                           Move lesson down
                         </button>
                         <button
-                          class="w-btn w-btn--primary w-btn--sm"
+                          w-button
+                          variant="primary"
+                          size="sm"
                           type="button"
                           (click)="publishLesson(lesson)"
                         >
                           Publish lesson
                         </button>
                         <button
-                          class="w-btn w-btn--danger w-btn--sm"
+                          w-button
+                          variant="danger"
+                          size="sm"
                           type="button"
                           (click)="archiveLesson(lesson)"
                         >
@@ -287,7 +301,9 @@
                         >
                           <span>Quiz · {{ quiz.questionCount }} questions</span>
                           <button
-                            class="w-btn w-btn--secondary w-btn--sm"
+                            w-button
+                            variant="secondary"
+                            size="sm"
                             type="button"
                             (click)="openQuiz(quiz.id)"
                           >
@@ -306,14 +322,18 @@
                           </span>
                           <div class="w-actions">
                             <button
-                              class="w-btn w-btn--secondary w-btn--sm"
+                              w-button
+                              variant="secondary"
+                              size="sm"
                               type="button"
                               (click)="openAssignment(module.id, assignment)"
                             >
                               Edit assignment
                             </button>
                             <button
-                              class="w-btn w-btn--primary w-btn--sm"
+                              w-button
+                              variant="primary"
+                              size="sm"
                               type="button"
                               (click)="publishAssignment(assignment)"
                             >
@@ -342,7 +362,9 @@
                         Quiz · {{ quiz.questionCount }} questions · pass {{ quiz.passMark }}%
                       </span>
                       <button
-                        class="w-btn w-btn--secondary w-btn--sm"
+                        w-button
+                        variant="secondary"
+                        size="sm"
                         type="button"
                         (click)="openQuiz(quiz.id)"
                       >
@@ -362,14 +384,18 @@
                       </span>
                       <div class="w-actions">
                         <button
-                          class="w-btn w-btn--secondary w-btn--sm"
+                          w-button
+                          variant="secondary"
+                          size="sm"
                           type="button"
                           (click)="openAssignment(module.id, assignment)"
                         >
                           Edit assignment
                         </button>
                         <button
-                          class="w-btn w-btn--primary w-btn--sm"
+                          w-button
+                          variant="primary"
+                          size="sm"
                           type="button"
                           (click)="publishAssignment(assignment)"
                         >
@@ -401,7 +427,7 @@
                 <p class="w-eyebrow">Assessment editor</p>
                 <h2>Quiz questions</h2>
               </div>
-              <button class="w-btn w-btn--ghost" type="button" (click)="selectedQuiz.set(null)">
+              <button w-button variant="ghost" type="button" (click)="selectedQuiz.set(null)">
                 Close quiz editor
               </button>
             </header>
@@ -440,7 +466,7 @@
                 <input type="checkbox" formControlName="requiredToCompleteModule" />
                 Required for module completion
               </label>
-              <button class="w-btn w-btn--secondary" type="submit">Save quiz settings</button>
+              <button w-button variant="secondary" type="submit">Save quiz settings</button>
             </form>
 
             <ol class="question-list">
@@ -452,7 +478,9 @@
                   </div>
                   <div class="w-actions">
                     <button
-                      class="w-btn w-btn--ghost w-btn--sm"
+                      w-button
+                      variant="ghost"
+                      size="sm"
                       type="button"
                       [disabled]="questionIndex === 0"
                       (click)="moveQuestion(question.id, -1)"
@@ -460,7 +488,9 @@
                       Move question up
                     </button>
                     <button
-                      class="w-btn w-btn--ghost w-btn--sm"
+                      w-button
+                      variant="ghost"
+                      size="sm"
                       type="button"
                       [disabled]="questionIndex === quiz.questions.length - 1"
                       (click)="moveQuestion(question.id, 1)"
@@ -518,7 +548,7 @@
                   <p class="w-help">One accepted answer per line.</p>
                 </div>
               }
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+              <button w-button variant="primary" type="submit" [disabled]="busy()">
                 Add question
               </button>
             </form>
@@ -563,10 +593,10 @@
               ></textarea>
             </div>
             <div class="w-actions">
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+              <button w-button variant="primary" type="submit" [disabled]="busy()">
                 Create track
               </button>
-              <button class="w-btn w-btn--ghost" type="button" (click)="trackDialogOpen.set(false)">
+              <button w-button variant="ghost" type="button" (click)="trackDialogOpen.set(false)">
                 Cancel
               </button>
             </div>
@@ -645,12 +675,10 @@
               ></textarea>
             </div>
             <div class="w-actions dialog-grid__wide">
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+              <button w-button variant="primary" type="submit" [disabled]="busy()">
                 {{ editingLessonId() ? 'Save lesson' : 'Create lesson' }}
               </button>
-              <button class="w-btn w-btn--ghost" type="button" (click)="closeLesson()">
-                Cancel
-              </button>
+              <button w-button variant="ghost" type="button" (click)="closeLesson()">Cancel</button>
             </div>
           </form>
         </div>
@@ -700,10 +728,10 @@
               Required for module completion
             </label>
             <div class="w-actions">
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+              <button w-button variant="primary" type="submit" [disabled]="busy()">
                 Create quiz
               </button>
-              <button class="w-btn w-btn--ghost" type="button" (click)="closeQuizDialog()">
+              <button w-button variant="ghost" type="button" (click)="closeQuizDialog()">
                 Cancel
               </button>
             </div>
@@ -810,7 +838,8 @@
                     />
                   </div>
                   <button
-                    class="w-btn w-btn--ghost"
+                    w-button
+                    variant="ghost"
                     type="button"
                     [disabled]="rubric.length === 1"
                     (click)="removeRubricRow(rubricIndex)"
@@ -819,15 +848,15 @@
                   </button>
                 </div>
               }
-              <button class="w-btn w-btn--secondary" type="button" (click)="addRubricRow()">
+              <button w-button variant="secondary" type="button" (click)="addRubricRow()">
                 Add rubric criterion
               </button>
             </fieldset>
             <div class="w-actions dialog-grid__wide">
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="busy()">
+              <button w-button variant="primary" type="submit" [disabled]="busy()">
                 {{ editingAssignmentId() ? 'Save assignment' : 'Create assignment' }}
               </button>
-              <button class="w-btn w-btn--ghost" type="button" (click)="closeAssignment()">
+              <button w-button variant="ghost" type="button" (click)="closeAssignment()">
                 Cancel
               </button>
             </div>
