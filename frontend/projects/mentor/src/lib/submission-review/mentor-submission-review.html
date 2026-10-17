@@ -13,7 +13,7 @@
       <div class="w-alert w-alert--warning w-stack" role="alert" data-testid="submission-conflict">
         <p>{{ conflict }}</p>
         <div>
-          <button class="w-btn w-btn--secondary" type="button" (click)="loadLatest()">
+          <button w-button variant="secondary" type="button" (click)="loadLatest()">
             Load latest review
           </button>
         </div>
@@ -109,7 +109,8 @@
             </label>
             <div class="w-actions review-actions">
               <button
-                class="w-btn w-btn--ghost"
+                w-button
+                variant="ghost"
                 type="button"
                 [disabled]="saving()"
                 (click)="submit('save-draft')"
@@ -117,7 +118,8 @@
                 Save draft
               </button>
               <button
-                class="w-btn w-btn--secondary"
+                w-button
+                variant="secondary"
                 type="button"
                 [disabled]="saving()"
                 (click)="submit('request-revision')"
@@ -125,7 +127,8 @@
                 Request revision
               </button>
               <button
-                class="w-btn w-btn--primary"
+                w-button
+                variant="primary"
                 type="button"
                 [disabled]="saving()"
                 (click)="submit('approve')"

@@ -21,7 +21,7 @@
           <div class="w-alert__title">{{ error }}</div>
           Settings could not be loaded or saved.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
@@ -116,7 +116,13 @@
             </div>
           </section>
         </div>
-        <button class="w-btn w-btn--primary w-mb-6" type="submit" [disabled]="savingSettings()">
+        <button
+          w-button
+          variant="primary"
+          class="w-mb-6"
+          type="submit"
+          [disabled]="savingSettings()"
+        >
           {{ savingSettings() ? 'Saving…' : 'Save organization settings' }}
         </button>
       </form>
@@ -148,7 +154,7 @@
                 <option value="Completed">Completed</option>
               </select>
             </div>
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="savingTerm()">
+            <button w-button variant="primary" type="submit" [disabled]="savingTerm()">
               @if (savingTerm()) {
                 Saving…
               } @else if (editingTermId()) {
@@ -159,7 +165,7 @@
             </button>
           </form>
           @if (editingTermId()) {
-            <button class="w-btn w-btn--ghost" type="button" (click)="cancelTermEdit()">
+            <button w-button variant="ghost" type="button" (click)="cancelTermEdit()">
               Cancel term edit
             </button>
           }
@@ -184,7 +190,9 @@
                     {{ term.status }}
                   </span>
                   <button
-                    class="w-btn w-btn--secondary w-btn--sm"
+                    w-button
+                    variant="secondary"
+                    size="sm"
                     type="button"
                     (click)="editTerm(term)"
                   >
@@ -226,7 +234,9 @@
                     {{ track.enabled ? 'Enabled' : 'Paused' }}
                   </span>
                   <button
-                    class="w-btn w-btn--secondary w-btn--sm"
+                    w-button
+                    variant="secondary"
+                    size="sm"
                     type="button"
                     [disabled]="savingTrackId() !== null"
                     (click)="toggleTrack(track)"

@@ -23,7 +23,7 @@
     @if (errorMessage(); as error) {
       <div class="w-alert w-alert--error" role="alert">
         <div>{{ error }}</div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="refresh()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="refresh()">Retry</button>
       </div>
     }
 
@@ -62,9 +62,10 @@
           </div>
         </div>
         <div class="board-actions">
-          <button class="w-btn w-btn--secondary" type="button" (click)="refresh()">Refresh</button>
+          <button w-button variant="secondary" type="button" (click)="refresh()">Refresh</button>
           <button
-            class="w-btn w-btn--secondary"
+            w-button
+            variant="secondary"
             type="button"
             [disabled]="!board()?.modules?.length || exporting() !== null"
             (click)="download('csv')"
@@ -72,7 +73,8 @@
             {{ exporting() === 'csv' ? 'Exporting…' : 'Export CSV' }}
           </button>
           <button
-            class="w-btn w-btn--secondary"
+            w-button
+            variant="secondary"
             type="button"
             [disabled]="!board()?.modules?.length || exporting() !== null"
             (click)="download('pdf')"

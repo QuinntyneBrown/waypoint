@@ -5,7 +5,7 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-container--narrow w-page">
-    <a class="w-btn w-btn--ghost" [routerLink]="['/youth/lessons', editor()?.lessonId]">
+    <a w-button variant="ghost" [routerLink]="['/youth/lessons', editor()?.lessonId]">
       Back to lesson
     </a>
 
@@ -100,14 +100,15 @@
 
         <div class="w-actions">
           <button
-            class="w-btn w-btn--secondary"
+            w-button
+            variant="secondary"
             type="button"
             [disabled]="saving()"
             (click)="saveDraft()"
           >
             Save draft
           </button>
-          <button class="w-btn w-btn--primary" type="submit" [disabled]="saving()">
+          <button w-button variant="primary" type="submit" [disabled]="saving()">
             Submit reflection
           </button>
         </div>

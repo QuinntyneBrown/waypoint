@@ -15,7 +15,8 @@
       </div>
       <div class="w-page__actions">
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           aria-label="Export filtered audit log as CSV"
           [disabled]="loading() || exporting()"
@@ -36,7 +37,7 @@
           <div class="w-alert__title">{{ error }}</div>
           Audit activity could not be loaded.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
 
@@ -86,7 +87,8 @@
             <input class="w-input" id="audit-to" type="date" formControlName="to" />
           </div>
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="submit"
             aria-label="Apply audit filters"
             [disabled]="loading()"
@@ -94,7 +96,8 @@
             Apply filters
           </button>
           <button
-            class="w-btn w-btn--ghost"
+            w-button
+            variant="ghost"
             type="button"
             aria-label="Clear audit filters"
             [disabled]="loading()"
@@ -127,7 +130,8 @@
               No audit events match the users, actions, or dates selected. Try widening the range.
             </p>
             <button
-              class="w-btn w-btn--secondary"
+              w-button
+              variant="secondary"
               type="button"
               aria-label="Clear audit filters"
               (click)="clearFilters()"
@@ -187,7 +191,8 @@
           </p>
           <div class="w-cluster">
             <button
-              class="w-btn w-btn--ghost"
+              w-button
+              variant="ghost"
               type="button"
               aria-label="Previous audit page"
               [disabled]="audit.page <= 1 || loading()"
@@ -196,7 +201,8 @@
               Previous
             </button>
             <button
-              class="w-btn w-btn--ghost"
+              w-button
+              variant="ghost"
               type="button"
               aria-label="Next audit page"
               [disabled]="audit.page >= pageCount() || loading()"

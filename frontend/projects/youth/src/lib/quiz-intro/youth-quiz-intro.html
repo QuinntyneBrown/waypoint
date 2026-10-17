@@ -5,7 +5,7 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-container--narrow w-page">
-    <a class="w-btn w-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+    <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
       <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
@@ -59,7 +59,7 @@
       @if (view.attemptsExhausted) {
         <p class="w-alert w-alert--warning">You have used all attempts for this quiz.</p>
       } @else {
-        <button class="w-btn w-btn--primary w-btn--block" type="button" (click)="begin()">
+        <button w-button variant="primary" block type="button" (click)="begin()">
           {{ view.hasInProgressAttempt ? 'Resume attempt' : 'Start attempt' }}
         </button>
       }

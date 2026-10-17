@@ -9,7 +9,7 @@ import {
   StaffOperationsService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WRole, WShell } from '@waypoint/components';
+import { WButton, WRole, WShell } from '@waypoint/components';
 
 type CalendarView = 'month' | 'week' | 'agenda';
 
@@ -17,7 +17,7 @@ type CalendarView = 'month' | 'week' | 'agenda';
 @Component({
   selector: 'w-mentor-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, RouterLink],
+  imports: [WShell, DatePipe, RouterLink, WButton],
   templateUrl: './mentor-calendar.html',
   styles: `
     .calendar-layout {

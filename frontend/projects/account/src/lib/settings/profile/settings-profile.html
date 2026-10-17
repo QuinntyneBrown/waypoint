@@ -57,7 +57,8 @@
     }
     @if (hasPhoto()) {
       <button
-        class="w-btn w-btn--ghost"
+        w-button
+        variant="ghost"
         type="button"
         [disabled]="removingPhoto()"
         (click)="removePhoto()"
@@ -67,7 +68,8 @@
     }
     <div>
       <button
-        class="w-btn w-btn--primary"
+        w-button
+        variant="primary"
         type="submit"
         [class.is-loading]="savingProfile()"
         [disabled]="savingProfile()"
@@ -136,7 +138,8 @@
     </div>
     <div>
       <button
-        class="w-btn w-btn--primary"
+        w-button
+        variant="primary"
         type="submit"
         [class.is-loading]="savingPassword()"
         [disabled]="!canChangePassword() || savingPassword()"

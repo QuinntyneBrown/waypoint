@@ -5,7 +5,7 @@
         <div class="w-eyebrow">Help</div>
         <h1 class="w-page__title">Contact support</h1>
       </div>
-      <a class="w-btn w-btn--ghost" routerLink="/help">Browse help articles</a>
+      <a w-button variant="ghost" routerLink="/help">Browse help articles</a>
     </div>
 
     @if (done()) {
@@ -88,7 +88,8 @@
           }
           @if (screenshot()) {
             <button
-              class="w-btn w-btn--ghost"
+              w-button
+              variant="ghost"
               type="button"
               [disabled]="uploading()"
               (click)="removeScreenshot()"
@@ -99,7 +100,8 @@
         </div>
         <div>
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="submit"
             [class.is-loading]="submitting()"
             [disabled]="submitting() || uploading()"

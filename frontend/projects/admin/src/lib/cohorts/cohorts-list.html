@@ -11,7 +11,7 @@
         <h1 class="w-page__title">Cohorts</h1>
         <p class="w-page__sub">Create cohorts and manage their membership and lead mentor.</p>
       </div>
-      <button class="w-btn w-btn--primary" type="button" (click)="openCreate()">New cohort</button>
+      <button w-button variant="primary" type="button" (click)="openCreate()">New cohort</button>
     </div>
 
     @if (errorMessage(); as error) {
@@ -20,7 +20,7 @@
           <div class="w-alert__title">{{ error }}</div>
           Cohort data could not be loaded or saved.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
@@ -64,9 +64,7 @@
         <div class="w-empty__icon"><w-icon name="layers" /></div>
         <h2 class="w-empty__title">No cohorts yet</h2>
         <p class="w-empty__text">Create the first cohort to begin placing young people.</p>
-        <button class="w-btn w-btn--primary" type="button" (click)="openCreate()">
-          New cohort
-        </button>
+        <button w-button variant="primary" type="button" (click)="openCreate()">New cohort</button>
       </div>
     }
   </div>
@@ -164,19 +162,15 @@
         </div>
         <div class="w-modal__footer">
           <button
-            class="w-btn w-btn--ghost"
+            w-button
+            variant="ghost"
             type="button"
             [disabled]="saving()"
             (click)="closeCreate()"
           >
             Cancel
           </button>
-          <button
-            class="w-btn w-btn--primary"
-            type="button"
-            [disabled]="saving()"
-            (click)="create()"
-          >
+          <button w-button variant="primary" type="button" [disabled]="saving()" (click)="create()">
             {{ saving() ? 'Creating…' : 'Create cohort' }}
           </button>
         </div>

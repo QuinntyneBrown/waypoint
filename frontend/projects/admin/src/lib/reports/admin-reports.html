@@ -16,7 +16,8 @@
       </div>
       <div class="w-page__actions">
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           aria-label="Export current report as CSV"
           [disabled]="!canExport() || exporting() !== null"
@@ -25,7 +26,8 @@
           {{ exporting() === 'csv' ? 'Preparing CSV…' : 'Export CSV' }}
         </button>
         <button
-          class="w-btn w-btn--primary"
+          w-button
+          variant="primary"
           type="button"
           aria-label="Export current report as PDF"
           [disabled]="!canExport() || exporting() !== null"
@@ -46,7 +48,7 @@
           <div class="w-alert__title">{{ error }}</div>
           Report data could not be loaded.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
 
@@ -92,7 +94,7 @@
               }
             </select>
           </div>
-          <button class="w-btn w-btn--primary" type="submit">Apply report filters</button>
+          <button w-button variant="primary" type="submit">Apply report filters</button>
         </form>
         @if (dateError(); as message) {
           <p class="w-error" role="alert">{{ message }}</p>
@@ -246,7 +248,7 @@
                 }
               </select>
             </div>
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="loadingDetail()">
+            <button w-button variant="primary" type="submit" [disabled]="loadingDetail()">
               Generate youth report
             </button>
           </div>
@@ -391,7 +393,7 @@
                 }
               </select>
             </div>
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="loadingDetail()">
+            <button w-button variant="primary" type="submit" [disabled]="loadingDetail()">
               Generate cohort report
             </button>
           </div>

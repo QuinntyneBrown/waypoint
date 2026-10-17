@@ -13,7 +13,8 @@
       </div>
       @if (unreadCount() > 0) {
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           [disabled]="saving()"
           (click)="markAllRead()"

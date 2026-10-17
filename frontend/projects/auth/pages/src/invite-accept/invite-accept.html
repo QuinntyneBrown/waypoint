@@ -89,7 +89,11 @@
             <p class="w-error-text">Agreement is required to join.</p>
           }
           <button
-            class="w-btn w-btn--primary w-btn--block w-btn--lg w-mt-5"
+            w-button
+            variant="primary"
+            block
+            size="lg"
+            class="w-mt-5"
             type="submit"
             [disabled]="submitting()"
           >
@@ -115,7 +119,8 @@
             </p>
           } @else {
             <button
-              class="w-btn w-btn--primary"
+              w-button
+              variant="primary"
               type="button"
               [disabled]="requesting() || !token"
               (click)="requestReplacement()"
@@ -123,7 +128,7 @@
               {{ requesting() ? 'Requesting…' : 'Request a new invite' }}
             </button>
           }
-          <a class="w-btn w-btn--ghost w-mt-3" routerLink="/auth/sign-in">Back to sign in</a>
+          <a w-button variant="ghost" class="w-mt-3" routerLink="/auth/sign-in">Back to sign in</a>
         </div>
       }
     }

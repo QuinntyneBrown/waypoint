@@ -19,7 +19,7 @@ import {
   MessagingService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
+import { WAccessibleDialog, WButton, WIcon, WShell } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
 type MessageMode = 'thread' | 'broadcast';
@@ -28,7 +28,7 @@ type MessageMode = 'thread' | 'broadcast';
 @Component({
   selector: 'w-mentor-messages',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, DatePipe, ReactiveFormsModule],
+  imports: [WShell, WIcon, WAccessibleDialog, DatePipe, ReactiveFormsModule, WButton],
   templateUrl: './mentor-messages.html',
   styles: `
     .messages-layout {

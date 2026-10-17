@@ -9,7 +9,7 @@
         We’ve received your details. Our team will reach out about next steps, including the
         screening and reference check every youth volunteer completes before starting.
       </p>
-      <a class="w-btn w-btn--primary" routerLink="/">Back to home</a>
+      <a w-button variant="primary" routerLink="/">Back to home</a>
     </div>
   } @else {
     <div class="w-eyebrow">Get involved</div>
@@ -27,7 +27,7 @@
             Prefer to give? A recurring gift keeps cohorts running and mentors resourced all year
             long.
           </p>
-          <a class="w-btn w-btn--secondary" routerLink="/donate">Donate</a>
+          <a w-button variant="secondary" routerLink="/donate">Donate</a>
         </div>
       </div>
       <div class="w-card">
@@ -36,7 +36,7 @@
           <p class="w-muted">
             Not sure where you’d fit? Reach out and we’ll help you find a place.
           </p>
-          <a class="w-btn w-btn--secondary" routerLink="/contact">Talk to our team</a>
+          <a w-button variant="secondary" routerLink="/contact">Talk to our team</a>
         </div>
       </div>
     </div>
@@ -98,7 +98,9 @@
       </div>
 
       <button
-        class="w-btn w-btn--primary w-btn--lg"
+        w-button
+        variant="primary"
+        size="lg"
         type="submit"
         [class.is-loading]="submitting()"
         [disabled]="submitting()"

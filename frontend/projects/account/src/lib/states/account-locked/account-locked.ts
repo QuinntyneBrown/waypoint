@@ -1,13 +1,13 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, WStatePage } from '@waypoint/components';
+import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, WButton, WStatePage } from '@waypoint/components';
 
 // Traces to: L2-AUTH-006
 @Component({
   selector: 'w-account-locked',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink],
+  imports: [WStatePage, RouterLink, WButton],
   template: `<w-state-page
     icon="lock"
     tone="error"
@@ -15,8 +15,8 @@ import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, WStatePage } from '@waypoint/c
     title="Too many sign-in attempts"
     [text]="message"
   >
-    <a class="w-btn w-btn--primary" routerLink="/auth/forgot-password">Reset password</a>
-    <a class="w-btn w-btn--ghost" [href]="contactUrl">Contact your mentor</a>
+    <a w-button variant="primary" routerLink="/auth/forgot-password">Reset password</a>
+    <a w-button variant="ghost" [href]="contactUrl">Contact your mentor</a>
   </w-state-page>`,
 })
 export class AccountLocked {

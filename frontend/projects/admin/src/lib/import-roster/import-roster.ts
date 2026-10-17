@@ -9,7 +9,7 @@ import {
   RosterPreview,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
+import { WAccessibleDialog, WButton, WIcon, WShell } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
 interface ImportColumn {
@@ -22,7 +22,7 @@ interface ImportColumn {
 @Component({
   selector: 'w-import-roster',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, FormsModule],
+  imports: [WShell, WIcon, WAccessibleDialog, FormsModule, WButton],
   templateUrl: './import-roster.html',
   styles: `
     .import-columns,

@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiError, LearningService, YouthQuizAttempt, YouthQuizQuestion } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import { WButton, WShell } from '@waypoint/components';
 
 type QuizAnswers = Record<string, number[] | string>;
 
@@ -11,7 +11,7 @@ type QuizAnswers = Record<string, number[] | string>;
 @Component({
   selector: 'w-youth-quiz-attempt',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell],
+  imports: [WShell, WButton],
   templateUrl: './youth-quiz-attempt.html',
 })
 export class YouthQuizAttemptPage {

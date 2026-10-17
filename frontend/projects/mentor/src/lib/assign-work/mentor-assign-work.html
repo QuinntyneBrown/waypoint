@@ -174,7 +174,9 @@
             </div>
             <div class="w-actions">
               <button
-                class="w-btn w-btn--primary review-button"
+                w-button
+                variant="primary"
+                class="review-button"
                 type="button"
                 [disabled]="filteredItems().length === 0"
                 (click)="review()"
@@ -260,7 +262,8 @@
         </div>
         <div class="w-modal__footer">
           <button
-            class="w-btn w-btn--ghost"
+            w-button
+            variant="ghost"
             type="button"
             wuDialogInitialFocus
             (click)="cancelReview()"
@@ -268,7 +271,9 @@
             Cancel
           </button>
           <button
-            class="w-btn w-btn--primary confirm-button"
+            w-button
+            variant="primary"
+            class="confirm-button"
             type="button"
             [disabled]="saving()"
             (click)="confirm()"

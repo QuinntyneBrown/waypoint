@@ -10,12 +10,13 @@ import {
 } from '@waypoint/api';
 import { forkJoin } from 'rxjs';
 import { SettingsShell } from '../settings-shell';
+import { WButton } from '@waypoint/components';
 
 // Traces to: L2-NFR-003
 @Component({
   selector: 'w-settings-privacy',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, ReactiveFormsModule, SettingsShell],
+  imports: [DatePipe, ReactiveFormsModule, SettingsShell, WButton],
   templateUrl: './settings-privacy.html',
   styles: `
     .privacy-grid {

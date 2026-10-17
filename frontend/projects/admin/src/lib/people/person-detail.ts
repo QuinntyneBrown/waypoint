@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, PeopleService, PersonDetail } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
+import { WAccessibleDialog, WButton, WIcon, WShell } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 
 type PersonTab = 'profile' | 'guardian' | 'progress' | 'attendance' | 'notes' | 'account';
@@ -17,7 +17,7 @@ type LifecycleAction =
 @Component({
   selector: 'w-person-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe],
+  imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe, WButton],
   templateUrl: './person-detail.html',
   styles: `
     .record-grid {

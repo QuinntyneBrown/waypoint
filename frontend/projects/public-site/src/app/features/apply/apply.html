@@ -9,7 +9,7 @@
         Thanks for applying to Waypoint! We’ll review your application and reach out with next
         steps. You don’t have an account yet — we’ll set one up once you’re accepted into a cohort.
       </p>
-      <a class="w-btn w-btn--primary" routerLink="/">Back to home</a>
+      <a w-button variant="primary" routerLink="/">Back to home</a>
     </div>
   } @else {
     <div class="w-eyebrow">Apply</div>
@@ -186,7 +186,9 @@
       </div>
 
       <button
-        class="w-btn w-btn--primary w-btn--lg"
+        w-button
+        variant="primary"
+        size="lg"
         type="submit"
         [class.is-loading]="submitting()"
         [disabled]="submitting()"

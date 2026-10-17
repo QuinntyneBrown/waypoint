@@ -11,7 +11,7 @@
         <h1 class="w-page__title">Take attendance</h1>
         <p class="w-page__sub">Only names and Present/Absent attendance are shown.</p>
       </div>
-      <a class="w-btn w-btn--ghost" routerLink="/volunteer/home">Back to today</a>
+      <a w-button variant="ghost" routerLink="/volunteer/home">Back to today</a>
     </div>
 
     @if (rows() === undefined) {
@@ -34,10 +34,10 @@
 
       <div class="w-cluster w-cluster--between">
         <div class="w-cluster">
-          <button class="w-btn w-btn--secondary" type="button" (click)="markAll('Present')">
+          <button w-button variant="secondary" type="button" (click)="markAll('Present')">
             All present
           </button>
-          <button class="w-btn w-btn--ghost" type="button" (click)="markAll(null)">Clear</button>
+          <button w-button variant="ghost" type="button" (click)="markAll(null)">Clear</button>
         </div>
         @if (queue.pendingCount() > 0) {
           <span class="w-badge w-badge--warning"> {{ queue.pendingCount() }} pending sync </span>
@@ -55,7 +55,8 @@
                 [attr.aria-label]="'Attendance for ' + row.name"
               >
                 <button
-                  class="w-btn w-btn--secondary"
+                  w-button
+                  variant="secondary"
                   [class.is-selected]="row.mark === 'Present'"
                   [attr.aria-pressed]="row.mark === 'Present'"
                   type="button"
@@ -64,7 +65,8 @@
                   Present
                 </button>
                 <button
-                  class="w-btn w-btn--secondary"
+                  w-button
+                  variant="secondary"
                   [class.is-selected]="row.mark === 'Absent'"
                   [attr.aria-pressed]="row.mark === 'Absent'"
                   type="button"
@@ -92,10 +94,10 @@
               apply your queued selections or keep the newer server attendance.
             </p>
             <div class="w-cluster">
-              <button class="w-btn w-btn--primary" type="button" (click)="applyQueuedConflict()">
+              <button w-button variant="primary" type="button" (click)="applyQueuedConflict()">
                 Apply my changes
               </button>
-              <button class="w-btn w-btn--secondary" type="button" (click)="keepServerAttendance()">
+              <button w-button variant="secondary" type="button" (click)="keepServerAttendance()">
                 Keep server attendance
               </button>
             </div>
@@ -115,7 +117,8 @@
           }
         </span>
         <button
-          class="w-btn w-btn--primary"
+          w-button
+          variant="primary"
           type="button"
           [disabled]="marked() !== total() || total() === 0 || saving()"
           (click)="save()"

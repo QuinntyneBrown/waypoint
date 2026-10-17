@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthStore, roleHome } from '@waypoint/auth';
-import { WStatePage } from '@waypoint/components';
+import { WButton, WStatePage } from '@waypoint/components';
 
 // Traces to: L2-PLATFORM-007
 @Component({
   selector: 'w-not-found',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink],
+  imports: [WStatePage, RouterLink, WButton],
   template: `<w-state-page
     icon="compass"
     tone="info"
@@ -15,7 +15,7 @@ import { WStatePage } from '@waypoint/components';
     title="Page not found"
     text="The page you’re looking for moved or never existed. Let’s get you back on track."
   >
-    <a class="w-btn w-btn--primary" [routerLink]="home">Back to safety</a>
+    <a w-button variant="primary" [routerLink]="home">Back to safety</a>
   </w-state-page>`,
 })
 export class NotFound {

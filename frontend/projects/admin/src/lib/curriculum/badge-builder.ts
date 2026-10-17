@@ -18,7 +18,7 @@ import {
   TrackWorkspace,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WShell } from '@waypoint/components';
+import { WAccessibleDialog, WButton, WShell } from '@waypoint/components';
 import { finalize, forkJoin, of, switchMap } from 'rxjs';
 import {
   EditorDraftService,
@@ -37,7 +37,7 @@ interface BadgeTarget {
 @Component({
   selector: 'w-badge-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WAccessibleDialog, ReactiveFormsModule],
+  imports: [WShell, WAccessibleDialog, ReactiveFormsModule, WButton],
   templateUrl: './badge-builder.html',
   styleUrl: './curriculum-admin.css',
 })

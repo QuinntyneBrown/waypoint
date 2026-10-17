@@ -21,7 +21,7 @@
           <div class="w-alert__title">{{ error }}</div>
           Mentor assignments could not be loaded or saved.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
@@ -73,7 +73,8 @@
                 </select>
               </div>
               <button
-                class="w-btn w-btn--primary"
+                w-button
+                variant="primary"
                 type="button"
                 [disabled]="saving() !== null || !youthId() || !mentorId()"
                 (click)="assignMentor()"
@@ -151,7 +152,8 @@
                 </div>
               </fieldset>
               <button
-                class="w-btn w-btn--primary"
+                w-button
+                variant="primary"
                 type="button"
                 [disabled]="saving() !== null || !cohortId() || !leadMentorId()"
                 (click)="saveCohortTeam()"

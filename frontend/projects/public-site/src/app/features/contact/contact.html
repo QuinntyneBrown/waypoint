@@ -9,7 +9,7 @@
         Thanks for reaching out! We’ve received your message and someone from our team will get back
         to you soon.
       </p>
-      <a class="w-btn w-btn--primary" routerLink="/">Back to home</a>
+      <a w-button variant="primary" routerLink="/">Back to home</a>
     </div>
   } @else {
     <div class="w-eyebrow">Contact</div>
@@ -76,7 +76,9 @@
       </div>
 
       <button
-        class="w-btn w-btn--primary w-btn--lg"
+        w-button
+        variant="primary"
+        size="lg"
         type="submit"
         [class.is-loading]="submitting()"
         [disabled]="submitting()"

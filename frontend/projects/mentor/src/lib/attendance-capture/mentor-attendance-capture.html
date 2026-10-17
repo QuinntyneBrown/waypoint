@@ -17,8 +17,8 @@
         }
       </div>
       <div class="w-cluster">
-        <a class="w-btn w-btn--ghost" [routerLink]="calendarPath()">Calendar</a>
-        <a class="w-btn w-btn--ghost" [routerLink]="historyPath()">History</a>
+        <a w-button variant="ghost" [routerLink]="calendarPath()">Calendar</a>
+        <a w-button variant="ghost" [routerLink]="historyPath()">History</a>
       </div>
     </div>
 
@@ -50,10 +50,10 @@
 
       <div class="w-cluster w-cluster--between">
         <div class="w-cluster">
-          <button class="w-btn w-btn--secondary" type="button" (click)="markAll('Present')">
+          <button w-button variant="secondary" type="button" (click)="markAll('Present')">
             All present
           </button>
-          <button class="w-btn w-btn--ghost" type="button" (click)="markAll(null)">Clear</button>
+          <button w-button variant="ghost" type="button" (click)="markAll(null)">Clear</button>
         </div>
         @if (queue.pendingCount() > 0) {
           <span class="w-badge w-badge--warning">{{ queue.pendingCount() }} pending sync</span>
@@ -72,7 +72,8 @@
               >
                 @for (status of statuses; track status) {
                   <button
-                    class="w-btn w-btn--secondary"
+                    w-button
+                    variant="secondary"
                     type="button"
                     [class.is-selected]="row.mark === status"
                     [attr.aria-pressed]="row.mark === status"
@@ -110,10 +111,10 @@
             <strong>Choose which attendance to keep</strong>
             <p>A newer server edit conflicts with your queued change. Review before choosing.</p>
             <div class="w-cluster">
-              <button class="w-btn w-btn--primary" type="button" (click)="applyQueuedConflict()">
+              <button w-button variant="primary" type="button" (click)="applyQueuedConflict()">
                 Apply my changes
               </button>
-              <button class="w-btn w-btn--secondary" type="button" (click)="keepServerAttendance()">
+              <button w-button variant="secondary" type="button" (click)="keepServerAttendance()">
                 Keep server attendance
               </button>
             </div>
@@ -127,7 +128,8 @@
       <div class="w-cluster w-cluster--between">
         <span class="w-muted">{{ dirty() ? 'Unsaved changes' : 'Changes saved' }}</span>
         <button
-          class="w-btn w-btn--primary"
+          w-button
+          variant="primary"
           type="button"
           [disabled]="marked() !== total() || total() === 0 || saving()"
           (click)="save()"

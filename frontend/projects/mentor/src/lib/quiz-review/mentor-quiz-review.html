@@ -111,7 +111,9 @@
                 <p class="w-help">Leave blank to approve the {{ item.autoScore }}% auto-score.</p>
               </div>
               <button
-                class="w-btn w-btn--primary approve-button"
+                w-button
+                variant="primary"
+                class="approve-button"
                 type="button"
                 [disabled]="approving()"
                 (click)="approve()"

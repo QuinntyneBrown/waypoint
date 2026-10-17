@@ -120,7 +120,7 @@
 
     <div class="w-cluster w-cluster--between w-mt-6">
       @if (step() > 1) {
-        <button class="w-btn w-btn--ghost" type="button" (click)="back()">
+        <button w-button variant="ghost" type="button" (click)="back()">
           <w-icon name="chevron-left" />Back
         </button>
       } @else {
@@ -128,12 +128,13 @@
       }
 
       @if (step() < 3) {
-        <button class="w-btn w-btn--primary" type="button" (click)="next()">
+        <button w-button variant="primary" type="button" (click)="next()">
           Next<w-icon name="chevron-right" />
         </button>
       } @else {
         <button
-          class="w-btn w-btn--primary"
+          w-button
+          variant="primary"
           type="button"
           [class.is-loading]="saving()"
           [disabled]="saving()"
@@ -145,7 +146,7 @@
     </div>
 
     <p class="w-text-c w-mt-6 w-text-sm">
-      <button class="w-btn w-btn--link" type="button" (click)="skip()">Skip for now</button>
+      <button w-button variant="link" type="button" (click)="skip()">Skip for now</button>
     </p>
   </div>
 </div>

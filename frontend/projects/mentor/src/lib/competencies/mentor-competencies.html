@@ -111,7 +111,9 @@
                   }
                 </div>
                 <button
-                  class="w-btn w-btn--primary save-button"
+                  w-button
+                  variant="primary"
+                  class="save-button"
                   type="button"
                   [disabled]="savingId() !== null"
                   (click)="save(item)"

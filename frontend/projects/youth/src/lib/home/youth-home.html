@@ -28,7 +28,7 @@
             Your mentor will place you in a cohort soon. Once you’re placed, your lessons and
             journey unlock here. Reach out if you have questions.
           </p>
-          <a class="w-btn w-btn--primary" routerLink="/youth/messages">
+          <a w-button variant="primary" routerLink="/youth/messages">
             <w-icon name="message-square" />Message your mentor
           </a>
         </div>
@@ -47,14 +47,14 @@
                     }
                   </p>
                   <div class="w-actions">
-                    <a class="w-btn w-btn--primary" [routerLink]="learning.targetPath">
+                    <a w-button variant="primary" [routerLink]="learning.targetPath">
                       {{ learning.status === 'in-progress' ? 'Resume learning' : 'Start learning' }}
                     </a>
-                    <a class="w-btn w-btn--ghost" routerLink="/youth/curriculum">View curriculum</a>
+                    <a w-button variant="ghost" routerLink="/youth/curriculum">View curriculum</a>
                   </div>
                 } @else {
                   <p>Your published learning is complete. Beautiful work.</p>
-                  <a class="w-btn w-btn--primary" routerLink="/youth/journey">View my journey</a>
+                  <a w-button variant="primary" routerLink="/youth/journey">View my journey</a>
                 }
               </div>
               <div class="w-scripture">
@@ -88,7 +88,7 @@
                   <div class="w-progress__fill"></div>
                 </div>
                 <p>{{ view.completedItems }} of {{ view.totalItems }} required items complete.</p>
-                <a class="w-btn w-btn--ghost" routerLink="/youth/progress">See all progress</a>
+                <a w-button variant="ghost" routerLink="/youth/progress">See all progress</a>
               </div>
             </section>
 
@@ -123,12 +123,12 @@
                       }}</span
                     >
                   }
-                  <a class="w-btn w-btn--ghost" routerLink="/youth/schedule">
+                  <a w-button variant="ghost" routerLink="/youth/schedule">
                     {{ session.rsvpResponse ? 'Update RSVP' : 'RSVP now' }}
                   </a>
                 } @else {
                   <p class="w-muted">No upcoming cohort sessions are scheduled yet.</p>
-                  <a class="w-btn w-btn--ghost" routerLink="/youth/schedule">View schedule</a>
+                  <a w-button variant="ghost" routerLink="/youth/schedule">View schedule</a>
                 }
               </div>
             </section>
@@ -142,7 +142,7 @@
                   <h2 class="w-card__title">Assigned work</h2>
                 </div>
                 @if (view.mentorName) {
-                  <a class="w-btn w-btn--ghost" routerLink="/youth/messages"
+                  <a w-button variant="ghost" routerLink="/youth/messages"
                     >Message {{ view.mentorName }}</a
                   >
                 }
@@ -170,7 +170,7 @@
                           <p>{{ work.message }}</p>
                         }
                       </div>
-                      <a class="w-btn w-btn--secondary" [routerLink]="work.targetPath">Open</a>
+                      <a w-button variant="secondary" [routerLink]="work.targetPath">Open</a>
                     </li>
                   }
                 </ul>

@@ -92,7 +92,7 @@
             </div>
             <div class="w-actions w-actions--between">
               <span class="w-muted">{{ form.controls.body.value.length }}/4000</span>
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="sending()">
+              <button w-button variant="primary" type="submit" [disabled]="sending()">
                 {{ sending() ? 'Sending…' : 'Send message' }}
               </button>
             </div>

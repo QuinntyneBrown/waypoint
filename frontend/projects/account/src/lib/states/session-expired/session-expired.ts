@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { WStatePage } from '@waypoint/components';
+import { WButton, WStatePage } from '@waypoint/components';
 import { FormDraftService } from '@waypoint/core';
 
 // Traces to: L2-PLATFORM-010
 @Component({
   selector: 'w-session-expired',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink],
+  imports: [WStatePage, RouterLink, WButton],
   template: `<w-state-page
     icon="clock"
     tone="warning"
@@ -16,7 +16,8 @@ import { FormDraftService } from '@waypoint/core';
     text="For your security we signed you out after a period of inactivity. Any work in progress has been saved — sign in to pick up where you left off."
   >
     <a
-      class="w-btn w-btn--primary"
+      w-button
+      variant="primary"
       routerLink="/auth/sign-in"
       [queryParams]="returnUrl ? { returnUrl } : null"
       >Sign in again</a

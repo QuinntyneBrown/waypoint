@@ -123,7 +123,8 @@
 
                   <div class="w-actions">
                     <button
-                      class="w-btn w-btn--primary"
+                      w-button
+                      variant="primary"
                       type="button"
                       [disabled]="saving().has(session.sessionId)"
                       (click)="save(session.sessionId)"

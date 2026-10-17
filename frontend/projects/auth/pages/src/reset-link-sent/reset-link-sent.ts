@@ -2,13 +2,13 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { maskEmail, PasswordResetService } from '@waypoint/api';
-import { ToastService, WStatePage } from '@waypoint/components';
+import { ToastService, WButton, WStatePage } from '@waypoint/components';
 
 // Traces to: L2-AUTH-005
 @Component({
   selector: 'w-reset-link-sent',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink],
+  imports: [WStatePage, RouterLink, WButton],
   template: `<w-state-page
     icon="mail"
     tone="info"
@@ -16,8 +16,8 @@ import { ToastService, WStatePage } from '@waypoint/components';
     title="Check your email"
     [text]="bodyText"
   >
-    <button class="w-btn w-btn--ghost" type="button" (click)="resend()">Resend link</button>
-    <a class="w-btn w-btn--primary" routerLink="/auth/sign-in">Back to sign in</a>
+    <button w-button variant="ghost" type="button" (click)="resend()">Resend link</button>
+    <a w-button variant="primary" routerLink="/auth/sign-in">Back to sign in</a>
   </w-state-page>`,
 })
 export class ResetLinkSent {
