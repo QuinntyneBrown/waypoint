@@ -30,10 +30,10 @@
         </aside>
       }
 
-      <div class="detail-tabs" role="tablist" aria-label="Youth record sections">
+      <div class="w-tabs" role="tablist" aria-label="Youth record sections">
         @for (tab of tabs; track tab.key) {
           <button
-            class="w-tab detail-tab"
+            class="w-tab"
             type="button"
             role="tab"
             [id]="'detail-tab-' + tab.key"

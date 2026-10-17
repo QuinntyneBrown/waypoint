@@ -26,21 +26,23 @@
         <div class="history-toolbar">
           <div>
             <h2 class="w-card__title" id="attendance-history-heading">Attendance history</h2>
-            <div class="w-cluster" role="tablist" aria-label="Attendance history view">
+            <div class="w-tabs" role="tablist" aria-label="Attendance history view">
               <button
-                class="w-btn w-btn--ghost"
+                class="w-tab"
                 type="button"
                 role="tab"
                 [attr.aria-selected]="view() === 'session'"
+                [class.is-active]="view() === 'session'"
                 (click)="setView('session')"
               >
                 By session
               </button>
               <button
-                class="w-btn w-btn--ghost"
+                class="w-tab"
                 type="button"
                 role="tab"
                 [attr.aria-selected]="view() === 'youth'"
+                [class.is-active]="view() === 'youth'"
                 (click)="setView('youth')"
               >
                 By youth
