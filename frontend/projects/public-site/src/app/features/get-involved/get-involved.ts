@@ -18,6 +18,10 @@ import {
   WCard,
   WCardBody,
   WCardTitle,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -45,6 +49,10 @@ function isEmail(value: string): boolean {
     WCard,
     WCardBody,
     WCardTitle,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './get-involved.html',
 })

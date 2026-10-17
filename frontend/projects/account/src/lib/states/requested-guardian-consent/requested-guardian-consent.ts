@@ -11,6 +11,9 @@ import {
   WCard,
   WCardBody,
   WCardTitle,
+  WEmptyState,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
@@ -43,6 +46,9 @@ import {
     WCard,
     WCardBody,
     WCardTitle,
+    WEmptyState,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './requested-guardian-consent.html',
 })

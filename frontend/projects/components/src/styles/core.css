@@ -1286,67 +1286,6 @@ legend {
   top: calc(var(--w-topbar-h) + 34px);
 }
 
-/* ---------- Skeleton ---------- */
-.w-skeleton {
-  background: linear-gradient(90deg, var(--w-g200) 25%, var(--w-g100) 37%, var(--w-g200) 63%);
-  background-size: 400% 100%;
-  animation: w-shimmer 1.4s ease infinite;
-  border-radius: 6px;
-  display: block;
-}
-.w-skeleton--text {
-  height: 0.8em;
-  margin: 0.35em 0;
-  border-radius: 4px;
-}
-.w-skeleton--title {
-  height: 1.4em;
-  width: 50%;
-  margin-bottom: 0.6em;
-}
-.w-skeleton--circle {
-  border-radius: 50%;
-}
-.w-skeleton--block {
-  height: 120px;
-  border-radius: var(--w-r-card);
-}
-.w-skeleton--btn {
-  height: 44px;
-  width: 120px;
-  border-radius: var(--w-r-pill);
-}
-
-/* ---------- Empty state ---------- */
-.w-empty {
-  text-align: center;
-  padding: var(--w-s9) var(--w-s5);
-  max-width: 420px;
-  margin-inline: auto;
-}
-.w-empty__icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--w-g100);
-  display: grid;
-  place-items: center;
-  margin: 0 auto var(--w-s4);
-}
-.w-empty__icon .w-icon {
-  width: 30px;
-  height: 30px;
-  color: var(--w-ink-45);
-}
-.w-empty__title {
-  font-size: 1.2rem;
-  margin-bottom: 0.35em;
-}
-.w-empty__text {
-  color: var(--w-muted);
-  margin-bottom: var(--w-s5);
-}
-
 /* ---------- Icons ---------- */
 .w-icon {
   width: 20px;

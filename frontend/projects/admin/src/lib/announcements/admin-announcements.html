@@ -140,10 +140,10 @@
         @if (announcements() === undefined) {
           <p class="w-muted">Loading announcements…</p>
         } @else if (announcements()!.length === 0) {
-          <div class="w-empty">
-            <div class="w-empty__icon"><w-icon name="bell" /></div>
-            <h3 class="w-empty__title">No announcements yet</h3>
-            <p class="w-empty__text">Sent and scheduled updates will appear here.</p>
+          <div w-empty-state>
+            <div w-empty-state-icon><w-icon name="bell" /></div>
+            <h3 w-empty-state-title>No announcements yet</h3>
+            <p w-empty-state-text>Sent and scheduled updates will appear here.</p>
           </div>
         } @else {
           <ol class="announcement-list w-stack">

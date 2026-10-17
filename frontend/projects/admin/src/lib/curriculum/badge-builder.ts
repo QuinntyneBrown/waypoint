@@ -30,6 +30,9 @@ import {
   WAlert,
   WCard,
   WCardBody,
+  WEmptyState,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { finalize, forkJoin, of, switchMap } from 'rxjs';
 import {
@@ -62,6 +65,9 @@ interface BadgeTarget {
     WAlert,
     WCard,
     WCardBody,
+    WEmptyState,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './badge-builder.html',
   styleUrl: './curriculum-admin.css',

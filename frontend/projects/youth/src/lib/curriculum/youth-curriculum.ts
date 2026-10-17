@@ -12,6 +12,10 @@ import {
   WCard,
   WCardBody,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-001
@@ -29,6 +33,10 @@ import {
     WCard,
     WCardBody,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './youth-curriculum.html',
 })

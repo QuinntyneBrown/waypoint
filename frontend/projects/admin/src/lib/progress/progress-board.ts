@@ -26,6 +26,10 @@ import {
   WCard,
   WCardBody,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { debounceTime, filter, finalize, forkJoin, merge } from 'rxjs';
 import { RealtimeService } from '@waypoint/core/realtime';
@@ -34,7 +38,22 @@ import { RealtimeService } from '@waypoint/core/realtime';
 @Component({
   selector: 'w-progress-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WButton, WFormField, WLabel, WSelect, WAlert, WCard, WCardBody, WBadge],
+  imports: [
+    WShell,
+    WIcon,
+    WButton,
+    WFormField,
+    WLabel,
+    WSelect,
+    WAlert,
+    WCard,
+    WCardBody,
+    WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
+  ],
   templateUrl: './progress-board.html',
   styles: `
     .board-filters {

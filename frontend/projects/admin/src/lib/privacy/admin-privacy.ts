@@ -23,6 +23,10 @@ import {
   WCardBody,
   WCardTitle,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import {
   buildVerifiedOwnershipPayload,
@@ -55,6 +59,10 @@ import {
     WCardBody,
     WCardTitle,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './admin-privacy.html',
   styles: `

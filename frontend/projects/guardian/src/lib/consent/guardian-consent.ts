@@ -17,6 +17,9 @@ import {
   WCardBody,
   WCardTitle,
   WBadge,
+  WEmptyState,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { GuardianContextService } from '../guardian-context.service';
 
@@ -40,6 +43,9 @@ import { GuardianContextService } from '../guardian-context.service';
     WCardBody,
     WCardTitle,
     WBadge,
+    WEmptyState,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './guardian-consent.html',
 })

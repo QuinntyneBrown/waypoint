@@ -45,11 +45,9 @@
         <div w-card-body class="w-stack">
           <h2>Your roadmap</h2>
           @if (view.modules.length === 0) {
-            <div class="w-empty">
-              <h3 class="w-empty__title">Your roadmap is being prepared</h3>
-              <p class="w-empty__text">
-                Your modules will appear after you join a curriculum track.
-              </p>
+            <div w-empty-state>
+              <h3 w-empty-state-title>Your roadmap is being prepared</h3>
+              <p w-empty-state-text>Your modules will appear after you join a curriculum track.</p>
             </div>
           } @else {
             <div class="w-timeline">

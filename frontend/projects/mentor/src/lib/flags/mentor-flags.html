@@ -185,10 +185,12 @@
               }
             </article>
           } @empty {
-            <div w-card class="w-empty">
-              <div class="w-empty__icon"><w-icon name="flag" /></div>
-              <h3 class="w-empty__title">No active flags</h3>
-              <p class="w-empty__text">No assigned youth currently need at-risk follow-up.</p>
+            <div w-card>
+              <div w-empty-state>
+                <div w-empty-state-icon><w-icon name="flag" /></div>
+                <h3 w-empty-state-title>No active flags</h3>
+                <p w-empty-state-text>No assigned youth currently need at-risk follow-up.</p>
+              </div>
             </div>
           }
         </div>

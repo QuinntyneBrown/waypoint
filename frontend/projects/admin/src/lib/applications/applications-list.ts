@@ -33,6 +33,10 @@ import {
   WAlert,
   WAlertTitle,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { Observable } from 'rxjs';
 
@@ -60,6 +64,10 @@ type Decision = 'approve' | 'decline';
     WAlert,
     WAlertTitle,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './applications-list.html',
   styles: `

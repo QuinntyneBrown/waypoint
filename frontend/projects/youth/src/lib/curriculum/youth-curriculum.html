@@ -40,12 +40,12 @@
       }
 
       @if (view.modules.length === 0) {
-        <div class="w-empty">
-          <div class="w-empty__icon">
+        <div w-empty-state>
+          <div w-empty-state-icon>
             <w-icon name="book-open" />
           </div>
-          <h2 class="w-empty__title">This track is not set up yet</h2>
-          <p class="w-empty__text">Published modules will appear here when they are ready.</p>
+          <h2 w-empty-state-title>This track is not set up yet</h2>
+          <p w-empty-state-text>Published modules will appear here when they are ready.</p>
         </div>
       } @else {
         <div class="w-stack">

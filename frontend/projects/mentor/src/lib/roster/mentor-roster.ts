@@ -16,6 +16,10 @@ import {
   WAlert,
   WCard,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { debounceTime, switchMap, tap } from 'rxjs';
 
@@ -39,6 +43,10 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
     WAlert,
     WCard,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './mentor-roster.html',
   styles: `

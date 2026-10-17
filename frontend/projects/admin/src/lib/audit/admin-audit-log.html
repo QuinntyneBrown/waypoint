@@ -115,18 +115,18 @@
     @if (loading() && !result()) {
       <div w-card aria-label="Loading audit activity">
         <div w-card-body class="w-stack">
-          <span class="w-skeleton w-skeleton--title"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
+          <span w-skeleton variant="title"></span>
+          <span w-skeleton variant="block"></span>
+          <span w-skeleton variant="block"></span>
+          <span w-skeleton variant="block"></span>
         </div>
       </div>
     } @else if (result(); as audit) {
       @if (audit.items.length === 0) {
         <div w-card>
-          <div class="w-empty">
-            <h2 class="w-empty__title">No activity for this filter</h2>
-            <p class="w-empty__text">
+          <div w-empty-state>
+            <h2 w-empty-state-title>No activity for this filter</h2>
+            <p w-empty-state-text>
               No audit events match the users, actions, or dates selected. Try widening the range.
             </p>
             <button

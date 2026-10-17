@@ -25,10 +25,12 @@
 
     @if (thread(); as view) {
       @if (!view.mentorId) {
-        <section w-card class="w-empty">
-          <div w-card-body>
-            <h2 class="w-empty__title">Your mentor hasn’t been assigned yet</h2>
-            <p class="w-empty__text">This conversation will open when your placement is ready.</p>
+        <section w-card>
+          <div w-empty-state>
+            <div w-card-body>
+              <h2 w-empty-state-title>Your mentor hasn’t been assigned yet</h2>
+              <p w-empty-state-text>This conversation will open when your placement is ready.</p>
+            </div>
           </div>
         </section>
       } @else {
@@ -51,9 +53,9 @@
             data-testid="message-thread"
           >
             @if (view.messages.length === 0) {
-              <div class="w-empty">
-                <h2 class="w-empty__title">Start the conversation</h2>
-                <p class="w-empty__text">Ask a question or share how your week is going.</p>
+              <div w-empty-state>
+                <h2 w-empty-state-title>Start the conversation</h2>
+                <p w-empty-state-text>Ask a question or share how your week is going.</p>
               </div>
             }
             @for (message of view.messages; track message.id) {

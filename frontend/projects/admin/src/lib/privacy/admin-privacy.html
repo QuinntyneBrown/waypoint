@@ -79,10 +79,10 @@
                 }
               </article>
             } @empty {
-              <div class="w-empty">
-                <div class="w-empty__icon"><w-icon name="shield" /></div>
-                <h3 class="w-empty__title">No {{ status().toLocaleLowerCase() || '' }} requests</h3>
-                <p class="w-empty__text">Requests will appear here when users submit them.</p>
+              <div w-empty-state>
+                <div w-empty-state-icon><w-icon name="shield" /></div>
+                <h3 w-empty-state-title>No {{ status().toLocaleLowerCase() || '' }} requests</h3>
+                <p w-empty-state-text>Requests will appear here when users submit them.</p>
               </div>
             }
             <div class="w-cluster w-cluster--between w-mt-4">
@@ -414,10 +414,10 @@
               </div>
             </form>
           } @else {
-            <div class="w-empty">
-              <div class="w-empty__icon"><w-icon name="clipboard-check" /></div>
-              <h2 class="w-empty__title">Choose a pending request</h2>
-              <p class="w-empty__text">Its safe fulfilment controls will appear here.</p>
+            <div w-empty-state>
+              <div w-empty-state-icon><w-icon name="clipboard-check" /></div>
+              <h2 w-empty-state-title>Choose a pending request</h2>
+              <p w-empty-state-text>Its safe fulfilment controls will appear here.</p>
             </div>
           }
         </div>

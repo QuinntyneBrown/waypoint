@@ -16,6 +16,9 @@ import {
   WCard,
   WCardBody,
   WBadge,
+  WEmptyState,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -37,6 +40,9 @@ import { RealtimeService } from '@waypoint/core/realtime';
     WCard,
     WCardBody,
     WBadge,
+    WEmptyState,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './youth-messages.html',
   styles: `

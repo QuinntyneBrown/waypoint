@@ -15,6 +15,10 @@ import {
   WCard,
   WCardBody,
   WBadge,
+  WSkeleton,
+  WEmptyState,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -36,6 +40,10 @@ import { finalize } from 'rxjs/operators';
     WCard,
     WCardBody,
     WBadge,
+    WSkeleton,
+    WEmptyState,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './admin-audit-log.html',
   styles: `

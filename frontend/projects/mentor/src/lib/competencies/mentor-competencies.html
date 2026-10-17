@@ -50,10 +50,12 @@
       </section>
 
       @if (view.items.length === 0) {
-        <div w-card class="w-empty">
-          <div class="w-empty__icon"><w-icon name="award" /></div>
-          <h2 class="w-empty__title">No competencies configured</h2>
-          <p class="w-empty__text">A program administrator can add the progression framework.</p>
+        <div w-card>
+          <div w-empty-state>
+            <div w-empty-state-icon><w-icon name="award" /></div>
+            <h2 w-empty-state-title>No competencies configured</h2>
+            <p w-empty-state-text>A program administrator can add the progression framework.</p>
+          </div>
         </div>
       } @else {
         <div class="competency-grid">

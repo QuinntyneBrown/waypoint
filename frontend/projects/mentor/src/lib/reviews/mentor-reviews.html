@@ -29,10 +29,12 @@
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
     @if (items(); as reviews) {
       @if (reviews.length === 0) {
-        <div w-card class="w-empty">
-          <div class="w-empty__icon"><w-icon name="file-text" /></div>
-          <h2 class="w-empty__title">No reviews waiting</h2>
-          <p class="w-empty__text">You are caught up with your assigned youth.</p>
+        <div w-card>
+          <div w-empty-state>
+            <div w-empty-state-icon><w-icon name="file-text" /></div>
+            <h2 w-empty-state-title>No reviews waiting</h2>
+            <p w-empty-state-text>You are caught up with your assigned youth.</p>
+          </div>
         </div>
       } @else {
         <div w-card>

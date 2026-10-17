@@ -160,10 +160,10 @@
     } @else if (view() === 'overview') {
       <section class="w-stack" data-testid="reports-overview" role="tabpanel">
         @if (hub()!.recordCount === 0) {
-          <div class="w-empty">
-            <div class="w-empty__icon"><w-icon name="bar-chart" /></div>
-            <h2 class="w-empty__title">No report data for these filters</h2>
-            <p class="w-empty__text">Change the date or program filters and try again.</p>
+          <div w-empty-state>
+            <div w-empty-state-icon><w-icon name="bar-chart" /></div>
+            <h2 w-empty-state-title>No report data for these filters</h2>
+            <p w-empty-state-text>Change the date or program filters and try again.</p>
           </div>
         } @else {
           <div class="report-kpis">
@@ -474,9 +474,9 @@
           <p class="w-muted">Caseload, check-ins, and reviews within the current report filters.</p>
         </div>
         @if (hub()!.staff.length === 0) {
-          <div class="w-empty">
-            <h3 class="w-empty__title">No staff activity for these filters</h3>
-            <p class="w-empty__text">Change the report scope and try again.</p>
+          <div w-empty-state>
+            <h3 w-empty-state-title>No staff activity for these filters</h3>
+            <p w-empty-state-text>Change the report scope and try again.</p>
           </div>
         } @else {
           <div class="report-grid">

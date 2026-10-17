@@ -14,6 +14,10 @@ import {
   WCheckbox,
   WCheckboxBox,
   WAlert,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 
 // Traces to: L2-AUTH-004, L2-AUTH-008, L2-PLATFORM-011
@@ -33,6 +37,10 @@ import {
     WCheckbox,
     WCheckboxBox,
     WAlert,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './invite-accept.html',
 })

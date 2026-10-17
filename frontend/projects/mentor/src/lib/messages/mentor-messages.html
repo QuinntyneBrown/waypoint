@@ -23,11 +23,11 @@
 
     @if (inbox(); as view) {
       @if (view.conversations.length === 0) {
-        <section w-card class="w-empty">
-          <div w-card-body>
-            <div class="w-empty__icon"><w-icon name="message-square" /></div>
-            <h2 class="w-empty__title">No youth conversations yet</h2>
-            <p class="w-empty__text">Threads appear when active youth are assigned to you.</p>
+        <section w-card>
+          <div w-empty-state>
+            <div w-empty-state-icon><w-icon name="message-square" /></div>
+            <h2 w-empty-state-title>No youth conversations yet</h2>
+            <p w-empty-state-text>Threads appear when active youth are assigned to you.</p>
           </div>
         </section>
       } @else {
@@ -95,8 +95,8 @@
                   </button>
                 </li>
               } @empty {
-                <li class="w-empty">
-                  <p class="w-empty__text">No conversations match your search.</p>
+                <li w-empty-state>
+                  <p w-empty-state-text>No conversations match your search.</p>
                 </li>
               }
             </ul>
@@ -181,9 +181,9 @@
                 @if (loadingThread()) {
                   <p class="w-muted" role="status">Loading conversation…</p>
                 } @else if (thread()?.length === 0) {
-                  <div class="w-empty">
-                    <h3 class="w-empty__title">Start the conversation</h3>
-                    <p class="w-empty__text">Send encouragement, a reminder, or a check-in.</p>
+                  <div w-empty-state>
+                    <h3 w-empty-state-title>Start the conversation</h3>
+                    <p w-empty-state-text>Send encouragement, a reminder, or a check-in.</p>
                   </div>
                 }
                 @for (message of thread() ?? []; track message.id) {

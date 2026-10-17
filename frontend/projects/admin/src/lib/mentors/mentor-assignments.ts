@@ -18,6 +18,10 @@ import {
   WCard,
   WCardBody,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { finalize } from 'rxjs';
 
@@ -37,6 +41,10 @@ import { finalize } from 'rxjs';
     WCard,
     WCardBody,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './mentor-assignments.html',
   styles: `

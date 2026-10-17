@@ -34,8 +34,11 @@ import {
   WTextField,
   WAlert,
   WCard,
-  WCardBody,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -62,8 +65,11 @@ type MessageMode = 'thread' | 'broadcast';
     WSelect,
     WAlert,
     WCard,
-    WCardBody,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './mentor-messages.html',
   styles: `

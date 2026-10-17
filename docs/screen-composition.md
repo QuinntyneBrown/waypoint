@@ -21,12 +21,12 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Avatar | 60 | in library |
 | Form field | 60 | in library |
 | Alert | 57 | in library |
-| Empty state | 54 | to build (DECISIONS #23) |
+| Empty state | 54 | in library |
 | Dialog | 48 | to build (DECISIONS #23) |
 | Icon button | 47 | in library |
 | Select | 43 | in library |
 | Text field | 43 | in library |
-| Skeleton | 41 | to build (DECISIONS #23) |
+| Skeleton | 41 | in library |
 | Textarea | 32 | in library |
 | Table | 30 | to build (DECISIONS #23) |
 | Progress | 30 | to build (DECISIONS #23) |

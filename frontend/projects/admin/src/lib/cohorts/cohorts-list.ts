@@ -20,6 +20,10 @@ import {
   WAlertTitle,
   WCard,
   WCardBody,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { finalize } from 'rxjs';
 
@@ -46,6 +50,10 @@ import { finalize } from 'rxjs';
     WAlertTitle,
     WCard,
     WCardBody,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './cohorts-list.html',
   styles: `

@@ -1,4 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import {
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateText,
+  WEmptyStateTitle,
+} from '../empty-state/w-empty-state';
 import { WIcon } from '../icon/w-icon';
 
 export type WStateTone = 'warning' | 'error' | 'info' | 'success';
@@ -11,18 +17,18 @@ export type WStateTone = 'warning' | 'error' | 'info' | 'success';
 @Component({
   selector: 'w-state-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WIcon],
+  imports: [WIcon, WEmptyState, WEmptyStateIcon, WEmptyStateTitle, WEmptyStateText],
   template: `<div class="w-authpage">
-    <div class="w-empty" style="max-width: 460px">
-      <div class="w-empty__icon" [style.background]="iconBg()" [style.color]="iconColor()">
+    <div w-empty-state style="max-width: 460px">
+      <div w-empty-state-icon [style.background]="iconBg()" [style.color]="iconColor()">
         <w-icon [name]="icon()" iconClass="w-state-page__glyph" />
       </div>
       @if (eyebrow()) {
         <div class="w-eyebrow">{{ eyebrow() }}</div>
       }
-      <h1 class="w-empty__title" style="font-size: 1.6rem">{{ title() }}</h1>
+      <h1 w-empty-state-title style="font-size: 1.6rem">{{ title() }}</h1>
       @if (text()) {
-        <p class="w-empty__text">{{ text() }}</p>
+        <p w-empty-state-text>{{ text() }}</p>
       }
       <div class="w-cluster" style="justify-content: center">
         <ng-content />

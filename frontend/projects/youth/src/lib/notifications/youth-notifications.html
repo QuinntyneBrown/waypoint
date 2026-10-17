@@ -25,10 +25,10 @@
     @if (loading()) {
       <p class="w-muted" role="status">Loading notifications…</p>
     } @else if (items().length === 0) {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="bell" /></div>
-        <h3 class="w-empty__title">You’re all caught up</h3>
-        <p class="w-empty__text">
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="bell" /></div>
+        <h3 w-empty-state-title>You’re all caught up</h3>
+        <p w-empty-state-text>
           Messages, reminders, and other activity that needs your attention will appear here.
         </p>
       </div>

@@ -16,6 +16,10 @@ import {
   WAlert,
   WCard,
   WCardBody,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -41,6 +45,10 @@ function isEmail(value: string): boolean {
     WAlert,
     WCard,
     WCardBody,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './contact.html',
 })

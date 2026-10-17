@@ -18,6 +18,10 @@ import {
   WCardBody,
   WCardTitle,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
@@ -36,6 +40,10 @@ import { forkJoin } from 'rxjs';
     WCardBody,
     WCardTitle,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './mentor-dashboard.html',
   styles: `

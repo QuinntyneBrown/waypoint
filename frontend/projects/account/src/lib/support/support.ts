@@ -23,6 +23,10 @@ import {
   WTextarea,
   WTextField,
   WAlert,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 
@@ -44,6 +48,10 @@ import { shellRole } from '@waypoint/core';
     WTextarea,
     WSelect,
     WAlert,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './support.html',
 })

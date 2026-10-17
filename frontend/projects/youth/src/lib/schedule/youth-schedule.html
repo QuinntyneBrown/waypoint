@@ -19,10 +19,12 @@
 
     @if (sessions(); as upcoming) {
       @if (upcoming.length === 0) {
-        <section w-card class="w-empty">
-          <div w-card-body>
-            <h2 class="w-empty__title">No upcoming sessions yet</h2>
-            <p class="w-empty__text">New cohort sessions will appear here when they are planned.</p>
+        <section w-card>
+          <div w-empty-state>
+            <div w-card-body>
+              <h2 w-empty-state-title>No upcoming sessions yet</h2>
+              <p w-empty-state-text>New cohort sessions will appear here when they are planned.</p>
+            </div>
           </div>
         </section>
       } @else {

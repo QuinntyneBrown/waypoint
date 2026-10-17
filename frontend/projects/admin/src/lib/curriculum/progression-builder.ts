@@ -18,6 +18,9 @@ import {
   WAlert,
   WCard,
   WCardBody,
+  WEmptyState,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 import {
@@ -55,6 +58,9 @@ type ProgressionAuthoringDraft =
     WAlert,
     WCard,
     WCardBody,
+    WEmptyState,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './progression-builder.html',
   styleUrl: './curriculum-admin.css',
