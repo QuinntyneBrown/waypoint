@@ -33,6 +33,17 @@ public static class InfrastructureDependencyInjection
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
+        services.AddOptions<MediaOptions>()
+            .Bind(configuration.GetSection("Media"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        services.AddSingleton<IMediaSettings>(sp =>
+            sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<MediaOptions>>().Value);
+        services.AddSingleton<FileSystemMediaStore>();
+        services.AddSingleton<IMediaStore>(sp => sp.GetRequiredService<FileSystemMediaStore>());
+        services.AddSingleton<IUploadStore>(sp => sp.GetRequiredService<FileSystemMediaStore>());
+        services.AddSingleton<IVideoTranscoder, FfmpegVideoTranscoder>();
+
         var connectionString = configuration.GetConnectionString("Default");
 
         if (string.IsNullOrWhiteSpace(connectionString) || connectionString.Equals("InMemory", StringComparison.OrdinalIgnoreCase))

@@ -111,7 +111,11 @@ public sealed class GetTrackWorkspaceQueryHandler
                                 item.OriginalFileName ?? "External media",
                                 item.ContentType ?? string.Empty,
                                 item.SizeBytes,
-                                item.Url))
+                                item.Url,
+                                item.VideoStatus.ToString(),
+                                item.ProgressPercent,
+                                item.DurationSeconds,
+                                item.FailureCode))
                             .ToList(),
                         quizzes
                             .Where(item => item.LessonId == lesson.Id)

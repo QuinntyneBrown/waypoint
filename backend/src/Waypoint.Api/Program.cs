@@ -42,6 +42,8 @@ if (builder.Environment.IsEnvironment("Testing"))
     builder.Services.AddSingleton<Waypoint.Api.TestSupport.TestingEmailSender>();
     builder.Services.AddSingleton<IEmailSender>(serviceProvider =>
         serviceProvider.GetRequiredService<Waypoint.Api.TestSupport.TestingEmailSender>());
+    builder.Services.RemoveAll<IVideoTranscoder>();
+    builder.Services.AddSingleton<IVideoTranscoder, Waypoint.Api.TestSupport.FakeVideoTranscoder>();
 }
 
 builder.Services.AddControllers();

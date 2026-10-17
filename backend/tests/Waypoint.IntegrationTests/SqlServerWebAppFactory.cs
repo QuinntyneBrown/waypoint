@@ -21,6 +21,9 @@ namespace Waypoint.IntegrationTests;
 /// </summary>
 public sealed class SqlServerWebAppFactory : WebApplicationFactory<Program>
 {
+    public string MediaRoot { get; } =
+        Path.Combine(Path.GetTempPath(), $"waypoint-media-{Guid.NewGuid():N}");
+
     public string DatabaseName { get; } = $"Waypoint_IntegrationTests_{Guid.NewGuid():N}";
 
     public string ConnectionString
@@ -59,6 +62,9 @@ public sealed class SqlServerWebAppFactory : WebApplicationFactory<Program>
                 ["Jwt:Audience"] = "Waypoint",
                 ["Jwt:SigningKey"] = "waypoint-integration-tests-signing-key-32chars-min!!",
                 ["Jwt:AccessTokenMinutes"] = "60",
+                ["Media:Enabled"] = "true",
+                ["Media:RootPath"] = MediaRoot,
+                ["Media:PlaybackSigningKey"] = "waypoint-integration-tests-media-key-32chars-min!!",
             });
         });
         builder.ConfigureTestServices(services =>

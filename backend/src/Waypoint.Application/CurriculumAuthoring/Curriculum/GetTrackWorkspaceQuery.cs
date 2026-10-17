@@ -47,7 +47,11 @@ public sealed record LessonMediaWorkspaceView(
     string FileName,
     string ContentType,
     long SizeBytes,
-    string Url);
+    string Url,
+    string VideoStatus,
+    int ProgressPercent,
+    double? DurationSeconds,
+    string? FailureCode);
 
 public sealed record QuizWorkspaceView(
     Guid Id,
