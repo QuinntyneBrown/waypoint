@@ -178,10 +178,7 @@
                     <td data-label="Mentor">{{ row.mentor || '—' }}</td>
                     <td data-label="Track">{{ row.track || '—' }}</td>
                     <td data-label="Import">
-                      <span
-                        class="import-status"
-                        [class]="'import-status import-status--' + statusClass(row.status)"
-                      >
+                      <span [class]="'w-badge w-badge--' + statusBadge(row.status)">
                         {{ statusLabel(row.status) }}
                       </span>
                       @if (row.message) {

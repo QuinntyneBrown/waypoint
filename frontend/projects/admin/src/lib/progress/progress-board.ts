@@ -81,26 +81,6 @@ import { RealtimeService } from '@waypoint/core/realtime';
       color: var(--w-muted);
       font-size: 0.875rem;
     }
-    .state {
-      display: inline-flex;
-      align-items: center;
-      min-height: 2rem;
-      padding: 0 var(--w-s2);
-      border-radius: var(--w-r-pill);
-      background: var(--w-g100);
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .state--done {
-      color: var(--w-success);
-    }
-    .state--progress {
-      color: var(--w-info);
-    }
-    .state--unassigned {
-      color: var(--w-muted);
-      font-weight: 500;
-    }
     .matrix tfoot th,
     .matrix tfoot td {
       border-bottom: 0;
