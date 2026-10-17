@@ -1,0 +1,56 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 3 — Upload a lesson video — components
+System_Boundary(waypoint, "Waypoint software system") {
+  Container_Boundary(frontend, "Frontend") {
+    Container_Boundary(frontend_app, "Portal application") {
+      Component(page, "CurriculumBuilder", "Angular page component", "Slices the file, sends chunks, shows progress and retry")
+      Component(client, "CurriculumAuthoringService", "Typed API client", "Start, chunk, status, complete, retry calls over HttpClient")
+    }
+  }
+  Container_Boundary(backend, "Backend") {
+    Container_Boundary(api_app, "Waypoint API application") {
+      Component(controller, "LessonVideoUploadsController", "API controller", "EditCurriculum policy; streams chunk bodies to the upload store")
+      Component(uploadstore, "FileSystemUploadStore", "IUploadStore adapter", "Writes each chunk at its offset in uploads/{uploadId}.part")
+    }
+    Container_Boundary(application, "Waypoint Application") {
+      Component(start, "StartVideoUploadCommandHandler", "MediatR handler", "Validates lesson, size limit, free space; creates the session")
+      Component(complete, "CompleteVideoUploadCommandHandler", "MediatR handler", "Verifies bytes and signature, probes, creates media and job, audits")
+      Component(retry, "RetryVideoTranscodeCommandHandler", "MediatR handler", "Re-queues a Failed media")
+      Component(policy, "LessonVideoUploadPolicy", "Static policy", "Size limit and ftyp signature rules for video")
+    }
+    Container_Boundary(domain, "Waypoint Domain") {
+      Component(media, "LessonMedia", "Domain type", "VideoStatus, duration, dimensions, progress, failure code")
+      Component(session, "VideoUploadSession", "Domain type", "Expected size, chunk size, received chunks")
+      Component(job, "VideoTranscodeJob", "Domain type", "Leased queue row for one transcode")
+    }
+    Container_Boundary(infrastructure, "Waypoint Infrastructure") {
+      Component(workerc, "VideoTranscodeWorker", "BackgroundService", "Ticks every 5 s outside Testing")
+      Component(processor, "VideoTranscodeProcessor", "Leased-queue processor", "Claims, heartbeats, publishes, sweeps")
+      Component(transcoder, "FfmpegVideoTranscoder", "IVideoTranscoder adapter", "Builds the ladder command and runs ffmpeg")
+      Component(mediastore, "FileSystemMediaStore", "IMediaStore adapter", "sources/, work/, hls/, trash/ layout and atomic moves")
+      Component(persistence, "AppDbContext", "EF Core adapter", "Queries and persists authoritative state")
+    }
+  }
+}
+Rel(page, client, "Calls")
+Rel(client, controller, "Calls", "HTTPS")
+Rel(controller, uploadstore, "Streams chunk body")
+Rel(controller, start, "Sends StartVideoUploadCommand")
+Rel(controller, complete, "Sends CompleteVideoUploadCommand")
+Rel(controller, retry, "Sends RetryVideoTranscodeCommand")
+Rel(start, session, "Creates")
+Rel(complete, policy, "Applies")
+Rel(complete, transcoder, "Probes")
+Rel(complete, mediastore, "Moves .part to sources/")
+Rel(complete, media, "Creates Queued")
+Rel(complete, job, "Enqueues")
+Rel(start, persistence, "Persists")
+Rel(complete, persistence, "Persists in one unit of work")
+Rel(workerc, processor, "Runs once per tick")
+Rel(processor, persistence, "Claims job; records progress and status")
+Rel(processor, transcoder, "Transcodes with progress callback")
+Rel(processor, mediastore, "Publishes work/ to hls/; sweeps")
+SHOW_LEGEND()
+@enduml

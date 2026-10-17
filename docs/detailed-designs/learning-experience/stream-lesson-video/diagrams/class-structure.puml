@@ -1,0 +1,121 @@
+@startuml
+left to right direction
+title UML class structure — Stream a lesson video
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "YouthLesson" as page <<Angular component>> {
+    +loadPlayback(mediaId): void
+    +onTokenExpired(mediaId): void
+    +retryMedia(mediaId): void
+  }
+  class "LearningService" as client <<API client>> {
+    +lesson(lessonId): Observable<YouthLesson>
+    +lessonVideoPlayback(lessonId, mediaId): Observable<PlaybackResult>
+  }
+}
+package "Frontend — Components library" {
+  class "WVideoPlayer" as player <<Angular component>> {
+    +src: string | null
+    +poster: string | null
+    +streamId: string | null
+    +tokenExpired: EventEmitter<void>
+    -mode(): "vod" | "live" | "idle"
+  }
+  class "HlsVodSession" as vod <<session>> {
+    +attach(video, src): Promise<void>
+    +seek(seconds): void
+    +currentLevelHeight(): number | null
+    +loadSource(src, resumeAt): void
+    +dispose(): void
+  }
+  class "VideoStreamSession" as live <<session>> {
+    +start(hubUrl, streamId): void
+  }
+  interface "HLS_FACTORY" as factory <<injection token>> {
+    +create(config): Promise<Hls>
+  }
+}
+package "Backend — Waypoint API application" {
+  class "YouthCurriculumController" as controller <<controller>> {
+    +Playback(id, mediaId, ct): ActionResult<PlaybackResult>
+  }
+  class "MediaDeliveryEndpoint" as delivery <<minimal API>> {
+    +Handle(token, mediaId, path, signer, store): IResult
+  }
+}
+package "Backend — Waypoint Application" {
+  class "LessonVideoPlaybackQuery" as query <<record>> {
+    +Guid LessonId
+    +Guid MediaId
+  }
+  class "LessonVideoPlaybackQueryHandler" as handler <<handler>> {
+    +Handle(request, ct): PlaybackResult
+  }
+  class "PlaybackResult" as result <<record>> {
+    +string Url
+    +DateTime ExpiresAt
+    +double DurationSeconds
+    +string PosterUrl
+  }
+  interface IPlaybackUrlSigner {
+    +Sign(mediaId, lifetime): SignedPlayback
+    +TryValidate(token, mediaId): bool
+  }
+  interface IMediaStore {
+    +ResolvePublished(mediaId, relativePath): string?
+  }
+  interface IAppDbContext {
+    +LessonMedia: IQueryable<LessonMedia>
+  }
+}
+package "Backend — Waypoint Domain" {
+  class "LessonMedia" as media <<domain type>> {
+    +Guid Id
+    +Guid LessonId
+    +VideoStatus VideoStatus
+    +double? DurationSeconds
+  }
+}
+package "Backend — Waypoint Infrastructure" {
+  class "HmacPlaybackUrlSigner" as hmac <<adapter>> {
+    -byte[] key
+  }
+  class "FileSystemMediaStore" as fsstore <<adapter>>
+}
+page --> client : invokes
+page --> player : binds src, poster
+player --> vod : owns when src set
+player --> live : owns when streamId set
+vod --> factory : creates hls.js lazily
+client --> controller : calls
+controller ..> query : creates
+query --> handler : dispatched to
+handler --> IAppDbContext : reads
+handler --> media : requires Ready
+handler --> IPlaybackUrlSigner : signs
+handler ..> result : returns
+vod --> delivery : fetches playlists and segments
+delivery --> IPlaybackUrlSigner : validates
+delivery --> IMediaStore : resolves file
+hmac ..|> IPlaybackUrlSigner
+fsstore ..|> IMediaStore
+IAppDbContext o-- media : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction or realization.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml

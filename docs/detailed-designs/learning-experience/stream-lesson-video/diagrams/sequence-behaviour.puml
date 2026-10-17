@@ -1,0 +1,91 @@
+@startuml
+
+title UML sequence behaviour — Stream a lesson video
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+actor "Youth participant" as actor
+box "Frontend — Portal application" #E0F2FE
+  participant "YouthLesson" as page
+  participant "LearningService" as client
+  participant "w-video-player / HlsVodSession" as player
+end box
+box "Backend — Waypoint API application" #D1FADF
+  participant "YouthCurriculumController" as controller
+  participant "MediaDeliveryEndpoint" as delivery
+end box
+box "Backend — Waypoint Application and Domain" #ECFDF3
+  participant "LessonVideoPlaybackQueryHandler" as handler
+  participant "LessonMedia" as entity
+end box
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  participant "HmacPlaybackUrlSigner" as signer
+  participant "FileSystemMediaStore" as store
+  database "Waypoint database" as db
+end box
+
+== Authorize and sign ==
+actor -> page : Open lesson
+page -> client : lesson(lessonId)
+client --> page : LessonView with media videoStatus (L2-LEARN-002 AC1)
+page -> client : lessonVideoPlayback(lessonId, mediaId) for Ready media
+client -> controller : GET api/me/lessons/{id}/media/{mediaId}/playback
+controller -> controller : Authenticate; apply YouthParticipation policy
+controller -> handler : Send LessonVideoPlaybackQuery
+handler -> db : Load media projection; EnsureLessonAccessibleAsync
+db --> handler : Media and access state
+handler -> entity : Require VideoStatus == Ready
+handler -> signer : Sign(mediaId, 8 h) (L2-LEARN-002 AC6)
+signer --> handler : /api/media/{token}/{mediaId}/master.m3u8
+handler --> controller : PlaybackResult
+controller --> client : 200 JSON
+client --> page : url, expiresAt, duration, poster
+page -> player : Bind src and poster
+
+== Play adaptively (no database access) ==
+player -> delivery : GET /api/media/{token}/{mediaId}/master.m3u8
+delivery -> signer : TryValidate(token, mediaId)
+signer --> delivery : valid
+delivery -> store : ResolvePublished(mediaId, "master.m3u8")
+store --> delivery : full path under hls/{mediaId}/
+delivery --> player : 200 application/vnd.apple.mpegurl, max-age=300
+player -> player : Pick rendition from measured throughput (L2-LEARN-002 AC5)
+player -> delivery : GET …/{rendition}/index.m3u8
+delivery --> player : 200 variant playlist
+loop each 6 s segment, switching rendition as bandwidth changes
+  player -> delivery : GET …/{rendition}/seg_NNNNN.m4s (Range)
+  delivery -> signer : TryValidate
+  delivery -> store : ResolvePublished
+  delivery --> player : 200 or 206 video/iso.segment, immutable (L2-NFR-008)
+end
+player --> actor : Playing; seek bar spans full duration (L2-LEARN-002 AC5)
+
+== Renew an expired token ==
+player -> delivery : GET …/seg_NNNNN.m4s after expiry
+delivery -> signer : TryValidate
+signer --> delivery : expired
+delivery --> player : 404
+player -> page : tokenExpired
+page -> client : lessonVideoPlayback(lessonId, mediaId)
+client --> page : fresh url
+page -> player : loadSource(url, resumeAt = currentTime)
+
+== Reject an invalid request ==
+player -> delivery : GET /api/media/{forged-token}/{otherMediaId}/master.m3u8
+delivery -> signer : TryValidate
+signer --> delivery : invalid signature or mediaId mismatch (L2-LEARN-002 AC6, L2-NFR-001 AC4)
+delivery --> player : 404
+player -> page : error
+page --> actor : Teaching text stays readable; Retry offered (L2-LEARN-002 AC4)
+@enduml
