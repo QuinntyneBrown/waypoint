@@ -1,0 +1,29 @@
+@startuml
+title Authorize once, then sign
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam defaultFontSize 20
+skinparam ArrowColor #344054
+skinparam sequenceMessageAlign left
+box "Frontend — Portal" #E0F2FE
+  participant "YouthLesson" as page
+end box
+box "Backend — API and Application" #D1FADF
+  participant "YouthCurriculumController" as controller
+  participant "LessonVideoPlaybackQueryHandler" as handler
+end box
+box "Backend — Infrastructure" #FFF4E5
+  participant "HmacPlaybackUrlSigner" as signer
+  database "Database" as db
+end box
+page -> controller : GET playback address for a Ready video
+controller -> controller : Signed in, YouthParticipation policy
+controller -> handler : LessonVideoPlaybackQuery
+handler -> db : Load media, check lesson access
+handler -> handler : Require status Ready
+handler -> signer : Sign(mediaId, 8 hours)
+signer --> handler : /api/media/{token}/{mediaId}/master.m3u8
+handler --> page : url, expiresAt, duration, poster
+@enduml

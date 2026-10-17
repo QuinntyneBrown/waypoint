@@ -1,0 +1,33 @@
+@startuml
+title Play adaptively, no database access
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam defaultFontSize 20
+skinparam ArrowColor #344054
+skinparam sequenceMessageAlign left
+box "Frontend — Portal" #E0F2FE
+  participant "w-video-player" as player
+end box
+box "Backend — API" #D1FADF
+  participant "MediaDeliveryEndpoint" as delivery
+end box
+box "Backend — Infrastructure" #FFF4E5
+  participant "HmacPlaybackUrlSigner" as signer
+  participant "FileSystemMediaStore" as store
+end box
+player -> delivery : GET …/master.m3u8
+delivery -> signer : Validate token and mediaId
+delivery -> store : Resolve path under hls/{mediaId}/
+delivery --> player : 200 master playlist, cached 5 minutes
+player -> player : Pick a rendition from measured throughput
+player -> delivery : GET …/{rendition}/index.m3u8
+delivery --> player : 200 variant playlist
+loop each 6 second segment
+  player -> delivery : GET …/seg_NNNNN.m4s (Range)
+  delivery -> signer : Validate token
+  delivery -> store : Resolve path
+  delivery --> player : 200 or 206, immutable
+end
+@enduml

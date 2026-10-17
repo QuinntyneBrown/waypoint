@@ -1,0 +1,36 @@
+@startuml
+title Upload: start, send chunks, resume
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam defaultFontSize 20
+skinparam ArrowColor #344054
+skinparam sequenceMessageAlign left
+actor "Program administrator" as actor
+box "Frontend — Portal" #E0F2FE
+  participant "CurriculumBuilder" as page
+end box
+box "Backend — API" #D1FADF
+  participant "LessonVideoUploadsController" as controller
+end box
+box "Backend — Infrastructure" #FFF4E5
+  participant "FileSystemMediaStore" as store
+  database "Database" as db
+end box
+actor -> page : Choose a video file
+page -> controller : Start upload session
+controller -> db : Check lesson, size limit, free space
+controller --> page : uploadId and 8 MiB chunk size
+loop each chunk, three in flight
+  page -> controller : PUT chunk (octet-stream)
+  controller -> store : Write at index × chunk size
+  controller -> db : Mark index received
+  controller --> page : 204
+end
+opt page reload or network loss
+  page -> controller : Ask which chunks arrived
+  controller --> page : Received-chunk bitmap
+  page -> controller : PUT missing chunks only
+end
+@enduml
