@@ -6,3 +6,4 @@ One requirements document (CRD) and one rendering per component of `@waypoint/co
 |---|---|---|---|---|---|---|
 | Button | `button[w-button]`, `a[w-button]` | built | L2-NFR-009, L2-NFR-010, L2-PLATFORM-004 | [button.md](button.md) | [button.html](button.html) | [button](../../design-system/components/button.html) |
 | Icon button | `button[w-icon-button]`, `a[w-icon-button]` | built | L2-NFR-009, L2-NFR-010 | [icon-button.md](icon-button.md) | [icon-button.html](icon-button.html) | [icon-button](../../design-system/components/icon-button.html) |
+| Link | `a[w-link]` | built | L2-NFR-009, L2-NFR-010 | [link.md](link.md) | [link.html](link.html) | [link](../../design-system/components/link.html) |

@@ -5,7 +5,7 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-page">
-    <a class="w-link" routerLink="/mentor/reviews">Back to reviews</a>
+    <a w-link standalone routerLink="/mentor/reviews">Back to reviews</a>
     @if (errorMessage(); as error) {
       <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
     }
@@ -43,15 +43,13 @@
               <img class="evidence-image" [src]="photo" alt="Evidence submitted by the youth" />
             }
             @if (item.linkUrl) {
-              <a class="w-link" [href]="item.linkUrl" target="_blank" rel="noopener noreferrer"
+              <a w-link [href]="item.linkUrl" target="_blank" rel="noopener noreferrer"
                 >Open submitted link</a
               >
             }
             @if (item.file; as file) {
               @if (fileUrl(); as url) {
-                <a class="w-link" [href]="url" [download]="file.fileName"
-                  >Download {{ file.fileName }}</a
-                >
+                <a w-link [href]="url" [download]="file.fileName">Download {{ file.fileName }}</a>
               } @else {
                 <p class="w-muted" role="status">Preparing {{ file.fileName }}…</p>
               }

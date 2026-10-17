@@ -5,7 +5,7 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-page">
-    <a class="w-link" routerLink="/admin/people">Back to people</a>
+    <a w-link standalone routerLink="/admin/people">Back to people</a>
 
     @if (errorMessage(); as error) {
       <p class="w-alert w-alert--error" role="alert">{{ error }}</p>

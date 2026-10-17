@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, MentorService, MentorYouthDetail } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WShell } from '@waypoint/components';
+import { WButton, WLink, WShell } from '@waypoint/components';
 
 type DetailTab =
   'profile' | 'progress' | 'attendance' | 'check-ins' | 'submissions' | 'competencies';
@@ -12,7 +12,7 @@ type DetailTab =
 @Component({
   selector: 'w-mentor-youth-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DatePipe, WButton],
+  imports: [WShell, RouterLink, DatePipe, WButton, WLink],
   templateUrl: './mentor-youth-detail.html',
   styles: `
     .detail-grid {
