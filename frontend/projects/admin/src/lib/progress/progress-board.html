@@ -12,9 +12,9 @@
         <p class="w-page__sub">Every youth across every published module in the selected track.</p>
       </div>
       <span
-        class="w-badge"
+        w-badge
+        [variant]="realtime.state() === 'connected' ? 'success' : ''"
         data-testid="progress-live-status"
-        [class.w-badge--success]="realtime.state() === 'connected'"
       >
         {{ realtime.state() === 'connected' ? 'Live updates on' : 'Connecting live updates…' }}
       </span>
@@ -117,10 +117,16 @@
                       <span class="w-muted">{{ result.modules[index].name }}</span
                       ><br />
                       <span
-                        class="w-badge"
-                        [class.w-badge--success]="cell.state === 'Done'"
-                        [class.w-badge--info]="cell.state === 'InProgress'"
-                        [class.w-badge--outline]="cell.state === 'NotAssigned'"
+                        w-badge
+                        [variant]="
+                          cell.state === 'Done'
+                            ? 'success'
+                            : cell.state === 'InProgress'
+                              ? 'info'
+                              : cell.state === 'NotAssigned'
+                                ? 'outline'
+                                : ''
+                        "
                       >
                         {{ stateLabel(cell.state) }}
                       </span>

@@ -24,6 +24,7 @@ import {
   WAlertTitle,
   WCard,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -51,6 +52,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     WAlertTitle,
     WCard,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './admin-reports.html',
   styles: `

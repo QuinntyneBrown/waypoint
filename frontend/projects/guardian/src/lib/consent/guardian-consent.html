@@ -65,9 +65,14 @@
               <div class="w-cluster w-cluster--between">
                 <h2 w-card-title>Participation consent</h2>
                 <span
-                  class="w-badge"
-                  [class.w-badge--success]="record.withdrawnAt === null"
-                  [class.w-badge--error]="record.withdrawnAt !== null"
+                  w-badge
+                  [variant]="
+                    record.withdrawnAt === null
+                      ? 'success'
+                      : record.withdrawnAt !== null
+                        ? 'error'
+                        : ''
+                  "
                   data-testid="participation-status"
                 >
                   {{ record.withdrawnAt ? 'Withdrawn' : 'Active' }}

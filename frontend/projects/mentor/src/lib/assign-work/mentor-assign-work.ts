@@ -29,6 +29,8 @@ import {
   WCardHeader,
   WCardTitle,
   WCardBody,
+  WDivider,
+  WBadge,
 } from '@waypoint/components';
 
 type TargetMode = 'individual' | 'cohort';
@@ -58,6 +60,8 @@ type TargetMode = 'individual' | 'cohort';
     WCardHeader,
     WCardTitle,
     WCardBody,
+    WDivider,
+    WBadge,
   ],
   templateUrl: './mentor-assign-work.html',
   styles: `

@@ -33,6 +33,7 @@ import {
   WCardTitle,
   WCardBody,
   WCardFooter,
+  WBadge,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -64,6 +65,7 @@ interface ImportColumn {
     WCardTitle,
     WCardBody,
     WCardFooter,
+    WBadge,
   ],
   templateUrl: './import-roster.html',
   styles: `
@@ -278,7 +280,7 @@ export class ImportRosterPage {
     return status === 'MissingConsent' ? 'Missing consent' : status;
   }
 
-  protected statusBadge(status: string): string {
+  protected statusBadge(status: string): 'success' | 'warning' | 'error' {
     if (status === 'Ready') return 'success';
     return status === 'Invalid' ? 'error' : 'warning';
   }

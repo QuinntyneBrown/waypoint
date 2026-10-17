@@ -22,6 +22,7 @@ import {
   WCard,
   WCardBody,
   WCardTitle,
+  WBadge,
 } from '@waypoint/components';
 import {
   buildVerifiedOwnershipPayload,
@@ -53,6 +54,7 @@ import {
     WCard,
     WCardBody,
     WCardTitle,
+    WBadge,
   ],
   templateUrl: './admin-privacy.html',
   styles: `

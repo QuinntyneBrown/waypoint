@@ -15,6 +15,7 @@ import {
   WAlert,
   WCard,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -35,6 +36,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
     WAlert,
     WCard,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './youth-messages.html',
   styles: `

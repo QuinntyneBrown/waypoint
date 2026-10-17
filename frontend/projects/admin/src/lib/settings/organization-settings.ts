@@ -24,6 +24,7 @@ import {
   WAlertTitle,
   WCard,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 import { finalize, forkJoin, map } from 'rxjs';
 
@@ -47,6 +48,7 @@ import { finalize, forkJoin, map } from 'rxjs';
     WAlertTitle,
     WCard,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './organization-settings.html',
   styles: `

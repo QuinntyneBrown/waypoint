@@ -17,6 +17,7 @@ import {
   WAlertTitle,
   WCard,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 import { finalize } from 'rxjs';
 
@@ -35,6 +36,7 @@ import { finalize } from 'rxjs';
     WAlertTitle,
     WCard,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './mentor-assignments.html',
   styles: `

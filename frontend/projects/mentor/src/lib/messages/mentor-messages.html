@@ -11,7 +11,7 @@
         <h1 class="w-page__title">Messages</h1>
         <p class="w-page__sub">Private youth threads and personal cohort broadcasts.</p>
       </div>
-      <span class="w-badge" data-testid="mentor-realtime-status">
+      <span w-badge data-testid="mentor-realtime-status">
         {{ realtime.state() === 'connected' ? 'Live updates on' : 'Reconnecting live updates' }}
       </span>
     </div>
@@ -42,7 +42,7 @@
               <div class="w-cluster w-cluster--between">
                 <h2 class="w-h3">Inbox</h2>
                 @if (totalUnread() > 0) {
-                  <span class="w-badge w-badge--info" data-testid="mentor-unread-count">
+                  <span w-badge variant="info" data-testid="mentor-unread-count">
                     {{ totalUnread() }} unread
                   </span>
                 }
@@ -83,7 +83,7 @@
                     <span class="w-cluster w-cluster--between">
                       <strong>{{ conversation.youthName }}</strong>
                       @if (conversation.unreadCount > 0) {
-                        <span class="w-badge w-badge--info">{{ conversation.unreadCount }}</span>
+                        <span w-badge variant="info">{{ conversation.unreadCount }}</span>
                       }
                     </span>
                     <span class="w-muted w-text-sm">

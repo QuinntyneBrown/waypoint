@@ -71,7 +71,7 @@
       <div class="w-cluster w-cluster--between w-mb-4">
         <h2 class="w-mb-0" id="active-flags-heading">Active flags</h2>
         @if (flags(); as activeFlags) {
-          <span class="w-badge">{{ activeFlags.length }} active</span>
+          <span w-badge>{{ activeFlags.length }} active</span>
         }
       </div>
 
@@ -89,7 +89,7 @@
                     Flagged by {{ flag.flaggedByName }} · {{ flag.flaggedAt | date: 'medium' }}
                   </p>
                 </div>
-                <span class="w-badge w-badge--error">At risk</span>
+                <span w-badge variant="error">At risk</span>
               </div>
               <div w-card-body class="w-stack">
                 <ul class="reason-list" aria-label="Reasons">

@@ -77,7 +77,7 @@
                       {{ person.displayName }}
                     </a>
                     <p class="w-muted">{{ person.cohortName ?? 'Cohort not assigned' }}</p>
-                    <span class="w-badge" [class.w-badge--error]="person.atRisk">
+                    <span w-badge [variant]="person.atRisk ? 'error' : ''">
                       {{ person.status }}
                     </span>
                   </div>
@@ -110,11 +110,11 @@
                   </div>
                   <div class="w-cluster">
                     @if (review.overdue) {
-                      <span class="w-badge w-badge--error">Overdue</span>
+                      <span w-badge variant="error">Overdue</span>
                     } @else if (review.dueDate) {
-                      <span class="w-badge">Due {{ review.dueDate | date: 'mediumDate' }}</span>
+                      <span w-badge>Due {{ review.dueDate | date: 'mediumDate' }}</span>
                     } @else {
-                      <span class="w-badge">No due date</span>
+                      <span w-badge>No due date</span>
                     }
                     <a
                       w-button

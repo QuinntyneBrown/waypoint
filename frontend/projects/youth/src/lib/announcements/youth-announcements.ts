@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { AnnouncementsService, AnnouncementView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell, WCard, WCardBody, WCardTitle } from '@waypoint/components';
+import { WButton, WIcon, WShell, WCard, WCardBody, WCardTitle, WBadge } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 
 // Traces to: L2-ENGAGE-006
 @Component({
   selector: 'w-youth-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WButton, WCard, WCardBody, WCardTitle],
+  imports: [WShell, WIcon, WButton, WCard, WCardBody, WCardTitle, WBadge],
   templateUrl: './youth-announcements.html',
 })
 export class YouthAnnouncements {

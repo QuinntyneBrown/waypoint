@@ -3,13 +3,33 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink } from '@angular/router';
 import { ApiError, MentorService, MentorReviewPreview } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@waypoint/components';
+import {
+  WButton,
+  WIcon,
+  WShell,
+  WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
+  WBadge,
+} from '@waypoint/components';
 
 // Traces to: L2-MENTOR-001, L2-MENTOR-003, L2-MENTOR-004
 @Component({
   selector: 'w-mentor-reviews',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, DatePipe, WButton, WAlert, WCard, WCardBody, WCardTitle],
+  imports: [
+    WShell,
+    WIcon,
+    RouterLink,
+    DatePipe,
+    WButton,
+    WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
+    WBadge,
+  ],
   templateUrl: './mentor-reviews.html',
   styles: `
     .queue-row {

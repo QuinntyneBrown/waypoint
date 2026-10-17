@@ -174,7 +174,7 @@
                         >
                       </td>
                       <td data-label="Status">
-                        <span class="w-badge" [class.w-badge--lime]="item.status === 'Accepted'">{{
+                        <span w-badge [variant]="item.status === 'Accepted' ? 'lime' : ''">{{
                           item.status
                         }}</span>
                       </td>

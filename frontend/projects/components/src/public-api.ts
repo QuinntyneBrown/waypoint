@@ -27,3 +27,6 @@ export * from './lib/button-group/w-button-group';
 export * from './lib/chip/w-chip';
 export * from './lib/alert/w-alert';
 export * from './lib/card/w-card';
+export * from './lib/badge/w-badge';
+export * from './lib/divider/w-divider';
+export * from './lib/scripture/w-scripture';

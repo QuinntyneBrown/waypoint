@@ -14,6 +14,7 @@ import {
   WAlertTitle,
   WCard,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -34,6 +35,7 @@ import { finalize } from 'rxjs/operators';
     WAlertTitle,
     WCard,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './admin-audit-log.html',
   styles: `

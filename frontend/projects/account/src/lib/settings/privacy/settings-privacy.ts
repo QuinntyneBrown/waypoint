@@ -23,6 +23,7 @@ import {
   WCard,
   WCardBody,
   WCardTitle,
+  WBadge,
 } from '@waypoint/components';
 
 // Traces to: L2-NFR-003
@@ -45,6 +46,7 @@ import {
     WCard,
     WCardBody,
     WCardTitle,
+    WBadge,
   ],
   templateUrl: './settings-privacy.html',
   styles: `

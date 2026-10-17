@@ -110,7 +110,7 @@
       </div>
 
       @if (needsGuardian()) {
-        <div class="w-divider"></div>
+        <div w-divider></div>
         <h3>Parent or guardian</h3>
         <p class="w-muted w-text-sm">Required for applicants under 18.</p>
         <div w-form-field [invalid]="error('guardianName')">
@@ -142,7 +142,7 @@
         </div>
       }
 
-      <div class="w-divider"></div>
+      <div w-divider></div>
 
       <div w-form-field [invalid]="error('participationConsentAck')">
         <label w-checkbox>

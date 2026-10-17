@@ -493,9 +493,8 @@
                     ><span>Reviews {{ mentor.reviews }}</span>
                   </div>
                   <span
-                    class="w-badge"
-                    [class.w-badge--danger]="mentor.overloaded"
-                    [class.w-badge--lime]="!mentor.overloaded"
+                    w-badge
+                    [variant]="mentor.overloaded ? 'danger' : !mentor.overloaded ? 'lime' : ''"
                     >{{ mentor.loadBalance }}</span
                   >
                   <p class="w-muted">

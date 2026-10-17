@@ -74,7 +74,7 @@
                 <div class="w-stack">
                   <div class="w-cluster w-cluster--between">
                     <strong>{{ competency.name }}</strong
-                    ><span class="w-badge">{{ competency.level }}</span>
+                    ><span w-badge>{{ competency.level }}</span>
                   </div>
                   <div
                     class="w-progress"
@@ -137,7 +137,7 @@
           <div w-card-body class="w-stack">
             <div class="w-cluster w-cluster--between">
               <h2>Quiz history</h2>
-              <span class="w-badge">Average {{ view.quizAverage | number: '1.0-0' }}%</span>
+              <span w-badge>Average {{ view.quizAverage | number: '1.0-0' }}%</span>
             </div>
             @if (view.quizHistory.length === 0) {
               <div class="w-empty">
@@ -163,9 +163,8 @@
                         <td data-label="Score">{{ quiz.score }}%</td>
                         <td data-label="Result">
                           <span
-                            class="w-badge"
-                            [class.w-badge--success]="quiz.passed"
-                            [class.w-badge--error]="!quiz.passed"
+                            w-badge
+                            [variant]="quiz.passed ? 'success' : !quiz.passed ? 'error' : ''"
                             >{{ quiz.passed ? 'Passed' : 'Not passed' }}</span
                           >
                         </td>
@@ -190,7 +189,7 @@
           <div w-card-body class="w-stack">
             <div class="w-cluster w-cluster--between">
               <h2>Session attendance</h2>
-              <span class="w-badge">{{ view.attendanceRate | number: '1.0-0' }}%</span>
+              <span w-badge>{{ view.attendanceRate | number: '1.0-0' }}%</span>
             </div>
             @if (view.attendanceHistory.length === 0) {
               <div class="w-empty">
@@ -213,12 +212,16 @@
                         <td data-label="Session">{{ session.sessionTitle }}</td>
                         <td data-label="Status">
                           <span
-                            class="w-badge"
-                            [class.w-badge--success]="session.status === 'Present'"
-                            [class.w-badge--warning]="
-                              session.status === 'Late' || session.status === 'Excused'
+                            w-badge
+                            [variant]="
+                              session.status === 'Present'
+                                ? 'success'
+                                : session.status === 'Late' || session.status === 'Excused'
+                                  ? 'warning'
+                                  : session.status === 'Absent'
+                                    ? 'error'
+                                    : ''
                             "
-                            [class.w-badge--error]="session.status === 'Absent'"
                             >{{ session.status }}</span
                           >
                         </td>

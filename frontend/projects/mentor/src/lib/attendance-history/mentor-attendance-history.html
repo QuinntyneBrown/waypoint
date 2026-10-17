@@ -140,10 +140,16 @@
                     <td>{{ row.rate | percent: '1.0-0' }}</td>
                     <td>
                       <span
-                        class="w-badge"
-                        [class.w-badge--success]="row.status === 'saved'"
-                        [class.w-badge--warning]="row.status === 'needs review'"
-                        [class.w-badge--error]="row.status === 'low turnout'"
+                        w-badge
+                        [variant]="
+                          row.status === 'saved'
+                            ? 'success'
+                            : row.status === 'needs review'
+                              ? 'warning'
+                              : row.status === 'low turnout'
+                                ? 'error'
+                                : ''
+                        "
                       >
                         {{ row.status }}
                       </span>
@@ -187,7 +193,7 @@
                     <td>
                       <strong>{{ row.displayName }}</strong>
                       @if (row.belowThreshold) {
-                        <span class="w-badge w-badge--error">Below 70%</span>
+                        <span w-badge variant="error">Below 70%</span>
                       }
                     </td>
                     <td>{{ row.attended }} / {{ row.total }}</td>

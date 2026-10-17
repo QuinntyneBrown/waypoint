@@ -35,6 +35,7 @@ import {
   WAlert,
   WCard,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -62,6 +63,7 @@ type MessageMode = 'thread' | 'broadcast';
     WAlert,
     WCard,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './mentor-messages.html',
   styles: `

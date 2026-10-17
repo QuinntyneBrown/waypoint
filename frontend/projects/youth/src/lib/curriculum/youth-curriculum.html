@@ -58,9 +58,14 @@
                     <h2 w-card-title>{{ module.name }}</h2>
                   </div>
                   <span
-                    class="w-badge"
-                    [class.w-badge--success]="module.status === 'done'"
-                    [class.w-badge--warning]="module.status === 'in-progress'"
+                    w-badge
+                    [variant]="
+                      module.status === 'done'
+                        ? 'success'
+                        : module.status === 'in-progress'
+                          ? 'warning'
+                          : ''
+                    "
                   >
                     {{
                       module.locked ? 'Locked' : (module.completionPercent | number: '1.0-0') + '%'
@@ -114,7 +119,7 @@
                               <span class="w-muted">{{ item.unlockCondition }}</span>
                             }
                           </div>
-                          <span class="w-badge">{{ item.locked ? 'Locked' : item.status }}</span>
+                          <span w-badge>{{ item.locked ? 'Locked' : item.status }}</span>
                         </div>
                       </li>
                     }

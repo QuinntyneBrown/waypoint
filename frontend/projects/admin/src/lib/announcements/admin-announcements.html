@@ -153,19 +153,18 @@
                   <div class="w-cluster w-cluster--between">
                     <h3 w-card-title>{{ announcement.title }}</h3>
                     <span
-                      class="w-badge"
-                      [class.w-badge--lime]="announcement.sentAt"
-                      [class.w-badge--info]="!announcement.sentAt"
+                      w-badge
+                      [variant]="announcement.sentAt ? 'lime' : !announcement.sentAt ? 'info' : ''"
                     >
                       {{ announcement.sentAt ? 'Sent' : 'Scheduled' }}
                     </span>
                   </div>
                   <p>{{ announcement.message }}</p>
                   <div class="announcement-meta">
-                    <span class="w-badge w-badge--neutral">
+                    <span w-badge>
                       {{ announcement.cohortName ?? 'Organization' }}
                     </span>
-                    <span class="w-badge w-badge--neutral">
+                    <span w-badge>
                       {{ roleLabel(announcement.roleTargeting) }}
                     </span>
                     <span class="w-muted">

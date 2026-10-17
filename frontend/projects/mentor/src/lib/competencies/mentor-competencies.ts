@@ -23,6 +23,7 @@ import {
   WCardBody,
   WCardHeader,
   WCardTitle,
+  WBadge,
 } from '@waypoint/components';
 
 interface CompetencyDraft {
@@ -50,6 +51,7 @@ interface CompetencyDraft {
     WCardBody,
     WCardHeader,
     WCardTitle,
+    WBadge,
   ],
   templateUrl: './mentor-competencies.html',
   styles: `

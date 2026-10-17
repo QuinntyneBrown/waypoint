@@ -10,7 +10,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { ApiError, NotificationsService, NotificationView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@waypoint/components';
+import {
+  WButton,
+  WIcon,
+  WShell,
+  WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
+  WBadge,
+} from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -18,7 +27,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
 @Component({
   selector: 'w-notifications',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, WButton, WAlert, WCard, WCardBody, WCardTitle],
+  imports: [WShell, WIcon, RouterLink, WButton, WAlert, WCard, WCardBody, WCardTitle, WBadge],
   templateUrl: './youth-notifications.html',
   styles: `
     .notification-card {

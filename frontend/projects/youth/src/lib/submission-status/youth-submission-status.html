@@ -14,7 +14,7 @@
         <div class="w-page__titles">
           <div class="w-eyebrow">Submission status</div>
           <h1 class="w-page__title">{{ view.assignmentTitle }}</h1>
-          <p class="w-badge" data-testid="submission-status">{{ displayStatus(view.status) }}</p>
+          <p w-badge data-testid="submission-status">{{ displayStatus(view.status) }}</p>
         </div>
       </div>
       <section w-card>
@@ -62,7 +62,7 @@
               <li>
                 <strong>{{ item.label }}</strong>
                 @if (item.current) {
-                  <span class="w-badge">Current</span>
+                  <span w-badge>Current</span>
                 }
               </li>
             }

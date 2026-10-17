@@ -32,6 +32,7 @@ import {
   WTextField,
   WAlert,
   WAlertTitle,
+  WBadge,
 } from '@waypoint/components';
 import { Observable } from 'rxjs';
 
@@ -58,6 +59,7 @@ type Decision = 'approve' | 'decline';
     WSelect,
     WAlert,
     WAlertTitle,
+    WBadge,
   ],
   templateUrl: './applications-list.html',
   styles: `

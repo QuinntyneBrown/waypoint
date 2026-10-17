@@ -194,10 +194,16 @@
                     <p class="w-muted">{{ mentor.email }}</p>
                   </div>
                   <span
-                    class="w-badge"
-                    [class.w-badge--error]="mentor.loadBalance === 'Overloaded'"
-                    [class.w-badge--success]="mentor.loadBalance === 'Balanced'"
-                    [class.w-badge--warning]="mentor.loadBalance === 'Under target'"
+                    w-badge
+                    [variant]="
+                      mentor.loadBalance === 'Overloaded'
+                        ? 'error'
+                        : mentor.loadBalance === 'Balanced'
+                          ? 'success'
+                          : mentor.loadBalance === 'Under target'
+                            ? 'warning'
+                            : ''
+                    "
                   >
                     {{ mentor.loadBalance }}
                   </span>

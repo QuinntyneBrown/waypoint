@@ -45,7 +45,7 @@
                       <span>{{ item.reference }} · {{ item.requestedAt | date: 'medium' }}</span>
                     </div>
                   </div>
-                  <span class="w-badge" [class.w-badge--lime]="item.status === 'Completed'">{{
+                  <span w-badge [variant]="item.status === 'Completed' ? 'lime' : ''">{{
                     item.status
                   }}</span>
                 </div>

@@ -162,7 +162,7 @@
                   {{ request.reference }} · {{ request.requestedAt | date: 'medium' }}
                 </p>
               </div>
-              <span class="w-badge" [class.w-badge--lime]="request.status === 'Completed'">
+              <span w-badge [variant]="request.status === 'Completed' ? 'lime' : ''">
                 {{ request.status }}
               </span>
             </div>

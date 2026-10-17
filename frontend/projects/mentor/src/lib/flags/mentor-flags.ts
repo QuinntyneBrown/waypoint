@@ -24,6 +24,7 @@ import {
   WCardHeader,
   WCardTitle,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-007, L2-ENGAGE-007, L2-AUTH-010
@@ -46,6 +47,7 @@ import {
     WCardHeader,
     WCardTitle,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './mentor-flags.html',
   styles: `

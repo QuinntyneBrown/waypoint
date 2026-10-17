@@ -80,7 +80,7 @@
               <article class="dashboard-row">
                 <div class="w-cluster w-cluster--between">
                   <strong>{{ cohort.cohortName }}</strong
-                  ><span class="w-badge" [class.w-badge--error]="cohort.atRisk > 0"
+                  ><span w-badge [variant]="cohort.atRisk > 0 ? 'error' : ''"
                     >{{ cohort.atRisk }} at risk</span
                   >
                 </div>
@@ -105,7 +105,7 @@
               <article class="dashboard-row">
                 <div class="w-cluster w-cluster--between">
                   <strong>{{ mentor.mentorName }}</strong
-                  ><span class="w-badge" [class.w-badge--error]="mentor.overloaded">{{
+                  ><span w-badge [variant]="mentor.overloaded ? 'error' : ''">{{
                     mentor.loadBalance
                   }}</span>
                 </div>

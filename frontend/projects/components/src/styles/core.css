@@ -298,10 +298,6 @@ pre {
     grid-template-columns: 1fr;
   }
 }
-.w-divider {
-  border-top: var(--w-bw) solid var(--w-border);
-  margin-block: var(--w-s5);
-}
 .w-muted {
   color: var(--w-muted);
 }
@@ -901,61 +897,6 @@ legend {
   }
 }
 
-/* ---------- Badge / pill ---------- */
-.w-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-family: var(--w-font-head);
-  font-weight: 600;
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
-  padding: 3px 10px;
-  border-radius: var(--w-r-pill);
-  background: var(--w-g200);
-  color: var(--w-ink);
-  white-space: nowrap;
-  line-height: 1.4;
-}
-.w-badge .w-icon {
-  width: 13px;
-  height: 13px;
-}
-.w-badge--success {
-  background: var(--w-success-bg);
-  color: var(--color-success-fg);
-}
-.w-badge--warning {
-  background: var(--w-warning-bg);
-  color: var(--color-warning-fg);
-}
-.w-badge--error {
-  background: var(--w-error-bg);
-  color: var(--color-danger-fg);
-}
-.w-badge--info {
-  background: var(--w-info-bg);
-  color: var(--color-info-fg);
-}
-.w-badge--lime {
-  background: var(--w-lime);
-  color: var(--w-on-lime);
-}
-.w-badge--ink {
-  background: var(--w-ink);
-  color: var(--w-white);
-}
-.w-badge--outline {
-  background: transparent;
-  border: var(--w-bw) solid var(--w-border-strong);
-}
-.w-badge--dot::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-}
 /* ---------- Progress ring & bar ---------- */
 .w-ring {
   --val: 0;
@@ -1038,43 +979,6 @@ legend {
   text-align: right;
 }
 
-/* ---------- Avatar ---------- */
-.w-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  flex: none;
-  display: inline-grid;
-  place-items: center;
-  font-family: var(--w-font-head);
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: var(--w-ink);
-  background: var(--w-g300);
-  overflow: hidden;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}
-.w-avatar--xs {
-  width: 26px;
-  height: 26px;
-  font-size: 0.66rem;
-}
-.w-avatar--sm {
-  width: 32px;
-  height: 32px;
-  font-size: 0.75rem;
-}
-.w-avatar--lg {
-  width: 56px;
-  height: 56px;
-  font-size: 1.2rem;
-}
-.w-avatar--xl {
-  width: 88px;
-  height: 88px;
-  font-size: 1.9rem;
-}
 .w-avatar__ring {
   position: relative;
   display: inline-grid;
@@ -1600,25 +1504,6 @@ legend {
 }
 .w-lessonstep.is-locked {
   opacity: 0.55;
-}
-.w-scripture {
-  border-left: 3px solid var(--w-lime);
-  background: var(--w-g100);
-  padding: var(--w-s5) var(--w-s6);
-  border-radius: 0 var(--w-r-card) var(--w-r-card) 0;
-  font-family: var(--w-font-serif);
-  font-size: 1.15rem;
-  line-height: 1.6;
-}
-.w-scripture__ref {
-  display: block;
-  font-family: var(--w-font-head);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--w-muted);
-  margin-top: 12px;
-  font-weight: 600;
 }
 .w-kpi {
   display: flex;
