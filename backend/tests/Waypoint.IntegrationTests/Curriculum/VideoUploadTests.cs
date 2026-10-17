@@ -11,30 +11,8 @@ namespace Waypoint.IntegrationTests.Curriculum;
 // Traces to: L2-CURRIC-002 (AC6 resumable chunked video upload)
 [TestFixture]
 [Property("Req", "L2-CURRIC-002")]
-public sealed class VideoUploadTests : IntegrationTestBase
+public sealed class VideoUploadTests : VideoTestBase
 {
-    private const long MiB = 1024 * 1024;
-
-    private async Task<HttpResponseMessage> SendAsync(
-        HttpMethod method, string url, string? accessToken, object? body = null)
-    {
-        var request = new HttpRequestMessage(method, url);
-        if (body is not null) request.Content = JsonContent.Create(body);
-        if (accessToken is not null) Authorize(request, accessToken);
-        return await Client.SendAsync(request);
-    }
-
-    private async Task<Guid> CreateLessonAsync(string adminToken)
-    {
-        var trackId = (await (await SendAsync(HttpMethod.Post, "/api/tracks", adminToken,
-            new { name = "Video Track", key = $"video-{Guid.NewGuid():N}" }))
-            .Content.ReadFromJsonAsync<IdDto>())!.Id;
-        var moduleId = (await (await SendAsync(HttpMethod.Post, "/api/modules", adminToken,
-            new { trackId, name = "Video Module" })).Content.ReadFromJsonAsync<IdDto>())!.Id;
-        return (await (await SendAsync(HttpMethod.Post, "/api/lessons", adminToken,
-            new { moduleId, title = "Video Lesson" })).Content.ReadFromJsonAsync<IdDto>())!.Id;
-    }
-
     // Traces to: L2-CURRIC-002 (AC6)
     [Test]
     [Property("Req", "L2-CURRIC-002")]
@@ -104,36 +82,6 @@ public sealed class VideoUploadTests : IntegrationTestBase
             Assert.That(youth.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
             Assert.That(anonymous.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
         });
-    }
-
-    private async Task<UploadSessionDto> StartAsync(string adminToken, Guid lessonId, long sizeBytes)
-    {
-        var response = await SendAsync(HttpMethod.Post, $"/api/lessons/{lessonId}/video-uploads",
-            adminToken, new { fileName = "week-1.mp4", sizeBytes });
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-        return (await response.Content.ReadFromJsonAsync<UploadSessionDto>())!;
-    }
-
-    private async Task<HttpResponseMessage> PutChunkAsync(
-        string? accessToken, Guid lessonId, Guid uploadId, int index, int length)
-    {
-        var request = new HttpRequestMessage(
-            HttpMethod.Put, $"/api/lessons/{lessonId}/video-uploads/{uploadId}/chunks/{index}")
-        {
-            Content = new ByteArrayContent(new byte[length]),
-        };
-        request.Content.Headers.ContentType =
-            new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-        if (accessToken is not null) Authorize(request, accessToken);
-        return await Client.SendAsync(request);
-    }
-
-    private async Task<StatusDto> StatusAsync(string adminToken, Guid lessonId, Guid uploadId)
-    {
-        var response = await SendAsync(
-            HttpMethod.Get, $"/api/lessons/{lessonId}/video-uploads/{uploadId}", adminToken);
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        return (await response.Content.ReadFromJsonAsync<StatusDto>())!;
     }
 
     // Traces to: L2-CURRIC-002 (AC6 an interrupted upload resumes from the last accepted chunk)
@@ -213,42 +161,6 @@ public sealed class VideoUploadTests : IntegrationTestBase
     }
 
     // A tiny stand-in for an MP4: the "ftyp" box marker sits at offset 4, as in a real file.
-    private static byte[] FakeMp4(int length, string marker = "")
-    {
-        var bytes = new byte[length];
-        "\0\0\0\u0018ftypisom"u8.CopyTo(bytes);
-        System.Text.Encoding.ASCII.GetBytes(marker).CopyTo(bytes, 16);
-        return bytes;
-    }
-
-    private async Task<(Guid TrackId, Guid LessonId, UploadSessionDto Session)> UploadAllChunksAsync(
-        string adminToken, byte[] content, int skipIndex = -1)
-    {
-        var trackId = Guid.Empty;
-        var lessonId = await CreateLessonAsync(adminToken);
-        var session = await StartAsync(adminToken, lessonId, content.Length);
-        for (var index = 0; index < session.ChunkCount; index++)
-        {
-            if (index == skipIndex) continue;
-            var offset = index * session.ChunkSizeBytes;
-            var length = Math.Min(session.ChunkSizeBytes, content.Length - offset);
-            var request = new HttpRequestMessage(
-                HttpMethod.Put,
-                $"/api/lessons/{lessonId}/video-uploads/{session.UploadId}/chunks/{index}")
-            {
-                Content = new ByteArrayContent(content, offset, length),
-            };
-            request.Content.Headers.ContentType =
-                new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-            Authorize(request, adminToken);
-            Assert.That((await Client.SendAsync(request)).StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
-        }
-        return (trackId, lessonId, session);
-    }
-
-    private Task<HttpResponseMessage> CompleteAsync(string? token, Guid lessonId, Guid uploadId) =>
-        SendAsync(HttpMethod.Post, $"/api/lessons/{lessonId}/video-uploads/{uploadId}/complete", token);
-
     // Traces to: L2-CURRIC-002 (AC7 accepted upload is queued for background transcoding),
     //            L2-CONSENT-003 (AC1 audit of mutating admin action)
     [Test]
@@ -331,8 +243,4 @@ public sealed class VideoUploadTests : IntegrationTestBase
         });
     }
 
-    private sealed record CompletedMediaDto(Guid Id, string MediaType);
-    private sealed record IdDto(Guid Id);
-    private sealed record UploadSessionDto(Guid UploadId, int ChunkSizeBytes, int ChunkCount);
-    private sealed record StatusDto(Guid UploadId, int ChunkCount, int[] ReceivedChunks);
 }

@@ -22,6 +22,69 @@ public sealed class FileSystemMediaStore : IMediaStore, IUploadStore
         return new DriveInfo(Path.GetPathRoot(Path.GetFullPath(_root))!).AvailableFreeSpace;
     }
 
+    public string SourcePath(Guid mediaId) => Path.Combine(_root, "sources", $"{mediaId:N}.mp4");
+
+    public bool SourceExists(Guid mediaId) => File.Exists(SourcePath(mediaId));
+
+    public string PrepareWorkDirectory(Guid mediaId)
+    {
+        var directory = Folder("work", mediaId);
+        if (Directory.Exists(directory)) Directory.Delete(directory, recursive: true);
+        Directory.CreateDirectory(directory);
+        return directory;
+    }
+
+    public void DiscardWork(Guid mediaId)
+    {
+        var directory = Folder("work", mediaId);
+        if (Directory.Exists(directory)) Directory.Delete(directory, recursive: true);
+    }
+
+    public void Publish(Guid mediaId)
+    {
+        var published = Folder("hls", mediaId);
+        Directory.CreateDirectory(Path.Combine(_root, "hls"));
+        if (Directory.Exists(published)) Directory.Delete(published, recursive: true);
+        Directory.Move(Folder("work", mediaId), published);
+    }
+
+    public void MoveToTrash(Guid mediaId)
+    {
+        var trash = Folder("trash", mediaId);
+        Directory.CreateDirectory(trash);
+        var published = Folder("hls", mediaId);
+        if (Directory.Exists(published)) Directory.Move(published, Path.Combine(trash, "hls"));
+        if (SourceExists(mediaId)) File.Move(SourcePath(mediaId), Path.Combine(trash, "source.mp4"));
+        DiscardWork(mediaId);
+    }
+
+    public void Sweep(
+        IReadOnlySet<Guid> existingMediaIds, IReadOnlySet<Guid> transcodingMediaIds, DateTime partCutoff)
+    {
+        DeleteChildren(Path.Combine(_root, "trash"), _ => true);
+        DeleteChildren(Path.Combine(_root, "work"),
+            name => !(Guid.TryParseExact(name, "N", out var id) && transcodingMediaIds.Contains(id)));
+        DeleteChildren(Path.Combine(_root, "hls"),
+            name => !(Guid.TryParseExact(name, "N", out var id) && existingMediaIds.Contains(id)));
+        var uploads = Path.Combine(_root, "uploads");
+        if (!Directory.Exists(uploads)) return;
+        foreach (var part in Directory.EnumerateFiles(uploads, "*.part"))
+        {
+            if (File.GetLastWriteTimeUtc(part) < partCutoff) File.Delete(part);
+        }
+    }
+
+    private string Folder(string area, Guid mediaId) => Path.Combine(_root, area, $"{mediaId:N}");
+
+    private static void DeleteChildren(string directory, Func<string, bool> shouldDelete)
+    {
+        if (!Directory.Exists(directory)) return;
+        foreach (var child in Directory.EnumerateDirectories(directory))
+        {
+            if (shouldDelete(Path.GetFileName(child))) Directory.Delete(child, recursive: true);
+        }
+    }
+
     public async Task WriteChunkAsync(
         Guid uploadId, long offset, Stream body, long length, CancellationToken cancellationToken)
     {

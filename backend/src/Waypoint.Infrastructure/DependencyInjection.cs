@@ -43,6 +43,8 @@ public static class InfrastructureDependencyInjection
         services.AddSingleton<IMediaStore>(sp => sp.GetRequiredService<FileSystemMediaStore>());
         services.AddSingleton<IUploadStore>(sp => sp.GetRequiredService<FileSystemMediaStore>());
         services.AddSingleton<IVideoTranscoder, FfmpegVideoTranscoder>();
+        services.AddScoped<VideoTranscodeProcessor>();
+        services.AddHostedService<VideoTranscodeWorker>();
 
         var connectionString = configuration.GetConnectionString("Default");
 
