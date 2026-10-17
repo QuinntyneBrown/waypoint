@@ -21,13 +21,14 @@ test('a youth plays a ready lesson video from a signed adaptive stream', async (
   const seeded = await seedYouthCurriculum(request);
   await seedLessonVideo(request, seeded.secondLessonId, { ready: true });
   const lesson = new YouthLessonPage(page);
+  await lesson.recordPlayerRendering();
   const master = lesson.waitForMasterPlaylist();
 
   await openSecondLesson(page, seeded);
 
   // A range response (206) is as good as a full one: browsers that play HLS natively ask for ranges.
   expect((await master).ok()).toBe(true);
-  await expect(lesson.videoPlayer).toBeVisible();
+  await expect.poll(() => lesson.playerWasRendered()).toBe(true);
   await expect(lesson.videoPreparingNotice).toHaveCount(0);
 });
 
