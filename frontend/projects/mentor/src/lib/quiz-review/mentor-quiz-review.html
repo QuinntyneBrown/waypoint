@@ -53,9 +53,9 @@
                 <ul class="answer-list">
                   @for (option of question.options; track $index; let optionIndex = $index) {
                     <li
-                      class="w-quiz__opt"
-                      [class.is-selected]="optionSelected(question, optionIndex)"
-                      [class.is-correct]="optionCorrect(question, optionIndex)"
+                      w-quiz-option
+                      [selected]="optionSelected(question, optionIndex)"
+                      [correct]="optionCorrect(question, optionIndex)"
                     >
                       <span class="answer-copy">{{ option }}</span>
                       @if (optionSelected(question, optionIndex)) {

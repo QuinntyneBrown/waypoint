@@ -14,6 +14,7 @@ import {
   WCard,
   WCardBody,
   WCardTitle,
+  WQuizOption,
 } from '@waypoint/components';
 
 type QuizAnswers = Record<string, number[] | string>;
@@ -33,6 +34,7 @@ type QuizAnswers = Record<string, number[] | string>;
     WCard,
     WCardBody,
     WCardTitle,
+    WQuizOption,
   ],
   templateUrl: './youth-quiz-attempt.html',
 })

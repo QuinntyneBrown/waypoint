@@ -47,7 +47,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Description list | — | in library |
 | Radio group | 10 | in library |
 | Footer | 8 | to build (DECISIONS #23) |
-| Quiz option | 3 | to build (DECISIONS #23) |
+| Quiz option | 3 | in library |
 
 ## Screens
 

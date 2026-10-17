@@ -46,7 +46,7 @@
                 </div>
               } @else {
                 @for (option of question.options; track $index) {
-                  <label class="w-quiz__opt" [class.is-selected]="isSelected(question.id, $index)">
+                  <label w-quiz-option [selected]="isSelected(question.id, $index)">
                     @if (question.type === 'MultipleAnswer') {
                       <input
                         type="checkbox"
