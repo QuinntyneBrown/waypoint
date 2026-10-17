@@ -42,3 +42,4 @@ export * from './lib/dialog/w-dialog';
 export * from './lib/list/w-list-item';
 export * from './lib/timeline/w-timeline';
 export * from './lib/message-thread/w-message-thread';
+export * from './lib/quiz-option/w-quiz-option';

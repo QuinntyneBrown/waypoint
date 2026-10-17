@@ -22,6 +22,7 @@ import {
   WEmptyStateText,
   WStatLabel,
   WStatValue,
+  WQuizOption,
 } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-004, L2-LEARN-005
@@ -49,6 +50,7 @@ import {
     WEmptyStateText,
     WStatLabel,
     WStatValue,
+    WQuizOption,
   ],
   templateUrl: './mentor-quiz-review.html',
   styles: `
