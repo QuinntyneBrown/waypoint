@@ -10,29 +10,6 @@ import { WShell } from '@waypoint/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [WShell, RouterLink],
   templateUrl: './youth-journey.html',
-  styles: `
-    .journey-timeline {
-      border-inline-start: 3px solid var(--w-border);
-      padding-inline-start: var(--w-s5);
-    }
-    .journey-module {
-      position: relative;
-    }
-    .journey-module::before {
-      content: '';
-      position: absolute;
-      inline-size: 0.9rem;
-      block-size: 0.9rem;
-      border-radius: 50%;
-      background: var(--w-border);
-      inset-inline-start: calc(-1 * var(--w-s5) - 0.55rem);
-      inset-block-start: 1.35rem;
-    }
-    .journey-module--current::before {
-      background: var(--w-lime);
-      box-shadow: 0 0 0 4px var(--w-lime-soft);
-    }
-  `,
 })
 export class YouthJourneyPage {
   protected readonly auth = inject(AuthStore);
