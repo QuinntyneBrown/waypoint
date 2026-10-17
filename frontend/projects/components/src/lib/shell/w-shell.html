@@ -1,3 +1,7 @@
+<a class="w-skip-link" href="#main" (click)="$event.preventDefault(); main.focus()">
+  Skip to content
+</a>
+
 <div class="w-offline" [class.is-visible]="showOffline()">
   <w-icon name="wifi-off" />
   <span>You’re offline — changes will save when you reconnect.</span>
@@ -95,6 +99,6 @@
   </div>
 }
 
-<main class="w-main">
+<main #main class="w-main" id="main" tabindex="-1">
   <ng-content />
 </main>
