@@ -29,6 +29,8 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WTableWrap,
+  WTable,
 } from '@waypoint/components';
 import { Observable } from 'rxjs';
 import { shellRole } from '@waypoint/core';
@@ -66,6 +68,8 @@ const ROLES: readonly WRoleName[] = [
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WTableWrap,
+    WTable,
   ],
   templateUrl: './invitations.html',
   styles: `

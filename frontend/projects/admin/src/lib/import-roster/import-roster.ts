@@ -34,6 +34,7 @@ import {
   WCardBody,
   WCardFooter,
   WBadge,
+  WTableWrap,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -66,6 +67,7 @@ interface ImportColumn {
     WCardBody,
     WCardFooter,
     WBadge,
+    WTableWrap,
   ],
   templateUrl: './import-roster.html',
   styles: `

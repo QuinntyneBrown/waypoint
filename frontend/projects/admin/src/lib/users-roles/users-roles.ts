@@ -20,6 +20,8 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WTableWrap,
+  WTable,
 } from '@waypoint/components';
 
 const ROLES: readonly WRoleName[] = [
@@ -53,6 +55,8 @@ const ROLES: readonly WRoleName[] = [
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WTableWrap,
+    WTable,
   ],
   templateUrl: './users-roles.html',
   styles: `

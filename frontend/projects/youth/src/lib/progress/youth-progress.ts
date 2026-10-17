@@ -15,6 +15,8 @@ import {
   WStat,
   WStatLabel,
   WStatValue,
+  WTableWrap,
+  WTable,
 } from '@waypoint/components';
 
 type ProgressTab = 'overview' | 'quizzes' | 'attendance';
@@ -38,6 +40,8 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
     WStat,
     WStatLabel,
     WStatValue,
+    WTableWrap,
+    WTable,
   ],
   templateUrl: './youth-progress.html',
 })

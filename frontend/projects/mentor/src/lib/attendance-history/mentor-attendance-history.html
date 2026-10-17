@@ -113,8 +113,8 @@
         @if (loading()) {
           <p class="w-muted" role="status">Loading attendance history…</p>
         } @else if (view() === 'session') {
-          <div class="w-table-wrap" data-testid="attendance-by-session">
-            <table class="w-table">
+          <div w-table-wrap data-testid="attendance-by-session">
+            <table w-table>
               <thead>
                 <tr>
                   <th scope="col">Session</th>
@@ -174,8 +174,8 @@
             </table>
           </div>
         } @else {
-          <div class="w-table-wrap" data-testid="attendance-by-youth">
-            <table class="w-table">
+          <div w-table-wrap data-testid="attendance-by-youth">
+            <table w-table>
               <thead>
                 <tr>
                   <th scope="col">Youth</th>

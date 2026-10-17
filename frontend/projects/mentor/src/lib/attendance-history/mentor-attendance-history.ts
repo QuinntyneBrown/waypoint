@@ -23,6 +23,8 @@ import {
   WCardTitle,
   WCardBody,
   WBadge,
+  WTableWrap,
+  WTable,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
@@ -48,6 +50,8 @@ type HistoryView = 'session' | 'youth';
     WCardTitle,
     WCardBody,
     WBadge,
+    WTableWrap,
+    WTable,
   ],
   templateUrl: './mentor-attendance-history.html',
   styles: `

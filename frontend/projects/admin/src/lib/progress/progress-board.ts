@@ -30,6 +30,8 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WTableWrap,
+  WMatrix,
 } from '@waypoint/components';
 import { debounceTime, filter, finalize, forkJoin, merge } from 'rxjs';
 import { RealtimeService } from '@waypoint/core/realtime';
@@ -53,6 +55,8 @@ import { RealtimeService } from '@waypoint/core/realtime';
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WTableWrap,
+    WMatrix,
   ],
   templateUrl: './progress-board.html',
   styles: `
