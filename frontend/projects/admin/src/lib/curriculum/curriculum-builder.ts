@@ -17,7 +17,6 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WAccessibleDialog,
   WButton,
   WFormField,
   WHelp,
@@ -33,6 +32,10 @@ import {
   WEmptyState,
   WEmptyStateTitle,
   WEmptyStateText,
+  WDialog,
+  WDialogHeader,
+  WDialogTitle,
+  WDialogBody,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 import {
@@ -116,7 +119,6 @@ interface CurriculumAuthoringDraft {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     WShell,
-    WAccessibleDialog,
     ReactiveFormsModule,
     WButton,
     WFormField,
@@ -132,6 +134,10 @@ interface CurriculumAuthoringDraft {
     WEmptyState,
     WEmptyStateTitle,
     WEmptyStateText,
+    WDialog,
+    WDialogHeader,
+    WDialogTitle,
+    WDialogBody,
   ],
   templateUrl: './curriculum-builder.html',
   styleUrl: './curriculum-builder.css',

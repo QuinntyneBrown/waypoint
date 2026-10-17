@@ -114,69 +114,55 @@
 
   @if (stageDialogOpen()) {
     <div
-      class="w-modal is-open"
-      wuAccessibleDialog
+      w-dialog
       [attr.aria-label]="editingStageId() ? 'Edit stage' : 'Add stage'"
-      (wuDialogEscape)="closeStage()"
+      (dismiss)="closeStage()"
     >
-      <div class="w-modal__scrim" (click)="closeStage()"></div>
-      <div class="w-modal__panel">
-        <div class="w-modal__header">
-          <h2 class="w-modal__title">{{ editingStageId() ? 'Edit stage' : 'Add stage' }}</h2>
-        </div>
-        <div class="w-modal__body">
-          <form class="w-stack" [formGroup]="stageForm" (ngSubmit)="saveStage()">
-            <div w-form-field>
-              <label w-label for="stage-name">Stage name</label>
-              <input w-text-field id="stage-name" formControlName="name" />
-            </div>
-            <div w-form-field>
-              <label w-label for="stage-description">Stage description</label>
-              <textarea
-                w-textarea
-                id="stage-description"
-                rows="4"
-                formControlName="description"
-              ></textarea>
-            </div>
-            <div class="w-actions">
-              <button w-button variant="primary" type="submit" [disabled]="busy()">
-                Save stage
-              </button>
-              <button w-button variant="ghost" type="button" (click)="closeStage()">Cancel</button>
-            </div>
-          </form>
-        </div>
+      <div w-dialog-header>
+        <h2 w-dialog-title>{{ editingStageId() ? 'Edit stage' : 'Add stage' }}</h2>
+      </div>
+      <div w-dialog-body>
+        <form class="w-stack" [formGroup]="stageForm" (ngSubmit)="saveStage()">
+          <div w-form-field>
+            <label w-label for="stage-name">Stage name</label>
+            <input w-text-field id="stage-name" formControlName="name" />
+          </div>
+          <div w-form-field>
+            <label w-label for="stage-description">Stage description</label>
+            <textarea
+              w-textarea
+              id="stage-description"
+              rows="4"
+              formControlName="description"
+            ></textarea>
+          </div>
+          <div class="w-actions">
+            <button w-button variant="primary" type="submit" [disabled]="busy()">Save stage</button>
+            <button w-button variant="ghost" type="button" (click)="closeStage()">Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
   }
 
   @if (competencyStageId()) {
-    <div
-      class="w-modal is-open"
-      wuAccessibleDialog
-      aria-label="Add competency"
-      (wuDialogEscape)="closeCompetency()"
-    >
-      <div class="w-modal__scrim" (click)="closeCompetency()"></div>
-      <div class="w-modal__panel">
-        <div class="w-modal__header"><h2 class="w-modal__title">Add competency</h2></div>
-        <div class="w-modal__body">
-          <form class="w-stack" [formGroup]="competencyForm" (ngSubmit)="addCompetency()">
-            <div w-form-field>
-              <label w-label for="competency-name">Competency name</label>
-              <input w-text-field id="competency-name" formControlName="name" />
-            </div>
-            <div class="w-actions">
-              <button w-button variant="primary" type="submit" [disabled]="busy()">
-                Add competency
-              </button>
-              <button w-button variant="ghost" type="button" (click)="closeCompetency()">
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
+    <div w-dialog aria-label="Add competency" (dismiss)="closeCompetency()">
+      <div w-dialog-header><h2 w-dialog-title>Add competency</h2></div>
+      <div w-dialog-body>
+        <form class="w-stack" [formGroup]="competencyForm" (ngSubmit)="addCompetency()">
+          <div w-form-field>
+            <label w-label for="competency-name">Competency name</label>
+            <input w-text-field id="competency-name" formControlName="name" />
+          </div>
+          <div class="w-actions">
+            <button w-button variant="primary" type="submit" [disabled]="busy()">
+              Add competency
+            </button>
+            <button w-button variant="ghost" type="button" (click)="closeCompetency()">
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   }

@@ -242,50 +242,46 @@
 
   @if (reviewingBroadcast()) {
     <div
-      class="w-modal w-modal--sm is-open"
-      wuAccessibleDialog
+      w-dialog
+      size="sm"
       aria-labelledby="confirm-broadcast-heading"
-      (wuDialogEscape)="reviewingBroadcast.set(false)"
+      (dismiss)="reviewingBroadcast.set(false)"
     >
-      <div class="w-modal__scrim" (click)="reviewingBroadcast.set(false)"></div>
-      <div class="w-modal__panel">
-        <div class="w-modal__header">
-          <div>
-            <h2 class="w-modal__title" id="confirm-broadcast-heading">Send this broadcast?</h2>
-            <p class="w-modal__sub">{{ selectedGroup()?.cohortName }}</p>
-          </div>
-          <button
-            w-icon-button
-            class="w-modal__close"
-            type="button"
-            aria-label="Close"
-            (click)="reviewingBroadcast.set(false)"
-          >
-            <w-icon name="x" />
-          </button>
+      <div w-dialog-header>
+        <div>
+          <h2 w-dialog-title id="confirm-broadcast-heading">Send this broadcast?</h2>
+          <p w-dialog-subtitle>{{ selectedGroup()?.cohortName }}</p>
         </div>
-        <div class="w-modal__body w-stack">
-          <p>
-            Send one private message to
-            <strong>{{ selectedGroup()?.recipientCount }} youth</strong>?
-          </p>
-          <p class="message-body">{{ broadcastForm.controls.body.value }}</p>
-        </div>
-        <div class="w-modal__footer">
-          <button w-button variant="ghost" type="button" (click)="reviewingBroadcast.set(false)">
-            Cancel
-          </button>
-          <button
-            w-button
-            variant="primary"
-            type="button"
-            data-testid="confirm-broadcast"
-            [disabled]="broadcasting()"
-            (click)="confirmBroadcast()"
-          >
-            {{ broadcasting() ? 'Sending…' : 'Send personal messages' }}
-          </button>
-        </div>
+        <button
+          w-icon-button
+          type="button"
+          aria-label="Close"
+          (click)="reviewingBroadcast.set(false)"
+        >
+          <w-icon name="x" />
+        </button>
+      </div>
+      <div w-dialog-body class="w-stack">
+        <p>
+          Send one private message to
+          <strong>{{ selectedGroup()?.recipientCount }} youth</strong>?
+        </p>
+        <p class="message-body">{{ broadcastForm.controls.body.value }}</p>
+      </div>
+      <div w-dialog-footer>
+        <button w-button variant="ghost" type="button" (click)="reviewingBroadcast.set(false)">
+          Cancel
+        </button>
+        <button
+          w-button
+          variant="primary"
+          type="button"
+          data-testid="confirm-broadcast"
+          [disabled]="broadcasting()"
+          (click)="confirmBroadcast()"
+        >
+          {{ broadcasting() ? 'Sending…' : 'Send personal messages' }}
+        </button>
       </div>
     </div>
   }

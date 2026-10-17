@@ -17,7 +17,6 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WAccessibleDialog,
   WButton,
   WErrorText,
   WFormField,
@@ -35,6 +34,11 @@ import {
   WCardFooter,
   WBadge,
   WTableWrap,
+  WDialog,
+  WDialogHeader,
+  WDialogTitle,
+  WDialogBody,
+  WDialogFooter,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -51,7 +55,6 @@ interface ImportColumn {
   imports: [
     WShell,
     WIcon,
-    WAccessibleDialog,
     FormsModule,
     WButton,
     WFormField,
@@ -68,6 +71,11 @@ interface ImportColumn {
     WCardFooter,
     WBadge,
     WTableWrap,
+    WDialog,
+    WDialogHeader,
+    WDialogTitle,
+    WDialogBody,
+    WDialogFooter,
   ],
   templateUrl: './import-roster.html',
   styles: `
