@@ -18,9 +18,6 @@ import { WIcon, WShell } from '@waypoint/components';
       gap: var(--w-s5);
       align-items: center;
     }
-    .home-progress {
-      width: 100%;
-    }
     .home-progress__value {
       font-size: clamp(2rem, 7vw, 3.25rem);
       font-weight: 800;

@@ -76,9 +76,17 @@
                     >{{ view.overallPercent | number: '1.0-0' }}%</strong
                   >
                 </div>
-                <progress class="home-progress" [value]="view.overallPercent" max="100">
-                  {{ view.overallPercent }}%
-                </progress>
+                <div
+                  class="w-progress"
+                  role="progressbar"
+                  aria-label="Overall progress"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  [attr.aria-valuenow]="view.overallPercent"
+                  [style.--val]="view.overallPercent + '%'"
+                >
+                  <div class="w-progress__fill"></div>
+                </div>
                 <p>{{ view.completedItems }} of {{ view.totalItems }} required items complete.</p>
                 <a class="w-btn w-btn--ghost" routerLink="/youth/progress">See all progress</a>
               </div>

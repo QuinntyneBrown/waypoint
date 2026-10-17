@@ -63,10 +63,6 @@ type LifecycleAction =
     .confirmation-copy {
       overflow-wrap: anywhere;
     }
-    progress {
-      width: min(100%, 32rem);
-      min-height: 1rem;
-    }
     @media (max-width: 42rem) {
       .record-grid,
       .account-actions {

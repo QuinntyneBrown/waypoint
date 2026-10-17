@@ -30,9 +30,17 @@
             <strong>Self-check progress</strong>
             <span class="w-badge" data-testid="coding-progress">{{ completionPercent() }}%</span>
           </div>
-          <progress class="coding-progress" [value]="completionPercent()" max="100">
-            {{ completionPercent() }}%
-          </progress>
+          <div
+            class="w-progress"
+            role="progressbar"
+            aria-label="Self-check progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [attr.aria-valuenow]="completionPercent()"
+            [style.--val]="completionPercent() + '%'"
+          >
+            <div class="w-progress__fill"></div>
+          </div>
           @if (view.badge; as badge) {
             <p>
               {{

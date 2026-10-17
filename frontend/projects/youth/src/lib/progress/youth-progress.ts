@@ -30,9 +30,6 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
       font-weight: 800;
       line-height: 1;
     }
-    .competency-progress {
-      width: 100%;
-    }
   `,
 })
 export class YouthProgressPage {

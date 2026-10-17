@@ -63,18 +63,6 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       gap: var(--w-s3);
       align-items: center;
     }
-    .report-bar {
-      height: 0.75rem;
-      overflow: hidden;
-      border-radius: 999px;
-      background: var(--w-g100);
-    }
-    .report-bar > span {
-      display: block;
-      height: 100%;
-      border-radius: inherit;
-      background: var(--w-teal);
-    }
     .report-card {
       min-width: 0;
       overflow-wrap: anywhere;
@@ -110,7 +98,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       .report-chart-row {
         grid-template-columns: 1fr auto;
       }
-      .report-chart-row .report-bar {
+      .report-chart-row .w-progress {
         grid-column: 1 / -1;
       }
       .report-filters .w-btn,

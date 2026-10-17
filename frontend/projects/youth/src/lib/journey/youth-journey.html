@@ -26,9 +26,17 @@
               You are in <strong>{{ current.name }}</strong> now.
             </p>
           }
-          <progress class="journey-progress" [value]="overallPercent()" max="100">
-            {{ overallPercent() }}%
-          </progress>
+          <div
+            class="w-progress"
+            role="progressbar"
+            aria-label="Overall progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [attr.aria-valuenow]="overallPercent()"
+            [style.--val]="overallPercent() + '%'"
+          >
+            <div class="w-progress__fill"></div>
+          </div>
           <strong>{{ overallPercent() }}%</strong>
         </div>
       </section>

@@ -63,9 +63,24 @@
                 <div class="w-eyebrow">Locked badge</div>
                 <h3>{{ badge.name }}</h3>
                 <p>{{ badge.criteria }}</p>
-                <progress [value]="badge.completedCriteria" [max]="badge.totalCriteria">
-                  {{ badge.progressLabel }}</progress
-                ><span class="w-badge" data-testid="badge-progress">{{ badge.progressLabel }}</span>
+                <div
+                  class="w-progress"
+                  role="progressbar"
+                  aria-label="Badge criteria progress"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  [attr.aria-valuenow]="
+                    badge.totalCriteria ? (badge.completedCriteria / badge.totalCriteria) * 100 : 0
+                  "
+                  [style.--val]="
+                    (badge.totalCriteria
+                      ? (badge.completedCriteria / badge.totalCriteria) * 100
+                      : 0) + '%'
+                  "
+                >
+                  <div class="w-progress__fill"></div>
+                </div>
+                <span class="w-badge" data-testid="badge-progress">{{ badge.progressLabel }}</span>
               </div>
             </article>
           }
