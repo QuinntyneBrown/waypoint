@@ -137,10 +137,10 @@
         </div>
       </nav>
     } @else {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="users" /></div>
-        <h3 class="w-empty__title">No people found</h3>
-        <p class="w-empty__text">No one matches the current directory filters.</p>
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="users" /></div>
+        <h3 w-empty-state-title>No people found</h3>
+        <p w-empty-state-text>No one matches the current directory filters.</p>
         <div class="w-actions">
           @if (hasFilters()) {
             <button w-button variant="secondary" type="button" (click)="clearFilters()">

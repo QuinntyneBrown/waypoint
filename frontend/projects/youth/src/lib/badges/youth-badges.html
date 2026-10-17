@@ -33,9 +33,9 @@
       <section class="w-stack" aria-labelledby="earned-badges">
         <h2 id="earned-badges">Earned</h2>
         @if (view.earned.length === 0) {
-          <div class="w-empty">
-            <h3 class="w-empty__title">No badges yet</h3>
-            <p class="w-empty__text">Complete your next learning step to begin your collection.</p>
+          <div w-empty-state>
+            <h3 w-empty-state-title>No badges yet</h3>
+            <p w-empty-state-text>Complete your next learning step to begin your collection.</p>
           </div>
         }
         <div class="w-grid w-grid--3">

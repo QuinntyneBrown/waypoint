@@ -25,6 +25,10 @@ import {
   WCardBody,
   WCardTitle,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { Observable } from 'rxjs';
 import { shellRole } from '@waypoint/core';
@@ -58,6 +62,10 @@ const ROLES: readonly WRoleName[] = [
     WCardBody,
     WCardTitle,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './invitations.html',
   styles: `

@@ -24,6 +24,10 @@ import {
   WCardHeader,
   WCardTitle,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 
 interface CompetencyDraft {
@@ -52,6 +56,10 @@ interface CompetencyDraft {
     WCardHeader,
     WCardTitle,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './mentor-competencies.html',
   styles: `

@@ -11,13 +11,31 @@ import {
   WCardBody,
   WCardTitle,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 
 // Traces to: L2-GUARDIAN-002
 @Component({
   selector: 'w-guardian-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, WIcon, WButton, WAlert, WCard, WCardBody, WCardTitle, WBadge],
+  imports: [
+    WShell,
+    DatePipe,
+    WIcon,
+    WButton,
+    WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
+    WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
+  ],
   templateUrl: './guardian-announcements.html',
 })
 export class GuardianAnnouncements {

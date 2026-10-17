@@ -228,10 +228,12 @@
               </div>
             </article>
           } @empty {
-            <div w-card class="w-empty">
-              <div class="w-empty__icon"><w-icon name="clipboard-check" /></div>
-              <h3 class="w-empty__title">No matching check-ins</h3>
-              <p class="w-empty__text">Adjust the youth or type filter.</p>
+            <div w-card>
+              <div w-empty-state>
+                <div w-empty-state-icon><w-icon name="clipboard-check" /></div>
+                <h3 w-empty-state-title>No matching check-ins</h3>
+                <p w-empty-state-text>Adjust the youth or type filter.</p>
+              </div>
             </div>
           }
         } @else {

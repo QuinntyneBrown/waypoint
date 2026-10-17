@@ -10,6 +10,7 @@ import {
   WCardTitle,
   WCardBody,
   WBadge,
+  WEmptyState,
 } from '@waypoint/components';
 
 // Traces to: L2-PUB-002
@@ -26,6 +27,7 @@ import {
     WCardTitle,
     WCardBody,
     WBadge,
+    WEmptyState,
   ],
   templateUrl: './about.html',
 })

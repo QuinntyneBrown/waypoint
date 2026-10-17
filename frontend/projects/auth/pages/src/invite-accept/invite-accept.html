@@ -99,16 +99,16 @@
           </button>
         </form>
       } @else {
-        <div class="w-empty">
-          <div class="w-empty__icon"><w-icon name="clock" /></div>
-          <h1 class="w-empty__title" style="font-size: 1.5rem">
+        <div w-empty-state>
+          <div w-empty-state-icon><w-icon name="clock" /></div>
+          <h1 w-empty-state-title style="font-size: 1.5rem">
             {{ stateHeading(invite.state) }}
           </h1>
-          <p class="w-empty__text">
+          <p w-empty-state-text>
             For your security, invite links are single-use and expire after 14 days.
           </p>
           @if (invite.state === 'accepted') {
-            <p class="w-empty__text">
+            <p w-empty-state-text>
               Your account already exists. Sign in with the password you created.
             </p>
           } @else if (replacementRequested()) {

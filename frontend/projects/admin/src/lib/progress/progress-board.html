@@ -87,10 +87,10 @@
       <p class="w-muted" role="status">Loading progress board…</p>
     } @else if (board(); as result) {
       @if (result.modules.length === 0) {
-        <div class="w-empty">
-          <div class="w-empty__icon"><w-icon name="bar-chart" /></div>
-          <h2 class="w-empty__title">No published modules</h2>
-          <p class="w-empty__text">
+        <div w-empty-state>
+          <div w-empty-state-icon><w-icon name="bar-chart" /></div>
+          <h2 w-empty-state-title>No published modules</h2>
+          <p w-empty-state-text>
             {{ result.trackName }} has no published modules to show yet. Choose another track or
             publish curriculum content.
           </p>
@@ -159,10 +159,10 @@
         </div>
       }
     } @else if (!errorMessage() && cohorts().length === 0) {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="layers" /></div>
-        <h2 class="w-empty__title">No cohorts available</h2>
-        <p class="w-empty__text">Create a cohort before opening the progress board.</p>
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="layers" /></div>
+        <h2 w-empty-state-title>No cohorts available</h2>
+        <p w-empty-state-text>Create a cohort before opening the progress board.</p>
       </div>
     }
   </div>

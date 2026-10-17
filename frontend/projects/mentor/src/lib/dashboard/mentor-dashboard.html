@@ -53,12 +53,12 @@
           <a w-button variant="ghost" routerLink="/mentor/my-youth">View all youth</a>
         </div>
         @if (youth().length === 0) {
-          <div w-card class="w-empty">
-            <div class="w-empty__icon"><w-icon name="users" /></div>
-            <h3 class="w-empty__title">No youth assigned yet</h3>
-            <p class="w-empty__text">
-              Assigned youth will appear here when your caseload is ready.
-            </p>
+          <div w-card>
+            <div w-empty-state>
+              <div w-empty-state-icon><w-icon name="users" /></div>
+              <h3 w-empty-state-title>No youth assigned yet</h3>
+              <p w-empty-state-text>Assigned youth will appear here when your caseload is ready.</p>
+            </div>
           </div>
         } @else {
           <div class="mentor-preview-grid">
@@ -94,10 +94,12 @@
           <a w-button variant="ghost" routerLink="/mentor/reviews">Open queue</a>
         </div>
         @if (reviews().length === 0) {
-          <div w-card class="w-empty">
-            <div class="w-empty__icon"><w-icon name="file-text" /></div>
-            <h3 class="w-empty__title">No reviews waiting</h3>
-            <p class="w-empty__text">New submissions and quiz assessments will appear here.</p>
+          <div w-card>
+            <div w-empty-state>
+              <div w-empty-state-icon><w-icon name="file-text" /></div>
+              <h3 w-empty-state-title>No reviews waiting</h3>
+              <p w-empty-state-text>New submissions and quiz assessments will appear here.</p>
+            </div>
           </div>
         } @else {
           <div w-card>

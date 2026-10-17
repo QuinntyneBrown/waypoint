@@ -12,6 +12,10 @@ import {
   WCardBody,
   WCardTitle,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-001, L2-MENTOR-003, L2-MENTOR-004
@@ -29,6 +33,10 @@ import {
     WCardBody,
     WCardTitle,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './mentor-reviews.html',
   styles: `

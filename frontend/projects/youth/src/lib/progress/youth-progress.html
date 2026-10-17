@@ -140,9 +140,9 @@
               <span w-badge>Average {{ view.quizAverage | number: '1.0-0' }}%</span>
             </div>
             @if (view.quizHistory.length === 0) {
-              <div class="w-empty">
-                <h3 class="w-empty__title">No approved quizzes yet</h3>
-                <p class="w-empty__text">Your results appear after mentor approval.</p>
+              <div w-empty-state>
+                <h3 w-empty-state-title>No approved quizzes yet</h3>
+                <p w-empty-state-text>Your results appear after mentor approval.</p>
               </div>
             } @else {
               <div class="w-table-wrap">
@@ -192,8 +192,8 @@
               <span w-badge>{{ view.attendanceRate | number: '1.0-0' }}%</span>
             </div>
             @if (view.attendanceHistory.length === 0) {
-              <div class="w-empty">
-                <h3 class="w-empty__title">No attendance recorded yet</h3>
+              <div w-empty-state>
+                <h3 w-empty-state-title>No attendance recorded yet</h3>
               </div>
             } @else {
               <div class="w-table-wrap">

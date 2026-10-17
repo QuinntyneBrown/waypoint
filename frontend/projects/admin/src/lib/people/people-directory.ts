@@ -15,6 +15,10 @@ import {
   WAlert,
   WCard,
   WCardBody,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { catchError, debounceTime, of, switchMap, tap } from 'rxjs';
 
@@ -42,6 +46,10 @@ interface DirectoryQuery {
     WAlert,
     WCard,
     WCardBody,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './people-directory.html',
   styles: `

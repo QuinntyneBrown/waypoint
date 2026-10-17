@@ -15,10 +15,10 @@
     </div>
 
     @if (!loading() && items().length === 0) {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="bell" /></div>
-        <h3 class="w-empty__title">No announcements yet</h3>
-        <p class="w-empty__text">
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="bell" /></div>
+        <h3 w-empty-state-title>No announcements yet</h3>
+        <p w-empty-state-text>
           Program-wide news will show up here. Check back soon — you’re all caught up.
         </p>
       </div>

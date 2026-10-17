@@ -28,9 +28,11 @@
         <section class="w-stack" aria-labelledby="answers-heading">
           <h2 id="answers-heading">Submitted answers</h2>
           @if (item.questions.length === 0) {
-            <div w-card class="w-empty">
-              <h3 class="w-empty__title">No question detail available</h3>
-              <p class="w-empty__text">The auto-scored result can still be reviewed.</p>
+            <div w-card>
+              <div w-empty-state>
+                <h3 w-empty-state-title>No question detail available</h3>
+                <p w-empty-state-text>The auto-scored result can still be reviewed.</p>
+              </div>
             </div>
           }
           @for (question of item.questions; track question.questionId; let number = $index) {

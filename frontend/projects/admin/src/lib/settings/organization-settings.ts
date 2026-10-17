@@ -25,6 +25,10 @@ import {
   WCard,
   WCardBody,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { finalize, forkJoin, map } from 'rxjs';
 
@@ -49,6 +53,10 @@ import { finalize, forkJoin, map } from 'rxjs';
     WCard,
     WCardBody,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './organization-settings.html',
   styles: `

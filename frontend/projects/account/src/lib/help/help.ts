@@ -9,6 +9,10 @@ import {
   WCard,
   WCardBody,
   WCardTitle,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 import { helpTopicsFor } from './help-content';
@@ -17,7 +21,20 @@ import { helpTopicsFor } from './help-content';
 @Component({
   selector: 'w-help',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, WIcon, WShell, WButton, WTextField, WCard, WCardBody, WCardTitle],
+  imports: [
+    RouterLink,
+    WIcon,
+    WShell,
+    WButton,
+    WTextField,
+    WCard,
+    WCardBody,
+    WCardTitle,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
+  ],
   templateUrl: './help.html',
   styles: `
     .help-search {

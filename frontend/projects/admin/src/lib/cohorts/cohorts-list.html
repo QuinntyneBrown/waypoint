@@ -60,10 +60,10 @@
         }
       </div>
     } @else if (!errorMessage()) {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="layers" /></div>
-        <h2 class="w-empty__title">No cohorts yet</h2>
-        <p class="w-empty__text">Create the first cohort to begin placing young people.</p>
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="layers" /></div>
+        <h2 w-empty-state-title>No cohorts yet</h2>
+        <p w-empty-state-text>Create the first cohort to begin placing young people.</p>
         <button w-button variant="primary" type="button" (click)="openCreate()">New cohort</button>
       </div>
     }

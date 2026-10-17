@@ -9,13 +9,24 @@ import {
   WCardTitle,
   WCardBody,
   WBadge,
+  WEmptyState,
 } from '@waypoint/components';
 
 // Traces to: L2-PUB-002
 @Component({
   selector: 'w-programs',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, WButton, WAlert, WCard, WCardHeader, WCardTitle, WCardBody, WBadge],
+  imports: [
+    RouterLink,
+    WButton,
+    WAlert,
+    WCard,
+    WCardHeader,
+    WCardTitle,
+    WCardBody,
+    WBadge,
+    WEmptyState,
+  ],
   templateUrl: './programs.html',
 })
 export class Programs {

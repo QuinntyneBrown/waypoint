@@ -17,6 +17,9 @@ import {
   WCardTitle,
   WCardBody,
   WBadge,
+  WEmptyState,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-004, L2-LEARN-005
@@ -39,6 +42,9 @@ import {
     WCardTitle,
     WCardBody,
     WBadge,
+    WEmptyState,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './mentor-quiz-review.html',
   styles: `

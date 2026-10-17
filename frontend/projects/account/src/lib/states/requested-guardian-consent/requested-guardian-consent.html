@@ -10,9 +10,9 @@
   </div>
 
   @if (loadingError(); as error) {
-    <section class="w-empty">
-      <h2 class="w-empty__title">Consent link unavailable</h2>
-      <p class="w-empty__text" role="alert">{{ error }}</p>
+    <section w-empty-state>
+      <h2 w-empty-state-title>Consent link unavailable</h2>
+      <p w-empty-state-text role="alert">{{ error }}</p>
     </section>
   } @else if (receipt(); as saved) {
     <section w-card>

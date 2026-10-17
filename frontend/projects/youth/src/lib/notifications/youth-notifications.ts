@@ -19,6 +19,10 @@ import {
   WCardBody,
   WCardTitle,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 import { RealtimeService } from '@waypoint/core/realtime';
@@ -27,7 +31,21 @@ import { RealtimeService } from '@waypoint/core/realtime';
 @Component({
   selector: 'w-notifications',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, WButton, WAlert, WCard, WCardBody, WCardTitle, WBadge],
+  imports: [
+    WShell,
+    WIcon,
+    RouterLink,
+    WButton,
+    WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
+    WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
+  ],
   templateUrl: './youth-notifications.html',
   styles: `
     .notification-card {

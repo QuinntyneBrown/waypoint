@@ -17,6 +17,10 @@ import {
   WCheckboxBox,
   WAlert,
   WDivider,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -43,6 +47,10 @@ function isEmail(value: string): boolean {
     WCheckboxBox,
     WAlert,
     WDivider,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './apply.html',
 })

@@ -16,6 +16,10 @@ import {
   WCard,
   WCardBody,
   WBadge,
+  WEmptyState,
+  WEmptyStateIcon,
+  WEmptyStateTitle,
+  WEmptyStateText,
 } from '@waypoint/components';
 
 const ROLES: readonly WRoleName[] = [
@@ -45,6 +49,10 @@ const ROLES: readonly WRoleName[] = [
     WCard,
     WCardBody,
     WBadge,
+    WEmptyState,
+    WEmptyStateIcon,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './users-roles.html',
   styles: `

@@ -3,7 +3,17 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthJourney } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WShell, WAlert, WCard, WCardBody, WBadge } from '@waypoint/components';
+import {
+  WButton,
+  WShell,
+  WAlert,
+  WCard,
+  WCardBody,
+  WBadge,
+  WEmptyState,
+  WEmptyStateTitle,
+  WEmptyStateText,
+} from '@waypoint/components';
 
 // Traces to: L2-LEARN-009
 @Component({
@@ -19,6 +29,9 @@ import { WButton, WShell, WAlert, WCard, WCardBody, WBadge } from '@waypoint/com
     WCard,
     WCardBody,
     WBadge,
+    WEmptyState,
+    WEmptyStateTitle,
+    WEmptyStateText,
   ],
   templateUrl: './youth-badges.html',
 })

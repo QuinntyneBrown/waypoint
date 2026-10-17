@@ -80,10 +80,10 @@
                 {{ saving() === 'youth' ? 'Saving…' : 'Assign mentor' }}
               </button>
             } @else {
-              <div class="w-empty">
-                <div class="w-empty__icon"><w-icon name="users" /></div>
-                <h3 class="w-empty__title">Pairing needs youth and mentors</h3>
-                <p class="w-empty__text">Add an active youth and mentor before pairing them.</p>
+              <div w-empty-state>
+                <div w-empty-state-icon><w-icon name="users" /></div>
+                <h3 w-empty-state-title>Pairing needs youth and mentors</h3>
+                <p w-empty-state-text>Add an active youth and mentor before pairing them.</p>
               </div>
             }
           </div>
@@ -157,10 +157,10 @@
                 {{ saving() === 'cohort' ? 'Saving…' : 'Save cohort team' }}
               </button>
             } @else {
-              <div class="w-empty">
-                <div class="w-empty__icon"><w-icon name="layers" /></div>
-                <h3 class="w-empty__title">No cohort teams to manage</h3>
-                <p class="w-empty__text">Create a cohort and active mentors first.</p>
+              <div w-empty-state>
+                <div w-empty-state-icon><w-icon name="layers" /></div>
+                <h3 w-empty-state-title>No cohort teams to manage</h3>
+                <p w-empty-state-text>Create a cohort and active mentors first.</p>
               </div>
             }
           </div>
@@ -230,10 +230,10 @@
               </div>
             </article>
           } @empty {
-            <div class="w-empty">
-              <div class="w-empty__icon"><w-icon name="users" /></div>
-              <h3 class="w-empty__title">No active mentors</h3>
-              <p class="w-empty__text">Active mentors will appear here with their load.</p>
+            <div w-empty-state>
+              <div w-empty-state-icon><w-icon name="users" /></div>
+              <h3 w-empty-state-title>No active mentors</h3>
+              <p w-empty-state-text>Active mentors will appear here with their load.</p>
             </div>
           }
         </div>

@@ -19,12 +19,12 @@
 
     @if (home(); as view) {
       @if (!view.placed) {
-        <div class="w-empty">
-          <div class="w-empty__icon">
+        <div w-empty-state>
+          <div w-empty-state-icon>
             <w-icon name="users" />
           </div>
-          <h2 class="w-empty__title">You’re not in a cohort yet</h2>
-          <p class="w-empty__text">
+          <h2 w-empty-state-title>You’re not in a cohort yet</h2>
+          <p w-empty-state-text>
             Your mentor will place you in a cohort soon. Once you’re placed, your lessons and
             journey unlock here. Reach out if you have questions.
           </p>
@@ -148,9 +148,9 @@
                 }
               </div>
               @if (view.assignedWork.length === 0) {
-                <div class="w-empty">
-                  <h3 class="w-empty__title">Nothing assigned right now</h3>
-                  <p class="w-empty__text">Your next mentor assignment will appear here.</p>
+                <div w-empty-state>
+                  <h3 w-empty-state-title>Nothing assigned right now</h3>
+                  <p w-empty-state-text>Your next mentor assignment will appear here.</p>
                 </div>
               } @else {
                 <ul class="assignment-list">
