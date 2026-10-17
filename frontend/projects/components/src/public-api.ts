@@ -13,3 +13,8 @@ export * from './lib/states/w-state-page';
 export * from './lib/offline/offline.service';
 export * from './lib/deployment/deployment-urls';
 export * from './lib/dialog/w-accessible-dialog';
+export * from './lib/video-player/w-video-player';
+export * from './lib/video-player/i18n';
+export * from './lib/video-player/types';
+export * from './lib/video-player/video-stream-transport';
+export * from './lib/video-player/signalr-video-stream-transport';
