@@ -2,7 +2,7 @@
 
 Binding map from every screen in `docs/mocks/` to the components of `@waypoint/components` it shall be composed of, plus the UI that must be built locally in the application.
 
-- **Sources.** The HTML mocks under `docs/mocks/<subsystem>/<role>/` and the design-system component pages in `docs/design-system/components/`. Component names below are design-system names. Each is implemented as an Angular component in `@waypoint/components` (DECISIONS #23); the exact selector and API are fixed in that component's requirements document under `docs/specs/components/`.
+- **Sources.** The HTML mocks under `docs/mocks/<subsystem>/<role>/` and the design-system component pages in `docs/design-system/components/`. Component names below are design-system names. Each is implemented as an Angular component in `@waypoint/components` (DECISIONS #23); the selector and API are shown in that component's Storybook story.
 - **Library** means a component in `@waypoint/components` (existing or scheduled in DECISIONS #23). **Local** means UI the mocks show that has no library component; it is built in the application feature library, not hand-written with library classes.
 - **Excluded.** Mock-only chrome (`mock-bar`, `mock-note`), layout and spacing utilities (`w-stack`, `w-cluster`, `w-grid`, `w-container`, `w-page*`, `w-mb-*`, `w-mt-*`, `w-muted`, `w-eyebrow`, `w-text-*`), which stay shared CSS.
 - **States.** Loading, empty, error and similar states live inside each screen mock. A state uses the Skeleton, Empty state or Alert component rather than a local equivalent.
@@ -14,20 +14,20 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Component | Screens using it | Status |
 | --- | ---: | --- |
 | Icon | 111 | in library |
-| Button | 109 | to build (DECISIONS #23) |
+| Button | 109 | in library |
 | Shell | 101 | in library |
 | Card | 90 | to build (DECISIONS #23) |
 | Badge | 72 | to build (DECISIONS #23) |
 | Avatar | 60 | in library |
-| Form field | 60 | to build (DECISIONS #23) |
+| Form field | 60 | in library |
 | Alert | 57 | to build (DECISIONS #23) |
 | Empty state | 54 | to build (DECISIONS #23) |
 | Dialog | 48 | to build (DECISIONS #23) |
-| Icon button | 47 | to build (DECISIONS #23) |
-| Select | 43 | to build (DECISIONS #23) |
-| Text field | 43 | to build (DECISIONS #23) |
+| Icon button | 47 | in library |
+| Select | 43 | in library |
+| Text field | 43 | in library |
 | Skeleton | 41 | to build (DECISIONS #23) |
-| Textarea | 32 | to build (DECISIONS #23) |
+| Textarea | 32 | in library |
 | Table | 30 | to build (DECISIONS #23) |
 | Progress | 30 | to build (DECISIONS #23) |
 | Stat | 28 | to build (DECISIONS #23) |
@@ -37,6 +37,8 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Button group | 18 | to build (DECISIONS #23) |
 | Checkbox | 18 | to build (DECISIONS #23) |
 | Switch | 17 | to build (DECISIONS #23) |
+| Link | — | in library |
+| Toast | — | in library |
 | Timeline | 15 | to build (DECISIONS #23) |
 | Tabs | 11 | to build (DECISIONS #23) |
 | Radio group | 10 | to build (DECISIONS #23) |
