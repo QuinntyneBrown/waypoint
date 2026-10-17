@@ -130,23 +130,17 @@
               @if (badge.description) {
                 <p>{{ badge.description }}</p>
               }
-              <dl class="definition-list">
+              <dl class="w-dl">
                 @if (badge.autoRule) {
-                  <div>
-                    <dt>Rule</dt>
-                    <dd>{{ badge.autoRule }}</dd>
-                  </div>
+                  <dt>Rule</dt>
+                  <dd>{{ badge.autoRule }}</dd>
                 }
                 @if (badge.competencyName) {
-                  <div>
-                    <dt>Competency</dt>
-                    <dd>{{ badge.competencyName }}</dd>
-                  </div>
+                  <dt>Competency</dt>
+                  <dd>{{ badge.competencyName }}</dd>
                 }
-                <div>
-                  <dt>Awards</dt>
-                  <dd>{{ badge.awardedCount }}</dd>
-                </div>
+                <dt>Awards</dt>
+                <dd>{{ badge.awardedCount }}</dd>
               </dl>
               <div class="w-actions card-actions">
                 @if (badge.criteriaKind === 'Manual') {

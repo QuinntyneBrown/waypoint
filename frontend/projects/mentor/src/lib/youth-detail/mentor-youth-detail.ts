@@ -20,19 +20,6 @@ type DetailTab =
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--w-s5);
     }
-    .detail-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .detail-row {
-      padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-border);
-      overflow-wrap: anywhere;
-    }
-    .detail-row:last-child {
-      border-bottom: 0;
-    }
     @media (max-width: 40rem) {
       .detail-grid {
         grid-template-columns: 1fr;

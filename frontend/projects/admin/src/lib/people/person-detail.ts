@@ -25,19 +25,6 @@ type LifecycleAction =
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--w-s5);
     }
-    .record-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .record-row {
-      padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-border);
-      overflow-wrap: anywhere;
-    }
-    .record-row:last-child {
-      border-bottom: 0;
-    }
     .account-actions {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
