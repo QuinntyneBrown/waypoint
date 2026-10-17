@@ -49,14 +49,14 @@
         <div>High contrast</div>
         <div class="w-muted w-text-sm">Stronger borders and text.</div>
       </div>
-      <label class="w-switch">
+      <label w-switch>
         <input
           type="checkbox"
           aria-label="High contrast"
           [checked]="prefs().highContrast"
           (change)="toggleContrast()"
         />
-        <span class="w-switch__track"></span>
+        <span w-switch-track></span>
       </label>
     </div>
 
@@ -65,14 +65,14 @@
         <div>Reduce motion</div>
         <div class="w-muted w-text-sm">Minimise animations and transitions.</div>
       </div>
-      <label class="w-switch">
+      <label w-switch>
         <input
           type="checkbox"
           aria-label="Reduce motion"
           [checked]="prefs().reduceMotion"
           (change)="toggleMotion()"
         />
-        <span class="w-switch__track"></span>
+        <span w-switch-track></span>
       </label>
     </div>
 
@@ -81,14 +81,14 @@
         <div>Underline links</div>
         <div class="w-muted w-text-sm">Always underline links for clarity.</div>
       </div>
-      <label class="w-switch">
+      <label w-switch>
         <input
           type="checkbox"
           aria-label="Underline links"
           [checked]="prefs().underlineLinks"
           (change)="toggleUnderline()"
         />
-        <span class="w-switch__track"></span>
+        <span w-switch-track></span>
       </label>
     </div>
 
@@ -97,14 +97,14 @@
         <div>Reading font</div>
         <div class="w-muted w-text-sm">Use a serif font for body text.</div>
       </div>
-      <label class="w-switch">
+      <label w-switch>
         <input
           type="checkbox"
           aria-label="Reading font"
           [checked]="prefs().readingFont === 'serif'"
           (change)="toggleReadingFont()"
         />
-        <span class="w-switch__track"></span>
+        <span w-switch-track></span>
       </label>
     </div>
 

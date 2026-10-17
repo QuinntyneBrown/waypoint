@@ -22,3 +22,4 @@ export * from './lib/textarea/w-textarea';
 export * from './lib/select/w-select';
 export * from './lib/checkbox/w-checkbox';
 export * from './lib/radio/w-radio';
+export * from './lib/switch/w-switch';

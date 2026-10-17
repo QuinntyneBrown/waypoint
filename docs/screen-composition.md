@@ -35,13 +35,13 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | List | 20 | to build (DECISIONS #23) |
 | Scripture | 19 | to build (DECISIONS #23) |
 | Button group | 18 | to build (DECISIONS #23) |
-| Checkbox | 18 | to build (DECISIONS #23) |
-| Switch | 17 | to build (DECISIONS #23) |
+| Checkbox | 18 | in library |
+| Switch | 17 | in library |
 | Link | — | in library |
 | Toast | — | in library |
 | Timeline | 15 | to build (DECISIONS #23) |
 | Tabs | 11 | to build (DECISIONS #23) |
-| Radio group | 10 | to build (DECISIONS #23) |
+| Radio group | 10 | in library |
 | Footer | 8 | to build (DECISIONS #23) |
 | Quiz option | 3 | to build (DECISIONS #23) |
 
