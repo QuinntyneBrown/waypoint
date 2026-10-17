@@ -20,6 +20,7 @@ import {
   WCardHeader,
   WCardTitle,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 
 type CheckInType = '1:1' | 'call' | 'session';
@@ -46,6 +47,7 @@ type CheckInType = '1:1' | 'call' | 'session';
     WCardHeader,
     WCardTitle,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './mentor-check-ins.html',
   styles: `

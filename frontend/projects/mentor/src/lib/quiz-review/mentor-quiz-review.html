@@ -19,7 +19,7 @@
             Attempt {{ item.attemptNumber }} · Submitted {{ item.submittedAt | date: 'medium' }}
           </p>
         </div>
-        <span class="w-badge" [class.w-badge--success]="item.status === 'Approved'">
+        <span w-badge [variant]="item.status === 'Approved' ? 'success' : ''">
           {{ item.status }}
         </span>
       </div>
@@ -41,9 +41,8 @@
                   <h3 w-card-title>{{ question.text }}</h3>
                 </div>
                 <span
-                  class="w-badge"
-                  [class.w-badge--success]="question.isCorrect"
-                  [class.w-badge--error]="!question.isCorrect"
+                  w-badge
+                  [variant]="question.isCorrect ? 'success' : !question.isCorrect ? 'error' : ''"
                 >
                   {{ question.isCorrect ? 'Correct' : 'Incorrect' }}
                 </span>
@@ -58,10 +57,10 @@
                     >
                       <span class="answer-copy">{{ option }}</span>
                       @if (optionSelected(question, optionIndex)) {
-                        <span class="w-badge">Youth answer</span>
+                        <span w-badge>Youth answer</span>
                       }
                       @if (optionCorrect(question, optionIndex)) {
-                        <span class="w-badge w-badge--success">Correct answer</span>
+                        <span w-badge variant="success">Correct answer</span>
                       }
                     </li>
                   }
@@ -82,7 +81,7 @@
                     >{{ item.autoScore }}%</span
                   >
                 </div>
-                <span class="w-badge" [class.w-badge--success]="item.autoPassed">
+                <span w-badge [variant]="item.autoPassed ? 'success' : ''">
                   {{ item.autoPassed ? 'Pass' : 'Below pass mark' }}
                 </span>
               </div>

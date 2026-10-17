@@ -40,7 +40,7 @@
           <button w-button variant="ghost" type="button" (click)="markAll(null)">Clear</button>
         </div>
         @if (queue.pendingCount() > 0) {
-          <span class="w-badge w-badge--warning"> {{ queue.pendingCount() }} pending sync </span>
+          <span w-badge variant="warning"> {{ queue.pendingCount() }} pending sync </span>
         }
       </div>
 

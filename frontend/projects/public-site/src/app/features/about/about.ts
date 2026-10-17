@@ -2,13 +2,31 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiError, PublicContentView, PublicSiteService } from '@waypoint/api';
-import { WButton, WAlert, WCard, WCardHeader, WCardTitle, WCardBody } from '@waypoint/components';
+import {
+  WButton,
+  WAlert,
+  WCard,
+  WCardHeader,
+  WCardTitle,
+  WCardBody,
+  WBadge,
+} from '@waypoint/components';
 
 // Traces to: L2-PUB-002
 @Component({
   selector: 'w-about',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, RouterLink, WButton, WAlert, WCard, WCardHeader, WCardTitle, WCardBody],
+  imports: [
+    DatePipe,
+    RouterLink,
+    WButton,
+    WAlert,
+    WCard,
+    WCardHeader,
+    WCardTitle,
+    WCardBody,
+    WBadge,
+  ],
   templateUrl: './about.html',
 })
 export class About {

@@ -17,7 +17,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Button | 109 | in library |
 | Shell | 101 | in library |
 | Card | 90 | in library |
-| Badge | 72 | to build (DECISIONS #23) |
+| Badge | 72 | in library |
 | Avatar | 60 | in library |
 | Form field | 60 | in library |
 | Alert | 57 | in library |
@@ -31,9 +31,9 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Table | 30 | to build (DECISIONS #23) |
 | Progress | 30 | to build (DECISIONS #23) |
 | Stat | 28 | to build (DECISIONS #23) |
-| Divider | 25 | to build (DECISIONS #23) |
+| Divider | 25 | in library |
 | List | 20 | to build (DECISIONS #23) |
-| Scripture | 19 | to build (DECISIONS #23) |
+| Scripture | 19 | in library |
 | Button group | 18 | in library |
 | Chip | — | in library |
 | Checkbox | 18 | in library |

@@ -4,7 +4,7 @@
       <div class="w-page__titles">
         <div class="w-eyebrow">Activity</div>
         <h1 class="w-page__title">Notifications</h1>
-        <span class="w-badge" data-testid="notification-realtime-status">
+        <span w-badge data-testid="notification-realtime-status">
           {{ realtime.state() === 'connected' ? 'Live updates on' : 'Reconnecting live updates' }}
         </span>
       </div>
@@ -48,7 +48,7 @@
                 <div class="w-cluster w-cluster--between">
                   <h3 w-card-title>{{ item.title }}</h3>
                   @if (!item.read) {
-                    <span class="w-badge w-badge--info w-badge--dot">New</span>
+                    <span w-badge variant="info" dot>New</span>
                   }
                 </div>
                 <p class="w-muted">{{ item.body }}</p>
@@ -66,7 +66,7 @@
                 <div class="w-cluster w-cluster--between">
                   <h3 w-card-title>{{ item.title }}</h3>
                   @if (!item.read) {
-                    <span class="w-badge w-badge--info w-badge--dot">New</span>
+                    <span w-badge variant="info" dot>New</span>
                   }
                 </div>
                 <p class="w-muted">{{ item.body }}</p>

@@ -3,7 +3,18 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthHomeView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@waypoint/components';
+import {
+  WButton,
+  WIcon,
+  WShell,
+  WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
+  WScripture,
+  WScriptureRef,
+  WBadge,
+} from '@waypoint/components';
 
 // Traces to: L2-LEARN-001..010, L2-ENGAGE-005, L2-MENTOR-008, L2-PLATFORM-011
 @Component({
@@ -20,6 +31,9 @@ import { WButton, WIcon, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@w
     WCard,
     WCardBody,
     WCardTitle,
+    WScripture,
+    WScriptureRef,
+    WBadge,
   ],
   templateUrl: './youth-home.html',
   styles: `

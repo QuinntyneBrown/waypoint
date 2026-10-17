@@ -65,9 +65,10 @@
                       <div class="w-cluster w-cluster--between">
                         <h3>{{ module.name }}</h3>
                         <span
-                          class="w-badge"
-                          [class.w-badge--success]="module.status === 'done'"
-                          [class.w-badge--warning]="module.current"
+                          w-badge
+                          [variant]="
+                            module.status === 'done' ? 'success' : module.current ? 'warning' : ''
+                          "
                           >{{ statusLabel(module.status) }}</span
                         >
                       </div>
@@ -96,7 +97,7 @@
         <div w-card-body class="w-stack">
           <div class="w-cluster w-cluster--between">
             <h2>Badge collection</h2>
-            <span class="w-badge"
+            <span w-badge
               >{{ view.earned.length }} of {{ view.earned.length + view.locked.length }}</span
             >
           </div>

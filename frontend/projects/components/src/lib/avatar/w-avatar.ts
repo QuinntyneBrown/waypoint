@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ViewEncapsulation,
+  computed,
+  input,
+} from '@angular/core';
 
 export type WAvatarSize = 'xs' | 'sm' | 'lg' | 'xl';
 
@@ -35,6 +41,7 @@ export function wuAvatarColor(name: string): string {
 @Component({
   selector: 'w-avatar',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
   host: {
     class: 'w-avatar',
     '[class.w-avatar--xs]': "size() === 'xs'",
@@ -46,6 +53,44 @@ export function wuAvatarColor(name: string): string {
     '[attr.aria-hidden]': "'true'",
   },
   template: `{{ initials() }}`,
+  styles: `
+    .w-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      flex: none;
+      display: inline-grid;
+      place-items: center;
+      font-family: var(--w-font-head);
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--w-ink);
+      background: var(--w-g300);
+      overflow: hidden;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .w-avatar--xs {
+      width: 26px;
+      height: 26px;
+      font-size: 0.66rem;
+    }
+    .w-avatar--sm {
+      width: 32px;
+      height: 32px;
+      font-size: 0.75rem;
+    }
+    .w-avatar--lg {
+      width: 56px;
+      height: 56px;
+      font-size: 1.2rem;
+    }
+    .w-avatar--xl {
+      width: 88px;
+      height: 88px;
+      font-size: 1.9rem;
+    }
+  `,
 })
 export class WAvatar {
   readonly name = input.required<string>();

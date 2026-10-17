@@ -28,6 +28,7 @@ import {
   WLabelRequired,
   WTextField,
   WAlert,
+  WDivider,
 } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
 
@@ -48,6 +49,7 @@ import { SettingsShell } from '../settings-shell';
     WErrorText,
     WTextField,
     WAlert,
+    WDivider,
   ],
   templateUrl: './settings-profile.html',
 })

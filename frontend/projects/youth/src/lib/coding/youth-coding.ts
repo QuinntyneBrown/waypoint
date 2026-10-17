@@ -15,6 +15,7 @@ import {
   WAlert,
   WCard,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-008
@@ -33,6 +34,7 @@ import {
     WAlert,
     WCard,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './youth-coding.html',
   styles: `

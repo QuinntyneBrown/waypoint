@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthJourney } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WShell, WAlert, WCard, WCardBody } from '@waypoint/components';
+import { WButton, WShell, WAlert, WCard, WCardBody, WBadge } from '@waypoint/components';
 
 // Traces to: L2-LEARN-009
 @Component({
   selector: 'w-youth-journey',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, WButton, WAlert, WCard, WCardBody],
+  imports: [WShell, RouterLink, WButton, WAlert, WCard, WCardBody, WBadge],
   templateUrl: './youth-journey.html',
 })
 export class YouthJourneyPage {

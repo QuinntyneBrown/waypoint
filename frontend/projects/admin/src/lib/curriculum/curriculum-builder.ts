@@ -29,6 +29,7 @@ import {
   WAlert,
   WCard,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 import {
@@ -124,6 +125,7 @@ interface CurriculumAuthoringDraft {
     WAlert,
     WCard,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './curriculum-builder.html',
   styleUrl: './curriculum-builder.css',

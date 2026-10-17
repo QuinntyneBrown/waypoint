@@ -17,6 +17,7 @@ import {
   WCard,
   WCardBody,
   WCardTitle,
+  WBadge,
 } from '@waypoint/components';
 
 interface RsvpDraft {
@@ -45,6 +46,7 @@ interface RsvpDraft {
     WCard,
     WCardBody,
     WCardTitle,
+    WBadge,
   ],
   templateUrl: './youth-schedule.html',
   styles: `

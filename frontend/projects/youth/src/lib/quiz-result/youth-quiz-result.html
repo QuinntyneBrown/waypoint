@@ -56,7 +56,7 @@
               <article w-card>
                 <div w-card-body class="w-stack">
                   <h3 w-card-title>{{ question.text }}</h3>
-                  <p class="w-badge" [class.w-badge--success]="question.correct">
+                  <p w-badge [variant]="question.correct ? 'success' : ''">
                     {{ question.correct ? 'Correct' : 'Needs review' }}
                   </p>
                   <ul class="w-stack">

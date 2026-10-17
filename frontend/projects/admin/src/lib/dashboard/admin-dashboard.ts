@@ -3,7 +3,16 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, ReportsService, ReportsHub } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@waypoint/components';
+import {
+  WButton,
+  WIcon,
+  WShell,
+  WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
+  WBadge,
+} from '@waypoint/components';
 
 // Traces to: L2-ADMIN-004, L2-REPORT-001
 @Component({
@@ -20,6 +29,7 @@ import { WButton, WIcon, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@w
     WCard,
     WCardBody,
     WCardTitle,
+    WBadge,
   ],
   templateUrl: './admin-dashboard.html',
   styles: `

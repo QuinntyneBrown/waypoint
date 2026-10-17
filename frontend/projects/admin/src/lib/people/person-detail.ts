@@ -18,6 +18,7 @@ import {
   WAlertTitle,
   WCard,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 
@@ -49,6 +50,7 @@ type LifecycleAction =
     WAlertTitle,
     WCard,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './person-detail.html',
   styles: `

@@ -57,9 +57,9 @@
                   <a w-button variant="primary" routerLink="/youth/journey">View my journey</a>
                 }
               </div>
-              <div class="w-scripture">
+              <div w-scripture>
                 “The Son of Man did not come to be served, but to serve.”
-                <span class="w-scripture__ref">Mark 10:45</span>
+                <span w-scripture-ref>Mark 10:45</span>
               </div>
             </div>
           </section>
@@ -114,7 +114,7 @@
                     }
                   </p>
                   @if (session.rsvpResponse) {
-                    <span class="w-badge"
+                    <span w-badge
                       >RSVP:
                       {{
                         session.rsvpResponse === 'CantAttend'
@@ -159,7 +159,7 @@
                       <div>
                         <div class="w-cluster">
                           <h3>{{ work.title }}</h3>
-                          <span class="w-badge" [class.w-badge--error]="work.overdue">
+                          <span w-badge [variant]="work.overdue ? 'error' : ''">
                             {{ work.overdue ? 'Overdue' : work.status }}
                           </span>
                         </div>

@@ -85,7 +85,7 @@
                       </div>
                     </td>
                     <td data-label="Status">
-                      <span class="w-badge" [class.w-badge--lime]="person.status === 'Active'">{{
+                      <span w-badge [variant]="person.status === 'Active' ? 'lime' : ''">{{
                         person.status
                       }}</span>
                     </td>

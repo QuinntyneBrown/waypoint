@@ -9,14 +9,34 @@ import {
   MentorRosterYouth,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@waypoint/components';
+import {
+  WButton,
+  WIcon,
+  WShell,
+  WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
+  WBadge,
+} from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
 // Traces to: L2-MENTOR-001, L2-AUTH-010
 @Component({
   selector: 'w-mentor-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, DatePipe, WButton, WAlert, WCard, WCardBody, WCardTitle],
+  imports: [
+    WShell,
+    WIcon,
+    RouterLink,
+    DatePipe,
+    WButton,
+    WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
+    WBadge,
+  ],
   templateUrl: './mentor-dashboard.html',
   styles: `
     .mentor-preview-grid {

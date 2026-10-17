@@ -49,7 +49,7 @@
         </div>
         @if (workspace(); as track) {
           <div class="track-meta">
-            <span class="w-badge" [class.w-badge--success]="track.status === 'Published'">
+            <span w-badge [variant]="track.status === 'Published' ? 'success' : ''">
               {{ track.status }}
             </span>
             <span class="w-muted">{{ track.modules.length }} modules</span>
@@ -133,7 +133,7 @@
                     <p class="w-muted">Scripture: {{ module.scriptureAnchor }}</p>
                   }
                 </div>
-                <span class="w-badge" [class.w-badge--success]="module.status === 'Published'">
+                <span w-badge [variant]="module.status === 'Published' ? 'success' : ''">
                   {{ module.status }}
                 </span>
               </header>
@@ -209,7 +209,7 @@
                             }
                           </div>
                         </div>
-                        <span class="w-badge">{{ lesson.status }}</span>
+                        <span w-badge>{{ lesson.status }}</span>
                       </div>
                       <div class="media-list">
                         @for (media of lesson.media; track media.id) {

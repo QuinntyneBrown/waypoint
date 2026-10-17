@@ -53,7 +53,7 @@
                     }
                   </ul>
                   @if (session.response) {
-                    <span class="w-badge w-badge--success" data-testid="current-rsvp">
+                    <span w-badge variant="success" data-testid="current-rsvp">
                       Current response:
                       {{ session.response === 'CantAttend' ? 'Can’t make it' : session.response }}
                     </span>

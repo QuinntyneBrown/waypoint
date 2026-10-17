@@ -26,6 +26,7 @@ import {
   WCard,
   WCardBody,
   WCardTitle,
+  WBadge,
 } from '@waypoint/components';
 import { finalize, forkJoin } from 'rxjs';
 
@@ -51,6 +52,7 @@ import { finalize, forkJoin } from 'rxjs';
     WCard,
     WCardBody,
     WCardTitle,
+    WBadge,
   ],
   templateUrl: './admin-announcements.html',
   styles: `

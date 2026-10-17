@@ -59,7 +59,7 @@
               }
             </div>
 
-            <div class="w-divider"></div>
+            <div w-divider></div>
             <fieldset class="w-stack">
               <legend w-label>Who is this for?</legend>
               <div class="w-cluster">
@@ -102,7 +102,7 @@
                       <span>
                         {{ person.displayName }}
                         @if (person.atRisk) {
-                          <span class="w-badge w-badge--error">At risk</span>
+                          <span w-badge variant="error">At risk</span>
                         }
                         @if (person.cohortName) {
                           <span class="w-muted">· {{ person.cohortName }}</span>
@@ -131,7 +131,7 @@
               }
             </fieldset>
 
-            <div class="w-divider"></div>
+            <div w-divider></div>
             <div class="w-grid w-grid--2">
               <div w-form-field>
                 <label w-label for="assign-due-date">Due date</label>
@@ -202,7 +202,7 @@
               </p>
               <p class="w-muted">{{ selectedItem()?.moduleName }}</p>
             </div>
-            <div class="w-divider"></div>
+            <div w-divider></div>
             <div>
               <p class="w-eyebrow">Recipients</p>
               <p>
@@ -210,7 +210,7 @@
               </p>
               <p class="w-muted">{{ recipientSummary() }}</p>
             </div>
-            <div class="w-divider"></div>
+            <div w-divider></div>
             <div>
               <p class="w-eyebrow">Due</p>
               <p>

@@ -22,10 +22,16 @@
           <p class="w-page__sub">Program record and account lifecycle</p>
         </div>
         <span
-          class="w-badge"
-          [class.w-badge--success]="person.status === 'Active'"
-          [class.w-badge--warning]="person.status === 'Pending'"
-          [class.w-badge--error]="person.status === 'Deactivated' || person.status === 'Removed'"
+          w-badge
+          [variant]="
+            person.status === 'Active'
+              ? 'success'
+              : person.status === 'Pending'
+                ? 'warning'
+                : person.status === 'Deactivated' || person.status === 'Removed'
+                  ? 'error'
+                  : ''
+          "
         >
           {{ person.status }}
         </span>
@@ -115,9 +121,14 @@
                       <h2>Consent</h2>
                       <p>
                         <span
-                          class="w-badge"
-                          [class.w-badge--success]="person.consent.hasValidParticipationConsent"
-                          [class.w-badge--error]="!person.consent.hasValidParticipationConsent"
+                          w-badge
+                          [variant]="
+                            person.consent.hasValidParticipationConsent
+                              ? 'success'
+                              : !person.consent.hasValidParticipationConsent
+                                ? 'error'
+                                : ''
+                          "
                         >
                           {{ person.consent.hasValidParticipationConsent ? 'Valid' : 'Not valid' }}
                         </span>

@@ -26,6 +26,7 @@ import {
   WAlert,
   WCard,
   WCardBody,
+  WBadge,
 } from '@waypoint/components';
 import {
   EditorDraftService,
@@ -50,6 +51,7 @@ import { AttendanceQueueService } from '@waypoint/core/attendance';
     WAlert,
     WCard,
     WCardBody,
+    WBadge,
   ],
   templateUrl: './mentor-attendance-capture.html',
   styles: `

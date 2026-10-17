@@ -25,7 +25,7 @@
               <div class="w-eyebrow">Collection</div>
               <h2>{{ view.earned.length }} earned · {{ view.locked.length }} to unlock</h2>
             </div>
-            <span class="w-badge w-badge--success">{{ view.earned.length }} earned</span>
+            <span w-badge variant="success">{{ view.earned.length }} earned</span>
           </div>
         </div>
       </section>
@@ -45,7 +45,7 @@
                 <div class="w-eyebrow">Badge earned</div>
                 <h3>{{ badge.name }}</h3>
                 <p>{{ badge.criteria }}</p>
-                <span class="w-badge w-badge--success"
+                <span w-badge variant="success"
                   >Earned {{ badge.awardedAt | date: 'mediumDate' }}</span
                 >
               </div>
@@ -80,7 +80,7 @@
                 >
                   <div class="w-progress__fill"></div>
                 </div>
-                <span class="w-badge" data-testid="badge-progress">{{ badge.progressLabel }}</span>
+                <span w-badge data-testid="badge-progress">{{ badge.progressLabel }}</span>
               </div>
             </article>
           }
@@ -119,7 +119,7 @@
                 }
               </p>
               @if (milestone.current) {
-                <span class="w-badge w-badge--warning">Current goal</span>
+                <span w-badge variant="warning">Current goal</span>
               }
             </ng-template>
           </div>

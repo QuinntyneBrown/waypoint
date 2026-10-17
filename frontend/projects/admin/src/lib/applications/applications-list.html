@@ -63,17 +63,21 @@
                 <td data-label="Age">
                   {{ application.age }}
                   @if (application.isMinor) {
-                    <span class="w-badge w-badge--muted">Minor</span>
+                    <span w-badge>Minor</span>
                   }
                 </td>
                 <td data-label="Neighbourhood">{{ application.neighbourhood }}</td>
                 <td data-label="Track">{{ application.trackInterest ?? '—' }}</td>
                 <td data-label="Status">
                   <span
-                    class="w-badge"
-                    [class.w-badge--warning]="application.status === 'Needs consent'"
-                    [class.w-badge--success]="application.status === 'Approved'"
-                    [class.w-badge--muted]="application.status === 'Declined'"
+                    w-badge
+                    [variant]="
+                      application.status === 'Needs consent'
+                        ? 'warning'
+                        : application.status === 'Approved'
+                          ? 'success'
+                          : ''
+                    "
                   >
                     {{ application.status }}
                   </span>
@@ -262,7 +266,7 @@
               Approve
             </button>
           } @else {
-            <span class="w-badge">{{ application.status }}</span>
+            <span w-badge>{{ application.status }}</span>
             <button w-button variant="primary" type="button" (click)="closeReview()">Done</button>
           }
         </div>

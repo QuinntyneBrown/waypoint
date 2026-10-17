@@ -178,10 +178,16 @@
                 </div>
                 <div class="w-actions">
                   <span
-                    class="w-badge"
-                    [class.w-badge--success]="term.status === 'Active'"
-                    [class.w-badge--info]="term.status === 'Upcoming'"
-                    [class.w-badge--ink]="term.status === 'Completed'"
+                    w-badge
+                    [variant]="
+                      term.status === 'Active'
+                        ? 'success'
+                        : term.status === 'Upcoming'
+                          ? 'info'
+                          : term.status === 'Completed'
+                            ? 'ink'
+                            : ''
+                    "
                   >
                     {{ term.status }}
                   </span>
@@ -223,9 +229,8 @@
                 </div>
                 <div class="w-actions">
                   <span
-                    class="w-badge"
-                    [class.w-badge--success]="track.enabled"
-                    [class.w-badge--warning]="!track.enabled"
+                    w-badge
+                    [variant]="track.enabled ? 'success' : !track.enabled ? 'warning' : ''"
                   >
                     {{ track.enabled ? 'Enabled' : 'Paused' }}
                   </span>
