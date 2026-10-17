@@ -12,6 +12,8 @@ import {
   WLabelRequired,
   WTextarea,
   WTextField,
+  WCheckbox,
+  WCheckboxBox,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -33,6 +35,8 @@ function isEmail(value: string): boolean {
     WErrorText,
     WTextField,
     WTextarea,
+    WCheckbox,
+    WCheckboxBox,
   ],
   templateUrl: './get-involved.html',
 })

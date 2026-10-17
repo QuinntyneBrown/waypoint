@@ -18,6 +18,8 @@ import {
   WSelect,
   WTextarea,
   WTextField,
+  WCheckbox,
+  WCheckboxBox,
 } from '@waypoint/components';
 
 // Traces to: L2-NFR-003
@@ -35,6 +37,8 @@ import {
     WTextField,
     WTextarea,
     WSelect,
+    WCheckbox,
+    WCheckboxBox,
   ],
   templateUrl: './settings-privacy.html',
   styles: `

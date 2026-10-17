@@ -78,9 +78,9 @@
               formControlName="confirmPassword"
             />
           </div>
-          <label class="w-check w-mt-4">
+          <label w-checkbox class="w-mt-4">
             <input type="checkbox" formControlName="agreeToGuidelines" />
-            <span class="w-check__box"><w-icon name="check" /></span>
+            <span w-checkbox-box><w-icon name="check" /></span>
             <span>I agree to follow the Waypoint community guidelines.</span>
           </label>
           @if (form.controls.agreeToGuidelines.touched && form.controls.agreeToGuidelines.invalid) {

@@ -94,13 +94,13 @@
                 (input)="setComment($any($event.target).value)"
               ></textarea>
             </div>
-            <label class="w-check">
+            <label w-checkbox>
               <input
                 type="checkbox"
                 [checked]="guardianNotified()"
                 (change)="guardianNotified.set($any($event.target).checked)"
               />
-              <span class="w-check__box">
+              <span w-checkbox-box>
                 <w-icon name="check" />
               </span>
               <span>Notify guardian about the outcome</span>

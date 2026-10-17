@@ -15,6 +15,8 @@ import {
   WShell,
   WTextarea,
   WTextField,
+  WCheckbox,
+  WCheckboxBox,
 } from '@waypoint/components';
 import {
   buildVerifiedOwnershipPayload,
@@ -39,6 +41,8 @@ import {
     WTextField,
     WTextarea,
     WSelect,
+    WCheckbox,
+    WCheckboxBox,
   ],
   templateUrl: './admin-privacy.html',
   styles: `

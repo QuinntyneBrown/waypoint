@@ -11,6 +11,8 @@ import {
   WIconButton,
   WLabel,
   WTextField,
+  WCheckbox,
+  WCheckboxBox,
 } from '@waypoint/components';
 
 // Traces to: L2-AUTH-004, L2-AUTH-008, L2-PLATFORM-011
@@ -27,6 +29,8 @@ import {
     WLabel,
     WErrorText,
     WTextField,
+    WCheckbox,
+    WCheckboxBox,
   ],
   templateUrl: './invite-accept.html',
 })

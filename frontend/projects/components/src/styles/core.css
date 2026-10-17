@@ -652,8 +652,7 @@ legend {
   padding: 0 var(--w-s2);
   font-weight: 600;
 }
-/* check / radio */
-.w-check,
+/* radio */
 .w-radio {
   display: flex;
   align-items: center;
@@ -663,14 +662,12 @@ legend {
   margin-bottom: 10px;
   min-height: 44px;
 }
-.w-check input,
 .w-radio input {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-.w-check__box,
 .w-radio__box {
   flex: none;
   width: 20px;
@@ -680,40 +677,10 @@ legend {
   display: grid;
   place-items: center;
   margin-top: 0;
+  border-radius: 50%;
   transition:
     background 0.15s,
     border-color 0.15s;
-}
-.w-check__box {
-  border-radius: 5px;
-}
-.w-radio__box {
-  border-radius: 50%;
-}
-.w-check__box .w-icon {
-  width: 14px;
-  height: 14px;
-  color: var(--w-on-lime);
-  opacity: 0;
-}
-.w-check input:checked + .w-check__box {
-  background: var(--w-lime);
-  border-color: var(--w-lime);
-}
-.w-check input:checked + .w-check__box .w-icon {
-  opacity: 1;
-}
-.w-check__box:empty::after {
-  content: '';
-  width: 5px;
-  height: 10px;
-  border: solid var(--w-on-lime);
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg) translate(-1px, -1px);
-  opacity: 0;
-}
-.w-check input:checked + .w-check__box:empty::after {
-  opacity: 1;
 }
 .w-radio input:checked + .w-radio__box {
   border-color: var(--w-ink);
@@ -725,7 +692,6 @@ legend {
   border-radius: 50%;
   background: var(--w-ink);
 }
-.w-check input:focus-visible + .w-check__box,
 .w-radio input:focus-visible + .w-radio__box {
   outline: 2px solid var(--w-ink);
   outline-offset: 2px;

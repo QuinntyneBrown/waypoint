@@ -90,13 +90,13 @@
               @if (targetMode() === 'individual') {
                 <div class="recipient-list" data-testid="assign-youth-list">
                   @for (person of view.youth; track person.youthId) {
-                    <label class="w-check">
+                    <label w-checkbox>
                       <input
                         type="checkbox"
                         [checked]="youthIds().includes(person.youthId)"
                         (change)="toggleYouth(person.youthId, $any($event.target).checked)"
                       />
-                      <span class="w-check__box">
+                      <span w-checkbox-box>
                         <w-icon name="check" />
                       </span>
                       <span>

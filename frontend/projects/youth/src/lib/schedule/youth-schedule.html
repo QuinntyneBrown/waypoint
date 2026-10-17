@@ -111,14 +111,14 @@
                     ></textarea>
                   </div>
 
-                  <label class="w-check">
+                  <label w-checkbox>
                     <input
                       type="checkbox"
                       [checked]="draft(session.sessionId).reminderSet"
                       [disabled]="draft(session.sessionId).response === 'can\'t make it'"
                       (change)="setReminder(session.sessionId, $any($event.target).checked)"
                     />
-                    <span class="w-check__box"></span>
+                    <span w-checkbox-box></span>
                     <span>Remind me before this session</span>
                   </label>
 
