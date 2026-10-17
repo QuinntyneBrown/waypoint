@@ -46,7 +46,8 @@
           [attr.aria-label]="'Conversation with ' + view.mentorName"
         >
           <div
-            class="w-thread thread-log"
+            w-message-thread
+            class="thread-log"
             role="log"
             aria-live="polite"
             aria-relevant="additions text"
@@ -60,16 +61,15 @@
             }
             @for (message of view.messages; track message.id) {
               <article
-                class="w-bubble"
-                [class.w-bubble--out]="message.senderId === auth.user()?.userId"
-                [class.w-bubble--in]="message.senderId !== auth.user()?.userId"
+                w-message-bubble
+                [direction]="message.senderId === auth.user()?.userId ? 'out' : 'in'"
                 [attr.data-message-id]="message.id"
               >
                 <span class="w-sr-only"
                   >{{ message.senderId === auth.user()?.userId ? 'You' : view.mentorName }}:</span
                 >
                 <span class="message-body">{{ message.body }}</span>
-                <time class="w-bubble__time" [attr.datetime]="message.sentAt">{{
+                <time w-message-bubble-time [attr.datetime]="message.sentAt">{{
                   message.sentAt | date: 'medium'
                 }}</time>
               </article>

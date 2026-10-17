@@ -44,6 +44,9 @@ import {
   WDialogSubtitle,
   WDialogBody,
   WDialogFooter,
+  WMessageThread,
+  WMessageBubble,
+  WMessageBubbleTime,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -80,6 +83,9 @@ type MessageMode = 'thread' | 'broadcast';
     WDialogSubtitle,
     WDialogBody,
     WDialogFooter,
+    WMessageThread,
+    WMessageBubble,
+    WMessageBubbleTime,
   ],
   templateUrl: './mentor-messages.html',
   styles: `

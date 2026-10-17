@@ -39,3 +39,6 @@ export * from './lib/pagination/w-pagination';
 export * from './lib/tabs/w-tabs';
 export * from './lib/description-list/w-description-list';
 export * from './lib/dialog/w-dialog';
+export * from './lib/list/w-list-item';
+export * from './lib/timeline/w-timeline';
+export * from './lib/message-thread/w-message-thread';

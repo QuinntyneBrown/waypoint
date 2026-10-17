@@ -13,6 +13,8 @@ import {
   WEmptyStateTitle,
   WEmptyStateText,
   WProgress,
+  WTimeline,
+  WTimelineItem,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-009
@@ -31,6 +33,8 @@ import {
     WEmptyStateTitle,
     WEmptyStateText,
     WProgress,
+    WTimeline,
+    WTimelineItem,
   ],
   templateUrl: './youth-journey.html',
 })
