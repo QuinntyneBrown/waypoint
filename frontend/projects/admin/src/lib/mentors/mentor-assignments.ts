@@ -6,14 +6,23 @@ import {
   MentorAssignmentsService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WFormField, WIcon, WLabel, WSelect, WShell } from '@waypoint/components';
+import {
+  WButton,
+  WFormField,
+  WIcon,
+  WLabel,
+  WSelect,
+  WShell,
+  WAlert,
+  WAlertTitle,
+} from '@waypoint/components';
 import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-005, L2-REPORT-001, L2-NFR-009, L2-NFR-010
 @Component({
   selector: 'w-mentor-assignments',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WButton, WFormField, WLabel, WSelect],
+  imports: [WShell, WIcon, WButton, WFormField, WLabel, WSelect, WAlert, WAlertTitle],
   templateUrl: './mentor-assignments.html',
   styles: `
     .assignment-grid {

@@ -16,15 +16,15 @@
       >
     </header>
 
-    <div class="w-alert w-alert--info">
+    <div w-alert variant="info">
       Staff roles can access other people’s records. Every role change takes effect immediately and
       is audit logged.
     </div>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
 
     <section class="w-card">

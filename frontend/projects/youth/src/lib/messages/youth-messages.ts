@@ -12,6 +12,7 @@ import {
   WLabel,
   WShell,
   WTextarea,
+  WAlert,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -29,6 +30,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
     WHelp,
     WErrorText,
     WTextarea,
+    WAlert,
   ],
   templateUrl: './youth-messages.html',
   styles: `

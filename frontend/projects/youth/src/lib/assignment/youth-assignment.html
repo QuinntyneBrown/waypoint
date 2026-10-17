@@ -7,13 +7,13 @@
   <div class="w-container w-container--narrow w-page">
     <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (fileError(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as status) {
-      <p class="w-alert w-alert--success" role="status">{{ status }}</p>
+      <p w-alert variant="success" role="status">{{ status }}</p>
     }
 
     @if (brief(); as view) {

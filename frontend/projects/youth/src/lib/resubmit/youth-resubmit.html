@@ -6,10 +6,10 @@
 >
   <div class="w-container w-container--narrow w-page">
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (conflictMessage(); as conflict) {
-      <div class="w-alert w-alert--warning w-stack" role="alert" data-testid="submission-conflict">
+      <div w-alert variant="warning" class="w-stack" role="alert" data-testid="submission-conflict">
         <p>{{ conflict }}</p>
         <div>
           <button w-button variant="secondary" type="button" (click)="reviewLatest()">
@@ -27,7 +27,7 @@
         </div>
       </div>
       @if (view.mentorComment) {
-        <div class="w-alert w-alert--info">
+        <div w-alert variant="info">
           <strong>Mentor feedback</strong>
           <p>{{ view.mentorComment }}</p>
         </div>

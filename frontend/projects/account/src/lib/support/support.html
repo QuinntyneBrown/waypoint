@@ -19,19 +19,13 @@
       </div>
     } @else {
       @if (errorMessage()) {
-        <div class="w-alert w-alert--error" role="alert">
-          <w-icon name="alert-circle" iconClass="w-alert__icon" />
-          <div>{{ errorMessage() }}</div>
-        </div>
+        <div w-alert variant="error" icon="alert-circle" role="alert">{{ errorMessage() }}</div>
       }
       @if (fileError(); as error) {
-        <div class="w-alert w-alert--error" role="alert">
-          <w-icon name="alert-circle" iconClass="w-alert__icon" />
-          <div>{{ error }}</div>
-        </div>
+        <div w-alert variant="error" icon="alert-circle" role="alert">{{ error }}</div>
       }
       @if (statusMessage(); as status) {
-        <p class="w-alert w-alert--success" role="status">{{ status }}</p>
+        <p w-alert variant="success" role="status">{{ status }}</p>
       }
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="w-stack">
         <div w-form-field>

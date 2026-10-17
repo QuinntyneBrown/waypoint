@@ -12,6 +12,7 @@ import {
   WSelect,
   WShell,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 
 const ROLES: readonly WRoleName[] = [
@@ -37,6 +38,7 @@ const ROLES: readonly WRoleName[] = [
     WLabel,
     WTextField,
     WSelect,
+    WAlert,
   ],
   templateUrl: './users-roles.html',
   styles: `

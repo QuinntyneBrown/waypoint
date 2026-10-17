@@ -13,6 +13,7 @@ import {
   WSelect,
   WTextarea,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -35,6 +36,7 @@ function isEmail(value: string): boolean {
     WTextField,
     WTextarea,
     WSelect,
+    WAlert,
   ],
   templateUrl: './contact.html',
 })

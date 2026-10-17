@@ -4,10 +4,10 @@
   </p>
 
   @if (errorMessage(); as error) {
-    <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+    <p w-alert variant="error" role="alert">{{ error }}</p>
   }
   @if (acknowledgement(); as request) {
-    <div class="w-alert w-alert--success" role="status">
+    <div w-alert variant="success" role="status">
       Request received. Keep reference <strong>{{ request.reference }}</strong> for your records.
     </div>
   }

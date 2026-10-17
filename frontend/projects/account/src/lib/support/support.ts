@@ -22,6 +22,7 @@ import {
   WShell,
   WTextarea,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 
@@ -42,6 +43,7 @@ import { shellRole } from '@waypoint/core';
     WTextField,
     WTextarea,
     WSelect,
+    WAlert,
   ],
   templateUrl: './support.html',
 })

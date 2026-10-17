@@ -13,6 +13,7 @@ import {
   WTextField,
   WChip,
   WChipRow,
+  WAlert,
 } from '@waypoint/components';
 import { debounceTime, switchMap, tap } from 'rxjs';
 
@@ -33,6 +34,7 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
     WTextField,
     WChip,
     WChipRow,
+    WAlert,
   ],
   templateUrl: './mentor-roster.html',
   styles: `

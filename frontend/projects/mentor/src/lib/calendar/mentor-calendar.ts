@@ -19,6 +19,7 @@ import {
   WTextField,
   WCheckbox,
   WCheckboxBox,
+  WAlert,
 } from '@waypoint/components';
 
 type CalendarView = 'month' | 'week' | 'agenda';
@@ -38,6 +39,7 @@ type CalendarView = 'month' | 'week' | 'agenda';
     WSelect,
     WCheckbox,
     WCheckboxBox,
+    WAlert,
   ],
   templateUrl: './mentor-calendar.html',
   styles: `

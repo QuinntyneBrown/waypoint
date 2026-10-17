@@ -20,7 +20,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Badge | 72 | to build (DECISIONS #23) |
 | Avatar | 60 | in library |
 | Form field | 60 | in library |
-| Alert | 57 | to build (DECISIONS #23) |
+| Alert | 57 | in library |
 | Empty state | 54 | to build (DECISIONS #23) |
 | Dialog | 48 | to build (DECISIONS #23) |
 | Icon button | 47 | in library |

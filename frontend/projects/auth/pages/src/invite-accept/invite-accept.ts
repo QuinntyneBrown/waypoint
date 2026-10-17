@@ -13,6 +13,7 @@ import {
   WTextField,
   WCheckbox,
   WCheckboxBox,
+  WAlert,
 } from '@waypoint/components';
 
 // Traces to: L2-AUTH-004, L2-AUTH-008, L2-PLATFORM-011
@@ -31,6 +32,7 @@ import {
     WTextField,
     WCheckbox,
     WCheckboxBox,
+    WAlert,
   ],
   templateUrl: './invite-accept.html',
 })

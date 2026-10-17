@@ -16,16 +16,16 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <div>
-          <div class="w-alert__title">{{ error }}</div>
+          <div w-alert-title>{{ error }}</div>
           Mentor assignments could not be loaded or saved.
         </div>
         <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
 
     @if (overview(); as view) {
@@ -216,7 +216,7 @@
                   </div>
                 </div>
                 @if (mentor.overloaded) {
-                  <p class="w-alert w-alert--warning w-mt-4">
+                  <p w-alert variant="warning" class="w-mt-4">
                     Rebalance this mentor's youth assignments.
                   </p>
                 }

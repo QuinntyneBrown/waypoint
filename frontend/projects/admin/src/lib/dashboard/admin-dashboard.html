@@ -18,7 +18,7 @@
       </button>
     </header>
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         {{ error }}
         <button w-button variant="ghost" type="button" (click)="load()">Try again</button>
       </div>

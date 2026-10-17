@@ -34,7 +34,7 @@
   } @else if (request(); as consentRequest) {
     <section class="w-card">
       <form class="w-card__body w-stack" [formGroup]="form" (ngSubmit)="submit()">
-        <div class="w-alert w-alert--info">
+        <div w-alert variant="info">
           <strong>Youth:</strong> {{ consentRequest.youthName }}<br />
           <span>
             Requested for {{ consentRequest.guardianDestination }} · Link expires
@@ -76,7 +76,7 @@
 
         <h2 class="w-card__title">Optional media choices</h2>
         @if (consentRequest.requireMediaConsent) {
-          <p class="w-alert w-alert--info">
+          <p w-alert variant="info">
             Organization policy: youth media requires recorded guardian permission. Participation
             consent remains separate from these optional media choices.
           </p>
@@ -125,7 +125,7 @@
           Sign and submit consent
         </button>
         @if (submitError(); as error) {
-          <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+          <p w-alert variant="error" role="alert">{{ error }}</p>
         }
       </form>
     </section>

@@ -27,6 +27,7 @@ import {
   WSelect,
   WShell,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -52,6 +53,7 @@ interface ImportColumn {
     WErrorText,
     WTextField,
     WSelect,
+    WAlert,
   ],
   templateUrl: './import-roster.html',
   styles: `

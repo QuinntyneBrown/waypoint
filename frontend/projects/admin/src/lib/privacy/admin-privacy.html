@@ -22,10 +22,10 @@
     </header>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
 
     <div class="privacy-layout">
@@ -159,14 +159,17 @@
                   Add only record IDs whose ownership you verified independently. Separate GUIDs
                   with commas or new lines. Empty categories are not submitted.
                 </p>
-                <div class="w-alert w-alert--warning" id="ownership-warning" role="note">
-                  <w-icon class="w-alert__icon" name="alert-triangle" />
-                  <div>
-                    <div class="w-alert__title">High-risk ownership link</div>
-                    Linking a public submission can expose or remove another person's information.
-                    Verify every reference using evidence outside the submitted contact details. An
-                    email-address match alone never establishes ownership.
-                  </div>
+                <div
+                  w-alert
+                  variant="warning"
+                  icon="alert-triangle"
+                  id="ownership-warning"
+                  role="note"
+                >
+                  <div w-alert-title>High-risk ownership link</div>
+                  Linking a public submission can expose or remove another person's information.
+                  Verify every reference using evidence outside the submitted contact details. An
+                  email-address match alone never establishes ownership.
                 </div>
 
                 <div class="verified-records__grid">

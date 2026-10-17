@@ -7,7 +7,7 @@
   <div class="w-container w-page">
     <a w-link standalone routerLink="/mentor/my-youth">Back to My youth</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (detail(); as youth) {
       <div class="w-page__head">
@@ -19,7 +19,7 @@
       </div>
 
       @if (youth.atRisk) {
-        <aside class="w-alert w-alert--error" data-testid="youth-at-risk-banner">
+        <aside w-alert variant="error" data-testid="youth-at-risk-banner">
           <strong>At risk:</strong> {{ youth.atRiskReason }}
           @if (youth.flaggedByName && youth.flaggedAt) {
             <span

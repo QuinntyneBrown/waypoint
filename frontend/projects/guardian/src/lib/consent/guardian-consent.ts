@@ -12,6 +12,7 @@ import {
   WTextField,
   WCheckbox,
   WCheckboxBox,
+  WAlert,
 } from '@waypoint/components';
 import { GuardianContextService } from '../guardian-context.service';
 
@@ -30,6 +31,7 @@ import { GuardianContextService } from '../guardian-context.service';
     WTextField,
     WCheckbox,
     WCheckboxBox,
+    WAlert,
   ],
   templateUrl: './guardian-consent.html',
 })

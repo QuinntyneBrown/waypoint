@@ -30,6 +30,8 @@ import {
   WShell,
   WTextarea,
   WTextField,
+  WAlert,
+  WAlertTitle,
 } from '@waypoint/components';
 import { Observable } from 'rxjs';
 
@@ -54,6 +56,8 @@ type Decision = 'approve' | 'decline';
     WTextField,
     WTextarea,
     WSelect,
+    WAlert,
+    WAlertTitle,
   ],
   templateUrl: './applications-list.html',
   styles: `

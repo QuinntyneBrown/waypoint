@@ -9,7 +9,7 @@
   @if (loading()) {
     <p class="w-muted" role="status">Loading programs…</p>
   } @else if (error()) {
-    <div class="w-alert w-alert--danger" role="alert">
+    <div w-alert variant="danger" role="alert">
       <p>{{ error() }}</p>
       <button w-button variant="ghost" size="sm" type="button" (click)="load()">Try again</button>
     </div>

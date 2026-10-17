@@ -20,6 +20,8 @@ import {
   WSelect,
   WShell,
   WTextField,
+  WAlert,
+  WAlertTitle,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -43,6 +45,8 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     WErrorText,
     WTextField,
     WSelect,
+    WAlert,
+    WAlertTitle,
   ],
   templateUrl: './admin-reports.html',
   styles: `

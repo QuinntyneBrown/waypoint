@@ -16,6 +16,8 @@ import {
   WSelect,
   WShell,
   WTextField,
+  WAlert,
+  WAlertTitle,
 } from '@waypoint/components';
 import { finalize } from 'rxjs';
 
@@ -38,6 +40,8 @@ import { finalize } from 'rxjs';
     WErrorText,
     WTextField,
     WSelect,
+    WAlert,
+    WAlertTitle,
   ],
   templateUrl: './cohorts-list.html',
   styles: `

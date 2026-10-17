@@ -13,6 +13,7 @@ import {
   WCheckboxBox,
   WRadio,
   WRadioBox,
+  WAlert,
 } from '@waypoint/components';
 
 interface RsvpDraft {
@@ -37,6 +38,7 @@ interface RsvpDraft {
     WCheckboxBox,
     WRadio,
     WRadioBox,
+    WAlert,
   ],
   templateUrl: './youth-schedule.html',
   styles: `

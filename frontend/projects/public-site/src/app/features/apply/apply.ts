@@ -15,6 +15,7 @@ import {
   WTextField,
   WCheckbox,
   WCheckboxBox,
+  WAlert,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -39,6 +40,7 @@ function isEmail(value: string): boolean {
     WSelect,
     WCheckbox,
     WCheckboxBox,
+    WAlert,
   ],
   templateUrl: './apply.html',
 })

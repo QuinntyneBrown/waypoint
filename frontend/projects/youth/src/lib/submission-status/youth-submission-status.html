@@ -7,7 +7,7 @@
   <div class="w-container w-container--narrow w-page">
     <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (submission(); as view) {
       <div class="w-page__head">
@@ -70,7 +70,7 @@
         </div>
       </section>
       @if (view.mentorComment) {
-        <section class="w-alert w-alert--info">
+        <section w-alert variant="info">
           <h2>Mentor feedback</h2>
           <p>{{ view.mentorComment }}</p>
         </section>

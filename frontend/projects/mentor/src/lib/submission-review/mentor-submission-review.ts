@@ -22,6 +22,7 @@ import {
   WTextField,
   WCheckbox,
   WCheckboxBox,
+  WAlert,
 } from '@waypoint/components';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { UnsavedChangesAware, DraftSaveResult, UnsavedChangesService } from '@waypoint/core';
@@ -51,6 +52,7 @@ interface GradingDraft {
     WTextarea,
     WCheckbox,
     WCheckboxBox,
+    WAlert,
   ],
   templateUrl: './mentor-submission-review.html',
   styles: `

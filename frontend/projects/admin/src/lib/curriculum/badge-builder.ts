@@ -27,6 +27,7 @@ import {
   WShell,
   WTextarea,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 import { finalize, forkJoin, of, switchMap } from 'rxjs';
 import {
@@ -56,6 +57,7 @@ interface BadgeTarget {
     WTextField,
     WTextarea,
     WSelect,
+    WAlert,
   ],
   templateUrl: './badge-builder.html',
   styleUrl: './curriculum-admin.css',

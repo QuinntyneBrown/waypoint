@@ -3,7 +3,15 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthSubmissionStatus } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WFormField, WLabel, WShell, WTextarea, WTextField } from '@waypoint/components';
+import {
+  WButton,
+  WFormField,
+  WLabel,
+  WShell,
+  WTextarea,
+  WTextField,
+  WAlert,
+} from '@waypoint/components';
 
 // Traces to: L2-LEARN-007
 @Component({
@@ -18,6 +26,7 @@ import { WButton, WFormField, WLabel, WShell, WTextarea, WTextField } from '@way
     WLabel,
     WTextField,
     WTextarea,
+    WAlert,
   ],
   templateUrl: './youth-resubmit.html',
 })

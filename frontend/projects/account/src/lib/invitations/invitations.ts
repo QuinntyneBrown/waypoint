@@ -20,6 +20,7 @@ import {
   WShell,
   WTextarea,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 import { Observable } from 'rxjs';
 import { shellRole } from '@waypoint/core';
@@ -48,6 +49,7 @@ const ROLES: readonly WRoleName[] = [
     WTextField,
     WTextarea,
     WSelect,
+    WAlert,
   ],
   templateUrl: './invitations.html',
   styles: `

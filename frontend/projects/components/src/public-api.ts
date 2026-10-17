@@ -25,3 +25,4 @@ export * from './lib/radio/w-radio';
 export * from './lib/switch/w-switch';
 export * from './lib/button-group/w-button-group';
 export * from './lib/chip/w-chip';
+export * from './lib/alert/w-alert';

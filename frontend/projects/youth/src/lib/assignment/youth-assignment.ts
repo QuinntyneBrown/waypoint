@@ -13,6 +13,7 @@ import {
   WShell,
   WTextarea,
   WTextField,
+  WAlert,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-006, L2-NFR-001
@@ -31,6 +32,7 @@ import {
     WErrorText,
     WTextField,
     WTextarea,
+    WAlert,
   ],
   templateUrl: './youth-assignment.html',
 })
