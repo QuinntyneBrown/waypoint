@@ -19,6 +19,9 @@ import {
   WEmptyState,
   WEmptyStateTitle,
   WEmptyStateText,
+  WTableWrap,
+  WTable,
+  WPagination,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -44,6 +47,9 @@ import { finalize } from 'rxjs/operators';
     WEmptyState,
     WEmptyStateTitle,
     WEmptyStateText,
+    WTableWrap,
+    WTable,
+    WPagination,
   ],
   templateUrl: './admin-audit-log.html',
   styles: `

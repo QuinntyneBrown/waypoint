@@ -19,6 +19,9 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WTableWrap,
+  WTable,
+  WPagination,
 } from '@waypoint/components';
 import { catchError, debounceTime, of, switchMap, tap } from 'rxjs';
 
@@ -50,6 +53,9 @@ interface DirectoryQuery {
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WTableWrap,
+    WTable,
+    WPagination,
   ],
   templateUrl: './people-directory.html',
   styles: `

@@ -37,6 +37,8 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WTableWrap,
+  WTable,
 } from '@waypoint/components';
 import { Observable } from 'rxjs';
 
@@ -68,6 +70,8 @@ type Decision = 'approve' | 'decline';
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WTableWrap,
+    WTable,
   ],
   templateUrl: './applications-list.html',
   styles: `

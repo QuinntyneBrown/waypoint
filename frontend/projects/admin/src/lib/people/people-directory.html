@@ -78,8 +78,8 @@
     @if (loading()) {
       <p class="w-muted" role="status">Loading people…</p>
     } @else if (people().length > 0) {
-      <div class="w-table-wrap">
-        <table class="w-table w-table--cards">
+      <div w-table-wrap>
+        <table w-table cards>
           <thead>
             <tr>
               <th>Name</th>
@@ -110,7 +110,7 @@
           </tbody>
         </table>
       </div>
-      <nav class="w-pagination" aria-label="People pages">
+      <nav w-pagination aria-label="People pages">
         <strong data-testid="people-page-status">
           Page {{ page() }} of {{ totalPages() }} · {{ result()?.total }} people
         </strong>

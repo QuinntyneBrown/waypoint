@@ -680,50 +680,6 @@ legend {
   }
 }
 
-/* ---------- Pagination ---------- */
-.w-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--w-s3);
-  flex-wrap: wrap;
-  padding-top: var(--w-s4);
-  font-size: 0.875rem;
-}
-.w-pagination ul {
-  display: flex;
-  gap: var(--w-s1);
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.w-pagination__page {
-  display: inline-grid;
-  place-items: center;
-  min-width: 32px;
-  height: 32px;
-  padding: 0 var(--w-s2);
-  border-radius: var(--w-r-pill);
-  color: var(--w-ink);
-  text-decoration: none;
-  font-weight: 500;
-}
-.w-pagination__page:hover {
-  background: var(--w-g200);
-}
-.w-pagination__page:focus-visible {
-  outline: 2px solid var(--w-ink);
-  outline-offset: 2px;
-}
-.w-pagination__page[aria-current='page'] {
-  background: var(--w-ink);
-  color: var(--w-white);
-}
-.w-pagination__page[aria-disabled='true'] {
-  color: var(--w-muted);
-  pointer-events: none;
-}
-
 /* ---------- Message thread ---------- */
 .w-thread {
   display: flex;
@@ -757,110 +713,6 @@ legend {
   align-self: center;
   font-size: 0.75rem;
   color: var(--w-muted);
-}
-
-/* ---------- Table ---------- */
-.w-table-wrap {
-  width: 100%;
-  overflow-x: auto;
-  border: var(--w-bw) solid var(--w-border);
-  border-radius: var(--w-r-card);
-  background: var(--w-white);
-}
-.w-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.92rem;
-}
-.w-table th {
-  text-align: left;
-  font-family: var(--w-font-head);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--w-muted);
-  padding: 12px 16px;
-  border-bottom: var(--w-bw) solid var(--w-border);
-  white-space: nowrap;
-  background: var(--w-g100);
-}
-.w-table td {
-  padding: 13px 16px;
-  border-bottom: var(--w-bw) solid var(--w-border);
-  vertical-align: middle;
-}
-.w-table tbody tr:last-child td {
-  border-bottom: 0;
-}
-.w-table tbody tr:hover {
-  background: var(--w-g100);
-}
-.w-table tr.is-clickable {
-  cursor: pointer;
-}
-.w-table__cellmain {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 600;
-  min-width: 0;
-}
-.w-table__cellmain > span:not(.w-avatar):not(.w-badge) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.w-table--compact td,
-.w-table--compact th {
-  padding: 9px 12px;
-}
-@media (max-width: 760px) {
-  .w-table--cards thead {
-    display: none;
-  }
-  .w-table--cards,
-  .w-table--cards tbody,
-  .w-table--cards tr,
-  .w-table--cards td {
-    display: block;
-    width: 100%;
-  }
-  .w-table--cards tr {
-    border: var(--w-bw) solid var(--w-border);
-    border-radius: var(--w-r-card);
-    margin-bottom: var(--w-s3);
-    padding: 6px 4px;
-    background: var(--w-white);
-  }
-  .w-table--cards td {
-    border: 0;
-    display: flex;
-    justify-content: space-between;
-    gap: var(--w-s4);
-    padding: 8px 14px;
-    text-align: right;
-    flex-wrap: wrap;
-  }
-  .w-table--cards td > * {
-    min-width: 0;
-  }
-  .w-table--cards td::before {
-    content: attr(data-label);
-    font-family: var(--w-font-head);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 0.66rem;
-    font-weight: 600;
-    color: var(--w-muted);
-    text-align: left;
-  }
-  .w-table--cards td:first-child {
-    border-bottom: var(--w-bw) solid var(--w-border);
-    margin-bottom: 4px;
-  }
-  .w-table--cards .w-table__cellmain {
-    justify-content: flex-end;
-  }
 }
 
 .w-avatar__ring {
@@ -1335,33 +1187,6 @@ legend {
 }
 .w-progressmatrix {
   overflow-x: auto;
-}
-.w-matrix {
-  border-collapse: collapse;
-  font-size: 0.82rem;
-  min-width: 640px;
-}
-.w-matrix th,
-.w-matrix td {
-  border: var(--w-bw) solid var(--w-border);
-  padding: 8px 10px;
-  text-align: center;
-}
-.w-matrix th:first-child,
-.w-matrix td:first-child {
-  text-align: left;
-  position: sticky;
-  left: 0;
-  background: var(--w-white);
-  z-index: 1;
-  font-weight: 600;
-}
-.w-matrix thead th {
-  background: var(--w-g100);
-  font-family: var(--w-font-head);
-  text-transform: uppercase;
-  font-size: 0.64rem;
-  letter-spacing: 0.05em;
 }
 .w-cell {
   display: inline-grid;

@@ -21,6 +21,8 @@ import {
   WEmptyStateTitle,
   WEmptyStateText,
   WProgress,
+  WTableWrap,
+  WTable,
 } from '@waypoint/components';
 import { debounceTime, switchMap, tap } from 'rxjs';
 
@@ -49,6 +51,8 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
     WEmptyStateTitle,
     WEmptyStateText,
     WProgress,
+    WTableWrap,
+    WTable,
   ],
   templateUrl: './mentor-roster.html',
   styles: `

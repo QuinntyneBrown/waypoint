@@ -142,8 +142,8 @@
         </div>
       } @else {
         <div w-card>
-          <div class="w-table-wrap">
-            <table class="w-table w-table--cards">
+          <div w-table-wrap>
+            <table w-table cards>
               <thead>
                 <tr>
                   <th>Who</th>
@@ -182,7 +182,7 @@
           </div>
         </div>
 
-        <nav class="w-pagination" aria-label="Audit pages">
+        <nav w-pagination aria-label="Audit pages">
           <p class="w-muted" data-testid="audit-page-summary">
             Page {{ audit.page }} of {{ pageCount() }} · Showing {{ firstShown() }}–{{
               lastShown()

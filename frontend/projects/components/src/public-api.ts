@@ -34,3 +34,5 @@ export * from './lib/empty-state/w-empty-state';
 export * from './lib/skeleton/w-skeleton';
 export * from './lib/stat/w-stat';
 export * from './lib/progress/w-progress';
+export * from './lib/table/w-table';
+export * from './lib/pagination/w-pagination';

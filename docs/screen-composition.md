@@ -28,7 +28,8 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Text field | 43 | in library |
 | Skeleton | 41 | in library |
 | Textarea | 32 | in library |
-| Table | 30 | to build (DECISIONS #23) |
+| Table | 30 | in library |
+| Pagination | — | in library |
 | Progress | 30 | in library |
 | Stat | 28 | in library |
 | Divider | 25 | in library |
