@@ -18,6 +18,15 @@
     .lb-video__play .w-icon{width:26px;height:26px;color:var(--color-fg-default)}
     .lb-video__cap{position:absolute;left:14px;bottom:12px;font-size:.82rem;color:rgba(255,255,255,.82)}
     .lb-sizectl{display:flex;align-items:center;gap:8px}
+    .lb-player{border-radius:var(--radius-lg);overflow:hidden;border:var(--border-width-hairline) solid var(--color-border-default);background:var(--color-bg-surface)}
+    .lb-player__stage{position:relative;aspect-ratio:16/9;display:grid;place-items:center;background:linear-gradient(160deg,var(--palette-ink-950) 55%,var(--palette-ink-700) 160%);color:var(--palette-ink-25)}
+    .lb-player__chip{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:center}
+    .lb-player__chip .w-spinner{background:var(--color-bg-surface);color:var(--color-fg-default);padding:var(--space-2) var(--space-4);border-radius:var(--radius-full)}
+    .lb-player__bar{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3)}
+    .lb-player__seek{flex:1 1 100%;min-width:0;height:2.75rem;margin:0;accent-color:var(--color-accent)}
+    .lb-player__time{font:var(--text-body-sm);font-variant-numeric:tabular-nums;color:var(--color-fg-muted);margin-right:auto;white-space:nowrap}
+    .lb-prep{display:flex;gap:var(--space-4);align-items:flex-start}
+    .lb-prep__icon{flex:none;width:3rem;height:3rem;border-radius:var(--radius-full);background:var(--color-bg-subtle-hover);display:grid;place-items:center}
     .lb-actions{position:sticky;bottom:0;background:var(--color-bg-surface);border-top:var(--border-width-hairline) solid var(--color-border-default);padding:var(--space-4) 0;margin-top:var(--space-6);display:flex;gap:12px}
     .lb-actions .w-btn--primary{flex:1}
   </style>
@@ -39,7 +48,7 @@
       </div>
 
       <!-- ===== default (reading experience) ===== -->
-      <div data-when-state="default">
+      <div data-when-state="default video-ready video-preparing video-renewing media-failed video-legacy">
         <div class="lb-topbar">
           <a class="w-btn w-btn--ghost w-btn--icon" href="module.html" aria-label="Back to module"><svg class="w-icon"><use href="#i-arrow-left"></use></svg></a>
           <div class="w-progress" aria-label="Lesson progress: 40%"><div class="w-progress__fill" style="--val:40%"></div></div>
@@ -67,7 +76,82 @@
           <p>That’s the shape of Waypoint leadership. Being first isn’t about status — it’s about who you’re willing to put first. This week, watch for one person you can quietly serve without being asked.</p>
         </div>
 
-        <div class="w-card w-mt-6">
+        <!-- ===== video Ready: adaptive stream; seek bar spans the full 1:12:08 ===== -->
+        <div class="w-card w-mt-6" data-when-state="video-ready">
+          <div class="w-card__header"><h3 class="w-card__title">Watch (1 hr 12 min)</h3><span class="w-badge w-badge--lime">Optional</span></div>
+          <div class="w-card__body">
+            <div class="lb-player" role="region" aria-label="Lesson video: Last Shall Be First">
+              <div class="lb-player__stage">
+                <button class="lb-video__play" data-toast="Video would play here in the live app." aria-label="Play video"><svg class="w-icon"><use href="#i-play"></use></svg></button>
+                <span class="lb-video__cap">Last Shall Be First, a teaching from Marcus Bello</span>
+              </div>
+              <div class="lb-player__bar" role="group" aria-label="Video controls">
+                <input class="lb-player__seek" type="range" min="0" max="4328" step="1" aria-label="Seek" value="0" aria-valuetext="0:00 of 1:12:08">
+                <button class="w-iconbtn" aria-label="Play" data-toast="Video would play here in the live app."><svg class="w-icon"><use href="#i-play"></use></svg></button>
+                <button class="w-iconbtn" aria-label="Mute" aria-pressed="false"><svg class="w-icon"><use href="#i-volume-2"></use></svg></button>
+                <span class="lb-player__time">0:00 / 1:12:08</span>
+                <span class="w-badge" aria-label="Quality 720p">720p</span>
+                <button class="w-iconbtn" aria-label="Full screen"><svg class="w-icon"><use href="#i-maximize"></use></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== video Queued or Processing: youth see one calm card, no progress and no retry ===== -->
+        <div class="w-card w-mt-6" data-when-state="video-preparing">
+          <div class="w-card__header"><h3 class="w-card__title">Watch</h3><span class="w-badge w-badge--lime">Optional</span></div>
+          <div class="w-card__body">
+            <div class="lb-prep" role="status">
+              <span class="lb-prep__icon"><svg class="w-icon"><use href="#i-video"></use></svg></span>
+              <div>
+                <h4 class="w-mb-1">Your video is being prepared</h4>
+                <p class="w-muted w-text-sm w-mb-0">A teaching video was added to this lesson and is getting ready to play. Check back in a few minutes. Everything else in this lesson is ready now.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== playback link expired: brief inline notice, same position, no action needed ===== -->
+        <div class="w-card w-mt-6" data-when-state="video-renewing">
+          <div class="w-card__header"><h3 class="w-card__title">Watch (1 hr 12 min)</h3><span class="w-badge w-badge--lime">Optional</span></div>
+          <div class="w-card__body">
+            <div class="lb-player" role="region" aria-label="Lesson video: Last Shall Be First">
+              <div class="lb-player__stage">
+                <div class="lb-player__chip"><span class="w-spinner">Renewing your video link</span></div>
+                <span class="lb-video__cap">Last Shall Be First, a teaching from Marcus Bello</span>
+              </div>
+              <div class="lb-player__bar" role="group" aria-label="Video controls">
+                <input class="lb-player__seek" type="range" min="0" max="4328" step="1" aria-label="Seek" value="1421" aria-valuetext="23:41 of 1:12:08">
+                <button class="w-iconbtn" aria-label="Pause"><svg class="w-icon"><use href="#i-pause"></use></svg></button>
+                <button class="w-iconbtn" aria-label="Mute" aria-pressed="false"><svg class="w-icon"><use href="#i-volume-2"></use></svg></button>
+                <span class="lb-player__time">23:41 / 1:12:08</span>
+                <span class="w-badge" aria-label="Quality 720p">720p</span>
+                <button class="w-iconbtn" aria-label="Full screen"><svg class="w-icon"><use href="#i-maximize"></use></svg></button>
+              </div>
+            </div>
+            <div class="w-alert w-alert--info w-mt-4" role="status">
+              <svg class="w-alert__icon w-icon"><use href="#i-refresh"></use></svg>
+              <div>Your video link expired, so Waypoint is renewing it. Playback will carry on from 23:41.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== media could not load: text stays readable, retry repeats the playback request ===== -->
+        <div class="w-card w-mt-6" data-when-state="media-failed">
+          <div class="w-card__header"><h3 class="w-card__title">Optional media</h3></div>
+          <div class="w-card__body">
+            <div class="w-alert w-alert--warning" role="alert">
+              <svg class="w-alert__icon w-icon"><use href="#i-alert-triangle"></use></svg>
+              <div>
+                <p class="w-mb-2">The media could not be loaded. The full lesson text remains available.</p>
+                <button class="w-btn w-btn--ghost" data-toast="Trying the video again." data-toast-type="info">Retry media</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== media without a stream (documents and older small videos): the pre-existing path ===== -->
+        <div class="w-card w-mt-6" data-when-state="default video-legacy">
           <div class="w-card__header"><h3 class="w-card__title">Watch (2 min)</h3><span class="w-badge w-badge--lime">Optional</span></div>
           <div class="w-card__body">
             <div class="lb-video">
@@ -88,7 +172,7 @@
     </div>
 
     <div class="w-container w-container--narrow">
-      <div class="lb-actions" data-when-state="default">
+      <div class="lb-actions" data-when-state="default video-ready video-preparing video-renewing media-failed video-legacy">
         <a class="w-btn w-btn--ghost" href="module.html"><svg class="w-icon"><use href="#i-arrow-left"></use></svg>Back</a>
         <button class="w-btn w-btn--primary" data-open-modal="m-complete">Mark complete</button>
       </div>
