@@ -98,7 +98,7 @@ Deployment prerequisites, all off until `Media:Enabled` is true:
 - `Media:RootPath`, a directory on storage large enough for the sources and renditions (about one and a half times each source). It must be shared storage if more than one API instance runs.
 - `Media:PlaybackSigningKey`, a secret of at least 32 characters. Production refuses to start with media enabled and a placeholder key or no root path.
 - A reverse proxy body limit of at least 16 MiB for `/api/lessons/*/video-uploads`.
-- If the portal gains a Content Security Policy it needs `media-src 'self' blob:`, `connect-src 'self'` and `img-src 'self'` (the player README lists them).
+- The portal declares a Content Security Policy in `frontend/projects/portal/src/index.html` that already includes `media-src 'self' blob:`, `connect-src 'self'` and `img-src 'self' data: blob:`. Any additional host the video is served from must be added there (the player README lists the requirements).
 
 ## Authentication and sensitive data
 

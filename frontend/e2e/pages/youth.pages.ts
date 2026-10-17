@@ -242,6 +242,12 @@ export class YouthLessonPage extends BasePage {
   get videoPlayer() {
     return this.page.locator('w-video-player');
   }
+  /** The player's current media source, such as a `blob:` address when hls.js attaches it. */
+  videoSource(): Promise<string> {
+    return this.page
+      .locator('w-video-player video')
+      .evaluate((video: HTMLVideoElement) => video.currentSrc || video.src);
+  }
   /** Shown instead of the player while a lesson video is queued or processing. */
   get videoPreparingNotice() {
     return this.page.getByText(/your video is being prepared/i);

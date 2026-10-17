@@ -62,7 +62,7 @@ node tools/video-build/build-video.mjs docs/videos/116-learning-experience-strea
 
 ## Pitfalls
 
-- The portal has no Content Security Policy today; the design records what a future one needs (`media-src 'self' blob:`). The video does not mention it.
+- The portal now declares a Content Security Policy that allows the player (`media-src 'self' blob:`). The video does not mention it.
 - Say that the player captures come from the live player and do not yet show the seek bar or quality label.
 - The signing key and the media root path are `<TO SUPPLY>` in the design.
 

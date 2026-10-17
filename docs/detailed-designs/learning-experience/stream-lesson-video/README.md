@@ -67,7 +67,7 @@ The entity tag is `"{length:x}-{lastWriteUtcTicks:x}"`. Response compression is 
 
 ### Content Security Policy
 
-The portal document carries no Content Security Policy today; `SecurityHeadersMiddleware` applies `default-src 'none'` to API responses only. When a policy is added to the portal document it shall include `media-src 'self' blob:` (hls.js attaches a `MediaSource` object URL; native HLS loads from the same origin), `connect-src 'self'`, and `img-src 'self'` for the poster. `enableWorker: false` avoids a `worker-src` entry; the worker only matters for transport-stream remuxing, and CMAF segments pass through untouched.
+The portal document declares its policy in a `<meta http-equiv="Content-Security-Policy">` element in `frontend/projects/portal/src/index.html`; `SecurityHeadersMiddleware` applies `default-src 'none'` to API responses only. The portal policy includes `media-src 'self' blob:` (hls.js attaches a `MediaSource` object URL; native HLS loads from the same origin), `connect-src 'self'` (the API, the realtime hub, playlists, and segments), and `img-src 'self' data: blob:` (the poster). `script-src 'self'` forbids inline event handlers, so the portal production build does not inline critical CSS, which would add one. `enableWorker: false` avoids a `worker-src` entry; the worker only matters for transport-stream remuxing, and CMAF segments pass through untouched.
 
 ### Functions and data flow
 
@@ -123,7 +123,7 @@ All input shall be validated and all output encoded to prevent injection and XSS
 | Relationship | Dependency |
 | L1 specification ID | `L1-NFR-001` |
 
-The API shall protect against cross-site attacks, set appropriate headers, and rate-limit sensitive endpoints. Acceptance criterion 3 governs this slice: media responses carry the security headers, and the portal document's future Content Security Policy shall permit `media-src 'self' blob:`.
+The API shall protect against cross-site attacks, set appropriate headers, and rate-limit sensitive endpoints. Acceptance criterion 3 governs this slice: media responses carry the security headers, and the portal document's Content Security Policy permits `media-src 'self' blob:`.
 
 ### L2-NFR-008 — Performance targets
 
