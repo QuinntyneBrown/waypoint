@@ -20,6 +20,7 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WProgress,
 } from '@waypoint/components';
 import { debounceTime, switchMap, tap } from 'rxjs';
 
@@ -47,6 +48,7 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WProgress,
   ],
   templateUrl: './mentor-roster.html',
   styles: `

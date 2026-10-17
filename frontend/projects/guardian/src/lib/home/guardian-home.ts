@@ -13,6 +13,9 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WStat,
+  WStatValue,
+  WStatLabel,
 } from '@waypoint/components';
 import { GuardianContextService } from '../guardian-context.service';
 
@@ -33,6 +36,9 @@ import { GuardianContextService } from '../guardian-context.service';
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WStat,
+    WStatValue,
+    WStatLabel,
   ],
   templateUrl: './guardian-home.html',
 })

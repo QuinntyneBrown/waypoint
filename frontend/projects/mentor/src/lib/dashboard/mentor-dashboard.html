@@ -20,29 +20,37 @@
       <p class="w-muted" role="status">Loading your dashboard…</p>
     } @else if (summary(); as view) {
       <div class="w-grid w-grid--4" aria-label="Mentor summary">
-        <div w-card class="w-statcard">
-          <div class="w-statcard__label">My youth</div>
-          <div class="w-statcard__value" data-testid="mentor-youth-count">
-            {{ view.youthCount }}
+        <div w-card>
+          <div w-stat>
+            <div w-stat-label>My youth</div>
+            <div w-stat-value data-testid="mentor-youth-count">
+              {{ view.youthCount }}
+            </div>
           </div>
         </div>
-        <div w-card class="w-statcard" data-testid="mentor-pending-reviews">
-          <div class="w-statcard__label">Pending reviews</div>
-          <div class="w-statcard__value">{{ view.pendingReviews }}</div>
-          <div class="w-statcard__delta" [class.is-down]="view.overdueReviews > 0">
-            {{ view.overdueReviews }} overdue
+        <div w-card data-testid="mentor-pending-reviews">
+          <div w-stat>
+            <div w-stat-label>Pending reviews</div>
+            <div w-stat-value>{{ view.pendingReviews }}</div>
+            <div w-stat-delta [trend]="view.overdueReviews > 0 ? 'down' : ''">
+              {{ view.overdueReviews }} overdue
+            </div>
           </div>
         </div>
-        <div w-card class="w-statcard">
-          <div class="w-statcard__label">Average progress</div>
-          <div class="w-statcard__value" data-testid="mentor-average-progress">
-            {{ percent(view.averageProgress) }}%
+        <div w-card>
+          <div w-stat>
+            <div w-stat-label>Average progress</div>
+            <div w-stat-value data-testid="mentor-average-progress">
+              {{ percent(view.averageProgress) }}%
+            </div>
           </div>
         </div>
-        <div w-card class="w-statcard">
-          <div class="w-statcard__label">At risk</div>
-          <div class="w-statcard__value" data-testid="mentor-at-risk-count">
-            {{ view.atRiskCount }}
+        <div w-card>
+          <div w-stat>
+            <div w-stat-label>At risk</div>
+            <div w-stat-value data-testid="mentor-at-risk-count">
+              {{ view.atRiskCount }}
+            </div>
           </div>
         </div>
       </div>

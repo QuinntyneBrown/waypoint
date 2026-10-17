@@ -32,3 +32,5 @@ export * from './lib/divider/w-divider';
 export * from './lib/scripture/w-scripture';
 export * from './lib/empty-state/w-empty-state';
 export * from './lib/skeleton/w-skeleton';
+export * from './lib/stat/w-stat';
+export * from './lib/progress/w-progress';

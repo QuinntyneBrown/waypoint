@@ -45,23 +45,31 @@
           data-testid="progress-overview"
         >
           <div class="w-grid w-grid--2">
-            <article w-card class="w-statcard">
-              <div class="w-statcard__label">Overall progress</div>
-              <div class="w-statcard__value">{{ view.overallPercent | number: '1.0-0' }}%</div>
-            </article>
-            <article w-card class="w-statcard">
-              <div class="w-statcard__label">Quiz average</div>
-              <div class="w-statcard__value">{{ view.quizAverage | number: '1.0-0' }}%</div>
-            </article>
-            <article w-card class="w-statcard">
-              <div class="w-statcard__label">Lessons done</div>
-              <div class="w-statcard__value">
-                {{ view.lessonsCompleted }}<span class="w-muted">/{{ view.lessonsTotal }}</span>
+            <article w-card>
+              <div w-stat>
+                <div w-stat-label>Overall progress</div>
+                <div w-stat-value>{{ view.overallPercent | number: '1.0-0' }}%</div>
               </div>
             </article>
-            <article w-card variant="lime" class="w-statcard">
-              <div class="w-statcard__label">Attendance</div>
-              <div class="w-statcard__value">{{ view.attendanceRate | number: '1.0-0' }}%</div>
+            <article w-card>
+              <div w-stat>
+                <div w-stat-label>Quiz average</div>
+                <div w-stat-value>{{ view.quizAverage | number: '1.0-0' }}%</div>
+              </div>
+            </article>
+            <article w-card>
+              <div w-stat>
+                <div w-stat-label>Lessons done</div>
+                <div w-stat-value>
+                  {{ view.lessonsCompleted }}<span class="w-muted">/{{ view.lessonsTotal }}</span>
+                </div>
+              </div>
+            </article>
+            <article w-card variant="lime">
+              <div w-stat>
+                <div w-stat-label>Attendance</div>
+                <div w-stat-value>{{ view.attendanceRate | number: '1.0-0' }}%</div>
+              </div>
             </article>
           </div>
           <section w-card>
@@ -76,17 +84,7 @@
                     <strong>{{ competency.name }}</strong
                     ><span w-badge>{{ competency.level }}</span>
                   </div>
-                  <div
-                    class="w-progress"
-                    role="progressbar"
-                    aria-label="Competency progress"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    [attr.aria-valuenow]="competency.percent"
-                    [style.--val]="competency.percent + '%'"
-                  >
-                    <div class="w-progress__fill"></div>
-                  </div>
+                  <div w-progress label="Competency progress" [value]="competency.percent"></div>
                   <span>{{ competency.percent }}%</span>
                 </div>
               }

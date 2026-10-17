@@ -29,6 +29,12 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WProgress,
+  WStat,
+  WStatLabel,
+  WStatValue,
+  WProgressRing,
+  WProgressRingLabel,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -61,6 +67,12 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WProgress,
+    WStat,
+    WStatLabel,
+    WStatValue,
+    WProgressRing,
+    WProgressRingLabel,
   ],
   templateUrl: './admin-reports.html',
   styles: `

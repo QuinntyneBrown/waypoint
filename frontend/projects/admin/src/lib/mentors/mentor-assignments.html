@@ -210,16 +210,16 @@
                 </div>
                 <div class="load-metrics">
                   <div class="w-kpi">
-                    <span class="w-statcard__label">{{ youthLabel(mentor.caseload) }}</span
-                    ><strong class="w-statcard__value">{{ mentor.caseload }}</strong>
+                    <span w-stat-label>{{ youthLabel(mentor.caseload) }}</span
+                    ><strong w-stat-value>{{ mentor.caseload }}</strong>
                   </div>
                   <div class="w-kpi">
-                    <span class="w-statcard__label">check-ins</span
-                    ><strong class="w-statcard__value">{{ mentor.checkIns }}</strong>
+                    <span w-stat-label>check-ins</span
+                    ><strong w-stat-value>{{ mentor.checkIns }}</strong>
                   </div>
                   <div class="w-kpi">
-                    <span class="w-statcard__label">reviews</span
-                    ><strong class="w-statcard__value">{{ mentor.reviews }}</strong>
+                    <span w-stat-label>reviews</span
+                    ><strong w-stat-value>{{ mentor.reviews }}</strong>
                   </div>
                 </div>
                 @if (mentor.overloaded) {

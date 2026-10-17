@@ -18,6 +18,7 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WProgress,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-001..010, L2-ENGAGE-005, L2-MENTOR-008, L2-PLATFORM-011
@@ -42,6 +43,7 @@ import {
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WProgress,
   ],
   templateUrl: './youth-home.html',
   styles: `

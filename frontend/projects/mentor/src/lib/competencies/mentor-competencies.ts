@@ -28,6 +28,8 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WStatLabel,
+  WStatValue,
 } from '@waypoint/components';
 
 interface CompetencyDraft {
@@ -60,6 +62,8 @@ interface CompetencyDraft {
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WStatLabel,
+    WStatValue,
   ],
   templateUrl: './mentor-competencies.html',
   styles: `

@@ -17,17 +17,23 @@
       </div>
 
       <div class="w-grid w-grid--3">
-        <div w-card class="w-statcard" data-testid="guardian-overall-progress">
-          <div class="w-statcard__value">{{ progress.overallPercent.toFixed(0) }}%</div>
-          <div class="w-statcard__label">Overall progress</div>
+        <div w-card data-testid="guardian-overall-progress">
+          <div w-stat>
+            <div w-stat-value>{{ progress.overallPercent.toFixed(0) }}%</div>
+            <div w-stat-label>Overall progress</div>
+          </div>
         </div>
-        <div w-card class="w-statcard">
-          <div class="w-statcard__value">{{ (progress.attendance.rate * 100).toFixed(0) }}%</div>
-          <div class="w-statcard__label">Attendance rate</div>
+        <div w-card>
+          <div w-stat>
+            <div w-stat-value>{{ (progress.attendance.rate * 100).toFixed(0) }}%</div>
+            <div w-stat-label>Attendance rate</div>
+          </div>
         </div>
-        <div w-card class="w-statcard">
-          <div class="w-statcard__value">{{ progress.earnedBadges.length }}</div>
-          <div class="w-statcard__label">Badges earned</div>
+        <div w-card>
+          <div w-stat>
+            <div w-stat-value>{{ progress.earnedBadges.length }}</div>
+            <div w-stat-label>Badges earned</div>
+          </div>
         </div>
       </div>
 

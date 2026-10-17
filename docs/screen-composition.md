@@ -29,8 +29,8 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Skeleton | 41 | in library |
 | Textarea | 32 | in library |
 | Table | 30 | to build (DECISIONS #23) |
-| Progress | 30 | to build (DECISIONS #23) |
-| Stat | 28 | to build (DECISIONS #23) |
+| Progress | 30 | in library |
+| Stat | 28 | in library |
 | Divider | 25 | in library |
 | List | 20 | to build (DECISIONS #23) |
 | Scripture | 19 | in library |

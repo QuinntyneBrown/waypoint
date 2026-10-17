@@ -20,6 +20,8 @@ import {
   WEmptyState,
   WEmptyStateTitle,
   WEmptyStateText,
+  WStatLabel,
+  WStatValue,
 } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-004, L2-LEARN-005
@@ -45,6 +47,8 @@ import {
     WEmptyState,
     WEmptyStateTitle,
     WEmptyStateText,
+    WStatLabel,
+    WStatValue,
   ],
   templateUrl: './mentor-quiz-review.html',
   styles: `

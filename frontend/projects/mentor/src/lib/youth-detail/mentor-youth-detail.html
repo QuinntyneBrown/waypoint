@@ -93,16 +93,10 @@
                     {{ youth.progress.totalLessons }} lessons complete
                   </p>
                   <div
-                    class="w-progress"
-                    role="progressbar"
-                    aria-label="Lesson progress"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    [attr.aria-valuenow]="percent(youth.progress.percent)"
-                    [style.--val]="percent(youth.progress.percent) + '%'"
-                  >
-                    <div class="w-progress__fill"></div>
-                  </div>
+                    w-progress
+                    label="Lesson progress"
+                    [value]="percent(youth.progress.percent)"
+                  ></div>
                 }
                 @case ('attendance') {
                   <h2>Attendance</h2>
