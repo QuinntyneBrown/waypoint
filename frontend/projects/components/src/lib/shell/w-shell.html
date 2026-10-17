@@ -8,18 +8,24 @@
 </div>
 
 <header class="w-topbar">
-  <button class="w-iconbtn w-topbar__burger" type="button" aria-label="Menu" (click)="toggleNav()">
+  <button
+    w-icon-button
+    class="w-topbar__burger"
+    type="button"
+    aria-label="Menu"
+    (click)="toggleNav()"
+  >
     <w-icon name="menu" />
   </button>
   <a class="w-brand" [routerLink]="nav().brandPath">
     <span class="w-brand__mark">W</span><span class="w-brand__name">Waypoint</span>
   </a>
   <div class="w-topbar__actions">
-    <a class="w-iconbtn" [routerLink]="'/' + role() + '/notifications'" aria-label="Notifications">
+    <a w-icon-button [routerLink]="'/' + role() + '/notifications'" aria-label="Notifications">
       <w-icon name="bell" />
     </a>
     <button
-      class="w-iconbtn"
+      w-icon-button
       type="button"
       [attr.aria-expanded]="accountOpen()"
       (click)="toggleAccount()"

@@ -14,3 +14,4 @@ export * from './lib/offline/offline.service';
 export * from './lib/deployment/deployment-urls';
 export * from './lib/dialog/w-accessible-dialog';
 export * from './lib/button/w-button';
+export * from './lib/icon-button/w-icon-button';

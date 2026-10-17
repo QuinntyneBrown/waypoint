@@ -17,7 +17,7 @@ import {
   ApplicationSummary,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WButton, WIcon, WShell } from '@waypoint/components';
+import { WAccessibleDialog, WButton, WIcon, WIconButton, WShell } from '@waypoint/components';
 import { Observable } from 'rxjs';
 
 type Decision = 'approve' | 'decline';
@@ -26,7 +26,7 @@ type Decision = 'approve' | 'decline';
 @Component({
   selector: 'w-applications-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, DatePipe, ReactiveFormsModule, WButton],
+  imports: [WShell, WIcon, WAccessibleDialog, DatePipe, ReactiveFormsModule, WButton, WIconButton],
   templateUrl: './applications-list.html',
   styles: `
     .application-name {

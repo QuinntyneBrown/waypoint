@@ -8,7 +8,7 @@ import {
   ReminderCadence,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WButton, WIcon, WShell } from '@waypoint/components';
+import { WAccessibleDialog, WButton, WIcon, WIconButton, WShell } from '@waypoint/components';
 
 type TargetMode = 'individual' | 'cohort';
 
@@ -16,7 +16,7 @@ type TargetMode = 'individual' | 'cohort';
 @Component({
   selector: 'w-mentor-assign-work',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, WButton],
+  imports: [WShell, WIcon, WAccessibleDialog, WButton, WIconButton],
   templateUrl: './mentor-assign-work.html',
   styles: `
     .assign-layout {

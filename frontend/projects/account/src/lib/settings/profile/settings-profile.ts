@@ -16,14 +16,14 @@ import {
   ProfileService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { ToastService, WButton, WIcon } from '@waypoint/components';
+import { ToastService, WButton, WIcon, WIconButton } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
 
 // Traces to: L2-PLATFORM-002
 @Component({
   selector: 'w-settings-profile',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SettingsShell, ReactiveFormsModule, WIcon, WButton],
+  imports: [SettingsShell, ReactiveFormsModule, WIcon, WButton, WIconButton],
   templateUrl: './settings-profile.html',
 })
 export class SettingsProfile implements OnDestroy {
