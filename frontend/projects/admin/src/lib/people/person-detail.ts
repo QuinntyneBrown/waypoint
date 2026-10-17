@@ -20,16 +20,6 @@ type LifecycleAction =
   imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe],
   templateUrl: './person-detail.html',
   styles: `
-    .record-tabs {
-      display: flex;
-      gap: var(--w-s2);
-      overflow-x: auto;
-      padding-block: var(--w-s2);
-    }
-    .record-tab {
-      min-height: 44px;
-      flex: none;
-    }
     .record-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));

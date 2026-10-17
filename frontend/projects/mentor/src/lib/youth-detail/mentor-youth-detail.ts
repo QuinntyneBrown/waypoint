@@ -15,16 +15,6 @@ type DetailTab =
   imports: [WShell, RouterLink, DatePipe],
   templateUrl: './mentor-youth-detail.html',
   styles: `
-    .detail-tabs {
-      display: flex;
-      gap: var(--w-s2);
-      overflow-x: auto;
-      padding-block: var(--w-s2);
-    }
-    .detail-tab {
-      min-height: 44px;
-      flex: none;
-    }
     .detail-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));

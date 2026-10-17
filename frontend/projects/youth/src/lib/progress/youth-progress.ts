@@ -12,17 +12,6 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [WShell, DecimalPipe, DatePipe],
   templateUrl: './youth-progress.html',
-  styles: `
-    .progress-tabs {
-      display: flex;
-      gap: var(--w-s2);
-      overflow-x: auto;
-    }
-    .progress-tab {
-      min-height: 2.75rem;
-      flex: 1 0 auto;
-    }
-  `,
 })
 export class YouthProgressPage {
   protected readonly auth = inject(AuthStore);

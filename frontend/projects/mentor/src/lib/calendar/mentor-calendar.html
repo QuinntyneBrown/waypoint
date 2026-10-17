@@ -29,10 +29,10 @@
         <div class="calendar-toolbar">
           <div>
             <h2 id="calendar-view-heading">{{ rangeLabel() }}</h2>
-            <div class="w-cluster" role="tablist" aria-label="Calendar view">
+            <div class="w-tabs" role="tablist" aria-label="Calendar view">
               @for (mode of ['month', 'week', 'agenda']; track mode) {
                 <button
-                  class="w-btn w-btn--ghost"
+                  class="w-tab"
                   type="button"
                   role="tab"
                   [attr.aria-selected]="view() === mode"

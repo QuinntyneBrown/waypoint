@@ -17,12 +17,11 @@
     }
 
     @if (progress(); as view) {
-      <div class="progress-tabs" role="tablist" aria-label="Progress sections">
+      <div class="w-tabs" role="tablist" aria-label="Progress sections">
         @for (tab of tabs; track tab.id; let index = $index) {
           <button
-            class="w-btn progress-tab"
-            [class.w-btn--primary]="activeTab() === tab.id"
-            [class.w-btn--ghost]="activeTab() !== tab.id"
+            class="w-tab"
+            [class.is-active]="activeTab() === tab.id"
             type="button"
             role="tab"
             [id]="'progress-tab-' + tab.id"

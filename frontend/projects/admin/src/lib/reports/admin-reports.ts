@@ -36,15 +36,6 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
       gap: var(--w-s2) var(--w-s5);
       align-items: center;
     }
-    .report-tabs {
-      display: flex;
-      gap: var(--w-s2);
-      overflow-x: auto;
-      padding-bottom: var(--w-s1);
-    }
-    .report-tabs .w-btn {
-      flex: 0 0 auto;
-    }
     .report-kpis,
     .report-rings,
     .report-grid {
