@@ -413,10 +413,12 @@ internal static class TestSupportEndpoints
         });
 
         // The video worker is idle in Testing, so browser tests run one transcode pass on demand.
+        // Parallel browser tests share one API, so each limits the pass to the lesson it owns.
         app.MapPost("/api/_test/video-transcodes/run", async (
+            Guid? lessonId,
             Waypoint.Infrastructure.VideoTranscodeProcessor processor,
             CancellationToken cancellationToken) =>
-            Results.Ok(new { processed = await processor.RunOnceAsync(cancellationToken) }));
+            Results.Ok(new { processed = await processor.RunOnceAsync(lessonId, cancellationToken) }));
 
         app.MapGet("/api/_test/emails/latest", (
             string to,

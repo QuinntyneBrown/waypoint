@@ -43,13 +43,18 @@ public sealed class VideoTranscodeProcessor
     }
 
     /// <summary>Transcodes each available queued video once; returns how many were attempted.</summary>
-    public async Task<int> RunOnceAsync(CancellationToken cancellationToken = default)
+    public Task<int> RunOnceAsync(CancellationToken cancellationToken = default) =>
+        RunOnceAsync(null, cancellationToken);
+
+    /// <summary>As above, limited to the videos of one lesson when a lesson is given.</summary>
+    public async Task<int> RunOnceAsync(Guid? lessonId, CancellationToken cancellationToken = default)
     {
         if (!_options.Enabled) return 0;
         var now = _clock.UtcNow;
         var ids = await _db.VideoTranscodeJobs.AsNoTracking()
             .Join(_db.LessonMedia, job => job.MediaId, media => media.Id, (job, media) => new { job, media })
-            .Where(row => (row.media.VideoStatus == VideoStatus.Queued
+            .Where(row => (lessonId == null || row.media.LessonId == lessonId)
+                && (row.media.VideoStatus == VideoStatus.Queued
                     || row.media.VideoStatus == VideoStatus.Processing)
                 && row.job.AttemptCount < MaxAttempts
                 && (row.job.LeaseUntil == null || row.job.LeaseUntil <= now))

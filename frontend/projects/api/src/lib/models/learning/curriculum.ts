@@ -43,6 +43,17 @@ export interface LessonMedia {
   mediaId: string;
   mediaType: string;
   url: string;
+  /** 'None' for documents and for videos stored before streaming existed. */
+  videoStatus: 'None' | 'Queued' | 'Processing' | 'Ready' | 'Failed';
+  durationSeconds: number | null;
+}
+
+/** A signed, expiring address for a lesson video that is ready to play. */
+export interface VideoPlayback {
+  url: string;
+  expiresAt: string;
+  durationSeconds: number;
+  posterUrl: string;
 }
 
 export interface LessonReadingState {

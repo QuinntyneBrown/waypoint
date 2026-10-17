@@ -7,6 +7,7 @@ import {
   ReflectionEditor,
   SaveReflectionInput,
   SaveReflectionResult,
+  VideoPlayback,
   YouthCurriculum,
   YouthLesson,
 } from '../models/learning/curriculum';
@@ -53,6 +54,12 @@ export class LearningService {
   lesson(lessonId: string): Observable<YouthLesson> {
     return this.http.get<YouthLesson>(
       `${this.base}/api/me/lessons/${encodeURIComponent(lessonId)}`,
+    );
+  }
+
+  lessonVideoPlayback(lessonId: string, mediaId: string): Observable<VideoPlayback> {
+    return this.http.get<VideoPlayback>(
+      `${this.base}/api/me/lessons/${encodeURIComponent(lessonId)}/media/${encodeURIComponent(mediaId)}/playback`,
     );
   }
 

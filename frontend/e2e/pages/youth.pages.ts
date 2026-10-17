@@ -238,6 +238,20 @@ export class YouthLessonPage extends BasePage {
   get completeButton() {
     return this.page.getByRole('button', { name: /mark lesson complete/i });
   }
+  /** The on-demand player shown for a lesson video that is ready. */
+  get videoPlayer() {
+    return this.page.locator('w-video-player');
+  }
+  /** Shown instead of the player while a lesson video is queued or processing. */
+  get videoPreparingNotice() {
+    return this.page.getByText(/your video is being prepared/i);
+  }
+  /** Resolves with the master playlist response; start waiting before opening the lesson. */
+  waitForMasterPlaylist() {
+    return this.page.waitForResponse((response) =>
+      /^\/api\/media\/[^/]+\/[0-9a-f-]{36}\/master\.m3u8$/.test(new URL(response.url()).pathname),
+    );
+  }
 }
 
 export class YouthCodingPage extends BasePage {

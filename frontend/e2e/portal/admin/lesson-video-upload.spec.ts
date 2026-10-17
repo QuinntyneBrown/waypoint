@@ -17,7 +17,7 @@ async function openLesson(
   await builder.trackSelect.selectOption(seeded.primaryTrackId);
   const lesson = builder.lesson(seeded.firstLessonTitle);
   await expect(lesson).toBeVisible();
-  return { builder, lesson };
+  return { builder, lesson, lessonId: seeded.firstLessonId };
 }
 
 // Traces to: L2-CURRIC-002 AC6, AC7
@@ -25,13 +25,13 @@ test('an admin uploads a video in chunks and sees it move from queued to ready',
   page,
   request,
 }) => {
-  const { builder, lesson } = await openLesson(page, request);
+  const { builder, lesson, lessonId } = await openLesson(page, request);
 
   await builder.attachVideo(lesson, { name: 'week-1.mp4', buffer: fakeMp4(9 * MIB) });
 
   const video = builder.video(lesson, 'week-1.mp4');
   await expect(video).toContainText('Queued');
-  await runVideoTranscodes(request);
+  await runVideoTranscodes(request, lessonId);
   await expect(video).toContainText('Ready', { timeout: 20_000 });
   await expect(video).toContainText('2:00');
 });
@@ -56,7 +56,7 @@ test('a file that is not a video is rejected and nothing is attached', async ({
 
 // Traces to: L2-CURRIC-002 AC7
 test('a failed transcode shows as failed and can be retried', async ({ page, request }) => {
-  const { builder, lesson } = await openLesson(page, request);
+  const { builder, lesson, lessonId } = await openLesson(page, request);
   await builder.attachVideo(lesson, {
     name: 'broken.mp4',
     buffer: fakeMp4(2 * MIB, 'FAILTRANSCODE'),
@@ -64,8 +64,8 @@ test('a failed transcode shows as failed and can be retried', async ({ page, req
   const video = builder.video(lesson, 'broken.mp4');
   await expect(video).toContainText('Queued');
 
-  await runVideoTranscodes(request);
-  await runVideoTranscodes(request);
+  await runVideoTranscodes(request, lessonId);
+  await runVideoTranscodes(request, lessonId);
   await expect(video).toContainText('Failed', { timeout: 20_000 });
   await builder.videoRetryButton(video).click();
 
