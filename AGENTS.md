@@ -69,8 +69,7 @@ Run from the repository root unless noted.
 - `docs/screen-composition.md` is binding. Before implementing or changing any
   screen, read its entry and use the components it lists. Build locally only the
   UI it marks as local.
-- If the library lacks a component the screen needs, STOP. Write its
-  component requirements document (`docs/specs/components/`) and add it to the
+- If the library lacks a component the screen needs, STOP. Add it to the
   library first. Do not work around it in the app.
 - Keep `docs/screen-composition.md` aligned with the mocks.
 
