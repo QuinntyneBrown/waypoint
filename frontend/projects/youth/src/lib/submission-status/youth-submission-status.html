@@ -47,9 +47,7 @@
           }
           @if (view.file; as file) {
             @if (fileUrl(); as url) {
-              <a class="w-link" [href]="url" [download]="file.fileName"
-                >Download {{ file.fileName }}</a
-              >
+              <a w-link [href]="url" [download]="file.fileName">Download {{ file.fileName }}</a>
             } @else {
               <p class="w-muted" role="status">Preparing {{ file.fileName }}…</p>
             }

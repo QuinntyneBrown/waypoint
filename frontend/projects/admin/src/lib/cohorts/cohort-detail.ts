@@ -4,7 +4,14 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, CohortDetail, CohortOptions, CohortsService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WButton, WIcon, WIconButton, WShell } from '@waypoint/components';
+import {
+  WAccessibleDialog,
+  WButton,
+  WIcon,
+  WIconButton,
+  WLink,
+  WShell,
+} from '@waypoint/components';
 import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-003
@@ -20,6 +27,7 @@ import { finalize } from 'rxjs';
     ReactiveFormsModule,
     WButton,
     WIconButton,
+    WLink,
   ],
   templateUrl: './cohort-detail.html',
   styles: `

@@ -3,13 +3,13 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, MentorService, QuizAssessmentReview } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WShell } from '@waypoint/components';
+import { WButton, WLink, WShell } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-004, L2-LEARN-005
 @Component({
   selector: 'w-mentor-quiz-review',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DatePipe, WButton],
+  imports: [WShell, RouterLink, DatePipe, WButton, WLink],
   templateUrl: './mentor-quiz-review.html',
   styles: `
     .assessment-layout {
