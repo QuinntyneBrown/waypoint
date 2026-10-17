@@ -33,7 +33,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Progress | 30 | in library |
 | Stat | 28 | in library |
 | Divider | 25 | in library |
-| List | 20 | to build (DECISIONS #23) |
+| List | 20 | in library |
 | Scripture | 19 | in library |
 | Button group | 18 | in library |
 | Chip | — | in library |
@@ -41,7 +41,8 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Switch | 17 | in library |
 | Link | — | in library |
 | Toast | — | in library |
-| Timeline | 15 | to build (DECISIONS #23) |
+| Timeline | 15 | in library |
+| Message thread | — | in library |
 | Tabs | 11 | in library |
 | Description list | — | in library |
 | Radio group | 10 | in library |

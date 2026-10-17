@@ -40,12 +40,12 @@
               <p w-empty-state-text>Your modules will appear after you join a curriculum track.</p>
             </div>
           } @else {
-            <div class="w-timeline">
+            <div w-timeline>
               @for (module of view.modules; track module.moduleId) {
                 <article
-                  class="w-timeline__item"
-                  [class.is-done]="module.status === 'done'"
-                  [class.is-current]="module.current"
+                  w-timeline-item
+                  [done]="module.status === 'done'"
+                  [current]="module.current"
                   [attr.data-testid]="module.current ? 'current-module' : 'journey-module'"
                 >
                   <div w-card variant="greige">

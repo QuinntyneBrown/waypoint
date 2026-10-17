@@ -9,6 +9,10 @@ import {
   WEmptyState,
   WEmptyStateTitle,
   WEmptyStateText,
+  WListItem,
+  WListItemBody,
+  WListItemTitle,
+  WListItemMeta,
 } from '@waypoint/components';
 import { GuardianContextService } from '../guardian-context.service';
 
@@ -25,6 +29,10 @@ import { GuardianContextService } from '../guardian-context.service';
     WEmptyState,
     WEmptyStateTitle,
     WEmptyStateText,
+    WListItem,
+    WListItemBody,
+    WListItemTitle,
+    WListItemMeta,
   ],
   templateUrl: './guardian-progress.html',
 })

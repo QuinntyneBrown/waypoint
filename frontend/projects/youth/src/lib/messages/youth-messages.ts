@@ -19,6 +19,9 @@ import {
   WEmptyState,
   WEmptyStateTitle,
   WEmptyStateText,
+  WMessageThread,
+  WMessageBubble,
+  WMessageBubbleTime,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -43,6 +46,9 @@ import { RealtimeService } from '@waypoint/core/realtime';
     WEmptyState,
     WEmptyStateTitle,
     WEmptyStateText,
+    WMessageThread,
+    WMessageBubble,
+    WMessageBubbleTime,
   ],
   templateUrl: './youth-messages.html',
   styles: `
