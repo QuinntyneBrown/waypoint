@@ -164,6 +164,8 @@ A running log of technical and product decisions worth recording. Each entry sta
 
 ## 21. The design system is documentation-only for v1
 
+**Status.** Superseded by #23.
+
 **Decision.** `docs/design-system` is the design reference for the mocks and for future work. The frontend keeps its own `--w-*` tokens and its small `components` library (avatar, deployment, dialog, icon, offline, shell, states, toast); it is not migrated to the extracted tokens or to all 50 component pages in v1. The optional skill artifacts `docs/screen-composition.md`, `docs/specs/components/` (CRDs) and `docs/mocks/manifest.json` are not produced until a migration is planned.
 
 **Why.** The product works and is tested against the frontend's own styling. A token and component migration is a large behaviour-neutral change with no acceptance criterion behind it, which the scope rules in `AGENTS.md` do not allow without a request.
@@ -172,8 +174,18 @@ A running log of technical and product decisions worth recording. Each entry sta
 
 ## 22. Design system is the spec; Storybook shows the implemented components
 
+**Status.** Superseded by #23.
+
 **Decision.** `docs/design-system` is the specification for how components look and behave. Storybook (`components` library, `npm run storybook`) is the catalogue of components that are actually implemented in the frontend; it is expected to be a small subset of the design system (DECISIONS #21). Where they differ, the design system is the target and the story documents current behaviour.
 
 **Why.** Two catalogues are fine when each has one job. This keeps contributors from treating Storybook as the full component list or from editing the design system to match code.
 
 **Consequences.** Build output goes to `dist/storybook/components`; the unused `storybook-static` entry was removed from `frontend/.gitignore`.
+
+## 23. Every design-system component in use is an Angular component in `@waypoint/components`
+
+**Decision.** For each design-system component that apps already use, `@waypoint/components` provides one Angular component, and apps consume only that component. Primitives use attribute selectors on native elements (`<button w-button>`, `<input w-text-field>`) so native semantics, forms and accessibility are kept; composites (tabs, dialog, pagination, table, ...) are element components. Components own their styles; apps do not use a component's `.w-*` classes directly. Layout, spacing and typography utilities (`w-stack`, `w-cluster`, `w-grid`, `w-container`, `w-page*`, `w-mb-*`, `w-mt-*`, `w-muted`, `w-eyebrow`, `w-text-*`) stay shared CSS. Design-system components no app uses yet (accordion, achievement badge, breadcrumb, drawer, file upload, form layout, spinner, stepper, tooltip, inline message) are built when a screen needs them. Work is delivered in waves (form and actions, display and feedback, composites), one component per pull request, each with a component requirements document, a Storybook story and a unit spec, and all app usages migrated in the same pull request.
+
+**Why.** Apps hand-write the same markup (`w-btn` about 360 times, `w-card` about 220, `w-alert` about 130), so a single pattern change needed edits in many places and drifted between apps. The user asked for a component for each design-system component, used across projects. This is the explicit request #21 required before a migration.
+
+**Consequences.** `docs/screen-composition.md` and the component requirements documents in `docs/specs/components/` are now produced. `AGENTS.md` gains the "Components library is mandatory" rule, enforced in review, not by a scan test. Storybook becomes the catalogue of implemented components, which grows toward the used subset of the design system. The design system remains the specification; where they differ, the design system is the target. The frontend keeps its own `--w-*` tokens; migrating to the extracted tokens is still a separate decision.
