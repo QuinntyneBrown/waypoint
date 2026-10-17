@@ -1,4 +1,12 @@
-import { WButton, WErrorText, WFormField, WLabel, WTextField, WAlert } from '@waypoint/components';
+import {
+  WButton,
+  WErrorText,
+  WFormField,
+  WLabel,
+  WTextField,
+  WAlert,
+  WBrand,
+} from '@waypoint/components';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -17,6 +25,7 @@ import { PasswordResetService } from '@waypoint/api';
     WErrorText,
     WTextField,
     WAlert,
+    WBrand,
   ],
   templateUrl: './forgot-password.html',
 })

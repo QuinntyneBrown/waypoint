@@ -9,10 +9,12 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { WAvatar } from '../avatar/w-avatar';
+import { WBrand } from '../brand/w-brand';
 import { WIcon } from '../icon/w-icon';
 import { OfflineService } from '../offline/offline.service';
 import { isNavGroup, W_NAV, W_ROLE_LABEL, WNavItem, WRole } from './nav-config';
 import { WIconButton } from '../icon-button/w-icon-button';
+import { WSkipLink } from '../skip-link/w-skip-link';
 
 /**
  * Authenticated app shell: fixed topbar, role-aware sidenav (+ mobile bottom
@@ -23,7 +25,7 @@ import { WIconButton } from '../icon-button/w-icon-button';
 @Component({
   selector: 'w-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, WIcon, WAvatar, WIconButton],
+  imports: [RouterLink, WIcon, WAvatar, WIconButton, WBrand, WSkipLink],
   host: {
     class: 'w-shell',
     // `role` is the product-role input name, not an ARIA role. Static Angular

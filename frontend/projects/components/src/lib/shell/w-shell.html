@@ -1,6 +1,4 @@
-<a class="w-skip-link" href="#main" (click)="$event.preventDefault(); main.focus()">
-  Skip to content
-</a>
+<a w-skip-link href="#main" (click)="$event.preventDefault(); main.focus()"> Skip to content </a>
 
 <div class="w-offline" [class.is-visible]="showOffline()">
   <w-icon name="wifi-off" />
@@ -17,9 +15,7 @@
   >
     <w-icon name="menu" />
   </button>
-  <a class="w-brand" [routerLink]="nav().brandPath">
-    <span class="w-brand__mark">W</span><span class="w-brand__name">Waypoint</span>
-  </a>
+  <a w-brand [routerLink]="nav().brandPath">Waypoint</a>
   <div class="w-topbar__actions">
     <a w-icon-button [routerLink]="'/' + role() + '/notifications'" aria-label="Notifications">
       <w-icon name="bell" />

@@ -46,7 +46,10 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Tabs | 11 | in library |
 | Description list | — | in library |
 | Radio group | 10 | in library |
-| Footer | 8 | to build (DECISIONS #23) |
+| Footer | 8 | in library |
+| Marketing nav | 8 | in library |
+| Brand | — | in library |
+| Skip link | — | in library |
 | Quiz option | 3 | in library |
 
 ## Screens
@@ -61,8 +64,8 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 
 | Screen (mock) | Library | Local UI |
 | --- | --- | --- |
-| Application submitted · Waypoint (`application-submitted.html`) | Alert, Button, Card, Empty state, Footer, Icon, List, Shell, Timeline | `w-marketing-nav` |
-| Apply / refer a youth · Waypoint (`apply.html`) | Alert, Button, Card, Checkbox, Divider, Footer, Form field, Icon, Radio group, Select, Shell, Text field, Textarea | `w-marketing-nav`, `w-pillrow` |
+| Application submitted · Waypoint (`application-submitted.html`) | Alert, Button, Card, Empty state, Footer, Icon, List, Marketing nav, Shell, Timeline | — |
+| Apply / refer a youth · Waypoint (`apply.html`) | Alert, Button, Card, Checkbox, Chip, Divider, Footer, Form field, Icon, Marketing nav, Radio group, Select, Shell, Text field, Textarea | — |
 
 ### `authentication/admin`
 
@@ -107,7 +110,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Module editor · Waypoint (`module-editor.html`) | Alert, Badge, Button, Card, Dialog, Divider, Form field, Icon, Icon button, List, Scripture, Select, Shell, Switch, Text field, Textarea | `w-lessonstep` |
 | Progression framework · Waypoint (`progression-editor.html`) | Avatar, Badge, Button, Card, Dialog, Divider, Form field, Icon, Icon button, List, Select, Shell, Text field, Timeline | `w-lessonstep`, `w-person` |
 | Quiz builder · Waypoint (`quiz-builder.html`) | Badge, Button, Card, Dialog, Divider, Empty state, Form field, Icon, Icon button, List, Progress, Quiz option, Radio group, Select, Shell, Switch, Text field, Textarea | — |
-| Curriculum builder · Waypoint (`tracks.html`) | Avatar, Badge, Button, Card, Dialog, Empty state, Form field, Icon, Icon button, List, Select, Shell, Skeleton, Stat, Switch, Text field, Textarea | `w-lessonstep`, `w-pill`, `w-pillrow` |
+| Curriculum builder · Waypoint (`tracks.html`) | Avatar, Badge, Button, Card, Chip, Dialog, Empty state, Form field, Icon, Icon button, List, Select, Shell, Skeleton, Stat, Switch, Text field, Textarea | `w-lessonstep` |
 
 ### `engagement/admin`
 
@@ -115,7 +118,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | --- | --- | --- |
 | Announcements · Waypoint (`announcements.html`) | Alert, Badge, Button, Button group, Card, Dialog, Empty state, Form field, Icon, Icon button, Progress, Radio group, Select, Shell, Skeleton, Stat, Text field, Textarea | — |
 | Attendance · Waypoint (`attendance-admin.html`) | Alert, Avatar, Badge, Button, Card, Dialog, Empty state, Form field, Icon, Icon button, Progress, Select, Shell, Skeleton, Stat, Table, Text field | — |
-| Calendar · Waypoint (`calendar.html`) | Avatar, Badge, Button, Button group, Card, Dialog, Empty state, Form field, Icon, Icon button, Select, Shell, Skeleton, Stat, Switch, Text field | `w-avatarstack`, `w-person`, `w-pill`, `w-pillrow` |
+| Calendar · Waypoint (`calendar.html`) | Avatar, Badge, Button, Button group, Card, Chip, Dialog, Empty state, Form field, Icon, Icon button, Select, Shell, Skeleton, Stat, Switch, Text field | `w-avatarstack`, `w-person` |
 
 ### `engagement/mentor`
 
@@ -125,7 +128,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Take attendance · Waypoint (`attendance.html`) | Alert, Avatar, Badge, Button, Button group, Card, Dialog, Empty state, Form field, Icon, Icon button, Select, Shell, Skeleton, Table, Textarea | `w-person` |
 | Calendar · Waypoint (`calendar.html`) | Avatar, Badge, Button, Button group, Card, Checkbox, Dialog, Empty state, Form field, Icon, Icon button, Select, Shell, Skeleton, Text field | `w-avatarstack`, `w-person` |
 | Messages · Waypoint (`messages.html`) | Alert, Avatar, Badge, Button, Card, Dialog, Empty state, Form field, Icon, Icon button, List, Shell, Skeleton, Text field, Textarea | `w-person` |
-| Notifications · Waypoint (`notifications.html`) | Avatar, Badge, Button, Card, Empty state, Icon, List, Shell, Skeleton | `w-pill`, `w-pillrow` |
+| Notifications · Waypoint (`notifications.html`) | Avatar, Badge, Button, Card, Chip, Empty state, Icon, List, Shell, Skeleton | — |
 
 ### `engagement/youth`
 
@@ -173,15 +176,15 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | --- | --- | --- |
 | Assessment approvals · Waypoint (`assessment-approvals.html`) | Alert, Avatar, Badge, Button, Card, Empty state, Icon, Shell, Skeleton, Table, Text field | — |
 | Assign work · Waypoint (`assign-work.html`) | Alert, Avatar, Badge, Button, Card, Checkbox, Dialog, Divider, Form field, Icon, Icon button, Select, Shell, Text field, Textarea | `w-avatarstack`, `w-person` |
-| Check-ins · Waypoint (`check-in-history.html`) | Avatar, Badge, Button, Button group, Card, Dialog, Empty state, Form field, Icon, Icon button, Select, Shell, Skeleton, Switch, Textarea, Timeline | `w-person`, `w-pill`, `w-pillrow` |
+| Check-ins · Waypoint (`check-in-history.html`) | Avatar, Badge, Button, Button group, Card, Chip, Dialog, Empty state, Form field, Icon, Icon button, Select, Shell, Skeleton, Switch, Textarea, Timeline | `w-person` |
 | Log check-in · Waypoint (`check-in.html`) | Alert, Button, Button group, Card, Divider, Form field, Icon, Select, Shell, Switch, Text field, Textarea | — |
 | Competency tracker · Waypoint (`competency.html`) | Alert, Avatar, Badge, Button, Button group, Card, Form field, Icon, Shell, Textarea | `comp-bar`, `comp-item`, `comp-note`, `comp-seg`, `w-person` |
 | Curriculum · Waypoint (`curriculum.html`) | Alert, Badge, Button, Button group, Card, Empty state, Icon, Scripture, Shell, Skeleton, Stat, Timeline | `w-person` |
 | Mentor dashboard · Waypoint (`dashboard.html`) | Avatar, Badge, Button, Card, Dialog, Form field, Icon, Icon button, Progress, Select, Shell, Stat, Textarea | `dash-date`, `dash-main`, `dash-review`, `dash-session`, `dash-youth`, `w-person` |
-| At-risk · Waypoint (`flags.html`) | Alert, Avatar, Badge, Button, Button group, Card, Dialog, Empty state, Form field, Icon, Icon button, Progress, Select, Shell, Skeleton, Textarea | `w-person`, `w-pill`, `w-pillrow` |
+| At-risk · Waypoint (`flags.html`) | Alert, Avatar, Badge, Button, Button group, Card, Chip, Dialog, Empty state, Form field, Icon, Icon button, Progress, Select, Shell, Skeleton, Textarea | `w-person` |
 | Grade submission · Waypoint (`grade-submission.html`) | Avatar, Badge, Button, Card, Checkbox, Dialog, Divider, Empty state, Form field, Icon, Icon button, Scripture, Shell, Text field, Textarea | `w-person` |
-| My group · Waypoint (`group.html`) | Alert, Avatar, Badge, Button, Card, Divider, Empty state, Icon, Progress, Scripture, Shell, Skeleton, Stat, Table, Timeline | `w-person`, `w-pill`, `w-pillrow` |
-| My youth · Waypoint (`my-youth.html`) | Avatar, Badge, Button, Card, Dialog, Empty state, Form field, Icon, Icon button, Progress, Select, Shell, Skeleton, Table, Text field, Textarea | `w-pill`, `w-pillrow` |
+| My group · Waypoint (`group.html`) | Alert, Avatar, Badge, Button, Card, Chip, Divider, Empty state, Icon, Progress, Scripture, Shell, Skeleton, Stat, Table, Timeline | `w-person` |
+| My youth · Waypoint (`my-youth.html`) | Avatar, Badge, Button, Card, Chip, Dialog, Empty state, Form field, Icon, Icon button, Progress, Select, Shell, Skeleton, Table, Text field, Textarea | — |
 | Reviews · Waypoint (`reviews.html`) | Avatar, Badge, Button, Card, Empty state, Icon, Shell, Skeleton, Table, Tabs | — |
 | Youth detail · Waypoint (`youth-detail.html`) | Alert, Avatar, Badge, Button, Card, Checkbox, Dialog, Form field, Icon, Icon button, Progress, Scripture, Select, Shell, Stat, Table, Tabs, Textarea, Timeline | `w-lessonstep`, `yd-activity`, `yd-comp`, `yd-head`, `yd-overview`, `yd-ringlabel`, `yd-rings` |
 
@@ -237,8 +240,8 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | --- | --- | --- |
 | Cohort detail · Waypoint (`cohort-detail.html`) | Alert, Avatar, Badge, Button, Card, Checkbox, Dialog, Divider, Form field, Icon, Icon button, Progress, Select, Shell, Stat, Table, Tabs, Text field, Timeline | `w-person` |
 | Progress board · Waypoint (`cohort-progress.html`) | Alert, Button, Card, Checkbox, Dialog, Empty state, Form field, Icon, Icon button, Radio group, Select, Shell, Skeleton, Stat, Table | — |
-| Cohorts · Waypoint (`cohorts.html`) | Alert, Avatar, Badge, Button, Card, Dialog, Empty state, Form field, Icon, Icon button, Progress, Select, Shell, Skeleton, Stat, Text field | `w-person`, `w-pill`, `w-pillrow` |
-| People · Waypoint (`people.html`) | Alert, Avatar, Badge, Button, Card, Dialog, Empty state, Form field, Icon, Icon button, Select, Shell, Skeleton, Table, Text field | `w-pill`, `w-pillrow` |
+| Cohorts · Waypoint (`cohorts.html`) | Alert, Avatar, Badge, Button, Card, Chip, Dialog, Empty state, Form field, Icon, Icon button, Progress, Select, Shell, Skeleton, Stat, Text field | `w-person` |
+| People · Waypoint (`people.html`) | Alert, Avatar, Badge, Button, Card, Chip, Dialog, Empty state, Form field, Icon, Icon button, Select, Shell, Skeleton, Table, Text field | — |
 | Person detail · Waypoint (`person-detail.html`) | Alert, Avatar, Badge, Button, Card, Dialog, Divider, Form field, Icon, Icon button, List, Progress, Scripture, Select, Shell, Stat, Table, Tabs, Text field, Textarea, Timeline | `w-badgeitem`, `w-person` |
 | Organization settings · Waypoint (`settings-org.html`) | Alert, Avatar, Badge, Button, Card, Form field, Icon, Shell, Switch, Table, Tabs, Text field, Textarea | `w-person` |
 
@@ -246,12 +249,12 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 
 | Screen (mock) | Library | Local UI |
 | --- | --- | --- |
-| About · Waypoint (`about.html`) | Avatar, Badge, Button, Card, Footer, Icon, List, Shell, Table, Timeline | `w-hero`, `w-marketing-nav`, `w-person` |
-| Contact · Waypoint (`contact.html`) | Button, Card, Divider, Empty state, Footer, Form field, Icon, Select, Shell, Text field, Textarea | `w-marketing-nav` |
-| Get involved · Waypoint (`get-involved.html`) | Alert, Button, Card, Checkbox, Dialog, Divider, Footer, Form field, Icon, Icon button, Select, Shell, Stat, Text field, Textarea | `w-hero`, `w-marketing-nav`, `w-pill`, `w-pillrow` |
-| Waypoint (`landing.html`) | Avatar, Button, Card, Footer, Icon, Scripture, Shell, Stat | `w-hero`, `w-marketing-nav`, `w-person` |
-| Privacy & consent · Waypoint (`privacy.html`) | Alert, Button, Divider, Footer, Icon, Shell | `w-marketing-nav` |
-| Programs · Waypoint (`programs.html`) | Avatar, Badge, Button, Card, Divider, Footer, Icon, List, Scripture, Shell | `w-hero`, `w-marketing-nav`, `w-person`, `w-pill`, `w-pillrow` |
+| About · Waypoint (`about.html`) | Avatar, Badge, Button, Card, Footer, Icon, List, Marketing nav, Shell, Table, Timeline | `w-hero`, `w-person` |
+| Contact · Waypoint (`contact.html`) | Button, Card, Divider, Empty state, Footer, Form field, Icon, Marketing nav, Select, Shell, Text field, Textarea | — |
+| Get involved · Waypoint (`get-involved.html`) | Alert, Button, Card, Checkbox, Chip, Dialog, Divider, Footer, Form field, Icon, Icon button, Marketing nav, Select, Shell, Stat, Text field, Textarea | `w-hero` |
+| Waypoint (`landing.html`) | Avatar, Button, Card, Footer, Icon, Marketing nav, Scripture, Shell, Stat | `w-hero`, `w-person` |
+| Privacy & consent · Waypoint (`privacy.html`) | Alert, Button, Divider, Footer, Icon, Marketing nav, Shell | — |
+| Programs · Waypoint (`programs.html`) | Avatar, Badge, Button, Card, Chip, Divider, Footer, Icon, List, Marketing nav, Scripture, Shell | `w-hero`, `w-person` |
 
 ### `reporting-and-data/admin`
 
@@ -281,12 +284,9 @@ Classes the mocks use that no library component covers, with the number of scree
 | --- | ---: |
 | `w-person` | 45 |
 | `w-authpage` | 20 |
-| `w-pillrow` | 12 |
-| `w-pill` | 11 |
 | `w-authcard` | 10 |
 | `w-badgeitem` | 9 |
 | `w-lessonstep` | 8 |
-| `w-marketing-nav` | 8 |
 | `set-tabs` | 4 |
 | `w-avatarstack` | 4 |
 | `w-hero` | 4 |

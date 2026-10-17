@@ -15,6 +15,7 @@ import {
   WCheckbox,
   WCheckboxBox,
   WAlert,
+  WBrand,
 } from '@waypoint/components';
 import { switchMap } from 'rxjs';
 import { EntryResolver } from '../entry';
@@ -36,6 +37,7 @@ import { EntryResolver } from '../entry';
     WCheckbox,
     WCheckboxBox,
     WAlert,
+    WBrand,
   ],
   templateUrl: './sign-in.html',
 })

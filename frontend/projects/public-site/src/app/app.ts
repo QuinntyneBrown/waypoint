@@ -1,10 +1,28 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, WButton } from '@waypoint/components';
+import {
+  deploymentUrl,
+  WAYPOINT_DEPLOYMENT_URLS,
+  WButton,
+  WSkipLink,
+  WMarketingNav,
+  WMarketingNavLinks,
+  WBrand,
+  WFooter,
+} from '@waypoint/components';
 
 @Component({
   selector: 'w-root',
-  imports: [RouterLink, RouterOutlet, WButton],
+  imports: [
+    RouterLink,
+    RouterOutlet,
+    WButton,
+    WSkipLink,
+    WMarketingNav,
+    WMarketingNavLinks,
+    WBrand,
+    WFooter,
+  ],
   templateUrl: './app.html',
 })
 export class App {
