@@ -127,12 +127,12 @@
           <form class="w-stack" [formGroup]="stageForm" (ngSubmit)="saveStage()">
             <div w-form-field>
               <label w-label for="stage-name">Stage name</label>
-              <input class="w-input" id="stage-name" formControlName="name" />
+              <input w-text-field id="stage-name" formControlName="name" />
             </div>
             <div w-form-field>
               <label w-label for="stage-description">Stage description</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="stage-description"
                 rows="4"
                 formControlName="description"
@@ -164,7 +164,7 @@
           <form class="w-stack" [formGroup]="competencyForm" (ngSubmit)="addCompetency()">
             <div w-form-field>
               <label w-label for="competency-name">Competency name</label>
-              <input class="w-input" id="competency-name" formControlName="name" />
+              <input w-text-field id="competency-name" formControlName="name" />
             </div>
             <div class="w-actions">
               <button w-button variant="primary" type="submit" [disabled]="busy()">

@@ -19,24 +19,24 @@
           <h2 class="w-card__title">Contact details</h2>
           <div w-form-field>
             <label w-label for="guardian-name">Name</label>
-            <input class="w-input" id="guardian-name" formControlName="displayName" />
+            <input w-text-field id="guardian-name" formControlName="displayName" />
           </div>
           <div w-form-field>
             <label w-label for="guardian-email">Email</label>
-            <input class="w-input" id="guardian-email" type="email" formControlName="email" />
+            <input w-text-field id="guardian-email" type="email" formControlName="email" />
           </div>
           <div w-form-field>
             <label w-label for="guardian-relationship">Relationship</label>
-            <input class="w-input" id="guardian-relationship" formControlName="relationship" />
+            <input w-text-field id="guardian-relationship" formControlName="relationship" />
           </div>
           <div w-form-field>
             <label w-label for="guardian-phone">Phone</label>
-            <input class="w-input" id="guardian-phone" type="tel" formControlName="phone" />
+            <input w-text-field id="guardian-phone" type="tel" formControlName="phone" />
           </div>
           <div w-form-field>
             <label w-label for="guardian-emergency-name">Emergency contact name</label>
             <input
-              class="w-input"
+              w-text-field
               id="guardian-emergency-name"
               formControlName="emergencyContactName"
             />
@@ -44,7 +44,7 @@
           <div w-form-field>
             <label w-label for="guardian-emergency-phone">Emergency contact phone</label>
             <input
-              class="w-input"
+              w-text-field
               id="guardian-emergency-phone"
               type="tel"
               formControlName="emergencyContactPhone"

@@ -96,8 +96,9 @@
           <div w-form-field>
             <label w-label for="coding-editor">Code editor</label>
             <textarea
+              w-textarea
               id="coding-editor"
-              class="w-input coding-editor"
+              class="coding-editor"
               data-testid="coding-editor"
               spellcheck="false"
               [value]="code()"
@@ -136,8 +137,8 @@
             <div w-form-field>
               <label w-label for="mentor-note">Note to your mentor (optional)</label>
               <textarea
+                w-textarea
                 id="mentor-note"
-                class="w-input"
                 formControlName="mentorNote"
                 rows="4"
               ></textarea>

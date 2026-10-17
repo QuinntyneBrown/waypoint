@@ -3,7 +3,15 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthStore, roleHome } from '@waypoint/auth';
 import { ApiError, InvitationContext, InvitationsService } from '@waypoint/api';
-import { WButton, WErrorText, WFormField, WIcon, WIconButton, WLabel } from '@waypoint/components';
+import {
+  WButton,
+  WErrorText,
+  WFormField,
+  WIcon,
+  WIconButton,
+  WLabel,
+  WTextField,
+} from '@waypoint/components';
 
 // Traces to: L2-AUTH-004, L2-AUTH-008, L2-PLATFORM-011
 @Component({
@@ -18,6 +26,7 @@ import { WButton, WErrorText, WFormField, WIcon, WIconButton, WLabel } from '@wa
     WFormField,
     WLabel,
     WErrorText,
+    WTextField,
   ],
   templateUrl: './invite-accept.html',
 })

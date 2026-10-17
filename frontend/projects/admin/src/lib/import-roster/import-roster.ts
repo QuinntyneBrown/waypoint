@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   ApiError,
@@ -17,7 +24,9 @@ import {
   WHelp,
   WIcon,
   WLabel,
+  WSelect,
   WShell,
+  WTextField,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -41,6 +50,8 @@ interface ImportColumn {
     WLabel,
     WHelp,
     WErrorText,
+    WTextField,
+    WSelect,
   ],
   templateUrl: './import-roster.html',
   styles: `
@@ -115,6 +126,7 @@ interface ImportColumn {
 })
 export class ImportRosterPage {
   protected readonly auth = inject(AuthStore);
+  private readonly fileInput = viewChild('fileInput', { read: ElementRef<HTMLInputElement> });
   private readonly api = inject(DataTransferService);
 
   protected readonly fields: readonly { value: RosterField; label: string }[] = [
@@ -259,8 +271,9 @@ export class ImportRosterPage {
     return status === 'Invalid' ? 'error' : 'warning';
   }
 
-  protected removeFile(input: HTMLInputElement): void {
-    input.value = '';
+  protected removeFile(): void {
+    const input = this.fileInput()?.nativeElement;
+    if (input) input.value = '';
     this.resetState();
   }
 

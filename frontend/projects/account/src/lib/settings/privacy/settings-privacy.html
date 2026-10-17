@@ -81,7 +81,7 @@
           <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
             <div w-form-field>
               <label w-label for="privacy-action">Request type</label>
-              <select class="w-select" id="privacy-action" formControlName="actionType">
+              <select w-select id="privacy-action" formControlName="actionType">
                 <option value="access">Access a copy of my data</option>
                 <option value="correction">Correct my information</option>
                 <option value="removal">Remove my information</option>
@@ -92,11 +92,11 @@
             @if (form.controls.actionType.value === 'correction') {
               <div w-form-field>
                 <label w-label for="privacy-name">Correct name</label>
-                <input class="w-input" id="privacy-name" formControlName="displayName" />
+                <input w-text-field id="privacy-name" formControlName="displayName" />
               </div>
               <div w-form-field>
                 <label w-label for="privacy-email">Correct email</label>
-                <input class="w-input" id="privacy-email" type="email" formControlName="email" />
+                <input w-text-field id="privacy-email" type="email" formControlName="email" />
                 @if (form.controls.email.touched && form.controls.email.invalid) {
                   <p w-error-text>Enter a valid email address.</p>
                 }
@@ -104,7 +104,7 @@
               <div w-form-field>
                 <label w-label for="privacy-pronouns">Correct pronouns</label>
                 <input
-                  class="w-input"
+                  w-text-field
                   id="privacy-pronouns"
                   formControlName="pronouns"
                   [disabled]="form.controls.clearPronouns.value"
@@ -126,7 +126,7 @@
             <div w-form-field>
               <label w-label for="privacy-details">Details</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="privacy-details"
                 rows="4"
                 formControlName="details"

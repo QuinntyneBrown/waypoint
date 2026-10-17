@@ -13,12 +13,7 @@
       </div>
       <div w-form-field>
         <label w-label for="privacy-status">Status</label>
-        <select
-          class="w-select"
-          id="privacy-status"
-          [value]="status()"
-          (change)="filterChanged($event)"
-        >
+        <select w-select id="privacy-status" [value]="status()" (change)="filterChanged($event)">
           <option value="">All requests</option>
           <option value="Pending">Pending</option>
           <option value="Completed">Completed</option>
@@ -127,16 +122,16 @@
               @if (item.actionType === 'correction') {
                 <div w-form-field>
                   <label w-label for="fulfil-name">Corrected name</label
-                  ><input class="w-input" id="fulfil-name" formControlName="displayName" />
+                  ><input w-text-field id="fulfil-name" formControlName="displayName" />
                 </div>
                 <div w-form-field>
                   <label w-label for="fulfil-email">Corrected email</label
-                  ><input class="w-input" id="fulfil-email" type="email" formControlName="email" />
+                  ><input w-text-field id="fulfil-email" type="email" formControlName="email" />
                 </div>
                 <div w-form-field>
                   <label w-label for="fulfil-pronouns">Corrected pronouns</label
                   ><input
-                    class="w-input"
+                    w-text-field
                     id="fulfil-pronouns"
                     formControlName="pronouns"
                     [disabled]="form.controls.clearPronouns.value"
@@ -181,7 +176,7 @@
                   >
                     <label w-label for="verified-contact-requests">Contact request IDs</label>
                     <textarea
-                      class="w-textarea"
+                      w-textarea
                       id="verified-contact-requests"
                       rows="3"
                       autocomplete="off"
@@ -212,7 +207,7 @@
                   >
                     <label w-label for="verified-volunteer-signups">Volunteer signup IDs</label>
                     <textarea
-                      class="w-textarea"
+                      w-textarea
                       id="verified-volunteer-signups"
                       rows="3"
                       autocomplete="off"
@@ -243,7 +238,7 @@
                   >
                     <label w-label for="verified-donation-pledges">Donation pledge IDs</label>
                     <textarea
-                      class="w-textarea"
+                      w-textarea
                       id="verified-donation-pledges"
                       rows="3"
                       autocomplete="off"
@@ -279,7 +274,7 @@
                       >Application IDs owned as applicant</label
                     >
                     <textarea
-                      class="w-textarea"
+                      w-textarea
                       id="verified-applicant-applications"
                       rows="3"
                       autocomplete="off"
@@ -318,7 +313,7 @@
                       >Application IDs owned as guardian</label
                     >
                     <textarea
-                      class="w-textarea"
+                      w-textarea
                       id="verified-guardian-applications"
                       rows="3"
                       autocomplete="off"
@@ -400,7 +395,7 @@
               <div w-form-field>
                 <label w-label for="resolution-note">Resolution note</label>
                 <textarea
-                  class="w-textarea"
+                  w-textarea
                   id="resolution-note"
                   rows="4"
                   formControlName="resolutionNote"

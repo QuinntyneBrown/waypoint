@@ -22,7 +22,10 @@ import {
   WFormField,
   WHelp,
   WLabel,
+  WSelect,
   WShell,
+  WTextarea,
+  WTextField,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 import {
@@ -104,7 +107,18 @@ interface CurriculumAuthoringDraft {
 @Component({
   selector: 'w-curriculum-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WAccessibleDialog, ReactiveFormsModule, WButton, WFormField, WLabel, WHelp],
+  imports: [
+    WShell,
+    WAccessibleDialog,
+    ReactiveFormsModule,
+    WButton,
+    WFormField,
+    WLabel,
+    WHelp,
+    WTextField,
+    WTextarea,
+    WSelect,
+  ],
   templateUrl: './curriculum-builder.html',
   styleUrl: './curriculum-builder.css',
 })

@@ -33,12 +33,11 @@
           <div w-form-field>
             <label w-label for="progress-cohort">Cohort</label>
             <select
-              #cohortSelect
-              class="w-select"
+              w-select
               id="progress-cohort"
               [value]="cohortId()"
               [disabled]="loadingOptions()"
-              (change)="selectCohort(cohortSelect.value)"
+              (change)="selectCohort($any($event.target).value)"
             >
               @for (cohort of cohorts(); track cohort.id) {
                 <option [value]="cohort.id">{{ cohort.name }}</option>
@@ -48,12 +47,11 @@
           <div w-form-field>
             <label w-label for="progress-track">Track</label>
             <select
-              #trackSelect
-              class="w-select"
+              w-select
               id="progress-track"
               [value]="trackId()"
               [disabled]="loadingOptions()"
-              (change)="selectTrack(trackSelect.value)"
+              (change)="selectTrack($any($event.target).value)"
             >
               @for (track of options().tracks; track track.id) {
                 <option [value]="track.id">{{ track.name }}</option>

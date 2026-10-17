@@ -11,7 +11,16 @@ import {
   YouthReport,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WErrorText, WFormField, WIcon, WLabel, WShell } from '@waypoint/components';
+import {
+  WButton,
+  WErrorText,
+  WFormField,
+  WIcon,
+  WLabel,
+  WSelect,
+  WShell,
+  WTextField,
+} from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -32,6 +41,8 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
     WFormField,
     WLabel,
     WErrorText,
+    WTextField,
+    WSelect,
   ],
   templateUrl: './admin-reports.html',
   styles: `

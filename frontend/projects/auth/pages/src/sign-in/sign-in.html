@@ -20,7 +20,7 @@
       <div w-form-field [invalid]="form.controls.email.touched && form.controls.email.invalid">
         <label w-label for="email">Email</label>
         <input
-          class="w-input"
+          w-text-field
           id="email"
           type="email"
           autocomplete="username"
@@ -39,7 +39,7 @@
         <label w-label for="password">Password</label>
         <div style="position: relative">
           <input
-            class="w-input"
+            w-text-field
             id="password"
             [type]="showPassword() ? 'text' : 'password'"
             autocomplete="current-password"

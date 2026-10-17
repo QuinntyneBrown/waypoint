@@ -30,7 +30,7 @@
             <div w-form-field>
               <label w-label for="assign-item-type">What are you assigning?</label>
               <select
-                class="w-select"
+                w-select
                 id="assign-item-type"
                 [value]="itemType()"
                 (change)="setItemType($any($event.target).value)"
@@ -43,7 +43,7 @@
             <div w-form-field>
               <label w-label for="assign-item">Item</label>
               <select
-                class="w-select"
+                w-select
                 id="assign-item"
                 [value]="itemId()"
                 (change)="itemId.set($any($event.target).value)"
@@ -115,7 +115,7 @@
                 <div w-form-field class="w-mb-0">
                   <label w-label for="assign-cohort">Cohort</label>
                   <select
-                    class="w-select"
+                    w-select
                     id="assign-cohort"
                     [value]="cohortId()"
                     (change)="cohortId.set($any($event.target).value)"
@@ -136,7 +136,7 @@
               <div w-form-field>
                 <label w-label for="assign-due-date">Due date</label>
                 <input
-                  class="w-input"
+                  w-text-field
                   id="assign-due-date"
                   type="date"
                   [value]="dueDate()"
@@ -146,7 +146,7 @@
               <div w-form-field>
                 <label w-label for="assign-reminder">Reminder</label>
                 <select
-                  class="w-select"
+                  w-select
                   id="assign-reminder"
                   [value]="reminderCadence()"
                   (change)="reminderCadence.set($any($event.target).value)"
@@ -160,7 +160,7 @@
             <div w-form-field>
               <label w-label for="assign-message">Message to youth</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="assign-message"
                 rows="4"
                 maxlength="4000"

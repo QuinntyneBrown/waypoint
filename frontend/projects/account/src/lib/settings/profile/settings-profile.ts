@@ -26,6 +26,7 @@ import {
   WIconButton,
   WLabel,
   WLabelRequired,
+  WTextField,
 } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
 
@@ -44,6 +45,7 @@ import { SettingsShell } from '../settings-shell';
     WLabelRequired,
     WHelp,
     WErrorText,
+    WTextField,
   ],
   templateUrl: './settings-profile.html',
 })

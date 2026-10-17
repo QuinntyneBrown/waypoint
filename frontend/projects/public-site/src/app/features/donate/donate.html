@@ -9,14 +9,14 @@
     <div class="w-grid w-grid--2">
       <div w-form-field [invalid]="error('donorName')">
         <label w-label for="donorName">Your name <span w-label-required>*</span></label>
-        <input class="w-input" id="donorName" formControlName="donorName" />
+        <input w-text-field id="donorName" formControlName="donorName" />
         @if (error('donorName')) {
           <div w-error-text>{{ error('donorName') }}</div>
         }
       </div>
       <div w-form-field [invalid]="error('email')">
         <label w-label for="email">Email <span w-label-required>*</span></label>
-        <input class="w-input" id="email" type="email" formControlName="email" />
+        <input w-text-field id="email" type="email" formControlName="email" />
         @if (error('email')) {
           <div w-error-text>{{ error('email') }}</div>
         }

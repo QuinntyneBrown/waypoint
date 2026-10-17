@@ -36,12 +36,7 @@
           <form class="w-stack" [formGroup]="form" (ngSubmit)="compose()">
             <div w-form-field>
               <label w-label for="announcement-title">Title</label>
-              <input
-                class="w-input"
-                id="announcement-title"
-                maxlength="200"
-                formControlName="title"
-              />
+              <input w-text-field id="announcement-title" maxlength="200" formControlName="title" />
               @if (form.controls.title.touched && form.controls.title.invalid) {
                 <p w-error-text>Enter a title up to 200 characters.</p>
               }
@@ -49,7 +44,7 @@
             <div w-form-field>
               <label w-label for="announcement-message">Message</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="announcement-message"
                 rows="6"
                 maxlength="4000"
@@ -61,7 +56,7 @@
             </div>
             <div w-form-field>
               <label w-label for="announcement-audience">Audience</label>
-              <select class="w-select" id="announcement-audience" formControlName="audienceScope">
+              <select w-select id="announcement-audience" formControlName="audienceScope">
                 <option value="org">Organization</option>
                 <option value="cohort">Cohort</option>
               </select>
@@ -69,7 +64,7 @@
             @if (isCohort()) {
               <div w-form-field>
                 <label w-label for="announcement-cohort">Cohort</label>
-                <select class="w-select" id="announcement-cohort" formControlName="cohortId">
+                <select w-select id="announcement-cohort" formControlName="cohortId">
                   <option value="">Choose a cohort</option>
                   @for (cohort of cohorts(); track cohort.id) {
                     <option [value]="cohort.id">{{ cohort.name }}</option>
@@ -82,7 +77,7 @@
             }
             <div w-form-field>
               <label w-label for="announcement-recipients">Recipients</label>
-              <select class="w-select" id="announcement-recipients" formControlName="roleTargeting">
+              <select w-select id="announcement-recipients" formControlName="roleTargeting">
                 <option value="Youth">Youth</option>
                 <option value="YouthGuardians">Youth + guardians</option>
                 <option value="Guardians">Guardians</option>
@@ -105,7 +100,7 @@
               <div w-form-field>
                 <label w-label for="announcement-scheduled-at">Send date and time</label>
                 <input
-                  class="w-input"
+                  w-text-field
                   id="announcement-scheduled-at"
                   type="datetime-local"
                   formControlName="scheduledAt"

@@ -2,7 +2,14 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ApiError, RsvpResponse, ScheduleService, YouthSession } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WFormField, WLabel, WLabelOptional, WShell } from '@waypoint/components';
+import {
+  WButton,
+  WFormField,
+  WLabel,
+  WLabelOptional,
+  WShell,
+  WTextarea,
+} from '@waypoint/components';
 
 interface RsvpDraft {
   response: RsvpResponse | null;
@@ -14,7 +21,7 @@ interface RsvpDraft {
 @Component({
   selector: 'w-youth-schedule',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, WButton, WFormField, WLabel, WLabelOptional],
+  imports: [WShell, DatePipe, WButton, WFormField, WLabel, WLabelOptional, WTextarea],
   templateUrl: './youth-schedule.html',
   styles: `
     .schedule-list {

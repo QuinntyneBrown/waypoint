@@ -28,7 +28,10 @@ import {
   WIcon,
   WIconButton,
   WLabel,
+  WSelect,
   WShell,
+  WTextarea,
+  WTextField,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -50,6 +53,9 @@ type MessageMode = 'thread' | 'broadcast';
     WLabel,
     WHelp,
     WErrorText,
+    WTextField,
+    WTextarea,
+    WSelect,
   ],
   templateUrl: './mentor-messages.html',
   styles: `

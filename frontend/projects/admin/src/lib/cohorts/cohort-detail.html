@@ -97,12 +97,11 @@
               <div w-form-field>
                 <label w-label for="available-youth">Add existing youth</label>
                 <select
-                  #youthSelect
-                  class="w-select"
+                  w-select
                   id="available-youth"
                   [value]="selectedYouthId()"
                   [disabled]="saving()"
-                  (change)="selectYouth(youthSelect.value)"
+                  (change)="selectYouth($any($event.target).value)"
                 >
                   <option value="">Choose a youth</option>
                   @for (youth of cohort.availableYouth; track youth.id) {
@@ -160,14 +159,14 @@
           <form class="w-stack" [formGroup]="editForm" (ngSubmit)="saveEdit()">
             <div w-form-field>
               <label w-label for="edit-cohort-name">Cohort name</label>
-              <input class="w-input" id="edit-cohort-name" formControlName="name" maxlength="128" />
+              <input w-text-field id="edit-cohort-name" formControlName="name" maxlength="128" />
               @if (editForm.controls.name.touched && editForm.controls.name.invalid) {
                 <p w-error-text>Enter a cohort name.</p>
               }
             </div>
             <div w-form-field>
               <label w-label for="edit-cohort-mentor">Lead mentor</label>
-              <select class="w-select" id="edit-cohort-mentor" formControlName="leadMentorId">
+              <select w-select id="edit-cohort-mentor" formControlName="leadMentorId">
                 <option value="">Choose a mentor</option>
                 @for (mentor of options()?.mentors ?? []; track mentor.id) {
                   <option [value]="mentor.id">{{ mentor.name }}</option>
@@ -182,7 +181,7 @@
             <div w-form-field>
               <label w-label for="edit-cohort-location">Meeting location</label>
               <input
-                class="w-input"
+                w-text-field
                 id="edit-cohort-location"
                 formControlName="location"
                 maxlength="256"

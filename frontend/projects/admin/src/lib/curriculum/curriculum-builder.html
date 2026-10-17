@@ -35,11 +35,10 @@
         <div w-form-field class="track-picker">
           <label w-label for="curriculum-track">Curriculum track</label>
           <select
-            #trackSelect
-            class="w-select"
+            w-select
             id="curriculum-track"
             [value]="selectedTrackId()"
-            (change)="selectTrack(trackSelect.value)"
+            (change)="selectTrack($any($event.target).value)"
           >
             @for (track of tracks(); track track.id) {
               <option [value]="track.id" [selected]="track.id === selectedTrackId()">
@@ -80,23 +79,19 @@
           </div>
           <div w-form-field>
             <label w-label for="module-name">Module name</label>
-            <input class="w-input" id="module-name" formControlName="name" />
+            <input w-text-field id="module-name" formControlName="name" />
           </div>
           <div w-form-field>
             <label w-label for="module-description">Module description</label>
-            <input class="w-input" id="module-description" formControlName="description" />
+            <input w-text-field id="module-description" formControlName="description" />
           </div>
           <div w-form-field>
             <label w-label for="scripture-anchor">Scripture anchor</label>
-            <input class="w-input" id="scripture-anchor" formControlName="scriptureAnchor" />
+            <input w-text-field id="scripture-anchor" formControlName="scriptureAnchor" />
           </div>
           <div w-form-field>
             <label w-label for="module-prerequisite">Module prerequisite</label>
-            <select
-              class="w-select"
-              id="module-prerequisite"
-              formControlName="prerequisiteModuleId"
-            >
+            <select w-select id="module-prerequisite" formControlName="prerequisiteModuleId">
               <option value="">No prerequisite</option>
               @for (module of track.modules; track module.id) {
                 @if (module.id !== editingModuleId()) {
@@ -235,7 +230,7 @@
                       </div>
                       <label w-label [for]="'lesson-media-' + lesson.id"> Upload PDF or MP4 </label>
                       <input
-                        class="w-input"
+                        w-text-field
                         [id]="'lesson-media-' + lesson.id"
                         type="file"
                         accept="application/pdf,video/mp4"
@@ -432,17 +427,12 @@
             <form class="settings-grid" [formGroup]="quizForm" (ngSubmit)="updateQuiz()">
               <div w-form-field>
                 <label w-label for="edit-pass-mark">Pass mark</label>
-                <input
-                  class="w-input"
-                  id="edit-pass-mark"
-                  type="number"
-                  formControlName="passMark"
-                />
+                <input w-text-field id="edit-pass-mark" type="number" formControlName="passMark" />
               </div>
               <div w-form-field>
                 <label w-label for="edit-attempts">Attempts allowed</label>
                 <input
-                  class="w-input"
+                  w-text-field
                   id="edit-attempts"
                   type="number"
                   formControlName="attemptsAllowed"
@@ -450,7 +440,7 @@
               </div>
               <div w-form-field>
                 <label w-label for="edit-feedback">Feedback mode</label>
-                <select class="w-select" id="edit-feedback" formControlName="feedbackMode">
+                <select w-select id="edit-feedback" formControlName="feedbackMode">
                   <option value="show-correct">Show correct answers</option>
                   <option value="score-only">Show score only</option>
                   <option value="after-all-attempts">After all attempts</option>
@@ -503,11 +493,11 @@
             <form class="question-form" [formGroup]="questionForm" (ngSubmit)="addQuestion()">
               <div w-form-field class="question-form__text">
                 <label w-label for="question-text">Question text</label>
-                <input class="w-input" id="question-text" formControlName="text" />
+                <input w-text-field id="question-text" formControlName="text" />
               </div>
               <div w-form-field>
                 <label w-label for="question-type">Question type</label>
-                <select class="w-select" id="question-type" formControlName="type">
+                <select w-select id="question-type" formControlName="type">
                   <option value="MultipleChoice">Multiple choice</option>
                   <option value="TrueFalse">True or false</option>
                   <option value="MultipleAnswer">Multiple answer</option>
@@ -518,7 +508,7 @@
                 <div w-form-field>
                   <label w-label for="answer-options">Answer options</label>
                   <textarea
-                    class="w-textarea"
+                    w-textarea
                     id="answer-options"
                     rows="3"
                     formControlName="options"
@@ -528,7 +518,7 @@
                 <div w-form-field>
                   <label w-label for="correct-options"> Correct option numbers </label>
                   <input
-                    class="w-input"
+                    w-text-field
                     id="correct-options"
                     placeholder="1, 3"
                     formControlName="correctIndexes"
@@ -538,7 +528,7 @@
                 <div w-form-field>
                   <label w-label for="correct-text-answers"> Correct text answers </label>
                   <textarea
-                    class="w-textarea"
+                    w-textarea
                     id="correct-text-answers"
                     rows="3"
                     formControlName="correctAnswers"
@@ -575,16 +565,16 @@
           <form class="w-stack" [formGroup]="trackForm" (ngSubmit)="createTrack()">
             <div w-form-field>
               <label w-label for="track-name">Track name</label>
-              <input class="w-input" id="track-name" formControlName="name" />
+              <input w-text-field id="track-name" formControlName="name" />
             </div>
             <div w-form-field>
               <label w-label for="track-key">Track key</label>
-              <input class="w-input" id="track-key" formControlName="key" />
+              <input w-text-field id="track-key" formControlName="key" />
             </div>
             <div w-form-field>
               <label w-label for="track-description">Track description</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="track-description"
                 rows="4"
                 formControlName="description"
@@ -620,16 +610,16 @@
           <form class="dialog-grid" [formGroup]="lessonForm" (ngSubmit)="saveLesson()">
             <div w-form-field class="dialog-grid__wide">
               <label w-label for="lesson-title">Lesson title</label>
-              <input class="w-input" id="lesson-title" formControlName="title" />
+              <input w-text-field id="lesson-title" formControlName="title" />
             </div>
             <div w-form-field>
               <label w-label for="lesson-scripture">Scripture reference</label>
-              <input class="w-input" id="lesson-scripture" formControlName="scriptureReference" />
+              <input w-text-field id="lesson-scripture" formControlName="scriptureReference" />
             </div>
             <div w-form-field>
               <label w-label for="lesson-minutes">Estimated minutes</label>
               <input
-                class="w-input"
+                w-text-field
                 id="lesson-minutes"
                 type="number"
                 min="1"
@@ -639,7 +629,7 @@
             <div w-form-field class="dialog-grid__wide">
               <label w-label for="learning-objectives">Learning objectives</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="learning-objectives"
                 rows="3"
                 formControlName="learningObjectives"
@@ -648,7 +638,7 @@
             <div w-form-field class="dialog-grid__wide">
               <label w-label for="teaching-body">Teaching body</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="teaching-body"
                 rows="6"
                 formControlName="teachingBody"
@@ -657,7 +647,7 @@
             <div w-form-field>
               <label w-label for="reflection-prompts">Reflection prompts</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="reflection-prompts"
                 rows="4"
                 formControlName="reflectionPrompts"
@@ -666,7 +656,7 @@
             <div w-form-field>
               <label w-label for="leader-guide-notes">Leader guide notes</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="leader-guide-notes"
                 rows="4"
                 formControlName="leaderGuideNotes"
@@ -698,12 +688,12 @@
           <form class="w-stack" [formGroup]="quizForm" (ngSubmit)="createQuiz()">
             <div w-form-field>
               <label w-label for="quiz-pass-mark">Pass mark</label>
-              <input class="w-input" id="quiz-pass-mark" type="number" formControlName="passMark" />
+              <input w-text-field id="quiz-pass-mark" type="number" formControlName="passMark" />
             </div>
             <div w-form-field>
               <label w-label for="quiz-attempts">Attempts allowed</label>
               <input
-                class="w-input"
+                w-text-field
                 id="quiz-attempts"
                 type="number"
                 formControlName="attemptsAllowed"
@@ -711,7 +701,7 @@
             </div>
             <div w-form-field>
               <label w-label for="quiz-feedback">Feedback mode</label>
-              <select class="w-select" id="quiz-feedback" formControlName="feedbackMode">
+              <select w-select id="quiz-feedback" formControlName="feedbackMode">
                 <option value="show-correct">Show correct answers</option>
                 <option value="score-only">Show score only</option>
                 <option value="after-all-attempts">After all attempts</option>
@@ -757,12 +747,12 @@
           <form class="dialog-grid" [formGroup]="assignmentForm" (ngSubmit)="saveAssignment()">
             <div w-form-field class="dialog-grid__wide">
               <label w-label for="assignment-title">Assignment title</label>
-              <input class="w-input" id="assignment-title" formControlName="title" />
+              <input w-text-field id="assignment-title" formControlName="title" />
             </div>
             <div w-form-field class="dialog-grid__wide">
               <label w-label for="assignment-task">Task description</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="assignment-task"
                 rows="5"
                 formControlName="taskDescription"
@@ -789,12 +779,12 @@
             </fieldset>
             <div w-form-field>
               <label w-label for="assignment-due">Due date</label>
-              <input class="w-input" id="assignment-due" type="date" formControlName="dueDate" />
+              <input w-text-field id="assignment-due" type="date" formControlName="dueDate" />
             </div>
             <div w-form-field>
               <label w-label for="assignment-grace">Grace period days</label>
               <input
-                class="w-input"
+                w-text-field
                 id="assignment-grace"
                 type="number"
                 min="0"
@@ -818,7 +808,7 @@
                       Rubric criterion
                     </label>
                     <input
-                      class="w-input"
+                      w-text-field
                       [id]="'rubric-description-' + rubricIndex"
                       formControlName="description"
                     />
@@ -826,7 +816,7 @@
                   <div w-form-field>
                     <label w-label [for]="'rubric-points-' + rubricIndex"> Criterion points </label>
                     <input
-                      class="w-input"
+                      w-text-field
                       [id]="'rubric-points-' + rubricIndex"
                       type="number"
                       min="1"

@@ -19,6 +19,7 @@ import {
   WIcon,
   WLabel,
   WLabelRequired,
+  WTextField,
 } from '@waypoint/components';
 import { forkJoin, of, switchMap } from 'rxjs';
 
@@ -35,6 +36,7 @@ import { forkJoin, of, switchMap } from 'rxjs';
     WLabelRequired,
     WHelp,
     WErrorText,
+    WTextField,
   ],
   templateUrl: './onboarding.html',
 })

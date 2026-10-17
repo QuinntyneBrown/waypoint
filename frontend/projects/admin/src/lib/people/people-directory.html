@@ -23,23 +23,21 @@
         <div w-form-field>
           <label w-label for="peopleSearch">Search people</label>
           <input
-            #searchBox
-            class="w-input"
+            w-text-field
             id="peopleSearch"
             type="search"
             placeholder="Name or email"
             [value]="search()"
-            (input)="onSearch(searchBox.value)"
+            (input)="onSearch($any($event.target).value)"
           />
         </div>
         <div w-form-field>
           <label w-label for="peopleCohort">Cohort</label>
           <select
-            #cohortSelect
+            w-select
             id="peopleCohort"
-            class="w-select"
             [value]="cohortId()"
-            (change)="setCohort(cohortSelect.value)"
+            (change)="setCohort($any($event.target).value)"
           >
             <option value="">All cohorts</option>
             @for (cohort of cohorts(); track cohort.id) {

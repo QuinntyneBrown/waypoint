@@ -76,7 +76,7 @@
           <div w-form-field class="w-mb-0">
             <label w-label for="attendance-cohort-filter">Cohort</label>
             <select
-              class="w-select"
+              w-select
               id="attendance-cohort-filter"
               [value]="cohortId()"
               (change)="cohortId.set($any($event.target).value)"
@@ -90,7 +90,7 @@
           <div w-form-field class="w-mb-0">
             <label w-label for="attendance-from">From</label>
             <input
-              class="w-input"
+              w-text-field
               id="attendance-from"
               type="date"
               [value]="from()"
@@ -100,7 +100,7 @@
           <div w-form-field class="w-mb-0">
             <label w-label for="attendance-to">To</label>
             <input
-              class="w-input"
+              w-text-field
               id="attendance-to"
               type="date"
               [value]="to()"

@@ -4,14 +4,32 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiError, MessagingService, YouthMessageThread } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WErrorText, WFormField, WHelp, WLabel, WShell } from '@waypoint/components';
+import {
+  WButton,
+  WErrorText,
+  WFormField,
+  WHelp,
+  WLabel,
+  WShell,
+  WTextarea,
+} from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
 // Traces to: L2-ENGAGE-007, L2-NFR-005
 @Component({
   selector: 'w-youth-messages',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, ReactiveFormsModule, WButton, WFormField, WLabel, WHelp, WErrorText],
+  imports: [
+    WShell,
+    DatePipe,
+    ReactiveFormsModule,
+    WButton,
+    WFormField,
+    WLabel,
+    WHelp,
+    WErrorText,
+    WTextarea,
+  ],
   templateUrl: './youth-messages.html',
   styles: `
     .thread-card {

@@ -241,12 +241,11 @@
                         <div w-form-field>
                           <label w-label for="person-role">Account role</label>
                           <select
-                            #roleSelect
-                            class="w-select"
+                            w-select
                             id="person-role"
                             [value]="roleSelection()"
                             [disabled]="saving()"
-                            (change)="selectRole(roleSelect.value)"
+                            (change)="selectRole($any($event.target).value)"
                           >
                             @for (role of roles; track role.value) {
                               <option [value]="role.value">{{ role.label }}</option>
@@ -412,13 +411,12 @@
                   Type {{ detail()?.displayName }} to confirm
                 </label>
                 <input
-                  #removeInput
-                  class="w-input"
+                  w-text-field
                   id="remove-person-confirmation"
                   type="text"
                   autocomplete="off"
                   [value]="removeConfirmation()"
-                  (input)="removeConfirmation.set(removeInput.value)"
+                  (input)="removeConfirmation.set($any($event.target).value)"
                 />
               </div>
             }

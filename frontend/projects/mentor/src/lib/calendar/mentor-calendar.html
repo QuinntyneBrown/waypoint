@@ -48,7 +48,7 @@
             <div w-form-field class="w-mb-0">
               <label w-label for="calendar-cohort-filter">Calendar cohort</label>
               <select
-                class="w-select"
+                w-select
                 id="calendar-cohort-filter"
                 [value]="cohortFilter()"
                 (change)="cohortFilter.set($any($event.target).value)"
@@ -152,7 +152,7 @@
           <div w-form-field>
             <label w-label for="session-title">Title</label>
             <input
-              class="w-input"
+              w-text-field
               id="session-title"
               maxlength="200"
               [value]="title()"
@@ -162,7 +162,7 @@
           <div w-form-field>
             <label w-label for="session-cohort">Cohort</label>
             <select
-              class="w-select"
+              w-select
               id="session-cohort"
               [value]="cohortId()"
               (change)="cohortId.set($any($event.target).value)"
@@ -176,7 +176,7 @@
           <div w-form-field>
             <label w-label for="session-mentor">Mentor</label>
             <select
-              class="w-select"
+              w-select
               id="session-mentor"
               [value]="mentorId()"
               (change)="mentorId.set($any($event.target).value)"
@@ -191,7 +191,7 @@
             <div w-form-field>
               <label w-label for="session-date">Date</label>
               <input
-                class="w-input"
+                w-text-field
                 id="session-date"
                 type="date"
                 [min]="selectedCohort()?.termStart?.slice(0, 10)"
@@ -203,7 +203,7 @@
             <div w-form-field>
               <label w-label for="session-time">Time</label>
               <input
-                class="w-input"
+                w-text-field
                 id="session-time"
                 type="time"
                 [value]="time()"
@@ -215,7 +215,7 @@
             <div w-form-field>
               <label w-label for="session-duration">Minutes</label>
               <input
-                class="w-input"
+                w-text-field
                 id="session-duration"
                 type="number"
                 min="1"
@@ -227,7 +227,7 @@
             <div w-form-field>
               <label w-label for="session-location">Location</label>
               <input
-                class="w-input"
+                w-text-field
                 id="session-location"
                 maxlength="256"
                 [value]="location()"

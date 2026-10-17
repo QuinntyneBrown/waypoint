@@ -16,7 +16,10 @@ import {
   WIcon,
   WIconButton,
   WLabel,
+  WSelect,
   WShell,
+  WTextarea,
+  WTextField,
 } from '@waypoint/components';
 
 type TargetMode = 'individual' | 'cohort';
@@ -25,7 +28,19 @@ type TargetMode = 'individual' | 'cohort';
 @Component({
   selector: 'w-mentor-assign-work',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, WButton, WIconButton, WFormField, WLabel, WHelp],
+  imports: [
+    WShell,
+    WIcon,
+    WAccessibleDialog,
+    WButton,
+    WIconButton,
+    WFormField,
+    WLabel,
+    WHelp,
+    WTextField,
+    WTextarea,
+    WSelect,
+  ],
   templateUrl: './mentor-assign-work.html',
   styles: `
     .assign-layout {

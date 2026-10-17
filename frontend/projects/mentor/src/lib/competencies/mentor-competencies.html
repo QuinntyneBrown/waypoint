@@ -76,7 +76,7 @@
                     {{ item.name }} level
                   </label>
                   <select
-                    class="w-select"
+                    w-select
                     [id]="'level-' + item.competencyId"
                     (change)="setLevel(item, $any($event.target).value)"
                   >
@@ -92,7 +92,7 @@
                     {{ item.name }} notes
                   </label>
                   <textarea
-                    class="w-textarea"
+                    w-textarea
                     [id]="'notes-' + item.competencyId"
                     rows="4"
                     maxlength="2000"

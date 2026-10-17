@@ -88,7 +88,7 @@
                   Staff note for {{ row.name }}
                 </label>
                 <input
-                  class="w-input"
+                  w-text-field
                   [id]="'attendance-note-' + row.youthUserId"
                   maxlength="1000"
                   [value]="row.note || ''"

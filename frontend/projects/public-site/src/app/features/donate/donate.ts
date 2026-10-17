@@ -10,6 +10,7 @@ import {
   WIcon,
   WLabel,
   WLabelRequired,
+  WTextField,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -29,6 +30,7 @@ function isEmail(value: string): boolean {
     WLabelRequired,
     WHelp,
     WErrorText,
+    WTextField,
   ],
   templateUrl: './donate.html',
 })

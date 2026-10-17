@@ -16,6 +16,7 @@ import {
   WIcon,
   WIconButton,
   WLabel,
+  WTextField,
 } from '@waypoint/components';
 
 // Traces to: L2-AUTH-005
@@ -31,6 +32,7 @@ import {
     WLabel,
     WHelp,
     WErrorText,
+    WTextField,
   ],
   templateUrl: './reset-password.html',
 })
