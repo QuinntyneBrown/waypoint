@@ -90,34 +90,11 @@ type MessageMode = 'thread' | 'broadcast';
       background: var(--w-white);
     }
     .thread-log {
-      display: flex;
       flex: 1 1 auto;
       min-height: 18rem;
       max-height: 32rem;
-      margin: 0;
       padding: var(--w-s5);
-      flex-direction: column;
-      gap: var(--w-s3);
       overflow-y: auto;
-      list-style: none;
-    }
-    .message-row {
-      display: flex;
-    }
-    .message-row--mine {
-      justify-content: flex-end;
-    }
-    .message-bubble {
-      width: fit-content;
-      max-width: 75%;
-      padding: var(--w-s3) var(--w-s4);
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-card);
-      background: var(--w-white);
-      overflow-wrap: anywhere;
-    }
-    .message-row--mine .message-bubble {
-      background: var(--w-lime-soft);
     }
     .message-body {
       white-space: pre-wrap;
@@ -148,9 +125,6 @@ type MessageMode = 'thread' | 'broadcast';
       }
       .thread-log {
         max-height: none;
-      }
-      .message-bubble {
-        max-width: 90%;
       }
     }
   `,

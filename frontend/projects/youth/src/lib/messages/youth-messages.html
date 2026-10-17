@@ -42,37 +42,36 @@
           class="w-card thread-card"
           [attr.aria-label]="'Conversation with ' + view.mentorName"
         >
-          <ol
-            class="thread-log"
+          <div
+            class="w-thread thread-log"
             role="log"
             aria-live="polite"
             aria-relevant="additions text"
             data-testid="message-thread"
           >
             @if (view.messages.length === 0) {
-              <li class="w-empty">
+              <div class="w-empty">
                 <h2 class="w-empty__title">Start the conversation</h2>
                 <p class="w-empty__text">Ask a question or share how your week is going.</p>
-              </li>
+              </div>
             }
             @for (message of view.messages; track message.id) {
-              <li
-                class="message-row"
-                [class.message-row--mine]="message.senderId === auth.user()?.userId"
+              <article
+                class="w-bubble"
+                [class.w-bubble--out]="message.senderId === auth.user()?.userId"
+                [class.w-bubble--in]="message.senderId !== auth.user()?.userId"
                 [attr.data-message-id]="message.id"
               >
-                <article class="message-bubble">
-                  <strong>{{
-                    message.senderId === auth.user()?.userId ? 'You' : view.mentorName
-                  }}</strong>
-                  <p class="message-body">{{ message.body }}</p>
-                  <time class="w-muted w-text-sm" [attr.datetime]="message.sentAt">
-                    {{ message.sentAt | date: 'medium' }}
-                  </time>
-                </article>
-              </li>
+                <span class="w-sr-only"
+                  >{{ message.senderId === auth.user()?.userId ? 'You' : view.mentorName }}:</span
+                >
+                <span class="message-body">{{ message.body }}</span>
+                <time class="w-bubble__time" [attr.datetime]="message.sentAt">{{
+                  message.sentAt | date: 'medium'
+                }}</time>
+              </article>
             }
-          </ol>
+          </div>
 
           <form class="composer w-stack" [formGroup]="form" (ngSubmit)="send()">
             <div class="w-field">
