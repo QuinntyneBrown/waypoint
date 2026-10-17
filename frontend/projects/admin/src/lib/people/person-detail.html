@@ -173,19 +173,21 @@
                     {{ person.attendance.attended }} of {{ person.attendance.total }} attended ·
                     {{ percent(person.attendance.rate) }}%
                   </p>
-                  <ul class="record-list">
-                    @for (item of person.attendance.items; track item.sessionId) {
-                      <li class="record-row">
-                        <strong>{{ item.sessionTitle }}</strong> · {{ item.status }}
-                        <span class="w-muted">{{ item.startsAt | date: 'mediumDate' }}</span>
-                        @if (item.note) {
-                          <p>{{ item.note }}</p>
-                        }
-                      </li>
-                    } @empty {
-                      <li class="w-muted">No attendance recorded.</li>
-                    }
-                  </ul>
+                  @if (person.attendance.items.length) {
+                    <dl class="w-dl w-dl--vertical">
+                      @for (item of person.attendance.items; track item.sessionId) {
+                        <dt>{{ item.sessionTitle }}</dt>
+                        <dd>
+                          {{ item.status }} · {{ item.startsAt | date: 'mediumDate' }}
+                          @if (item.note) {
+                            <p>{{ item.note }}</p>
+                          }
+                        </dd>
+                      }
+                    </dl>
+                  } @else {
+                    <p class="w-muted">No attendance recorded.</p>
+                  }
                 }
                 @case ('notes') {
                   <h2>Notes</h2>
@@ -193,22 +195,24 @@
                     Operational check-in summaries are shown here. Private prayer requests are never
                     included.
                   </p>
-                  <ul class="record-list">
-                    @for (note of person.notes; track note.id) {
-                      <li class="record-row">
-                        <strong>{{ note.type }}</strong> · {{ note.date | date: 'mediumDate' }} ·
-                        {{ note.mentorName }}
-                        <p>{{ note.summary }}</p>
-                        @if (note.nextFollowUp) {
-                          <p class="w-muted">
-                            Follow up {{ note.nextFollowUp | date: 'mediumDate' }}
-                          </p>
-                        }
-                      </li>
-                    } @empty {
-                      <li class="w-muted">No operational notes recorded.</li>
-                    }
-                  </ul>
+                  @if (person.notes.length) {
+                    <dl class="w-dl w-dl--vertical">
+                      @for (note of person.notes; track note.id) {
+                        <dt>{{ note.type }}</dt>
+                        <dd>
+                          {{ note.date | date: 'mediumDate' }} · {{ note.mentorName }}
+                          <p>{{ note.summary }}</p>
+                          @if (note.nextFollowUp) {
+                            <p class="w-muted">
+                              Follow up {{ note.nextFollowUp | date: 'mediumDate' }}
+                            </p>
+                          }
+                        </dd>
+                      }
+                    </dl>
+                  } @else {
+                    <p class="w-muted">No operational notes recorded.</p>
+                  }
                 }
                 @case ('account') {
                   <h2>Account</h2>
