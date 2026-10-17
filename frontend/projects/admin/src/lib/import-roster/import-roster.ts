@@ -55,19 +55,6 @@ interface ImportColumn {
       display: block;
       font-size: 1.5rem;
     }
-    .import-status {
-      font-weight: 700;
-    }
-    .import-status--ready {
-      color: var(--w-success);
-    }
-    .import-status--duplicate,
-    .import-status--consent {
-      color: var(--w-warning);
-    }
-    .import-status--invalid {
-      color: var(--w-error);
-    }
     .import-dialog-backdrop {
       position: fixed;
       z-index: 1000;
@@ -262,8 +249,9 @@ export class ImportRosterPage {
     return status === 'MissingConsent' ? 'Missing consent' : status;
   }
 
-  protected statusClass(status: string): string {
-    return status === 'MissingConsent' ? 'consent' : status.toLowerCase();
+  protected statusBadge(status: string): string {
+    if (status === 'Ready') return 'success';
+    return status === 'Invalid' ? 'error' : 'warning';
   }
 
   protected removeFile(input: HTMLInputElement): void {

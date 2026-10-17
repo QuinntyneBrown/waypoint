@@ -116,10 +116,10 @@
                     <td class="module-cell">
                       <span class="module-cell__name">{{ result.modules[index].name }}</span>
                       <span
-                        class="state"
-                        [class.state--done]="cell.state === 'Done'"
-                        [class.state--progress]="cell.state === 'InProgress'"
-                        [class.state--unassigned]="cell.state === 'NotAssigned'"
+                        class="w-badge"
+                        [class.w-badge--success]="cell.state === 'Done'"
+                        [class.w-badge--info]="cell.state === 'InProgress'"
+                        [class.w-badge--outline]="cell.state === 'NotAssigned'"
                       >
                         {{ stateLabel(cell.state) }}
                       </span>
