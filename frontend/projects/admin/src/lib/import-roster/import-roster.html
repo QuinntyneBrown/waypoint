@@ -232,24 +232,24 @@
   </div>
 
   @if (confirming() && preview(); as roster) {
-    <div class="import-dialog-backdrop" (click)="cancelConfirmation()">
-      <div
-        class="w-card import-dialog"
-        wuAccessibleDialog
-        aria-labelledby="confirm-import-title"
-        (click)="$event.stopPropagation()"
-        (wuDialogEscape)="cancelConfirmation()"
-      >
-        <div class="w-card__header">
-          <h2 class="w-card__title" id="confirm-import-title">Confirm roster import</h2>
+    <div
+      class="w-modal w-modal--sm is-open"
+      wuAccessibleDialog
+      aria-labelledby="confirm-import-title"
+      (wuDialogEscape)="cancelConfirmation()"
+    >
+      <div class="w-modal__scrim" (click)="cancelConfirmation()"></div>
+      <div class="w-modal__panel">
+        <div class="w-modal__header">
+          <h2 class="w-modal__title" id="confirm-import-title">Confirm roster import</h2>
         </div>
-        <div class="w-card__body">
+        <div class="w-modal__body">
           <p>
             Only {{ roster.ready }} ready {{ roster.ready === 1 ? 'row' : 'rows' }} will create an
             account. Duplicates, missing-consent rows, and invalid rows will remain unchanged.
           </p>
         </div>
-        <div class="w-card__footer w-cluster">
+        <div class="w-modal__footer">
           <button class="w-btn w-btn--ghost" type="button" (click)="cancelConfirmation()">
             Cancel
           </button>

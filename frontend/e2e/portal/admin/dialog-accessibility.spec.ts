@@ -66,7 +66,7 @@ test('panel-style dialogs share keyboard management and retain backdrop close', 
   await expect(opener).toBeFocused();
 
   await opener.click();
-  await page.locator('.dialog-backdrop').click({ position: { x: 2, y: 2 } });
+  await curriculum.dialogBackdrop.click({ position: { x: 2, y: 2 } });
   await expect(dialog).toBeHidden();
   await expect(opener).toBeFocused();
 });
