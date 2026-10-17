@@ -58,6 +58,22 @@ Run from the repository root unless noted.
   - `.github/workflows/frontend.yml`
   - `.github/workflows/performance.yml`
 
+## Components library is mandatory (CRITICAL)
+
+- Every application and feature library MUST be built from `@waypoint/components`
+  (DECISIONS #23). Never hand-write markup or CSS for a design-system component
+  the library provides; use the library component. Component `.w-*` classes are
+  not public API. Layout, spacing and typography utilities (`w-stack`,
+  `w-cluster`, `w-grid`, `w-container`, `w-page*`, `w-mb-*`, `w-mt-*`, `w-muted`,
+  `w-eyebrow`, `w-text-*`) remain shared CSS.
+- `docs/screen-composition.md` is binding. Before implementing or changing any
+  screen, read its entry and use the components it lists. Build locally only the
+  UI it marks as local.
+- If the library lacks a component the screen needs, STOP. Write its
+  component requirements document (`docs/specs/components/`) and add it to the
+  library first. Do not work around it in the app.
+- Keep `docs/screen-composition.md` aligned with the mocks.
+
 ## Scope, Simplicity, and Zero-Waste Engineering (CRITICAL)
 
 This is the absolute highest-priority rule in this repository. AI agents tend to over-engineer, hallucinate future needs, and balloon codebase complexity. This kills project velocity and comprehensibility. You must resist this impulse. Deliver radically simple solutions that fulfill the exact prompt—nothing more.
