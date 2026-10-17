@@ -226,65 +226,49 @@
   </div>
 
   @if (reviewing()) {
-    <div
-      class="w-modal w-modal--sm is-open"
-      wuAccessibleDialog
-      aria-labelledby="confirm-assign-heading"
-      (wuDialogEscape)="cancelReview()"
-    >
-      <div class="w-modal__scrim" (click)="cancelReview()"></div>
-      <div class="w-modal__panel">
-        <div class="w-modal__header">
-          <div>
-            <h2 class="w-modal__title" id="confirm-assign-heading">
-              Assign {{ selectedItem()?.title }}?
-            </h2>
-            <p class="w-modal__sub">Due {{ dueDate() }}</p>
-          </div>
-          <button
-            w-icon-button
-            class="w-modal__close"
-            type="button"
-            aria-label="Close"
-            (click)="cancelReview()"
-          >
-            <w-icon name="x" />
-          </button>
+    <div w-dialog size="sm" aria-labelledby="confirm-assign-heading" (dismiss)="cancelReview()">
+      <div w-dialog-header>
+        <div>
+          <h2 w-dialog-title id="confirm-assign-heading">Assign {{ selectedItem()?.title }}?</h2>
+          <p w-dialog-subtitle>Due {{ dueDate() }}</p>
         </div>
-        <div class="w-modal__body w-stack">
-          <p>
-            This adds the item to {{ recipientCount() }} youth
-            {{ recipientCount() === 1 ? 'journey' : 'journeys' }}.
-          </p>
-          <p class="w-muted">{{ recipientSummary() }}</p>
-          @if (message().trim()) {
-            <p>Each recipient will also receive your message right away.</p>
-          }
-          @if (reminderCadence()) {
-            <p>A due reminder will be scheduled for each recipient.</p>
-          }
-        </div>
-        <div class="w-modal__footer">
-          <button
-            w-button
-            variant="ghost"
-            type="button"
-            wuDialogInitialFocus
-            (click)="cancelReview()"
-          >
-            Cancel
-          </button>
-          <button
-            w-button
-            variant="primary"
-            class="confirm-button"
-            type="button"
-            [disabled]="saving()"
-            (click)="confirm()"
-          >
-            Assign to {{ recipientCount() }} youth
-          </button>
-        </div>
+        <button w-icon-button type="button" aria-label="Close" (click)="cancelReview()">
+          <w-icon name="x" />
+        </button>
+      </div>
+      <div w-dialog-body class="w-stack">
+        <p>
+          This adds the item to {{ recipientCount() }} youth
+          {{ recipientCount() === 1 ? 'journey' : 'journeys' }}.
+        </p>
+        <p class="w-muted">{{ recipientSummary() }}</p>
+        @if (message().trim()) {
+          <p>Each recipient will also receive your message right away.</p>
+        }
+        @if (reminderCadence()) {
+          <p>A due reminder will be scheduled for each recipient.</p>
+        }
+      </div>
+      <div w-dialog-footer>
+        <button
+          w-button
+          variant="ghost"
+          type="button"
+          wuDialogInitialFocus
+          (click)="cancelReview()"
+        >
+          Cancel
+        </button>
+        <button
+          w-button
+          variant="primary"
+          class="confirm-button"
+          type="button"
+          [disabled]="saving()"
+          (click)="confirm()"
+        >
+          Assign to {{ recipientCount() }} youth
+        </button>
       </div>
     </div>
   }

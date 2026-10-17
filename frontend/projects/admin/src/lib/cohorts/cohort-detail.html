@@ -131,84 +131,61 @@
   </div>
 
   @if (editOpen()) {
-    <div
-      class="w-modal w-modal--sm is-open"
-      wuAccessibleDialog
-      aria-labelledby="edit-cohort-heading"
-      (wuDialogEscape)="closeEdit()"
-    >
-      <div class="w-modal__scrim" (click)="closeEdit()"></div>
-      <div class="w-modal__panel">
-        <div class="w-modal__header">
-          <div>
-            <h2 class="w-modal__title" id="edit-cohort-heading">Edit cohort</h2>
-            <p class="w-modal__sub">Changes are recorded in the audit log.</p>
+    <div w-dialog size="sm" aria-labelledby="edit-cohort-heading" (dismiss)="closeEdit()">
+      <div w-dialog-header>
+        <div>
+          <h2 w-dialog-title id="edit-cohort-heading">Edit cohort</h2>
+          <p w-dialog-subtitle>Changes are recorded in the audit log.</p>
+        </div>
+        <button
+          w-icon-button
+          type="button"
+          aria-label="Close"
+          [disabled]="saving()"
+          (click)="closeEdit()"
+        >
+          <w-icon name="x" />
+        </button>
+      </div>
+      <div w-dialog-body>
+        <form class="w-stack" [formGroup]="editForm" (ngSubmit)="saveEdit()">
+          <div w-form-field>
+            <label w-label for="edit-cohort-name">Cohort name</label>
+            <input w-text-field id="edit-cohort-name" formControlName="name" maxlength="128" />
+            @if (editForm.controls.name.touched && editForm.controls.name.invalid) {
+              <p w-error-text>Enter a cohort name.</p>
+            }
           </div>
-          <button
-            w-icon-button
-            class="w-modal__close"
-            type="button"
-            aria-label="Close"
-            [disabled]="saving()"
-            (click)="closeEdit()"
-          >
-            <w-icon name="x" />
-          </button>
-        </div>
-        <div class="w-modal__body">
-          <form class="w-stack" [formGroup]="editForm" (ngSubmit)="saveEdit()">
-            <div w-form-field>
-              <label w-label for="edit-cohort-name">Cohort name</label>
-              <input w-text-field id="edit-cohort-name" formControlName="name" maxlength="128" />
-              @if (editForm.controls.name.touched && editForm.controls.name.invalid) {
-                <p w-error-text>Enter a cohort name.</p>
+          <div w-form-field>
+            <label w-label for="edit-cohort-mentor">Lead mentor</label>
+            <select w-select id="edit-cohort-mentor" formControlName="leadMentorId">
+              <option value="">Choose a mentor</option>
+              @for (mentor of options()?.mentors ?? []; track mentor.id) {
+                <option [value]="mentor.id">{{ mentor.name }}</option>
               }
-            </div>
-            <div w-form-field>
-              <label w-label for="edit-cohort-mentor">Lead mentor</label>
-              <select w-select id="edit-cohort-mentor" formControlName="leadMentorId">
-                <option value="">Choose a mentor</option>
-                @for (mentor of options()?.mentors ?? []; track mentor.id) {
-                  <option [value]="mentor.id">{{ mentor.name }}</option>
-                }
-              </select>
-              @if (
-                editForm.controls.leadMentorId.touched && editForm.controls.leadMentorId.invalid
-              ) {
-                <p w-error-text>Choose an active lead mentor.</p>
-              }
-            </div>
-            <div w-form-field>
-              <label w-label for="edit-cohort-location">Meeting location</label>
-              <input
-                w-text-field
-                id="edit-cohort-location"
-                formControlName="location"
-                maxlength="256"
-              />
-            </div>
-          </form>
-        </div>
-        <div class="w-modal__footer">
-          <button
-            w-button
-            variant="ghost"
-            type="button"
-            [disabled]="saving()"
-            (click)="closeEdit()"
-          >
-            Cancel
-          </button>
-          <button
-            w-button
-            variant="primary"
-            type="button"
-            [disabled]="saving()"
-            (click)="saveEdit()"
-          >
-            {{ saving() ? 'Saving…' : 'Save changes' }}
-          </button>
-        </div>
+            </select>
+            @if (editForm.controls.leadMentorId.touched && editForm.controls.leadMentorId.invalid) {
+              <p w-error-text>Choose an active lead mentor.</p>
+            }
+          </div>
+          <div w-form-field>
+            <label w-label for="edit-cohort-location">Meeting location</label>
+            <input
+              w-text-field
+              id="edit-cohort-location"
+              formControlName="location"
+              maxlength="256"
+            />
+          </div>
+        </form>
+      </div>
+      <div w-dialog-footer>
+        <button w-button variant="ghost" type="button" [disabled]="saving()" (click)="closeEdit()">
+          Cancel
+        </button>
+        <button w-button variant="primary" type="button" [disabled]="saving()" (click)="saveEdit()">
+          {{ saving() ? 'Saving…' : 'Save changes' }}
+        </button>
       </div>
     </div>
   }

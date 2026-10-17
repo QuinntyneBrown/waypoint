@@ -9,7 +9,6 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WAccessibleDialog,
   WButton,
   WFormField,
   WHelp,
@@ -31,6 +30,12 @@ import {
   WCardBody,
   WDivider,
   WBadge,
+  WDialog,
+  WDialogHeader,
+  WDialogTitle,
+  WDialogSubtitle,
+  WDialogBody,
+  WDialogFooter,
 } from '@waypoint/components';
 
 type TargetMode = 'individual' | 'cohort';
@@ -42,7 +47,6 @@ type TargetMode = 'individual' | 'cohort';
   imports: [
     WShell,
     WIcon,
-    WAccessibleDialog,
     WButton,
     WIconButton,
     WFormField,
@@ -62,6 +66,12 @@ type TargetMode = 'individual' | 'cohort';
     WCardBody,
     WDivider,
     WBadge,
+    WDialog,
+    WDialogHeader,
+    WDialogTitle,
+    WDialogSubtitle,
+    WDialogBody,
+    WDialogFooter,
   ],
   templateUrl: './mentor-assign-work.html',
   styles: `

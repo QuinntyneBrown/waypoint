@@ -19,7 +19,6 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WAccessibleDialog,
   WButton,
   WFormField,
   WLabel,
@@ -34,6 +33,10 @@ import {
   WEmptyStateTitle,
   WEmptyStateText,
   WDescriptionList,
+  WDialog,
+  WDialogHeader,
+  WDialogTitle,
+  WDialogBody,
 } from '@waypoint/components';
 import { finalize, forkJoin, of, switchMap } from 'rxjs';
 import {
@@ -55,7 +58,6 @@ interface BadgeTarget {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     WShell,
-    WAccessibleDialog,
     ReactiveFormsModule,
     WButton,
     WFormField,
@@ -70,6 +72,10 @@ interface BadgeTarget {
     WEmptyStateTitle,
     WEmptyStateText,
     WDescriptionList,
+    WDialog,
+    WDialogHeader,
+    WDialogTitle,
+    WDialogBody,
   ],
   templateUrl: './badge-builder.html',
   styleUrl: './curriculum-admin.css',

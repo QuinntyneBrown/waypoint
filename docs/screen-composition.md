@@ -22,7 +22,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Form field | 60 | in library |
 | Alert | 57 | in library |
 | Empty state | 54 | in library |
-| Dialog | 48 | to build (DECISIONS #23) |
+| Dialog | 48 | in library |
 | Icon button | 47 | in library |
 | Select | 43 | in library |
 | Text field | 43 | in library |

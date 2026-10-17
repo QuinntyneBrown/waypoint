@@ -18,7 +18,6 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WAccessibleDialog,
   WButton,
   WErrorText,
   WFormField,
@@ -39,6 +38,12 @@ import {
   WEmptyStateText,
   WTableWrap,
   WTable,
+  WDialog,
+  WDialogHeader,
+  WDialogTitle,
+  WDialogSubtitle,
+  WDialogBody,
+  WDialogFooter,
 } from '@waypoint/components';
 import { Observable } from 'rxjs';
 
@@ -51,7 +56,6 @@ type Decision = 'approve' | 'decline';
   imports: [
     WShell,
     WIcon,
-    WAccessibleDialog,
     DatePipe,
     ReactiveFormsModule,
     WButton,
@@ -72,6 +76,12 @@ type Decision = 'approve' | 'decline';
     WEmptyStateText,
     WTableWrap,
     WTable,
+    WDialog,
+    WDialogHeader,
+    WDialogTitle,
+    WDialogSubtitle,
+    WDialogBody,
+    WDialogFooter,
   ],
   templateUrl: './applications-list.html',
   styles: `

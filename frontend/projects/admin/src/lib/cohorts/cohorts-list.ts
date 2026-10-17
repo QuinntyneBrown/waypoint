@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
 import { ApiError, CohortOptions, CohortsService, CohortSummary } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WAccessibleDialog,
   WButton,
   WErrorText,
   WFormField,
@@ -24,6 +23,12 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WDialog,
+  WDialogHeader,
+  WDialogTitle,
+  WDialogSubtitle,
+  WDialogBody,
+  WDialogFooter,
 } from '@waypoint/components';
 import { finalize } from 'rxjs';
 
@@ -34,7 +39,6 @@ import { finalize } from 'rxjs';
   imports: [
     WShell,
     WIcon,
-    WAccessibleDialog,
     RouterLink,
     DatePipe,
     ReactiveFormsModule,
@@ -54,6 +58,12 @@ import { finalize } from 'rxjs';
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WDialog,
+    WDialogHeader,
+    WDialogTitle,
+    WDialogSubtitle,
+    WDialogBody,
+    WDialogFooter,
   ],
   templateUrl: './cohorts-list.html',
   styles: `

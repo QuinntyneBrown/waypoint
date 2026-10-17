@@ -20,7 +20,6 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WAccessibleDialog,
   WButton,
   WErrorText,
   WFormField,
@@ -39,6 +38,12 @@ import {
   WEmptyStateIcon,
   WEmptyStateTitle,
   WEmptyStateText,
+  WDialog,
+  WDialogHeader,
+  WDialogTitle,
+  WDialogSubtitle,
+  WDialogBody,
+  WDialogFooter,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -51,7 +56,6 @@ type MessageMode = 'thread' | 'broadcast';
   imports: [
     WShell,
     WIcon,
-    WAccessibleDialog,
     DatePipe,
     ReactiveFormsModule,
     WButton,
@@ -70,6 +74,12 @@ type MessageMode = 'thread' | 'broadcast';
     WEmptyStateIcon,
     WEmptyStateTitle,
     WEmptyStateText,
+    WDialog,
+    WDialogHeader,
+    WDialogTitle,
+    WDialogSubtitle,
+    WDialogBody,
+    WDialogFooter,
   ],
   templateUrl: './mentor-messages.html',
   styles: `

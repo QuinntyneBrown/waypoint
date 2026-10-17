@@ -4,7 +4,6 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, PeopleService, PersonDetail } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WAccessibleDialog,
   WButton,
   WFormField,
   WIcon,
@@ -23,6 +22,12 @@ import {
   WTabs,
   WTab,
   WDescriptionList,
+  WDialog,
+  WDialogHeader,
+  WDialogTitle,
+  WDialogSubtitle,
+  WDialogBody,
+  WDialogFooter,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 
@@ -40,7 +45,6 @@ type LifecycleAction =
   imports: [
     WShell,
     WIcon,
-    WAccessibleDialog,
     RouterLink,
     DatePipe,
     WButton,
@@ -59,6 +63,12 @@ type LifecycleAction =
     WTabs,
     WTab,
     WDescriptionList,
+    WDialog,
+    WDialogHeader,
+    WDialogTitle,
+    WDialogSubtitle,
+    WDialogBody,
+    WDialogFooter,
   ],
   templateUrl: './person-detail.html',
   styles: `
