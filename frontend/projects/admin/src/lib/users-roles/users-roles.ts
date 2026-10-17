@@ -13,6 +13,8 @@ import {
   WShell,
   WTextField,
   WAlert,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 
 const ROLES: readonly WRoleName[] = [
@@ -39,6 +41,8 @@ const ROLES: readonly WRoleName[] = [
     WTextField,
     WSelect,
     WAlert,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './users-roles.html',
   styles: `

@@ -14,6 +14,8 @@ import {
   WTextarea,
   WTextField,
   WAlert,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-006, L2-NFR-001
@@ -33,6 +35,8 @@ import {
     WTextField,
     WTextarea,
     WAlert,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './youth-assignment.html',
 })

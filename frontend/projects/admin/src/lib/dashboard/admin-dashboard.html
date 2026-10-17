@@ -27,19 +27,19 @@
       <p class="w-muted" role="status">Loading the director dashboard…</p>
     } @else if (hub(); as view) {
       <div class="w-grid w-grid--4" aria-label="Program summary">
-        <article class="w-card w-statcard">
+        <article w-card class="w-statcard">
           <div class="w-statcard__label">Active youth</div>
           <div class="w-statcard__value">{{ view.kpis.activeYouth }}</div>
         </article>
-        <article class="w-card w-statcard">
+        <article w-card class="w-statcard">
           <div class="w-statcard__label">Active cohorts</div>
           <div class="w-statcard__value">{{ view.kpis.cohorts }}</div>
         </article>
-        <article class="w-card w-statcard">
+        <article w-card class="w-statcard">
           <div class="w-statcard__label">Average completion</div>
           <div class="w-statcard__value">{{ view.kpis.avgCompletion | percent: '1.0-0' }}</div>
         </article>
-        <article class="w-card w-statcard">
+        <article w-card class="w-statcard">
           <div class="w-statcard__label">Attendance rate</div>
           <div class="w-statcard__value">{{ view.kpis.attendanceRate | percent: '1.0-0' }}</div>
         </article>
@@ -48,32 +48,32 @@
       <section class="w-mt-6">
         <h2>Quick actions</h2>
         <div class="dashboard-actions">
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/invitations"
+          <a w-card class="dashboard-action" routerLink="/admin/invitations"
             ><w-icon name="user-plus" /><strong>Invite people</strong></a
           >
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/applications"
+          <a w-card class="dashboard-action" routerLink="/admin/applications"
             ><w-icon name="clipboard-check" /><strong>Review applications</strong></a
           >
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/cohort-progress"
+          <a w-card class="dashboard-action" routerLink="/admin/cohort-progress"
             ><w-icon name="trending-up" /><strong>Open progress board</strong></a
           >
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/calendar"
+          <a w-card class="dashboard-action" routerLink="/admin/calendar"
             ><w-icon name="calendar" /><strong>Manage calendar</strong></a
           >
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/reports"
+          <a w-card class="dashboard-action" routerLink="/admin/reports"
             ><w-icon name="bar-chart" /><strong>Explore reports</strong></a
           >
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/privacy"
+          <a w-card class="dashboard-action" routerLink="/admin/privacy"
             ><w-icon name="shield" /><strong>Privacy requests</strong></a
           >
         </div>
       </section>
 
       <div class="dashboard-grid w-mt-6">
-        <section class="w-card">
-          <div class="w-card__body">
+        <section w-card>
+          <div w-card-body>
             <div class="w-cluster w-cluster--between">
-              <h2 class="w-card__title">Cohort health</h2>
+              <h2 w-card-title>Cohort health</h2>
               <a routerLink="/admin/reports">Full report</a>
             </div>
             @for (cohort of view.cohorts; track cohort.cohortId) {
@@ -95,10 +95,10 @@
             }
           </div>
         </section>
-        <section class="w-card">
-          <div class="w-card__body">
+        <section w-card>
+          <div w-card-body>
             <div class="w-cluster w-cluster--between">
-              <h2 class="w-card__title">Staff load</h2>
+              <h2 w-card-title>Staff load</h2>
               <a routerLink="/admin/mentor-assignments">Balance caseloads</a>
             </div>
             @for (mentor of view.staff.slice(0, 6); track mentor.mentorId) {

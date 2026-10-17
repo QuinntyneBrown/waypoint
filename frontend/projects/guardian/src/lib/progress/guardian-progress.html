@@ -19,9 +19,9 @@
       <p class="w-muted">Loading progress…</p>
     } @else if (context.progress(); as progress) {
       <div class="w-stack w-stack--lg">
-        <section class="w-card">
-          <div class="w-card__body w-stack">
-            <h2 class="w-card__title">Modules</h2>
+        <section w-card>
+          <div w-card-body class="w-stack">
+            <h2 w-card-title>Modules</h2>
             @for (module of progress.modules; track module.moduleId) {
               <div class="w-listitem" data-testid="guardian-module">
                 <div class="w-listitem__body">
@@ -37,9 +37,9 @@
           </div>
         </section>
 
-        <section class="w-card">
-          <div class="w-card__body w-stack">
-            <h2 class="w-card__title">Attendance history</h2>
+        <section w-card>
+          <div w-card-body class="w-stack">
+            <h2 w-card-title>Attendance history</h2>
             @for (item of progress.attendanceHistory; track item.sessionId) {
               <div class="w-listitem" data-testid="guardian-attendance">
                 <div class="w-listitem__body">
@@ -56,9 +56,9 @@
         </section>
 
         <div class="w-grid w-grid--2">
-          <section class="w-card" data-testid="guardian-quiz-outcomes">
-            <div class="w-card__body w-stack">
-              <h2 class="w-card__title">Approved quiz outcomes</h2>
+          <section w-card data-testid="guardian-quiz-outcomes">
+            <div w-card-body class="w-stack">
+              <h2 w-card-title>Approved quiz outcomes</h2>
               @for (quiz of progress.quizHistory; track quiz.attemptId) {
                 <div class="w-listitem">
                   <div class="w-listitem__body">
@@ -75,9 +75,9 @@
             </div>
           </section>
 
-          <section class="w-card" data-testid="guardian-competencies">
-            <div class="w-card__body w-stack">
-              <h2 class="w-card__title">Leadership competencies</h2>
+          <section w-card data-testid="guardian-competencies">
+            <div w-card-body class="w-stack">
+              <h2 w-card-title>Leadership competencies</h2>
               @for (competency of progress.competencies; track competency.competencyId) {
                 <div class="w-listitem">
                   <div class="w-listitem__body">
@@ -95,9 +95,9 @@
         </div>
 
         <div class="w-grid w-grid--2">
-          <section class="w-card" data-testid="guardian-earned-badges">
-            <div class="w-card__body w-stack">
-              <h2 class="w-card__title">Earned badges</h2>
+          <section w-card data-testid="guardian-earned-badges">
+            <div w-card-body class="w-stack">
+              <h2 w-card-title>Earned badges</h2>
               @for (badge of progress.earnedBadges; track badge.badgeId) {
                 <p><span aria-hidden="true">★</span> {{ badge.name }}</p>
               } @empty {
@@ -105,9 +105,9 @@
               }
             </div>
           </section>
-          <section class="w-card" data-testid="guardian-locked-badges">
-            <div class="w-card__body w-stack">
-              <h2 class="w-card__title">Still to unlock</h2>
+          <section w-card data-testid="guardian-locked-badges">
+            <div w-card-body class="w-stack">
+              <h2 w-card-title>Still to unlock</h2>
               @for (badge of progress.lockedBadges; track badge.badgeId) {
                 <p><span aria-hidden="true">○</span> {{ badge.name }}</p>
               } @empty {
@@ -117,9 +117,9 @@
           </section>
         </div>
 
-        <section class="w-card" data-testid="guardian-upcoming-sessions">
-          <div class="w-card__body w-stack">
-            <h2 class="w-card__title">Upcoming schedule</h2>
+        <section w-card data-testid="guardian-upcoming-sessions">
+          <div w-card-body class="w-stack">
+            <h2 w-card-title>Upcoming schedule</h2>
             @for (session of progress.upcomingSessions; track session.sessionId) {
               <p>
                 <strong>{{ session.title }}</strong> ·
@@ -131,9 +131,9 @@
           </div>
         </section>
 
-        <section class="w-card" data-testid="guardian-shared-checkins">
-          <div class="w-card__body w-stack">
-            <h2 class="w-card__title">Shared mentor updates</h2>
+        <section w-card data-testid="guardian-shared-checkins">
+          <div w-card-body class="w-stack">
+            <h2 w-card-title>Shared mentor updates</h2>
             @for (checkIn of progress.sharedCheckIns; track checkIn.checkInId) {
               <article class="w-stack w-stack--sm">
                 <strong>{{ checkIn.date | date: 'MMM d, y' }} · {{ checkIn.type }}</strong>

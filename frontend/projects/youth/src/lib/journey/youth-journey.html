@@ -17,8 +17,8 @@
     }
 
     @if (journey(); as view) {
-      <section class="w-card w-card--ink">
-        <div class="w-card__body w-stack">
+      <section w-card variant="ink">
+        <div w-card-body class="w-stack">
           <div class="w-eyebrow">Overall progress</div>
           <h2>{{ completedModules() }} of {{ view.modules.length }} modules complete</h2>
           @if (currentModule(); as current) {
@@ -41,8 +41,8 @@
         </div>
       </section>
 
-      <section class="w-card">
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-body class="w-stack">
           <h2>Your roadmap</h2>
           @if (view.modules.length === 0) {
             <div class="w-empty">
@@ -60,8 +60,8 @@
                   [class.is-current]="module.current"
                   [attr.data-testid]="module.current ? 'current-module' : 'journey-module'"
                 >
-                  <div class="w-card w-card--greige">
-                    <div class="w-card__body w-stack">
+                  <div w-card variant="greige">
+                    <div w-card-body class="w-stack">
                       <div class="w-cluster w-cluster--between">
                         <h3>{{ module.name }}</h3>
                         <span
@@ -92,8 +92,8 @@
         </div>
       </section>
 
-      <section class="w-card">
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-body class="w-stack">
           <div class="w-cluster w-cluster--between">
             <h2>Badge collection</h2>
             <span class="w-badge"
@@ -102,16 +102,16 @@
           </div>
           <div class="w-grid w-grid--3">
             @for (badge of view.earned; track badge.badgeId) {
-              <div class="w-card w-card--greige">
-                <div class="w-card__body">
+              <div w-card variant="greige">
+                <div w-card-body>
                   <strong>{{ badge.name }}</strong>
                   <p class="w-muted">Earned</p>
                 </div>
               </div>
             }
             @for (badge of view.locked; track badge.badgeId) {
-              <div class="w-card w-card--greige">
-                <div class="w-card__body">
+              <div w-card variant="greige">
+                <div w-card-body>
                   <strong>{{ badge.name }}</strong>
                   <p class="w-muted">{{ badge.progressLabel }}</p>
                 </div>

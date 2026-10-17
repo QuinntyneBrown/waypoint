@@ -15,9 +15,9 @@
       <p class="w-empty__text" role="alert">{{ error }}</p>
     </section>
   } @else if (receipt(); as saved) {
-    <section class="w-card">
-      <div class="w-card__body w-stack">
-        <h2 class="w-card__title">Consent recorded</h2>
+    <section w-card>
+      <div w-card-body class="w-stack">
+        <h2 w-card-title>Consent recorded</h2>
         <p>
           Thank you. The youth’s access updates automatically, and a copy has been sent to the
           guardian email.
@@ -32,8 +32,8 @@
       </div>
     </section>
   } @else if (request(); as consentRequest) {
-    <section class="w-card">
-      <form class="w-card__body w-stack" [formGroup]="form" (ngSubmit)="submit()">
+    <section w-card>
+      <form w-card-body class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
         <div w-alert variant="info">
           <strong>Youth:</strong> {{ consentRequest.youthName }}<br />
           <span>
@@ -42,8 +42,8 @@
           </span>
         </div>
 
-        <div class="w-card w-card--subtle">
-          <div class="w-card__body">
+        <div w-card>
+          <div w-card-body>
             <strong>Participation statement</strong>
             <p>{{ consentRequest.consentStatement }}</p>
             @if (consentRequest.contactEmail) {
@@ -74,7 +74,7 @@
           <span>I give permission for this youth to participate in Waypoint.</span>
         </label>
 
-        <h2 class="w-card__title">Optional media choices</h2>
+        <h2 w-card-title>Optional media choices</h2>
         @if (consentRequest.requireMediaConsent) {
           <p w-alert variant="info">
             Organization policy: youth media requires recorded guardian permission. Participation

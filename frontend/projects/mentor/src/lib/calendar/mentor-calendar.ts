@@ -20,6 +20,10 @@ import {
   WCheckbox,
   WCheckboxBox,
   WAlert,
+  WCard,
+  WCardBody,
+  WCardHeader,
+  WCardTitle,
 } from '@waypoint/components';
 
 type CalendarView = 'month' | 'week' | 'agenda';
@@ -40,6 +44,10 @@ type CalendarView = 'month' | 'week' | 'agenda';
     WCheckbox,
     WCheckboxBox,
     WAlert,
+    WCard,
+    WCardBody,
+    WCardHeader,
+    WCardTitle,
   ],
   templateUrl: './mentor-calendar.html',
   styles: `

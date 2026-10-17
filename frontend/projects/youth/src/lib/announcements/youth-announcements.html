@@ -25,10 +25,10 @@
     } @else {
       <div class="w-stack">
         @for (item of items(); track item.id) {
-          <div class="w-card" [class.w-card--greige]="!item.read">
-            <div class="w-card__body">
+          <div w-card [variant]="!item.read ? 'greige' : ''">
+            <div w-card-body>
               <div class="w-cluster w-cluster--between">
-                <h3 class="w-card__title">{{ item.title }}</h3>
+                <h3 w-card-title>{{ item.title }}</h3>
                 @if (!item.read) {
                   <span class="w-badge w-badge--info w-badge--dot">New</span>
                 }

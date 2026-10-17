@@ -32,9 +32,9 @@
       </div>
 
       <div class="review-layout">
-        <section class="w-card" data-testid="submitted-copy">
-          <div class="w-card__header"><h2 class="w-card__title">Submitted work</h2></div>
-          <div class="w-card__body w-stack">
+        <section w-card data-testid="submitted-copy">
+          <div w-card-header><h2 w-card-title>Submitted work</h2></div>
+          <div w-card-body class="w-stack">
             <p>{{ item.taskDescription }}</p>
             @if (item.bodyText) {
               <div class="submitted-body">{{ item.bodyText }}</div>
@@ -60,9 +60,9 @@
           </div>
         </section>
 
-        <section class="w-card">
-          <div class="w-card__header"><h2 class="w-card__title">Rubric and outcome</h2></div>
-          <div class="w-card__body w-stack">
+        <section w-card>
+          <div w-card-header><h2 w-card-title>Rubric and outcome</h2></div>
+          <div w-card-body class="w-stack">
             @for (criterion of item.rubric; track criterion.criterionId) {
               <div class="rubric-row">
                 <label w-label [for]="'score-' + criterion.criterionId">
@@ -80,9 +80,7 @@
                 />
               </div>
             }
-            <p class="w-card__title" data-testid="rubric-total">
-              {{ total() }} / {{ item.totalPossible }}
-            </p>
+            <p w-card-title data-testid="rubric-total">{{ total() }} / {{ item.totalPossible }}</p>
             <div w-form-field>
               <label w-label for="mentor-feedback">Feedback for the youth</label>
               <textarea

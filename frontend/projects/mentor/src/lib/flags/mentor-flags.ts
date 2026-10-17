@@ -20,6 +20,10 @@ import {
   WTextarea,
   WTextField,
   WAlert,
+  WCard,
+  WCardHeader,
+  WCardTitle,
+  WCardBody,
 } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-007, L2-ENGAGE-007, L2-AUTH-010
@@ -38,6 +42,10 @@ import {
     WTextarea,
     WSelect,
     WAlert,
+    WCard,
+    WCardHeader,
+    WCardTitle,
+    WCardBody,
   ],
   templateUrl: './mentor-flags.html',
   styles: `

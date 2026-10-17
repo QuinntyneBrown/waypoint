@@ -20,14 +20,14 @@
     }
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
 
-    <section class="w-card w-mb-6" aria-labelledby="raise-flag-heading">
-      <div class="w-card__header">
+    <section w-card class="w-mb-6" aria-labelledby="raise-flag-heading">
+      <div w-card-header>
         <div>
-          <h2 class="w-card__title" id="raise-flag-heading">Raise a manual flag</h2>
+          <h2 w-card-title id="raise-flag-heading">Raise a manual flag</h2>
           <p class="w-muted">Use this when a concern is not captured by an automatic signal.</p>
         </div>
       </div>
-      <div class="w-card__body raise-grid">
+      <div w-card-body class="raise-grid">
         <div w-form-field class="w-mb-0">
           <label w-label for="flag-youth">Youth</label>
           <select
@@ -78,20 +78,20 @@
       @if (flags(); as activeFlags) {
         <div class="flag-list">
           @for (flag of activeFlags; track flag.flagId) {
-            <article class="w-card flag-card" data-testid="at-risk-flag">
-              <div class="w-card__header">
+            <article w-card class="flag-card" data-testid="at-risk-flag">
+              <div w-card-header>
                 <div>
                   <p class="w-eyebrow">
                     {{ flag.automatic ? 'Automatic signal' : 'Mentor-raised concern' }}
                   </p>
-                  <h3 class="w-card__title">{{ flag.displayName }}</h3>
+                  <h3 w-card-title>{{ flag.displayName }}</h3>
                   <p class="w-muted">
                     Flagged by {{ flag.flaggedByName }} · {{ flag.flaggedAt | date: 'medium' }}
                   </p>
                 </div>
                 <span class="w-badge w-badge--error">At risk</span>
               </div>
-              <div class="w-card__body w-stack">
+              <div w-card-body class="w-stack">
                 <ul class="reason-list" aria-label="Reasons">
                   @for (reason of flag.reasons; track reason) {
                     <li>{{ reason }}</li>
@@ -185,7 +185,7 @@
               }
             </article>
           } @empty {
-            <div class="w-card w-empty">
+            <div w-card class="w-empty">
               <div class="w-empty__icon"><w-icon name="flag" /></div>
               <h3 class="w-empty__title">No active flags</h3>
               <p class="w-empty__text">No assigned youth currently need at-risk follow-up.</p>

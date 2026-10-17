@@ -16,6 +16,8 @@ import {
   WTextarea,
   WTextField,
   WAlert,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 import {
@@ -51,6 +53,8 @@ type ProgressionAuthoringDraft =
     WTextField,
     WTextarea,
     WAlert,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './progression-builder.html',
   styleUrl: './curriculum-admin.css',

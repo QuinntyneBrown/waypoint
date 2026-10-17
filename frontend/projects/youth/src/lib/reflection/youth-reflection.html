@@ -26,8 +26,8 @@
       </div>
 
       @if (view.prompt) {
-        <section class="w-card w-card--greige">
-          <div class="w-card__body">
+        <section w-card variant="greige">
+          <div w-card-body>
             <div class="w-eyebrow">Think about it</div>
             <p class="w-scripture">{{ view.prompt }}</p>
           </div>
@@ -35,8 +35,8 @@
       }
 
       <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
-        <fieldset class="w-card">
-          <div class="w-card__body w-stack">
+        <fieldset w-card>
+          <div w-card-body class="w-stack">
             <legend><strong>How are you feeling?</strong></legend>
             <div class="mood-options">
               @for (mood of ['Hopeful', 'Thoughtful', 'Unsure', 'Challenged']; track mood) {
@@ -83,8 +83,8 @@
           <p w-help>Optional</p>
         </div>
 
-        <section class="w-card w-card--greige">
-          <div class="w-card__body w-stack">
+        <section w-card variant="greige">
+          <div w-card-body class="w-stack">
             <label class="share-option">
               <input type="checkbox" formControlName="shareWithMentor" />
               <strong>Share with my mentor</strong>

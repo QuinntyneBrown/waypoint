@@ -13,6 +13,9 @@ import {
   WCheckbox,
   WCheckboxBox,
   WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
 } from '@waypoint/components';
 import { GuardianContextService } from '../guardian-context.service';
 
@@ -32,6 +35,9 @@ import { GuardianContextService } from '../guardian-context.service';
     WCheckbox,
     WCheckboxBox,
     WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
   ],
   templateUrl: './guardian-consent.html',
 })

@@ -26,9 +26,9 @@
       </div>
 
       @if (currentQuestion(); as question) {
-        <section class="w-card">
-          <div class="w-card__body w-stack">
-            <h2 class="w-card__title">{{ question.text }}</h2>
+        <section w-card>
+          <div w-card-body class="w-stack">
+            <h2 w-card-title>{{ question.text }}</h2>
             <div class="w-stack">
               @if (question.type === 'ShortAnswer') {
                 <div w-form-field>

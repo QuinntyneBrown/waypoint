@@ -3,13 +3,24 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthHomeView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WIcon, WShell, WAlert } from '@waypoint/components';
+import { WButton, WIcon, WShell, WAlert, WCard, WCardBody, WCardTitle } from '@waypoint/components';
 
 // Traces to: L2-LEARN-001..010, L2-ENGAGE-005, L2-MENTOR-008, L2-PLATFORM-011
 @Component({
   selector: 'w-youth-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DatePipe, DecimalPipe, WIcon, WButton, WAlert],
+  imports: [
+    WShell,
+    RouterLink,
+    DatePipe,
+    DecimalPipe,
+    WIcon,
+    WButton,
+    WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
+  ],
   templateUrl: './youth-home.html',
   styles: `
     .home-hero {

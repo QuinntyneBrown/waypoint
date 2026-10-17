@@ -11,6 +11,9 @@ import {
   WShell,
   WTextField,
   WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
 } from '@waypoint/components';
 
 type QuizAnswers = Record<string, number[] | string>;
@@ -19,7 +22,18 @@ type QuizAnswers = Record<string, number[] | string>;
 @Component({
   selector: 'w-youth-quiz-attempt',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WButton, WFormField, WLabel, WHelp, WTextField, WAlert],
+  imports: [
+    WShell,
+    WButton,
+    WFormField,
+    WLabel,
+    WHelp,
+    WTextField,
+    WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
+  ],
   templateUrl: './youth-quiz-attempt.html',
 })
 export class YouthQuizAttemptPage {

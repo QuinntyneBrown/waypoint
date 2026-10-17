@@ -30,8 +30,8 @@
       </p>
     }
 
-    <section class="w-card w-mb-5">
-      <div class="w-card__body toolbar">
+    <section w-card class="w-mb-5">
+      <div w-card-body class="toolbar">
         <div w-form-field class="track-picker">
           <label w-label for="curriculum-track">Curriculum track</label>
           <select
@@ -70,8 +70,8 @@
     @if (loading()) {
       <p class="w-muted" role="status">Loading curriculum workspace…</p>
     } @else if (workspace(); as track) {
-      <section class="w-card w-mb-5" aria-labelledby="module-form-heading">
-        <form class="w-card__body module-form" [formGroup]="moduleForm" (ngSubmit)="saveModule()">
+      <section w-card class="w-mb-5" aria-labelledby="module-form-heading">
+        <form w-card-body class="module-form" [formGroup]="moduleForm" (ngSubmit)="saveModule()">
           <div class="module-form__heading">
             <h2 id="module-form-heading">
               {{ editingModuleId() ? 'Edit module' : 'Add a module' }}
@@ -116,11 +116,12 @@
       <div class="module-list">
         @for (module of track.modules; track module.id; let moduleIndex = $index) {
           <article
-            class="w-card curriculum-module"
+            w-card
+            class="curriculum-module"
             data-testid="curriculum-module"
             [attr.data-module-id]="module.id"
           >
-            <div class="w-card__body w-stack">
+            <div w-card-body class="w-stack">
               <header class="item-head">
                 <div>
                   <p class="w-eyebrow">Module {{ moduleIndex + 1 }}</p>
@@ -413,8 +414,8 @@
       </div>
 
       @if (selectedQuiz(); as quiz) {
-        <section class="w-card quiz-editor" data-testid="quiz-editor">
-          <div class="w-card__body w-stack">
+        <section w-card class="quiz-editor" data-testid="quiz-editor">
+          <div w-card-body class="w-stack">
             <header class="item-head">
               <div>
                 <p class="w-eyebrow">Assessment editor</p>

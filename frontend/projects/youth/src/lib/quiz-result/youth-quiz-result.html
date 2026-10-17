@@ -19,15 +19,15 @@
       </div>
 
       @if (view.status === 'PendingApproval') {
-        <section class="w-card w-card--greige">
-          <div class="w-card__body w-stack">
-            <h2 class="w-card__title">Waiting for mentor approval</h2>
+        <section w-card variant="greige">
+          <div w-card-body class="w-stack">
+            <h2 w-card-title>Waiting for mentor approval</h2>
             <p>Your answers are submitted and locked. Your score will appear after review.</p>
           </div>
         </section>
       } @else if (view.status === 'Approved') {
-        <section class="w-card" [class.w-card--greige]="!view.passed">
-          <div class="w-card__body w-stack">
+        <section w-card [variant]="!view.passed ? 'greige' : ''">
+          <div w-card-body class="w-stack">
             <div class="w-eyebrow">Approved score</div>
             <p class="w-page__title">{{ view.score }}%</p>
             <p>
@@ -38,10 +38,10 @@
         </section>
 
         @if (view.earnedBadge; as badge) {
-          <section class="w-card w-card--greige">
-            <div class="w-card__body w-stack">
+          <section w-card variant="greige">
+            <div w-card-body class="w-stack">
               <div class="w-eyebrow">Badge earned</div>
-              <h2 class="w-card__title">{{ badge.name }}</h2>
+              <h2 w-card-title>{{ badge.name }}</h2>
               @if (badge.description) {
                 <p>{{ badge.description }}</p>
               }
@@ -53,9 +53,9 @@
           <section class="w-stack">
             <h2>Question review</h2>
             @for (question of view.review; track question.questionId) {
-              <article class="w-card">
-                <div class="w-card__body w-stack">
-                  <h3 class="w-card__title">{{ question.text }}</h3>
+              <article w-card>
+                <div w-card-body class="w-stack">
+                  <h3 w-card-title>{{ question.text }}</h3>
                   <p class="w-badge" [class.w-badge--success]="question.correct">
                     {{ question.correct ? 'Correct' : 'Needs review' }}
                   </p>

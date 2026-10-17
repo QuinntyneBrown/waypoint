@@ -16,9 +16,9 @@
     @if (loading()) {
       <p class="w-muted">Loading…</p>
     } @else if (today(); as session) {
-      <div class="w-card">
-        <div class="w-card__body w-stack">
-          <h2 class="w-card__title">{{ session.title }}</h2>
+      <div w-card>
+        <div w-card-body class="w-stack">
+          <h2 w-card-title>{{ session.title }}</h2>
           <p class="w-muted">
             {{ session.startsAt | date: 'EEEE, MMM d · h:mm a' }}
             @if (session.durationMinutes) {

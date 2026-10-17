@@ -29,9 +29,9 @@
     }
 
     <div class="privacy-layout">
-      <section class="w-card">
-        <div class="w-card__body">
-          <h2 class="w-card__title">Requests</h2>
+      <section w-card>
+        <div w-card-body>
+          <h2 w-card-title>Requests</h2>
           @if (loading()) {
             <p class="w-muted" role="status">Loading privacy requests…</p>
           } @else {
@@ -39,7 +39,7 @@
               <article class="privacy-row" data-testid="privacy-request">
                 <div class="w-cluster w-cluster--between">
                   <div>
-                    <h3 class="w-card__title">{{ item.actionType }}</h3>
+                    <h3 w-card-title>{{ item.actionType }}</h3>
                     <div class="privacy-meta w-muted w-text-sm">
                       <span>{{ item.subjectName }} · {{ item.subjectEmail }}</span>
                       <span>{{ item.reference }} · {{ item.requestedAt | date: 'medium' }}</span>
@@ -110,10 +110,10 @@
         </div>
       </section>
 
-      <aside class="w-card">
-        <div class="w-card__body">
+      <aside w-card>
+        <div w-card-body>
           @if (selected(); as item) {
-            <h2 class="w-card__title">Fulfil {{ item.reference }}</h2>
+            <h2 w-card-title>Fulfil {{ item.reference }}</h2>
             <p class="w-muted w-mb-4">
               Apply only verified corrections. Removal and consent workflows are completed by the
               server while preserving required de-identified records.

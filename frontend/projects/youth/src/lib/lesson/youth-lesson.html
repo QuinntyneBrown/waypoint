@@ -25,8 +25,8 @@
         </div>
       </div>
 
-      <div class="w-card">
-        <div class="w-card__body w-cluster w-cluster--between">
+      <div w-card>
+        <div w-card-body class="w-cluster w-cluster--between">
           <div class="w-cluster" aria-label="Reading text size">
             <button
               w-button
@@ -85,8 +85,8 @@
         [class.lesson-copy--large]="textSize() === 'large'"
       >
         @if (view.scriptureReference) {
-          <section class="w-card w-card--greige">
-            <div class="w-card__body">
+          <section w-card variant="greige">
+            <div w-card-body>
               <div class="w-eyebrow">Scripture</div>
               <p class="w-scripture">{{ view.scriptureReference }}</p>
             </div>
@@ -106,8 +106,8 @@
         }
 
         @for (media of view.media; track media.mediaId) {
-          <section class="w-card">
-            <div class="w-card__body w-stack">
+          <section w-card>
+            <div w-card-body class="w-stack">
               <h2>Optional media</h2>
               @if (mediaFailures().has(media.mediaId)) {
                 <div w-alert variant="warning">
@@ -140,8 +140,8 @@
         }
 
         @if (view.reflectionPrompts) {
-          <section class="w-card w-card--greige">
-            <div class="w-card__body">
+          <section w-card variant="greige">
+            <div w-card-body>
               <h2>Think about it</h2>
               <p>{{ view.reflectionPrompts }}</p>
             </div>

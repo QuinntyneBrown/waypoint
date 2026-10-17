@@ -62,12 +62,13 @@
       @for (tab of tabs; track tab.key) {
         @if (activeTab() === tab.key) {
           <section
-            class="w-card w-mt-4"
+            w-card
+            class="w-mt-4"
             role="tabpanel"
             [id]="'person-panel-' + tab.key"
             [attr.aria-labelledby]="'person-tab-' + tab.key"
           >
-            <div class="w-card__body">
+            <div w-card-body>
               @switch (tab.key) {
                 @case ('profile') {
                   <h2>Profile</h2>
@@ -235,8 +236,8 @@
                   </div>
 
                   @if (person.status !== 'Removed') {
-                    <section class="w-card w-mb-5" aria-labelledby="account-access-heading">
-                      <div class="w-card__body w-stack">
+                    <section w-card class="w-mb-5" aria-labelledby="account-access-heading">
+                      <div w-card-body class="w-stack">
                         <h3 id="account-access-heading">Access and role</h3>
                         <div w-form-field>
                           <label w-label for="person-role">Account role</label>
@@ -275,8 +276,8 @@
                       </div>
                     </section>
 
-                    <section class="w-card danger-zone" aria-labelledby="lifecycle-heading">
-                      <div class="w-card__body w-stack">
+                    <section w-card class="danger-zone" aria-labelledby="lifecycle-heading">
+                      <div w-card-body class="w-stack">
                         <h3 id="lifecycle-heading">Account lifecycle</h3>
                         @if (person.status === 'Deactivated') {
                           <p>

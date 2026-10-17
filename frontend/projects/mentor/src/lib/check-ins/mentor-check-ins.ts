@@ -16,6 +16,10 @@ import {
   WCheckbox,
   WCheckboxBox,
   WAlert,
+  WCard,
+  WCardHeader,
+  WCardTitle,
+  WCardBody,
 } from '@waypoint/components';
 
 type CheckInType = '1:1' | 'call' | 'session';
@@ -38,6 +42,10 @@ type CheckInType = '1:1' | 'call' | 'session';
     WCheckbox,
     WCheckboxBox,
     WAlert,
+    WCard,
+    WCardHeader,
+    WCardTitle,
+    WCardBody,
   ],
   templateUrl: './mentor-check-ins.html',
   styles: `

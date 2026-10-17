@@ -33,6 +33,8 @@ import {
   WTextarea,
   WTextField,
   WAlert,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -58,6 +60,8 @@ type MessageMode = 'thread' | 'broadcast';
     WTextarea,
     WSelect,
     WAlert,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './mentor-messages.html',
   styles: `

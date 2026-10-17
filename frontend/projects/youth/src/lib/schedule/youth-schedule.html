@@ -19,8 +19,8 @@
 
     @if (sessions(); as upcoming) {
       @if (upcoming.length === 0) {
-        <section class="w-card w-empty">
-          <div class="w-card__body">
+        <section w-card class="w-empty">
+          <div w-card-body>
             <h2 class="w-empty__title">No upcoming sessions yet</h2>
             <p class="w-empty__text">New cohort sessions will appear here when they are planned.</p>
           </div>
@@ -28,12 +28,12 @@
       } @else {
         <div class="schedule-list">
           @for (session of upcoming; track session.sessionId) {
-            <article class="w-card" data-testid="youth-session">
-              <div class="w-card__body session-card__layout">
+            <article w-card data-testid="youth-session">
+              <div w-card-body class="session-card__layout">
                 <div class="w-stack">
                   <div>
                     <div class="w-eyebrow">Upcoming session</div>
-                    <h2 class="w-card__title">{{ session.title }}</h2>
+                    <h2 w-card-title>{{ session.title }}</h2>
                   </div>
                   <ul class="session-meta w-stack">
                     <li>

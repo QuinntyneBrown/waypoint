@@ -25,6 +25,10 @@ import {
   WRadio,
   WRadioBox,
   WAlert,
+  WCard,
+  WCardHeader,
+  WCardTitle,
+  WCardBody,
 } from '@waypoint/components';
 
 type TargetMode = 'individual' | 'cohort';
@@ -50,6 +54,10 @@ type TargetMode = 'individual' | 'cohort';
     WRadio,
     WRadioBox,
     WAlert,
+    WCard,
+    WCardHeader,
+    WCardTitle,
+    WCardBody,
   ],
   templateUrl: './mentor-assign-work.html',
   styles: `

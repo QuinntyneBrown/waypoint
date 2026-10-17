@@ -12,6 +12,10 @@ import {
   WShell,
   WTextField,
   WAlert,
+  WCard,
+  WCardHeader,
+  WCardTitle,
+  WCardBody,
 } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-004, L2-LEARN-005
@@ -29,6 +33,10 @@ import {
     WHelp,
     WTextField,
     WAlert,
+    WCard,
+    WCardHeader,
+    WCardTitle,
+    WCardBody,
   ],
   templateUrl: './mentor-quiz-review.html',
   styles: `

@@ -18,6 +18,8 @@ import {
   WTextField,
   WAlert,
   WAlertTitle,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import { finalize } from 'rxjs';
 
@@ -42,6 +44,8 @@ import { finalize } from 'rxjs';
     WSelect,
     WAlert,
     WAlertTitle,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './cohorts-list.html',
   styles: `

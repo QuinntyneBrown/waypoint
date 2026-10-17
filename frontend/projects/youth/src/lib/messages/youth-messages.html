@@ -25,8 +25,8 @@
 
     @if (thread(); as view) {
       @if (!view.mentorId) {
-        <section class="w-card w-empty">
-          <div class="w-card__body">
+        <section w-card class="w-empty">
+          <div w-card-body>
             <h2 class="w-empty__title">Your mentor hasn’t been assigned yet</h2>
             <p class="w-empty__text">This conversation will open when your placement is ready.</p>
           </div>
@@ -39,7 +39,8 @@
           </p>
         }
         <section
-          class="w-card thread-card"
+          w-card
+          class="thread-card"
           [attr.aria-label]="'Conversation with ' + view.mentorName"
         >
           <div

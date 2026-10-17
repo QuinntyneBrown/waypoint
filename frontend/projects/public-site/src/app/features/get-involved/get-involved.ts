@@ -15,6 +15,9 @@ import {
   WCheckbox,
   WCheckboxBox,
   WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -39,6 +42,9 @@ function isEmail(value: string): boolean {
     WCheckbox,
     WCheckboxBox,
     WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
   ],
   templateUrl: './get-involved.html',
 })

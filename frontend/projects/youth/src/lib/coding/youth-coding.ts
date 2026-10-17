@@ -13,6 +13,8 @@ import {
   WShell,
   WTextarea,
   WAlert,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-008
@@ -29,6 +31,8 @@ import {
     WErrorText,
     WTextarea,
     WAlert,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './youth-coding.html',
   styles: `

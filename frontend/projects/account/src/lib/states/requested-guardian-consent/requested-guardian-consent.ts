@@ -8,6 +8,9 @@ import {
   WCheckbox,
   WCheckboxBox,
   WAlert,
+  WCard,
+  WCardBody,
+  WCardTitle,
 } from '@waypoint/components';
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
@@ -37,6 +40,9 @@ import {
     WCheckbox,
     WCheckboxBox,
     WAlert,
+    WCard,
+    WCardBody,
+    WCardTitle,
   ],
   templateUrl: './requested-guardian-consent.html',
 })

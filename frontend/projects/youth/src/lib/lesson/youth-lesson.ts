@@ -10,13 +10,13 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, LearningService, LessonReadingState, YouthLesson } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WShell, WAlert } from '@waypoint/components';
+import { WButton, WShell, WAlert, WCard, WCardBody } from '@waypoint/components';
 
 // Traces to: L2-LEARN-002
 @Component({
   selector: 'w-youth-lesson',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, WButton, WAlert],
+  imports: [WShell, RouterLink, WButton, WAlert, WCard, WCardBody],
   templateUrl: './youth-lesson.html',
   styles: `
     .lesson-copy {

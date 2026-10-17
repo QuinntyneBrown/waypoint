@@ -27,6 +27,8 @@ import {
   WTextarea,
   WTextField,
   WAlert,
+  WCard,
+  WCardBody,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 import {
@@ -120,6 +122,8 @@ interface CurriculumAuthoringDraft {
     WTextarea,
     WSelect,
     WAlert,
+    WCard,
+    WCardBody,
   ],
   templateUrl: './curriculum-builder.html',
   styleUrl: './curriculum-builder.css',

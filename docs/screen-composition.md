@@ -16,7 +16,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Icon | 111 | in library |
 | Button | 109 | in library |
 | Shell | 101 | in library |
-| Card | 90 | to build (DECISIONS #23) |
+| Card | 90 | in library |
 | Badge | 72 | to build (DECISIONS #23) |
 | Avatar | 60 | in library |
 | Form field | 60 | in library |

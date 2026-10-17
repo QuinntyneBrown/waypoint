@@ -52,8 +52,8 @@
       </div>
     }
 
-    <section class="w-card" aria-labelledby="report-filters-heading">
-      <div class="w-card__body w-stack">
+    <section w-card aria-labelledby="report-filters-heading">
+      <div w-card-body class="w-stack">
         <div>
           <h2 id="report-filters-heading">Report filters</h2>
           <p class="w-muted">Every overview and staff metric uses this exact scope.</p>
@@ -167,40 +167,40 @@
           </div>
         } @else {
           <div class="report-kpis">
-            <article class="w-card w-statcard">
+            <article w-card class="w-statcard">
               <div class="w-statcard__label">Active youth</div>
               <div class="w-statcard__value">{{ hub()!.kpis.activeYouth }}</div>
             </article>
-            <article class="w-card w-statcard">
+            <article w-card class="w-statcard">
               <div class="w-statcard__label">Average completion</div>
               <div class="w-statcard__value">
                 {{ hub()!.kpis.avgCompletion | percent: '1.0-0' }}
               </div>
             </article>
-            <article class="w-card w-statcard">
+            <article w-card class="w-statcard">
               <div class="w-statcard__label">Attendance</div>
               <div class="w-statcard__value">
                 {{ hub()!.kpis.attendanceRate | percent: '1.0-0' }}
               </div>
             </article>
-            <article class="w-card w-statcard">
+            <article w-card class="w-statcard">
               <div class="w-statcard__label">Retention</div>
               <div class="w-statcard__value">
                 {{ hub()!.kpis.retentionRate | percent: '1.0-0' }}
               </div>
             </article>
-            <article class="w-card w-statcard">
+            <article w-card class="w-statcard">
               <div class="w-statcard__label">Cohorts</div>
               <div class="w-statcard__value">{{ hub()!.kpis.cohorts }}</div>
             </article>
-            <article class="w-card w-statcard">
+            <article w-card class="w-statcard">
               <div class="w-statcard__label">Active mentors</div>
               <div class="w-statcard__value">{{ hub()!.kpis.activeMentors }}</div>
             </article>
           </div>
           <div class="report-grid">
-            <section class="w-card report-card" aria-labelledby="attendance-chart-heading">
-              <div class="w-card__body w-stack">
+            <section w-card class="report-card" aria-labelledby="attendance-chart-heading">
+              <div w-card-body class="w-stack">
                 <h2 id="attendance-chart-heading">Attendance breakdown</h2>
                 <div class="report-stat-line">
                   <span>Present {{ hub()!.attendance.present }}</span>
@@ -211,11 +211,12 @@
               </div>
             </section>
             <section
-              class="w-card report-card"
+              w-card
+              class="report-card"
               style="grid-column: span 2"
               aria-labelledby="cohort-chart-heading"
             >
-              <div class="w-card__body w-stack">
+              <div w-card-body class="w-stack">
                 <h2 id="cohort-chart-heading">Cohort completion</h2>
                 @for (cohort of hub()!.cohorts; track cohort.cohortId) {
                   <div class="report-chart-row">
@@ -237,8 +238,8 @@
       </section>
     } @else if (view() === 'youth') {
       <section class="w-stack" role="tabpanel">
-        <form class="w-card report-selector" [formGroup]="youthForm" (ngSubmit)="generateYouth()">
-          <div class="w-card__body report-grid">
+        <form w-card class="report-selector" [formGroup]="youthForm" (ngSubmit)="generateYouth()">
+          <div w-card-body class="report-grid">
             <div w-form-field>
               <label w-label for="report-youth">Youth</label>
               <select w-select id="report-youth" formControlName="youthId">
@@ -260,8 +261,8 @@
               <p class="w-muted">{{ report.cohortName }} · Mentor {{ report.mentorName }}</p>
             </div>
             <div class="report-rings">
-              <div class="w-card report-card">
-                <div class="w-card__body w-stack w-stack--sm">
+              <div w-card class="report-card">
+                <div w-card-body class="w-stack w-stack--sm">
                   <div class="w-ring w-ring--lg" [style.--val]="report.completionRate * 100">
                     <span class="w-ring__label">{{
                       report.completionRate | percent: '1.0-0'
@@ -270,16 +271,16 @@
                   <span>Curriculum progress</span>
                 </div>
               </div>
-              <div class="w-card report-card">
-                <div class="w-card__body w-stack w-stack--sm">
+              <div w-card class="report-card">
+                <div w-card-body class="w-stack w-stack--sm">
                   <div class="w-ring w-ring--lg" [style.--val]="report.avgQuizScore">
                     <span class="w-ring__label">{{ report.avgQuizScore | number: '1.0-0' }}%</span>
                   </div>
                   <span>Average quiz score</span>
                 </div>
               </div>
-              <div class="w-card report-card">
-                <div class="w-card__body w-stack w-stack--sm">
+              <div w-card class="report-card">
+                <div w-card-body class="w-stack w-stack--sm">
                   <div class="w-ring w-ring--lg" [style.--val]="report.attendance.rate * 100">
                     <span class="w-ring__label">{{
                       report.attendance.rate | percent: '1.0-0'
@@ -290,8 +291,8 @@
               </div>
             </div>
             <div class="report-grid">
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Module completion</h3>
                   @for (module of report.modules; track module.moduleId) {
                     <div>
@@ -304,8 +305,8 @@
                   }
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Quiz scores</h3>
                   @for (quiz of report.quizScores; track $index) {
                     <div>
@@ -317,8 +318,8 @@
                   }
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Attendance</h3>
                   <div class="report-stat-line">
                     <span>Present {{ report.attendance.present }}</span
@@ -328,8 +329,8 @@
                   </div>
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Mentor-assessed competencies</h3>
                   @for (competency of report.competencies; track competency.competencyId) {
                     <div>
@@ -341,8 +342,8 @@
                   }
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Mentor notes summary</h3>
                   <strong>{{ checkInLabel(report.mentorNotes.checkIns) }}</strong>
                   @if (report.mentorNotes.latestAt) {
@@ -354,8 +355,8 @@
                   <p class="w-muted">Private note details are not included in this summary.</p>
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Badges</h3>
                   @for (badge of report.badgeAwards; track badge.badgeId) {
                     <div>
@@ -373,8 +374,8 @@
       </section>
     } @else if (view() === 'cohort') {
       <section class="w-stack" role="tabpanel">
-        <form class="w-card report-selector" [formGroup]="cohortForm" (ngSubmit)="generateCohort()">
-          <div class="w-card__body report-grid">
+        <form w-card class="report-selector" [formGroup]="cohortForm" (ngSubmit)="generateCohort()">
+          <div w-card-body class="report-grid">
             <div w-form-field>
               <label w-label for="cohort-report-selection">Cohort report selection</label
               ><select w-select id="cohort-report-selection" formControlName="cohortId">
@@ -408,22 +409,22 @@
               </p>
             </div>
             <div class="report-kpis">
-              <article class="w-card w-statcard">
+              <article w-card class="w-statcard">
                 <div class="w-statcard__label">Average completion</div>
                 <div class="w-statcard__value">{{ report.avgCompletion | percent: '1.0-0' }}</div>
               </article>
-              <article class="w-card w-statcard">
+              <article w-card class="w-statcard">
                 <div class="w-statcard__label">Attendance</div>
                 <div class="w-statcard__value">{{ report.attendanceRate | percent: '1.0-0' }}</div>
               </article>
-              <article class="w-card w-statcard">
+              <article w-card class="w-statcard">
                 <div class="w-statcard__label">Retention</div>
                 <div class="w-statcard__value">{{ report.retentionRate | percent: '1.0-0' }}</div>
               </article>
             </div>
             <div class="report-grid">
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Module completion</h3>
                   @for (module of report.modules; track module.moduleId) {
                     <div>
@@ -433,8 +434,8 @@
                   }
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Youth summary</h3>
                   @for (person of report.youth; track person.youthId) {
                     <div>
@@ -447,8 +448,8 @@
                   }
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Comparisons</h3>
                   @for (comparison of report.comparisons; track comparison.label) {
                     <div>
@@ -480,8 +481,8 @@
         } @else {
           <div class="report-grid">
             @for (mentor of hub()!.staff; track mentor.mentorId) {
-              <article class="w-card report-card" data-testid="staff-activity-row">
-                <div class="w-card__body w-stack">
+              <article w-card class="report-card" data-testid="staff-activity-row">
+                <div w-card-body class="w-stack">
                   <div>
                     <h3>{{ mentor.mentorName }}</h3>
                     <p class="w-muted">{{ mentor.email }}</p>

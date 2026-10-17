@@ -34,11 +34,12 @@
       <section class="stage-list" aria-label="Ordered progression stages">
         @for (stage of stages(); track stage.id; let stageIndex = $index) {
           <article
-            class="w-card admin-card"
+            w-card
+            class="admin-card"
             data-testid="progression-stage"
             [attr.data-stage-id]="stage.id"
           >
-            <div class="w-card__body w-stack">
+            <div w-card-body class="w-stack">
               <header class="card-head">
                 <div>
                   <p class="w-eyebrow">Stage {{ stageIndex + 1 }}</p>

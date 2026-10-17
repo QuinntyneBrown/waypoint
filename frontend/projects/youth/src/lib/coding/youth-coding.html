@@ -24,8 +24,8 @@
         </div>
       </div>
 
-      <section class="w-card w-card--greige">
-        <div class="w-card__body w-stack">
+      <section w-card variant="greige">
+        <div w-card-body class="w-stack">
           <div class="w-cluster w-cluster--between">
             <strong>Self-check progress</strong>
             <span class="w-badge" data-testid="coding-progress">{{ completionPercent() }}%</span>
@@ -73,8 +73,8 @@
             </button>
           }
           @if (currentStep(); as step) {
-            <section class="w-card">
-              <div class="w-card__body w-stack">
+            <section w-card>
+              <div w-card-body class="w-stack">
                 <h2>{{ step.title }}</h2>
                 <p>{{ step.instructions }}</p>
                 <h3>Code sample</h3>
@@ -127,8 +127,8 @@
           >View coding project submission</a
         >
       } @else {
-        <section class="w-card">
-          <form class="w-card__body w-stack" [formGroup]="submitForm" (ngSubmit)="submitProject()">
+        <section w-card>
+          <form w-card-body class="w-stack" [formGroup]="submitForm" (ngSubmit)="submitProject()">
             <div>
               <div class="w-eyebrow">Coding project</div>
               <h2>Send your project for mentor review</h2>
@@ -143,8 +143,8 @@
                 rows="4"
               ></textarea>
             </div>
-            <label class="w-card w-card--greige"
-              ><span class="w-card__body w-cluster"
+            <label w-card variant="greige"
+              ><span w-card-body class="w-cluster"
                 ><input type="checkbox" formControlName="attest" /><strong
                   >This is my own work.</strong
                 ></span

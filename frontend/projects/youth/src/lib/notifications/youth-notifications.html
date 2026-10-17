@@ -37,14 +37,16 @@
         @for (item of items(); track item.id) {
           @if (item.linkPath) {
             <a
-              class="w-card w-card--link notification-card"
-              [class.w-card--greige]="!item.read"
+              w-card
+              link
+              class="notification-card"
+              [variant]="item.read ? '' : 'greige'"
               [routerLink]="item.linkPath"
               data-testid="notification-item"
             >
-              <div class="w-card__body">
+              <div w-card-body>
                 <div class="w-cluster w-cluster--between">
-                  <h3 class="w-card__title">{{ item.title }}</h3>
+                  <h3 w-card-title>{{ item.title }}</h3>
                   @if (!item.read) {
                     <span class="w-badge w-badge--info w-badge--dot">New</span>
                   }
@@ -55,13 +57,14 @@
             </a>
           } @else {
             <article
-              class="w-card notification-card"
-              [class.w-card--greige]="!item.read"
+              w-card
+              [variant]="!item.read ? 'greige' : ''"
+              class="notification-card"
               data-testid="notification-item"
             >
-              <div class="w-card__body">
+              <div w-card-body>
                 <div class="w-cluster w-cluster--between">
-                  <h3 class="w-card__title">{{ item.title }}</h3>
+                  <h3 w-card-title>{{ item.title }}</h3>
                   @if (!item.read) {
                     <span class="w-badge w-badge--info w-badge--dot">New</span>
                   }
