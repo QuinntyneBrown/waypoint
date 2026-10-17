@@ -113,30 +113,30 @@
           <section class="w-card">
             <form class="w-card__body w-stack" [formGroup]="mediaForm" (ngSubmit)="saveMedia()">
               <h2 class="w-card__title">Media consent</h2>
-              <label class="w-check">
+              <label w-checkbox>
                 <input type="checkbox" formControlName="mediaConsent" />
-                <span class="w-check__box">
+                <span w-checkbox-box>
                   <w-icon name="check" />
                 </span>
                 <span>Allow media use</span>
               </label>
-              <label class="w-check">
+              <label w-checkbox>
                 <input type="checkbox" formControlName="mediaAllPhotosVideo" />
-                <span class="w-check__box">
+                <span w-checkbox-box>
                   <w-icon name="check" />
                 </span>
                 <span>All photos and video</span>
               </label>
-              <label class="w-check">
+              <label w-checkbox>
                 <input type="checkbox" formControlName="mediaGroupOnly" />
-                <span class="w-check__box">
+                <span w-checkbox-box>
                   <w-icon name="check" />
                 </span>
                 <span>Group photos only</span>
               </label>
-              <label class="w-check">
+              <label w-checkbox>
                 <input type="checkbox" formControlName="mediaFirstNameCaptions" />
-                <span class="w-check__box">
+                <span w-checkbox-box>
                   <w-icon name="check" />
                 </span>
                 <span>First-name captions</span>

@@ -20,6 +20,10 @@ import {
   WShell,
   WTextarea,
   WTextField,
+  WCheckbox,
+  WCheckboxBox,
+  WRadio,
+  WRadioBox,
 } from '@waypoint/components';
 
 type TargetMode = 'individual' | 'cohort';
@@ -40,6 +44,10 @@ type TargetMode = 'individual' | 'cohort';
     WTextField,
     WTextarea,
     WSelect,
+    WCheckbox,
+    WCheckboxBox,
+    WRadio,
+    WRadioBox,
   ],
   templateUrl: './mentor-assign-work.html',
   styles: `

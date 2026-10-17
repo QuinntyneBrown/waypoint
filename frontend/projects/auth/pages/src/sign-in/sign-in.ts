@@ -12,6 +12,8 @@ import {
   WIconButton,
   WLabel,
   WTextField,
+  WCheckbox,
+  WCheckboxBox,
 } from '@waypoint/components';
 import { switchMap } from 'rxjs';
 import { EntryResolver } from '../entry';
@@ -30,6 +32,8 @@ import { EntryResolver } from '../entry';
     WHelp,
     WErrorText,
     WTextField,
+    WCheckbox,
+    WCheckboxBox,
   ],
   templateUrl: './sign-in.html',
 })

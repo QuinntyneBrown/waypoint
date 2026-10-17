@@ -3,14 +3,34 @@ import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@ang
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiError, GuardianService, GuardianConsentRecord } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WFormField, WIcon, WLabel, WShell, WTextField } from '@waypoint/components';
+import {
+  WButton,
+  WFormField,
+  WIcon,
+  WLabel,
+  WShell,
+  WTextField,
+  WCheckbox,
+  WCheckboxBox,
+} from '@waypoint/components';
 import { GuardianContextService } from '../guardian-context.service';
 
 // Traces to: L2-GUARDIAN-003, L2-CONSENT-001
 @Component({
   selector: 'w-guardian-consent',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, ReactiveFormsModule, DatePipe, WIcon, WButton, WFormField, WLabel, WTextField],
+  imports: [
+    WShell,
+    ReactiveFormsModule,
+    DatePipe,
+    WIcon,
+    WButton,
+    WFormField,
+    WLabel,
+    WTextField,
+    WCheckbox,
+    WCheckboxBox,
+  ],
   templateUrl: './guardian-consent.html',
 })
 export class GuardianConsent {

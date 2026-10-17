@@ -96,14 +96,14 @@
             <div>{{ cat.label }}</div>
             <div class="w-muted w-text-sm">{{ cat.description }}</div>
           </div>
-          <label class="w-switch">
+          <label w-switch>
             <input
               type="checkbox"
               [attr.aria-label]="cat.label"
               [checked]="prefs()[cat.eventKey]"
               (change)="toggle(cat.eventKey)"
             />
-            <span class="w-switch__track"></span>
+            <span w-switch-track></span>
           </label>
         </div>
       }

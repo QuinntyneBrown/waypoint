@@ -138,14 +138,14 @@
                   />
                 </div>
                 <div w-form-field>
-                  <label class="w-check" for="fulfil-clear-pronouns">
+                  <label w-checkbox for="fulfil-clear-pronouns">
                     <input
                       id="fulfil-clear-pronouns"
                       type="checkbox"
                       formControlName="clearPronouns"
                       (change)="clearPronounsChanged()"
                     />
-                    <span class="w-check__box"><w-icon name="check" /></span>
+                    <span w-checkbox-box><w-icon name="check" /></span>
                     <span>Remove saved pronouns</span>
                   </label>
                 </div>
@@ -362,7 +362,7 @@
                 }
 
                 <div class="verified-attestation" [class.is-error]="attestationInvalid()">
-                  <label class="w-check" for="verified-ownership-attestation">
+                  <label w-checkbox for="verified-ownership-attestation">
                     <input
                       id="verified-ownership-attestation"
                       type="checkbox"
@@ -375,7 +375,7 @@
                           : 'ownership-warning ownership-attestation-help'
                       "
                     />
-                    <span class="w-check__box"><w-icon name="check" /></span>
+                    <span w-checkbox-box><w-icon name="check" /></span>
                     <span>
                       <strong>I attest that I independently verified ownership.</strong><br />
                       I verified that this person owns every referenced record using evidence beyond

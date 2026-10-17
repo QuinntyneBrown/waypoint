@@ -146,9 +146,9 @@
       <div class="w-divider"></div>
 
       <div w-form-field [invalid]="error('participationConsentAck')">
-        <label class="w-check">
+        <label w-checkbox>
           <input type="checkbox" formControlName="participationConsentAck" />
-          <span class="w-check__box"><w-icon name="check" /></span>
+          <span w-checkbox-box><w-icon name="check" /></span>
           <span>I confirm a parent or guardian consents to participation.</span>
         </label>
         @if (error('participationConsentAck')) {
@@ -157,9 +157,9 @@
       </div>
 
       <div w-form-field [invalid]="error('privacyAck')">
-        <label class="w-check">
+        <label w-checkbox>
           <input type="checkbox" formControlName="privacyAck" />
-          <span class="w-check__box"><w-icon name="check" /></span>
+          <span w-checkbox-box><w-icon name="check" /></span>
           <span>I’ve read the <a routerLink="/privacy">privacy notice</a>.</span>
         </label>
         @if (error('privacyAck')) {

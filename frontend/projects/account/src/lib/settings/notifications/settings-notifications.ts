@@ -4,7 +4,7 @@ import {
   NOTIFICATION_DEFAULTS,
   NotificationPreferencesService,
 } from '@waypoint/api';
-import { ToastService } from '@waypoint/components';
+import { ToastService, WCheckbox, WCheckboxBox } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
 
 type Channel = 'inApp' | 'email';
@@ -17,7 +17,7 @@ interface PrefRow {
 @Component({
   selector: 'w-settings-notifications',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SettingsShell],
+  imports: [SettingsShell, WCheckbox, WCheckboxBox],
   templateUrl: './settings-notifications.html',
 })
 export class SettingsNotifications {

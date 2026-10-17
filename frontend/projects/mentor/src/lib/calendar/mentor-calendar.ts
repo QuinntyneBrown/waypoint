@@ -17,6 +17,8 @@ import {
   WSelect,
   WShell,
   WTextField,
+  WCheckbox,
+  WCheckboxBox,
 } from '@waypoint/components';
 
 type CalendarView = 'month' | 'week' | 'agenda';
@@ -25,7 +27,18 @@ type CalendarView = 'month' | 'week' | 'agenda';
 @Component({
   selector: 'w-mentor-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, RouterLink, WButton, WFormField, WLabel, WTextField, WSelect],
+  imports: [
+    WShell,
+    DatePipe,
+    RouterLink,
+    WButton,
+    WFormField,
+    WLabel,
+    WTextField,
+    WSelect,
+    WCheckbox,
+    WCheckboxBox,
+  ],
   templateUrl: './mentor-calendar.html',
   styles: `
     .calendar-layout {

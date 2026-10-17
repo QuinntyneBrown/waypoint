@@ -9,6 +9,10 @@ import {
   WLabelOptional,
   WShell,
   WTextarea,
+  WCheckbox,
+  WCheckboxBox,
+  WRadio,
+  WRadioBox,
 } from '@waypoint/components';
 
 interface RsvpDraft {
@@ -21,7 +25,19 @@ interface RsvpDraft {
 @Component({
   selector: 'w-youth-schedule',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, WButton, WFormField, WLabel, WLabelOptional, WTextarea],
+  imports: [
+    WShell,
+    DatePipe,
+    WButton,
+    WFormField,
+    WLabel,
+    WLabelOptional,
+    WTextarea,
+    WCheckbox,
+    WCheckboxBox,
+    WRadio,
+    WRadioBox,
+  ],
   templateUrl: './youth-schedule.html',
   styles: `
     .schedule-list {
