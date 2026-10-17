@@ -52,9 +52,6 @@ import { WShell } from '@waypoint/components';
       border-radius: var(--w-r-input);
       background: white;
     }
-    .coding-progress {
-      width: 100%;
-    }
     @media (max-width: 50rem) {
       .coding-layout {
         grid-template-columns: minmax(0, 1fr);

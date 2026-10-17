@@ -228,8 +228,12 @@
                 @for (cohort of hub()!.cohorts; track cohort.cohortId) {
                   <div class="report-chart-row">
                     <span>{{ cohort.cohortName }}</span>
-                    <div class="report-bar" aria-hidden="true">
-                      <span [style.width.%]="cohort.completionRate * 100"></span>
+                    <div
+                      class="w-progress"
+                      aria-hidden="true"
+                      [style.--val]="cohort.completionRate * 100 + '%'"
+                    >
+                      <div class="w-progress__fill"></div>
                     </div>
                     <strong>{{ cohort.completionRate | percent: '1.0-0' }}</strong>
                   </div>

@@ -92,9 +92,18 @@
                     <strong>{{ competency.name }}</strong
                     ><span class="w-badge">{{ competency.level }}</span>
                   </div>
-                  <progress class="competency-progress" [value]="competency.percent" max="100">
-                    {{ competency.percent }}%</progress
-                  ><span>{{ competency.percent }}%</span>
+                  <div
+                    class="w-progress"
+                    role="progressbar"
+                    aria-label="Competency progress"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [attr.aria-valuenow]="competency.percent"
+                    [style.--val]="competency.percent + '%'"
+                  >
+                    <div class="w-progress__fill"></div>
+                  </div>
+                  <span>{{ competency.percent }}%</span>
                 </div>
               }
             </div>

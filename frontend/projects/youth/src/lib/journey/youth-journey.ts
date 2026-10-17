@@ -32,9 +32,6 @@ import { WShell } from '@waypoint/components';
       background: var(--w-lime);
       box-shadow: 0 0 0 4px var(--w-lime-soft);
     }
-    .journey-progress {
-      width: 100%;
-    }
   `,
 })
 export class YouthJourneyPage {

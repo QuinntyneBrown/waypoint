@@ -30,11 +30,6 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
     .filter-button {
       min-height: 44px;
     }
-    progress {
-      width: 8rem;
-      max-width: 100%;
-      accent-color: var(--w-lime-600);
-    }
   `,
 })
 export class MentorRosterPage {
