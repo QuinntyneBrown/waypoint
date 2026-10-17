@@ -82,7 +82,7 @@ Narrated videos made from a script, a slide deck and captions, one per detailed 
 | [048 · Authoring quizzes](048-curriculum-authoring-author-quizzes/README.md) | author quizzes | 3 min 16 s |
 | [049 · Authoring tracks and modules](049-curriculum-authoring-author-tracks-and-modules/README.md) | author tracks and modules | 3 min 19 s |
 | [050 · Awarding badges](050-curriculum-authoring-award-badges/README.md) | award badges | 2 min 37 s |
-| [115 · Uploading a lesson video](115-curriculum-authoring-upload-lesson-video/README.md) | upload lesson video | 5 min 34 s |
+| [115 · Uploading a lesson video](115-curriculum-authoring-upload-lesson-video/README.md) | upload lesson video | 5 min 39 s |
 
 ## Mentoring
 

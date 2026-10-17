@@ -63,7 +63,7 @@ A source link identifies an existing realization. An unlinked name identifies a 
 | 480p | 1400 kbit/s | 1498 kbit/s | 2100 kbit |
 | 360p | 800 kbit/s | 856 kbit/s | 1200 kbit |
 
-A 3-hour source yields about 1,800 segments per rendition. With the `veryfast` preset on 8 modern cores the full ladder encodes at roughly 3 to 5 times real time, so a 3-hour source completes in about 40 to 60 minutes; actual throughput on the deployment host is `<TO SUPPLY>`. The worker runs `ffmpeg` at `BelowNormal` process priority so the API on the same host stays responsive.
+A 3-hour source yields 1,800 segments per rendition. Throughput was measured on an 8-core development machine with the `veryfast` preset and a full four-rendition ladder: a 3-hour 1080p source of static content took 84 minutes (about 2.1 times real time), and 90 seconds of worst-case high-motion 1080p content took 2.1 minutes (about 0.7 times real time, so a 3-hour source of that kind would need about 4.3 hours). Both are inside the job time limit of three times the source duration. Throughput on the deployment host is `<TO SUPPLY>`; the worker runs `ffmpeg` at `BelowNormal` process priority so the API on the same host stays responsive.
 
 ### Functions and data flow
 

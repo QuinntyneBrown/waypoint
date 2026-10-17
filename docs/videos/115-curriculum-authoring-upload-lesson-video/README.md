@@ -1,6 +1,6 @@
 # 115 · Uploading a lesson video
 
-> **Runtime:** about 5 min 34 s · **Audience:** developers, designers and program staff who will build or use lesson video upload · **Prerequisites:** none
+> **Runtime:** about 5 min 39 s · **Audience:** developers, designers and program staff who will build or use lesson video upload · **Prerequisites:** none
 
 **Video:** [115-curriculum-authoring-upload-lesson-video.mp4](115-curriculum-authoring-upload-lesson-video.mp4) · [Slides](slides.html) · [Transcript](script.md)
 
@@ -47,10 +47,10 @@ The mock was captured with `tools/video-build/capture-mocks.py` from `images/sho
 | 00:31-01:03 | Why a new path | 25 MB byte-array path and its limits |
 | 01:03-01:59 | Uploading in chunks | Session start checks, offset writes, resume, token refresh |
 | 01:59-02:41 | Checking the file | Length, signature, immediate probe, one unit of work |
-| 02:41-04:07 | The transcode worker | Lease, one ffmpeg pass, rendition ladder, atomic publish |
-| 04:07-04:47 | When something fails | Time limit, two attempts, retry, trash and sweep |
-| 04:47-05:18 | What the author sees | Four states, polling, missing mock states |
-| 05:18-05:34 | Things to remember | Recap and preview of video 116 |
+| 02:41-04:12 | The transcode worker | Lease, one ffmpeg pass, rendition ladder, atomic publish |
+| 04:12-04:52 | When something fails | Time limit, two attempts, retry, trash and sweep |
+| 04:52-05:23 | What the author sees | Four states, polling, missing mock states |
+| 05:23-05:39 | Things to remember | Recap and preview of video 116 |
 
 ## Demo commands
 
@@ -64,7 +64,7 @@ node tools/video-build/build-video.mjs docs/videos/115-curriculum-authoring-uplo
 ## Pitfalls
 
 - The designs mark the media root path and real transcode throughput as `<TO SUPPLY>`; the video says so rather than quoting a figure for the deployment host.
-- The figure of about 40 to 60 minutes for a 3-hour recording assumes 8 modern cores and the `veryfast` preset.
+- Transcode speed was measured on an 8-core development machine with the `veryfast` preset: 84 minutes for a 3-hour still picture, and slower than real time for worst-case high-motion footage. The deployment host figure is still to be supplied.
 - Do not describe the mock as showing upload progress; it does not.
 
 ## References

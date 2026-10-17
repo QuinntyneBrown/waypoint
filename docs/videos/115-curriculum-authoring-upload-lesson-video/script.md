@@ -36,7 +36,7 @@ The worker runs ffmpeg once. The source is decoded one time and split into up to
 
 The output is cut into six second segments in the fragmented MP4 format, with a master playlist that ties the renditions together, and a poster image. Everything is written to a work folder. Only when ffmpeg succeeds is that folder moved, in one step, to the published folder. A viewer never sees half a video.
 
-On a machine with eight modern cores, a three hour recording should finish in roughly forty to sixty minutes. The real figure for the deployment host is still to be supplied.
+Measured on an eight core development machine, a three hour recording of a still picture took about eighty four minutes, and busy high motion footage ran slower than real time. The figure for the deployment host is still to be supplied.
 
 [pause 2s]
 
