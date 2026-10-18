@@ -6,17 +6,17 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, CodingLesson, CodingLessonStep, LearningService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WErrorText,
-  WFormField,
-  WLabel,
-  WShell,
-  WTextarea,
-  WAlert,
-  WCard,
-  WCardBody,
-  WBadge,
-  WProgress,
+  Button,
+  ErrorText,
+  FormField,
+  Label,
+  Shell,
+  Textarea,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  Progress,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-008
@@ -24,70 +24,22 @@ import {
   selector: 'w-youth-coding',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     RouterLink,
     ReactiveFormsModule,
-    WButton,
-    WFormField,
-    WLabel,
-    WErrorText,
-    WTextarea,
-    WAlert,
-    WCard,
-    WCardBody,
-    WBadge,
-    WProgress,
+    Button,
+    FormField,
+    Label,
+    ErrorText,
+    Textarea,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    Progress,
   ],
   templateUrl: './youth-coding.html',
-  styles: `
-    .coding-layout {
-      display: grid;
-      grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.6fr);
-      gap: var(--w-s5);
-      align-items: start;
-    }
-    .coding-step-button {
-      width: 100%;
-      text-align: left;
-      justify-content: flex-start;
-      white-space: normal;
-    }
-    .coding-sample,
-    .coding-editor {
-      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-      tab-size: 2;
-    }
-    .coding-sample {
-      overflow-x: auto;
-      white-space: pre-wrap;
-      padding: var(--w-s4);
-      background: #17202a;
-      color: #f8f9f9;
-      border-radius: var(--w-r-input);
-    }
-    .coding-editor {
-      width: 100%;
-      min-height: 18rem;
-      resize: vertical;
-    }
-    .coding-preview {
-      display: block;
-      width: 100%;
-      min-height: 18rem;
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-input);
-      background: white;
-    }
-    @media (max-width: 50rem) {
-      .coding-layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .coding-editor,
-      .coding-preview {
-        min-height: 15rem;
-      }
-    }
-  `,
+  styleUrl: './youth-coding.css',
 })
 export class YouthCodingPage {
   protected readonly auth = inject(AuthStore);

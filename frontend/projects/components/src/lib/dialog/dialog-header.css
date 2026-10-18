@@ -1,0 +1,10 @@
+.w-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--w-s3);
+  padding: var(--w-s5) var(--w-s6) var(--w-s3);
+}
+.w-modal__header > button {
+  flex: none;
+}

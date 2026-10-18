@@ -3,32 +3,25 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthSubmissionStatus } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import {
-  WButton,
-  WFormField,
-  WLabel,
-  WShell,
-  WTextarea,
-  WTextField,
-  WAlert,
-} from '@waypoint/components';
+import { Button, FormField, Label, Shell, Textarea, TextField, Alert } from '@waypoint/components';
 
 // Traces to: L2-LEARN-007
 @Component({
   selector: 'w-youth-resubmit',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     RouterLink,
     ReactiveFormsModule,
-    WButton,
-    WFormField,
-    WLabel,
-    WTextField,
-    WTextarea,
-    WAlert,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Textarea,
+    Alert,
   ],
   templateUrl: './youth-resubmit.html',
+  styleUrl: './youth-resubmit.css',
 })
 export class YouthResubmitPage {
   protected readonly auth = inject(AuthStore);

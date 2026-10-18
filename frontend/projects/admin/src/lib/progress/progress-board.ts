@@ -16,22 +16,22 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WFormField,
-  WIcon,
-  WLabel,
-  WSelect,
-  WShell,
-  WAlert,
-  WCard,
-  WCardBody,
-  WBadge,
-  WEmptyState,
-  WEmptyStateIcon,
-  WEmptyStateTitle,
-  WEmptyStateText,
-  WTableWrap,
-  WMatrix,
+  Button,
+  FormField,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  TableWrap,
+  Matrix,
 } from '@waypoint/components';
 import { debounceTime, filter, finalize, forkJoin, merge } from 'rxjs';
 import { RealtimeService } from '@waypoint/core/realtime';
@@ -41,46 +41,25 @@ import { RealtimeService } from '@waypoint/core/realtime';
   selector: 'w-progress-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
-    WButton,
-    WFormField,
-    WLabel,
-    WSelect,
-    WAlert,
-    WCard,
-    WCardBody,
-    WBadge,
-    WEmptyState,
-    WEmptyStateIcon,
-    WEmptyStateTitle,
-    WEmptyStateText,
-    WTableWrap,
-    WMatrix,
+    Shell,
+    Icon,
+    Button,
+    FormField,
+    Label,
+    Select,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    TableWrap,
+    Matrix,
   ],
   templateUrl: './progress-board.html',
-  styles: `
-    .board-filters {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(13rem, 1fr));
-      gap: var(--w-s4);
-      align-items: end;
-    }
-    .board-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s3);
-    }
-    @media (max-width: 42rem) {
-      .board-filters {
-        grid-template-columns: 1fr;
-      }
-      .board-actions .w-btn {
-        flex: 1 1 calc(50% - var(--w-s3));
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './progress-board.css',
 })
 export class ProgressBoardPage {
   protected readonly auth = inject(AuthStore);

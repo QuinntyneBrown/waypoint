@@ -1,9 +1,9 @@
-import { WRole } from '@waypoint/components';
+import { Role } from '@waypoint/components';
 
 export interface HelpArticle {
   question: string;
   answer: string;
-  roles?: readonly WRole[];
+  roles?: readonly Role[];
   keywords?: string;
 }
 
@@ -13,7 +13,7 @@ export interface HelpTopic {
   articles: readonly HelpArticle[];
 }
 
-const ALL_ROLES: readonly WRole[] = ['youth', 'mentor', 'admin', 'guardian', 'volunteer'];
+const ALL_ROLES: readonly Role[] = ['youth', 'mentor', 'admin', 'guardian', 'volunteer'];
 
 export const HELP_TOPICS: readonly HelpTopic[] = [
   {
@@ -131,7 +131,7 @@ export const HELP_TOPICS: readonly HelpTopic[] = [
   },
 ];
 
-export function helpTopicsFor(role: WRole, query = ''): HelpTopic[] {
+export function helpTopicsFor(role: Role, query = ''): HelpTopic[] {
   const needle = query.trim().toLocaleLowerCase();
   return HELP_TOPICS.map((topic) => ({
     ...topic,

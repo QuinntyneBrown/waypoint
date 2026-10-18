@@ -1,0 +1,4 @@
+.w-divider {
+  border-top: var(--w-bw) solid var(--w-border);
+  margin-block: var(--w-s5);
+}

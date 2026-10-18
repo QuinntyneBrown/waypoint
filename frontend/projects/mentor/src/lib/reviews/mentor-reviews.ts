@@ -4,18 +4,18 @@ import { RouterLink } from '@angular/router';
 import { ApiError, MentorService, MentorReviewPreview } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WIcon,
-  WShell,
-  WAlert,
-  WCard,
-  WCardBody,
-  WCardTitle,
-  WBadge,
-  WEmptyState,
-  WEmptyStateIcon,
-  WEmptyStateTitle,
-  WEmptyStateText,
+  Button,
+  Icon,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
 } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-001, L2-MENTOR-003, L2-MENTOR-004
@@ -23,48 +23,23 @@ import {
   selector: 'w-mentor-reviews',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
+    Shell,
+    Icon,
     RouterLink,
     DatePipe,
-    WButton,
-    WAlert,
-    WCard,
-    WCardBody,
-    WCardTitle,
-    WBadge,
-    WEmptyState,
-    WEmptyStateIcon,
-    WEmptyStateTitle,
-    WEmptyStateText,
+    Button,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
   ],
   templateUrl: './mentor-reviews.html',
-  styles: `
-    .queue-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--w-s4);
-      padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-border);
-    }
-    .queue-row:last-child {
-      border-bottom: 0;
-    }
-    .queue-link {
-      min-height: 44px;
-      flex: none;
-    }
-    @media (max-width: 40rem) {
-      .queue-row {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-      .queue-link {
-        width: 100%;
-      }
-    }
-  `,
+  styleUrl: './mentor-reviews.css',
 })
 export class MentorReviewsPage {
   protected readonly auth = inject(AuthStore);

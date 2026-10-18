@@ -1,21 +1,14 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { WButton, WStatePage } from '@waypoint/components';
+import { Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-PLATFORM-009
 @Component({
   selector: 'w-maintenance',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, WButton],
-  template: `<w-state-page
-    icon="settings"
-    tone="info"
-    eyebrow="Scheduled maintenance"
-    title="We’ll be right back"
-    text="Waypoint is down for a short bit of maintenance. Nothing you’ve done is lost — please check again shortly."
-  >
-    <button w-button variant="primary" type="button" (click)="retry()">Try again</button>
-  </w-state-page>`,
+  imports: [StatePage, Button],
+  templateUrl: './maintenance.html',
+  styleUrl: './maintenance.css',
 })
 export class Maintenance {
   private readonly doc = inject(DOCUMENT);

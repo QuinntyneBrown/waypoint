@@ -4,25 +4,25 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, MentorService, QuizAssessmentReview } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WFormField,
-  WHelp,
-  WLabel,
-  WLink,
-  WShell,
-  WTextField,
-  WAlert,
-  WCard,
-  WCardHeader,
-  WCardTitle,
-  WCardBody,
-  WBadge,
-  WEmptyState,
-  WEmptyStateTitle,
-  WEmptyStateText,
-  WStatLabel,
-  WStatValue,
-  WQuizOption,
+  Button,
+  FormField,
+  Help,
+  Label,
+  Link,
+  Shell,
+  TextField,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  StatLabel,
+  StatValue,
+  QuizOption,
 } from '@waypoint/components';
 
 // Traces to: L2-MENTOR-004, L2-LEARN-005
@@ -30,67 +30,30 @@ import {
   selector: 'w-mentor-quiz-review',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     RouterLink,
     DatePipe,
-    WButton,
-    WLink,
-    WFormField,
-    WLabel,
-    WHelp,
-    WTextField,
-    WAlert,
-    WCard,
-    WCardHeader,
-    WCardTitle,
-    WCardBody,
-    WBadge,
-    WEmptyState,
-    WEmptyStateTitle,
-    WEmptyStateText,
-    WStatLabel,
-    WStatValue,
-    WQuizOption,
+    Button,
+    Link,
+    FormField,
+    Label,
+    Help,
+    TextField,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    StatLabel,
+    StatValue,
+    QuizOption,
   ],
   templateUrl: './mentor-quiz-review.html',
-  styles: `
-    .assessment-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.65fr);
-      gap: var(--w-s6);
-      align-items: start;
-    }
-    .score-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .answer-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: var(--w-s3);
-    }
-    .answer-copy {
-      min-width: 0;
-      flex: 1;
-      overflow-wrap: anywhere;
-    }
-    .approve-button {
-      min-height: 44px;
-    }
-    @media (max-width: 52rem) {
-      .assessment-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 32rem) {
-      .score-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './mentor-quiz-review.css',
 })
 export class MentorQuizReviewPage {
   protected readonly auth = inject(AuthStore);

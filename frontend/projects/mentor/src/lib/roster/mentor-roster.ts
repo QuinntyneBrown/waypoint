@@ -5,24 +5,24 @@ import { RouterLink } from '@angular/router';
 import { ApiError, MentorService, MentorRosterYouth } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WFormField,
-  WIcon,
-  WLabel,
-  WShell,
-  WTextField,
-  WChip,
-  WChipRow,
-  WAlert,
-  WCard,
-  WBadge,
-  WEmptyState,
-  WEmptyStateIcon,
-  WEmptyStateTitle,
-  WEmptyStateText,
-  WProgress,
-  WTableWrap,
-  WTable,
+  Button,
+  FormField,
+  Icon,
+  Label,
+  Shell,
+  TextField,
+  Chip,
+  ChipRow,
+  Alert,
+  Card,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  Progress,
+  TableWrap,
+  Table,
 } from '@waypoint/components';
 import { debounceTime, switchMap, tap } from 'rxjs';
 
@@ -33,44 +33,29 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
   selector: 'w-mentor-roster',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
+    Shell,
+    Icon,
     RouterLink,
     DatePipe,
-    WButton,
-    WFormField,
-    WLabel,
-    WTextField,
-    WChip,
-    WChipRow,
-    WAlert,
-    WCard,
-    WBadge,
-    WEmptyState,
-    WEmptyStateIcon,
-    WEmptyStateTitle,
-    WEmptyStateText,
-    WProgress,
-    WTableWrap,
-    WTable,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Chip,
+    ChipRow,
+    Alert,
+    Card,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    Progress,
+    TableWrap,
+    Table,
   ],
   templateUrl: './mentor-roster.html',
-  styles: `
-    .roster-controls {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: var(--w-s4);
-    }
-    .roster-search {
-      flex: 1 1 16rem;
-      max-width: 24rem;
-    }
-    .filter-button {
-      min-height: 44px;
-    }
-  `,
+  styleUrl: './mentor-roster.css',
 })
 export class MentorRosterPage {
   protected readonly auth = inject(AuthStore);

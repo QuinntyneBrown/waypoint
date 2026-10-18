@@ -1,0 +1,17 @@
+.w-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--w-r-pill);
+  border: var(--w-bw) solid var(--w-border-strong);
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: var(--w-white);
+  cursor: pointer;
+}
+.w-pill.is-active {
+  background: var(--w-ink);
+  color: var(--w-white);
+  border-color: var(--w-ink);
+}

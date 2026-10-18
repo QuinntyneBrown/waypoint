@@ -4,17 +4,17 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, LearningService, ReflectionEditor, SaveReflectionInput } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WErrorText,
-  WFormField,
-  WHelp,
-  WLabel,
-  WShell,
-  WTextarea,
-  WAlert,
-  WCard,
-  WCardBody,
-  WScripture,
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Label,
+  Shell,
+  Textarea,
+  Alert,
+  Card,
+  CardBody,
+  Scripture,
 } from '@waypoint/components';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import {
@@ -31,40 +31,22 @@ const OPTIONAL_PROMPT = 'One action I will take';
   selector: 'w-youth-reflection',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     RouterLink,
     ReactiveFormsModule,
-    WButton,
-    WFormField,
-    WLabel,
-    WHelp,
-    WErrorText,
-    WTextarea,
-    WAlert,
-    WCard,
-    WCardBody,
-    WScripture,
+    Button,
+    FormField,
+    Label,
+    Help,
+    ErrorText,
+    Textarea,
+    Alert,
+    Card,
+    CardBody,
+    Scripture,
   ],
   templateUrl: './youth-reflection.html',
-  styles: `
-    .mood-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
-      gap: var(--w-s2);
-    }
-    .mood-option,
-    .share-option {
-      min-height: 2.75rem;
-      display: flex;
-      align-items: center;
-      gap: var(--w-s2);
-      cursor: pointer;
-    }
-    textarea {
-      min-height: 10rem;
-      resize: vertical;
-    }
-  `,
+  styleUrl: './youth-reflection.css',
 })
 export class YouthReflectionPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);

@@ -1,0 +1,8 @@
+.w-statcard__value {
+  font-family: var(--w-font-head);
+  font-weight: 500;
+  font-size: 2.1rem;
+  line-height: 1.1;
+  margin-top: 6px;
+  letter-spacing: -0.02em;
+}

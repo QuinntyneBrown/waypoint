@@ -3,14 +3,14 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, PublicContentView, PublicSiteService } from '@waypoint/api';
 import {
-  WButton,
-  WAlert,
-  WCard,
-  WCardHeader,
-  WCardTitle,
-  WCardBody,
-  WBadge,
-  WEmptyState,
+  Button,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Badge,
+  EmptyState,
 } from '@waypoint/components';
 
 // Traces to: L2-PUB-002
@@ -20,16 +20,17 @@ import {
   imports: [
     DatePipe,
     RouterLink,
-    WButton,
-    WAlert,
-    WCard,
-    WCardHeader,
-    WCardTitle,
-    WCardBody,
-    WBadge,
-    WEmptyState,
+    Button,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    Badge,
+    EmptyState,
   ],
   templateUrl: './about.html',
+  styleUrl: './about.css',
 })
 export class About {
   private readonly api = inject(PublicSiteService);

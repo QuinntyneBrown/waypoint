@@ -4,16 +4,16 @@ import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthJourney } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WShell,
-  WAlert,
-  WCard,
-  WCardBody,
-  WBadge,
-  WEmptyState,
-  WEmptyStateTitle,
-  WEmptyStateText,
-  WProgress,
+  Button,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  Progress,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-009
@@ -21,21 +21,22 @@ import {
   selector: 'w-youth-badges',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     RouterLink,
     DatePipe,
     NgTemplateOutlet,
-    WButton,
-    WAlert,
-    WCard,
-    WCardBody,
-    WBadge,
-    WEmptyState,
-    WEmptyStateTitle,
-    WEmptyStateText,
-    WProgress,
+    Button,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    Progress,
   ],
   templateUrl: './youth-badges.html',
+  styleUrl: './youth-badges.css',
 })
 export class YouthBadgesPage {
   protected readonly auth = inject(AuthStore);

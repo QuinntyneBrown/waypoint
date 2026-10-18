@@ -9,33 +9,33 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WFormField,
-  WHelp,
-  WIcon,
-  WIconButton,
-  WLabel,
-  WSelect,
-  WShell,
-  WTextarea,
-  WTextField,
-  WCheckbox,
-  WCheckboxBox,
-  WRadio,
-  WRadioBox,
-  WAlert,
-  WCard,
-  WCardHeader,
-  WCardTitle,
-  WCardBody,
-  WDivider,
-  WBadge,
-  WDialog,
-  WDialogHeader,
-  WDialogTitle,
-  WDialogSubtitle,
-  WDialogBody,
-  WDialogFooter,
+  Button,
+  FormField,
+  Help,
+  Icon,
+  IconButton,
+  Label,
+  Select,
+  Shell,
+  Textarea,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Radio,
+  RadioBox,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Divider,
+  Badge,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogSubtitle,
+  DialogBody,
+  DialogFooter,
 } from '@waypoint/components';
 
 type TargetMode = 'individual' | 'cohort';
@@ -45,81 +45,36 @@ type TargetMode = 'individual' | 'cohort';
   selector: 'w-mentor-assign-work',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
-    WButton,
-    WIconButton,
-    WFormField,
-    WLabel,
-    WHelp,
-    WTextField,
-    WTextarea,
-    WSelect,
-    WCheckbox,
-    WCheckboxBox,
-    WRadio,
-    WRadioBox,
-    WAlert,
-    WCard,
-    WCardHeader,
-    WCardTitle,
-    WCardBody,
-    WDivider,
-    WBadge,
-    WDialog,
-    WDialogHeader,
-    WDialogTitle,
-    WDialogSubtitle,
-    WDialogBody,
-    WDialogFooter,
+    Shell,
+    Icon,
+    Button,
+    IconButton,
+    FormField,
+    Label,
+    Help,
+    TextField,
+    Textarea,
+    Select,
+    Checkbox,
+    CheckboxBox,
+    Radio,
+    RadioBox,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    Divider,
+    Badge,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogSubtitle,
+    DialogBody,
+    DialogFooter,
   ],
   templateUrl: './mentor-assign-work.html',
-  styles: `
-    .assign-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.6fr);
-      gap: var(--w-s6);
-      align-items: start;
-    }
-    .summary-card {
-      position: sticky;
-      top: var(--w-s4);
-    }
-    .recipient-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s2) var(--w-s4);
-    }
-    .recipient-list .w-check {
-      margin-bottom: 0;
-    }
-    .review-button,
-    .confirm-button {
-      min-height: 46px;
-    }
-    .selection-summary {
-      overflow-wrap: anywhere;
-    }
-    @media (max-width: 54rem) {
-      .assign-layout {
-        grid-template-columns: 1fr;
-      }
-      .summary-card {
-        position: static;
-      }
-    }
-    @media (max-width: 34rem) {
-      .recipient-list {
-        grid-template-columns: 1fr;
-      }
-      .review-button {
-        width: 100%;
-      }
-      .w-modal__footer .w-btn {
-        flex: 1 1 100%;
-      }
-    }
-  `,
+  styleUrl: './mentor-assign-work.css',
 })
 export class MentorAssignWorkPage {
   protected readonly auth = inject(AuthStore);

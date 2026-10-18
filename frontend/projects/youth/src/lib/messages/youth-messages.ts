@@ -5,23 +5,23 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiError, MessagingService, YouthMessageThread } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WErrorText,
-  WFormField,
-  WHelp,
-  WLabel,
-  WShell,
-  WTextarea,
-  WAlert,
-  WCard,
-  WCardBody,
-  WBadge,
-  WEmptyState,
-  WEmptyStateTitle,
-  WEmptyStateText,
-  WMessageThread,
-  WMessageBubble,
-  WMessageBubbleTime,
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Label,
+  Shell,
+  Textarea,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  MessageThread,
+  MessageBubble,
+  MessageBubbleTime,
 } from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -30,52 +30,28 @@ import { RealtimeService } from '@waypoint/core/realtime';
   selector: 'w-youth-messages',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     DatePipe,
     ReactiveFormsModule,
-    WButton,
-    WFormField,
-    WLabel,
-    WHelp,
-    WErrorText,
-    WTextarea,
-    WAlert,
-    WCard,
-    WCardBody,
-    WBadge,
-    WEmptyState,
-    WEmptyStateTitle,
-    WEmptyStateText,
-    WMessageThread,
-    WMessageBubble,
-    WMessageBubbleTime,
+    Button,
+    FormField,
+    Label,
+    Help,
+    ErrorText,
+    Textarea,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    MessageThread,
+    MessageBubble,
+    MessageBubbleTime,
   ],
   templateUrl: './youth-messages.html',
-  styles: `
-    .thread-card {
-      overflow: hidden;
-    }
-    .thread-log {
-      min-height: 12rem;
-      max-height: 34rem;
-      overflow-y: auto;
-      padding: var(--w-s5);
-      background: var(--w-g100);
-    }
-    .message-body {
-      white-space: pre-wrap;
-    }
-    .composer {
-      padding: var(--w-s5);
-      border-top: 1px solid var(--w-border);
-    }
-    @media (max-width: 40rem) {
-      .thread-log,
-      .composer {
-        padding: var(--w-s3);
-      }
-    }
-  `,
+  styleUrl: './youth-messages.css',
 })
 export class YouthMessagesPage {
   protected readonly auth = inject(AuthStore);

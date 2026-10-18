@@ -9,16 +9,16 @@ import {
   PasswordResetService,
 } from '@waypoint/api';
 import {
-  WButton,
-  WErrorText,
-  WFormField,
-  WHelp,
-  WIcon,
-  WIconButton,
-  WLabel,
-  WTextField,
-  WAlert,
-  WBrand,
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Icon,
+  IconButton,
+  Label,
+  TextField,
+  Alert,
+  Brand,
 } from '@waypoint/components';
 
 // Traces to: L2-AUTH-005
@@ -27,18 +27,19 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
-    WIcon,
-    WButton,
-    WIconButton,
-    WFormField,
-    WLabel,
-    WHelp,
-    WErrorText,
-    WTextField,
-    WAlert,
-    WBrand,
+    Icon,
+    Button,
+    IconButton,
+    FormField,
+    Label,
+    Help,
+    ErrorText,
+    TextField,
+    Alert,
+    Brand,
   ],
   templateUrl: './reset-password.html',
+  styleUrl: './reset-password.css',
 })
 export class ResetPassword {
   private readonly fb = inject(FormBuilder);

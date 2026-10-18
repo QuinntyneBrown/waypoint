@@ -5,17 +5,17 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, AssignmentBrief, AssignmentUpload, LearningService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WErrorText,
-  WFormField,
-  WHelp,
-  WLabel,
-  WShell,
-  WTextarea,
-  WTextField,
-  WAlert,
-  WCard,
-  WCardBody,
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Label,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-006, L2-NFR-001
@@ -23,22 +23,23 @@ import {
   selector: 'w-youth-assignment',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     RouterLink,
     ReactiveFormsModule,
     DatePipe,
-    WButton,
-    WFormField,
-    WLabel,
-    WHelp,
-    WErrorText,
-    WTextField,
-    WTextarea,
-    WAlert,
-    WCard,
-    WCardBody,
+    Button,
+    FormField,
+    Label,
+    Help,
+    ErrorText,
+    TextField,
+    Textarea,
+    Alert,
+    Card,
+    CardBody,
   ],
   templateUrl: './youth-assignment.html',
+  styleUrl: './youth-assignment.css',
 })
 export class YouthAssignmentPage {
   protected readonly auth = inject(AuthStore);

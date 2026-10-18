@@ -2,17 +2,17 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { AnnouncementsService, AnnouncementView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WIcon,
-  WShell,
-  WCard,
-  WCardBody,
-  WCardTitle,
-  WBadge,
-  WEmptyState,
-  WEmptyStateIcon,
-  WEmptyStateTitle,
-  WEmptyStateText,
+  Button,
+  Icon,
+  Shell,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
 } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 
@@ -21,19 +21,20 @@ import { shellRole } from '@waypoint/core';
   selector: 'w-youth-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
-    WButton,
-    WCard,
-    WCardBody,
-    WCardTitle,
-    WBadge,
-    WEmptyState,
-    WEmptyStateIcon,
-    WEmptyStateTitle,
-    WEmptyStateText,
+    Shell,
+    Icon,
+    Button,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
   ],
   templateUrl: './youth-announcements.html',
+  styleUrl: './youth-announcements.css',
 })
 export class YouthAnnouncements {
   private readonly api = inject(AnnouncementsService);

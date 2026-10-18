@@ -10,22 +10,22 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WIcon,
-  WShell,
-  WAlert,
-  WCard,
-  WCardBody,
-  WCardTitle,
-  WBadge,
-  WEmptyState,
-  WEmptyStateIcon,
-  WEmptyStateTitle,
-  WEmptyStateText,
-  WStat,
-  WStatLabel,
-  WStatValue,
-  WStatDelta,
+  Button,
+  Icon,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  Stat,
+  StatLabel,
+  StatValue,
+  StatDelta,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
@@ -34,75 +34,27 @@ import { forkJoin } from 'rxjs';
   selector: 'w-mentor-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
+    Shell,
+    Icon,
     RouterLink,
     DatePipe,
-    WButton,
-    WAlert,
-    WCard,
-    WCardBody,
-    WCardTitle,
-    WBadge,
-    WEmptyState,
-    WEmptyStateIcon,
-    WEmptyStateTitle,
-    WEmptyStateText,
-    WStat,
-    WStatLabel,
-    WStatValue,
-    WStatDelta,
+    Button,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    Stat,
+    StatLabel,
+    StatValue,
+    StatDelta,
   ],
   templateUrl: './mentor-dashboard.html',
-  styles: `
-    .mentor-preview-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .youth-preview {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      align-items: center;
-      gap: var(--w-s4);
-    }
-    .progress-number {
-      display: grid;
-      place-items: center;
-      width: 3.5rem;
-      height: 3.5rem;
-      border: 0.35rem solid var(--w-lime);
-      border-radius: 50%;
-      font-weight: 700;
-    }
-    .review-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--w-s4);
-      padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-border);
-    }
-    .review-row:last-child {
-      border-bottom: 0;
-    }
-    .review-link {
-      min-height: 44px;
-      flex: none;
-    }
-    @media (max-width: 48rem) {
-      .mentor-preview-grid {
-        grid-template-columns: 1fr;
-      }
-      .review-row {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-      .review-link {
-        width: 100%;
-      }
-    }
-  `,
+  styleUrl: './mentor-dashboard.css',
 })
 export class MentorDashboardPage {
   protected readonly auth = inject(AuthStore);

@@ -10,26 +10,26 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WFormField,
-  WIcon,
-  WLabel,
-  WLink,
-  WSelect,
-  WShell,
-  WTextarea,
-  WAlert,
-  WCard,
-  WCardBody,
-  WCardHeader,
-  WCardTitle,
-  WBadge,
-  WEmptyState,
-  WEmptyStateIcon,
-  WEmptyStateTitle,
-  WEmptyStateText,
-  WStatLabel,
-  WStatValue,
+  Button,
+  FormField,
+  Icon,
+  Label,
+  Link,
+  Select,
+  Shell,
+  Textarea,
+  Alert,
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  StatLabel,
+  StatValue,
 } from '@waypoint/components';
 
 interface CompetencyDraft {
@@ -42,54 +42,31 @@ interface CompetencyDraft {
   selector: 'w-mentor-competencies',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
+    Shell,
+    Icon,
     RouterLink,
     DatePipe,
-    WButton,
-    WLink,
-    WFormField,
-    WLabel,
-    WTextarea,
-    WSelect,
-    WAlert,
-    WCard,
-    WCardBody,
-    WCardHeader,
-    WCardTitle,
-    WBadge,
-    WEmptyState,
-    WEmptyStateIcon,
-    WEmptyStateTitle,
-    WEmptyStateText,
-    WStatLabel,
-    WStatValue,
+    Button,
+    Link,
+    FormField,
+    Label,
+    Textarea,
+    Select,
+    Alert,
+    Card,
+    CardBody,
+    CardHeader,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    StatLabel,
+    StatValue,
   ],
   templateUrl: './mentor-competencies.html',
-  styles: `
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .competency-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s5);
-    }
-    .assessment-record {
-      min-height: 2.75rem;
-    }
-    .save-button {
-      min-height: 44px;
-    }
-    @media (max-width: 48rem) {
-      .summary-grid,
-      .competency-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './mentor-competencies.css',
 })
 export class MentorCompetenciesPage {
   protected readonly auth = inject(AuthStore);

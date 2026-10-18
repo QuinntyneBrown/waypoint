@@ -43,6 +43,15 @@ Run from the repository root unless noted.
 ## Naming Conventions
 
 - Frontend API services are named `<Name>Service` in `<name>.service.ts` (for example `AuditService` in `audit.service.ts`), never `<Name>Api` or `<name>-api.ts`.
+- Components are named `<Name>` in `<name>.ts` (for example `Alert` in `alert.ts`), never with a `W`
+  class prefix or a `w-` file prefix. Selectors and `.w-*` CSS classes keep the `w` prefix.
+
+## Component Files (mandatory)
+
+- Each component has its own `<name>.ts`, `<name>.html` and `<name>.css`, referenced with
+  `templateUrl` and `styleUrl`: one component per file set, no inline `template` or `styles`, no
+  stylesheet shared between components. ESLint (`@angular-eslint/component-max-inline-declarations`)
+  enforces the no-inline part.
 
 ## Testing
 

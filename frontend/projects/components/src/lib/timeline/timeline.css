@@ -1,0 +1,13 @@
+.w-timeline {
+  position: relative;
+  padding-left: 26px;
+}
+.w-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--w-border);
+}

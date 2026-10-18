@@ -4,16 +4,16 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, MentorService, MentorYouthDetail } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WLink,
-  WShell,
-  WAlert,
-  WCard,
-  WCardBody,
-  WProgress,
-  WTabs,
-  WTab,
-  WDescriptionList,
+  Button,
+  Link,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  Progress,
+  Tabs,
+  Tab,
+  DescriptionList,
 } from '@waypoint/components';
 
 type DetailTab =
@@ -24,32 +24,21 @@ type DetailTab =
   selector: 'w-mentor-youth-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     RouterLink,
     DatePipe,
-    WButton,
-    WLink,
-    WAlert,
-    WCard,
-    WCardBody,
-    WProgress,
-    WTabs,
-    WTab,
-    WDescriptionList,
+    Button,
+    Link,
+    Alert,
+    Card,
+    CardBody,
+    Progress,
+    Tabs,
+    Tab,
+    DescriptionList,
   ],
   templateUrl: './mentor-youth-detail.html',
-  styles: `
-    .detail-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s5);
-    }
-    @media (max-width: 40rem) {
-      .detail-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './mentor-youth-detail.css',
 })
 export class MentorYouthDetailPage {
   protected readonly auth = inject(AuthStore);

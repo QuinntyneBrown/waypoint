@@ -2,17 +2,17 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WShell,
-  WCard,
-  WCardBody,
-  WCardTitle,
-  WEmptyState,
-  WEmptyStateTitle,
-  WEmptyStateText,
-  WListItem,
-  WListItemBody,
-  WListItemTitle,
-  WListItemMeta,
+  Shell,
+  Card,
+  CardBody,
+  CardTitle,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  ListItem,
+  ListItemBody,
+  ListItemTitle,
+  ListItemMeta,
 } from '@waypoint/components';
 import { GuardianContextService } from '../guardian-context.service';
 
@@ -21,20 +21,21 @@ import { GuardianContextService } from '../guardian-context.service';
   selector: 'w-guardian-progress',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     DatePipe,
-    WCard,
-    WCardBody,
-    WCardTitle,
-    WEmptyState,
-    WEmptyStateTitle,
-    WEmptyStateText,
-    WListItem,
-    WListItemBody,
-    WListItemTitle,
-    WListItemMeta,
+    Card,
+    CardBody,
+    CardTitle,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    ListItem,
+    ListItemBody,
+    ListItemTitle,
+    ListItemMeta,
   ],
   templateUrl: './guardian-progress.html',
+  styleUrl: './guardian-progress.css',
 })
 export class GuardianProgress {
   protected readonly auth = inject(AuthStore);

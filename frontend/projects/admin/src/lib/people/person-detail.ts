@@ -4,30 +4,30 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, PeopleService, PersonDetail } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WFormField,
-  WIcon,
-  WIconButton,
-  WLabel,
-  WLink,
-  WSelect,
-  WShell,
-  WTextField,
-  WAlert,
-  WAlertTitle,
-  WCard,
-  WCardBody,
-  WBadge,
-  WProgress,
-  WTabs,
-  WTab,
-  WDescriptionList,
-  WDialog,
-  WDialogHeader,
-  WDialogTitle,
-  WDialogSubtitle,
-  WDialogBody,
-  WDialogFooter,
+  Button,
+  FormField,
+  Icon,
+  IconButton,
+  Label,
+  Link,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  AlertTitle,
+  Card,
+  CardBody,
+  Badge,
+  Progress,
+  Tabs,
+  Tab,
+  DescriptionList,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogSubtitle,
+  DialogBody,
+  DialogFooter,
 } from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 
@@ -43,66 +43,35 @@ type LifecycleAction =
   selector: 'w-person-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
+    Shell,
+    Icon,
     RouterLink,
     DatePipe,
-    WButton,
-    WIconButton,
-    WLink,
-    WFormField,
-    WLabel,
-    WTextField,
-    WSelect,
-    WAlert,
-    WAlertTitle,
-    WCard,
-    WCardBody,
-    WBadge,
-    WProgress,
-    WTabs,
-    WTab,
-    WDescriptionList,
-    WDialog,
-    WDialogHeader,
-    WDialogTitle,
-    WDialogSubtitle,
-    WDialogBody,
-    WDialogFooter,
+    Button,
+    IconButton,
+    Link,
+    FormField,
+    Label,
+    TextField,
+    Select,
+    Alert,
+    AlertTitle,
+    Card,
+    CardBody,
+    Badge,
+    Progress,
+    Tabs,
+    Tab,
+    DescriptionList,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogSubtitle,
+    DialogBody,
+    DialogFooter,
   ],
   templateUrl: './person-detail.html',
-  styles: `
-    .record-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s5);
-    }
-    .account-actions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .account-actions .w-btn {
-      justify-content: center;
-      min-height: 45px;
-    }
-    .danger-zone {
-      border-color: var(--w-error);
-    }
-    .confirmation-copy {
-      overflow-wrap: anywhere;
-    }
-    @media (max-width: 42rem) {
-      .record-grid,
-      .account-actions {
-        grid-template-columns: 1fr;
-      }
-      .w-modal__footer .w-btn {
-        flex: 1 1 100%;
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './person-detail.css',
 })
 export class PersonDetailPage {
   protected readonly auth = inject(AuthStore);

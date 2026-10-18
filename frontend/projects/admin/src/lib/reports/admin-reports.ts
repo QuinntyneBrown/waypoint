@@ -12,31 +12,31 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WErrorText,
-  WFormField,
-  WIcon,
-  WLabel,
-  WSelect,
-  WShell,
-  WTextField,
-  WAlert,
-  WAlertTitle,
-  WCard,
-  WCardBody,
-  WBadge,
-  WEmptyState,
-  WEmptyStateIcon,
-  WEmptyStateTitle,
-  WEmptyStateText,
-  WProgress,
-  WStat,
-  WStatLabel,
-  WStatValue,
-  WProgressRing,
-  WProgressRingLabel,
-  WTabs,
-  WTab,
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  AlertTitle,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  Progress,
+  Stat,
+  StatLabel,
+  StatValue,
+  ProgressRing,
+  ProgressRingLabel,
+  Tabs,
+  Tab,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -48,108 +48,38 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
   selector: 'w-admin-reports',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
+    Shell,
+    Icon,
     ReactiveFormsModule,
     DatePipe,
     DecimalPipe,
     PercentPipe,
-    WButton,
-    WFormField,
-    WLabel,
-    WErrorText,
-    WTextField,
-    WSelect,
-    WAlert,
-    WAlertTitle,
-    WCard,
-    WCardBody,
-    WBadge,
-    WEmptyState,
-    WEmptyStateIcon,
-    WEmptyStateTitle,
-    WEmptyStateText,
-    WProgress,
-    WStat,
-    WStatLabel,
-    WStatValue,
-    WProgressRing,
-    WProgressRingLabel,
-    WTabs,
-    WTab,
+    Button,
+    FormField,
+    Label,
+    ErrorText,
+    TextField,
+    Select,
+    Alert,
+    AlertTitle,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    Progress,
+    Stat,
+    StatLabel,
+    StatValue,
+    ProgressRing,
+    ProgressRingLabel,
+    Tabs,
+    Tab,
   ],
   templateUrl: './admin-reports.html',
-  styles: `
-    .report-filters {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(8.5rem, 1fr)) auto;
-      gap: var(--w-s3);
-      align-items: end;
-    }
-    .report-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s2) var(--w-s5);
-      align-items: center;
-    }
-    .report-kpis,
-    .report-rings,
-    .report-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .report-chart-row {
-      display: grid;
-      grid-template-columns: minmax(8rem, 1fr) minmax(8rem, 3fr) auto;
-      gap: var(--w-s3);
-      align-items: center;
-    }
-    .report-card {
-      min-width: 0;
-      overflow-wrap: anywhere;
-    }
-    .report-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .report-stat-line {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s3);
-    }
-    .report-status--risk {
-      color: var(--w-error);
-      font-weight: 700;
-    }
-    @media (max-width: 72rem) {
-      .report-filters {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-    @media (max-width: 48rem) {
-      .report-filters,
-      .report-kpis,
-      .report-grid {
-        grid-template-columns: 1fr;
-      }
-      .report-rings {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .report-chart-row {
-        grid-template-columns: 1fr auto;
-      }
-      .report-chart-row .w-progress {
-        grid-column: 1 / -1;
-      }
-      .report-filters .w-btn,
-      .report-selector .w-btn {
-        width: 100%;
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './admin-reports.css',
 })
 export class AdminReportsPage {
   protected readonly auth = inject(AuthStore);

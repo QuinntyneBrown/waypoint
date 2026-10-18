@@ -17,28 +17,28 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WErrorText,
-  WFormField,
-  WHelp,
-  WIcon,
-  WLabel,
-  WSelect,
-  WShell,
-  WTextField,
-  WAlert,
-  WCard,
-  WCardHeader,
-  WCardTitle,
-  WCardBody,
-  WCardFooter,
-  WBadge,
-  WTableWrap,
-  WDialog,
-  WDialogHeader,
-  WDialogTitle,
-  WDialogBody,
-  WDialogFooter,
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  CardFooter,
+  Badge,
+  TableWrap,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogBody,
+  DialogFooter,
 } from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
@@ -53,100 +53,32 @@ interface ImportColumn {
   selector: 'w-import-roster',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
+    Shell,
+    Icon,
     FormsModule,
-    WButton,
-    WFormField,
-    WLabel,
-    WHelp,
-    WErrorText,
-    WTextField,
-    WSelect,
-    WAlert,
-    WCard,
-    WCardHeader,
-    WCardTitle,
-    WCardBody,
-    WCardFooter,
-    WBadge,
-    WTableWrap,
-    WDialog,
-    WDialogHeader,
-    WDialogTitle,
-    WDialogBody,
-    WDialogFooter,
+    Button,
+    FormField,
+    Label,
+    Help,
+    ErrorText,
+    TextField,
+    Select,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    CardFooter,
+    Badge,
+    TableWrap,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogBody,
+    DialogFooter,
   ],
   templateUrl: './import-roster.html',
-  styles: `
-    .import-columns,
-    .import-preview {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .import-columns th,
-    .import-columns td,
-    .import-preview th,
-    .import-preview td {
-      padding: var(--w-s3);
-      border-bottom: 1px solid var(--w-border);
-      text-align: left;
-      vertical-align: top;
-    }
-    .import-file {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s3);
-      align-items: center;
-      justify-content: space-between;
-    }
-    .import-counts {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--w-s3);
-    }
-    .import-count strong {
-      display: block;
-      font-size: 1.5rem;
-    }
-    @media (max-width: 48rem) {
-      .import-counts {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .import-columns thead,
-      .import-preview thead {
-        display: none;
-      }
-      .import-columns tr,
-      .import-preview tr {
-        display: grid;
-        gap: var(--w-s2);
-        padding: var(--w-s3);
-        border-bottom: 1px solid var(--w-border);
-      }
-      .import-columns td,
-      .import-preview td {
-        display: grid;
-        grid-template-columns: minmax(7rem, 0.8fr) minmax(0, 1.2fr);
-        gap: var(--w-s2);
-        padding: 0;
-        border: 0;
-        overflow-wrap: anywhere;
-      }
-      .import-columns td::before,
-      .import-preview td::before {
-        content: attr(data-label);
-        color: var(--w-muted);
-        font-weight: 700;
-      }
-      .import-columns .w-select,
-      .import-file .w-btn,
-      .import-actions .w-btn {
-        min-height: 45px;
-        width: 100%;
-      }
-    }
-  `,
+  styleUrl: './import-roster.css',
 })
 export class ImportRosterPage {
   protected readonly auth = inject(AuthStore);

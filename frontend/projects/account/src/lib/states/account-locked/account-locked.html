@@ -1,0 +1,10 @@
+<w-state-page
+  icon="lock"
+  tone="error"
+  eyebrow="Account locked"
+  title="Too many sign-in attempts"
+  [text]="message"
+>
+  <a w-button variant="primary" routerLink="/auth/forgot-password">Reset password</a>
+  <a w-button variant="ghost" [href]="contactUrl">Contact your mentor</a>
+</w-state-page>

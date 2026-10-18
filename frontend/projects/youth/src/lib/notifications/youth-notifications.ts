@@ -11,18 +11,18 @@ import { RouterLink } from '@angular/router';
 import { ApiError, NotificationsService, NotificationView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WIcon,
-  WShell,
-  WAlert,
-  WCard,
-  WCardBody,
-  WCardTitle,
-  WBadge,
-  WEmptyState,
-  WEmptyStateIcon,
-  WEmptyStateTitle,
-  WEmptyStateText,
+  Button,
+  Icon,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
 } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 import { RealtimeService } from '@waypoint/core/realtime';
@@ -32,34 +32,22 @@ import { RealtimeService } from '@waypoint/core/realtime';
   selector: 'w-notifications',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
-    WIcon,
+    Shell,
+    Icon,
     RouterLink,
-    WButton,
-    WAlert,
-    WCard,
-    WCardBody,
-    WCardTitle,
-    WBadge,
-    WEmptyState,
-    WEmptyStateIcon,
-    WEmptyStateTitle,
-    WEmptyStateText,
+    Button,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
   ],
   templateUrl: './youth-notifications.html',
-  styles: `
-    .notification-card {
-      display: block;
-      min-height: 44px;
-      color: inherit;
-      text-decoration: none;
-      overflow-wrap: anywhere;
-    }
-    .notification-card:focus-visible {
-      outline: 3px solid var(--w-ink);
-      outline-offset: 2px;
-    }
-  `,
+  styleUrl: './youth-notifications.css',
 })
 export class YouthNotifications {
   private readonly api = inject(NotificationsService);

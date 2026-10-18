@@ -4,21 +4,21 @@ import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthHomeView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WIcon,
-  WShell,
-  WAlert,
-  WCard,
-  WCardBody,
-  WCardTitle,
-  WScripture,
-  WScriptureRef,
-  WBadge,
-  WEmptyState,
-  WEmptyStateIcon,
-  WEmptyStateTitle,
-  WEmptyStateText,
-  WProgress,
+  Button,
+  Icon,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Scripture,
+  ScriptureRef,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  Progress,
 } from '@waypoint/components';
 
 // Traces to: L2-LEARN-001..010, L2-ENGAGE-005, L2-MENTOR-008, L2-PLATFORM-011
@@ -26,64 +26,27 @@ import {
   selector: 'w-youth-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     RouterLink,
     DatePipe,
     DecimalPipe,
-    WIcon,
-    WButton,
-    WAlert,
-    WCard,
-    WCardBody,
-    WCardTitle,
-    WScripture,
-    WScriptureRef,
-    WBadge,
-    WEmptyState,
-    WEmptyStateIcon,
-    WEmptyStateTitle,
-    WEmptyStateText,
-    WProgress,
+    Icon,
+    Button,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    Scripture,
+    ScriptureRef,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    Progress,
   ],
   templateUrl: './youth-home.html',
-  styles: `
-    .home-hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: var(--w-s5);
-      align-items: center;
-    }
-    .home-progress__value {
-      font-size: clamp(2rem, 7vw, 3.25rem);
-      font-weight: 800;
-      line-height: 1;
-    }
-    .assignment-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .assignment-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: var(--w-s4);
-      align-items: center;
-      padding-block: var(--w-s4);
-      border-top: 1px solid var(--w-border);
-    }
-    .assignment-row:first-child {
-      border-top: 0;
-    }
-    @media (max-width: 42rem) {
-      .home-hero,
-      .assignment-row {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .assignment-row .w-btn {
-        width: 100%;
-      }
-    }
-  `,
+  styleUrl: './youth-home.css',
 })
 export class YouthHome {
   protected readonly auth = inject(AuthStore);

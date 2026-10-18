@@ -10,39 +10,15 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, LearningService, LessonReadingState, YouthLesson } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WShell, WAlert, WCard, WCardBody, WScripture } from '@waypoint/components';
+import { Button, Shell, Alert, Card, CardBody, Scripture } from '@waypoint/components';
 
 // Traces to: L2-LEARN-002
 @Component({
   selector: 'w-youth-lesson',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, WButton, WAlert, WCard, WCardBody, WScripture],
+  imports: [Shell, RouterLink, Button, Alert, Card, CardBody, Scripture],
   templateUrl: './youth-lesson.html',
-  styles: `
-    .lesson-copy {
-      line-height: 1.75;
-      white-space: pre-line;
-    }
-    .lesson-copy--small {
-      font-size: 0.95rem;
-    }
-    .lesson-copy--medium {
-      font-size: 1.08rem;
-    }
-    .lesson-copy--large {
-      font-size: 1.25rem;
-    }
-    .lesson-media {
-      width: 100%;
-      max-height: 28rem;
-      background: var(--w-ink);
-      border-radius: var(--w-r-card);
-    }
-    .reading-size-button {
-      min-inline-size: 2.75rem;
-      min-block-size: 2.75rem;
-    }
-  `,
+  styleUrl: './youth-lesson.css',
 })
 export class YouthLessonPage implements OnDestroy {
   protected readonly auth = inject(AuthStore);
