@@ -10,7 +10,7 @@ Once an application has been reviewed, someone has to decide. This video shows h
 
 Pat opens the applications page and chooses a review. The first application belongs to Imani Clarke. She is fifteen, and her guardian, Ruth Clarke, filled in the form. Imani's status is needs consent, and the review window explains why. It says guardian participation consent is required. This minor cannot be approved into active participation until a valid consent record is linked.
 
-Look at the approve button. It is switched off. Waypoint will not let a young person under eighteen move into the program until a guardian's consent is on record. Pat does not have to remember this rule. The screen enforces it.
+Look at the approve button. It is still available, because Pat can approve the application and create the youth account. But Waypoint will not let a young person under eighteen take part in the program until a guardian's consent is on record. Pat does not have to remember this rule. The notice on the screen states it.
 
 [pause 2s]
 
@@ -34,6 +34,6 @@ Pat confirms. The page says Amara was approved and enrolled. Behind that message
 
 ## Things to remember
 
-A minor without guardian consent cannot be approved, and the approve button stays off. A decline is soft. The application stays on record, the note is optional, and no account is created. An approval needs a cohort and a mentor. It creates the youth account, enrolls the young person, and sends the applicant contact an email. Only program administrators decide, and every decision is audited.
+A minor without guardian consent can be approved, but cannot take part until the guardian's consent is recorded. A decline is soft. The application stays on record, the note is optional, and no account is created. An approval needs a cohort and a mentor. It creates the youth account, enrolls the young person, and sends the applicant contact an email. Only program administrators decide, and every decision is audited.
 
 Next, we will look at how the review step works before a decision is made.

@@ -52,6 +52,6 @@ test('capture: review an application', async ({ page, request }) => {
 
   await applications.review(application.lastName).click();
   await expect(applications.reviewDialog).toContainText('I want to grow as a leader and serve.');
-  await expect(applications.approve).toBeDisabled();
+  await expect(applications.approve).toBeEnabled();
   await tall(page, 'detail');
 });
