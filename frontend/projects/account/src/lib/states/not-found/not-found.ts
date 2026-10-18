@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthStore, roleHome } from '@waypoint/auth';
-import { WButton, WStatePage } from '@waypoint/components';
+import { Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-PLATFORM-007
 @Component({
   selector: 'w-not-found',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink, WButton],
+  imports: [StatePage, RouterLink, Button],
   template: `<w-state-page
     icon="compass"
     tone="info"

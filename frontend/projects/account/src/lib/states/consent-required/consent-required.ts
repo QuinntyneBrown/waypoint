@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ApiError, ConsentService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WStatePage, WAlert } from '@waypoint/components';
+import { Button, StatePage, Alert } from '@waypoint/components';
 
 // Traces to: L2-CONSENT-002
 @Component({
   selector: 'w-consent-required',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, WButton, WAlert],
+  imports: [StatePage, Button, Alert],
   template: `<w-state-page
     icon="shield"
     tone="warning"

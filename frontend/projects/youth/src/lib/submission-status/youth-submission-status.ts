@@ -3,13 +3,13 @@ import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthSubmissionStatus } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WButton, WLink, WShell, WAlert, WCard, WCardBody, WBadge } from '@waypoint/components';
+import { Button, Link, Shell, Alert, Card, CardBody, Badge } from '@waypoint/components';
 
 // Traces to: L2-LEARN-007
 @Component({
   selector: 'w-youth-submission-status',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, WButton, WLink, WAlert, WCard, WCardBody, WBadge],
+  imports: [Shell, RouterLink, Button, Link, Alert, Card, CardBody, Badge],
   templateUrl: './youth-submission-status.html',
   styles: `
     .coding-sample {

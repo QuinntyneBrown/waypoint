@@ -3,12 +3,12 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import {
   deploymentUrl,
   WAYPOINT_DEPLOYMENT_URLS,
-  WButton,
-  WSkipLink,
-  WMarketingNav,
-  WMarketingNavLinks,
-  WBrand,
-  WFooter,
+  Button,
+  SkipLink,
+  MarketingNav,
+  MarketingNavLinks,
+  Brand,
+  Footer,
 } from '@waypoint/components';
 
 @Component({
@@ -16,12 +16,12 @@ import {
   imports: [
     RouterLink,
     RouterOutlet,
-    WButton,
-    WSkipLink,
-    WMarketingNav,
-    WMarketingNavLinks,
-    WBrand,
-    WFooter,
+    Button,
+    SkipLink,
+    MarketingNav,
+    MarketingNavLinks,
+    Brand,
+    Footer,
   ],
   templateUrl: './app.html',
 })

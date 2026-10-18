@@ -2,31 +2,21 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, PublicContentView, PublicSiteService } from '@waypoint/api';
 import {
-  WButton,
-  WAlert,
-  WCard,
-  WCardHeader,
-  WCardTitle,
-  WCardBody,
-  WBadge,
-  WEmptyState,
+  Button,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Badge,
+  EmptyState,
 } from '@waypoint/components';
 
 // Traces to: L2-PUB-002
 @Component({
   selector: 'w-programs',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    RouterLink,
-    WButton,
-    WAlert,
-    WCard,
-    WCardHeader,
-    WCardTitle,
-    WCardBody,
-    WBadge,
-    WEmptyState,
-  ],
+  imports: [RouterLink, Button, Alert, Card, CardHeader, CardTitle, CardBody, Badge, EmptyState],
   templateUrl: './programs.html',
 })
 export class Programs {

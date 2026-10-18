@@ -10,23 +10,23 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WFormField,
-  WLabel,
-  WRole,
-  WSelect,
-  WShell,
-  WTextField,
-  WAlert,
-  WCard,
-  WCardHeader,
-  WCardTitle,
-  WCardBody,
-  WBadge,
-  WTableWrap,
-  WTable,
-  WTabs,
-  WTab,
+  Button,
+  FormField,
+  Label,
+  Role,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Badge,
+  TableWrap,
+  Table,
+  Tabs,
+  Tab,
 } from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
@@ -37,25 +37,25 @@ type HistoryView = 'session' | 'youth';
   selector: 'w-mentor-attendance-history',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     DatePipe,
     PercentPipe,
     RouterLink,
-    WButton,
-    WFormField,
-    WLabel,
-    WTextField,
-    WSelect,
-    WAlert,
-    WCard,
-    WCardHeader,
-    WCardTitle,
-    WCardBody,
-    WBadge,
-    WTableWrap,
-    WTable,
-    WTabs,
-    WTab,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Select,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    Badge,
+    TableWrap,
+    Table,
+    Tabs,
+    Tab,
   ],
   templateUrl: './mentor-attendance-history.html',
   styles: `
@@ -108,7 +108,7 @@ export class MentorAttendanceHistoryPage {
   protected readonly statusMessage = signal<string | null>(null);
   private loadSequence = 0;
   protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
-  protected readonly shellRole = computed<WRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly shellRole = computed<Role>(() => (this.isAdmin() ? 'admin' : 'mentor'));
   protected readonly calendarPath = computed(() =>
     this.isAdmin() ? '/admin/calendar' : '/mentor/calendar',
   );

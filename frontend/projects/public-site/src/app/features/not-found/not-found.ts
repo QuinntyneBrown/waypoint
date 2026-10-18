@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { WButton } from '@waypoint/components';
+import { Button } from '@waypoint/components';
 
 @Component({
   selector: 'w-public-not-found',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, WButton],
+  imports: [RouterLink, Button],
   template: `<section class="w-container w-section" style="max-width: 560px; text-align: center">
     <div class="w-eyebrow">Error 404</div>
     <h1>We couldn’t find that page</h1>

@@ -3,15 +3,15 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ApiError, PublicSiteService } from '@waypoint/api';
 import {
-  WButton,
-  WErrorText,
-  WFormField,
-  WHelp,
-  WLabel,
-  WLabelRequired,
-  WTextField,
-  WAlert,
-  WAlertTitle,
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Label,
+  LabelRequired,
+  TextField,
+  Alert,
+  AlertTitle,
 } from '@waypoint/components';
 
 function isEmail(value: string): boolean {
@@ -24,15 +24,15 @@ function isEmail(value: string): boolean {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
-    WButton,
-    WFormField,
-    WLabel,
-    WLabelRequired,
-    WHelp,
-    WErrorText,
-    WTextField,
-    WAlert,
-    WAlertTitle,
+    Button,
+    FormField,
+    Label,
+    LabelRequired,
+    Help,
+    ErrorText,
+    TextField,
+    Alert,
+    AlertTitle,
   ],
   templateUrl: './donate.html',
 })

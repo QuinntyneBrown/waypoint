@@ -1,13 +1,13 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, WButton, WStatePage } from '@waypoint/components';
+import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-AUTH-006
 @Component({
   selector: 'w-account-locked',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink, WButton],
+  imports: [StatePage, RouterLink, Button],
   template: `<w-state-page
     icon="lock"
     tone="error"

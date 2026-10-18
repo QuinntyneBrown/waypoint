@@ -2,13 +2,13 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { maskEmail, PasswordResetService } from '@waypoint/api';
-import { ToastService, WButton, WStatePage } from '@waypoint/components';
+import { ToastService, Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-AUTH-005
 @Component({
   selector: 'w-reset-link-sent',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink, WButton],
+  imports: [StatePage, RouterLink, Button],
   template: `<w-state-page
     icon="mail"
     tone="info"

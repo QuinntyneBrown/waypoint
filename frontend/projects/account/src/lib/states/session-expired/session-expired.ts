@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { WButton, WStatePage } from '@waypoint/components';
+import { Button, StatePage } from '@waypoint/components';
 import { FormDraftService } from '@waypoint/core';
 
 // Traces to: L2-PLATFORM-010
 @Component({
   selector: 'w-session-expired',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink, WButton],
+  imports: [StatePage, RouterLink, Button],
   template: `<w-state-page
     icon="clock"
     tone="warning"

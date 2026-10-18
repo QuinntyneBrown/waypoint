@@ -9,14 +9,14 @@ import {
 } from '@waypoint/api';
 import {
   ToastService,
-  WButton,
-  WFormField,
-  WHelp,
-  WLabel,
-  WSwitch,
-  WSwitchTrack,
-  WButtonGroup,
-  WButtonGroupItem,
+  Button,
+  FormField,
+  Help,
+  Label,
+  Switch,
+  SwitchTrack,
+  ButtonGroup,
+  ButtonGroupItem,
 } from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
 import { DisplayPreferencesService } from '@waypoint/core';
@@ -27,14 +27,14 @@ import { DisplayPreferencesService } from '@waypoint/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SettingsShell,
-    WButton,
-    WFormField,
-    WLabel,
-    WHelp,
-    WSwitch,
-    WSwitchTrack,
-    WButtonGroup,
-    WButtonGroupItem,
+    Button,
+    FormField,
+    Label,
+    Help,
+    Switch,
+    SwitchTrack,
+    ButtonGroup,
+    ButtonGroupItem,
   ],
   templateUrl: './settings-display.html',
 })

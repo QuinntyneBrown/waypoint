@@ -3,14 +3,14 @@ import { Component, effect, EnvironmentInjector, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DisplayPreferencesService as DisplayPreferencesApiService } from '@waypoint/api';
 import { SessionStore } from '@waypoint/auth';
-import { WToastHost } from '@waypoint/components';
+import { ToastHost } from '@waypoint/components';
 import { DisplayPreferencesService, IdleSessionService } from '@waypoint/core';
 
 const NON_CRITICAL_RUNTIME_DELAY_MS = 1_500;
 
 @Component({
   selector: 'w-root',
-  imports: [RouterOutlet, WToastHost],
+  imports: [RouterOutlet, ToastHost],
   template: `<router-outlet /> <w-toast-host />`,
 })
 export class App {

@@ -12,7 +12,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const FRONTEND = join(HERE, '..');
 const REPO = join(FRONTEND, '..');
 const SRC = join(REPO, 'docs', 'mocks', 'assets', 'js', 'waypoint.js');
-const OUT = join(FRONTEND, 'projects', 'components', 'src', 'lib', 'icon', 'w-icons.ts');
+const OUT = join(FRONTEND, 'projects', 'components', 'src', 'lib', 'icon', 'icons.ts');
 
 const js = readFileSync(SRC, 'utf8');
 const block = js.match(/var ICONS = \{([\s\S]*?)\n {2}\};/);
@@ -41,9 +41,9 @@ export const W_ICONS: Record<string, string> = {
 ${entries}
 };
 
-export type WIconName = keyof typeof W_ICONS;
+export type IconName = keyof typeof W_ICONS;
 
-export const W_ICON_NAMES = Object.keys(W_ICONS) as WIconName[];
+export const W_ICON_NAMES = Object.keys(W_ICONS) as IconName[];
 `;
 
 writeFileSync(OUT, out);

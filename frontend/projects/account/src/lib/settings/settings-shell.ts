@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthStore } from '@waypoint/auth';
-import { WShell, WTabs, WTab } from '@waypoint/components';
+import { Shell, Tabs, Tab } from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 
 /** Shared layout for the settings pages: app shell + settings tab nav + content. */
 @Component({
   selector: 'w-settings-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, RouterLinkActive, WTabs, WTab],
+  imports: [Shell, RouterLink, RouterLinkActive, Tabs, Tab],
   template: `<w-shell
     [role]="role()"
     active="profile"

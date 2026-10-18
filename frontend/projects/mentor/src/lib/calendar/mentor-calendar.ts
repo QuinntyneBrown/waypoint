@@ -10,23 +10,23 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WFormField,
-  WLabel,
-  WRole,
-  WSelect,
-  WShell,
-  WTextField,
-  WCheckbox,
-  WCheckboxBox,
-  WAlert,
-  WCard,
-  WCardBody,
-  WCardHeader,
-  WCardTitle,
-  WEmptyState,
-  WTabs,
-  WTab,
+  Button,
+  FormField,
+  Label,
+  Role,
+  Select,
+  Shell,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Alert,
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+  EmptyState,
+  Tabs,
+  Tab,
 } from '@waypoint/components';
 
 type CalendarView = 'month' | 'week' | 'agenda';
@@ -36,24 +36,24 @@ type CalendarView = 'month' | 'week' | 'agenda';
   selector: 'w-mentor-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     DatePipe,
     RouterLink,
-    WButton,
-    WFormField,
-    WLabel,
-    WTextField,
-    WSelect,
-    WCheckbox,
-    WCheckboxBox,
-    WAlert,
-    WCard,
-    WCardBody,
-    WCardHeader,
-    WCardTitle,
-    WEmptyState,
-    WTabs,
-    WTab,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Select,
+    Checkbox,
+    CheckboxBox,
+    Alert,
+    Card,
+    CardBody,
+    CardHeader,
+    CardTitle,
+    EmptyState,
+    Tabs,
+    Tab,
   ],
   templateUrl: './mentor-calendar.html',
   styles: `
@@ -167,7 +167,7 @@ export class MentorCalendarPage {
   protected readonly anchor = signal(this.startOfDay(new Date()));
   protected readonly cohortFilter = signal('');
   protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
-  protected readonly shellRole = computed<WRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly shellRole = computed<Role>(() => (this.isAdmin() ? 'admin' : 'mentor'));
   protected readonly attendanceBase = computed(() =>
     this.isAdmin() ? '/admin/attendance' : '/mentor/attendance',
   );

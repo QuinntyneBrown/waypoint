@@ -17,17 +17,17 @@ import {
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
 import {
-  WButton,
-  WFormField,
-  WLabel,
-  WRole,
-  WShell,
-  WTextField,
-  WAlert,
-  WCard,
-  WCardBody,
-  WBadge,
-  WEmptyState,
+  Button,
+  FormField,
+  Label,
+  Role,
+  Shell,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
 } from '@waypoint/components';
 import {
   EditorDraftService,
@@ -42,18 +42,18 @@ import { AttendanceQueueService } from '@waypoint/core/attendance';
   selector: 'w-mentor-attendance-capture',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    WShell,
+    Shell,
     DatePipe,
     RouterLink,
-    WButton,
-    WFormField,
-    WLabel,
-    WTextField,
-    WAlert,
-    WCard,
-    WCardBody,
-    WBadge,
-    WEmptyState,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
   ],
   templateUrl: './mentor-attendance-capture.html',
   styles: `
@@ -130,7 +130,7 @@ export class MentorAttendanceCapturePage implements UnsavedChangesAware {
   protected readonly errorMessage = signal<string | null>(null);
   private readonly baseline = signal('');
   protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
-  protected readonly shellRole = computed<WRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly shellRole = computed<Role>(() => (this.isAdmin() ? 'admin' : 'mentor'));
   protected readonly calendarPath = computed(() =>
     this.isAdmin() ? '/admin/calendar' : '/mentor/calendar',
   );

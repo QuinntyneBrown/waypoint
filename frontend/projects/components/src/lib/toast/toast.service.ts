@@ -1,18 +1,18 @@
 import { Injectable, signal } from '@angular/core';
 
-export type WToastType = 'success' | 'error' | 'warning' | 'info' | 'default';
+export type ToastType = 'success' | 'error' | 'warning' | 'info' | 'default';
 
-export interface WToast {
+export interface Toast {
   readonly id: number;
   readonly message: string;
-  readonly type: WToastType;
+  readonly type: ToastType;
   readonly title?: string;
   /** Auto-dismiss delay in ms; 0 = sticky (dismiss only on user action). */
   readonly duration: number;
 }
 
-export interface WToastOptions {
-  type?: WToastType;
+export interface ToastOptions {
+  type?: ToastType;
   title?: string;
   duration?: number;
 }
@@ -20,7 +20,7 @@ export interface WToastOptions {
 const DEFAULT_DURATION = 3600;
 
 /** Icon per toast type, mirroring the mock (`waypoint.js`). */
-export const W_TOAST_ICON: Record<WToastType, string> = {
+export const W_TOAST_ICON: Record<ToastType, string> = {
   success: 'check-circle',
   error: 'x-circle',
   warning: 'alert-triangle',
@@ -30,19 +30,19 @@ export const W_TOAST_ICON: Record<WToastType, string> = {
 
 /**
  * Signal-based toast queue. Zoneless-friendly: `show`/`dismiss` mutate a signal,
- * which drives the WToastHost's rendering and change detection.
+ * which drives the ToastHost's rendering and change detection.
  */
 @Injectable({ providedIn: 'root' })
 export class ToastService {
   private seq = 0;
   private readonly timers = new Map<number, ReturnType<typeof setTimeout>>();
-  private readonly _toasts = signal<readonly WToast[]>([]);
+  private readonly _toasts = signal<readonly Toast[]>([]);
   readonly toasts = this._toasts.asReadonly();
 
-  show(message: string, opts: WToastOptions = {}): number {
+  show(message: string, opts: ToastOptions = {}): number {
     const id = ++this.seq;
     const duration = opts.duration ?? DEFAULT_DURATION;
-    const toast: WToast = {
+    const toast: Toast = {
       id,
       message,
       type: opts.type ?? 'default',
@@ -59,16 +59,16 @@ export class ToastService {
     return id;
   }
 
-  success(message: string, opts: Omit<WToastOptions, 'type'> = {}): number {
+  success(message: string, opts: Omit<ToastOptions, 'type'> = {}): number {
     return this.show(message, { ...opts, type: 'success' });
   }
-  error(message: string, opts: Omit<WToastOptions, 'type'> = {}): number {
+  error(message: string, opts: Omit<ToastOptions, 'type'> = {}): number {
     return this.show(message, { ...opts, type: 'error' });
   }
-  warning(message: string, opts: Omit<WToastOptions, 'type'> = {}): number {
+  warning(message: string, opts: Omit<ToastOptions, 'type'> = {}): number {
     return this.show(message, { ...opts, type: 'warning' });
   }
-  info(message: string, opts: Omit<WToastOptions, 'type'> = {}): number {
+  info(message: string, opts: Omit<ToastOptions, 'type'> = {}): number {
     return this.show(message, { ...opts, type: 'info' });
   }
 
