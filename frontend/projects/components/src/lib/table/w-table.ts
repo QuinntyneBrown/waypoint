@@ -15,6 +15,7 @@ import {
   template: '<ng-content />',
   styles: `
     .w-table-wrap {
+      position: relative;
       width: 100%;
       overflow-x: auto;
       border: var(--w-bw) solid var(--w-border);
