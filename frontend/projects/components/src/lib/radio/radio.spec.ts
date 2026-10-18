@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Radio, RadioBox } from './radio';
+import { Radio } from './radio';
+import { RadioBox } from './radio-box';
 
 @Component({
   imports: [Radio, RadioBox],

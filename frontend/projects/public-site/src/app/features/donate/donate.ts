@@ -35,6 +35,7 @@ function isEmail(value: string): boolean {
     AlertTitle,
   ],
   templateUrl: './donate.html',
+  styleUrl: './donate.css',
 })
 export class Donate {
   private readonly fb = inject(FormBuilder);

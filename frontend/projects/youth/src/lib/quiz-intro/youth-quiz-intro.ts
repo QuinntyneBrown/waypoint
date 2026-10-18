@@ -10,13 +10,7 @@ import { Button, Shell, Alert, Card, CardBody, CardTitle } from '@waypoint/compo
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Shell, RouterLink, Button, Alert, Card, CardBody, CardTitle],
   templateUrl: './youth-quiz-intro.html',
-  styles: `
-    .quiz-facts {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-      gap: var(--w-s3);
-    }
-  `,
+  styleUrl: './youth-quiz-intro.css',
 })
 export class YouthQuizIntroPage {
   protected readonly auth = inject(AuthStore);

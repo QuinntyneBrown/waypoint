@@ -10,27 +10,8 @@ import { ToastService, W_TOAST_ICON } from './toast.service';
   selector: 'w-toast-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Icon],
-  template: `<div class="w-toasts" role="region" aria-live="polite" aria-label="Notifications">
-    @for (t of toasts.toasts(); track t.id) {
-      <div class="w-toast w-toast--{{ t.type }}">
-        <span class="w-toast__icon"><w-icon [name]="iconFor(t.type)" /></span>
-        <div class="w-toast__body">
-          @if (t.title) {
-            <div class="w-toast__title">{{ t.title }}</div>
-          }
-          {{ t.message }}
-        </div>
-        <button
-          class="w-toast__close"
-          type="button"
-          aria-label="Dismiss"
-          (click)="toasts.dismiss(t.id)"
-        >
-          <w-icon name="x" />
-        </button>
-      </div>
-    }
-  </div>`,
+  templateUrl: './toast-host.html',
+  styleUrl: './toast-host.css',
 })
 export class ToastHost {
   protected readonly toasts = inject(ToastService);

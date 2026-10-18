@@ -1,0 +1,6 @@
+.w-empty {
+  text-align: center;
+  padding: var(--w-s9) var(--w-s5);
+  max-width: 420px;
+  margin-inline: auto;
+}

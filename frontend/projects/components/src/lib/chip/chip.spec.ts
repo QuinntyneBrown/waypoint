@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Chip, ChipRow } from './chip';
+import { Chip } from './chip';
+import { ChipRow } from './chip-row';
 
 @Component({
   imports: [Chip, ChipRow],

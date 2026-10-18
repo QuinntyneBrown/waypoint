@@ -6,12 +6,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: { class: 'w-divider' },
-  template: '',
-  styles: `
-    .w-divider {
-      border-top: var(--w-bw) solid var(--w-border);
-      margin-block: var(--w-s5);
-    }
-  `,
+  templateUrl: './divider.html',
+  styleUrl: './divider.css',
 })
 export class Divider {}

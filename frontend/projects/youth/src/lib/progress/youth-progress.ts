@@ -48,6 +48,7 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
     Tab,
   ],
   templateUrl: './youth-progress.html',
+  styleUrl: './youth-progress.css',
 })
 export class YouthProgressPage {
   protected readonly auth = inject(AuthStore);

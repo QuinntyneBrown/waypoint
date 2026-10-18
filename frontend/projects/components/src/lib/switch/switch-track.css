@@ -1,0 +1,19 @@
+.w-switch__track {
+  width: 42px;
+  height: 24px;
+  border-radius: var(--w-r-pill);
+  background: var(--w-g400);
+  position: relative;
+  transition: background 0.18s;
+}
+.w-switch__track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--w-white);
+  transition: transform 0.18s;
+}

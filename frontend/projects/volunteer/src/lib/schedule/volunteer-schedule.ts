@@ -33,6 +33,7 @@ import {
     EmptyStateText,
   ],
   templateUrl: './volunteer-schedule.html',
+  styleUrl: './volunteer-schedule.css',
 })
 export class VolunteerSchedule {
   protected readonly auth = inject(AuthStore);

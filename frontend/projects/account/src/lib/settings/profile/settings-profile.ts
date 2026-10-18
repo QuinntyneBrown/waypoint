@@ -52,6 +52,7 @@ import { SettingsShell } from '../settings-shell';
     Divider,
   ],
   templateUrl: './settings-profile.html',
+  styleUrl: './settings-profile.css',
 })
 export class SettingsProfile implements OnDestroy {
   private readonly fb = inject(FormBuilder);

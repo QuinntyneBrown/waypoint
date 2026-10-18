@@ -58,36 +58,7 @@ interface DirectoryQuery {
     Pagination,
   ],
   templateUrl: './people-directory.html',
-  styles: `
-    .directory-filters {
-      display: grid;
-      grid-template-columns: minmax(14rem, 1fr) minmax(13rem, 0.5fr);
-      gap: var(--w-s4);
-      align-items: end;
-    }
-    .role-filters {
-      grid-column: 1 / -1;
-      margin: 0;
-      padding: 0;
-      border: 0;
-    }
-    .role-filter-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s2);
-    }
-    @media (max-width: 42rem) {
-      .directory-filters {
-        grid-template-columns: 1fr;
-      }
-      .role-filters {
-        grid-column: auto;
-      }
-      .role-filter-list .w-btn {
-        flex: 1 1 calc(50% - var(--w-s2));
-      }
-    }
-  `,
+  styleUrl: './people-directory.css',
 })
 export class PeopleDirectory {
   protected readonly auth = inject(AuthStore);

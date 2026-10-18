@@ -37,6 +37,7 @@ import { DisplayPreferencesService } from '@waypoint/core';
     ButtonGroupItem,
   ],
   templateUrl: './settings-display.html',
+  styleUrl: './settings-display.css',
 })
 export class SettingsDisplay {
   private readonly api = inject(DisplayPreferencesApiService);

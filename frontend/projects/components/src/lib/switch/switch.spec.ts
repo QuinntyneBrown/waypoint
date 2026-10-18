@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Switch, SwitchTrack } from './switch';
+import { Switch } from './switch';
+import { SwitchTrack } from './switch-track';
 
 @Component({
   imports: [Switch, SwitchTrack],

@@ -1,0 +1,7 @@
+@if (icon(); as name) {
+  <w-icon [name]="name" iconClass="w-alert__icon" />
+  <div><ng-container [ngTemplateOutlet]="body" /></div>
+} @else {
+  <ng-container [ngTemplateOutlet]="body" />
+}
+<ng-template #body><ng-content /></ng-template>

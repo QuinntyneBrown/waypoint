@@ -51,6 +51,7 @@ import {
     EmptyStateText,
   ],
   templateUrl: './requested-guardian-consent.html',
+  styleUrl: './requested-guardian-consent.css',
 })
 export class RequestedGuardianConsentPage {
   private readonly api = inject(ConsentService);

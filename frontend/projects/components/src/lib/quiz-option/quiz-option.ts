@@ -21,34 +21,8 @@ import {
     '[class.is-selected]': 'selected()',
     '[class.is-correct]': 'correct()',
   },
-  template: '<ng-content />',
-  styles: `
-    .w-quiz__opt {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 15px 16px;
-      border: var(--w-bw) solid var(--w-border-strong);
-      border-radius: var(--w-r-card);
-      cursor: pointer;
-      margin-bottom: 10px;
-      font-size: 1rem;
-      transition:
-        border-color 0.15s,
-        background 0.15s;
-    }
-    .w-quiz__opt:hover {
-      border-color: var(--w-ink);
-    }
-    .w-quiz__opt.is-selected {
-      border-color: var(--w-ink);
-      background: var(--w-lime-soft);
-    }
-    .w-quiz__opt.is-correct {
-      border-color: var(--w-success);
-      background: var(--w-success-bg);
-    }
-  `,
+  templateUrl: './quiz-option.html',
+  styleUrl: './quiz-option.css',
 })
 export class QuizOption {
   readonly selected = input(false, { transform: booleanAttribute });

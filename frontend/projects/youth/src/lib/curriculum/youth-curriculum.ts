@@ -39,6 +39,7 @@ import {
     EmptyStateText,
   ],
   templateUrl: './youth-curriculum.html',
+  styleUrl: './youth-curriculum.css',
 })
 export class YouthCurriculumPage {
   protected readonly auth = inject(AuthStore);

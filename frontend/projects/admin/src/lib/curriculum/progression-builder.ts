@@ -69,7 +69,7 @@ type ProgressionAuthoringDraft =
     DialogBody,
   ],
   templateUrl: './progression-builder.html',
-  styleUrl: './curriculum-admin.css',
+  styleUrl: './progression-builder.css',
 })
 export class ProgressionBuilderPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);

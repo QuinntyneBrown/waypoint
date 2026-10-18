@@ -1,6 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ErrorText, FormField, Help, Label, LabelOptional, LabelRequired } from './form-field';
+import { ErrorText } from './error-text';
+import { FormField } from './form-field';
+import { Help } from './help';
+import { Label } from './label';
+import { LabelOptional } from './label-optional';
+import { LabelRequired } from './label-required';
 
 @Component({
   imports: [FormField, Label, LabelRequired, LabelOptional, Help, ErrorText],

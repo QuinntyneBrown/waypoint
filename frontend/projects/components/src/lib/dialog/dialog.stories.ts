@@ -3,14 +3,12 @@ import { moduleMetadata } from '@storybook/angular';
 import { Button } from '../button/button';
 import { Icon } from '../icon/icon';
 import { IconButton } from '../icon-button/icon-button';
-import {
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-  DialogSubtitle,
-  DialogTitle,
-} from './dialog';
+import { Dialog } from './dialog';
+import { DialogBody } from './dialog-body';
+import { DialogFooter } from './dialog-footer';
+import { DialogHeader } from './dialog-header';
+import { DialogSubtitle } from './dialog-subtitle';
+import { DialogTitle } from './dialog-title';
 
 const meta: Meta<Dialog> = {
   title: 'Components/Dialog',

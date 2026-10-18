@@ -51,31 +51,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
     MessageBubbleTime,
   ],
   templateUrl: './youth-messages.html',
-  styles: `
-    .thread-card {
-      overflow: hidden;
-    }
-    .thread-log {
-      min-height: 12rem;
-      max-height: 34rem;
-      overflow-y: auto;
-      padding: var(--w-s5);
-      background: var(--w-g100);
-    }
-    .message-body {
-      white-space: pre-wrap;
-    }
-    .composer {
-      padding: var(--w-s5);
-      border-top: 1px solid var(--w-border);
-    }
-    @media (max-width: 40rem) {
-      .thread-log,
-      .composer {
-        padding: var(--w-s3);
-      }
-    }
-  `,
+  styleUrl: './youth-messages.css',
 })
 export class YouthMessagesPage {
   protected readonly auth = inject(AuthStore);

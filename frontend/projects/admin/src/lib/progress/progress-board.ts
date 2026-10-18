@@ -59,28 +59,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
     Matrix,
   ],
   templateUrl: './progress-board.html',
-  styles: `
-    .board-filters {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(13rem, 1fr));
-      gap: var(--w-s4);
-      align-items: end;
-    }
-    .board-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s3);
-    }
-    @media (max-width: 42rem) {
-      .board-filters {
-        grid-template-columns: 1fr;
-      }
-      .board-actions .w-btn {
-        flex: 1 1 calc(50% - var(--w-s3));
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './progress-board.css',
 })
 export class ProgressBoardPage {
   protected readonly auth = inject(AuthStore);

@@ -39,6 +39,7 @@ import {
     Brand,
   ],
   templateUrl: './reset-password.html',
+  styleUrl: './reset-password.css',
 })
 export class ResetPassword {
   private readonly fb = inject(FormBuilder);

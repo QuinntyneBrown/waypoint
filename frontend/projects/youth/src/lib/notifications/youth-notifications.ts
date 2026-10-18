@@ -47,19 +47,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
     EmptyStateText,
   ],
   templateUrl: './youth-notifications.html',
-  styles: `
-    .notification-card {
-      display: block;
-      min-height: 44px;
-      color: inherit;
-      text-decoration: none;
-      overflow-wrap: anywhere;
-    }
-    .notification-card:focus-visible {
-      outline: 3px solid var(--w-ink);
-      outline-offset: 2px;
-    }
-  `,
+  styleUrl: './youth-notifications.css',
 })
 export class YouthNotifications {
   private readonly api = inject(NotificationsService);

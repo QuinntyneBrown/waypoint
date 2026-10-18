@@ -30,58 +30,7 @@ interface AttendanceRow extends VolunteerRosterEntry {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Shell, RouterLink, Button, Alert, Card, CardBody, Badge],
   templateUrl: './volunteer-attendance.html',
-  styles: [
-    `
-      .attendance-summary {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: var(--w-s3);
-      }
-      .attendance-summary > div {
-        padding: var(--w-s3);
-        text-align: center;
-      }
-      .attendance-summary strong {
-        display: block;
-        font-size: 1.25rem;
-      }
-      .attendance-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--w-s4);
-        padding: var(--w-s4) 0;
-        border-bottom: 1px solid var(--w-border);
-      }
-      .attendance-row:last-child {
-        border-bottom: 0;
-      }
-      .attendance-name {
-        font-weight: 700;
-      }
-      .attendance-actions {
-        display: flex;
-        gap: var(--w-s2);
-      }
-      .attendance-actions .is-selected {
-        outline: 3px solid var(--w-ink);
-        outline-offset: 2px;
-      }
-      .attendance-actions .w-btn {
-        min-height: 44px;
-        min-width: 44px;
-      }
-      @media (max-width: 575px) {
-        .attendance-row {
-          align-items: stretch;
-          flex-direction: column;
-        }
-        .attendance-actions .w-btn {
-          flex: 1;
-        }
-      }
-    `,
-  ],
+  styleUrl: './volunteer-attendance.css',
 })
 export class VolunteerAttendance implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);

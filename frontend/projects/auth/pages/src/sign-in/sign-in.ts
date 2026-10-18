@@ -40,6 +40,7 @@ import { EntryResolver } from '../entry';
     Brand,
   ],
   templateUrl: './sign-in.html',
+  styleUrl: './sign-in.css',
 })
 export class SignIn {
   private readonly fb = inject(FormBuilder);

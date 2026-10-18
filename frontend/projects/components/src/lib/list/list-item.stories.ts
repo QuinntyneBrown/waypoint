@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { ListItem, ListItemBody, ListItemMeta, ListItemTitle } from './list-item';
+import { ListItem } from './list-item';
+import { ListItemBody } from './list-item-body';
+import { ListItemMeta } from './list-item-meta';
+import { ListItemTitle } from './list-item-title';
 
 const meta: Meta<ListItem> = {
   title: 'Components/List item',

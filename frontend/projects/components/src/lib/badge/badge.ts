@@ -30,64 +30,8 @@ export type BadgeVariant =
     '[class.w-badge--outline]': "variant() === 'outline'",
     '[class.w-badge--dot]': 'dot()',
   },
-  template: '<ng-content />',
-  styles: `
-    .w-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: var(--w-font-head);
-      font-weight: 600;
-      font-size: 0.72rem;
-      letter-spacing: 0.02em;
-      padding: 3px 10px;
-      border-radius: var(--w-r-pill);
-      background: var(--w-g200);
-      color: var(--w-ink);
-      white-space: nowrap;
-      line-height: 1.4;
-    }
-    .w-badge .w-icon {
-      width: 13px;
-      height: 13px;
-    }
-    .w-badge--success {
-      background: var(--w-success-bg);
-      color: var(--color-success-fg);
-    }
-    .w-badge--warning {
-      background: var(--w-warning-bg);
-      color: var(--color-warning-fg);
-    }
-    .w-badge--error,
-    .w-badge--danger {
-      background: var(--w-error-bg);
-      color: var(--color-danger-fg);
-    }
-    .w-badge--info {
-      background: var(--w-info-bg);
-      color: var(--color-info-fg);
-    }
-    .w-badge--lime {
-      background: var(--w-lime);
-      color: var(--w-on-lime);
-    }
-    .w-badge--ink {
-      background: var(--w-ink);
-      color: var(--w-white);
-    }
-    .w-badge--outline {
-      background: transparent;
-      border: var(--w-bw) solid var(--w-border-strong);
-    }
-    .w-badge--dot::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-  `,
+  templateUrl: './badge.html',
+  styleUrl: './badge.css',
 })
 export class Badge {
   readonly variant = input<BadgeVariant | ''>('');

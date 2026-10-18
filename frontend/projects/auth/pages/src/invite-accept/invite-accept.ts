@@ -45,6 +45,7 @@ import {
     Brand,
   ],
   templateUrl: './invite-accept.html',
+  styleUrl: './invite-accept.css',
 })
 export class InviteAcceptPage {
   private readonly fb = inject(FormBuilder);

@@ -38,16 +38,7 @@ import { SkipLink } from '../skip-link/skip-link';
   },
   templateUrl: './shell.html',
   // Visually hidden name, so the visible avatar initials don't contradict an aria-label.
-  styles: `
-    .w-shell__account-label {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip-path: inset(50%);
-      white-space: nowrap;
-    }
-  `,
+  styleUrl: './shell.css',
 })
 export class Shell {
   readonly role = input.required<Role>();

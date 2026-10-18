@@ -56,62 +56,7 @@ import { AttendanceQueueService } from '@waypoint/core/attendance';
     EmptyState,
   ],
   templateUrl: './mentor-attendance-capture.html',
-  styles: `
-    .attendance-summary {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: var(--w-s3);
-    }
-    .attendance-summary > div {
-      padding: var(--w-s3);
-      text-align: center;
-    }
-    .attendance-summary strong {
-      display: block;
-      font-size: 1.25rem;
-    }
-    .attendance-row {
-      display: grid;
-      grid-template-columns: minmax(10rem, 0.5fr) minmax(22rem, 1fr) minmax(12rem, 0.6fr);
-      gap: var(--w-s4);
-      align-items: center;
-      padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-border);
-    }
-    .attendance-row:last-child {
-      border-bottom: 0;
-    }
-    .attendance-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s2);
-    }
-    .attendance-actions .w-btn {
-      min-width: 44px;
-      min-height: 44px;
-      flex: 1 1 auto;
-    }
-    .attendance-actions .is-selected {
-      outline: 3px solid var(--w-ink);
-      outline-offset: 1px;
-    }
-    @media (max-width: 64rem) {
-      .attendance-row {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 42rem) {
-      .attendance-summary {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .attendance-summary > div:first-child {
-        grid-column: 1 / -1;
-      }
-      .attendance-actions .w-btn {
-        flex: 1 1 calc(50% - var(--w-s2));
-      }
-    }
-  `,
+  styleUrl: './mentor-attendance-capture.css',
 })
 export class MentorAttendanceCapturePage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);

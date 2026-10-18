@@ -1,6 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Progress, ProgressRing, ProgressRingLabel } from './progress';
+import { Progress } from './progress';
+import { ProgressRing } from './progress-ring';
+import { ProgressRingLabel } from './progress-ring-label';
 
 @Component({
   imports: [Progress, ProgressRing, ProgressRingLabel],

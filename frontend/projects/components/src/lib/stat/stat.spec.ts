@@ -1,6 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Stat, StatDelta, StatLabel, StatValue } from './stat';
+import { Stat } from './stat';
+import { StatDelta } from './stat-delta';
+import { StatLabel } from './stat-label';
+import { StatValue } from './stat-value';
 
 @Component({
   imports: [Stat, StatLabel, StatValue, StatDelta],

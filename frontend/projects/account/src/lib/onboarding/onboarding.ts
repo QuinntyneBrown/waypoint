@@ -47,6 +47,7 @@ import { forkJoin, of, switchMap } from 'rxjs';
     Brand,
   ],
   templateUrl: './onboarding.html',
+  styleUrl: './onboarding.css',
 })
 export class Onboarding implements OnDestroy {
   private readonly fb = inject(FormBuilder);

@@ -46,25 +46,7 @@ const OPTIONAL_PROMPT = 'One action I will take';
     Scripture,
   ],
   templateUrl: './youth-reflection.html',
-  styles: `
-    .mood-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
-      gap: var(--w-s2);
-    }
-    .mood-option,
-    .share-option {
-      min-height: 2.75rem;
-      display: flex;
-      align-items: center;
-      gap: var(--w-s2);
-      cursor: pointer;
-    }
-    textarea {
-      min-height: 10rem;
-      resize: vertical;
-    }
-  `,
+  styleUrl: './youth-reflection.css',
 })
 export class YouthReflectionPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);

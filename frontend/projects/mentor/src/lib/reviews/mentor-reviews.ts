@@ -39,32 +39,7 @@ import {
     EmptyStateText,
   ],
   templateUrl: './mentor-reviews.html',
-  styles: `
-    .queue-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--w-s4);
-      padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-border);
-    }
-    .queue-row:last-child {
-      border-bottom: 0;
-    }
-    .queue-link {
-      min-height: 44px;
-      flex: none;
-    }
-    @media (max-width: 40rem) {
-      .queue-row {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-      .queue-link {
-        width: 100%;
-      }
-    }
-  `,
+  styleUrl: './mentor-reviews.css',
 })
 export class MentorReviewsPage {
   protected readonly auth = inject(AuthStore);

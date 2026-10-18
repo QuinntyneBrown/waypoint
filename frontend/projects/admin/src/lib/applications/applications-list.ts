@@ -84,37 +84,7 @@ type Decision = 'approve' | 'decline';
     DialogFooter,
   ],
   templateUrl: './applications-list.html',
-  styles: `
-    .application-name {
-      min-width: 12rem;
-    }
-    .review-detail {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .review-detail__wide {
-      grid-column: 1 / -1;
-    }
-    .detail-copy {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-    .w-modal__footer .w-btn {
-      min-height: 45px;
-    }
-    @media (max-width: 42rem) {
-      .review-detail {
-        grid-template-columns: 1fr;
-      }
-      .review-detail__wide {
-        grid-column: auto;
-      }
-      .w-modal__footer .w-btn {
-        flex: 1 1 100%;
-      }
-    }
-  `,
+  styleUrl: './applications-list.css',
 })
 export class ApplicationsList {
   protected readonly auth = inject(AuthStore);

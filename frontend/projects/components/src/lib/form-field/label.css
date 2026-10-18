@@ -1,0 +1,7 @@
+.w-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: var(--w-ink);
+}

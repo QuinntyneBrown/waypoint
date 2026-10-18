@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { ErrorText, FormField, Help, Label, LabelRequired } from './form-field';
+import { ErrorText } from './error-text';
+import { FormField } from './form-field';
+import { Help } from './help';
+import { Label } from './label';
+import { LabelRequired } from './label-required';
 
 const meta: Meta<FormField> = {
   title: 'Components/Form field',

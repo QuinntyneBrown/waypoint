@@ -30,6 +30,7 @@ import {
     EmptyState,
   ],
   templateUrl: './about.html',
+  styleUrl: './about.css',
 })
 export class About {
   private readonly api = inject(PublicSiteService);

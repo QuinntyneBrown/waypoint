@@ -34,6 +34,7 @@ import { shellRole } from '@waypoint/core';
     EmptyStateText,
   ],
   templateUrl: './youth-announcements.html',
+  styleUrl: './youth-announcements.css',
 })
 export class YouthAnnouncements {
   private readonly api = inject(AnnouncementsService);

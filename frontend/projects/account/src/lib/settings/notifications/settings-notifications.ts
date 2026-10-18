@@ -19,6 +19,7 @@ interface PrefRow {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [SettingsShell, Checkbox, CheckboxBox],
   templateUrl: './settings-notifications.html',
+  styleUrl: './settings-notifications.css',
 })
 export class SettingsNotifications {
   private readonly api = inject(NotificationPreferencesService);

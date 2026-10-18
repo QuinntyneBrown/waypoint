@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Progress, ProgressRing, ProgressRingLabel } from './progress';
+import { Progress } from './progress';
+import { ProgressRing } from './progress-ring';
+import { ProgressRingLabel } from './progress-ring-label';
 
 const meta: Meta<Progress> = {
   title: 'Components/Progress',

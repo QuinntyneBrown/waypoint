@@ -18,38 +18,8 @@ export type SkeletonVariant = 'text' | 'title' | 'circle' | 'block' | 'btn';
     '[class.w-skeleton--block]': "variant() === 'block'",
     '[class.w-skeleton--btn]': "variant() === 'btn'",
   },
-  template: '',
-  styles: `
-    .w-skeleton {
-      background: linear-gradient(90deg, var(--w-g200) 25%, var(--w-g100) 37%, var(--w-g200) 63%);
-      background-size: 400% 100%;
-      animation: w-shimmer 1.4s ease infinite;
-      border-radius: 6px;
-      display: block;
-    }
-    .w-skeleton--text {
-      height: 0.8em;
-      margin: 0.35em 0;
-      border-radius: 4px;
-    }
-    .w-skeleton--title {
-      height: 1.4em;
-      width: 50%;
-      margin-bottom: 0.6em;
-    }
-    .w-skeleton--circle {
-      border-radius: 50%;
-    }
-    .w-skeleton--block {
-      height: 120px;
-      border-radius: var(--w-r-card);
-    }
-    .w-skeleton--btn {
-      height: 44px;
-      width: 120px;
-      border-radius: var(--w-r-pill);
-    }
-  `,
+  templateUrl: './skeleton.html',
+  styleUrl: './skeleton.css',
 })
 export class Skeleton {
   readonly variant = input<SkeletonVariant | ''>('');

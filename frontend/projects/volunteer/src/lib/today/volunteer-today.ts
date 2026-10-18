@@ -35,6 +35,7 @@ import {
     EmptyStateText,
   ],
   templateUrl: './volunteer-today.html',
+  styleUrl: './volunteer-today.css',
 })
 export class VolunteerToday {
   protected readonly auth = inject(AuthStore);

@@ -8,15 +8,8 @@ import { Button, StatePage } from '@waypoint/components';
   selector: 'w-not-found',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
-  template: `<w-state-page
-    icon="compass"
-    tone="info"
-    eyebrow="Error 404"
-    title="Page not found"
-    text="The page you’re looking for moved or never existed. Let’s get you back on track."
-  >
-    <a w-button variant="primary" [routerLink]="home">Back to safety</a>
-  </w-state-page>`,
+  templateUrl: './not-found.html',
+  styleUrl: './not-found.css',
 })
 export class NotFound {
   private readonly auth = inject(AuthStore);

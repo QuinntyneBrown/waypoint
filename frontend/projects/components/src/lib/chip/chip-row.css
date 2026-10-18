@@ -1,0 +1,5 @@
+.w-pillrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

@@ -11,7 +11,8 @@ const NON_CRITICAL_RUNTIME_DELAY_MS = 1_500;
 @Component({
   selector: 'w-root',
   imports: [RouterOutlet, ToastHost],
-  template: `<router-outlet /> <w-toast-host />`,
+  templateUrl: './app.html',
+  styleUrl: './app.css',
 })
 export class App {
   private readonly session = inject(SessionStore);

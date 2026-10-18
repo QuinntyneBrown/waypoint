@@ -7,15 +7,7 @@ import { Button, StatePage } from '@waypoint/components';
   selector: 'w-reset-link-invalid',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
-  template: `<w-state-page
-    icon="alert-triangle"
-    tone="error"
-    eyebrow="Reset link"
-    title="This link is invalid or expired"
-    text="Reset links can only be used once and expire after an hour. Request a fresh link to continue."
-  >
-    <a w-button variant="primary" routerLink="/auth/forgot-password">Request a new link</a>
-    <a w-button variant="ghost" routerLink="/auth/sign-in">Back to sign in</a>
-  </w-state-page>`,
+  templateUrl: './reset-link-invalid.html',
+  styleUrl: './reset-link-invalid.css',
 })
 export class ResetLinkInvalid {}

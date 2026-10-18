@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Switch, SwitchTrack } from './switch';
+import { Switch } from './switch';
+import { SwitchTrack } from './switch-track';
 
 const meta: Meta<Switch> = {
   title: 'Components/Switch',

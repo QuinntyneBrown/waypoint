@@ -58,37 +58,7 @@ type HistoryView = 'session' | 'youth';
     Tab,
   ],
   templateUrl: './mentor-attendance-history.html',
-  styles: `
-    .history-toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: end;
-      justify-content: space-between;
-      gap: var(--w-s4);
-    }
-    .history-filters {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: end;
-      gap: var(--w-s3);
-    }
-    [role='tab'],
-    .history-toolbar .w-btn,
-    .w-table .w-btn {
-      min-height: 44px;
-    }
-    @media (max-width: 42rem) {
-      .history-filters,
-      .history-filters .w-field,
-      .history-filters .w-btn,
-      .history-toolbar > .w-cluster {
-        width: 100%;
-      }
-      .history-toolbar > .w-cluster .w-btn {
-        flex: 1;
-      }
-    }
-  `,
+  styleUrl: './mentor-attendance-history.css',
 })
 export class MentorAttendanceHistoryPage {
   protected readonly auth = inject(AuthStore);

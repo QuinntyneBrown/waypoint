@@ -58,35 +58,7 @@ type CheckInType = '1:1' | 'call' | 'session';
     EmptyStateText,
   ],
   templateUrl: './mentor-check-ins.html',
-  styles: `
-    .check-in-layout {
-      display: grid;
-      grid-template-columns: minmax(19rem, 0.75fr) minmax(0, 1.25fr);
-      gap: var(--w-s6);
-      align-items: start;
-    }
-    .history-filters {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .history-card p {
-      overflow-wrap: anywhere;
-    }
-    .save-button {
-      min-height: 44px;
-    }
-    @media (max-width: 56rem) {
-      .check-in-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 32rem) {
-      .history-filters {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './mentor-check-ins.css',
 })
 export class MentorCheckInsPage {
   protected readonly auth = inject(AuthStore);

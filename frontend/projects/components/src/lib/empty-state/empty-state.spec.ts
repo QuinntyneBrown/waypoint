@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Icon } from '../icon/icon';
-import { EmptyState, EmptyStateIcon, EmptyStateText, EmptyStateTitle } from './empty-state';
+import { EmptyState } from './empty-state';
+import { EmptyStateIcon } from './empty-state-icon';
+import { EmptyStateText } from './empty-state-text';
+import { EmptyStateTitle } from './empty-state-title';
 
 @Component({
   imports: [EmptyState, EmptyStateIcon, EmptyStateTitle, EmptyStateText, Icon],

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Timeline, TimelineItem } from './timeline';
+import { Timeline } from './timeline';
+import { TimelineItem } from './timeline-item';
 
 const meta: Meta<Timeline> = {
   title: 'Components/Timeline',

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Scripture, ScriptureRef } from './scripture';
+import { Scripture } from './scripture';
+import { ScriptureRef } from './scripture-ref';
 
 @Component({
   imports: [Scripture, ScriptureRef],

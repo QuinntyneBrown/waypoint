@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Chip, ChipRow } from './chip';
+import { Chip } from './chip';
+import { ChipRow } from './chip-row';
 
 const meta: Meta<Chip> = {
   title: 'Components/Chip',

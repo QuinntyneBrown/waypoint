@@ -37,6 +37,7 @@ import {
     EmptyStateText,
   ],
   templateUrl: './guardian-announcements.html',
+  styleUrl: './guardian-announcements.css',
 })
 export class GuardianAnnouncements {
   protected readonly auth = inject(AuthStore);

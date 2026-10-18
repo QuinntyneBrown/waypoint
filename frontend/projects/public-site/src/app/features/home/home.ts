@@ -18,6 +18,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, Button, Alert, Card, CardBody, CardTitle, Stat, StatValue, StatLabel],
   templateUrl: './home.html',
+  styleUrl: './home.css',
 })
 export class Home {
   private readonly api = inject(PublicSiteService);

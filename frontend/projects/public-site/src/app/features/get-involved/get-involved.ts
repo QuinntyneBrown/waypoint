@@ -55,6 +55,7 @@ function isEmail(value: string): boolean {
     EmptyStateText,
   ],
   templateUrl: './get-involved.html',
+  styleUrl: './get-involved.css',
 })
 export class GetInvolved {
   private readonly fb = inject(FormBuilder);

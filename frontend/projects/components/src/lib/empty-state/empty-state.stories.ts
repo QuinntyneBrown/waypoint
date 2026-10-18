@@ -3,7 +3,10 @@ import { moduleMetadata } from '@storybook/angular';
 import { Button } from '../button/button';
 import { Card } from '../card/card';
 import { Icon } from '../icon/icon';
-import { EmptyState, EmptyStateIcon, EmptyStateText, EmptyStateTitle } from './empty-state';
+import { EmptyState } from './empty-state';
+import { EmptyStateIcon } from './empty-state-icon';
+import { EmptyStateText } from './empty-state-text';
+import { EmptyStateTitle } from './empty-state-title';
 
 const meta: Meta<EmptyState> = {
   title: 'Components/Empty state',

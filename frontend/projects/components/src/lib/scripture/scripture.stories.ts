@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Scripture, ScriptureRef } from './scripture';
+import { Scripture } from './scripture';
+import { ScriptureRef } from './scripture-ref';
 
 const meta: Meta<Scripture> = {
   title: 'Components/Scripture',

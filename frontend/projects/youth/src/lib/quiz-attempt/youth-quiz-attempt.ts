@@ -37,6 +37,7 @@ type QuizAnswers = Record<string, number[] | string>;
     QuizOption,
   ],
   templateUrl: './youth-quiz-attempt.html',
+  styleUrl: './youth-quiz-attempt.css',
 })
 export class YouthQuizAttemptPage {
   protected readonly auth = inject(AuthStore);

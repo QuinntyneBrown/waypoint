@@ -1,0 +1,7 @@
+.w-modal__footer {
+  padding: var(--w-s4) var(--w-s6) var(--w-s6);
+  display: flex;
+  gap: var(--w-s3);
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}

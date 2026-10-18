@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Card, CardBody, CardFooter, CardHeader, CardTitle } from './card';
+import { Card } from './card';
+import { CardBody } from './card-body';
+import { CardFooter } from './card-footer';
+import { CardHeader } from './card-header';
+import { CardTitle } from './card-title';
 
 const meta: Meta<Card> = {
   title: 'Components/Card',

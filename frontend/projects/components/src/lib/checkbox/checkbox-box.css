@@ -1,0 +1,29 @@
+.w-check__box {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: var(--w-bw) solid var(--w-border-strong);
+  background: var(--w-white);
+  display: grid;
+  place-items: center;
+  margin-top: 0;
+  border-radius: 5px;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+.w-check__box .w-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--w-on-lime);
+  opacity: 0;
+}
+.w-check__box:empty::after {
+  content: '';
+  width: 5px;
+  height: 10px;
+  border: solid var(--w-on-lime);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-1px, -1px);
+  opacity: 0;
+}

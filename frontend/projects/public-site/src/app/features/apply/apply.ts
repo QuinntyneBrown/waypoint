@@ -53,6 +53,7 @@ function isEmail(value: string): boolean {
     EmptyStateText,
   ],
   templateUrl: './apply.html',
+  styleUrl: './apply.css',
 })
 export class Apply {
   private readonly fb = inject(FormBuilder);

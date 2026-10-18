@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ButtonGroup, ButtonGroupItem } from './button-group';
+import { ButtonGroup } from './button-group';
+import { ButtonGroupItem } from './button-group-item';
 
 @Component({
   imports: [ButtonGroup, ButtonGroupItem],

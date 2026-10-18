@@ -8,35 +8,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: { class: 'w-iconbtn' },
-  template: '<ng-content />',
-  styles: `
-    .w-iconbtn {
-      width: 44px;
-      height: 44px;
-      border-radius: var(--w-r-pill);
-      border: 0;
-      background: transparent;
-      color: var(--w-ink);
-      display: inline-grid;
-      place-items: center;
-      cursor: pointer;
-      position: relative;
-      flex: none;
-    }
-    .w-iconbtn:hover {
-      background: var(--w-g200);
-    }
-    .w-iconbtn .w-icon {
-      width: 20px;
-      height: 20px;
-    }
-    .w-iconbtn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    .w-iconbtn:disabled:hover {
-      background: transparent;
-    }
-  `,
+  templateUrl: './icon-button.html',
+  styleUrl: './icon-button.css',
 })
 export class IconButton {}

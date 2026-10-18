@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Timeline, TimelineItem } from './timeline';
+import { Timeline } from './timeline';
+import { TimelineItem } from './timeline-item';
 
 @Component({
   imports: [Timeline, TimelineItem],

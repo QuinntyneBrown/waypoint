@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Matrix, Table, TableWrap } from './table';
+import { Matrix } from './matrix';
+import { Table } from './table';
+import { TableWrap } from './table-wrap';
 
 @Component({
   imports: [TableWrap, Table, Matrix],

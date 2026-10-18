@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Tab, Tabs } from './tabs';
+import { Tab } from './tab';
+import { Tabs } from './tabs';
 
 const meta: Meta<Tabs> = {
   title: 'Components/Tabs',

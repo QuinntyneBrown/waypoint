@@ -10,17 +10,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: { class: 'w-pagination' },
-  template: '<ng-content />',
-  styles: `
-    .w-pagination {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--w-s3);
-      flex-wrap: wrap;
-      padding-top: var(--w-s4);
-      font-size: 0.875rem;
-    }
-  `,
+  templateUrl: './pagination.html',
+  styleUrl: './pagination.css',
 })
 export class Pagination {}

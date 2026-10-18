@@ -1,0 +1,20 @@
+.w-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.w-switch input {
+  position: absolute;
+  opacity: 0;
+}
+.w-switch input:checked + .w-switch__track {
+  background: var(--w-ink);
+}
+.w-switch input:checked + .w-switch__track::after {
+  transform: translateX(18px);
+}
+.w-switch input:focus-visible + .w-switch__track {
+  outline: 2px solid var(--w-ink);
+  outline-offset: 2px;
+}

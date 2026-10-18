@@ -35,6 +35,7 @@ import { GuardianContextService } from '../guardian-context.service';
     ListItemMeta,
   ],
   templateUrl: './guardian-progress.html',
+  styleUrl: './guardian-progress.css',
 })
 export class GuardianProgress {
   protected readonly auth = inject(AuthStore);

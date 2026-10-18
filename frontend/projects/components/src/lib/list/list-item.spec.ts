@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ListItem, ListItemBody, ListItemMeta, ListItemTitle } from './list-item';
+import { ListItem } from './list-item';
+import { ListItemBody } from './list-item-body';
+import { ListItemMeta } from './list-item-meta';
+import { ListItemTitle } from './list-item-title';
 
 @Component({
   imports: [ListItem, ListItemBody, ListItemTitle, ListItemMeta],

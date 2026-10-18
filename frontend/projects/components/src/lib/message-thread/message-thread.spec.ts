@@ -1,6 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { MessageBubble, MessageBubbleTime, MessageThread } from './message-thread';
+import { MessageBubble } from './message-bubble';
+import { MessageBubbleTime } from './message-bubble-time';
+import { MessageThread } from './message-thread';
 
 @Component({
   imports: [MessageThread, MessageBubble, MessageBubbleTime],

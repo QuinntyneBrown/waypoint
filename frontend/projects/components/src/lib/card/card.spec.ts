@@ -1,6 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Card, CardBody, CardFooter, CardHeader, CardTitle } from './card';
+import { Card } from './card';
+import { CardBody } from './card-body';
+import { CardFooter } from './card-footer';
+import { CardHeader } from './card-header';
+import { CardTitle } from './card-title';
 
 @Component({
   imports: [Card, CardHeader, CardTitle, CardBody, CardFooter],

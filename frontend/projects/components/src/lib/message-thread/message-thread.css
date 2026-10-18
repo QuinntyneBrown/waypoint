@@ -1,0 +1,5 @@
+.w-thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--w-s2);
+}

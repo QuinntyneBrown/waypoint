@@ -37,6 +37,7 @@ import {
     TimelineItem,
   ],
   templateUrl: './youth-journey.html',
+  styleUrl: './youth-journey.css',
 })
 export class YouthJourneyPage {
   protected readonly auth = inject(AuthStore);

@@ -48,6 +48,7 @@ import { GuardianContextService } from '../guardian-context.service';
     EmptyStateText,
   ],
   templateUrl: './guardian-consent.html',
+  styleUrl: './guardian-consent.css',
 })
 export class GuardianConsent {
   protected readonly auth = inject(AuthStore);

@@ -1,0 +1,24 @@
+.w-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--w-font-head);
+  font-weight: 500;
+  font-size: 0.92rem;
+  color: var(--w-muted);
+  padding: 12px 14px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  margin-bottom: -1.5px;
+}
+.w-tab:hover {
+  color: var(--w-ink);
+}
+.w-tab.is-active {
+  color: var(--w-ink);
+  border-bottom-color: var(--w-ink);
+}
+.w-tab .w-badge {
+  margin-left: 6px;
+}

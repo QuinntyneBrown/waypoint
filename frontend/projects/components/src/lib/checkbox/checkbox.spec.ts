@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Checkbox, CheckboxBox } from './checkbox';
+import { Checkbox } from './checkbox';
+import { CheckboxBox } from './checkbox-box';
 
 @Component({
   imports: [Checkbox, CheckboxBox],

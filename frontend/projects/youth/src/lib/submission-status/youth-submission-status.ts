@@ -11,16 +11,7 @@ import { Button, Link, Shell, Alert, Card, CardBody, Badge } from '@waypoint/com
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Shell, RouterLink, Button, Link, Alert, Card, CardBody, Badge],
   templateUrl: './youth-submission-status.html',
-  styles: `
-    .coding-sample {
-      overflow-x: auto;
-      white-space: pre-wrap;
-      padding: var(--w-s4);
-      background: #17202a;
-      color: #f8f9f9;
-      border-radius: var(--w-r-input);
-    }
-  `,
+  styleUrl: './youth-submission-status.css',
 })
 export class YouthSubmissionStatusPage implements OnDestroy {
   protected readonly auth = inject(AuthStore);

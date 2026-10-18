@@ -51,6 +51,7 @@ function isEmail(value: string): boolean {
     EmptyStateText,
   ],
   templateUrl: './contact.html',
+  styleUrl: './contact.css',
 })
 export class Contact {
   private readonly fb = inject(FormBuilder);

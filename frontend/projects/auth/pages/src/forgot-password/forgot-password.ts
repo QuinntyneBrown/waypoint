@@ -20,6 +20,7 @@ import { PasswordResetService } from '@waypoint/api';
     Brand,
   ],
   templateUrl: './forgot-password.html',
+  styleUrl: './forgot-password.css',
 })
 export class ForgotPassword {
   private readonly fb = inject(FormBuilder);

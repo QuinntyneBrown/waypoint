@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { MarketingNav, MarketingNavLinks } from './marketing-nav';
+import { MarketingNav } from './marketing-nav';
+import { MarketingNavLinks } from './marketing-nav-links';
 
 @Component({
   imports: [MarketingNav, MarketingNavLinks],

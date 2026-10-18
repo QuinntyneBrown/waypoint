@@ -10,6 +10,7 @@ import { Button, Shell, Alert, Card, CardBody, CardTitle, Badge } from '@waypoin
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Shell, RouterLink, Button, Alert, Card, CardBody, CardTitle, Badge],
   templateUrl: './youth-quiz-result.html',
+  styleUrl: './youth-quiz-result.css',
 })
 export class YouthQuizResultPage {
   protected readonly auth = inject(AuthStore);

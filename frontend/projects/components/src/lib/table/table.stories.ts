@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { Matrix, Table, TableWrap } from './table';
+import { Matrix } from './matrix';
+import { Table } from './table';
+import { TableWrap } from './table-wrap';
 
 const meta: Meta<Table> = {
   title: 'Components/Table',

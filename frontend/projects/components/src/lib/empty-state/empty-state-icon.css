@@ -1,0 +1,14 @@
+.w-empty__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--w-g100);
+  display: grid;
+  place-items: center;
+  margin: 0 auto var(--w-s4);
+}
+.w-empty__icon .w-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--w-ink-45);
+}

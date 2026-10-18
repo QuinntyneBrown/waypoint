@@ -38,18 +38,7 @@ type DetailTab =
     DescriptionList,
   ],
   templateUrl: './mentor-youth-detail.html',
-  styles: `
-    .detail-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s5);
-    }
-    @media (max-width: 40rem) {
-      .detail-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './mentor-youth-detail.css',
 })
 export class MentorYouthDetailPage {
   protected readonly auth = inject(AuthStore);

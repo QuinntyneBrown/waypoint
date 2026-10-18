@@ -59,31 +59,7 @@ const ROLES: readonly WRoleName[] = [
     Table,
   ],
   templateUrl: './users-roles.html',
-  styles: `
-    .users-filters {
-      display: grid;
-      gap: var(--w-s4);
-      grid-template-columns: minmax(14rem, 2fr) minmax(10rem, 1fr) auto;
-      align-items: end;
-    }
-    .user-cell {
-      align-items: center;
-      display: flex;
-      gap: var(--w-s3);
-      min-width: 14rem;
-    }
-    .role-action {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s2);
-    }
-    @media (max-width: 48rem) {
-      .users-filters {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './users-roles.css',
 })
 export class UsersRolesPage {
   protected readonly auth = inject(AuthStore);

@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Tab, Tabs } from './tabs';
+import { Tab } from './tab';
+import { Tabs } from './tabs';
 
 @Component({
   imports: [Tabs, Tab],

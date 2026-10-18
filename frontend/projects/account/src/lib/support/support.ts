@@ -54,6 +54,7 @@ import { shellRole } from '@waypoint/core';
     EmptyStateText,
   ],
   templateUrl: './support.html',
+  styleUrl: './support.css',
 })
 export class Support implements OnDestroy {
   private readonly fb = inject(FormBuilder);

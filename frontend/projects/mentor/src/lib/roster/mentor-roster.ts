@@ -55,22 +55,7 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
     Table,
   ],
   templateUrl: './mentor-roster.html',
-  styles: `
-    .roster-controls {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: var(--w-s4);
-    }
-    .roster-search {
-      flex: 1 1 16rem;
-      max-width: 24rem;
-    }
-    .filter-button {
-      min-height: 44px;
-    }
-  `,
+  styleUrl: './mentor-roster.css',
 })
 export class MentorRosterPage {
   protected readonly auth = inject(AuthStore);

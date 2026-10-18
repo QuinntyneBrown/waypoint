@@ -9,16 +9,8 @@ import { FormDraftService } from '@waypoint/core';
   selector: 'w-server-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
-  template: `<w-state-page
-    icon="alert-triangle"
-    tone="error"
-    eyebrow="Error 500"
-    title="Something went wrong"
-    text="We hit a snag on our end — nothing you did caused it. Please try again in a moment."
-  >
-    <button w-button variant="primary" type="button" (click)="retry()">Try again</button>
-    <a w-button variant="ghost" [routerLink]="home">Back to home</a>
-  </w-state-page>`,
+  templateUrl: './server-error.html',
+  styleUrl: './server-error.css',
 })
 export class ServerError {
   private readonly auth = inject(AuthStore);

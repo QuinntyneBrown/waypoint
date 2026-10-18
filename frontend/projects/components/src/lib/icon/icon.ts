@@ -22,13 +22,8 @@ import { W_ICONS } from './icons';
   selector: 'w-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { style: 'display: contents' },
-  template: `<svg
-    #svg
-    [class]="classes()"
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    focusable="false"
-  ></svg>`,
+  templateUrl: './icon.html',
+  styleUrl: './icon.css',
 })
 export class Icon {
   /** Icon name, e.g. 'home', 'chevron-right'. Unknown names render an empty glyph. */

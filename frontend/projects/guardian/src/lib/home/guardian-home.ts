@@ -41,6 +41,7 @@ import { GuardianContextService } from '../guardian-context.service';
     StatLabel,
   ],
   templateUrl: './guardian-home.html',
+  styleUrl: './guardian-home.css',
 })
 export class GuardianHome {
   protected readonly auth = inject(AuthStore);

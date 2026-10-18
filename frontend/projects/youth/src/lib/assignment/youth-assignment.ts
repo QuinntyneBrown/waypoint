@@ -39,6 +39,7 @@ import {
     CardBody,
   ],
   templateUrl: './youth-assignment.html',
+  styleUrl: './youth-assignment.css',
 })
 export class YouthAssignmentPage {
   protected readonly auth = inject(AuthStore);

@@ -21,6 +21,7 @@ import { Button, FormField, Label, Shell, Textarea, TextField, Alert } from '@wa
     Alert,
   ],
   templateUrl: './youth-resubmit.html',
+  styleUrl: './youth-resubmit.css',
 })
 export class YouthResubmitPage {
   protected readonly auth = inject(AuthStore);

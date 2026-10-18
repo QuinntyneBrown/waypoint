@@ -53,44 +53,7 @@ import {
     QuizOption,
   ],
   templateUrl: './mentor-quiz-review.html',
-  styles: `
-    .assessment-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.65fr);
-      gap: var(--w-s6);
-      align-items: start;
-    }
-    .score-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .answer-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: var(--w-s3);
-    }
-    .answer-copy {
-      min-width: 0;
-      flex: 1;
-      overflow-wrap: anywhere;
-    }
-    .approve-button {
-      min-height: 44px;
-    }
-    @media (max-width: 52rem) {
-      .assessment-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 32rem) {
-      .score-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './mentor-quiz-review.css',
 })
 export class MentorQuizReviewPage {
   protected readonly auth = inject(AuthStore);

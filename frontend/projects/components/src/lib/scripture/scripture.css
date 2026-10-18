@@ -1,0 +1,9 @@
+.w-scripture {
+  border-left: 3px solid var(--w-lime);
+  background: var(--w-g100);
+  padding: var(--w-s5) var(--w-s6);
+  border-radius: 0 var(--w-r-card) var(--w-r-card) 0;
+  font-family: var(--w-font-serif);
+  font-size: 1.15rem;
+  line-height: 1.6;
+}

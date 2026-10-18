@@ -78,7 +78,7 @@ interface BadgeTarget {
     DialogBody,
   ],
   templateUrl: './badge-builder.html',
-  styleUrl: './curriculum-admin.css',
+  styleUrl: './badge-builder.css',
 })
 export class BadgeBuilderPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);

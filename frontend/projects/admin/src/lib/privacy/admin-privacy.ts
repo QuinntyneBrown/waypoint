@@ -65,73 +65,7 @@ import {
     EmptyStateText,
   ],
   templateUrl: './admin-privacy.html',
-  styles: `
-    .privacy-layout {
-      display: grid;
-      gap: var(--w-s5);
-      grid-template-columns: minmax(0, 1.35fr) minmax(20rem, 0.65fr);
-    }
-    .privacy-row {
-      border-top: 1px solid var(--w-border);
-      padding: var(--w-s4) 0;
-    }
-    .privacy-row:first-child {
-      border-top: 0;
-    }
-    .privacy-meta {
-      display: grid;
-      gap: var(--w-s2);
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .privacy-meta span {
-      overflow-wrap: anywhere;
-    }
-    .verified-records {
-      border: 0;
-      border-top: 1px solid var(--w-border);
-      margin: var(--w-s2) 0 0;
-      padding: var(--w-s5) 0 0;
-    }
-    .verified-records legend {
-      font-size: 1.05rem;
-      font-weight: 700;
-      padding: 0;
-    }
-    .verified-records__grid {
-      display: grid;
-      gap: var(--w-s3);
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .verified-records__grid .w-field {
-      margin-bottom: 0;
-    }
-    .verified-attestation {
-      background: var(--w-warning-bg);
-      border: 2px solid var(--w-warning);
-      border-radius: var(--w-r-card);
-      padding: var(--w-s4);
-    }
-    .verified-attestation .w-check {
-      align-items: flex-start;
-      margin-bottom: 0;
-    }
-    .verified-error {
-      color: var(--w-error);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-top: var(--w-s2);
-    }
-    @media (max-width: 62rem) {
-      .privacy-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 36rem) {
-      .privacy-meta {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './admin-privacy.css',
 })
 export class AdminPrivacyPage {
   protected readonly auth = inject(AuthStore);

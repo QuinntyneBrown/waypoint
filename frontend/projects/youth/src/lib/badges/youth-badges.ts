@@ -36,6 +36,7 @@ import {
     Progress,
   ],
   templateUrl: './youth-badges.html',
+  styleUrl: './youth-badges.css',
 })
 export class YouthBadgesPage {
   protected readonly auth = inject(AuthStore);

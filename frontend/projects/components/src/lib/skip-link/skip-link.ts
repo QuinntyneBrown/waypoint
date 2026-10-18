@@ -10,22 +10,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: { class: 'w-skip-link' },
-  template: '<ng-content />',
-  styles: `
-    .w-skip-link {
-      position: absolute;
-      left: var(--w-s4);
-      top: -60px;
-      z-index: 100;
-      padding: var(--w-s2) var(--w-s4);
-      background: var(--w-ink);
-      color: var(--w-white);
-      border-radius: var(--w-r-input);
-      transition: top 0.15s ease;
-    }
-    .w-skip-link:focus {
-      top: var(--w-s3);
-    }
-  `,
+  templateUrl: './skip-link.html',
+  styleUrl: './skip-link.css',
 })
 export class SkipLink {}

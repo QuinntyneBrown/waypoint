@@ -36,6 +36,17 @@ module.exports = defineConfig([
     },
   },
   {
+    // Every component has its own .ts, .html and .css file (AGENTS.md).
+    files: ['**/*.ts'],
+    ignores: ['**/*.spec.ts', '**/*.stories.ts'],
+    rules: {
+      '@angular-eslint/component-max-inline-declarations': [
+        'error',
+        { template: 0, styles: 0, animations: 0 },
+      ],
+    },
+  },
+  {
     files: ['**/*.html'],
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {

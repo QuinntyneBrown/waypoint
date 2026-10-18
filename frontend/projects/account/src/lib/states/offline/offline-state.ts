@@ -7,15 +7,8 @@ import { Button, StatePage } from '@waypoint/components';
   selector: 'w-offline-state',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, Button],
-  template: `<w-state-page
-    icon="wifi-off"
-    tone="warning"
-    eyebrow="You’re offline"
-    title="No connection right now"
-    text="Check your internet connection. Anything already loaded stays available, and we’ll reconnect automatically."
-  >
-    <button w-button variant="primary" type="button" (click)="retry()">Retry</button>
-  </w-state-page>`,
+  templateUrl: './offline-state.html',
+  styleUrl: './offline-state.css',
 })
 export class OfflineState {
   private readonly doc = inject(DOCUMENT);

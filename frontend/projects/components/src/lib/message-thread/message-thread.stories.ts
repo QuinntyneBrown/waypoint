@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { MessageBubble, MessageBubbleTime, MessageThread } from './message-thread';
+import { MessageBubble } from './message-bubble';
+import { MessageBubbleTime } from './message-bubble-time';
+import { MessageThread } from './message-thread';
 
 const meta: Meta<MessageThread> = {
   title: 'Components/Message thread',

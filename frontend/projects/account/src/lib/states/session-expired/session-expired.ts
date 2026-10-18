@@ -8,21 +8,8 @@ import { FormDraftService } from '@waypoint/core';
   selector: 'w-session-expired',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
-  template: `<w-state-page
-    icon="clock"
-    tone="warning"
-    eyebrow="Session expired"
-    title="You’ve been signed out"
-    text="For your security we signed you out after a period of inactivity. Any work in progress has been saved — sign in to pick up where you left off."
-  >
-    <a
-      w-button
-      variant="primary"
-      routerLink="/auth/sign-in"
-      [queryParams]="returnUrl ? { returnUrl } : null"
-      >Sign in again</a
-    >
-  </w-state-page>`,
+  templateUrl: './session-expired.html',
+  styleUrl: './session-expired.css',
 })
 export class SessionExpired {
   private readonly route = inject(ActivatedRoute);

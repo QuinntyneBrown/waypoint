@@ -9,16 +9,8 @@ import { ToastService, Button, StatePage } from '@waypoint/components';
   selector: 'w-reset-link-sent',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
-  template: `<w-state-page
-    icon="mail"
-    tone="info"
-    eyebrow="Reset link sent"
-    title="Check your email"
-    [text]="bodyText"
-  >
-    <button w-button variant="ghost" type="button" (click)="resend()">Resend link</button>
-    <a w-button variant="primary" routerLink="/auth/sign-in">Back to sign in</a>
-  </w-state-page>`,
+  templateUrl: './reset-link-sent.html',
+  styleUrl: './reset-link-sent.css',
 })
 export class ResetLinkSent {
   private readonly doc = inject(DOCUMENT);

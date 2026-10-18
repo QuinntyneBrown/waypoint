@@ -1,0 +1,6 @@
+.w-segment {
+  display: inline-flex;
+  background: var(--w-g200);
+  border-radius: var(--w-r-pill);
+  padding: 3px;
+}

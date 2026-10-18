@@ -7,14 +7,7 @@ import { Button, StatePage } from '@waypoint/components';
   selector: 'w-reset-success',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
-  template: `<w-state-page
-    icon="check-circle"
-    tone="success"
-    eyebrow="All set"
-    title="Your password was updated"
-    text="For your security we signed out your other sessions. Sign in with your new password."
-  >
-    <a w-button variant="primary" routerLink="/auth/sign-in">Sign in</a>
-  </w-state-page>`,
+  templateUrl: './reset-success.html',
+  styleUrl: './reset-success.css',
 })
 export class ResetSuccess {}

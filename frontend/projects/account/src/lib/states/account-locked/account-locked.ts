@@ -8,16 +8,8 @@ import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, Button, StatePage } from '@way
   selector: 'w-account-locked',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
-  template: `<w-state-page
-    icon="lock"
-    tone="error"
-    eyebrow="Account locked"
-    title="Too many sign-in attempts"
-    [text]="message"
-  >
-    <a w-button variant="primary" routerLink="/auth/forgot-password">Reset password</a>
-    <a w-button variant="ghost" [href]="contactUrl">Contact your mentor</a>
-  </w-state-page>`,
+  templateUrl: './account-locked.html',
+  styleUrl: './account-locked.css',
 })
 export class AccountLocked {
   private readonly doc = inject(DOCUMENT);

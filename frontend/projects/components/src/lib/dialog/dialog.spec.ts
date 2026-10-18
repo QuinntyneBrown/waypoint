@@ -1,13 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import {
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-  DialogSubtitle,
-  DialogTitle,
-} from './dialog';
+import { Dialog } from './dialog';
+import { DialogBody } from './dialog-body';
+import { DialogFooter } from './dialog-footer';
+import { DialogHeader } from './dialog-header';
+import { DialogSubtitle } from './dialog-subtitle';
+import { DialogTitle } from './dialog-title';
 
 @Component({
   imports: [Dialog, DialogHeader, DialogTitle, DialogSubtitle, DialogBody, DialogFooter],
