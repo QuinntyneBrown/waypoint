@@ -9,14 +9,11 @@ Waypoint is a youth leadership platform for Bible study, mentoring, leadership d
 
 [Getting started](#getting-started) · [Documentation](#documentation) · [Contributing](#contributing) · [Support](SUPPORT.md)
 
-> [!WARNING]
-> Waypoint remains a development project. Independent security, privacy, safeguarding, and accessibility reviews have not been completed, and no release is approved for production use or for storing real participant information. Use synthetic data only. See the current [implementation status](docs/implementation-plan.md) and [security policy](SECURITY.md).
-
 ## Overview
 
 Waypoint is designed to bring youth applications, consent and safeguarding, cohort operations, learning, mentoring, attendance, communication, and reporting into one role-aware system. It serves youth, mentors, guardians, volunteers, program administrators, and public visitors.
 
-The repository contains a .NET 9 API and operational CLI, an Angular 21 authenticated portal and public SSR site, layered frontend feature and component libraries, SQL Server persistence, automated acceptance tests, and static interaction references. The product scope comes from the [product requirements](docs/PRD.md) and 88 in-scope, acceptance-testable requirements under [`docs/specs`](docs/specs/README.md).
+The repository contains a .NET 9 API and operational CLI, an Angular 21 authenticated portal and public SSR site, layered frontend feature and component libraries, SQL Server persistence, automated acceptance tests, and static interaction references. The product scope comes from the [product requirements](docs/PRD.md) and 89 in-scope, acceptance-testable requirements under [`docs/specs`](docs/specs/README.md).
 
 ## Capabilities
 
@@ -26,6 +23,7 @@ The repository contains a .NET 9 API and operational CLI, an Angular 21 authenti
 - Cohort, curriculum, schedule, attendance, mentoring, communication, and reporting workflows
 - Guardian consent, safeguarding gates, scoped authorization, privacy requests, and auditable sensitive actions
 - Invitations, password recovery, notifications, realtime updates, and durable email delivery
+- Self-hosted lesson video with resumable upload, HLS transcoding, and signed playback
 - Responsive browser experiences with automated route, accessibility, performance, and requirements-traceability gates
 
 ## Getting started
@@ -35,6 +33,7 @@ The repository contains a .NET 9 API and operational CLI, an Angular 21 authenti
 - [.NET SDK 9](https://dotnet.microsoft.com/) (selected by [`global.json`](global.json))
 - [Node.js](https://nodejs.org/) `^22.12.0` or `>=24.0.0`
 - npm 10.9.4
+- `ffmpeg` and `ffprobe` only when lesson video is enabled
 - SQL Server only for integration tests or persistent local data; the default development setup uses an in-memory database
 
 ### Set up the repository
@@ -82,26 +81,27 @@ Both web applications proxy `/api`, `/hubs`, and `/health` to the API. Developme
 
 Local defaults are defined in [`appsettings.json`](backend/src/Waypoint.Api/appsettings.json). ASP.NET Core configuration keys use double underscores in environment variables; for example, `Jwt:SigningKey` becomes `Jwt__SigningKey`.
 
-| Configuration                                                        | Purpose                                                                                  |
-| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `ConnectionStrings:Default`                                          | Uses `InMemory` locally; provide a SQL Server connection string for durable persistence. |
-| `Jwt:SigningKey`                                                     | Signs access tokens. Replace the development placeholder outside local use.              |
-| `AuditIntegrity:SigningKey`                                          | Protects audit-record integrity. Replace the development placeholder.                    |
-| `SensitiveData:EncryptionKey`                                        | Protects sensitive stored values. Replace the development placeholder.                   |
-| `ApplicationUrls:PortalBaseUrl`, `ApplicationUrls:PublicSiteBaseUrl` | Build absolute application links; production values must use HTTPS.                      |
-| `Smtp:*`                                                             | Configures SMTP delivery, TLS, sender identity, retry limits, and optional credentials.  |
+| Configuration                                                        | Purpose                                                                                                                                                                                        |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ConnectionStrings:Default`                                          | Uses `InMemory` locally; provide a SQL Server connection string for durable persistence.                                                                                                       |
+| `Jwt:SigningKey`                                                     | Signs access tokens. Replace the development placeholder outside local use.                                                                                                                    |
+| `AuditIntegrity:SigningKey`                                          | Protects audit-record integrity. Replace the development placeholder.                                                                                                                          |
+| `SensitiveData:EncryptionKey`                                        | Protects sensitive stored values. Replace the development placeholder.                                                                                                                         |
+| `ApplicationUrls:PortalBaseUrl`, `ApplicationUrls:PublicSiteBaseUrl` | Build absolute application links; production values must use HTTPS.                                                                                                                            |
+| `Smtp:*`                                                             | Configures SMTP delivery, TLS, sender identity, retry limits, and optional credentials.                                                                                                        |
+| `Media:*`                                                            | Lesson video is off by default (`Media:Enabled`). Enabling it needs `Media:RootPath`, `Media:FfmpegPath`, `Media:FfprobePath`, and a `Media:PlaybackSigningKey` that signs playback addresses. |
 
-Production startup rejects the in-memory database, placeholder keys, non-HTTPS application URLs, and missing required SMTP settings. Keep secrets outside source control. See the [architecture guide](docs/ARCHITECTURE.md) and [CLI guide](backend/src/Waypoint.Cli/README.md) for operational details.
+Production startup rejects the in-memory database, placeholder keys, non-HTTPS application URLs, missing required SMTP settings, and lesson video enabled with a placeholder playback key or no media root. Keep secrets outside source control. See the [architecture guide](docs/ARCHITECTURE.md) and [CLI guide](backend/src/Waypoint.Cli/README.md) for operational details.
 
 ## Architecture
 
-| Area           | Implementation                                                                                    |
-| -------------- | ------------------------------------------------------------------------------------------------- |
-| Backend        | ASP.NET Core on .NET 9, MediatR/CQS, FluentValidation, and SignalR                                |
-| Persistence    | Entity Framework Core with SQL Server and an in-memory development provider                       |
-| Authentication | JWT access tokens, rotating refresh tokens, BCrypt password hashing, and role-based policies      |
-| Frontend       | Angular 21 portal, Angular SSR public site, RxJS, and TypeScript                                  |
-| Quality        | NUnit, `WebApplicationFactory`, Vitest, Playwright, axe, load gates, and requirement traceability |
+| Area           | Implementation                                                                                                       |
+| -------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Backend        | ASP.NET Core on .NET 9, MediatR/CQS, FluentValidation, and SignalR                                                   |
+| Persistence    | Entity Framework Core with SQL Server and an in-memory development provider                                          |
+| Authentication | JWT access tokens, rotating refresh tokens, BCrypt password hashing, and role-based policies                         |
+| Frontend       | Angular 21 portal, Angular SSR public site, RxJS, and TypeScript, all built from the `@waypoint/components` library  |
+| Quality        | NUnit, `WebApplicationFactory`, Vitest, Playwright, axe, ESLint, Storybook, load gates, and requirement traceability |
 
 The backend follows a Clean Architecture dependency direction: API → Application → Domain, with Infrastructure implementing Application ports. Read [the architecture documentation](docs/ARCHITECTURE.md) before changing module boundaries, persistence, authorization, or data flow.
 
@@ -128,6 +128,8 @@ npm ci
 npm run format:check
 npm run quality:routes
 npm run build
+npm run lint
+npm run build-storybook
 npm test -- --watch=false
 
 # Browser acceptance, responsive, accessibility, and interaction-performance gates
@@ -161,6 +163,8 @@ docs/
   mocks/                   Static interaction references
   design-system/           Design tokens, foundations, components, and patterns
   estimates/               Per-subsystem effort and completion estimates
+  screen-composition.md    Which library components each screen is built from
+  videos/                  Narrated walkthrough videos
 scripts/                   Requirements traceability and performance tooling
 ```
 
@@ -175,6 +179,8 @@ scripts/                   Requirements traceability and performance tooling
 | [Architecture decisions](docs/DECISIONS.md)            | Durable technical and product decisions                           |
 | [Design system](docs/design-system/README.md)          | Tokens, foundations, components, and patterns used by the mocks   |
 | [Design references](docs/mocks/README.md)              | Static product map and role-based interaction references          |
+| [Screen composition](docs/screen-composition.md)       | Component library parts that make up each screen                  |
+| [Narrated videos](docs/videos/README.md)               | Walkthrough videos of designs and journeys                        |
 | [Estimates](docs/estimates/README.md)                  | Per-subsystem effort, percent complete, and roadmap               |
 | [Frontend guide](frontend/README.md)                   | Angular applications, libraries, and frontend commands            |
 | [Operational CLI](backend/src/Waypoint.Cli/README.md)  | `way` CLI commands and production configuration                   |
