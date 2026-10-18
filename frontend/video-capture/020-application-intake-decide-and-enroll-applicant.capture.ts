@@ -65,10 +65,10 @@ test('capture: decide and enroll an applicant', async ({ page, request }) => {
   await applications.goto();
   await expect(applications.rowFor(adultLastName)).toBeVisible();
 
-  // A minor without consent cannot be approved.
+  // A minor without consent can still be approved; participation stays blocked.
   await applications.review(minorLastName).click();
   await expect(applications.reviewDialog).toContainText('Guardian participation consent');
-  await expect(applications.approve).toBeDisabled();
+  await expect(applications.approve).toBeEnabled();
   await tall(page, 'blocked');
 
   // Soft decline with a note.

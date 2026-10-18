@@ -6,14 +6,14 @@
 
 ## Why this video exists
 
-Applications are only useful once someone decides on them. This video follows Pat Morgan through the queue, a minor who cannot be approved without guardian consent, a soft decline, and the approval that places Amara Bell in a cohort with a mentor. It follows the designs for [reviewing an application](../../../detailed-designs/application-intake/review-application/README.md), [deciding and enrolling](../../../detailed-designs/application-intake/decide-and-enroll-applicant/README.md), and the acceptance criteria in [the application intake L2 specification](../../../specs/application-intake/L2.md).
+Applications are only useful once someone decides on them. This video follows Pat Morgan through the queue, a minor who can be approved but cannot take part without guardian consent, a soft decline, and the approval that places Amara Bell in a cohort with a mentor. It follows the designs for [reviewing an application](../../../detailed-designs/application-intake/review-application/README.md), [deciding and enrolling](../../../detailed-designs/application-intake/decide-and-enroll-applicant/README.md), and the acceptance criteria in [the application intake L2 specification](../../../specs/application-intake/L2.md).
 
 ## Learning objectives
 
 By the end, the viewer can:
 
 - Find an application in the queue and open its review.
-- Explain why approve is disabled for a minor without consent.
+- Explain that a minor without consent can be approved but cannot take part until consent is recorded.
 - Describe a soft decline.
 - State what an approval needs and what it creates.
 

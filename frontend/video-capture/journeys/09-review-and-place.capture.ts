@@ -79,7 +79,7 @@ test('capture: review and place', async ({ page, request }) => {
 
   await applications.review(minorLastName).click();
   await expect(applications.reviewDialog).toContainText('Guardian participation consent');
-  await expect(applications.approve).toBeDisabled();
+  await expect(applications.approve).toBeEnabled();
   await tall(page, 'blocked');
 
   await applications.decisionNote.fill('No place is available this term.');

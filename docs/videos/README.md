@@ -159,6 +159,7 @@ Narrated videos made from a script, a slide deck and captions, one per detailed 
 | [094 · Replacing an expired invitation](094-platform-services-replace-expired-invitation/README.md) | replace expired invitation | 2 min 38 s |
 | [095 · Working without a connection](095-platform-services-show-offline-sync-state/README.md) | show offline sync state | 2 min 24 s |
 | [096 · Asking the program for help](096-platform-services-submit-support-request/README.md) | submit support request | 2 min 31 s |
+| [117 · Switching between light and dark](117-platform-services-switch-theme/README.md) | switch theme | 2 min 38 s |
 
 ## Reporting and data
 
