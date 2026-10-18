@@ -4,6 +4,9 @@
   gap: var(--w-s3);
   align-items: end;
 }
+.report-filters .w-field {
+  margin-bottom: 0;
+}
 .report-meta {
   display: flex;
   flex-wrap: wrap;
