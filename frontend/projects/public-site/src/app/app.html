@@ -1,30 +1,26 @@
-<a class="w-skip-link" href="#main">Skip to content</a>
+<a w-skip-link href="#main">Skip to content</a>
 
-<header class="w-marketing-nav">
-  <div class="w-container w-marketing-nav__inner">
-    <a class="w-brand" routerLink="/"><span class="w-brand__mark">W</span><span>Waypoint</span></a>
-    <nav class="w-marketing-nav__links" aria-label="Primary">
-      <a routerLink="/programs">Programs</a>
-      <a routerLink="/about">About</a>
-      <a routerLink="/get-involved">Get involved</a>
-      <a routerLink="/contact">Contact</a>
-    </nav>
-    <div class="w-spacer"></div>
-    <a class="w-btn w-btn--ghost w-btn--sm" [href]="signInUrl">Sign in</a>
-    <a class="w-btn w-btn--primary w-btn--sm" routerLink="/apply">Apply</a>
-  </div>
+<header w-marketing-nav>
+  <a w-brand routerLink="/">Waypoint</a>
+  <nav w-marketing-nav-links aria-label="Primary">
+    <a routerLink="/programs">Programs</a>
+    <a routerLink="/about">About</a>
+    <a routerLink="/get-involved">Get involved</a>
+    <a routerLink="/contact">Contact</a>
+  </nav>
+  <div class="w-spacer"></div>
+  <a w-button variant="ghost" size="sm" [href]="signInUrl">Sign in</a>
+  <a w-button variant="primary" size="sm" routerLink="/apply">Apply</a>
 </header>
 
 <main id="main">
   <router-outlet />
 </main>
 
-<footer class="w-footer">
+<footer w-footer>
   <div class="w-container">
     <div class="w-cluster w-justify-between">
-      <div class="w-brand" style="color: #fff">
-        <span class="w-brand__mark">W</span><span>Waypoint</span>
-      </div>
+      <div w-brand style="color: #fff">Waypoint</div>
       <nav class="w-cluster w-gap-4" aria-label="Footer">
         <a routerLink="/programs">Programs</a>
         <a routerLink="/about">About</a>

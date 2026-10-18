@@ -3,14 +3,39 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink } from '@angular/router';
 import { VolunteerService, VolunteerTodayView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  Icon,
+  Shell,
+  Card,
+  CardBody,
+  CardTitle,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 
 // Traces to: L2-VOLUNTEER-001
 @Component({
   selector: 'w-volunteer-today',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DatePipe, WIcon],
+  imports: [
+    Shell,
+    RouterLink,
+    DatePipe,
+    Icon,
+    Button,
+    Card,
+    CardBody,
+    CardTitle,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './volunteer-today.html',
+  styleUrl: './volunteer-today.css',
 })
 export class VolunteerToday {
   protected readonly auth = inject(AuthStore);

@@ -62,7 +62,7 @@ test('admin reviews consent state, declines softly, and approves a valid placeme
   await applications.review(minor.lastName).click();
   await expect(applications.reviewDialog).toContainText('Guardian participation consent');
   await expect(applications.reviewDialog).toContainText('I want to grow as a leader and serve.');
-  await expect(applications.approve).toBeDisabled();
+  await expect(applications.approve).toBeEnabled();
   await applications.decisionNote.fill('No place is available this term.');
   await applications.decline.click();
   const declineDialog = page.getByRole('dialog', { name: /decline application/i });

@@ -1,0 +1,28 @@
+.privacy-grid {
+  display: grid;
+  gap: var(--w-s5);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.privacy-data {
+  display: grid;
+  gap: var(--w-s3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.privacy-data dt {
+  color: var(--w-muted);
+  font-size: 0.85rem;
+}
+.privacy-data dd {
+  margin: 0.2rem 0 0;
+  overflow-wrap: anywhere;
+}
+.request-row {
+  border-top: 1px solid var(--w-border);
+  padding: var(--w-s4) 0;
+}
+@media (max-width: 48rem) {
+  .privacy-grid,
+  .privacy-data {
+    grid-template-columns: 1fr;
+  }
+}

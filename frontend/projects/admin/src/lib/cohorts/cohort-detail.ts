@@ -4,63 +4,63 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, CohortDetail, CohortOptions, CohortsService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  IconButton,
+  Label,
+  Link,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  AlertTitle,
+  Card,
+  CardBody,
+  Badge,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogSubtitle,
+  DialogBody,
+  DialogFooter,
+} from '@waypoint/components';
 import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-003
 @Component({
   selector: 'w-cohort-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe, ReactiveFormsModule],
+  imports: [
+    Shell,
+    Icon,
+    RouterLink,
+    DatePipe,
+    ReactiveFormsModule,
+    Button,
+    IconButton,
+    Link,
+    FormField,
+    Label,
+    ErrorText,
+    TextField,
+    Select,
+    Alert,
+    AlertTitle,
+    Card,
+    CardBody,
+    Badge,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogSubtitle,
+    DialogBody,
+    DialogFooter,
+  ],
   templateUrl: './cohort-detail.html',
-  styles: `
-    .cohort-summary {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .member-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(17rem, 1fr);
-      gap: var(--w-s5);
-      align-items: start;
-    }
-    .member-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .member-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--w-s4);
-      padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-border);
-      overflow-wrap: anywhere;
-    }
-    .member-row:last-child {
-      border-bottom: 0;
-    }
-    .member-actions {
-      display: grid;
-      gap: var(--w-s3);
-    }
-    @media (max-width: 48rem) {
-      .member-layout,
-      .cohort-summary {
-        grid-template-columns: 1fr;
-      }
-      .member-row {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-      .w-modal__footer .w-btn {
-        flex: 1 1 100%;
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './cohort-detail.css',
 })
 export class CohortDetailPage {
   protected readonly auth = inject(AuthStore);

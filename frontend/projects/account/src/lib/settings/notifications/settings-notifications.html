@@ -9,24 +9,24 @@
         <div>{{ cat.label }}</div>
         <div class="w-muted w-text-sm w-mb-2">{{ cat.description }}</div>
         <div class="w-cluster">
-          <label class="w-check">
+          <label w-checkbox>
             <input
               type="checkbox"
               [attr.aria-label]="cat.label + ' in-app'"
               [checked]="prefs()[cat.eventKey].inApp"
               (change)="toggle(cat.eventKey, 'inApp')"
             />
-            <span class="w-check__box"></span>
+            <span w-checkbox-box></span>
             <span>In-app</span>
           </label>
-          <label class="w-check">
+          <label w-checkbox>
             <input
               type="checkbox"
               [attr.aria-label]="cat.label + ' email'"
               [checked]="prefs()[cat.eventKey].email"
               (change)="toggle(cat.eventKey, 'email')"
             />
-            <span class="w-check__box"></span>
+            <span w-checkbox-box></span>
             <span>Email</span>
           </label>
         </div>

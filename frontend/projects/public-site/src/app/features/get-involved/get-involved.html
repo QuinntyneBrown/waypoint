@@ -1,15 +1,15 @@
 <section class="w-container w-section" style="max-width: 720px">
   @if (done()) {
-    <div class="w-empty">
-      <div class="w-empty__icon">
+    <div w-empty-state>
+      <div w-empty-state-icon>
         <w-icon name="check-circle" />
       </div>
-      <h1 class="w-empty__title">Thanks for volunteering</h1>
-      <p class="w-empty__text">
+      <h1 w-empty-state-title>Thanks for volunteering</h1>
+      <p w-empty-state-text>
         We’ve received your details. Our team will reach out about next steps, including the
         screening and reference check every youth volunteer completes before starting.
       </p>
-      <a class="w-btn w-btn--primary" routerLink="/">Back to home</a>
+      <a w-button variant="primary" routerLink="/">Back to home</a>
     </div>
   } @else {
     <div class="w-eyebrow">Get involved</div>
@@ -20,31 +20,30 @@
     </p>
 
     <div class="w-grid w-grid--2 w-mt-6">
-      <div class="w-card">
-        <div class="w-card__body">
-          <h2 class="w-card__title">Give monthly</h2>
+      <div w-card>
+        <div w-card-body>
+          <h2 w-card-title>Give monthly</h2>
           <p class="w-muted">
             Prefer to give? A recurring gift keeps cohorts running and mentors resourced all year
             long.
           </p>
-          <a class="w-btn w-btn--secondary" routerLink="/donate">Donate</a>
+          <a w-button variant="secondary" routerLink="/donate">Donate</a>
         </div>
       </div>
-      <div class="w-card">
-        <div class="w-card__body">
-          <h2 class="w-card__title">Have a question first?</h2>
+      <div w-card>
+        <div w-card-body>
+          <h2 w-card-title>Have a question first?</h2>
           <p class="w-muted">
             Not sure where you’d fit? Reach out and we’ll help you find a place.
           </p>
-          <a class="w-btn w-btn--secondary" routerLink="/contact">Talk to our team</a>
+          <a w-button variant="secondary" routerLink="/contact">Talk to our team</a>
         </div>
       </div>
     </div>
 
     @if (serverError()) {
-      <div class="w-alert w-alert--error w-mt-4" role="alert">
-        <w-icon name="alert-circle" iconClass="w-alert__icon" />
-        <div>{{ serverError() }}</div>
+      <div w-alert variant="error" icon="alert-circle" class="w-mt-4" role="alert">
+        {{ serverError() }}
       </div>
     }
 
@@ -52,53 +51,55 @@
       <h2>Volunteer with us</h2>
 
       <div class="w-grid w-grid--2">
-        <div class="w-field" [class.is-error]="error('name')">
-          <label class="w-label" for="name">Your name <span class="w-label__req">*</span></label>
-          <input class="w-input" id="name" formControlName="name" />
+        <div w-form-field [invalid]="error('name')">
+          <label w-label for="name">Your name <span w-label-required>*</span></label>
+          <input w-text-field id="name" formControlName="name" />
           @if (error('name')) {
-            <div class="w-error-text">{{ error('name') }}</div>
+            <div w-error-text>{{ error('name') }}</div>
           }
         </div>
-        <div class="w-field" [class.is-error]="error('email')">
-          <label class="w-label" for="email">Email <span class="w-label__req">*</span></label>
-          <input class="w-input" id="email" type="email" formControlName="email" />
+        <div w-form-field [invalid]="error('email')">
+          <label w-label for="email">Email <span w-label-required>*</span></label>
+          <input w-text-field id="email" type="email" formControlName="email" />
           @if (error('email')) {
-            <div class="w-error-text">{{ error('email') }}</div>
+            <div w-error-text>{{ error('email') }}</div>
           }
         </div>
       </div>
 
-      <div class="w-field">
-        <label class="w-label" for="phone">Phone</label>
-        <input class="w-input" id="phone" formControlName="phone" />
+      <div w-form-field>
+        <label w-label for="phone">Phone</label>
+        <input w-text-field id="phone" formControlName="phone" />
       </div>
 
-      <div class="w-field">
-        <label class="w-label" for="areasOfInterest">How would you like to help?</label>
+      <div w-form-field>
+        <label w-label for="areasOfInterest">How would you like to help?</label>
         <textarea
-          class="w-textarea"
+          w-textarea
           id="areasOfInterest"
           rows="4"
           formControlName="areasOfInterest"
         ></textarea>
       </div>
 
-      <div class="w-field" [class.is-error]="error('screeningConsentAck')">
-        <label class="w-check">
+      <div w-form-field [invalid]="error('screeningConsentAck')">
+        <label w-checkbox>
           <input type="checkbox" formControlName="screeningConsentAck" />
-          <span class="w-check__box"><w-icon name="check" /></span>
+          <span w-checkbox-box><w-icon name="check" /></span>
           <span>
             I acknowledge that volunteers working with youth must complete a screening and reference
             check before starting.
           </span>
         </label>
         @if (error('screeningConsentAck')) {
-          <div class="w-error-text">{{ error('screeningConsentAck') }}</div>
+          <div w-error-text>{{ error('screeningConsentAck') }}</div>
         }
       </div>
 
       <button
-        class="w-btn w-btn--primary w-btn--lg"
+        w-button
+        variant="primary"
+        size="lg"
         type="submit"
         [class.is-loading]="submitting()"
         [disabled]="submitting()"

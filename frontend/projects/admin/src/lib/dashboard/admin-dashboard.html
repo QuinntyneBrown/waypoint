@@ -13,74 +13,82 @@
           A current view of program participation, progress, and staff load.
         </p>
       </div>
-      <button class="w-btn w-btn--ghost" type="button" [disabled]="loading()" (click)="load()">
+      <button w-button variant="ghost" type="button" [disabled]="loading()" (click)="load()">
         <w-icon name="refresh-cw" />Refresh
       </button>
     </header>
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         {{ error }}
-        <button class="w-btn w-btn--ghost" type="button" (click)="load()">Try again</button>
+        <button w-button variant="ghost" type="button" (click)="load()">Try again</button>
       </div>
     }
     @if (loading()) {
       <p class="w-muted" role="status">Loading the director dashboard…</p>
     } @else if (hub(); as view) {
       <div class="w-grid w-grid--4" aria-label="Program summary">
-        <article class="w-card w-statcard">
-          <div class="w-statcard__label">Active youth</div>
-          <div class="w-statcard__value">{{ view.kpis.activeYouth }}</div>
+        <article w-card>
+          <div w-stat>
+            <div w-stat-label>Active youth</div>
+            <div w-stat-value>{{ view.kpis.activeYouth }}</div>
+          </div>
         </article>
-        <article class="w-card w-statcard">
-          <div class="w-statcard__label">Active cohorts</div>
-          <div class="w-statcard__value">{{ view.kpis.cohorts }}</div>
+        <article w-card>
+          <div w-stat>
+            <div w-stat-label>Active cohorts</div>
+            <div w-stat-value>{{ view.kpis.cohorts }}</div>
+          </div>
         </article>
-        <article class="w-card w-statcard">
-          <div class="w-statcard__label">Average completion</div>
-          <div class="w-statcard__value">{{ view.kpis.avgCompletion | percent: '1.0-0' }}</div>
+        <article w-card>
+          <div w-stat>
+            <div w-stat-label>Average completion</div>
+            <div w-stat-value>{{ view.kpis.avgCompletion | percent: '1.0-0' }}</div>
+          </div>
         </article>
-        <article class="w-card w-statcard">
-          <div class="w-statcard__label">Attendance rate</div>
-          <div class="w-statcard__value">{{ view.kpis.attendanceRate | percent: '1.0-0' }}</div>
+        <article w-card>
+          <div w-stat>
+            <div w-stat-label>Attendance rate</div>
+            <div w-stat-value>{{ view.kpis.attendanceRate | percent: '1.0-0' }}</div>
+          </div>
         </article>
       </div>
 
       <section class="w-mt-6">
         <h2>Quick actions</h2>
         <div class="dashboard-actions">
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/invitations"
+          <a w-card class="dashboard-action" routerLink="/admin/invitations"
             ><w-icon name="user-plus" /><strong>Invite people</strong></a
           >
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/applications"
+          <a w-card class="dashboard-action" routerLink="/admin/applications"
             ><w-icon name="clipboard-check" /><strong>Review applications</strong></a
           >
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/cohort-progress"
+          <a w-card class="dashboard-action" routerLink="/admin/cohort-progress"
             ><w-icon name="trending-up" /><strong>Open progress board</strong></a
           >
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/calendar"
+          <a w-card class="dashboard-action" routerLink="/admin/calendar"
             ><w-icon name="calendar" /><strong>Manage calendar</strong></a
           >
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/reports"
+          <a w-card class="dashboard-action" routerLink="/admin/reports"
             ><w-icon name="bar-chart" /><strong>Explore reports</strong></a
           >
-          <a class="w-card w-card__body dashboard-action" routerLink="/admin/privacy"
+          <a w-card class="dashboard-action" routerLink="/admin/privacy"
             ><w-icon name="shield" /><strong>Privacy requests</strong></a
           >
         </div>
       </section>
 
       <div class="dashboard-grid w-mt-6">
-        <section class="w-card">
-          <div class="w-card__body">
+        <section w-card>
+          <div w-card-body>
             <div class="w-cluster w-cluster--between">
-              <h2 class="w-card__title">Cohort health</h2>
+              <h2 w-card-title>Cohort health</h2>
               <a routerLink="/admin/reports">Full report</a>
             </div>
             @for (cohort of view.cohorts; track cohort.cohortId) {
               <article class="dashboard-row">
                 <div class="w-cluster w-cluster--between">
                   <strong>{{ cohort.cohortName }}</strong
-                  ><span class="w-badge" [class.w-badge--error]="cohort.atRisk > 0"
+                  ><span w-badge [variant]="cohort.atRisk > 0 ? 'error' : ''"
                     >{{ cohort.atRisk }} at risk</span
                   >
                 </div>
@@ -95,17 +103,17 @@
             }
           </div>
         </section>
-        <section class="w-card">
-          <div class="w-card__body">
+        <section w-card>
+          <div w-card-body>
             <div class="w-cluster w-cluster--between">
-              <h2 class="w-card__title">Staff load</h2>
+              <h2 w-card-title>Staff load</h2>
               <a routerLink="/admin/mentor-assignments">Balance caseloads</a>
             </div>
             @for (mentor of view.staff.slice(0, 6); track mentor.mentorId) {
               <article class="dashboard-row">
                 <div class="w-cluster w-cluster--between">
                   <strong>{{ mentor.mentorName }}</strong
-                  ><span class="w-badge" [class.w-badge--error]="mentor.overloaded">{{
+                  ><span w-badge [variant]="mentor.overloaded ? 'error' : ''">{{
                     mentor.loadBalance
                   }}</span>
                 </div>

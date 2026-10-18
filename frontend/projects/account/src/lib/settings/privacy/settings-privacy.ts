@@ -10,43 +10,46 @@ import {
 } from '@waypoint/api';
 import { forkJoin } from 'rxjs';
 import { SettingsShell } from '../settings-shell';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Label,
+  Select,
+  Textarea,
+  TextField,
+  Checkbox,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+} from '@waypoint/components';
 
 // Traces to: L2-NFR-003
 @Component({
   selector: 'w-settings-privacy',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, ReactiveFormsModule, SettingsShell],
+  imports: [
+    DatePipe,
+    ReactiveFormsModule,
+    SettingsShell,
+    Button,
+    FormField,
+    Label,
+    ErrorText,
+    TextField,
+    Textarea,
+    Select,
+    Checkbox,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+  ],
   templateUrl: './settings-privacy.html',
-  styles: `
-    .privacy-grid {
-      display: grid;
-      gap: var(--w-s5);
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    }
-    .privacy-data {
-      display: grid;
-      gap: var(--w-s3);
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .privacy-data dt {
-      color: var(--w-muted);
-      font-size: 0.85rem;
-    }
-    .privacy-data dd {
-      margin: 0.2rem 0 0;
-      overflow-wrap: anywhere;
-    }
-    .request-row {
-      border-top: 1px solid var(--w-border);
-      padding: var(--w-s4) 0;
-    }
-    @media (max-width: 48rem) {
-      .privacy-grid,
-      .privacy-data {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './settings-privacy.css',
 })
 export class SettingsPrivacyPage {
   private static readonly requestPageSize = 25;

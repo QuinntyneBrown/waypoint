@@ -14,50 +14,50 @@
     </div>
 
     <div class="roster-controls w-mb-4">
-      <div class="w-field w-mb-0 roster-search">
-        <label class="w-label" for="mentor-youth-search">Search youth</label>
+      <div w-form-field class="w-mb-0 roster-search">
+        <label w-label for="mentor-youth-search">Search youth</label>
         <input
+          w-text-field
           id="mentor-youth-search"
-          class="w-input"
           type="search"
           placeholder="Search by name…"
           [value]="search()"
           (input)="onSearch($any($event.target).value)"
         />
       </div>
-      <div class="w-pillrow" aria-label="Roster status filter">
+      <div w-chip-row aria-label="Roster status filter">
         <button
-          class="w-pill filter-button"
+          w-chip
+          class="filter-button"
           type="button"
-          [class.is-active]="filter() === 'all'"
-          [attr.aria-pressed]="filter() === 'all'"
+          [active]="filter() === 'all'"
           (click)="setFilter('all')"
         >
           All
         </button>
         <button
-          class="w-pill filter-button"
+          w-chip
+          class="filter-button"
           type="button"
-          [class.is-active]="filter() === 'on-track'"
-          [attr.aria-pressed]="filter() === 'on-track'"
+          [active]="filter() === 'on-track'"
           (click)="setFilter('on-track')"
         >
           On track
         </button>
         <button
-          class="w-pill filter-button"
+          w-chip
+          class="filter-button"
           type="button"
-          [class.is-active]="filter() === 'at-risk'"
-          [attr.aria-pressed]="filter() === 'at-risk'"
+          [active]="filter() === 'at-risk'"
           (click)="setFilter('at-risk')"
         >
           At risk
         </button>
         <button
-          class="w-pill filter-button"
+          w-chip
+          class="filter-button"
           type="button"
-          [class.is-active]="filter() === 'new'"
-          [attr.aria-pressed]="filter() === 'new'"
+          [active]="filter() === 'new'"
           (click)="setFilter('new')"
         >
           New
@@ -66,22 +66,24 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (loading()) {
       <p class="w-muted" role="status">Loading your roster…</p>
     } @else if (youth().length === 0) {
-      <div class="w-card w-empty">
-        <div class="w-empty__icon"><w-icon name="users" /></div>
-        <h2 class="w-empty__title">No youth match that filter</h2>
-        <p class="w-empty__text">Try another status or clear your search to see your roster.</p>
-        <button class="w-btn w-btn--primary" type="button" (click)="clearFilters()">
-          Clear filters
-        </button>
+      <div w-card>
+        <div w-empty-state>
+          <div w-empty-state-icon><w-icon name="users" /></div>
+          <h2 w-empty-state-title>No youth match that filter</h2>
+          <p w-empty-state-text>Try another status or clear your search to see your roster.</p>
+          <button w-button variant="primary" type="button" (click)="clearFilters()">
+            Clear filters
+          </button>
+        </div>
       </div>
     } @else {
-      <div class="w-table-wrap">
-        <table class="w-table w-table--cards">
+      <div w-table-wrap>
+        <table w-table cards>
           <thead>
             <tr>
               <th>Youth</th>
@@ -97,23 +99,19 @@
                 <td data-label="Youth">
                   <a [routerLink]="['/mentor/youth', person.id]">{{ person.displayName }}</a>
                   @if (person.new) {
-                    <span class="w-badge w-badge--info">New</span>
+                    <span w-badge variant="info">New</span>
                   }
                 </td>
                 <td data-label="Cohort">{{ person.cohortName ?? 'Not assigned' }}</td>
                 <td data-label="Progress">
                   <div class="w-cluster">
-                    <progress
-                      max="100"
-                      [value]="percent(person.progress)"
-                      [attr.aria-label]="percent(person.progress) + '% progress'"
-                    ></progress>
+                    <div w-progress label="Progress" [value]="percent(person.progress)"></div>
                     <span>{{ percent(person.progress) }}%</span>
                   </div>
                 </td>
                 <td data-label="Last active">{{ person.lastActiveAt | date: 'mediumDate' }}</td>
                 <td data-label="Status">
-                  <span class="w-badge" [class.w-badge--error]="person.atRisk">
+                  <span w-badge [variant]="person.atRisk ? 'error' : ''">
                     {{ person.status }}
                   </span>
                 </td>

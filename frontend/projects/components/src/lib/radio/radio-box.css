@@ -1,0 +1,14 @@
+.w-radio__box {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: var(--w-bw) solid var(--w-border-strong);
+  background: var(--w-white);
+  display: grid;
+  place-items: center;
+  margin-top: 0;
+  border-radius: 50%;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}

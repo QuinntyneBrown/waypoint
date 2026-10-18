@@ -20,39 +20,39 @@
     </header>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
 
     <div class="invite-layout">
-      <section class="w-card">
-        <div class="w-card__body">
-          <h2 class="w-card__title">Send invitations</h2>
+      <section w-card>
+        <div w-card-body>
+          <h2 w-card-title>Send invitations</h2>
           <p class="w-muted w-mb-4">Enter one email per line. Links expire after 14 days.</p>
           <form class="w-stack" [formGroup]="form" (ngSubmit)="send()">
             @if (isAdmin()) {
-              <div class="w-field">
-                <label class="w-label" for="invite-role">Role</label>
-                <select class="w-select" id="invite-role" formControlName="role">
+              <div w-form-field>
+                <label w-label for="invite-role">Role</label>
+                <select w-select id="invite-role" formControlName="role">
                   @for (role of roles; track role) {
                     <option [value]="role">{{ role }}</option>
                   }
                 </select>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="invite-cohort">Cohort (optional)</label>
-                <select class="w-select" id="invite-cohort" formControlName="cohortId">
+              <div w-form-field>
+                <label w-label for="invite-cohort">Cohort (optional)</label>
+                <select w-select id="invite-cohort" formControlName="cohortId">
                   <option value="">No cohort yet</option>
                   @for (cohort of cohorts(); track cohort.id) {
                     <option [value]="cohort.id">{{ cohort.name }}</option>
                   }
                 </select>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="invite-mentor">Mentor (optional)</label>
-                <select class="w-select" id="invite-mentor" formControlName="mentorId">
+              <div w-form-field>
+                <label w-label for="invite-mentor">Mentor (optional)</label>
+                <select w-select id="invite-mentor" formControlName="mentorId">
                   <option value="">Assign later</option>
                   @for (mentor of mentors(); track mentor.id) {
                     <option [value]="mentor.id">{{ mentor.displayName }}</option>
@@ -60,12 +60,12 @@
                 </select>
               </div>
             } @else {
-              <div class="w-alert w-alert--info">
+              <div w-alert variant="info">
                 Invitations you send create Youth accounts assigned to you.
               </div>
-              <div class="w-field">
-                <label class="w-label" for="mentor-invite-cohort">Cohort (optional)</label>
-                <select class="w-select" id="mentor-invite-cohort" formControlName="cohortId">
+              <div w-form-field>
+                <label w-label for="mentor-invite-cohort">Cohort (optional)</label>
+                <select w-select id="mentor-invite-cohort" formControlName="cohortId">
                   <option value="">Assign later</option>
                   @for (cohort of cohorts(); track cohort.id) {
                     <option [value]="cohort.id">{{ cohort.name }}</option>
@@ -74,35 +74,35 @@
               </div>
             }
             <div
-              class="w-field"
-              [class.is-error]="form.controls.emails.touched && form.controls.emails.invalid"
+              w-form-field
+              [invalid]="form.controls.emails.touched && form.controls.emails.invalid"
             >
-              <label class="w-label" for="invite-emails">Email addresses</label>
+              <label w-label for="invite-emails">Email addresses</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="invite-emails"
                 rows="6"
                 formControlName="emails"
                 placeholder="name@example.com"
               ></textarea>
               @if (form.controls.emails.touched && form.controls.emails.invalid) {
-                <p class="w-error-text">Enter at least one email address.</p>
+                <p w-error-text>Enter at least one email address.</p>
               }
             </div>
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="submitting()">
+            <button w-button variant="primary" type="submit" [disabled]="submitting()">
               <w-icon name="send" />{{ submitting() ? 'Sending…' : 'Send invitation' }}
             </button>
           </form>
         </div>
       </section>
 
-      <section class="w-card">
-        <div class="w-card__body">
+      <section w-card>
+        <div w-card-body>
           <div class="invite-filters w-mb-4">
-            <div class="w-field">
-              <label class="w-label" for="invite-search">Search invitations</label>
+            <div w-form-field>
+              <label w-label for="invite-search">Search invitations</label>
               <input
-                class="w-input"
+                w-text-field
                 id="invite-search"
                 type="search"
                 [value]="search()"
@@ -110,10 +110,10 @@
                 (keyup.enter)="applyFilters()"
               />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="invite-status">Status</label>
+            <div w-form-field>
+              <label w-label for="invite-status">Status</label>
               <select
-                class="w-select"
+                w-select
                 id="invite-status"
                 [value]="status()"
                 (change)="statusChanged($event)"
@@ -126,10 +126,10 @@
               </select>
             </div>
             @if (isAdmin()) {
-              <div class="w-field">
-                <label class="w-label" for="invite-role-filter">Role</label>
+              <div w-form-field>
+                <label w-label for="invite-role-filter">Role</label>
                 <select
-                  class="w-select"
+                  w-select
                   id="invite-role-filter"
                   [value]="roleFilter()"
                   (change)="roleFilterChanged($event)"
@@ -142,15 +142,15 @@
               </div>
             }
           </div>
-          <button class="w-btn w-btn--ghost w-mb-4" type="button" (click)="applyFilters()">
+          <button w-button variant="ghost" class="w-mb-4" type="button" (click)="applyFilters()">
             Apply search
           </button>
 
           @if (loading()) {
             <p class="w-muted" role="status">Loading invitations…</p>
           } @else {
-            <div class="w-table-wrap">
-              <table class="w-table w-table--cards">
+            <div w-table-wrap>
+              <table w-table cards>
                 <thead>
                   <tr>
                     <th>Email</th>
@@ -174,7 +174,7 @@
                         >
                       </td>
                       <td data-label="Status">
-                        <span class="w-badge" [class.w-badge--lime]="item.status === 'Accepted'">{{
+                        <span w-badge [variant]="item.status === 'Accepted' ? 'lime' : ''">{{
                           item.status
                         }}</span>
                       </td>
@@ -183,7 +183,9 @@
                         @if (item.status === 'Pending' || item.status === 'Expired') {
                           <div class="invite-actions">
                             <button
-                              class="w-btn w-btn--ghost w-btn--sm"
+                              w-button
+                              variant="ghost"
+                              size="sm"
                               type="button"
                               (click)="resend(item)"
                             >
@@ -192,14 +194,18 @@
                             @if (revokeCandidate() === item.id) {
                               <span>Revoke now?</span>
                               <button
-                                class="w-btn w-btn--danger w-btn--sm"
+                                w-button
+                                variant="danger"
+                                size="sm"
                                 type="button"
                                 (click)="revoke(item)"
                               >
                                 Confirm
                               </button>
                               <button
-                                class="w-btn w-btn--ghost w-btn--sm"
+                                w-button
+                                variant="ghost"
+                                size="sm"
                                 type="button"
                                 (click)="revokeCandidate.set(null)"
                               >
@@ -207,7 +213,9 @@
                               </button>
                             } @else {
                               <button
-                                class="w-btn w-btn--ghost w-btn--sm"
+                                w-button
+                                variant="ghost"
+                                size="sm"
                                 type="button"
                                 (click)="confirmRevoke(item)"
                               >
@@ -223,10 +231,10 @@
                   } @empty {
                     <tr>
                       <td colspan="5">
-                        <div class="w-empty">
-                          <div class="w-empty__icon"><w-icon name="mail" /></div>
-                          <h3 class="w-empty__title">No invitations found</h3>
-                          <p class="w-empty__text">Send an invitation or change the filters.</p>
+                        <div w-empty-state>
+                          <div w-empty-state-icon><w-icon name="mail" /></div>
+                          <h3 w-empty-state-title>No invitations found</h3>
+                          <p w-empty-state-text>Send an invitation or change the filters.</p>
                         </div>
                       </td>
                     </tr>
@@ -236,7 +244,8 @@
             </div>
             <div class="w-cluster w-cluster--between w-mt-4">
               <button
-                class="w-btn w-btn--ghost"
+                w-button
+                variant="ghost"
                 type="button"
                 [disabled]="page() <= 1"
                 (click)="previous()"
@@ -245,7 +254,8 @@
               </button>
               <span class="w-muted">Page {{ page() }} · {{ total() }} total</span>
               <button
-                class="w-btn w-btn--ghost"
+                w-button
+                variant="ghost"
                 type="button"
                 [disabled]="page() * 25 >= total()"
                 (click)="next()"

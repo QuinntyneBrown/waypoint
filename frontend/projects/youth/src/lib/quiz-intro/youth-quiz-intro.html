@@ -5,9 +5,9 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-container--narrow w-page">
-    <a class="w-btn w-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+    <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (intro(); as view) {
@@ -22,33 +22,33 @@
       </div>
 
       <div class="quiz-facts">
-        <div class="w-card">
-          <div class="w-card__body">
+        <div w-card>
+          <div w-card-body>
             <strong>{{ view.questionCount }} questions</strong>
           </div>
         </div>
-        <div class="w-card">
-          <div class="w-card__body">
+        <div w-card>
+          <div w-card-body>
             <strong>{{ view.estimatedMinutes }} minutes</strong>
           </div>
         </div>
-        <div class="w-card">
-          <div class="w-card__body">
+        <div w-card>
+          <div w-card-body>
             <strong>{{ view.passMark }}% pass mark</strong>
           </div>
         </div>
-        <div class="w-card">
-          <div class="w-card__body">
+        <div w-card>
+          <div w-card-body>
             <strong>{{ view.attemptsRemaining }} attempts remaining</strong>
           </div>
         </div>
       </div>
 
       @if (view.badgeReward; as badge) {
-        <section class="w-card w-card--greige">
-          <div class="w-card__body w-stack">
+        <section w-card variant="greige">
+          <div w-card-body class="w-stack">
             <div class="w-eyebrow">Badge reward</div>
-            <h2 class="w-card__title">{{ badge.name }}</h2>
+            <h2 w-card-title>{{ badge.name }}</h2>
             @if (badge.description) {
               <p>{{ badge.description }}</p>
             }
@@ -57,9 +57,9 @@
       }
 
       @if (view.attemptsExhausted) {
-        <p class="w-alert w-alert--warning">You have used all attempts for this quiz.</p>
+        <p w-alert variant="warning">You have used all attempts for this quiz.</p>
       } @else {
-        <button class="w-btn w-btn--primary w-btn--block" type="button" (click)="begin()">
+        <button w-button variant="primary" block type="button" (click)="begin()">
           {{ view.hasInProgressAttempt ? 'Resume attempt' : 'Start attempt' }}
         </button>
       }

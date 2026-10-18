@@ -3,7 +3,25 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { APPLICANT_MAX_AGE, APPLICANT_MIN_AGE, ApiError, IntakeService } from '@waypoint/api';
-import { WIcon } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  Label,
+  LabelRequired,
+  Select,
+  Textarea,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Alert,
+  Divider,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 
 function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -13,8 +31,29 @@ function isEmail(value: string): boolean {
 @Component({
   selector: 'w-apply',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WIcon],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    Icon,
+    Button,
+    FormField,
+    Label,
+    LabelRequired,
+    ErrorText,
+    TextField,
+    Textarea,
+    Select,
+    Checkbox,
+    CheckboxBox,
+    Alert,
+    Divider,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './apply.html',
+  styleUrl: './apply.css',
 })
 export class Apply {
   private readonly fb = inject(FormBuilder);

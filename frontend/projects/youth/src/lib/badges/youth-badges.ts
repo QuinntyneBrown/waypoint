@@ -1,16 +1,42 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthJourney } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import {
+  Button,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  Progress,
+} from '@waypoint/components';
 
 // Traces to: L2-LEARN-009
 @Component({
   selector: 'w-youth-badges',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DatePipe],
+  imports: [
+    Shell,
+    RouterLink,
+    DatePipe,
+    NgTemplateOutlet,
+    Button,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    Progress,
+  ],
   templateUrl: './youth-badges.html',
+  styleUrl: './youth-badges.css',
 })
 export class YouthBadgesPage {
   protected readonly auth = inject(AuthStore);

@@ -1,0 +1,31 @@
+.w-dl {
+  display: grid;
+  grid-template-columns: minmax(8rem, max-content) 1fr;
+  gap: var(--w-s3) var(--w-s6);
+  margin: 0;
+}
+.w-dl dt {
+  color: var(--w-muted);
+  font-size: 0.875rem;
+}
+.w-dl dd {
+  margin: 0;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.w-dl--vertical {
+  grid-template-columns: 1fr;
+  gap: var(--w-s1);
+}
+.w-dl--vertical dd {
+  margin-bottom: var(--w-s3);
+}
+@media (max-width: 39.99rem) {
+  .w-dl {
+    grid-template-columns: 1fr;
+    gap: var(--w-s1);
+  }
+  .w-dl dd {
+    margin-bottom: var(--w-s3);
+  }
+}

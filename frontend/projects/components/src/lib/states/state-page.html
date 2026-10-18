@@ -1,0 +1,17 @@
+<div class="w-authpage">
+  <div w-empty-state style="max-width: 460px">
+    <div w-empty-state-icon [style.background]="iconBg()" [style.color]="iconColor()">
+      <w-icon [name]="icon()" iconClass="w-state-page__glyph" />
+    </div>
+    @if (eyebrow()) {
+      <div class="w-eyebrow">{{ eyebrow() }}</div>
+    }
+    <h1 w-empty-state-title style="font-size: 1.6rem">{{ title() }}</h1>
+    @if (text()) {
+      <p w-empty-state-text>{{ text() }}</p>
+    }
+    <div class="w-cluster" style="justify-content: center">
+      <ng-content />
+    </div>
+  </div>
+</div>

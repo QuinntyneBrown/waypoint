@@ -1,40 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ApiError, ConsentService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WStatePage } from '@waypoint/components';
+import { Button, StatePage, Alert } from '@waypoint/components';
 
 // Traces to: L2-CONSENT-002
 @Component({
   selector: 'w-consent-required',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage],
-  template: `<w-state-page
-    icon="shield"
-    tone="warning"
-    eyebrow="Consent needed"
-    title="A guardian needs to sign off"
-    text="Before you can start lessons, a parent or guardian needs to give participation consent. It only takes a minute — send them a secure link, or have them sign now."
-  >
-    <button
-      class="w-btn w-btn--primary"
-      type="button"
-      [class.is-loading]="notifying()"
-      (click)="notifyGuardian()"
-      [disabled]="notifying()"
-    >
-      Notify my guardian
-    </button>
-    <button class="w-btn w-btn--ghost" type="button" (click)="guardianSignNow()">
-      My guardian can sign now
-    </button>
-    <button class="w-btn w-btn--subtle" type="button" (click)="signOut()">Sign out</button>
-    @if (deliveryMessage(); as message) {
-      <p class="w-alert w-alert--success" role="status" aria-live="polite">{{ message }}</p>
-    }
-    @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
-    }
-  </w-state-page>`,
+  imports: [StatePage, Button, Alert],
+  templateUrl: './consent-required.html',
+  styleUrl: './consent-required.css',
 })
 export class ConsentRequired {
   private readonly api = inject(ConsentService);

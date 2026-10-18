@@ -3,7 +3,24 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ApiError, PublicSiteService } from '@waypoint/api';
-import { WIcon } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  Label,
+  LabelRequired,
+  Select,
+  Textarea,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 
 function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -13,8 +30,28 @@ function isEmail(value: string): boolean {
 @Component({
   selector: 'w-contact',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WIcon],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    Icon,
+    Button,
+    FormField,
+    Label,
+    LabelRequired,
+    ErrorText,
+    TextField,
+    Textarea,
+    Select,
+    Alert,
+    Card,
+    CardBody,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './contact.html',
+  styleUrl: './contact.css',
 })
 export class Contact {
   private readonly fb = inject(FormBuilder);

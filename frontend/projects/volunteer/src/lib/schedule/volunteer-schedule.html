@@ -18,11 +18,11 @@
     } @else if (sessions()!.length > 0) {
       <div class="w-stack">
         @for (session of sessions(); track session.sessionId) {
-          <div class="w-card">
-            <div class="w-card__body">
+          <div w-card>
+            <div w-card-body>
               <div class="w-cluster w-cluster--between">
-                <h2 class="w-card__title">{{ session.title }}</h2>
-                <span class="w-badge">{{ session.status }}</span>
+                <h2 w-card-title>{{ session.title }}</h2>
+                <span w-badge>{{ session.status }}</span>
               </div>
               <p class="w-muted">
                 {{ session.startsAt | date: 'EEEE, MMM d · h:mm a' }}
@@ -38,12 +38,12 @@
         }
       </div>
     } @else {
-      <div class="w-empty">
-        <div class="w-empty__icon">
+      <div w-empty-state>
+        <div w-empty-state-icon>
           <w-icon name="calendar" />
         </div>
-        <h3 class="w-empty__title">No upcoming sessions</h3>
-        <p class="w-empty__text">
+        <h3 w-empty-state-title>No upcoming sessions</h3>
+        <p w-empty-state-text>
           You have no upcoming sessions assigned yet. We’ll show them here once you’re scheduled.
         </p>
       </div>

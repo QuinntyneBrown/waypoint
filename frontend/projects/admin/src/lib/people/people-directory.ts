@@ -4,7 +4,25 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { ApiError, DirectoryCohort, PagedPeople, PeopleService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  TableWrap,
+  Table,
+  Pagination,
+} from '@waypoint/components';
 import { catchError, debounceTime, of, switchMap, tap } from 'rxjs';
 
 interface DirectoryQuery {
@@ -18,41 +36,29 @@ interface DirectoryQuery {
 @Component({
   selector: 'w-people-directory',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, DatePipe],
+  imports: [
+    Shell,
+    Icon,
+    RouterLink,
+    DatePipe,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Select,
+    Alert,
+    Card,
+    CardBody,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    TableWrap,
+    Table,
+    Pagination,
+  ],
   templateUrl: './people-directory.html',
-  styles: `
-    .directory-filters {
-      display: grid;
-      grid-template-columns: minmax(14rem, 1fr) minmax(13rem, 0.5fr);
-      gap: var(--w-s4);
-      align-items: end;
-    }
-    .role-filters {
-      grid-column: 1 / -1;
-      margin: 0;
-      padding: 0;
-      border: 0;
-    }
-    .role-filter-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s2);
-    }
-    .pager {
-      margin-top: var(--w-s4);
-    }
-    @media (max-width: 42rem) {
-      .directory-filters {
-        grid-template-columns: 1fr;
-      }
-      .role-filters {
-        grid-column: auto;
-      }
-      .role-filter-list .w-btn {
-        flex: 1 1 calc(50% - var(--w-s2));
-      }
-    }
-  `,
+  styleUrl: './people-directory.css',
 })
 export class PeopleDirectory {
   protected readonly auth = inject(AuthStore);

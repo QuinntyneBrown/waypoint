@@ -2,14 +2,42 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ApiError, GuardianAnnouncement, GuardianService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  Icon,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 
 // Traces to: L2-GUARDIAN-002
 @Component({
   selector: 'w-guardian-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, WIcon],
+  imports: [
+    Shell,
+    DatePipe,
+    Icon,
+    Button,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './guardian-announcements.html',
+  styleUrl: './guardian-announcements.css',
 })
 export class GuardianAnnouncements {
   protected readonly auth = inject(AuthStore);

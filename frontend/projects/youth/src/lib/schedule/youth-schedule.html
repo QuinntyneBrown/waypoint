@@ -14,26 +14,28 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (sessions(); as upcoming) {
       @if (upcoming.length === 0) {
-        <section class="w-card w-empty">
-          <div class="w-card__body">
-            <h2 class="w-empty__title">No upcoming sessions yet</h2>
-            <p class="w-empty__text">New cohort sessions will appear here when they are planned.</p>
+        <section w-card>
+          <div w-empty-state>
+            <div w-card-body>
+              <h2 w-empty-state-title>No upcoming sessions yet</h2>
+              <p w-empty-state-text>New cohort sessions will appear here when they are planned.</p>
+            </div>
           </div>
         </section>
       } @else {
         <div class="schedule-list">
           @for (session of upcoming; track session.sessionId) {
-            <article class="w-card" data-testid="youth-session">
-              <div class="w-card__body session-card__layout">
+            <article w-card data-testid="youth-session">
+              <div w-card-body class="session-card__layout">
                 <div class="w-stack">
                   <div>
                     <div class="w-eyebrow">Upcoming session</div>
-                    <h2 class="w-card__title">{{ session.title }}</h2>
+                    <h2 w-card-title>{{ session.title }}</h2>
                   </div>
                   <ul class="session-meta w-stack">
                     <li>
@@ -53,7 +55,7 @@
                     }
                   </ul>
                   @if (session.response) {
-                    <span class="w-badge w-badge--success" data-testid="current-rsvp">
+                    <span w-badge variant="success" data-testid="current-rsvp">
                       Current response:
                       {{ session.response === 'CantAttend' ? 'Can’t make it' : session.response }}
                     </span>
@@ -64,7 +66,7 @@
                   <fieldset class="w-stack">
                     <legend><strong>Your RSVP</strong></legend>
                     <div class="rsvp-options">
-                      <label class="w-radio rsvp-option">
+                      <label w-radio class="rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -72,9 +74,9 @@
                           [checked]="draft(session.sessionId).response === 'going'"
                           (change)="setResponse(session.sessionId, 'going')"
                         />
-                        <span class="w-radio__box"></span><span>Going</span>
+                        <span w-radio-box></span><span>Going</span>
                       </label>
-                      <label class="w-radio rsvp-option">
+                      <label w-radio class="rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -82,9 +84,9 @@
                           [checked]="draft(session.sessionId).response === 'maybe'"
                           (change)="setResponse(session.sessionId, 'maybe')"
                         />
-                        <span class="w-radio__box"></span><span>Maybe</span>
+                        <span w-radio-box></span><span>Maybe</span>
                       </label>
-                      <label class="w-radio rsvp-option">
+                      <label w-radio class="rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -92,17 +94,18 @@
                           [checked]="draft(session.sessionId).response === 'can\'t make it'"
                           (change)="setResponse(session.sessionId, 'can\'t make it')"
                         />
-                        <span class="w-radio__box"></span><span>Can’t make it</span>
+                        <span w-radio-box></span><span>Can’t make it</span>
                       </label>
                     </div>
                   </fieldset>
 
-                  <div class="w-field">
-                    <label class="w-label" [for]="'rsvp-note-' + session.sessionId">
-                      Note to your mentor <span class="w-label__opt">(optional)</span>
+                  <div w-form-field>
+                    <label w-label [for]="'rsvp-note-' + session.sessionId">
+                      Note to your mentor <span w-label-optional>(optional)</span>
                     </label>
                     <textarea
-                      class="w-textarea rsvp-note"
+                      w-textarea
+                      class="rsvp-note"
                       [id]="'rsvp-note-' + session.sessionId"
                       maxlength="1000"
                       [value]="draft(session.sessionId).note"
@@ -110,20 +113,21 @@
                     ></textarea>
                   </div>
 
-                  <label class="w-check">
+                  <label w-checkbox>
                     <input
                       type="checkbox"
                       [checked]="draft(session.sessionId).reminderSet"
                       [disabled]="draft(session.sessionId).response === 'can\'t make it'"
                       (change)="setReminder(session.sessionId, $any($event.target).checked)"
                     />
-                    <span class="w-check__box"></span>
+                    <span w-checkbox-box></span>
                     <span>Remind me before this session</span>
                   </label>
 
                   <div class="w-actions">
                     <button
-                      class="w-btn w-btn--primary"
+                      w-button
+                      variant="primary"
                       type="button"
                       [disabled]="saving().has(session.sessionId)"
                       (click)="save(session.sessionId)"

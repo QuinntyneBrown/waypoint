@@ -2,40 +2,42 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthJourney } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import {
+  Button,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  Progress,
+  Timeline,
+  TimelineItem,
+} from '@waypoint/components';
 
 // Traces to: L2-LEARN-009
 @Component({
   selector: 'w-youth-journey',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink],
+  imports: [
+    Shell,
+    RouterLink,
+    Button,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    Progress,
+    Timeline,
+    TimelineItem,
+  ],
   templateUrl: './youth-journey.html',
-  styles: `
-    .journey-timeline {
-      border-inline-start: 3px solid var(--w-border);
-      padding-inline-start: var(--w-s5);
-    }
-    .journey-module {
-      position: relative;
-    }
-    .journey-module::before {
-      content: '';
-      position: absolute;
-      inline-size: 0.9rem;
-      block-size: 0.9rem;
-      border-radius: 50%;
-      background: var(--w-border);
-      inset-inline-start: calc(-1 * var(--w-s5) - 0.55rem);
-      inset-block-start: 1.35rem;
-    }
-    .journey-module--current::before {
-      background: var(--w-lime);
-      box-shadow: 0 0 0 4px var(--w-lime-soft);
-    }
-    .journey-progress {
-      width: 100%;
-    }
-  `,
+  styleUrl: './youth-journey.css',
 })
 export class YouthJourneyPage {
   protected readonly auth = inject(AuthStore);

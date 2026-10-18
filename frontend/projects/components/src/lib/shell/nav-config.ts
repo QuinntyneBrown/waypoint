@@ -1,6 +1,6 @@
-export type WRole = 'youth' | 'mentor' | 'admin' | 'guardian' | 'volunteer';
+export type Role = 'youth' | 'mentor' | 'admin' | 'guardian' | 'volunteer';
 
-export interface WNavItem {
+export interface NavItem {
   readonly key: string;
   readonly label: string;
   readonly icon: string;
@@ -10,21 +10,21 @@ export interface WNavItem {
 }
 
 /** A section heading in the sidenav. */
-export interface WNavGroup {
+export interface NavGroup {
   readonly group: string;
 }
 
-export type WNavEntry = WNavItem | WNavGroup;
+export type NavEntry = NavItem | NavGroup;
 
-export interface WRoleNav {
+export interface RoleNav {
   readonly brandPath: string;
   /** Keys promoted to the mobile bottom nav (in order); empty = no bottom nav. */
   readonly botnav: readonly string[];
-  readonly items: readonly WNavEntry[];
+  readonly items: readonly NavEntry[];
 }
 
-export function isNavGroup(entry: WNavEntry): entry is WNavGroup {
-  return (entry as WNavGroup).group !== undefined;
+export function isNavGroup(entry: NavEntry): entry is NavGroup {
+  return (entry as NavGroup).group !== undefined;
 }
 
 /**
@@ -32,7 +32,7 @@ export function isNavGroup(entry: WNavEntry): entry is WNavGroup {
  * Angular route paths. Areas beyond Tier A (learning, mentor, admin, …) are
  * present so the shell renders faithfully; their routes land as they are built.
  */
-export const W_NAV: Record<WRole, WRoleNav> = {
+export const W_NAV: Record<Role, RoleNav> = {
   youth: {
     brandPath: '/youth/home',
     botnav: ['home', 'journey', 'curriculum', 'messages', 'profile'],
@@ -132,7 +132,7 @@ export const W_NAV: Record<WRole, WRoleNav> = {
   },
 };
 
-export const W_ROLE_LABEL: Record<WRole, string> = {
+export const W_ROLE_LABEL: Record<Role, string> = {
   youth: 'Youth Leader',
   mentor: 'Mentor',
   admin: 'Director',

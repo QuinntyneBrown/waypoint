@@ -14,43 +14,43 @@
     </div>
 
     <div class="w-grid w-grid--2">
-      <section class="w-card">
-        <form class="w-card__body w-stack" [formGroup]="contactForm" (ngSubmit)="saveContact()">
-          <h2 class="w-card__title">Contact details</h2>
-          <div class="w-field">
-            <label class="w-label" for="guardian-name">Name</label>
-            <input class="w-input" id="guardian-name" formControlName="displayName" />
+      <section w-card>
+        <form w-card-body class="w-stack" [formGroup]="contactForm" (ngSubmit)="saveContact()">
+          <h2 w-card-title>Contact details</h2>
+          <div w-form-field>
+            <label w-label for="guardian-name">Name</label>
+            <input w-text-field id="guardian-name" formControlName="displayName" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="guardian-email">Email</label>
-            <input class="w-input" id="guardian-email" type="email" formControlName="email" />
+          <div w-form-field>
+            <label w-label for="guardian-email">Email</label>
+            <input w-text-field id="guardian-email" type="email" formControlName="email" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="guardian-relationship">Relationship</label>
-            <input class="w-input" id="guardian-relationship" formControlName="relationship" />
+          <div w-form-field>
+            <label w-label for="guardian-relationship">Relationship</label>
+            <input w-text-field id="guardian-relationship" formControlName="relationship" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="guardian-phone">Phone</label>
-            <input class="w-input" id="guardian-phone" type="tel" formControlName="phone" />
+          <div w-form-field>
+            <label w-label for="guardian-phone">Phone</label>
+            <input w-text-field id="guardian-phone" type="tel" formControlName="phone" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="guardian-emergency-name">Emergency contact name</label>
+          <div w-form-field>
+            <label w-label for="guardian-emergency-name">Emergency contact name</label>
             <input
-              class="w-input"
+              w-text-field
               id="guardian-emergency-name"
               formControlName="emergencyContactName"
             />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="guardian-emergency-phone">Emergency contact phone</label>
+          <div w-form-field>
+            <label w-label for="guardian-emergency-phone">Emergency contact phone</label>
             <input
-              class="w-input"
+              w-text-field
               id="guardian-emergency-phone"
               type="tel"
               formControlName="emergencyContactPhone"
             />
           </div>
-          <button class="w-btn w-btn--primary" type="submit" [disabled]="saving()">
+          <button w-button variant="primary" type="submit" [disabled]="saving()">
             Save contact details
           </button>
         </form>
@@ -60,14 +60,19 @@
         @if (records() === undefined) {
           <p class="w-muted">Loading consent record…</p>
         } @else if (records()![0]; as record) {
-          <section class="w-card">
-            <div class="w-card__body w-stack">
+          <section w-card>
+            <div w-card-body class="w-stack">
               <div class="w-cluster w-cluster--between">
-                <h2 class="w-card__title">Participation consent</h2>
+                <h2 w-card-title>Participation consent</h2>
                 <span
-                  class="w-badge"
-                  [class.w-badge--success]="record.withdrawnAt === null"
-                  [class.w-badge--error]="record.withdrawnAt !== null"
+                  w-badge
+                  [variant]="
+                    record.withdrawnAt === null
+                      ? 'success'
+                      : record.withdrawnAt !== null
+                        ? 'error'
+                        : ''
+                  "
                   data-testid="participation-status"
                 >
                   {{ record.withdrawnAt ? 'Withdrawn' : 'Active' }}
@@ -87,7 +92,8 @@
               </dl>
               <div class="w-cluster">
                 <button
-                  class="w-btn w-btn--secondary"
+                  w-button
+                  variant="secondary"
                   type="button"
                   [disabled]="saving()"
                   (click)="emailCopy(record.consentId)"
@@ -96,7 +102,8 @@
                 </button>
                 @if (!record.withdrawnAt) {
                   <button
-                    class="w-btn w-btn--danger"
+                    w-button
+                    variant="danger"
                     type="button"
                     [disabled]="saving()"
                     (click)="withdraw(record.consentId)"
@@ -108,46 +115,46 @@
             </div>
           </section>
 
-          <section class="w-card">
-            <form class="w-card__body w-stack" [formGroup]="mediaForm" (ngSubmit)="saveMedia()">
-              <h2 class="w-card__title">Media consent</h2>
-              <label class="w-check">
+          <section w-card>
+            <form w-card-body class="w-stack" [formGroup]="mediaForm" (ngSubmit)="saveMedia()">
+              <h2 w-card-title>Media consent</h2>
+              <label w-checkbox>
                 <input type="checkbox" formControlName="mediaConsent" />
-                <span class="w-check__box">
+                <span w-checkbox-box>
                   <w-icon name="check" />
                 </span>
                 <span>Allow media use</span>
               </label>
-              <label class="w-check">
+              <label w-checkbox>
                 <input type="checkbox" formControlName="mediaAllPhotosVideo" />
-                <span class="w-check__box">
+                <span w-checkbox-box>
                   <w-icon name="check" />
                 </span>
                 <span>All photos and video</span>
               </label>
-              <label class="w-check">
+              <label w-checkbox>
                 <input type="checkbox" formControlName="mediaGroupOnly" />
-                <span class="w-check__box">
+                <span w-checkbox-box>
                   <w-icon name="check" />
                 </span>
                 <span>Group photos only</span>
               </label>
-              <label class="w-check">
+              <label w-checkbox>
                 <input type="checkbox" formControlName="mediaFirstNameCaptions" />
-                <span class="w-check__box">
+                <span w-checkbox-box>
                   <w-icon name="check" />
                 </span>
                 <span>First-name captions</span>
               </label>
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="saving()">
+              <button w-button variant="primary" type="submit" [disabled]="saving()">
                 Save media consent
               </button>
             </form>
           </section>
         } @else {
-          <div class="w-empty">
-            <h2 class="w-empty__title">No consent record yet</h2>
-            <p class="w-empty__text">
+          <div w-empty-state>
+            <h2 w-empty-state-title>No consent record yet</h2>
+            <p w-empty-state-text>
               A participation and media consent record will appear once a youth is linked.
             </p>
           </div>
@@ -156,12 +163,12 @@
     </div>
 
     @if (statusMessage(); as message) {
-      <p class="w-alert w-alert--success" role="status" aria-live="polite">{{ message }}</p>
+      <p w-alert variant="success" role="status" aria-live="polite">{{ message }}</p>
     } @else {
       <p role="status" aria-live="polite"></p>
     }
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
   </div>
 </w-shell>

@@ -5,15 +5,15 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-page">
-    <a class="w-link" routerLink="/mentor/reviews">Back to reviews</a>
+    <a w-link standalone routerLink="/mentor/reviews">Back to reviews</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (conflictMessage(); as conflict) {
-      <div class="w-alert w-alert--warning w-stack" role="alert" data-testid="submission-conflict">
+      <div w-alert variant="warning" class="w-stack" role="alert" data-testid="submission-conflict">
         <p>{{ conflict }}</p>
         <div>
-          <button class="w-btn w-btn--secondary" type="button" (click)="loadLatest()">
+          <button w-button variant="secondary" type="button" (click)="loadLatest()">
             Load latest review
           </button>
         </div>
@@ -32,9 +32,9 @@
       </div>
 
       <div class="review-layout">
-        <section class="w-card" data-testid="submitted-copy">
-          <div class="w-card__header"><h2 class="w-card__title">Submitted work</h2></div>
-          <div class="w-card__body w-stack">
+        <section w-card data-testid="submitted-copy">
+          <div w-card-header><h2 w-card-title>Submitted work</h2></div>
+          <div w-card-body class="w-stack">
             <p>{{ item.taskDescription }}</p>
             @if (item.bodyText) {
               <div class="submitted-body">{{ item.bodyText }}</div>
@@ -43,15 +43,13 @@
               <img class="evidence-image" [src]="photo" alt="Evidence submitted by the youth" />
             }
             @if (item.linkUrl) {
-              <a class="w-link" [href]="item.linkUrl" target="_blank" rel="noopener noreferrer"
+              <a w-link [href]="item.linkUrl" target="_blank" rel="noopener noreferrer"
                 >Open submitted link</a
               >
             }
             @if (item.file; as file) {
               @if (fileUrl(); as url) {
-                <a class="w-link" [href]="url" [download]="file.fileName"
-                  >Download {{ file.fileName }}</a
-                >
+                <a w-link [href]="url" [download]="file.fileName">Download {{ file.fileName }}</a>
               } @else {
                 <p class="w-muted" role="status">Preparing {{ file.fileName }}…</p>
               }
@@ -62,16 +60,16 @@
           </div>
         </section>
 
-        <section class="w-card">
-          <div class="w-card__header"><h2 class="w-card__title">Rubric and outcome</h2></div>
-          <div class="w-card__body w-stack">
+        <section w-card>
+          <div w-card-header><h2 w-card-title>Rubric and outcome</h2></div>
+          <div w-card-body class="w-stack">
             @for (criterion of item.rubric; track criterion.criterionId) {
               <div class="rubric-row">
-                <label class="w-label" [for]="'score-' + criterion.criterionId">
+                <label w-label [for]="'score-' + criterion.criterionId">
                   {{ criterion.description }} (0–{{ criterion.possiblePoints }})
                 </label>
                 <input
-                  class="w-input"
+                  w-text-field
                   type="number"
                   [id]="'score-' + criterion.criterionId"
                   min="0"
@@ -82,34 +80,33 @@
                 />
               </div>
             }
-            <p class="w-card__title" data-testid="rubric-total">
-              {{ total() }} / {{ item.totalPossible }}
-            </p>
-            <div class="w-field">
-              <label class="w-label" for="mentor-feedback">Feedback for the youth</label>
+            <p w-card-title data-testid="rubric-total">{{ total() }} / {{ item.totalPossible }}</p>
+            <div w-form-field>
+              <label w-label for="mentor-feedback">Feedback for the youth</label>
               <textarea
+                w-textarea
                 id="mentor-feedback"
-                class="w-textarea"
                 rows="5"
                 maxlength="4000"
                 [value]="comment()"
                 (input)="setComment($any($event.target).value)"
               ></textarea>
             </div>
-            <label class="w-check">
+            <label w-checkbox>
               <input
                 type="checkbox"
                 [checked]="guardianNotified()"
                 (change)="guardianNotified.set($any($event.target).checked)"
               />
-              <span class="w-check__box">
+              <span w-checkbox-box>
                 <w-icon name="check" />
               </span>
               <span>Notify guardian about the outcome</span>
             </label>
             <div class="w-actions review-actions">
               <button
-                class="w-btn w-btn--ghost"
+                w-button
+                variant="ghost"
                 type="button"
                 [disabled]="saving()"
                 (click)="submit('save-draft')"
@@ -117,7 +114,8 @@
                 Save draft
               </button>
               <button
-                class="w-btn w-btn--secondary"
+                w-button
+                variant="secondary"
                 type="button"
                 [disabled]="saving()"
                 (click)="submit('request-revision')"
@@ -125,7 +123,8 @@
                 Request revision
               </button>
               <button
-                class="w-btn w-btn--primary"
+                w-button
+                variant="primary"
                 type="button"
                 [disabled]="saving()"
                 (click)="submit('approve')"

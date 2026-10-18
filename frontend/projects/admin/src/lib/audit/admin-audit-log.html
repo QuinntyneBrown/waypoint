@@ -15,7 +15,8 @@
       </div>
       <div class="w-page__actions">
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           aria-label="Export filtered audit log as CSV"
           [disabled]="loading() || exporting()"
@@ -27,24 +28,24 @@
     </div>
 
     @if (exportStatus(); as status) {
-      <p class="w-alert w-alert--success" role="status">{{ status }}</p>
+      <p w-alert variant="success" role="status">{{ status }}</p>
     }
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <div>
-          <div class="w-alert__title">{{ error }}</div>
+          <div w-alert-title>{{ error }}</div>
           Audit activity could not be loaded.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
 
     @if (result(); as audit) {
       @if (!audit.integrityValid) {
-        <div class="w-alert w-alert--error" role="alert" data-testid="audit-integrity-warning">
+        <div w-alert variant="error" role="alert" data-testid="audit-integrity-warning">
           <div>
-            <div class="w-alert__title">Audit integrity check failed</div>
+            <div w-alert-title>Audit integrity check failed</div>
             One or more audit records may have been changed, removed, or inserted outside the
             protected audit writer. Escalate this incident before relying on the log.
           </div>
@@ -52,41 +53,42 @@
       }
     }
 
-    <section class="w-card w-mb-4" aria-labelledby="audit-filters-heading">
-      <div class="w-card__body w-stack">
+    <section w-card class="w-mb-4" aria-labelledby="audit-filters-heading">
+      <div w-card-body class="w-stack">
         <div>
           <h2 id="audit-filters-heading">Audit filters</h2>
           <p class="w-muted">Filter the view and CSV export by user, action, or inclusive dates.</p>
         </div>
         <form class="audit-filters" [formGroup]="filterForm" (ngSubmit)="applyFilters()">
-          <div class="w-field w-mb-0">
-            <label class="w-label" for="audit-user">Audit user</label>
-            <select class="w-select" id="audit-user" formControlName="actorUserId">
+          <div w-form-field class="w-mb-0">
+            <label w-label for="audit-user">Audit user</label>
+            <select w-select id="audit-user" formControlName="actorUserId">
               <option value="">All users</option>
               @for (actor of result()?.actors ?? []; track actor.id) {
                 <option [value]="actor.id">{{ actor.name }}</option>
               }
             </select>
           </div>
-          <div class="w-field w-mb-0">
-            <label class="w-label" for="audit-action">Audit action</label>
-            <select class="w-select" id="audit-action" formControlName="action">
+          <div w-form-field class="w-mb-0">
+            <label w-label for="audit-action">Audit action</label>
+            <select w-select id="audit-action" formControlName="action">
               <option value="">All actions</option>
               @for (action of result()?.actions ?? []; track action) {
                 <option [value]="action">{{ actionLabel(action) }}</option>
               }
             </select>
           </div>
-          <div class="w-field w-mb-0">
-            <label class="w-label" for="audit-from">Audit date from</label>
-            <input class="w-input" id="audit-from" type="date" formControlName="from" />
+          <div w-form-field class="w-mb-0">
+            <label w-label for="audit-from">Audit date from</label>
+            <input w-text-field id="audit-from" type="date" formControlName="from" />
           </div>
-          <div class="w-field w-mb-0">
-            <label class="w-label" for="audit-to">Audit date to</label>
-            <input class="w-input" id="audit-to" type="date" formControlName="to" />
+          <div w-form-field class="w-mb-0">
+            <label w-label for="audit-to">Audit date to</label>
+            <input w-text-field id="audit-to" type="date" formControlName="to" />
           </div>
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="submit"
             aria-label="Apply audit filters"
             [disabled]="loading()"
@@ -94,7 +96,8 @@
             Apply filters
           </button>
           <button
-            class="w-btn w-btn--ghost"
+            w-button
+            variant="ghost"
             type="button"
             aria-label="Clear audit filters"
             [disabled]="loading()"
@@ -104,30 +107,31 @@
           </button>
         </form>
         @if (dateError(); as error) {
-          <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+          <p w-alert variant="error" role="alert">{{ error }}</p>
         }
       </div>
     </section>
 
     @if (loading() && !result()) {
-      <div class="w-card" aria-label="Loading audit activity">
-        <div class="w-card__body w-stack">
-          <span class="w-skeleton w-skeleton--title"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
+      <div w-card aria-label="Loading audit activity">
+        <div w-card-body class="w-stack">
+          <span w-skeleton variant="title"></span>
+          <span w-skeleton variant="block"></span>
+          <span w-skeleton variant="block"></span>
+          <span w-skeleton variant="block"></span>
         </div>
       </div>
     } @else if (result(); as audit) {
       @if (audit.items.length === 0) {
-        <div class="w-card">
-          <div class="w-empty">
-            <h2 class="w-empty__title">No activity for this filter</h2>
-            <p class="w-empty__text">
+        <div w-card>
+          <div w-empty-state>
+            <h2 w-empty-state-title>No activity for this filter</h2>
+            <p w-empty-state-text>
               No audit events match the users, actions, or dates selected. Try widening the range.
             </p>
             <button
-              class="w-btn w-btn--secondary"
+              w-button
+              variant="secondary"
               type="button"
               aria-label="Clear audit filters"
               (click)="clearFilters()"
@@ -137,9 +141,9 @@
           </div>
         </div>
       } @else {
-        <div class="w-card">
-          <div class="w-table-wrap">
-            <table class="w-table w-table--cards">
+        <div w-card>
+          <div w-table-wrap>
+            <table w-table cards>
               <thead>
                 <tr>
                   <th>Who</th>
@@ -156,7 +160,7 @@
                       <strong>{{ item.actorName }}</strong>
                     </td>
                     <td data-label="Action">
-                      <span class="w-badge w-badge--outline">{{ actionLabel(item.action) }}</span>
+                      <span w-badge variant="outline">{{ actionLabel(item.action) }}</span>
                       <span class="w-sr-only">{{ item.action }}</span>
                     </td>
                     <td data-label="Target and detail" class="audit-target">
@@ -178,16 +182,17 @@
           </div>
         </div>
 
-        <div class="audit-pagination w-mt-4">
+        <nav w-pagination aria-label="Audit pages">
           <p class="w-muted" data-testid="audit-page-summary">
             Page {{ audit.page }} of {{ pageCount() }} · Showing {{ firstShown() }}–{{
               lastShown()
             }}
             of {{ audit.total }} events
           </p>
-          <div class="audit-pagination__actions">
+          <div class="w-cluster">
             <button
-              class="w-btn w-btn--ghost"
+              w-button
+              variant="ghost"
               type="button"
               aria-label="Previous audit page"
               [disabled]="audit.page <= 1 || loading()"
@@ -196,7 +201,8 @@
               Previous
             </button>
             <button
-              class="w-btn w-btn--ghost"
+              w-button
+              variant="ghost"
               type="button"
               aria-label="Next audit page"
               [disabled]="audit.page >= pageCount() || loading()"
@@ -205,7 +211,7 @@
               Next
             </button>
           </div>
-        </div>
+        </nav>
       }
     }
   </div>

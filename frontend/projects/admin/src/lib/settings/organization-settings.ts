@@ -10,106 +10,56 @@ import {
   SaveProgramTerm,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Help,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  AlertTitle,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 import { finalize, forkJoin, map } from 'rxjs';
 
 // Traces to: L2-ADMIN-006, L2-CONSENT-001, L2-NFR-009, L2-NFR-010
 @Component({
   selector: 'w-organization-settings',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, ReactiveFormsModule, DatePipe],
+  imports: [
+    Shell,
+    Icon,
+    ReactiveFormsModule,
+    DatePipe,
+    Button,
+    FormField,
+    Label,
+    Help,
+    TextField,
+    Textarea,
+    Select,
+    Alert,
+    AlertTitle,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './organization-settings.html',
-  styles: `
-    .settings-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s5);
-      align-items: start;
-    }
-    .settings-card {
-      min-width: 0;
-    }
-    .logo-preview {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 6rem;
-      padding: var(--w-s3);
-      border: 1px dashed var(--w-border);
-      border-radius: var(--w-r-card);
-      background: var(--w-g100);
-    }
-    .logo-preview img {
-      max-width: 12rem;
-      max-height: 5rem;
-      object-fit: contain;
-    }
-    .term-form {
-      display: grid;
-      grid-template-columns: minmax(12rem, 2fr) repeat(3, minmax(9rem, 1fr)) auto;
-      gap: var(--w-s3);
-      align-items: end;
-    }
-    .term-list,
-    .track-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .term-row,
-    .track-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--w-s4);
-      padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-border);
-      overflow-wrap: anywhere;
-    }
-    .term-row:last-child,
-    .track-row:last-child {
-      border-bottom: 0;
-    }
-    .term-row__details,
-    .track-row__details {
-      min-width: 0;
-    }
-    .policy-check {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--w-s3);
-      min-height: 2.75rem;
-    }
-    .policy-check input {
-      width: 1.25rem;
-      height: 1.25rem;
-      flex: 0 0 auto;
-      margin-top: 0.125rem;
-    }
-    @media (max-width: 64rem) {
-      .term-form {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-    @media (max-width: 48rem) {
-      .settings-grid,
-      .term-form {
-        grid-template-columns: 1fr;
-      }
-      .term-row,
-      .track-row {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .settings-card .w-btn,
-      .term-form .w-btn,
-      .term-row .w-btn,
-      .track-row .w-btn {
-        width: 100%;
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './organization-settings.css',
 })
 export class OrganizationSettingsPage {
   protected readonly auth = inject(AuthStore);

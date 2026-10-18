@@ -13,18 +13,18 @@
       </div>
     </div>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
 
     <div class="check-in-layout">
-      <section class="w-card">
-        <div class="w-card__header"><h2 class="w-card__title">Log check-in</h2></div>
-        <div class="w-card__body w-stack">
-          <div class="w-field">
-            <label class="w-label" for="check-in-youth">Youth</label>
+      <section w-card>
+        <div w-card-header><h2 w-card-title>Log check-in</h2></div>
+        <div w-card-body class="w-stack">
+          <div w-form-field>
+            <label w-label for="check-in-youth">Youth</label>
             <select
-              class="w-select"
+              w-select
               id="check-in-youth"
               [value]="selectedYouthId()"
               (change)="selectedYouthId.set($any($event.target).value)"
@@ -38,20 +38,20 @@
             </select>
           </div>
           <div class="w-grid w-grid--2">
-            <div class="w-field">
-              <label class="w-label" for="check-in-date">Date</label>
+            <div w-form-field>
+              <label w-label for="check-in-date">Date</label>
               <input
-                class="w-input"
+                w-text-field
                 id="check-in-date"
                 type="date"
                 [value]="date()"
                 (input)="date.set($any($event.target).value)"
               />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="check-in-type">Type</label>
+            <div w-form-field>
+              <label w-label for="check-in-type">Type</label>
               <select
-                class="w-select"
+                w-select
                 id="check-in-type"
                 [value]="type()"
                 (change)="type.set($any($event.target).value)"
@@ -62,10 +62,10 @@
               </select>
             </div>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="engagement">Engagement / mood</label>
+          <div w-form-field>
+            <label w-label for="engagement">Engagement / mood</label>
             <textarea
-              class="w-textarea"
+              w-textarea
               id="engagement"
               rows="3"
               maxlength="2000"
@@ -73,10 +73,10 @@
               (input)="engagement.set($any($event.target).value)"
             ></textarea>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="goals-discussed">Goals discussed</label>
+          <div w-form-field>
+            <label w-label for="goals-discussed">Goals discussed</label>
             <textarea
-              class="w-textarea"
+              w-textarea
               id="goals-discussed"
               rows="3"
               maxlength="2000"
@@ -84,22 +84,22 @@
               (input)="goalsDiscussed.set($any($event.target).value)"
             ></textarea>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="prayer-requests">Prayer requests</label>
+          <div w-form-field>
+            <label w-label for="prayer-requests">Prayer requests</label>
             <textarea
-              class="w-textarea"
+              w-textarea
               id="prayer-requests"
               rows="3"
               maxlength="2000"
               [value]="prayerRequests()"
               (input)="prayerRequests.set($any($event.target).value)"
             ></textarea>
-            <p class="w-help">Private unless you explicitly enable sharing below.</p>
+            <p w-help>Private unless you explicitly enable sharing below.</p>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="action-items">Action items</label>
+          <div w-form-field>
+            <label w-label for="action-items">Action items</label>
             <textarea
-              class="w-textarea"
+              w-textarea
               id="action-items"
               rows="3"
               maxlength="2000"
@@ -107,46 +107,48 @@
               (input)="actionItems.set($any($event.target).value)"
             ></textarea>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="next-follow-up">Next follow-up</label>
+          <div w-form-field>
+            <label w-label for="next-follow-up">Next follow-up</label>
             <input
-              class="w-input"
+              w-text-field
               id="next-follow-up"
               type="date"
               [value]="nextFollowUp()"
               (input)="nextFollowUp.set($any($event.target).value)"
             />
           </div>
-          <label class="w-check">
+          <label w-checkbox>
             <input
               type="checkbox"
               [checked]="share()"
               (change)="share.set($any($event.target).checked)"
             />
-            <span class="w-check__box">
+            <span w-checkbox-box>
               <w-icon name="check" />
             </span>
             <span>Share this check-in with the youth and guardian</span>
           </label>
           @if (share()) {
-            <p class="w-alert">
+            <p w-alert>
               All entered fields, including prayer requests, will be visible to the youth and their
               linked guardian.
             </p>
           }
-          <label class="w-check">
+          <label w-checkbox>
             <input
               type="checkbox"
               [checked]="guardianInformed()"
               (change)="guardianInformed.set($any($event.target).checked)"
             />
-            <span class="w-check__box">
+            <span w-checkbox-box>
               <w-icon name="check" />
             </span>
             <span>Guardian was informed</span>
           </label>
           <button
-            class="w-btn w-btn--primary save-button"
+            w-button
+            variant="primary"
+            class="save-button"
             type="button"
             [disabled]="saving()"
             (click)="save()"
@@ -160,10 +162,10 @@
         <div>
           <h2 id="history-heading">Check-in history</h2>
           <div class="history-filters">
-            <div class="w-field">
-              <label class="w-label" for="filter-youth">Filter by youth</label>
+            <div w-form-field>
+              <label w-label for="filter-youth">Filter by youth</label>
               <select
-                class="w-select"
+                w-select
                 id="filter-youth"
                 [value]="filterYouthId()"
                 (change)="filterYouthId.set($any($event.target).value); applyFilters()"
@@ -176,10 +178,10 @@
                 }
               </select>
             </div>
-            <div class="w-field">
-              <label class="w-label" for="filter-type">Filter by type</label>
+            <div w-form-field>
+              <label w-label for="filter-type">Filter by type</label>
               <select
-                class="w-select"
+                w-select
                 id="filter-type"
                 [value]="filterType()"
                 (change)="filterType.set($any($event.target).value); applyFilters()"
@@ -194,19 +196,17 @@
         </div>
         @if (history(); as items) {
           @for (item of items; track item.id) {
-            <article class="w-card history-card" data-testid="check-in-history-item">
-              <div class="w-card__header">
+            <article w-card class="history-card" data-testid="check-in-history-item">
+              <div w-card-header>
                 <div>
                   <p class="w-eyebrow">{{ item.youthName }}</p>
-                  <h3 class="w-card__title">
-                    {{ item.type }} · {{ item.date | date: 'mediumDate' }}
-                  </h3>
+                  <h3 w-card-title>{{ item.type }} · {{ item.date | date: 'mediumDate' }}</h3>
                 </div>
-                <span class="w-badge">
+                <span w-badge>
                   {{ item.visibility === 'Private' ? 'Private mentor note' : 'Shared' }}
                 </span>
               </div>
-              <div class="w-card__body w-stack">
+              <div w-card-body class="w-stack">
                 @if (item.engagement) {
                   <p><strong>Engagement:</strong> {{ item.engagement }}</p>
                 }
@@ -228,10 +228,12 @@
               </div>
             </article>
           } @empty {
-            <div class="w-card w-empty">
-              <div class="w-empty__icon"><w-icon name="clipboard-check" /></div>
-              <h3 class="w-empty__title">No matching check-ins</h3>
-              <p class="w-empty__text">Adjust the youth or type filter.</p>
+            <div w-card>
+              <div w-empty-state>
+                <div w-empty-state-icon><w-icon name="clipboard-check" /></div>
+                <h3 w-empty-state-title>No matching check-ins</h3>
+                <p w-empty-state-text>Adjust the youth or type filter.</p>
+              </div>
             </div>
           }
         } @else {

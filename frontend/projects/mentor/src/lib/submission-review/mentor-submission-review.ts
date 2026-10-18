@@ -11,7 +11,23 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, MentorService, SubmissionReviewView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Icon,
+  Label,
+  Link,
+  Shell,
+  Textarea,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+} from '@waypoint/components';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { UnsavedChangesAware, DraftSaveResult, UnsavedChangesService } from '@waypoint/core';
 
@@ -27,48 +43,27 @@ interface GradingDraft {
 @Component({
   selector: 'w-mentor-submission-review',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DatePipe, WIcon],
+  imports: [
+    Shell,
+    RouterLink,
+    DatePipe,
+    Icon,
+    Button,
+    Link,
+    FormField,
+    Label,
+    TextField,
+    Textarea,
+    Checkbox,
+    CheckboxBox,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+  ],
   templateUrl: './mentor-submission-review.html',
-  styles: `
-    .review-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.75fr);
-      gap: var(--w-s6);
-      align-items: start;
-    }
-    .submitted-body {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-    .evidence-image {
-      display: block;
-      max-width: 100%;
-      max-height: 28rem;
-      object-fit: contain;
-    }
-    .rubric-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 7rem;
-      gap: var(--w-s4);
-      align-items: center;
-      padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-border);
-    }
-    .review-actions {
-      display: grid;
-      gap: var(--w-s3);
-    }
-    @media (max-width: 52rem) {
-      .review-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 32rem) {
-      .rubric-row {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './mentor-submission-review.css',
 })
 export class MentorSubmissionReviewPage implements OnDestroy, UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);

@@ -16,15 +16,43 @@ import {
   ProfileService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { ToastService, WIcon } from '@waypoint/components';
+import {
+  ToastService,
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Icon,
+  IconButton,
+  Label,
+  LabelRequired,
+  TextField,
+  Alert,
+  Divider,
+} from '@waypoint/components';
 import { SettingsShell } from '../settings-shell';
 
 // Traces to: L2-PLATFORM-002
 @Component({
   selector: 'w-settings-profile',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SettingsShell, ReactiveFormsModule, WIcon],
+  imports: [
+    SettingsShell,
+    ReactiveFormsModule,
+    Icon,
+    Button,
+    IconButton,
+    FormField,
+    Label,
+    LabelRequired,
+    Help,
+    ErrorText,
+    TextField,
+    Alert,
+    Divider,
+  ],
   templateUrl: './settings-profile.html',
+  styleUrl: './settings-profile.css',
 })
 export class SettingsProfile implements OnDestroy {
   private readonly fb = inject(FormBuilder);

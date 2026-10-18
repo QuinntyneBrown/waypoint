@@ -7,7 +7,24 @@ import {
   ProgressionStage,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Label,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogBody,
+} from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 import {
   EditorDraftService,
@@ -32,9 +49,27 @@ type ProgressionAuthoringDraft =
 @Component({
   selector: 'w-progression-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WAccessibleDialog, ReactiveFormsModule],
+  imports: [
+    Shell,
+    ReactiveFormsModule,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Textarea,
+    Alert,
+    Card,
+    CardBody,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogBody,
+  ],
   templateUrl: './progression-builder.html',
-  styleUrl: './curriculum-admin.css',
+  styleUrl: './progression-builder.css',
 })
 export class ProgressionBuilderPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);

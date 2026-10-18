@@ -15,7 +15,24 @@ import {
   ProgressBoard,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  TableWrap,
+  Matrix,
+} from '@waypoint/components';
 import { debounceTime, filter, finalize, forkJoin, merge } from 'rxjs';
 import { RealtimeService } from '@waypoint/core/realtime';
 
@@ -23,100 +40,26 @@ import { RealtimeService } from '@waypoint/core/realtime';
 @Component({
   selector: 'w-progress-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon],
+  imports: [
+    Shell,
+    Icon,
+    Button,
+    FormField,
+    Label,
+    Select,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    TableWrap,
+    Matrix,
+  ],
   templateUrl: './progress-board.html',
-  styles: `
-    .board-filters {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(13rem, 1fr));
-      gap: var(--w-s4);
-      align-items: end;
-    }
-    .board-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s3);
-    }
-    .matrix-wrap {
-      max-width: 100%;
-      overflow-x: auto;
-      overscroll-behavior-inline: contain;
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-lg);
-    }
-    .matrix {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .matrix th,
-    .matrix td {
-      padding: var(--w-s3);
-      border-bottom: 1px solid var(--w-border);
-      text-align: left;
-      vertical-align: middle;
-    }
-    .matrix thead th {
-      position: sticky;
-      top: 0;
-      background: var(--w-surface);
-      z-index: 1;
-    }
-    .matrix th:first-child,
-    .matrix td:first-child {
-      position: sticky;
-      left: 0;
-      min-width: 13rem;
-      background: var(--w-surface);
-      z-index: 2;
-    }
-    .matrix thead th:first-child {
-      z-index: 3;
-    }
-    .module-cell {
-      min-width: 9rem;
-    }
-    .module-cell__name {
-      display: block;
-      margin-bottom: var(--w-s1);
-      color: var(--w-muted);
-      font-size: 0.875rem;
-    }
-    .state {
-      display: inline-flex;
-      align-items: center;
-      min-height: 2rem;
-      padding: 0 var(--w-s2);
-      border-radius: var(--w-r-pill);
-      background: var(--w-g100);
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .state--done {
-      color: var(--w-success);
-    }
-    .state--progress {
-      color: var(--w-info);
-    }
-    .state--unassigned {
-      color: var(--w-muted);
-      font-weight: 500;
-    }
-    .matrix tfoot th,
-    .matrix tfoot td {
-      border-bottom: 0;
-      background: var(--w-g100);
-      font-weight: 700;
-    }
-    @media (max-width: 42rem) {
-      .board-filters {
-        grid-template-columns: 1fr;
-      }
-      .board-actions .w-btn {
-        flex: 1 1 calc(50% - var(--w-s3));
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './progress-board.css',
 })
 export class ProgressBoardPage {
   protected readonly auth = inject(AuthStore);

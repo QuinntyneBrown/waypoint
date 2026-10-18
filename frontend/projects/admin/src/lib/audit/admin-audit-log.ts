@@ -3,69 +3,56 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ApiError, AuditService, AuditLogFilter, AuditLogPage } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Label,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  AlertTitle,
+  Card,
+  CardBody,
+  Badge,
+  Skeleton,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  TableWrap,
+  Table,
+  Pagination,
+} from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
 // Traces to: L2-CONSENT-003, L2-REPORT-003, L2-AUTH-009, L2-NFR-009/010
 @Component({
   selector: 'w-admin-audit-log',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, ReactiveFormsModule, DatePipe],
+  imports: [
+    Shell,
+    ReactiveFormsModule,
+    DatePipe,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Select,
+    Alert,
+    AlertTitle,
+    Card,
+    CardBody,
+    Badge,
+    Skeleton,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    TableWrap,
+    Table,
+    Pagination,
+  ],
   templateUrl: './admin-audit-log.html',
-  styles: `
-    .audit-filters {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(9rem, 1fr)) auto auto;
-      gap: var(--w-s3);
-      align-items: end;
-    }
-    .audit-target,
-    .audit-detail {
-      overflow-wrap: anywhere;
-    }
-    .audit-source {
-      overflow-wrap: break-word;
-    }
-    .audit-private {
-      display: inline-flex;
-      gap: var(--w-s2);
-      align-items: center;
-      color: var(--w-muted);
-      font-weight: 700;
-    }
-    .audit-pagination {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s3);
-      align-items: center;
-      justify-content: space-between;
-    }
-    .audit-pagination__actions {
-      display: flex;
-      gap: var(--w-s2);
-    }
-    @media (max-width: 68rem) {
-      .audit-filters {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-    @media (max-width: 48rem) {
-      .audit-filters {
-        grid-template-columns: 1fr;
-      }
-      .audit-filters .w-btn,
-      .audit-pagination .w-btn,
-      .w-page__actions .w-btn {
-        width: 100%;
-        min-height: 45px;
-      }
-      .audit-pagination,
-      .audit-pagination__actions {
-        align-items: stretch;
-        flex-direction: column;
-      }
-    }
-  `,
+  styleUrl: './admin-audit-log.css',
 })
 export class AdminAuditLogPage {
   private static readonly pageSize = 10;

@@ -16,9 +16,9 @@
     @if (loading()) {
       <p class="w-muted">Loading…</p>
     } @else if (today(); as session) {
-      <div class="w-card">
-        <div class="w-card__body w-stack">
-          <h2 class="w-card__title">{{ session.title }}</h2>
+      <div w-card>
+        <div w-card-body class="w-stack">
+          <h2 w-card-title>{{ session.title }}</h2>
           <p class="w-muted">
             {{ session.startsAt | date: 'EEEE, MMM d · h:mm a' }}
             @if (session.durationMinutes) {
@@ -29,24 +29,21 @@
             <p><w-icon name="map-pin" /> {{ session.location }}</p>
           }
           <p>{{ session.rosterCount }} on the roster</p>
-          <a
-            class="w-btn w-btn--primary"
-            [routerLink]="['/volunteer/attendance', session.sessionId]"
-          >
+          <a w-button variant="primary" [routerLink]="['/volunteer/attendance', session.sessionId]">
             Take attendance
           </a>
         </div>
       </div>
     } @else {
-      <div class="w-empty">
-        <div class="w-empty__icon">
+      <div w-empty-state>
+        <div w-empty-state-icon>
           <w-icon name="calendar" />
         </div>
-        <h3 class="w-empty__title">No session today</h3>
-        <p class="w-empty__text">
+        <h3 w-empty-state-title>No session today</h3>
+        <p w-empty-state-text>
           You have no assigned session today. Check your schedule for what’s coming up.
         </p>
-        <a class="w-btn w-btn--secondary" routerLink="/volunteer/schedule">View schedule</a>
+        <a w-button variant="secondary" routerLink="/volunteer/schedule">View schedule</a>
       </div>
     }
   </div>

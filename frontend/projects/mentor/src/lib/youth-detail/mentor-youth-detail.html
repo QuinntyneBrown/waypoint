@@ -5,9 +5,9 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-page">
-    <a class="w-link" routerLink="/mentor/my-youth">Back to My youth</a>
+    <a w-link standalone routerLink="/mentor/my-youth">Back to My youth</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (detail(); as youth) {
       <div class="w-page__head">
@@ -19,7 +19,7 @@
       </div>
 
       @if (youth.atRisk) {
-        <aside class="w-alert w-alert--error" data-testid="youth-at-risk-banner">
+        <aside w-alert variant="error" data-testid="youth-at-risk-banner">
           <strong>At risk:</strong> {{ youth.atRiskReason }}
           @if (youth.flaggedByName && youth.flaggedAt) {
             <span
@@ -30,17 +30,17 @@
         </aside>
       }
 
-      <div class="detail-tabs" role="tablist" aria-label="Youth record sections">
+      <div w-tabs role="tablist" aria-label="Youth record sections">
         @for (tab of tabs; track tab.key) {
           <button
-            class="w-tab detail-tab"
+            w-tab
+            [active]="activeTab() === tab.key"
             type="button"
             role="tab"
             [id]="'detail-tab-' + tab.key"
             [attr.aria-controls]="'detail-panel-' + tab.key"
             [attr.aria-selected]="activeTab() === tab.key"
             [attr.tabindex]="activeTab() === tab.key ? 0 : -1"
-            [class.is-active]="activeTab() === tab.key"
             (click)="selectTab(tab.key)"
           >
             {{ tab.label }}
@@ -51,12 +51,13 @@
       @for (tab of tabs; track tab.key) {
         @if (activeTab() === tab.key) {
           <section
-            class="w-card w-mt-4"
+            w-card
+            class="w-mt-4"
             role="tabpanel"
             [id]="'detail-panel-' + tab.key"
             [attr.aria-labelledby]="'detail-tab-' + tab.key"
           >
-            <div class="w-card__body">
+            <div w-card-body>
               @switch (tab.key) {
                 @case ('profile') {
                   <div class="detail-grid">
@@ -91,82 +92,91 @@
                     {{ youth.progress.completedLessons }} of
                     {{ youth.progress.totalLessons }} lessons complete
                   </p>
-                  <progress max="100" [value]="percent(youth.progress.percent)">
-                    {{ percent(youth.progress.percent) }}%
-                  </progress>
+                  <div
+                    w-progress
+                    label="Lesson progress"
+                    [value]="percent(youth.progress.percent)"
+                  ></div>
                 }
                 @case ('attendance') {
                   <h2>Attendance</h2>
-                  <ul class="detail-list">
-                    @for (item of youth.attendance; track item.sessionId) {
-                      <li class="detail-row">
-                        <strong>{{ item.sessionTitle }}</strong> · {{ item.status }}
-                        <span class="w-muted">{{ item.startsAt | date: 'mediumDate' }}</span>
-                      </li>
-                    } @empty {
-                      <li class="w-muted">No attendance recorded.</li>
-                    }
-                  </ul>
+                  @if (youth.attendance.length) {
+                    <dl w-description-list vertical>
+                      @for (item of youth.attendance; track item.sessionId) {
+                        <dt>{{ item.sessionTitle }}</dt>
+                        <dd>{{ item.status }} · {{ item.startsAt | date: 'mediumDate' }}</dd>
+                      }
+                    </dl>
+                  } @else {
+                    <p class="w-muted">No attendance recorded.</p>
+                  }
                 }
                 @case ('check-ins') {
                   <h2>Check-ins</h2>
                   <p>
                     <a
-                      class="w-btn w-btn--primary"
+                      w-button
+                      variant="primary"
                       [routerLink]="['/mentor/check-ins']"
                       [queryParams]="{ youthId: youth.id }"
                     >
                       Log or view check-ins
                     </a>
                   </p>
-                  <ul class="detail-list">
-                    @for (item of youth.checkIns; track item.id) {
-                      <li class="detail-row">
-                        <strong>{{ item.type }}</strong> · {{ item.visibility }} ·
-                        {{ item.date | date: 'mediumDate' }}
-                      </li>
-                    } @empty {
-                      <li class="w-muted">No check-ins recorded.</li>
-                    }
-                  </ul>
+                  @if (youth.checkIns.length) {
+                    <dl w-description-list vertical>
+                      @for (item of youth.checkIns; track item.id) {
+                        <dt>{{ item.type }}</dt>
+                        <dd>{{ item.visibility }} · {{ item.date | date: 'mediumDate' }}</dd>
+                      }
+                    </dl>
+                  } @else {
+                    <p class="w-muted">No check-ins recorded.</p>
+                  }
                 }
                 @case ('submissions') {
                   <h2>Submissions</h2>
-                  <ul class="detail-list">
-                    @for (item of youth.submissions; track item.id) {
-                      <li class="detail-row">
-                        <a [routerLink]="['/mentor/reviews/submissions', item.id]">{{
-                          item.assignmentTitle
-                        }}</a>
-                        · {{ item.status }} · {{ item.submittedAt | date: 'mediumDate' }}
-                      </li>
-                    } @empty {
-                      <li class="w-muted">No submissions yet.</li>
-                    }
-                  </ul>
+                  @if (youth.submissions.length) {
+                    <dl w-description-list vertical>
+                      @for (item of youth.submissions; track item.id) {
+                        <dt>
+                          <a [routerLink]="['/mentor/reviews/submissions', item.id]">{{
+                            item.assignmentTitle
+                          }}</a>
+                        </dt>
+                        <dd>{{ item.status }} · {{ item.submittedAt | date: 'mediumDate' }}</dd>
+                      }
+                    </dl>
+                  } @else {
+                    <p class="w-muted">No submissions yet.</p>
+                  }
                 }
                 @case ('competencies') {
                   <h2>Competencies</h2>
                   <p>
                     <a
-                      class="w-btn w-btn--primary"
+                      w-button
+                      variant="primary"
                       [routerLink]="['/mentor/youth', youth.id, 'competencies']"
                     >
                       Open competency tracker
                     </a>
                   </p>
-                  <ul class="detail-list">
-                    @for (item of youth.competencies; track item.competencyId) {
-                      <li class="detail-row">
-                        <strong>{{ item.name }}</strong> · {{ item.level }}
-                        @if (item.notes) {
-                          <p>{{ item.notes }}</p>
-                        }
-                      </li>
-                    } @empty {
-                      <li class="w-muted">No competency assessments yet.</li>
-                    }
-                  </ul>
+                  @if (youth.competencies.length) {
+                    <dl w-description-list vertical>
+                      @for (item of youth.competencies; track item.competencyId) {
+                        <dt>{{ item.name }}</dt>
+                        <dd>
+                          {{ item.level }}
+                          @if (item.notes) {
+                            <p>{{ item.notes }}</p>
+                          }
+                        </dd>
+                      }
+                    </dl>
+                  } @else {
+                    <p class="w-muted">No competency assessments yet.</p>
+                  }
                 }
               }
             </div>

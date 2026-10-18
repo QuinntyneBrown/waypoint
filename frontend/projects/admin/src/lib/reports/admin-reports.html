@@ -16,7 +16,8 @@
       </div>
       <div class="w-page__actions">
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           aria-label="Export current report as CSV"
           [disabled]="!canExport() || exporting() !== null"
@@ -25,7 +26,8 @@
           {{ exporting() === 'csv' ? 'Preparing CSV…' : 'Export CSV' }}
         </button>
         <button
-          class="w-btn w-btn--primary"
+          w-button
+          variant="primary"
           type="button"
           aria-label="Export current report as PDF"
           [disabled]="!canExport() || exporting() !== null"
@@ -37,65 +39,65 @@
     </div>
 
     @if (exportStatus(); as status) {
-      <p class="w-alert w-alert--success" role="status">{{ status }}</p>
+      <p w-alert variant="success" role="status">{{ status }}</p>
     }
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <div>
-          <div class="w-alert__title">{{ error }}</div>
+          <div w-alert-title>{{ error }}</div>
           Report data could not be loaded.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
 
-    <section class="w-card" aria-labelledby="report-filters-heading">
-      <div class="w-card__body w-stack">
+    <section w-card aria-labelledby="report-filters-heading">
+      <div w-card-body class="w-stack">
         <div>
           <h2 id="report-filters-heading">Report filters</h2>
           <p class="w-muted">Every overview and staff metric uses this exact scope.</p>
         </div>
         <form class="report-filters" [formGroup]="filterForm" (ngSubmit)="applyFilters()">
-          <div class="w-field">
-            <label class="w-label" for="report-from">Date from</label>
-            <input class="w-input" id="report-from" type="date" formControlName="from" />
+          <div w-form-field>
+            <label w-label for="report-from">Date from</label>
+            <input w-text-field id="report-from" type="date" formControlName="from" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="report-to">Date to</label>
-            <input class="w-input" id="report-to" type="date" formControlName="to" />
+          <div w-form-field>
+            <label w-label for="report-to">Date to</label>
+            <input w-text-field id="report-to" type="date" formControlName="to" />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="report-cohort">Report cohort</label>
-            <select class="w-select" id="report-cohort" formControlName="cohortId">
+          <div w-form-field>
+            <label w-label for="report-cohort">Report cohort</label>
+            <select w-select id="report-cohort" formControlName="cohortId">
               <option value="">All cohorts</option>
               @for (cohort of options()?.cohorts ?? []; track cohort.id) {
                 <option [value]="cohort.id">{{ cohort.name }}</option>
               }
             </select>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="report-track">Report track</label>
-            <select class="w-select" id="report-track" formControlName="trackId">
+          <div w-form-field>
+            <label w-label for="report-track">Report track</label>
+            <select w-select id="report-track" formControlName="trackId">
               <option value="">All tracks</option>
               @for (track of options()?.tracks ?? []; track track.id) {
                 <option [value]="track.id">{{ track.name }}</option>
               }
             </select>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="report-mentor">Report mentor</label>
-            <select class="w-select" id="report-mentor" formControlName="mentorId">
+          <div w-form-field>
+            <label w-label for="report-mentor">Report mentor</label>
+            <select w-select id="report-mentor" formControlName="mentorId">
               <option value="">All mentors</option>
               @for (mentor of options()?.mentors ?? []; track mentor.id) {
                 <option [value]="mentor.id">{{ mentor.name }}</option>
               }
             </select>
           </div>
-          <button class="w-btn w-btn--primary" type="submit">Apply report filters</button>
+          <button w-button variant="primary" type="submit">Apply report filters</button>
         </form>
         @if (dateError(); as message) {
-          <p class="w-error" role="alert">{{ message }}</p>
+          <p w-error-text role="alert">{{ message }}</p>
         }
         @if (hub(); as summary) {
           <div class="report-meta">
@@ -110,11 +112,10 @@
       </div>
     </section>
 
-    <div class="report-tabs" role="tablist" aria-label="Report views">
+    <div w-tabs role="tablist" aria-label="Report views">
       <button
-        class="w-btn"
-        [class.w-btn--primary]="view() === 'overview'"
-        [class.w-btn--secondary]="view() !== 'overview'"
+        w-tab
+        [active]="view() === 'overview'"
         type="button"
         role="tab"
         [attr.aria-selected]="view() === 'overview'"
@@ -123,9 +124,8 @@
         Overview
       </button>
       <button
-        class="w-btn"
-        [class.w-btn--primary]="view() === 'youth'"
-        [class.w-btn--secondary]="view() !== 'youth'"
+        w-tab
+        [active]="view() === 'youth'"
         type="button"
         role="tab"
         [attr.aria-selected]="view() === 'youth'"
@@ -134,9 +134,8 @@
         Youth report
       </button>
       <button
-        class="w-btn"
-        [class.w-btn--primary]="view() === 'cohort'"
-        [class.w-btn--secondary]="view() !== 'cohort'"
+        w-tab
+        [active]="view() === 'cohort'"
         type="button"
         role="tab"
         [attr.aria-selected]="view() === 'cohort'"
@@ -145,9 +144,8 @@
         Cohort report
       </button>
       <button
-        class="w-btn"
-        [class.w-btn--primary]="view() === 'staff'"
-        [class.w-btn--secondary]="view() !== 'staff'"
+        w-tab
+        [active]="view() === 'staff'"
         type="button"
         role="tab"
         [attr.aria-selected]="view() === 'staff'"
@@ -162,53 +160,59 @@
     } @else if (view() === 'overview') {
       <section class="w-stack" data-testid="reports-overview" role="tabpanel">
         @if (hub()!.recordCount === 0) {
-          <div class="w-empty">
-            <div class="w-empty__icon"><w-icon name="bar-chart" /></div>
-            <h2 class="w-empty__title">No report data for these filters</h2>
-            <p class="w-empty__text">Change the date or program filters and try again.</p>
+          <div w-empty-state>
+            <div w-empty-state-icon><w-icon name="bar-chart" /></div>
+            <h2 w-empty-state-title>No report data for these filters</h2>
+            <p w-empty-state-text>Change the date or program filters and try again.</p>
           </div>
         } @else {
           <div class="report-kpis">
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.activeYouth }}</strong
-                ><span>Active youth</span>
+            <article w-card>
+              <div w-stat>
+                <div w-stat-label>Active youth</div>
+                <div w-stat-value>{{ hub()!.kpis.activeYouth }}</div>
               </div>
             </article>
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.avgCompletion | percent: '1.0-0' }}</strong
-                ><span>Average completion</span>
+            <article w-card>
+              <div w-stat>
+                <div w-stat-label>Average completion</div>
+                <div w-stat-value>
+                  {{ hub()!.kpis.avgCompletion | percent: '1.0-0' }}
+                </div>
               </div>
             </article>
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.attendanceRate | percent: '1.0-0' }}</strong
-                ><span>Attendance</span>
+            <article w-card>
+              <div w-stat>
+                <div w-stat-label>Attendance</div>
+                <div w-stat-value>
+                  {{ hub()!.kpis.attendanceRate | percent: '1.0-0' }}
+                </div>
               </div>
             </article>
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.retentionRate | percent: '1.0-0' }}</strong
-                ><span>Retention</span>
+            <article w-card>
+              <div w-stat>
+                <div w-stat-label>Retention</div>
+                <div w-stat-value>
+                  {{ hub()!.kpis.retentionRate | percent: '1.0-0' }}
+                </div>
               </div>
             </article>
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.cohorts }}</strong
-                ><span>Cohorts</span>
+            <article w-card>
+              <div w-stat>
+                <div w-stat-label>Cohorts</div>
+                <div w-stat-value>{{ hub()!.kpis.cohorts }}</div>
               </div>
             </article>
-            <article class="w-card report-kpi">
-              <div class="w-card__body">
-                <strong>{{ hub()!.kpis.activeMentors }}</strong
-                ><span>Active mentors</span>
+            <article w-card>
+              <div w-stat>
+                <div w-stat-label>Active mentors</div>
+                <div w-stat-value>{{ hub()!.kpis.activeMentors }}</div>
               </div>
             </article>
           </div>
           <div class="report-grid">
-            <section class="w-card report-card" aria-labelledby="attendance-chart-heading">
-              <div class="w-card__body w-stack">
+            <section w-card class="report-card" aria-labelledby="attendance-chart-heading">
+              <div w-card-body class="w-stack">
                 <h2 id="attendance-chart-heading">Attendance breakdown</h2>
                 <div class="report-stat-line">
                   <span>Present {{ hub()!.attendance.present }}</span>
@@ -219,18 +223,17 @@
               </div>
             </section>
             <section
-              class="w-card report-card"
+              w-card
+              class="report-card"
               style="grid-column: span 2"
               aria-labelledby="cohort-chart-heading"
             >
-              <div class="w-card__body w-stack">
+              <div w-card-body class="w-stack">
                 <h2 id="cohort-chart-heading">Cohort completion</h2>
                 @for (cohort of hub()!.cohorts; track cohort.cohortId) {
                   <div class="report-chart-row">
                     <span>{{ cohort.cohortName }}</span>
-                    <div class="report-bar" aria-hidden="true">
-                      <span [style.width.%]="cohort.completionRate * 100"></span>
-                    </div>
+                    <div w-progress [value]="cohort.completionRate * 100" aria-hidden="true"></div>
                     <strong>{{ cohort.completionRate | percent: '1.0-0' }}</strong>
                   </div>
                 }
@@ -241,18 +244,18 @@
       </section>
     } @else if (view() === 'youth') {
       <section class="w-stack" role="tabpanel">
-        <form class="w-card report-selector" [formGroup]="youthForm" (ngSubmit)="generateYouth()">
-          <div class="w-card__body report-grid">
-            <div class="w-field">
-              <label class="w-label" for="report-youth">Youth</label>
-              <select class="w-select" id="report-youth" formControlName="youthId">
+        <form w-card class="report-selector" [formGroup]="youthForm" (ngSubmit)="generateYouth()">
+          <div w-card-body class="report-grid">
+            <div w-form-field>
+              <label w-label for="report-youth">Youth</label>
+              <select w-select id="report-youth" formControlName="youthId">
                 <option value="">Choose a youth</option>
                 @for (person of options()?.youth ?? []; track person.id) {
                   <option [value]="person.id">{{ person.name }}</option>
                 }
               </select>
             </div>
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="loadingDetail()">
+            <button w-button variant="primary" type="submit" [disabled]="loadingDetail()">
               Generate youth report
             </button>
           </div>
@@ -264,40 +267,38 @@
               <p class="w-muted">{{ report.cohortName }} · Mentor {{ report.mentorName }}</p>
             </div>
             <div class="report-rings">
-              <div class="w-card report-card">
-                <div class="w-card__body w-stack w-stack--sm">
-                  <div
-                    class="report-ring"
-                    [style.--report-value]="report.completionRate * 100 + '%'"
-                  >
-                    <strong>{{ report.completionRate | percent: '1.0-0' }}</strong>
+              <div w-card class="report-card">
+                <div w-card-body class="w-stack w-stack--sm">
+                  <div w-progress-ring size="lg" [value]="report.completionRate * 100">
+                    <span w-progress-ring-label>{{
+                      report.completionRate | percent: '1.0-0'
+                    }}</span>
                   </div>
                   <span>Curriculum progress</span>
                 </div>
               </div>
-              <div class="w-card report-card">
-                <div class="w-card__body w-stack w-stack--sm">
-                  <div class="report-ring" [style.--report-value]="report.avgQuizScore + '%'">
-                    <strong>{{ report.avgQuizScore | number: '1.0-0' }}%</strong>
+              <div w-card class="report-card">
+                <div w-card-body class="w-stack w-stack--sm">
+                  <div w-progress-ring size="lg" [value]="report.avgQuizScore">
+                    <span w-progress-ring-label>{{ report.avgQuizScore | number: '1.0-0' }}%</span>
                   </div>
                   <span>Average quiz score</span>
                 </div>
               </div>
-              <div class="w-card report-card">
-                <div class="w-card__body w-stack w-stack--sm">
-                  <div
-                    class="report-ring"
-                    [style.--report-value]="report.attendance.rate * 100 + '%'"
-                  >
-                    <strong>{{ report.attendance.rate | percent: '1.0-0' }}</strong>
+              <div w-card class="report-card">
+                <div w-card-body class="w-stack w-stack--sm">
+                  <div w-progress-ring size="lg" [value]="report.attendance.rate * 100">
+                    <span w-progress-ring-label>{{
+                      report.attendance.rate | percent: '1.0-0'
+                    }}</span>
                   </div>
                   <span>Attendance rate</span>
                 </div>
               </div>
             </div>
             <div class="report-grid">
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Module completion</h3>
                   @for (module of report.modules; track module.moduleId) {
                     <div>
@@ -310,8 +311,8 @@
                   }
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Quiz scores</h3>
                   @for (quiz of report.quizScores; track $index) {
                     <div>
@@ -323,8 +324,8 @@
                   }
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Attendance</h3>
                   <div class="report-stat-line">
                     <span>Present {{ report.attendance.present }}</span
@@ -334,8 +335,8 @@
                   </div>
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Mentor-assessed competencies</h3>
                   @for (competency of report.competencies; track competency.competencyId) {
                     <div>
@@ -347,8 +348,8 @@
                   }
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Mentor notes summary</h3>
                   <strong>{{ checkInLabel(report.mentorNotes.checkIns) }}</strong>
                   @if (report.mentorNotes.latestAt) {
@@ -360,8 +361,8 @@
                   <p class="w-muted">Private note details are not included in this summary.</p>
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Badges</h3>
                   @for (badge of report.badgeAwards; track badge.badgeId) {
                     <div>
@@ -379,27 +380,27 @@
       </section>
     } @else if (view() === 'cohort') {
       <section class="w-stack" role="tabpanel">
-        <form class="w-card report-selector" [formGroup]="cohortForm" (ngSubmit)="generateCohort()">
-          <div class="w-card__body report-grid">
-            <div class="w-field">
-              <label class="w-label" for="cohort-report-selection">Cohort report selection</label
-              ><select class="w-select" id="cohort-report-selection" formControlName="cohortId">
+        <form w-card class="report-selector" [formGroup]="cohortForm" (ngSubmit)="generateCohort()">
+          <div w-card-body class="report-grid">
+            <div w-form-field>
+              <label w-label for="cohort-report-selection">Cohort report selection</label
+              ><select w-select id="cohort-report-selection" formControlName="cohortId">
                 <option value="">Choose a cohort</option>
                 @for (cohort of options()?.cohorts ?? []; track cohort.id) {
                   <option [value]="cohort.id">{{ cohort.name }}</option>
                 }
               </select>
             </div>
-            <div class="w-field">
-              <label class="w-label" for="cohort-comparison">Compare with</label
-              ><select class="w-select" id="cohort-comparison" formControlName="compareCohortId">
+            <div w-form-field>
+              <label w-label for="cohort-comparison">Compare with</label
+              ><select w-select id="cohort-comparison" formControlName="compareCohortId">
                 <option value="">Program average / previous term</option>
                 @for (cohort of options()?.cohorts ?? []; track cohort.id) {
                   <option [value]="cohort.id">{{ cohort.name }}</option>
                 }
               </select>
             </div>
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="loadingDetail()">
+            <button w-button variant="primary" type="submit" [disabled]="loadingDetail()">
               Generate cohort report
             </button>
           </div>
@@ -414,28 +415,28 @@
               </p>
             </div>
             <div class="report-kpis">
-              <article class="w-card report-kpi">
-                <div class="w-card__body">
-                  <strong>{{ report.avgCompletion | percent: '1.0-0' }}</strong
-                  ><span>Average completion</span>
+              <article w-card>
+                <div w-stat>
+                  <div w-stat-label>Average completion</div>
+                  <div w-stat-value>{{ report.avgCompletion | percent: '1.0-0' }}</div>
                 </div>
               </article>
-              <article class="w-card report-kpi">
-                <div class="w-card__body">
-                  <strong>{{ report.attendanceRate | percent: '1.0-0' }}</strong
-                  ><span>Attendance</span>
+              <article w-card>
+                <div w-stat>
+                  <div w-stat-label>Attendance</div>
+                  <div w-stat-value>{{ report.attendanceRate | percent: '1.0-0' }}</div>
                 </div>
               </article>
-              <article class="w-card report-kpi">
-                <div class="w-card__body">
-                  <strong>{{ report.retentionRate | percent: '1.0-0' }}</strong
-                  ><span>Retention</span>
+              <article w-card>
+                <div w-stat>
+                  <div w-stat-label>Retention</div>
+                  <div w-stat-value>{{ report.retentionRate | percent: '1.0-0' }}</div>
                 </div>
               </article>
             </div>
             <div class="report-grid">
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Module completion</h3>
                   @for (module of report.modules; track module.moduleId) {
                     <div>
@@ -445,8 +446,8 @@
                   }
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Youth summary</h3>
                   @for (person of report.youth; track person.youthId) {
                     <div>
@@ -459,8 +460,8 @@
                   }
                 </div>
               </section>
-              <section class="w-card report-card">
-                <div class="w-card__body w-stack">
+              <section w-card class="report-card">
+                <div w-card-body class="w-stack">
                   <h3>Comparisons</h3>
                   @for (comparison of report.comparisons; track comparison.label) {
                     <div>
@@ -485,15 +486,15 @@
           <p class="w-muted">Caseload, check-ins, and reviews within the current report filters.</p>
         </div>
         @if (hub()!.staff.length === 0) {
-          <div class="w-empty">
-            <h3 class="w-empty__title">No staff activity for these filters</h3>
-            <p class="w-empty__text">Change the report scope and try again.</p>
+          <div w-empty-state>
+            <h3 w-empty-state-title>No staff activity for these filters</h3>
+            <p w-empty-state-text>Change the report scope and try again.</p>
           </div>
         } @else {
           <div class="report-grid">
             @for (mentor of hub()!.staff; track mentor.mentorId) {
-              <article class="w-card report-card" data-testid="staff-activity-row">
-                <div class="w-card__body w-stack">
+              <article w-card class="report-card" data-testid="staff-activity-row">
+                <div w-card-body class="w-stack">
                   <div>
                     <h3>{{ mentor.mentorName }}</h3>
                     <p class="w-muted">{{ mentor.email }}</p>
@@ -504,9 +505,8 @@
                     ><span>Reviews {{ mentor.reviews }}</span>
                   </div>
                   <span
-                    class="w-badge"
-                    [class.w-badge--danger]="mentor.overloaded"
-                    [class.w-badge--lime]="!mentor.overloaded"
+                    w-badge
+                    [variant]="mentor.overloaded ? 'danger' : !mentor.overloaded ? 'lime' : ''"
                     >{{ mentor.loadBalance }}</span
                   >
                   <p class="w-muted">

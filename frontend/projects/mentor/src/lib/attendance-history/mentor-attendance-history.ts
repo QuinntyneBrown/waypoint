@@ -9,7 +9,25 @@ import {
   YouthAttendanceSummary,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WRole, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Label,
+  Role,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Badge,
+  TableWrap,
+  Table,
+  Tabs,
+  Tab,
+} from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 
 type HistoryView = 'session' | 'youth';
@@ -18,55 +36,29 @@ type HistoryView = 'session' | 'youth';
 @Component({
   selector: 'w-mentor-attendance-history',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, PercentPipe, RouterLink],
+  imports: [
+    Shell,
+    DatePipe,
+    PercentPipe,
+    RouterLink,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Select,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    Badge,
+    TableWrap,
+    Table,
+    Tabs,
+    Tab,
+  ],
   templateUrl: './mentor-attendance-history.html',
-  styles: `
-    .history-toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: end;
-      justify-content: space-between;
-      gap: var(--w-s4);
-    }
-    .history-filters {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: end;
-      gap: var(--w-s3);
-    }
-    .history-table-wrap {
-      max-width: 100%;
-      overflow-x: auto;
-    }
-    .history-table {
-      width: 100%;
-      min-width: 52rem;
-      border-collapse: collapse;
-    }
-    .history-table th,
-    .history-table td {
-      padding: var(--w-s3);
-      border-bottom: 1px solid var(--w-border);
-      text-align: left;
-      vertical-align: middle;
-    }
-    [role='tab'],
-    .history-toolbar .w-btn,
-    .history-table .w-btn {
-      min-height: 44px;
-    }
-    @media (max-width: 42rem) {
-      .history-filters,
-      .history-filters .w-field,
-      .history-filters .w-btn,
-      .history-toolbar > .w-cluster {
-        width: 100%;
-      }
-      .history-toolbar > .w-cluster .w-btn {
-        flex: 1;
-      }
-    }
-  `,
+  styleUrl: './mentor-attendance-history.css',
 })
 export class MentorAttendanceHistoryPage {
   protected readonly auth = inject(AuthStore);
@@ -86,7 +78,7 @@ export class MentorAttendanceHistoryPage {
   protected readonly statusMessage = signal<string | null>(null);
   private loadSequence = 0;
   protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
-  protected readonly shellRole = computed<WRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly shellRole = computed<Role>(() => (this.isAdmin() ? 'admin' : 'mentor'));
   protected readonly calendarPath = computed(() =>
     this.isAdmin() ? '/admin/calendar' : '/mentor/calendar',
   );

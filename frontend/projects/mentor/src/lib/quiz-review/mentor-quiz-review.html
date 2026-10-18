@@ -5,9 +5,9 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-page">
-    <a class="w-link" routerLink="/mentor/reviews">Back to reviews</a>
+    <a w-link standalone routerLink="/mentor/reviews">Back to reviews</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
     @if (review(); as item) {
@@ -19,7 +19,7 @@
             Attempt {{ item.attemptNumber }} · Submitted {{ item.submittedAt | date: 'medium' }}
           </p>
         </div>
-        <span class="w-badge" [class.w-badge--success]="item.status === 'Approved'">
+        <span w-badge [variant]="item.status === 'Approved' ? 'success' : ''">
           {{ item.status }}
         </span>
       </div>
@@ -28,39 +28,41 @@
         <section class="w-stack" aria-labelledby="answers-heading">
           <h2 id="answers-heading">Submitted answers</h2>
           @if (item.questions.length === 0) {
-            <div class="w-card w-empty">
-              <h3 class="w-empty__title">No question detail available</h3>
-              <p class="w-empty__text">The auto-scored result can still be reviewed.</p>
+            <div w-card>
+              <div w-empty-state>
+                <h3 w-empty-state-title>No question detail available</h3>
+                <p w-empty-state-text>The auto-scored result can still be reviewed.</p>
+              </div>
             </div>
           }
           @for (question of item.questions; track question.questionId; let number = $index) {
-            <article class="w-card">
-              <div class="w-card__header">
+            <article w-card>
+              <div w-card-header>
                 <div>
                   <p class="w-eyebrow">Question {{ number + 1 }}</p>
-                  <h3 class="w-card__title">{{ question.text }}</h3>
+                  <h3 w-card-title>{{ question.text }}</h3>
                 </div>
                 <span
-                  class="w-badge"
-                  [class.w-badge--success]="question.isCorrect"
-                  [class.w-badge--error]="!question.isCorrect"
+                  w-badge
+                  [variant]="question.isCorrect ? 'success' : !question.isCorrect ? 'error' : ''"
                 >
                   {{ question.isCorrect ? 'Correct' : 'Incorrect' }}
                 </span>
               </div>
-              <div class="w-card__body">
+              <div w-card-body>
                 <ul class="answer-list">
                   @for (option of question.options; track $index; let optionIndex = $index) {
                     <li
-                      class="answer-option"
-                      [class.answer-option--selected]="optionSelected(question, optionIndex)"
+                      w-quiz-option
+                      [selected]="optionSelected(question, optionIndex)"
+                      [correct]="optionCorrect(question, optionIndex)"
                     >
                       <span class="answer-copy">{{ option }}</span>
                       @if (optionSelected(question, optionIndex)) {
-                        <span class="w-badge">Youth answer</span>
+                        <span w-badge>Youth answer</span>
                       }
                       @if (optionCorrect(question, optionIndex)) {
-                        <span class="w-badge w-badge--success">Correct answer</span>
+                        <span w-badge variant="success">Correct answer</span>
                       }
                     </li>
                   }
@@ -70,28 +72,31 @@
           }
         </section>
 
-        <aside class="w-card">
-          <div class="w-card__header"><h2 class="w-card__title">Score approval</h2></div>
-          <div class="w-card__body w-stack">
+        <aside w-card>
+          <div w-card-header><h2 w-card-title>Score approval</h2></div>
+          <div w-card-body class="w-stack">
             <div class="score-grid">
               <div>
-                <p class="w-muted">Auto-scored</p>
-                <p class="score-value" data-testid="quiz-auto-score">{{ item.autoScore }}%</p>
-                <span class="w-badge" [class.w-badge--success]="item.autoPassed">
+                <div class="w-kpi">
+                  <span w-stat-label>Auto-scored</span
+                  ><span w-stat-value data-testid="quiz-auto-score">{{ item.autoScore }}%</span>
+                </div>
+                <span w-badge [variant]="item.autoPassed ? 'success' : ''">
                   {{ item.autoPassed ? 'Pass' : 'Below pass mark' }}
                 </span>
               </div>
               <div>
-                <p class="w-muted">Pass mark</p>
-                <p class="score-value">{{ item.passMark }}%</p>
+                <div class="w-kpi">
+                  <span w-stat-label>Pass mark</span><span w-stat-value>{{ item.passMark }}%</span>
+                </div>
               </div>
             </div>
 
             @if (item.approvedScore === null || item.approvedScore === undefined) {
-              <div class="w-field">
-                <label class="w-label" for="override-score">Override score (optional)</label>
+              <div w-form-field>
+                <label w-label for="override-score">Override score (optional)</label>
                 <input
-                  class="w-input"
+                  w-text-field
                   id="override-score"
                   type="number"
                   inputmode="numeric"
@@ -101,10 +106,12 @@
                   [value]="overrideScore()"
                   (input)="setOverrideScore($any($event.target).value)"
                 />
-                <p class="w-help">Leave blank to approve the {{ item.autoScore }}% auto-score.</p>
+                <p w-help>Leave blank to approve the {{ item.autoScore }}% auto-score.</p>
               </div>
               <button
-                class="w-btn w-btn--primary approve-button"
+                w-button
+                variant="primary"
+                class="approve-button"
                 type="button"
                 [disabled]="approving()"
                 (click)="approve()"
@@ -113,7 +120,7 @@
               </button>
             } @else {
               <div class="w-stack" data-testid="quiz-approval-record">
-                <h3 class="w-card__title">Approval record</h3>
+                <h3 w-card-title>Approval record</h3>
                 <p>Auto-scored {{ item.autoScore }}%</p>
                 <p>Approved {{ item.approvedScore }}%</p>
                 <p class="w-muted">

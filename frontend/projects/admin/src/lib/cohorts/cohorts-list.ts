@@ -4,50 +4,69 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ApiError, CohortOptions, CohortsService, CohortSummary } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  IconButton,
+  Label,
+  LabelRequired,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  AlertTitle,
+  Card,
+  CardBody,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogSubtitle,
+  DialogBody,
+  DialogFooter,
+} from '@waypoint/components';
 import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-003
 @Component({
   selector: 'w-cohorts-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe, ReactiveFormsModule],
+  imports: [
+    Shell,
+    Icon,
+    RouterLink,
+    DatePipe,
+    ReactiveFormsModule,
+    Button,
+    IconButton,
+    FormField,
+    Label,
+    LabelRequired,
+    ErrorText,
+    TextField,
+    Select,
+    Alert,
+    AlertTitle,
+    Card,
+    CardBody,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogSubtitle,
+    DialogBody,
+    DialogFooter,
+  ],
   templateUrl: './cohorts-list.html',
-  styles: `
-    .cohort-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
-      gap: var(--w-s4);
-    }
-    .cohort-card {
-      height: 100%;
-    }
-    .cohort-card__meta {
-      display: grid;
-      gap: var(--w-s2);
-      overflow-wrap: anywhere;
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .form-grid__wide {
-      grid-column: 1 / -1;
-    }
-    @media (max-width: 42rem) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-      .form-grid__wide {
-        grid-column: auto;
-      }
-      .w-modal__footer .w-btn {
-        flex: 1 1 100%;
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './cohorts-list.css',
 })
 export class CohortsListPage {
   protected readonly auth = inject(AuthStore);

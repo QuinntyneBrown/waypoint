@@ -1,0 +1,7 @@
+.w-tabs {
+  display: flex;
+  gap: 2px;
+  border-bottom: var(--w-bw) solid var(--w-border);
+  margin-bottom: var(--w-s5);
+  overflow-x: auto;
+}

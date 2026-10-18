@@ -17,7 +17,34 @@ import {
   ApplicationSummary,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  IconButton,
+  Label,
+  LabelRequired,
+  Select,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  AlertTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  TableWrap,
+  Table,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogSubtitle,
+  DialogBody,
+  DialogFooter,
+} from '@waypoint/components';
 import { Observable } from 'rxjs';
 
 type Decision = 'approve' | 'decline';
@@ -26,39 +53,38 @@ type Decision = 'approve' | 'decline';
 @Component({
   selector: 'w-applications-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, DatePipe, ReactiveFormsModule],
+  imports: [
+    Shell,
+    Icon,
+    DatePipe,
+    ReactiveFormsModule,
+    Button,
+    IconButton,
+    FormField,
+    Label,
+    LabelRequired,
+    ErrorText,
+    TextField,
+    Textarea,
+    Select,
+    Alert,
+    AlertTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    TableWrap,
+    Table,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogSubtitle,
+    DialogBody,
+    DialogFooter,
+  ],
   templateUrl: './applications-list.html',
-  styles: `
-    .application-name {
-      min-width: 12rem;
-    }
-    .review-detail {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .review-detail__wide {
-      grid-column: 1 / -1;
-    }
-    .detail-copy {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-    .w-modal__footer .w-btn {
-      min-height: 45px;
-    }
-    @media (max-width: 42rem) {
-      .review-detail {
-        grid-template-columns: 1fr;
-      }
-      .review-detail__wide {
-        grid-column: auto;
-      }
-      .w-modal__footer .w-btn {
-        flex: 1 1 100%;
-      }
-    }
-  `,
+  styleUrl: './applications-list.css',
 })
 export class ApplicationsList {
   protected readonly auth = inject(AuthStore);

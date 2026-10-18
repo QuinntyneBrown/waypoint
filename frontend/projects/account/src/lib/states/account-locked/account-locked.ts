@@ -1,23 +1,15 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, WStatePage } from '@waypoint/components';
+import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-AUTH-006
 @Component({
   selector: 'w-account-locked',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink],
-  template: `<w-state-page
-    icon="lock"
-    tone="error"
-    eyebrow="Account locked"
-    title="Too many sign-in attempts"
-    [text]="message"
-  >
-    <a class="w-btn w-btn--primary" routerLink="/auth/forgot-password">Reset password</a>
-    <a class="w-btn w-btn--ghost" [href]="contactUrl">Contact your mentor</a>
-  </w-state-page>`,
+  imports: [StatePage, RouterLink, Button],
+  templateUrl: './account-locked.html',
+  styleUrl: './account-locked.css',
 })
 export class AccountLocked {
   private readonly doc = inject(DOCUMENT);

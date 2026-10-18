@@ -31,7 +31,7 @@ By the end, the viewer can:
 | --- | --- |
 | `images/*-light.png`, `images/*-dark.png` | The same Storybook story in each theme |
 
-Captures are made by `frontend/video-capture/114-components-video-player.capture.mjs` from the Storybook stories in `frontend/projects/components/src/lib/video-player/w-video-player.stories.ts`. The stories replay a ten-second fixture (`demo/media/demo-10s.fmp4`) through a demo transport.
+Captures are made by `frontend/video-capture/114-components-video-player.capture.mjs` from the Storybook stories in `frontend/projects/components/src/lib/video-player/video-player.stories.ts`. The stories replay a ten-second fixture (`demo/media/demo-10s.fmp4`) through a demo transport.
 
 ## Run sheet
 

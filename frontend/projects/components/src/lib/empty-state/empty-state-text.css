@@ -1,0 +1,4 @@
+.w-empty__text {
+  color: var(--w-muted);
+  margin-bottom: var(--w-s5);
+}

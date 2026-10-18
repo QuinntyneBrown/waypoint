@@ -2,23 +2,15 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { maskEmail, PasswordResetService } from '@waypoint/api';
-import { ToastService, WStatePage } from '@waypoint/components';
+import { ToastService, Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-AUTH-005
 @Component({
   selector: 'w-reset-link-sent',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WStatePage, RouterLink],
-  template: `<w-state-page
-    icon="mail"
-    tone="info"
-    eyebrow="Reset link sent"
-    title="Check your email"
-    [text]="bodyText"
-  >
-    <button class="w-btn w-btn--ghost" type="button" (click)="resend()">Resend link</button>
-    <a class="w-btn w-btn--primary" routerLink="/auth/sign-in">Back to sign in</a>
-  </w-state-page>`,
+  imports: [StatePage, RouterLink, Button],
+  templateUrl: './reset-link-sent.html',
+  styleUrl: './reset-link-sent.css',
 })
 export class ResetLinkSent {
   private readonly doc = inject(DOCUMENT);

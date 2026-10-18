@@ -14,9 +14,9 @@
         </p>
       </div>
       <div class="w-page__actions">
-        <div class="w-field">
-          <label class="w-label" for="application-status">Application status</label>
-          <select id="application-status" class="w-select" [formControl]="statusFilter">
+        <div w-form-field>
+          <label w-label for="application-status">Application status</label>
+          <select w-select id="application-status" [formControl]="statusFilter">
             <option value="">All statuses</option>
             <option value="New">New</option>
             <option value="In review">In review</option>
@@ -29,10 +29,10 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (outcome(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
     @if (loadingReview()) {
       <p class="w-muted" role="status">Loading application…</p>
@@ -41,8 +41,8 @@
     @if (loading()) {
       <p class="w-muted" role="status">Loading applications…</p>
     } @else if (applications()!.length > 0) {
-      <div class="w-table-wrap">
-        <table class="w-table">
+      <div w-table-wrap>
+        <table w-table>
           <thead>
             <tr>
               <th>Applicant</th>
@@ -63,17 +63,21 @@
                 <td data-label="Age">
                   {{ application.age }}
                   @if (application.isMinor) {
-                    <span class="w-badge w-badge--muted">Minor</span>
+                    <span w-badge>Minor</span>
                   }
                 </td>
                 <td data-label="Neighbourhood">{{ application.neighbourhood }}</td>
                 <td data-label="Track">{{ application.trackInterest ?? '—' }}</td>
                 <td data-label="Status">
                   <span
-                    class="w-badge"
-                    [class.w-badge--warning]="application.status === 'Needs consent'"
-                    [class.w-badge--success]="application.status === 'Approved'"
-                    [class.w-badge--muted]="application.status === 'Declined'"
+                    w-badge
+                    [variant]="
+                      application.status === 'Needs consent'
+                        ? 'warning'
+                        : application.status === 'Approved'
+                          ? 'success'
+                          : ''
+                    "
                   >
                     {{ application.status }}
                   </span>
@@ -81,7 +85,9 @@
                 <td data-label="Submitted">{{ application.createdAt | date: 'MMM d, y' }}</td>
                 <td data-label="Action">
                   <button
-                    class="w-btn w-btn--secondary w-btn--sm"
+                    w-button
+                    variant="secondary"
+                    size="sm"
                     type="button"
                     (click)="openReview(application)"
                   >
@@ -94,242 +100,226 @@
         </table>
       </div>
     } @else {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="clipboard-check" /></div>
-        <h3 class="w-empty__title">No matching applications</h3>
-        <p class="w-empty__text">New applications and referrals will appear here for review.</p>
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="clipboard-check" /></div>
+        <h3 w-empty-state-title>No matching applications</h3>
+        <p w-empty-state-text>New applications and referrals will appear here for review.</p>
       </div>
     }
   </div>
 
   @if (reviewing(); as application) {
-    <div
-      class="w-modal w-modal--lg is-open"
-      wuAccessibleDialog
-      aria-labelledby="review-application-heading"
-      (wuDialogEscape)="closeReview()"
-    >
-      <div class="w-modal__scrim" (click)="closeReview()"></div>
-      <div class="w-modal__panel">
-        <div class="w-modal__header">
+    <div w-dialog size="lg" aria-labelledby="review-application-heading" (dismiss)="closeReview()">
+      <div w-dialog-header>
+        <div>
+          <h2 w-dialog-title id="review-application-heading">Review application</h2>
+          <p w-dialog-subtitle>
+            {{ application.firstName }} {{ application.lastName }} · age {{ application.age }} ·
+            applied {{ application.createdAt | date: 'mediumDate' }}
+          </p>
+        </div>
+        <button w-icon-button type="button" aria-label="Close" (click)="closeReview()">
+          <w-icon name="x" />
+        </button>
+      </div>
+      <div w-dialog-body class="w-stack">
+        @if (application.consentState === 'Needs consent') {
+          <div w-alert variant="warning">
+            <div>
+              <div w-alert-title>Guardian participation consent required</div>
+              This minor cannot be approved into active participation until a valid consent record
+              is linked.
+            </div>
+          </div>
+        } @else if (application.consentState === 'Recorded') {
+          <div w-alert variant="success">
+            <div>
+              <div w-alert-title>Guardian participation consent recorded</div>
+              This application is eligible for a placement decision.
+            </div>
+          </div>
+        }
+
+        <section class="review-detail" aria-label="Submitted application">
           <div>
-            <h2 class="w-modal__title" id="review-application-heading">Review application</h2>
-            <p class="w-modal__sub">
-              {{ application.firstName }} {{ application.lastName }} · age {{ application.age }} ·
-              applied {{ application.createdAt | date: 'mediumDate' }}
+            <div class="w-eyebrow">Submitted by</div>
+            <p>{{ application.whoIsFilling }}</p>
+          </div>
+          <div>
+            <div class="w-eyebrow">Neighbourhood</div>
+            <p>{{ application.neighbourhood }}</p>
+          </div>
+          <div>
+            <div class="w-eyebrow">Cohort interest</div>
+            <p>{{ application.cohortInterest }}</p>
+          </div>
+          <div>
+            <div class="w-eyebrow">Acknowledgements</div>
+            <p>
+              Participation
+              {{ application.participationConsentAck ? 'acknowledged' : 'missing' }} · privacy
+              {{ application.privacyAck ? 'acknowledged' : 'missing' }}
             </p>
           </div>
-          <button
-            class="w-iconbtn w-modal__close"
-            type="button"
-            aria-label="Close"
-            (click)="closeReview()"
-          >
-            <w-icon name="x" />
-          </button>
-        </div>
-        <div class="w-modal__body w-stack">
-          @if (application.consentState === 'Needs consent') {
-            <div class="w-alert w-alert--warning">
-              <div>
-                <div class="w-alert__title">Guardian participation consent required</div>
-                This minor cannot be approved into active participation until a valid consent record
-                is linked.
-              </div>
-            </div>
-          } @else if (application.consentState === 'Recorded') {
-            <div class="w-alert w-alert--success">
-              <div>
-                <div class="w-alert__title">Guardian participation consent recorded</div>
-                This application is eligible for a placement decision.
-              </div>
-            </div>
-          }
-
-          <section class="review-detail" aria-label="Submitted application">
-            <div>
-              <div class="w-eyebrow">Submitted by</div>
-              <p>{{ application.whoIsFilling }}</p>
-            </div>
-            <div>
-              <div class="w-eyebrow">Neighbourhood</div>
-              <p>{{ application.neighbourhood }}</p>
-            </div>
-            <div>
-              <div class="w-eyebrow">Cohort interest</div>
-              <p>{{ application.cohortInterest }}</p>
-            </div>
-            <div>
-              <div class="w-eyebrow">Acknowledgements</div>
+          <div class="review-detail__wide">
+            <div class="w-eyebrow">Why interested</div>
+            <p class="detail-copy">{{ application.whyInterested }}</p>
+          </div>
+          @if (application.guardianName || application.guardianEmail || application.guardianPhone) {
+            <div class="review-detail__wide">
+              <div class="w-eyebrow">Guardian / applicant contact</div>
               <p>
-                Participation
-                {{ application.participationConsentAck ? 'acknowledged' : 'missing' }} · privacy
-                {{ application.privacyAck ? 'acknowledged' : 'missing' }}
+                {{ application.guardianName ?? 'Name not provided' }} ·
+                {{ application.guardianEmail ?? 'Email not provided' }} ·
+                {{ application.guardianPhone ?? 'Phone not provided' }}
               </p>
             </div>
-            <div class="review-detail__wide">
-              <div class="w-eyebrow">Why interested</div>
-              <p class="detail-copy">{{ application.whyInterested }}</p>
-            </div>
-            @if (
-              application.guardianName || application.guardianEmail || application.guardianPhone
-            ) {
-              <div class="review-detail__wide">
-                <div class="w-eyebrow">Guardian / applicant contact</div>
-                <p>
-                  {{ application.guardianName ?? 'Name not provided' }} ·
-                  {{ application.guardianEmail ?? 'Email not provided' }} ·
-                  {{ application.guardianPhone ?? 'Phone not provided' }}
-                </p>
-              </div>
-            }
-          </section>
-
-          <form class="w-stack" [formGroup]="form">
-            <div class="w-field">
-              <label class="w-label" for="application-track">Interest track</label>
-              <input
-                id="application-track"
-                class="w-input"
-                formControlName="trackInterest"
-                maxlength="200"
-                list="application-track-options"
-              />
-              <datalist id="application-track-options">
-                @for (track of options()?.tracks ?? []; track track.id) {
-                  <option [value]="track.name"></option>
-                }
-              </datalist>
-            </div>
-            <div class="w-grid w-grid--2">
-              <div class="w-field">
-                <label class="w-label" for="application-cohort">
-                  Assign cohort <span class="w-label__req">*</span>
-                </label>
-                <select id="application-cohort" class="w-select" formControlName="cohortId">
-                  <option value="">Choose a cohort</option>
-                  @for (cohort of options()?.cohorts ?? []; track cohort.id) {
-                    <option [value]="cohort.id">{{ cohort.name }}</option>
-                  }
-                </select>
-                @if (form.controls.cohortId.touched && form.controls.cohortId.invalid) {
-                  <p class="w-field__error">Choose a cohort before approval.</p>
-                }
-              </div>
-              <div class="w-field">
-                <label class="w-label" for="application-mentor">
-                  Assign mentor <span class="w-label__req">*</span>
-                </label>
-                <select id="application-mentor" class="w-select" formControlName="mentorId">
-                  <option value="">Choose a mentor</option>
-                  @for (mentor of eligibleMentors(); track mentor.id) {
-                    <option [value]="mentor.id">{{ mentor.name }}</option>
-                  }
-                </select>
-                @if (form.controls.mentorId.touched && form.controls.mentorId.invalid) {
-                  <p class="w-field__error">Choose a mentor assigned to the cohort.</p>
-                }
-              </div>
-            </div>
-            <div class="w-field">
-              <label class="w-label" for="application-decision-note">Decision note</label>
-              <textarea
-                id="application-decision-note"
-                class="w-textarea"
-                formControlName="decisionNote"
-                maxlength="2000"
-                rows="4"
-                placeholder="Optional note kept on the applicant record."
-              ></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="w-modal__footer">
-          @if (application.status !== 'Approved' && application.status !== 'Declined') {
-            <button class="w-btn w-btn--danger" type="button" (click)="reviewDecline()">
-              Decline
-            </button>
-            <button
-              class="w-btn w-btn--primary"
-              type="button"
-              [disabled]="!application.canApprove"
-              (click)="reviewApproval()"
-            >
-              Approve
-            </button>
-          } @else {
-            <span class="w-badge">{{ application.status }}</span>
-            <button class="w-btn w-btn--primary" type="button" (click)="closeReview()">Done</button>
           }
-        </div>
+        </section>
+
+        <form class="w-stack" [formGroup]="form">
+          <div w-form-field>
+            <label w-label for="application-track">Interest track</label>
+            <input
+              w-text-field
+              id="application-track"
+              formControlName="trackInterest"
+              maxlength="200"
+              list="application-track-options"
+            />
+            <datalist id="application-track-options">
+              @for (track of options()?.tracks ?? []; track track.id) {
+                <option [value]="track.name"></option>
+              }
+            </datalist>
+          </div>
+          <div class="w-grid w-grid--2">
+            <div w-form-field>
+              <label w-label for="application-cohort">
+                Assign cohort <span w-label-required>*</span>
+              </label>
+              <select w-select id="application-cohort" formControlName="cohortId">
+                <option value="">Choose a cohort</option>
+                @for (cohort of options()?.cohorts ?? []; track cohort.id) {
+                  <option [value]="cohort.id">{{ cohort.name }}</option>
+                }
+              </select>
+              @if (form.controls.cohortId.touched && form.controls.cohortId.invalid) {
+                <p w-error-text>Choose a cohort before approval.</p>
+              }
+            </div>
+            <div w-form-field>
+              <label w-label for="application-mentor">
+                Assign mentor <span w-label-required>*</span>
+              </label>
+              <select w-select id="application-mentor" formControlName="mentorId">
+                <option value="">Choose a mentor</option>
+                @for (mentor of eligibleMentors(); track mentor.id) {
+                  <option [value]="mentor.id">{{ mentor.name }}</option>
+                }
+              </select>
+              @if (form.controls.mentorId.touched && form.controls.mentorId.invalid) {
+                <p w-error-text>Choose a mentor assigned to the cohort.</p>
+              }
+            </div>
+          </div>
+          <div w-form-field>
+            <label w-label for="application-decision-note">Decision note</label>
+            <textarea
+              w-textarea
+              id="application-decision-note"
+              formControlName="decisionNote"
+              maxlength="2000"
+              rows="4"
+              placeholder="Optional note kept on the applicant record."
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div w-dialog-footer>
+        @if (application.status !== 'Approved' && application.status !== 'Declined') {
+          <button w-button variant="danger" type="button" (click)="reviewDecline()">Decline</button>
+          <button
+            w-button
+            variant="primary"
+            type="button"
+            [disabled]="!application.canApprove"
+            (click)="reviewApproval()"
+          >
+            Approve
+          </button>
+        } @else {
+          <span w-badge>{{ application.status }}</span>
+          <button w-button variant="primary" type="button" (click)="closeReview()">Done</button>
+        }
       </div>
     </div>
   }
 
   @if (decision(); as pendingDecision) {
     <div
-      class="w-modal w-modal--sm is-open"
-      wuAccessibleDialog
+      w-dialog
+      size="sm"
       [attr.aria-labelledby]="pendingDecision + '-application-heading'"
-      (wuDialogEscape)="cancelDecision()"
+      (dismiss)="cancelDecision()"
     >
-      <div class="w-modal__scrim" (click)="cancelDecision()"></div>
-      <div class="w-modal__panel">
-        <div class="w-modal__header">
-          <div>
-            <h2 class="w-modal__title" [id]="pendingDecision + '-application-heading'">
-              {{ pendingDecision === 'approve' ? 'Approve application?' : 'Decline application?' }}
-            </h2>
-            <p class="w-modal__sub">{{ reviewing()?.firstName }} {{ reviewing()?.lastName }}</p>
-          </div>
-          <button
-            class="w-iconbtn w-modal__close"
-            type="button"
-            aria-label="Close confirmation"
-            (click)="cancelDecision()"
-          >
-            <w-icon name="x" />
-          </button>
+      <div w-dialog-header>
+        <div>
+          <h2 w-dialog-title [id]="pendingDecision + '-application-heading'">
+            {{ pendingDecision === 'approve' ? 'Approve application?' : 'Decline application?' }}
+          </h2>
+          <p w-dialog-subtitle>{{ reviewing()?.firstName }} {{ reviewing()?.lastName }}</p>
         </div>
-        <div class="w-modal__body w-stack">
-          @if (pendingDecision === 'approve') {
-            <p>
-              Enrol this applicant in <strong>{{ selectedCohortName() }}</strong> with
-              <strong>{{ selectedMentorName() }}</strong
-              >?
-            </p>
-            <p class="w-muted">The applicant contact will receive an approval email.</p>
-          } @else {
-            <p>
-              Decline {{ reviewing()?.firstName }} {{ reviewing()?.lastName }} without creating an
-              account?
-            </p>
-            <p class="w-muted">The optional decision note remains on the application record.</p>
-          }
-        </div>
-        <div class="w-modal__footer">
-          <button class="w-btn w-btn--ghost" type="button" (click)="cancelDecision()">
-            Cancel
-          </button>
-          <button
-            class="w-btn"
-            [class.w-btn--primary]="pendingDecision === 'approve'"
-            [class.w-btn--danger]="pendingDecision === 'decline'"
-            type="button"
-            [disabled]="saving()"
-            (click)="confirmDecision()"
-          >
-            {{
-              pendingDecision === 'approve'
-                ? saving()
-                  ? 'Approving…'
-                  : 'Confirm approval'
-                : saving()
-                  ? 'Declining…'
-                  : 'Confirm decline'
-            }}
-          </button>
-        </div>
+        <button
+          w-icon-button
+          type="button"
+          aria-label="Close confirmation"
+          (click)="cancelDecision()"
+        >
+          <w-icon name="x" />
+        </button>
+      </div>
+      <div w-dialog-body class="w-stack">
+        @if (pendingDecision === 'approve') {
+          <p>
+            Enrol this applicant in <strong>{{ selectedCohortName() }}</strong> with
+            <strong>{{ selectedMentorName() }}</strong
+            >?
+          </p>
+          <p class="w-muted">The applicant contact will receive an approval email.</p>
+        } @else {
+          <p>
+            Decline {{ reviewing()?.firstName }} {{ reviewing()?.lastName }} without creating an
+            account?
+          </p>
+          <p class="w-muted">The optional decision note remains on the application record.</p>
+        }
+      </div>
+      <div w-dialog-footer>
+        <button w-button variant="ghost" type="button" (click)="cancelDecision()">Cancel</button>
+        <button
+          w-button
+          [variant]="
+            pendingDecision === 'decline'
+              ? 'danger'
+              : pendingDecision === 'approve'
+                ? 'primary'
+                : 'neutral'
+          "
+          type="button"
+          [disabled]="saving()"
+          (click)="confirmDecision()"
+        >
+          {{
+            pendingDecision === 'approve'
+              ? saving()
+                ? 'Approving…'
+                : 'Confirm approval'
+              : saving()
+                ? 'Declining…'
+                : 'Confirm decline'
+          }}
+        </button>
       </div>
     </div>
   }

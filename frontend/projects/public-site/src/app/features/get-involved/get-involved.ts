@@ -3,7 +3,26 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ApiError, PublicSiteService } from '@waypoint/api';
-import { WIcon } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  Label,
+  LabelRequired,
+  Textarea,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 
 function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -13,8 +32,30 @@ function isEmail(value: string): boolean {
 @Component({
   selector: 'w-get-involved',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WIcon],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    Icon,
+    Button,
+    FormField,
+    Label,
+    LabelRequired,
+    ErrorText,
+    TextField,
+    Textarea,
+    Checkbox,
+    CheckboxBox,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './get-involved.html',
+  styleUrl: './get-involved.css',
 })
 export class GetInvolved {
   private readonly fb = inject(FormBuilder);

@@ -3,7 +3,19 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiError, LearningService, YouthQuizAttempt, YouthQuizQuestion } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Help,
+  Label,
+  Shell,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  QuizOption,
+} from '@waypoint/components';
 
 type QuizAnswers = Record<string, number[] | string>;
 
@@ -11,20 +23,21 @@ type QuizAnswers = Record<string, number[] | string>;
 @Component({
   selector: 'w-youth-quiz-attempt',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell],
+  imports: [
+    Shell,
+    Button,
+    FormField,
+    Label,
+    Help,
+    TextField,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    QuizOption,
+  ],
   templateUrl: './youth-quiz-attempt.html',
-  styles: `
-    .quiz-option {
-      min-height: 2.75rem;
-      display: flex;
-      align-items: center;
-      gap: var(--w-s3);
-      padding: var(--w-s3);
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-input);
-      cursor: pointer;
-    }
-  `,
+  styleUrl: './youth-quiz-attempt.css',
 })
 export class YouthQuizAttemptPage {
   protected readonly auth = inject(AuthStore);

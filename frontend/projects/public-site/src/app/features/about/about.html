@@ -13,27 +13,25 @@
     @if (loading()) {
       <p class="w-muted" role="status">Loading cohorts…</p>
     } @else if (error()) {
-      <div class="w-alert w-alert--danger" role="alert">
+      <div w-alert variant="danger" role="alert">
         <p>{{ error() }}</p>
-        <button class="w-btn w-btn--ghost w-btn--sm" type="button" (click)="load()">
-          Try again
-        </button>
+        <button w-button variant="ghost" size="sm" type="button" (click)="load()">Try again</button>
       </div>
     } @else if (content(); as publicContent) {
       @if (publicContent.cohorts.length === 0) {
-        <div class="w-empty">
+        <div w-empty-state>
           <h3>No cohorts are currently listed</h3>
           <p class="w-muted">You can still apply and our team will share upcoming options.</p>
         </div>
       } @else {
         <div class="w-grid w-grid--2 w-mt-6">
           @for (cohort of publicContent.cohorts; track cohort.id) {
-            <article class="w-card">
-              <div class="w-card__header w-cluster w-justify-between">
-                <h3 class="w-card__title">{{ cohort.name }}</h3>
-                <span class="w-badge">{{ cohort.status }}</span>
+            <article w-card>
+              <div w-card-header class="w-cluster w-justify-between">
+                <h3 w-card-title>{{ cohort.name }}</h3>
+                <span w-badge>{{ cohort.status }}</span>
               </div>
-              <div class="w-card__body">
+              <div w-card-body>
                 <dl class="w-stack w-gap-3">
                   <div>
                     <dt class="w-text-sm w-muted">Neighbourhood</dt>
@@ -61,7 +59,7 @@
   </div>
 
   <div class="w-cluster w-mt-6">
-    <a class="w-btn w-btn--primary" routerLink="/apply">Apply now</a>
-    <a class="w-btn w-btn--ghost" routerLink="/programs">Explore the programs</a>
+    <a w-button variant="primary" routerLink="/apply">Apply now</a>
+    <a w-button variant="ghost" routerLink="/programs">Explore the programs</a>
   </div>
 </section>

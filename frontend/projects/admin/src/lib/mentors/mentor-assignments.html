@@ -16,36 +16,35 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <div>
-          <div class="w-alert__title">{{ error }}</div>
+          <div w-alert-title>{{ error }}</div>
           Mentor assignments could not be loaded or saved.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
 
     @if (overview(); as view) {
       <div class="assignment-grid w-mb-6">
-        <section class="w-card assignment-card" aria-labelledby="pair-youth-heading">
-          <div class="w-card__body w-stack">
+        <section w-card class="assignment-card" aria-labelledby="pair-youth-heading">
+          <div w-card-body class="w-stack">
             <div>
               <h2 id="pair-youth-heading">Pair a youth</h2>
               <p class="w-muted">The change is visible on the mentor's roster after saving.</p>
             </div>
             @if (view.youth.length > 0 && view.mentors.length > 0) {
-              <div class="w-field">
-                <label class="w-label" for="assignment-youth">Youth</label>
+              <div w-form-field>
+                <label w-label for="assignment-youth">Youth</label>
                 <select
-                  #youthSelect
-                  class="w-select"
+                  w-select
                   id="assignment-youth"
                   [value]="youthId()"
                   [disabled]="saving() !== null"
-                  (change)="selectYouth(youthSelect.value)"
+                  (change)="selectYouth($any($event.target).value)"
                 >
                   @for (youth of view.youth; track youth.id) {
                     <option [value]="youth.id">
@@ -55,15 +54,14 @@
                   }
                 </select>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="assignment-mentor">Assigned mentor</label>
+              <div w-form-field>
+                <label w-label for="assignment-mentor">Assigned mentor</label>
                 <select
-                  #mentorSelect
-                  class="w-select"
+                  w-select
                   id="assignment-mentor"
                   [value]="mentorId()"
                   [disabled]="saving() !== null"
-                  (change)="selectMentor(mentorSelect.value)"
+                  (change)="selectMentor($any($event.target).value)"
                 >
                   @for (mentor of view.mentors; track mentor.mentorId) {
                     <option [value]="mentor.mentorId">
@@ -73,7 +71,8 @@
                 </select>
               </div>
               <button
-                class="w-btn w-btn--primary"
+                w-button
+                variant="primary"
                 type="button"
                 [disabled]="saving() !== null || !youthId() || !mentorId()"
                 (click)="assignMentor()"
@@ -81,54 +80,52 @@
                 {{ saving() === 'youth' ? 'Saving…' : 'Assign mentor' }}
               </button>
             } @else {
-              <div class="w-empty">
-                <div class="w-empty__icon"><w-icon name="users" /></div>
-                <h3 class="w-empty__title">Pairing needs youth and mentors</h3>
-                <p class="w-empty__text">Add an active youth and mentor before pairing them.</p>
+              <div w-empty-state>
+                <div w-empty-state-icon><w-icon name="users" /></div>
+                <h3 w-empty-state-title>Pairing needs youth and mentors</h3>
+                <p w-empty-state-text>Add an active youth and mentor before pairing them.</p>
               </div>
             }
           </div>
         </section>
 
-        <section class="w-card assignment-card" aria-labelledby="cohort-team-heading">
-          <div class="w-card__body w-stack">
+        <section w-card class="assignment-card" aria-labelledby="cohort-team-heading">
+          <div w-card-body class="w-stack">
             <div>
               <h2 id="cohort-team-heading">Cohort mentor team</h2>
               <p class="w-muted">Set one lead and any number of supporting mentors.</p>
             </div>
             @if (view.cohorts.length > 0 && view.mentors.length > 0) {
-              <div class="w-field">
-                <label class="w-label" for="assignment-cohort">Cohort team</label>
+              <div w-form-field>
+                <label w-label for="assignment-cohort">Cohort team</label>
                 <select
-                  #cohortSelect
-                  class="w-select"
+                  w-select
                   id="assignment-cohort"
                   [value]="cohortId()"
                   [disabled]="saving() !== null"
-                  (change)="selectCohort(cohortSelect.value)"
+                  (change)="selectCohort($any($event.target).value)"
                 >
                   @for (cohort of view.cohorts; track cohort.id) {
                     <option [value]="cohort.id">{{ cohort.name }}</option>
                   }
                 </select>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="lead-mentor">Lead mentor</label>
+              <div w-form-field>
+                <label w-label for="lead-mentor">Lead mentor</label>
                 <select
-                  #leadSelect
-                  class="w-select"
+                  w-select
                   id="lead-mentor"
                   [value]="leadMentorId()"
                   [disabled]="saving() !== null"
-                  (change)="selectLeadMentor(leadSelect.value)"
+                  (change)="selectLeadMentor($any($event.target).value)"
                 >
                   @for (mentor of view.mentors; track mentor.mentorId) {
                     <option [value]="mentor.mentorId">{{ mentor.mentorName }}</option>
                   }
                 </select>
               </div>
-              <fieldset class="w-field">
-                <legend class="w-label">Supporting mentors</legend>
+              <fieldset w-form-field>
+                <legend w-label>Supporting mentors</legend>
                 <div class="supporting-list">
                   @for (mentor of view.mentors; track mentor.mentorId) {
                     <label class="supporting-option">
@@ -151,7 +148,8 @@
                 </div>
               </fieldset>
               <button
-                class="w-btn w-btn--primary"
+                w-button
+                variant="primary"
                 type="button"
                 [disabled]="saving() !== null || !cohortId() || !leadMentorId()"
                 (click)="saveCohortTeam()"
@@ -159,10 +157,10 @@
                 {{ saving() === 'cohort' ? 'Saving…' : 'Save cohort team' }}
               </button>
             } @else {
-              <div class="w-empty">
-                <div class="w-empty__icon"><w-icon name="layers" /></div>
-                <h3 class="w-empty__title">No cohort teams to manage</h3>
-                <p class="w-empty__text">Create a cohort and active mentors first.</p>
+              <div w-empty-state>
+                <div w-empty-state-icon><w-icon name="layers" /></div>
+                <h3 w-empty-state-title>No cohort teams to manage</h3>
+                <p w-empty-state-text>Create a cohort and active mentors first.</p>
               </div>
             }
           </div>
@@ -184,51 +182,58 @@
         <div class="load-grid">
           @for (mentor of view.mentors; track mentor.mentorId) {
             <article
-              class="w-card load-card"
+              w-card
+              class="load-card"
               data-testid="mentor-load-card"
               [attr.data-mentor-id]="mentor.mentorId"
             >
-              <div class="w-card__body">
+              <div w-card-body>
                 <div class="load-card__head">
                   <div>
                     <h3>{{ mentor.mentorName }}</h3>
                     <p class="w-muted">{{ mentor.email }}</p>
                   </div>
                   <span
-                    class="w-badge"
-                    [class.w-badge--error]="mentor.loadBalance === 'Overloaded'"
-                    [class.w-badge--success]="mentor.loadBalance === 'Balanced'"
-                    [class.w-badge--warning]="mentor.loadBalance === 'Under target'"
+                    w-badge
+                    [variant]="
+                      mentor.loadBalance === 'Overloaded'
+                        ? 'error'
+                        : mentor.loadBalance === 'Balanced'
+                          ? 'success'
+                          : mentor.loadBalance === 'Under target'
+                            ? 'warning'
+                            : ''
+                    "
                   >
                     {{ mentor.loadBalance }}
                   </span>
                 </div>
                 <div class="load-metrics">
-                  <div class="load-metric">
-                    <strong>{{ mentor.caseload }}</strong>
-                    <span class="w-muted">{{ youthLabel(mentor.caseload) }}</span>
+                  <div class="w-kpi">
+                    <span w-stat-label>{{ youthLabel(mentor.caseload) }}</span
+                    ><strong w-stat-value>{{ mentor.caseload }}</strong>
                   </div>
-                  <div class="load-metric">
-                    <strong>{{ mentor.checkIns }}</strong>
-                    <span class="w-muted">check-ins</span>
+                  <div class="w-kpi">
+                    <span w-stat-label>check-ins</span
+                    ><strong w-stat-value>{{ mentor.checkIns }}</strong>
                   </div>
-                  <div class="load-metric">
-                    <strong>{{ mentor.reviews }}</strong>
-                    <span class="w-muted">reviews</span>
+                  <div class="w-kpi">
+                    <span w-stat-label>reviews</span
+                    ><strong w-stat-value>{{ mentor.reviews }}</strong>
                   </div>
                 </div>
                 @if (mentor.overloaded) {
-                  <p class="w-alert w-alert--warning w-mt-4">
+                  <p w-alert variant="warning" class="w-mt-4">
                     Rebalance this mentor's youth assignments.
                   </p>
                 }
               </div>
             </article>
           } @empty {
-            <div class="w-empty">
-              <div class="w-empty__icon"><w-icon name="users" /></div>
-              <h3 class="w-empty__title">No active mentors</h3>
-              <p class="w-empty__text">Active mentors will appear here with their load.</p>
+            <div w-empty-state>
+              <div w-empty-state-icon><w-icon name="users" /></div>
+              <h3 w-empty-state-title>No active mentors</h3>
+              <p w-empty-state-text>Active mentors will appear here with their load.</p>
             </div>
           }
         </div>

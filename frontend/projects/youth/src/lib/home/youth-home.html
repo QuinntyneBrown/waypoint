@@ -14,28 +14,28 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (home(); as view) {
       @if (!view.placed) {
-        <div class="w-empty">
-          <div class="w-empty__icon">
+        <div w-empty-state>
+          <div w-empty-state-icon>
             <w-icon name="users" />
           </div>
-          <h2 class="w-empty__title">You’re not in a cohort yet</h2>
-          <p class="w-empty__text">
+          <h2 w-empty-state-title>You’re not in a cohort yet</h2>
+          <p w-empty-state-text>
             Your mentor will place you in a cohort soon. Once you’re placed, your lessons and
             journey unlock here. Reach out if you have questions.
           </p>
-          <a class="w-btn w-btn--primary" routerLink="/youth/messages">
+          <a w-button variant="primary" routerLink="/youth/messages">
             <w-icon name="message-square" />Message your mentor
           </a>
         </div>
       } @else {
         <div class="w-stack w-stack--lg" data-testid="placed-home">
-          <section class="w-card w-card--lime">
-            <div class="w-card__body home-hero">
+          <section w-card variant="lime">
+            <div w-card-body class="home-hero">
               <div class="w-stack">
                 <div class="w-eyebrow">{{ view.cohortName }}</div>
                 <h2>Ready for your next step?</h2>
@@ -47,48 +47,46 @@
                     }
                   </p>
                   <div class="w-actions">
-                    <a class="w-btn w-btn--primary" [routerLink]="learning.targetPath">
+                    <a w-button variant="primary" [routerLink]="learning.targetPath">
                       {{ learning.status === 'in-progress' ? 'Resume learning' : 'Start learning' }}
                     </a>
-                    <a class="w-btn w-btn--ghost" routerLink="/youth/curriculum">View curriculum</a>
+                    <a w-button variant="ghost" routerLink="/youth/curriculum">View curriculum</a>
                   </div>
                 } @else {
                   <p>Your published learning is complete. Beautiful work.</p>
-                  <a class="w-btn w-btn--primary" routerLink="/youth/journey">View my journey</a>
+                  <a w-button variant="primary" routerLink="/youth/journey">View my journey</a>
                 }
               </div>
-              <div class="w-scripture">
+              <div w-scripture>
                 “The Son of Man did not come to be served, but to serve.”
-                <span class="w-scripture__ref">Mark 10:45</span>
+                <span w-scripture-ref>Mark 10:45</span>
               </div>
             </div>
           </section>
 
           <div class="w-grid w-grid--2">
-            <section class="w-card" data-testid="home-progress">
-              <div class="w-card__body w-stack">
+            <section w-card data-testid="home-progress">
+              <div w-card-body class="w-stack">
                 <div class="w-cluster w-cluster--between">
                   <div>
                     <div class="w-eyebrow">Learning</div>
-                    <h2 class="w-card__title">My progress</h2>
+                    <h2 w-card-title>My progress</h2>
                   </div>
                   <strong class="home-progress__value"
                     >{{ view.overallPercent | number: '1.0-0' }}%</strong
                   >
                 </div>
-                <progress class="home-progress" [value]="view.overallPercent" max="100">
-                  {{ view.overallPercent }}%
-                </progress>
+                <div w-progress label="Overall progress" [value]="view.overallPercent"></div>
                 <p>{{ view.completedItems }} of {{ view.totalItems }} required items complete.</p>
-                <a class="w-btn w-btn--ghost" routerLink="/youth/progress">See all progress</a>
+                <a w-button variant="ghost" routerLink="/youth/progress">See all progress</a>
               </div>
             </section>
 
-            <section class="w-card" data-testid="home-session">
-              <div class="w-card__body w-stack">
+            <section w-card data-testid="home-session">
+              <div w-card-body class="w-stack">
                 <div>
                   <div class="w-eyebrow">Next up</div>
-                  <h2 class="w-card__title">Schedule</h2>
+                  <h2 w-card-title>Schedule</h2>
                 </div>
                 @if (view.nextSession; as session) {
                   <h3>{{ session.title }}</h3>
@@ -106,7 +104,7 @@
                     }
                   </p>
                   @if (session.rsvpResponse) {
-                    <span class="w-badge"
+                    <span w-badge
                       >RSVP:
                       {{
                         session.rsvpResponse === 'CantAttend'
@@ -115,34 +113,34 @@
                       }}</span
                     >
                   }
-                  <a class="w-btn w-btn--ghost" routerLink="/youth/schedule">
+                  <a w-button variant="ghost" routerLink="/youth/schedule">
                     {{ session.rsvpResponse ? 'Update RSVP' : 'RSVP now' }}
                   </a>
                 } @else {
                   <p class="w-muted">No upcoming cohort sessions are scheduled yet.</p>
-                  <a class="w-btn w-btn--ghost" routerLink="/youth/schedule">View schedule</a>
+                  <a w-button variant="ghost" routerLink="/youth/schedule">View schedule</a>
                 }
               </div>
             </section>
           </div>
 
-          <section class="w-card" data-testid="home-assignments">
-            <div class="w-card__body">
+          <section w-card data-testid="home-assignments">
+            <div w-card-body>
               <div class="w-cluster w-cluster--between w-mb-4">
                 <div>
                   <div class="w-eyebrow">From your mentor</div>
-                  <h2 class="w-card__title">Assigned work</h2>
+                  <h2 w-card-title>Assigned work</h2>
                 </div>
                 @if (view.mentorName) {
-                  <a class="w-btn w-btn--ghost" routerLink="/youth/messages"
+                  <a w-button variant="ghost" routerLink="/youth/messages"
                     >Message {{ view.mentorName }}</a
                   >
                 }
               </div>
               @if (view.assignedWork.length === 0) {
-                <div class="w-empty">
-                  <h3 class="w-empty__title">Nothing assigned right now</h3>
-                  <p class="w-empty__text">Your next mentor assignment will appear here.</p>
+                <div w-empty-state>
+                  <h3 w-empty-state-title>Nothing assigned right now</h3>
+                  <p w-empty-state-text>Your next mentor assignment will appear here.</p>
                 </div>
               } @else {
                 <ul class="assignment-list">
@@ -151,7 +149,7 @@
                       <div>
                         <div class="w-cluster">
                           <h3>{{ work.title }}</h3>
-                          <span class="w-badge" [class.w-badge--error]="work.overdue">
+                          <span w-badge [variant]="work.overdue ? 'error' : ''">
                             {{ work.overdue ? 'Overdue' : work.status }}
                           </span>
                         </div>
@@ -162,7 +160,7 @@
                           <p>{{ work.message }}</p>
                         }
                       </div>
-                      <a class="w-btn w-btn--secondary" [routerLink]="work.targetPath">Open</a>
+                      <a w-button variant="secondary" [routerLink]="work.targetPath">Open</a>
                     </li>
                   }
                 </ul>

@@ -1,0 +1,10 @@
+<w-state-page
+  icon="lock"
+  tone="warning"
+  eyebrow="Error 403"
+  title="You don’t have access to that"
+  text="This area is for a different role. If you think this is a mistake, switch to the right account or head back to your home."
+>
+  <a w-button variant="primary" [routerLink]="home">Back to your home</a>
+  <button w-button variant="ghost" type="button" (click)="switchAccount()">Switch account</button>
+</w-state-page>

@@ -1,10 +1,11 @@
 <w-settings-shell heading="Display & accessibility">
   <div class="w-stack w-stack--lg">
-    <div class="w-field">
-      <span class="w-label">Text size</span>
+    <div w-form-field>
+      <span w-label>Text size</span>
       <div class="w-cluster">
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           aria-label="Decrease text size"
           (click)="changeScale(-10)"
@@ -13,7 +14,8 @@
         </button>
         <span aria-live="polite" data-testid="text-scale">{{ prefs().textScalePercent }}%</span>
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           aria-label="Increase text size"
           (click)="changeScale(10)"
@@ -21,25 +23,24 @@
           A+
         </button>
       </div>
-      <div class="w-help">Changes preview instantly across the app.</div>
+      <div w-help>Changes preview instantly across the app.</div>
     </div>
 
-    <div class="w-field">
-      <span class="w-label" id="theme-label">Theme</span>
-      <div class="w-segment" role="group" aria-labelledby="theme-label">
+    <div w-form-field>
+      <span w-label id="theme-label">Theme</span>
+      <div w-button-group role="group" aria-labelledby="theme-label">
         @for (option of themes; track option.value) {
           <button
-            class="w-segment__item"
+            w-button-group-item
             type="button"
-            [class.is-active]="prefs().theme === option.value"
-            [attr.aria-pressed]="prefs().theme === option.value"
+            [active]="prefs().theme === option.value"
             (click)="setTheme(option.value)"
           >
             {{ option.label }}
           </button>
         }
       </div>
-      <div class="w-help">System matches your device. Save to keep your choice.</div>
+      <div w-help>System matches your device. Save to keep your choice.</div>
     </div>
 
     <div class="w-cluster w-cluster--between">
@@ -47,14 +48,14 @@
         <div>High contrast</div>
         <div class="w-muted w-text-sm">Stronger borders and text.</div>
       </div>
-      <label class="w-switch">
+      <label w-switch>
         <input
           type="checkbox"
           aria-label="High contrast"
           [checked]="prefs().highContrast"
           (change)="toggleContrast()"
         />
-        <span class="w-switch__track"></span>
+        <span w-switch-track></span>
       </label>
     </div>
 
@@ -63,14 +64,14 @@
         <div>Reduce motion</div>
         <div class="w-muted w-text-sm">Minimise animations and transitions.</div>
       </div>
-      <label class="w-switch">
+      <label w-switch>
         <input
           type="checkbox"
           aria-label="Reduce motion"
           [checked]="prefs().reduceMotion"
           (change)="toggleMotion()"
         />
-        <span class="w-switch__track"></span>
+        <span w-switch-track></span>
       </label>
     </div>
 
@@ -79,14 +80,14 @@
         <div>Underline links</div>
         <div class="w-muted w-text-sm">Always underline links for clarity.</div>
       </div>
-      <label class="w-switch">
+      <label w-switch>
         <input
           type="checkbox"
           aria-label="Underline links"
           [checked]="prefs().underlineLinks"
           (change)="toggleUnderline()"
         />
-        <span class="w-switch__track"></span>
+        <span w-switch-track></span>
       </label>
     </div>
 
@@ -95,20 +96,21 @@
         <div>Reading font</div>
         <div class="w-muted w-text-sm">Use a serif font for body text.</div>
       </div>
-      <label class="w-switch">
+      <label w-switch>
         <input
           type="checkbox"
           aria-label="Reading font"
           [checked]="prefs().readingFont === 'serif'"
           (change)="toggleReadingFont()"
         />
-        <span class="w-switch__track"></span>
+        <span w-switch-track></span>
       </label>
     </div>
 
     <div>
       <button
-        class="w-btn w-btn--primary"
+        w-button
+        variant="primary"
         type="button"
         [class.is-loading]="saving()"
         [disabled]="saving()"

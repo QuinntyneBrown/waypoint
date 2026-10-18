@@ -1,10 +1,7 @@
 <div class="w-authpage">
   <div class="w-authcard" style="max-width: 560px">
     <div class="w-authcard__brand">
-      <span class="w-brand__mark" style="width: 38px; height: 38px; font-size: 1.1rem">W</span>
-      <span style="font-family: var(--w-font-head); font-weight: 700; font-size: 1.2rem"
-        >Waypoint</span
-      >
+      <div w-brand size="lg">Waypoint</div>
     </div>
 
     <div class="w-cluster w-cluster--between w-mb-4">
@@ -17,50 +14,41 @@
       <p class="w-muted w-mb-6">This is how you’ll show up across Waypoint.</p>
       <form [formGroup]="profile">
         <div
-          class="w-field"
-          [class.is-error]="
-            profile.controls.displayName.touched && profile.controls.displayName.invalid
-          "
+          w-form-field
+          [invalid]="profile.controls.displayName.touched && profile.controls.displayName.invalid"
         >
-          <label class="w-label" for="displayName"
-            >Display name <span class="w-label__req">*</span></label
-          >
-          <input
-            class="w-input"
-            id="displayName"
-            formControlName="displayName"
-            autocomplete="name"
-          />
+          <label w-label for="displayName">Display name <span w-label-required>*</span></label>
+          <input w-text-field id="displayName" formControlName="displayName" autocomplete="name" />
           @if (profile.controls.displayName.touched && profile.controls.displayName.invalid) {
-            <div class="w-error-text">Please enter a display name.</div>
+            <div w-error-text>Please enter a display name.</div>
           }
         </div>
-        <div class="w-field">
-          <label class="w-label" for="pronouns">Pronouns</label>
+        <div w-form-field>
+          <label w-label for="pronouns">Pronouns</label>
           <input
-            class="w-input"
+            w-text-field
             id="pronouns"
             formControlName="pronouns"
             placeholder="e.g. she/her, he/him, they/them"
           />
         </div>
-        <div class="w-field">
-          <label class="w-label" for="profilePhoto">Profile photo</label>
+        <div w-form-field>
+          <label w-label for="profilePhoto">Profile photo</label>
           <input
-            class="w-input"
+            w-text-field
             id="profilePhoto"
             type="file"
             accept="image/jpeg,image/png,.jpg,.jpeg,.png"
             [disabled]="uploadingPhoto()"
             (change)="photoSelected($event)"
           />
-          <div class="w-help">Optional JPG or PNG, up to 5 MB. Stored privately.</div>
+          <div w-help>Optional JPG or PNG, up to 5 MB. Stored privately.</div>
         </div>
         @if (photoError(); as error) {
-          <div class="w-alert w-alert--error" role="alert">{{ error }}</div>
+          <div w-alert variant="error" role="alert">{{ error }}</div>
         }
         @if (photoStatus(); as status) {
-          <p class="w-alert w-alert--success" role="status">{{ status }}</p>
+          <p w-alert variant="success" role="status">{{ status }}</p>
         }
         @if (photoPreview(); as photo) {
           <img
@@ -78,20 +66,14 @@
         <p class="w-muted w-mb-6">
           You’re placed in a cohort. Your mentor will guide your journey.
         </p>
-        <div class="w-alert w-alert--lime">
-          <w-icon name="users" iconClass="w-alert__icon" />
-          <div>You’re all set with a cohort and mentor.</div>
-        </div>
+        <div w-alert variant="lime" icon="users">You’re all set with a cohort and mentor.</div>
       } @else {
         <p class="w-muted w-mb-6">
           Cohorts are assigned by your program team — you don’t pick one.
         </p>
-        <div class="w-alert w-alert--info">
-          <w-icon name="info" iconClass="w-alert__icon" />
-          <div>
-            You’re not placed in a cohort yet. Your mentor will add you soon — program content
-            unlocks once you’re placed.
-          </div>
+        <div w-alert variant="info" icon="info">
+          You’re not placed in a cohort yet. Your mentor will add you soon — program content unlocks
+          once you’re placed.
         </div>
       }
     }
@@ -105,14 +87,14 @@
             <div>{{ cat.label }}</div>
             <div class="w-muted w-text-sm">{{ cat.description }}</div>
           </div>
-          <label class="w-switch">
+          <label w-switch>
             <input
               type="checkbox"
               [attr.aria-label]="cat.label"
               [checked]="prefs()[cat.eventKey]"
               (change)="toggle(cat.eventKey)"
             />
-            <span class="w-switch__track"></span>
+            <span w-switch-track></span>
           </label>
         </div>
       }
@@ -120,7 +102,7 @@
 
     <div class="w-cluster w-cluster--between w-mt-6">
       @if (step() > 1) {
-        <button class="w-btn w-btn--ghost" type="button" (click)="back()">
+        <button w-button variant="ghost" type="button" (click)="back()">
           <w-icon name="chevron-left" />Back
         </button>
       } @else {
@@ -128,12 +110,13 @@
       }
 
       @if (step() < 3) {
-        <button class="w-btn w-btn--primary" type="button" (click)="next()">
+        <button w-button variant="primary" type="button" (click)="next()">
           Next<w-icon name="chevron-right" />
         </button>
       } @else {
         <button
-          class="w-btn w-btn--primary"
+          w-button
+          variant="primary"
           type="button"
           [class.is-loading]="saving()"
           [disabled]="saving()"
@@ -145,7 +128,7 @@
     </div>
 
     <p class="w-text-c w-mt-6 w-text-sm">
-      <button class="w-btn w-btn--link" type="button" (click)="skip()">Skip for now</button>
+      <button w-button variant="link" type="button" (click)="skip()">Skip for now</button>
     </p>
   </div>
 </div>

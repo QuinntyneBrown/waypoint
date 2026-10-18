@@ -13,22 +13,23 @@
         </h1>
         <p class="w-page__sub">Review turnout by session or attendance patterns by youth.</p>
       </div>
-      <a class="w-btn w-btn--primary" [routerLink]="calendarPath()">Open calendar</a>
+      <a w-button variant="primary" [routerLink]="calendarPath()">Open calendar</a>
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
 
-    <section class="w-card" aria-labelledby="attendance-history-heading">
-      <div class="w-card__header">
+    <section w-card aria-labelledby="attendance-history-heading">
+      <div w-card-header>
         <div class="history-toolbar">
           <div>
-            <h2 class="w-card__title" id="attendance-history-heading">Attendance history</h2>
-            <div class="w-cluster" role="tablist" aria-label="Attendance history view">
+            <h2 w-card-title id="attendance-history-heading">Attendance history</h2>
+            <div w-tabs role="tablist" aria-label="Attendance history view">
               <button
-                class="w-btn w-btn--ghost"
+                w-tab
+                [active]="view() === 'session'"
                 type="button"
                 role="tab"
                 [attr.aria-selected]="view() === 'session'"
@@ -37,7 +38,8 @@
                 By session
               </button>
               <button
-                class="w-btn w-btn--ghost"
+                w-tab
+                [active]="view() === 'youth'"
                 type="button"
                 role="tab"
                 [attr.aria-selected]="view() === 'youth'"
@@ -49,7 +51,8 @@
           </div>
           <div class="w-cluster">
             <button
-              class="w-btn w-btn--secondary"
+              w-button
+              variant="secondary"
               type="button"
               [disabled]="exporting()"
               (click)="export('csv')"
@@ -57,7 +60,8 @@
               Export CSV
             </button>
             <button
-              class="w-btn w-btn--secondary"
+              w-button
+              variant="secondary"
               type="button"
               [disabled]="exporting()"
               (click)="export('pdf')"
@@ -67,12 +71,12 @@
           </div>
         </div>
       </div>
-      <div class="w-card__body w-stack">
+      <div w-card-body class="w-stack">
         <div class="history-filters" aria-label="Attendance filters">
-          <div class="w-field w-mb-0">
-            <label class="w-label" for="attendance-cohort-filter">Cohort</label>
+          <div w-form-field class="w-mb-0">
+            <label w-label for="attendance-cohort-filter">Cohort</label>
             <select
-              class="w-select"
+              w-select
               id="attendance-cohort-filter"
               [value]="cohortId()"
               (change)="cohortId.set($any($event.target).value)"
@@ -83,34 +87,34 @@
               }
             </select>
           </div>
-          <div class="w-field w-mb-0">
-            <label class="w-label" for="attendance-from">From</label>
+          <div w-form-field class="w-mb-0">
+            <label w-label for="attendance-from">From</label>
             <input
-              class="w-input"
+              w-text-field
               id="attendance-from"
               type="date"
               [value]="from()"
               (input)="from.set($any($event.target).value)"
             />
           </div>
-          <div class="w-field w-mb-0">
-            <label class="w-label" for="attendance-to">To</label>
+          <div w-form-field class="w-mb-0">
+            <label w-label for="attendance-to">To</label>
             <input
-              class="w-input"
+              w-text-field
               id="attendance-to"
               type="date"
               [value]="to()"
               (input)="to.set($any($event.target).value)"
             />
           </div>
-          <button class="w-btn w-btn--primary" type="button" (click)="load()">Apply filters</button>
+          <button w-button variant="primary" type="button" (click)="load()">Apply filters</button>
         </div>
 
         @if (loading()) {
           <p class="w-muted" role="status">Loading attendance history…</p>
         } @else if (view() === 'session') {
-          <div class="history-table-wrap" data-testid="attendance-by-session">
-            <table class="history-table">
+          <div w-table-wrap data-testid="attendance-by-session">
+            <table w-table>
               <thead>
                 <tr>
                   <th scope="col">Session</th>
@@ -136,17 +140,25 @@
                     <td>{{ row.rate | percent: '1.0-0' }}</td>
                     <td>
                       <span
-                        class="w-badge"
-                        [class.w-badge--success]="row.status === 'saved'"
-                        [class.w-badge--warning]="row.status === 'needs review'"
-                        [class.w-badge--error]="row.status === 'low turnout'"
+                        w-badge
+                        [variant]="
+                          row.status === 'saved'
+                            ? 'success'
+                            : row.status === 'needs review'
+                              ? 'warning'
+                              : row.status === 'low turnout'
+                                ? 'error'
+                                : ''
+                        "
                       >
                         {{ row.status }}
                       </span>
                     </td>
                     <td>
                       <a
-                        class="w-btn w-btn--ghost w-btn--sm"
+                        w-button
+                        variant="ghost"
+                        size="sm"
                         [routerLink]="[attendanceBase(), row.sessionId]"
                       >
                         {{ row.marked ? 'Edit' : 'Take attendance' }}
@@ -162,8 +174,8 @@
             </table>
           </div>
         } @else {
-          <div class="history-table-wrap" data-testid="attendance-by-youth">
-            <table class="history-table">
+          <div w-table-wrap data-testid="attendance-by-youth">
+            <table w-table>
               <thead>
                 <tr>
                   <th scope="col">Youth</th>
@@ -181,7 +193,7 @@
                     <td>
                       <strong>{{ row.displayName }}</strong>
                       @if (row.belowThreshold) {
-                        <span class="w-badge w-badge--error">Below 70%</span>
+                        <span w-badge variant="error">Below 70%</span>
                       }
                     </td>
                     <td>{{ row.attended }} / {{ row.total }}</td>

@@ -18,7 +18,26 @@ import {
   TrackWorkspace,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Label,
+  Select,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  DescriptionList,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogBody,
+} from '@waypoint/components';
 import { finalize, forkJoin, of, switchMap } from 'rxjs';
 import {
   EditorDraftService,
@@ -37,9 +56,29 @@ interface BadgeTarget {
 @Component({
   selector: 'w-badge-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WAccessibleDialog, ReactiveFormsModule],
+  imports: [
+    Shell,
+    ReactiveFormsModule,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Textarea,
+    Select,
+    Alert,
+    Card,
+    CardBody,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    DescriptionList,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogBody,
+  ],
   templateUrl: './badge-builder.html',
-  styleUrl: './curriculum-admin.css',
+  styleUrl: './badge-builder.css',
 })
 export class BadgeBuilderPage implements UnsavedChangesAware {
   protected readonly auth = inject(AuthStore);

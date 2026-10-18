@@ -2,14 +2,38 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { VolunteerService, VolunteerScheduleItem } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Icon,
+  Shell,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 
 // Traces to: L2-VOLUNTEER-002
 @Component({
   selector: 'w-volunteer-schedule',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, WIcon],
+  imports: [
+    Shell,
+    DatePipe,
+    Icon,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './volunteer-schedule.html',
+  styleUrl: './volunteer-schedule.css',
 })
 export class VolunteerSchedule {
   protected readonly auth = inject(AuthStore);

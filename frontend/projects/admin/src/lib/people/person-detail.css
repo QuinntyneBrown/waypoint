@@ -1,0 +1,30 @@
+.record-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--w-s5);
+}
+.account-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--w-s4);
+}
+.account-actions .w-btn {
+  justify-content: center;
+  min-height: 45px;
+}
+.danger-zone {
+  border-color: var(--w-error);
+}
+.confirmation-copy {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 42rem) {
+  .record-grid,
+  .account-actions {
+    grid-template-columns: 1fr;
+  }
+  .w-modal__footer .w-btn {
+    flex: 1 1 100%;
+    min-height: 45px;
+  }
+}

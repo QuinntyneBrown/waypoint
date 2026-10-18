@@ -3,7 +3,32 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiError, PeopleService, PersonDetail } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Icon,
+  IconButton,
+  Label,
+  Link,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  AlertTitle,
+  Card,
+  CardBody,
+  Badge,
+  Progress,
+  Tabs,
+  Tab,
+  DescriptionList,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogSubtitle,
+  DialogBody,
+  DialogFooter,
+} from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 
 type PersonTab = 'profile' | 'guardian' | 'progress' | 'attendance' | 'notes' | 'account';
@@ -17,67 +42,36 @@ type LifecycleAction =
 @Component({
   selector: 'w-person-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, RouterLink, DatePipe],
+  imports: [
+    Shell,
+    Icon,
+    RouterLink,
+    DatePipe,
+    Button,
+    IconButton,
+    Link,
+    FormField,
+    Label,
+    TextField,
+    Select,
+    Alert,
+    AlertTitle,
+    Card,
+    CardBody,
+    Badge,
+    Progress,
+    Tabs,
+    Tab,
+    DescriptionList,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogSubtitle,
+    DialogBody,
+    DialogFooter,
+  ],
   templateUrl: './person-detail.html',
-  styles: `
-    .record-tabs {
-      display: flex;
-      gap: var(--w-s2);
-      overflow-x: auto;
-      padding-block: var(--w-s2);
-    }
-    .record-tab {
-      min-height: 44px;
-      flex: none;
-    }
-    .record-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s5);
-    }
-    .record-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .record-row {
-      padding: var(--w-s4) 0;
-      border-bottom: 1px solid var(--w-border);
-      overflow-wrap: anywhere;
-    }
-    .record-row:last-child {
-      border-bottom: 0;
-    }
-    .account-actions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .account-actions .w-btn {
-      justify-content: center;
-      min-height: 45px;
-    }
-    .danger-zone {
-      border-color: var(--w-error);
-    }
-    .confirmation-copy {
-      overflow-wrap: anywhere;
-    }
-    progress {
-      width: min(100%, 32rem);
-      min-height: 1rem;
-    }
-    @media (max-width: 42rem) {
-      .record-grid,
-      .account-actions {
-        grid-template-columns: 1fr;
-      }
-      .w-modal__footer .w-btn {
-        flex: 1 1 100%;
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './person-detail.css',
 })
 export class PersonDetailPage {
   protected readonly auth = inject(AuthStore);

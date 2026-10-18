@@ -43,6 +43,15 @@ Run from the repository root unless noted.
 ## Naming Conventions
 
 - Frontend API services are named `<Name>Service` in `<name>.service.ts` (for example `AuditService` in `audit.service.ts`), never `<Name>Api` or `<name>-api.ts`.
+- Components are named `<Name>` in `<name>.ts` (for example `Alert` in `alert.ts`), never with a `W`
+  class prefix or a `w-` file prefix. Selectors and `.w-*` CSS classes keep the `w` prefix.
+
+## Component Files (mandatory)
+
+- Each component has its own `<name>.ts`, `<name>.html` and `<name>.css`, referenced with
+  `templateUrl` and `styleUrl`: one component per file set, no inline `template` or `styles`, no
+  stylesheet shared between components. ESLint (`@angular-eslint/component-max-inline-declarations`)
+  enforces the no-inline part.
 
 ## Testing
 
@@ -57,6 +66,21 @@ Run from the repository root unless noted.
   - `.github/workflows/backend.yml`
   - `.github/workflows/frontend.yml`
   - `.github/workflows/performance.yml`
+
+## Components library is mandatory (CRITICAL)
+
+- Every application and feature library MUST be built from `@waypoint/components`
+  (DECISIONS #23). Never hand-write markup or CSS for a design-system component
+  the library provides; use the library component. Component `.w-*` classes are
+  not public API. Layout, spacing and typography utilities (`w-stack`,
+  `w-cluster`, `w-grid`, `w-container`, `w-page*`, `w-mb-*`, `w-mt-*`, `w-muted`,
+  `w-eyebrow`, `w-text-*`) remain shared CSS.
+- `docs/screen-composition.md` is binding. Before implementing or changing any
+  screen, read its entry and use the components it lists. Build locally only the
+  UI it marks as local.
+- If the library lacks a component the screen needs, STOP. Add it to the
+  library first. Do not work around it in the app.
+- Keep `docs/screen-composition.md` aligned with the mocks.
 
 ## Scope, Simplicity, and Zero-Waste Engineering (CRITICAL)
 

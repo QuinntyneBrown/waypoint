@@ -5,7 +5,7 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-page">
-    <a class="w-btn w-btn--ghost" routerLink="/youth/journey">Back to journey</a>
+    <a w-button variant="ghost" routerLink="/youth/journey">Back to journey</a>
     <div class="w-page__head">
       <div class="w-page__titles">
         <div class="w-eyebrow">Achievements</div>
@@ -14,18 +14,18 @@
       </div>
     </div>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (journey(); as view) {
-      <section class="w-card w-card--greige">
-        <div class="w-card__body">
+      <section w-card variant="greige">
+        <div w-card-body>
           <div class="w-cluster w-cluster--between">
             <div>
               <div class="w-eyebrow">Collection</div>
               <h2>{{ view.earned.length }} earned · {{ view.locked.length }} to unlock</h2>
             </div>
-            <span class="w-badge w-badge--success">{{ view.earned.length }} earned</span>
+            <span w-badge variant="success">{{ view.earned.length }} earned</span>
           </div>
         </div>
       </section>
@@ -33,19 +33,19 @@
       <section class="w-stack" aria-labelledby="earned-badges">
         <h2 id="earned-badges">Earned</h2>
         @if (view.earned.length === 0) {
-          <div class="w-empty">
-            <h3 class="w-empty__title">No badges yet</h3>
-            <p class="w-empty__text">Complete your next learning step to begin your collection.</p>
+          <div w-empty-state>
+            <h3 w-empty-state-title>No badges yet</h3>
+            <p w-empty-state-text>Complete your next learning step to begin your collection.</p>
           </div>
         }
         <div class="w-grid w-grid--3">
           @for (badge of view.earned; track badge.badgeId) {
-            <article class="w-card">
-              <div class="w-card__body w-stack">
+            <article w-card>
+              <div w-card-body class="w-stack">
                 <div class="w-eyebrow">Badge earned</div>
                 <h3>{{ badge.name }}</h3>
                 <p>{{ badge.criteria }}</p>
-                <span class="w-badge w-badge--success"
+                <span w-badge variant="success"
                   >Earned {{ badge.awardedAt | date: 'mediumDate' }}</span
                 >
               </div>
@@ -58,14 +58,19 @@
         <h2 id="locked-badges">Still to unlock</h2>
         <div class="w-grid w-grid--3">
           @for (badge of view.locked; track badge.badgeId) {
-            <article class="w-card w-card--greige">
-              <div class="w-card__body w-stack">
+            <article w-card variant="greige">
+              <div w-card-body class="w-stack">
                 <div class="w-eyebrow">Locked badge</div>
                 <h3>{{ badge.name }}</h3>
                 <p>{{ badge.criteria }}</p>
-                <progress [value]="badge.completedCriteria" [max]="badge.totalCriteria">
-                  {{ badge.progressLabel }}</progress
-                ><span class="w-badge" data-testid="badge-progress">{{ badge.progressLabel }}</span>
+                <div
+                  w-progress
+                  label="Badge criteria progress"
+                  [value]="
+                    badge.totalCriteria ? (badge.completedCriteria / badge.totalCriteria) * 100 : 0
+                  "
+                ></div>
+                <span w-badge data-testid="badge-progress">{{ badge.progressLabel }}</span>
               </div>
             </article>
           }
@@ -74,24 +79,39 @@
 
       <section class="w-stack" aria-labelledby="milestones">
         <h2 id="milestones">Your milestones</h2>
-        <div class="w-card">
-          <div class="w-card__body">
+        <div w-card>
+          <div w-card-body>
             <ol class="w-stack">
               @for (milestone of view.milestones; track $index) {
-                <li [class.w-card]="milestone.current" [class.w-card--greige]="milestone.current">
-                  <strong>{{ milestone.title }}</strong>
-                  <p>
-                    {{ milestone.detail }}
-                    @if (milestone.occurredAt) {
-                      · {{ milestone.occurredAt | date: 'mediumDate' }}
-                    }
-                  </p>
-                  @if (milestone.current) {
-                    <span class="w-badge w-badge--warning">Current goal</span>
-                  }
-                </li>
+                @if (milestone.current) {
+                  <li w-card variant="greige">
+                    <ng-container
+                      [ngTemplateOutlet]="milestoneContent"
+                      [ngTemplateOutletContext]="{ $implicit: milestone }"
+                    />
+                  </li>
+                } @else {
+                  <li>
+                    <ng-container
+                      [ngTemplateOutlet]="milestoneContent"
+                      [ngTemplateOutletContext]="{ $implicit: milestone }"
+                    />
+                  </li>
+                }
               }
             </ol>
+            <ng-template #milestoneContent let-milestone>
+              <strong>{{ milestone.title }}</strong>
+              <p>
+                {{ milestone.detail }}
+                @if (milestone.occurredAt) {
+                  · {{ milestone.occurredAt | date: 'mediumDate' }}
+                }
+              </p>
+              @if (milestone.current) {
+                <span w-badge variant="warning">Current goal</span>
+              }
+            </ng-template>
           </div>
         </div>
       </section>

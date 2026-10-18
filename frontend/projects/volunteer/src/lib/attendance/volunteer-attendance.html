@@ -11,22 +11,22 @@
         <h1 class="w-page__title">Take attendance</h1>
         <p class="w-page__sub">Only names and Present/Absent attendance are shown.</p>
       </div>
-      <a class="w-btn w-btn--ghost" routerLink="/volunteer/home">Back to today</a>
+      <a w-button variant="ghost" routerLink="/volunteer/home">Back to today</a>
     </div>
 
     @if (rows() === undefined) {
       <p class="w-muted">Loading roster…</p>
     } @else {
       <div class="attendance-summary" aria-label="Attendance tallies">
-        <div class="w-card" data-testid="marked-tally">
+        <div w-card data-testid="marked-tally">
           <strong>{{ marked() }} of {{ total() }}</strong>
           <span>marked</span>
         </div>
-        <div class="w-card" data-testid="present-tally">
+        <div w-card data-testid="present-tally">
           <strong>{{ present() }}</strong>
           <span>present</span>
         </div>
-        <div class="w-card" data-testid="absent-tally">
+        <div w-card data-testid="absent-tally">
           <strong>{{ absent() }}</strong>
           <span>absent</span>
         </div>
@@ -34,18 +34,18 @@
 
       <div class="w-cluster w-cluster--between">
         <div class="w-cluster">
-          <button class="w-btn w-btn--secondary" type="button" (click)="markAll('Present')">
+          <button w-button variant="secondary" type="button" (click)="markAll('Present')">
             All present
           </button>
-          <button class="w-btn w-btn--ghost" type="button" (click)="markAll(null)">Clear</button>
+          <button w-button variant="ghost" type="button" (click)="markAll(null)">Clear</button>
         </div>
         @if (queue.pendingCount() > 0) {
-          <span class="w-badge w-badge--warning"> {{ queue.pendingCount() }} pending sync </span>
+          <span w-badge variant="warning"> {{ queue.pendingCount() }} pending sync </span>
         }
       </div>
 
-      <div class="w-card">
-        <div class="w-card__body">
+      <div w-card>
+        <div w-card-body>
           @for (row of rows(); track row.youthUserId) {
             <div class="attendance-row" data-testid="attendance-row">
               <span class="attendance-name">{{ row.name }}</span>
@@ -55,7 +55,8 @@
                 [attr.aria-label]="'Attendance for ' + row.name"
               >
                 <button
-                  class="w-btn w-btn--secondary"
+                  w-button
+                  variant="secondary"
                   [class.is-selected]="row.mark === 'Present'"
                   [attr.aria-pressed]="row.mark === 'Present'"
                   type="button"
@@ -64,7 +65,8 @@
                   Present
                 </button>
                 <button
-                  class="w-btn w-btn--secondary"
+                  w-button
+                  variant="secondary"
                   [class.is-selected]="row.mark === 'Absent'"
                   [attr.aria-pressed]="row.mark === 'Absent'"
                   type="button"
@@ -79,12 +81,12 @@
       </div>
 
       @if (queue.message(); as message) {
-        <p class="w-alert w-alert--info" role="status" aria-live="polite">{{ message }}</p>
+        <p w-alert variant="info" role="status" aria-live="polite">{{ message }}</p>
       } @else {
         <p class="w-muted" role="status" aria-live="polite"></p>
       }
       @if (queue.hasConflictForSession(sessionId)) {
-        <div class="w-alert w-alert--warning">
+        <div w-alert variant="warning">
           <div class="w-stack w-stack--sm">
             <strong>Choose which attendance to keep</strong>
             <p>
@@ -92,10 +94,10 @@
               apply your queued selections or keep the newer server attendance.
             </p>
             <div class="w-cluster">
-              <button class="w-btn w-btn--primary" type="button" (click)="applyQueuedConflict()">
+              <button w-button variant="primary" type="button" (click)="applyQueuedConflict()">
                 Apply my changes
               </button>
-              <button class="w-btn w-btn--secondary" type="button" (click)="keepServerAttendance()">
+              <button w-button variant="secondary" type="button" (click)="keepServerAttendance()">
                 Keep server attendance
               </button>
             </div>
@@ -103,7 +105,7 @@
         </div>
       }
       @if (errorMessage(); as error) {
-        <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+        <p w-alert variant="error" role="alert">{{ error }}</p>
       }
 
       <div class="w-cluster w-cluster--between">
@@ -115,7 +117,8 @@
           }
         </span>
         <button
-          class="w-btn w-btn--primary"
+          w-button
+          variant="primary"
           type="button"
           [disabled]="marked() !== total() || total() === 0 || saving()"
           (click)="save()"

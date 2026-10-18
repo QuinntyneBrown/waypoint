@@ -13,7 +13,8 @@
       </div>
       @if (pendingQuizCount() > 0) {
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           [disabled]="approvingAll()"
           (click)="approveAllQuizzes()"
@@ -23,35 +24,37 @@
       }
     </div>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
     @if (items(); as reviews) {
       @if (reviews.length === 0) {
-        <div class="w-card w-empty">
-          <div class="w-empty__icon"><w-icon name="file-text" /></div>
-          <h2 class="w-empty__title">No reviews waiting</h2>
-          <p class="w-empty__text">You are caught up with your assigned youth.</p>
+        <div w-card>
+          <div w-empty-state>
+            <div w-empty-state-icon><w-icon name="file-text" /></div>
+            <h2 w-empty-state-title>No reviews waiting</h2>
+            <p w-empty-state-text>You are caught up with your assigned youth.</p>
+          </div>
         </div>
       } @else {
-        <div class="w-card">
-          <div class="w-card__body">
+        <div w-card>
+          <div w-card-body>
             @for (review of reviews; track review.reviewId) {
               <article class="queue-row" data-testid="mentor-review-queue-item">
                 <div>
-                  <h2 class="w-card__title">{{ review.youthName }}</h2>
+                  <h2 w-card-title>{{ review.youthName }}</h2>
                   <p>{{ review.itemType }} · {{ review.itemTitle }}</p>
                   <p class="w-muted">Submitted {{ review.submittedAt | date: 'medium' }}</p>
                 </div>
                 <div class="w-cluster">
                   @if (review.overdue) {
-                    <span class="w-badge w-badge--error">Overdue</span>
+                    <span w-badge variant="error">Overdue</span>
                   } @else if (review.dueDate) {
-                    <span class="w-badge">Due {{ review.dueDate | date: 'mediumDate' }}</span>
+                    <span w-badge>Due {{ review.dueDate | date: 'mediumDate' }}</span>
                   } @else {
-                    <span class="w-badge">No due date</span>
+                    <span w-badge>No due date</span>
                   }
-                  <a class="w-btn w-btn--primary queue-link" [routerLink]="review.reviewPath">
+                  <a w-button variant="primary" class="queue-link" [routerLink]="review.reviewPath">
                     Review
                   </a>
                 </div>

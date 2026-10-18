@@ -4,10 +4,10 @@
   </p>
 
   @if (errorMessage(); as error) {
-    <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+    <p w-alert variant="error" role="alert">{{ error }}</p>
   }
   @if (acknowledgement(); as request) {
-    <div class="w-alert w-alert--success" role="status">
+    <div w-alert variant="success" role="status">
       Request received. Keep reference <strong>{{ request.reference }}</strong> for your records.
     </div>
   }
@@ -16,9 +16,9 @@
     <p class="w-muted" role="status">Loading your privacy information…</p>
   } @else {
     <div class="privacy-grid">
-      <section class="w-card">
-        <div class="w-card__body">
-          <h2 class="w-card__title">Your stored account data</h2>
+      <section w-card>
+        <div w-card-body>
+          <h2 w-card-title>Your stored account data</h2>
           <p class="w-muted w-mb-4">Placement identifiers are managed by program staff.</p>
           @if (data(); as person) {
             <dl class="privacy-data">
@@ -56,7 +56,9 @@
               </div>
             </dl>
             <button
-              class="w-btn w-btn--secondary w-mt-4"
+              w-button
+              variant="secondary"
+              class="w-mt-4"
               type="button"
               [disabled]="!canExport() || downloading()"
               (click)="downloadPersonalData()"
@@ -73,13 +75,13 @@
         </div>
       </section>
 
-      <section class="w-card">
-        <div class="w-card__body">
-          <h2 class="w-card__title">Make a data-rights request</h2>
+      <section w-card>
+        <div w-card-body>
+          <h2 w-card-title>Make a data-rights request</h2>
           <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
-            <div class="w-field">
-              <label class="w-label" for="privacy-action">Request type</label>
-              <select class="w-select" id="privacy-action" formControlName="actionType">
+            <div w-form-field>
+              <label w-label for="privacy-action">Request type</label>
+              <select w-select id="privacy-action" formControlName="actionType">
                 <option value="access">Access a copy of my data</option>
                 <option value="correction">Correct my information</option>
                 <option value="removal">Remove my information</option>
@@ -88,28 +90,28 @@
             </div>
 
             @if (form.controls.actionType.value === 'correction') {
-              <div class="w-field">
-                <label class="w-label" for="privacy-name">Correct name</label>
-                <input class="w-input" id="privacy-name" formControlName="displayName" />
+              <div w-form-field>
+                <label w-label for="privacy-name">Correct name</label>
+                <input w-text-field id="privacy-name" formControlName="displayName" />
               </div>
-              <div class="w-field">
-                <label class="w-label" for="privacy-email">Correct email</label>
-                <input class="w-input" id="privacy-email" type="email" formControlName="email" />
+              <div w-form-field>
+                <label w-label for="privacy-email">Correct email</label>
+                <input w-text-field id="privacy-email" type="email" formControlName="email" />
                 @if (form.controls.email.touched && form.controls.email.invalid) {
-                  <p class="w-error-text">Enter a valid email address.</p>
+                  <p w-error-text>Enter a valid email address.</p>
                 }
               </div>
-              <div class="w-field">
-                <label class="w-label" for="privacy-pronouns">Correct pronouns</label>
+              <div w-form-field>
+                <label w-label for="privacy-pronouns">Correct pronouns</label>
                 <input
-                  class="w-input"
+                  w-text-field
                   id="privacy-pronouns"
                   formControlName="pronouns"
                   [disabled]="form.controls.clearPronouns.value"
                 />
               </div>
-              <div class="w-field">
-                <label class="w-check" for="privacy-clear-pronouns">
+              <div w-form-field>
+                <label w-checkbox for="privacy-clear-pronouns">
                   <input
                     id="privacy-clear-pronouns"
                     type="checkbox"
@@ -121,10 +123,10 @@
               </div>
             }
 
-            <div class="w-field">
-              <label class="w-label" for="privacy-details">Details</label>
+            <div w-form-field>
+              <label w-label for="privacy-details">Details</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="privacy-details"
                 rows="4"
                 formControlName="details"
@@ -135,7 +137,7 @@
               Removal and consent requests may require follow-up so safeguarding and legal records
               are handled correctly.
             </p>
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="submitting()">
+            <button w-button variant="primary" type="submit" [disabled]="submitting()">
               {{ submitting() ? 'Sending…' : 'Submit request' }}
             </button>
           </form>
@@ -143,9 +145,9 @@
       </section>
     </div>
 
-    <section class="w-card w-mt-6">
-      <div class="w-card__body">
-        <h2 class="w-card__title">Your requests</h2>
+    <section w-card class="w-mt-6">
+      <div w-card-body>
+        <h2 w-card-title>Your requests</h2>
         @if (requestTotal() > 0) {
           <p class="w-muted w-text-sm">
             Showing {{ requests().length }} of {{ requestTotal() }} requests.
@@ -160,7 +162,7 @@
                   {{ request.reference }} · {{ request.requestedAt | date: 'medium' }}
                 </p>
               </div>
-              <span class="w-badge" [class.w-badge--lime]="request.status === 'Completed'">
+              <span w-badge [variant]="request.status === 'Completed' ? 'lime' : ''">
                 {{ request.status }}
               </span>
             </div>
@@ -173,7 +175,9 @@
         }
         @if (hasMoreRequests()) {
           <button
-            class="w-btn w-btn--secondary w-mt-3"
+            w-button
+            variant="secondary"
+            class="w-mt-3"
             type="button"
             [disabled]="loadingMore()"
             (click)="loadMoreRequests()"

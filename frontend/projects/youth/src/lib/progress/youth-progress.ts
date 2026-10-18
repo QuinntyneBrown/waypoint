@@ -2,7 +2,24 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ApiError, LearningService, YouthProgress } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import {
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  Progress,
+  Stat,
+  StatLabel,
+  StatValue,
+  TableWrap,
+  Table,
+  Tabs,
+  Tab,
+} from '@waypoint/components';
 
 type ProgressTab = 'overview' | 'quizzes' | 'attendance';
 
@@ -10,30 +27,28 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
 @Component({
   selector: 'w-youth-progress',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DecimalPipe, DatePipe],
+  imports: [
+    Shell,
+    DecimalPipe,
+    DatePipe,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    Progress,
+    Stat,
+    StatLabel,
+    StatValue,
+    TableWrap,
+    Table,
+    Tabs,
+    Tab,
+  ],
   templateUrl: './youth-progress.html',
-  styles: `
-    .progress-tabs {
-      display: flex;
-      gap: var(--w-s2);
-      overflow-x: auto;
-    }
-    .progress-tab {
-      min-height: 2.75rem;
-      flex: 1 0 auto;
-    }
-    .progress-stat {
-      min-height: 8rem;
-    }
-    .progress-stat__value {
-      font-size: clamp(2rem, 8vw, 3.25rem);
-      font-weight: 800;
-      line-height: 1;
-    }
-    .competency-progress {
-      width: 100%;
-    }
-  `,
+  styleUrl: './youth-progress.css',
 })
 export class YouthProgressPage {
   protected readonly auth = inject(AuthStore);

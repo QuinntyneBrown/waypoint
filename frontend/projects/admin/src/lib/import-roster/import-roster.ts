@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   ApiError,
@@ -9,7 +16,30 @@ import {
   RosterPreview,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  CardFooter,
+  Badge,
+  TableWrap,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogBody,
+  DialogFooter,
+} from '@waypoint/components';
 import { finalize } from 'rxjs/operators';
 
 interface ImportColumn {
@@ -22,107 +52,37 @@ interface ImportColumn {
 @Component({
   selector: 'w-import-roster',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, WAccessibleDialog, FormsModule],
+  imports: [
+    Shell,
+    Icon,
+    FormsModule,
+    Button,
+    FormField,
+    Label,
+    Help,
+    ErrorText,
+    TextField,
+    Select,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    CardFooter,
+    Badge,
+    TableWrap,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogBody,
+    DialogFooter,
+  ],
   templateUrl: './import-roster.html',
-  styles: `
-    .import-columns,
-    .import-preview {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .import-columns th,
-    .import-columns td,
-    .import-preview th,
-    .import-preview td {
-      padding: var(--w-s3);
-      border-bottom: 1px solid var(--w-border);
-      text-align: left;
-      vertical-align: top;
-    }
-    .import-file {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s3);
-      align-items: center;
-      justify-content: space-between;
-    }
-    .import-counts {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--w-s3);
-    }
-    .import-count strong {
-      display: block;
-      font-size: 1.5rem;
-    }
-    .import-status {
-      font-weight: 700;
-    }
-    .import-status--ready {
-      color: var(--w-success);
-    }
-    .import-status--duplicate,
-    .import-status--consent {
-      color: var(--w-warning);
-    }
-    .import-status--invalid {
-      color: var(--w-error);
-    }
-    .import-dialog-backdrop {
-      position: fixed;
-      z-index: 1000;
-      inset: 0;
-      display: grid;
-      padding: var(--w-s4);
-      place-items: center;
-      background: rgb(0 0 0 / 55%);
-    }
-    .import-dialog {
-      width: min(32rem, 100%);
-      margin: 0;
-      border: 0;
-    }
-    @media (max-width: 48rem) {
-      .import-counts {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .import-columns thead,
-      .import-preview thead {
-        display: none;
-      }
-      .import-columns tr,
-      .import-preview tr {
-        display: grid;
-        gap: var(--w-s2);
-        padding: var(--w-s3);
-        border-bottom: 1px solid var(--w-border);
-      }
-      .import-columns td,
-      .import-preview td {
-        display: grid;
-        grid-template-columns: minmax(7rem, 0.8fr) minmax(0, 1.2fr);
-        gap: var(--w-s2);
-        padding: 0;
-        border: 0;
-        overflow-wrap: anywhere;
-      }
-      .import-columns td::before,
-      .import-preview td::before {
-        content: attr(data-label);
-        color: var(--w-muted);
-        font-weight: 700;
-      }
-      .import-columns .w-select,
-      .import-file .w-btn,
-      .import-actions .w-btn {
-        min-height: 45px;
-        width: 100%;
-      }
-    }
-  `,
+  styleUrl: './import-roster.css',
 })
 export class ImportRosterPage {
   protected readonly auth = inject(AuthStore);
+  private readonly fileInput = viewChild('fileInput', { read: ElementRef<HTMLInputElement> });
   private readonly api = inject(DataTransferService);
 
   protected readonly fields: readonly { value: RosterField; label: string }[] = [
@@ -262,12 +222,14 @@ export class ImportRosterPage {
     return status === 'MissingConsent' ? 'Missing consent' : status;
   }
 
-  protected statusClass(status: string): string {
-    return status === 'MissingConsent' ? 'consent' : status.toLowerCase();
+  protected statusBadge(status: string): 'success' | 'warning' | 'error' {
+    if (status === 'Ready') return 'success';
+    return status === 'Invalid' ? 'error' : 'warning';
   }
 
-  protected removeFile(input: HTMLInputElement): void {
-    input.value = '';
+  protected removeFile(): void {
+    const input = this.fileInput()?.nativeElement;
+    if (input) input.value = '';
     this.resetState();
   }
 

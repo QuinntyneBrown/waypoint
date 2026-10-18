@@ -6,7 +6,7 @@
 >
   <div class="w-container w-container--narrow w-page">
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (saveStatus(); as status) {
       <p class="w-muted" role="status">{{ status }}</p>
@@ -26,15 +26,15 @@
       </div>
 
       @if (currentQuestion(); as question) {
-        <section class="w-card">
-          <div class="w-card__body w-stack">
-            <h2 class="w-card__title">{{ question.text }}</h2>
+        <section w-card>
+          <div w-card-body class="w-stack">
+            <h2 w-card-title>{{ question.text }}</h2>
             <div class="w-stack">
               @if (question.type === 'ShortAnswer') {
-                <div class="w-field">
-                  <label class="w-label" [for]="'short-answer-' + question.id"> Your answer </label>
+                <div w-form-field>
+                  <label w-label [for]="'short-answer-' + question.id"> Your answer </label>
                   <input
-                    class="w-input"
+                    w-text-field
                     [id]="'short-answer-' + question.id"
                     type="text"
                     maxlength="1000"
@@ -42,11 +42,11 @@
                     [value]="textAnswer(question.id)"
                     (change)="writeText(question.id, $any($event.target).value)"
                   />
-                  <p class="w-help">Your answer saves when you leave this field.</p>
+                  <p w-help>Your answer saves when you leave this field.</p>
                 </div>
               } @else {
                 @for (option of question.options; track $index) {
-                  <label class="quiz-option">
+                  <label w-quiz-option [selected]="isSelected(question.id, $index)">
                     @if (question.type === 'MultipleAnswer') {
                       <input
                         type="checkbox"
@@ -71,13 +71,14 @@
 
         <div class="w-actions w-actions--between">
           @if (currentIndex() > 0) {
-            <button class="w-btn w-btn--ghost" type="button" (click)="move(-1)">
+            <button w-button variant="ghost" type="button" (click)="move(-1)">
               Previous question
             </button>
           }
           @if (currentIndex() < view.questionCount - 1) {
             <button
-              class="w-btn w-btn--primary"
+              w-button
+              variant="primary"
               type="button"
               [disabled]="!answered(question.id) || saveStatus() === 'Saving answer…'"
               (click)="move(1)"
@@ -86,7 +87,8 @@
             </button>
           } @else {
             <button
-              class="w-btn w-btn--primary"
+              w-button
+              variant="primary"
               type="button"
               [disabled]="
                 !answered(question.id) || submitting() || saveStatus() === 'Saving answer…'

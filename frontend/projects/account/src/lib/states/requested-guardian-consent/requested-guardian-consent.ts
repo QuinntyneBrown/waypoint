@@ -1,4 +1,20 @@
-import { WIcon } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Help,
+  Icon,
+  Label,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,8 +31,27 @@ import {
 @Component({
   selector: 'w-requested-guardian-consent',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, DatePipe, WIcon],
+  imports: [
+    ReactiveFormsModule,
+    DatePipe,
+    Icon,
+    Button,
+    FormField,
+    Label,
+    Help,
+    TextField,
+    Checkbox,
+    CheckboxBox,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './requested-guardian-consent.html',
+  styleUrl: './requested-guardian-consent.css',
 })
 export class RequestedGuardianConsentPage {
   private readonly api = inject(ConsentService);

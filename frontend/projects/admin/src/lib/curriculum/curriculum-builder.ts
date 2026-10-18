@@ -16,7 +16,27 @@ import {
   TrackWorkspace,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAccessibleDialog, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Help,
+  Label,
+  Select,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogBody,
+} from '@waypoint/components';
 import { finalize, Observable } from 'rxjs';
 import {
   EditorDraftService,
@@ -97,7 +117,28 @@ interface CurriculumAuthoringDraft {
 @Component({
   selector: 'w-curriculum-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WAccessibleDialog, ReactiveFormsModule],
+  imports: [
+    Shell,
+    ReactiveFormsModule,
+    Button,
+    FormField,
+    Label,
+    Help,
+    TextField,
+    Textarea,
+    Select,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogBody,
+  ],
   templateUrl: './curriculum-builder.html',
   styleUrl: './curriculum-builder.css',
 })

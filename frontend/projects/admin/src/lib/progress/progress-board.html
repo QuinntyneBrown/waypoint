@@ -12,48 +12,46 @@
         <p class="w-page__sub">Every youth across every published module in the selected track.</p>
       </div>
       <span
-        class="w-badge"
+        w-badge
+        [variant]="realtime.state() === 'connected' ? 'success' : ''"
         data-testid="progress-live-status"
-        [class.w-badge--success]="realtime.state() === 'connected'"
       >
         {{ realtime.state() === 'connected' ? 'Live updates on' : 'Connecting live updates…' }}
       </span>
     </div>
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <div>{{ error }}</div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="refresh()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="refresh()">Retry</button>
       </div>
     }
 
-    <section class="w-card w-mb-5" aria-label="Progress board filters">
-      <div class="w-card__body w-stack">
+    <section w-card class="w-mb-5" aria-label="Progress board filters">
+      <div w-card-body class="w-stack">
         <div class="board-filters">
-          <div class="w-field">
-            <label class="w-label" for="progress-cohort">Cohort</label>
+          <div w-form-field>
+            <label w-label for="progress-cohort">Cohort</label>
             <select
-              #cohortSelect
-              class="w-select"
+              w-select
               id="progress-cohort"
               [value]="cohortId()"
               [disabled]="loadingOptions()"
-              (change)="selectCohort(cohortSelect.value)"
+              (change)="selectCohort($any($event.target).value)"
             >
               @for (cohort of cohorts(); track cohort.id) {
                 <option [value]="cohort.id">{{ cohort.name }}</option>
               }
             </select>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="progress-track">Track</label>
+          <div w-form-field>
+            <label w-label for="progress-track">Track</label>
             <select
-              #trackSelect
-              class="w-select"
+              w-select
               id="progress-track"
               [value]="trackId()"
               [disabled]="loadingOptions()"
-              (change)="selectTrack(trackSelect.value)"
+              (change)="selectTrack($any($event.target).value)"
             >
               @for (track of options().tracks; track track.id) {
                 <option [value]="track.id">{{ track.name }}</option>
@@ -62,9 +60,10 @@
           </div>
         </div>
         <div class="board-actions">
-          <button class="w-btn w-btn--secondary" type="button" (click)="refresh()">Refresh</button>
+          <button w-button variant="secondary" type="button" (click)="refresh()">Refresh</button>
           <button
-            class="w-btn w-btn--secondary"
+            w-button
+            variant="secondary"
             type="button"
             [disabled]="!board()?.modules?.length || exporting() !== null"
             (click)="download('csv')"
@@ -72,7 +71,8 @@
             {{ exporting() === 'csv' ? 'Exporting…' : 'Export CSV' }}
           </button>
           <button
-            class="w-btn w-btn--secondary"
+            w-button
+            variant="secondary"
             type="button"
             [disabled]="!board()?.modules?.length || exporting() !== null"
             (click)="download('pdf')"
@@ -87,17 +87,17 @@
       <p class="w-muted" role="status">Loading progress board…</p>
     } @else if (board(); as result) {
       @if (result.modules.length === 0) {
-        <div class="w-empty">
-          <div class="w-empty__icon"><w-icon name="bar-chart" /></div>
-          <h2 class="w-empty__title">No published modules</h2>
-          <p class="w-empty__text">
+        <div w-empty-state>
+          <div w-empty-state-icon><w-icon name="bar-chart" /></div>
+          <h2 w-empty-state-title>No published modules</h2>
+          <p w-empty-state-text>
             {{ result.trackName }} has no published modules to show yet. Choose another track or
             publish curriculum content.
           </p>
         </div>
       } @else {
-        <div class="matrix-wrap" data-testid="progress-matrix">
-          <table class="matrix" aria-label="Progress board" [style.min-width.px]="matrixWidth()">
+        <div w-table-wrap data-testid="progress-matrix">
+          <table w-matrix aria-label="Progress board" [style.min-width.px]="matrixWidth()">
             <thead>
               <tr>
                 <th scope="col">Youth</th>
@@ -113,13 +113,20 @@
                 <tr data-testid="progress-row">
                   <th scope="row">{{ row.youthName }}</th>
                   @for (cell of row.cells; track cell.moduleId; let index = $index) {
-                    <td class="module-cell">
-                      <span class="module-cell__name">{{ result.modules[index].name }}</span>
+                    <td>
+                      <span class="w-muted">{{ result.modules[index].name }}</span
+                      ><br />
                       <span
-                        class="state"
-                        [class.state--done]="cell.state === 'Done'"
-                        [class.state--progress]="cell.state === 'InProgress'"
-                        [class.state--unassigned]="cell.state === 'NotAssigned'"
+                        w-badge
+                        [variant]="
+                          cell.state === 'Done'
+                            ? 'success'
+                            : cell.state === 'InProgress'
+                              ? 'info'
+                              : cell.state === 'NotAssigned'
+                                ? 'outline'
+                                : ''
+                        "
                       >
                         {{ stateLabel(cell.state) }}
                       </span>
@@ -152,10 +159,10 @@
         </div>
       }
     } @else if (!errorMessage() && cohorts().length === 0) {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="layers" /></div>
-        <h2 class="w-empty__title">No cohorts available</h2>
-        <p class="w-empty__text">Create a cohort before opening the progress board.</p>
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="layers" /></div>
+        <h2 w-empty-state-title>No cohorts available</h2>
+        <p w-empty-state-text>Create a cohort before opening the progress board.</p>
       </div>
     }
   </div>

@@ -3,15 +3,44 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Icon,
+  IconButton,
+  Label,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Alert,
+  Brand,
+} from '@waypoint/components';
 import { switchMap } from 'rxjs';
 import { EntryResolver } from '../entry';
 
 @Component({
   selector: 'w-sign-in',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WIcon],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    Icon,
+    Button,
+    IconButton,
+    FormField,
+    Label,
+    Help,
+    ErrorText,
+    TextField,
+    Checkbox,
+    CheckboxBox,
+    Alert,
+    Brand,
+  ],
   templateUrl: './sign-in.html',
+  styleUrl: './sign-in.css',
 })
 export class SignIn {
   private readonly fb = inject(FormBuilder);

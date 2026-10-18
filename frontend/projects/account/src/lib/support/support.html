@@ -5,80 +5,67 @@
         <div class="w-eyebrow">Help</div>
         <h1 class="w-page__title">Contact support</h1>
       </div>
-      <a class="w-btn w-btn--ghost" routerLink="/help">Browse help articles</a>
+      <a w-button variant="ghost" routerLink="/help">Browse help articles</a>
     </div>
 
     @if (done()) {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="check-circle" /></div>
-        <h3 class="w-empty__title">Thanks — we’ve got your message</h3>
-        <p class="w-empty__text">
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="check-circle" /></div>
+        <h3 w-empty-state-title>Thanks — we’ve got your message</h3>
+        <p w-empty-state-text>
           Our team will follow up at the email you gave us. We usually reply within a couple of
           days.
         </p>
       </div>
     } @else {
       @if (errorMessage()) {
-        <div class="w-alert w-alert--error" role="alert">
-          <w-icon name="alert-circle" iconClass="w-alert__icon" />
-          <div>{{ errorMessage() }}</div>
-        </div>
+        <div w-alert variant="error" icon="alert-circle" role="alert">{{ errorMessage() }}</div>
       }
       @if (fileError(); as error) {
-        <div class="w-alert w-alert--error" role="alert">
-          <w-icon name="alert-circle" iconClass="w-alert__icon" />
-          <div>{{ error }}</div>
-        </div>
+        <div w-alert variant="error" icon="alert-circle" role="alert">{{ error }}</div>
       }
       @if (statusMessage(); as status) {
-        <p class="w-alert w-alert--success" role="status">{{ status }}</p>
+        <p w-alert variant="success" role="status">{{ status }}</p>
       }
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="w-stack">
-        <div class="w-field">
-          <label class="w-label" for="category">What’s this about?</label>
-          <select class="w-select" id="category" formControlName="category">
+        <div w-form-field>
+          <label w-label for="category">What’s this about?</label>
+          <select w-select id="category" formControlName="category">
             @for (cat of categories; track cat) {
               <option [value]="cat">{{ cat }}</option>
             }
           </select>
         </div>
         <div
-          class="w-field"
-          [class.is-error]="form.controls.description.touched && form.controls.description.invalid"
+          w-form-field
+          [invalid]="form.controls.description.touched && form.controls.description.invalid"
         >
-          <label class="w-label" for="description">How can we help?</label>
-          <textarea
-            class="w-textarea"
-            id="description"
-            rows="5"
-            formControlName="description"
-          ></textarea>
+          <label w-label for="description">How can we help?</label>
+          <textarea w-textarea id="description" rows="5" formControlName="description"></textarea>
           @if (form.controls.description.touched && form.controls.description.invalid) {
-            <div class="w-error-text">Please describe your issue (at least 10 characters).</div>
+            <div w-error-text>Please describe your issue (at least 10 characters).</div>
           }
         </div>
         <div
-          class="w-field"
-          [class.is-error]="
-            form.controls.replyToEmail.touched && form.controls.replyToEmail.invalid
-          "
+          w-form-field
+          [invalid]="form.controls.replyToEmail.touched && form.controls.replyToEmail.invalid"
         >
-          <label class="w-label" for="replyToEmail">Reply-to email</label>
-          <input class="w-input" id="replyToEmail" type="email" formControlName="replyToEmail" />
+          <label w-label for="replyToEmail">Reply-to email</label>
+          <input w-text-field id="replyToEmail" type="email" formControlName="replyToEmail" />
           @if (form.controls.replyToEmail.touched && form.controls.replyToEmail.invalid) {
-            <div class="w-error-text">Enter a valid email address.</div>
+            <div w-error-text>Enter a valid email address.</div>
           }
         </div>
-        <div class="w-field">
-          <label class="w-label" for="support-screenshot">Optional screenshot</label>
+        <div w-form-field>
+          <label w-label for="support-screenshot">Optional screenshot</label>
           <input
-            class="w-input"
+            w-text-field
             id="support-screenshot"
             type="file"
             accept="image/jpeg,image/png,.jpg,.jpeg,.png"
             (change)="screenshotSelected($event)"
           />
-          <p class="w-field__hint">JPG or PNG, up to 5 MB. Avoid including private information.</p>
+          <p w-help>JPG or PNG, up to 5 MB. Avoid including private information.</p>
           @if (screenshotPreview(); as preview) {
             <img
               [src]="preview"
@@ -88,7 +75,8 @@
           }
           @if (screenshot()) {
             <button
-              class="w-btn w-btn--ghost"
+              w-button
+              variant="ghost"
               type="button"
               [disabled]="uploading()"
               (click)="removeScreenshot()"
@@ -99,7 +87,8 @@
         </div>
         <div>
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="submit"
             [class.is-loading]="submitting()"
             [disabled]="submitting() || uploading()"

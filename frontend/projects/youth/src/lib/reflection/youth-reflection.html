@@ -5,15 +5,15 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-container--narrow w-page">
-    <a class="w-btn w-btn--ghost" [routerLink]="['/youth/lessons', editor()?.lessonId]">
+    <a w-button variant="ghost" [routerLink]="['/youth/lessons', editor()?.lessonId]">
       Back to lesson
     </a>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as status) {
-      <p class="w-alert w-alert--success" role="status">{{ status }}</p>
+      <p w-alert variant="success" role="status">{{ status }}</p>
     }
 
     @if (editor(); as view) {
@@ -26,17 +26,17 @@
       </div>
 
       @if (view.prompt) {
-        <section class="w-card w-card--greige">
-          <div class="w-card__body">
+        <section w-card variant="greige">
+          <div w-card-body>
             <div class="w-eyebrow">Think about it</div>
-            <p class="w-scripture">{{ view.prompt }}</p>
+            <p w-scripture>{{ view.prompt }}</p>
           </div>
         </section>
       }
 
       <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
-        <fieldset class="w-card">
-          <div class="w-card__body w-stack">
+        <fieldset w-card>
+          <div w-card-body class="w-stack">
             <legend><strong>How are you feeling?</strong></legend>
             <div class="mood-options">
               @for (mood of ['Hopeful', 'Thoughtful', 'Unsure', 'Challenged']; track mood) {
@@ -52,41 +52,39 @@
               }
             </div>
             @if (form.controls.mood.touched && form.controls.mood.hasError('required')) {
-              <p class="w-field__error">Choose how you are feeling.</p>
+              <p w-error-text>Choose how you are feeling.</p>
             }
           </div>
         </fieldset>
 
-        <div class="w-field">
-          <label class="w-field__label" for="reflection-text">Your reflection</label>
+        <div w-form-field>
+          <label w-label for="reflection-text">Your reflection</label>
           <textarea
+            w-textarea
             id="reflection-text"
-            class="w-input"
             formControlName="text"
             maxlength="8000"
             aria-describedby="reflection-help reflection-error"
           ></textarea>
-          <p id="reflection-help" class="w-field__hint">
-            Required when you submit. Drafts can be unfinished.
-          </p>
+          <p w-help id="reflection-help">Required when you submit. Drafts can be unfinished.</p>
           @if (form.controls.text.touched && form.controls.text.hasError('required')) {
-            <p id="reflection-error" class="w-field__error">Reflection text is required.</p>
+            <p w-error-text id="reflection-error">Reflection text is required.</p>
           }
         </div>
 
-        <div class="w-field">
-          <label class="w-field__label" for="secondary-response">One action I will take</label>
+        <div w-form-field>
+          <label w-label for="secondary-response">One action I will take</label>
           <textarea
+            w-textarea
             id="secondary-response"
-            class="w-input"
             formControlName="secondaryResponse"
             maxlength="4000"
           ></textarea>
-          <p class="w-field__hint">Optional</p>
+          <p w-help>Optional</p>
         </div>
 
-        <section class="w-card w-card--greige">
-          <div class="w-card__body w-stack">
+        <section w-card variant="greige">
+          <div w-card-body class="w-stack">
             <label class="share-option">
               <input type="checkbox" formControlName="shareWithMentor" />
               <strong>Share with my mentor</strong>
@@ -100,14 +98,15 @@
 
         <div class="w-actions">
           <button
-            class="w-btn w-btn--secondary"
+            w-button
+            variant="secondary"
             type="button"
             [disabled]="saving()"
             (click)="saveDraft()"
           >
             Save draft
           </button>
-          <button class="w-btn w-btn--primary" type="submit" [disabled]="saving()">
+          <button w-button variant="primary" type="submit" [disabled]="saving()">
             Submit reflection
           </button>
         </div>

@@ -4,66 +4,54 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiError, MessagingService, YouthMessageThread } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Label,
+  Shell,
+  Textarea,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+  MessageThread,
+  MessageBubble,
+  MessageBubbleTime,
+} from '@waypoint/components';
 import { RealtimeService } from '@waypoint/core/realtime';
 
 // Traces to: L2-ENGAGE-007, L2-NFR-005
 @Component({
   selector: 'w-youth-messages',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, ReactiveFormsModule],
+  imports: [
+    Shell,
+    DatePipe,
+    ReactiveFormsModule,
+    Button,
+    FormField,
+    Label,
+    Help,
+    ErrorText,
+    Textarea,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+    MessageThread,
+    MessageBubble,
+    MessageBubbleTime,
+  ],
   templateUrl: './youth-messages.html',
-  styles: `
-    .thread-card {
-      overflow: hidden;
-    }
-    .thread-log {
-      display: flex;
-      flex-direction: column;
-      gap: var(--w-s3);
-      min-height: 12rem;
-      max-height: 34rem;
-      overflow-y: auto;
-      margin: 0;
-      padding: var(--w-s5);
-      list-style: none;
-      background: var(--w-g100);
-    }
-    .message-row {
-      display: flex;
-    }
-    .message-row--mine {
-      justify-content: flex-end;
-    }
-    .message-bubble {
-      width: fit-content;
-      max-width: 75%;
-      padding: var(--w-s3) var(--w-s4);
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-card);
-      background: var(--w-white);
-      overflow-wrap: anywhere;
-    }
-    .message-row--mine .message-bubble {
-      background: var(--w-lime-soft);
-    }
-    .message-body {
-      white-space: pre-wrap;
-    }
-    .composer {
-      padding: var(--w-s5);
-      border-top: 1px solid var(--w-border);
-    }
-    @media (max-width: 40rem) {
-      .message-bubble {
-        max-width: 90%;
-      }
-      .thread-log,
-      .composer {
-        padding: var(--w-s3);
-      }
-    }
-  `,
+  styleUrl: './youth-messages.css',
 })
 export class YouthMessagesPage {
   protected readonly auth = inject(AuthStore);

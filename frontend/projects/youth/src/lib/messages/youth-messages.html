@@ -13,36 +13,40 @@
           <p class="w-page__sub">Your private conversation with {{ mentorName }}.</p>
         }
       </div>
-      <span class="w-badge" data-testid="realtime-status">
+      <span w-badge data-testid="realtime-status">
         {{ realtime.state() === 'connected' ? 'Live updates on' : 'Reconnecting live updates' }}
       </span>
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ liveStatus() }}</p>
 
     @if (thread(); as view) {
       @if (!view.mentorId) {
-        <section class="w-card w-empty">
-          <div class="w-card__body">
-            <h2 class="w-empty__title">Your mentor hasn’t been assigned yet</h2>
-            <p class="w-empty__text">This conversation will open when your placement is ready.</p>
+        <section w-card>
+          <div w-empty-state>
+            <div w-card-body>
+              <h2 w-empty-state-title>Your mentor hasn’t been assigned yet</h2>
+              <p w-empty-state-text>This conversation will open when your placement is ready.</p>
+            </div>
           </div>
         </section>
       } @else {
         @if (view.unreadCount > 0) {
-          <p class="w-alert w-alert--info" role="status">
+          <p w-alert variant="info" role="status">
             {{ view.unreadCount }} new {{ view.unreadCount === 1 ? 'message' : 'messages' }} from
             your mentor.
           </p>
         }
         <section
-          class="w-card thread-card"
+          w-card
+          class="thread-card"
           [attr.aria-label]="'Conversation with ' + view.mentorName"
         >
-          <ol
+          <div
+            w-message-thread
             class="thread-log"
             role="log"
             aria-live="polite"
@@ -50,50 +54,48 @@
             data-testid="message-thread"
           >
             @if (view.messages.length === 0) {
-              <li class="w-empty">
-                <h2 class="w-empty__title">Start the conversation</h2>
-                <p class="w-empty__text">Ask a question or share how your week is going.</p>
-              </li>
+              <div w-empty-state>
+                <h2 w-empty-state-title>Start the conversation</h2>
+                <p w-empty-state-text>Ask a question or share how your week is going.</p>
+              </div>
             }
             @for (message of view.messages; track message.id) {
-              <li
-                class="message-row"
-                [class.message-row--mine]="message.senderId === auth.user()?.userId"
+              <article
+                w-message-bubble
+                [direction]="message.senderId === auth.user()?.userId ? 'out' : 'in'"
                 [attr.data-message-id]="message.id"
               >
-                <article class="message-bubble">
-                  <strong>{{
-                    message.senderId === auth.user()?.userId ? 'You' : view.mentorName
-                  }}</strong>
-                  <p class="message-body">{{ message.body }}</p>
-                  <time class="w-muted w-text-sm" [attr.datetime]="message.sentAt">
-                    {{ message.sentAt | date: 'medium' }}
-                  </time>
-                </article>
-              </li>
+                <span class="w-sr-only"
+                  >{{ message.senderId === auth.user()?.userId ? 'You' : view.mentorName }}:</span
+                >
+                <span class="message-body">{{ message.body }}</span>
+                <time w-message-bubble-time [attr.datetime]="message.sentAt">{{
+                  message.sentAt | date: 'medium'
+                }}</time>
+              </article>
             }
-          </ol>
+          </div>
 
           <form class="composer w-stack" [formGroup]="form" (ngSubmit)="send()">
-            <div class="w-field">
-              <label class="w-label" for="message-body">Message your mentor</label>
+            <div w-form-field>
+              <label w-label for="message-body">Message your mentor</label>
               <textarea
+                w-textarea
                 id="message-body"
-                class="w-textarea"
                 formControlName="body"
                 maxlength="4000"
                 rows="4"
                 aria-describedby="message-help"
                 (keydown.control.enter)="send()"
               ></textarea>
-              <p id="message-help" class="w-help">Ctrl + Enter also sends your message.</p>
+              <p w-help id="message-help">Ctrl + Enter also sends your message.</p>
               @if (form.controls.body.touched && form.controls.body.invalid) {
-                <p class="w-field__error">Write a message before sending.</p>
+                <p w-error-text>Write a message before sending.</p>
               }
             </div>
             <div class="w-actions w-actions--between">
               <span class="w-muted">{{ form.controls.body.value.length }}/4000</span>
-              <button class="w-btn w-btn--primary" type="submit" [disabled]="sending()">
+              <button w-button variant="primary" type="submit" [disabled]="sending()">
                 {{ sending() ? 'Sending…' : 'Send message' }}
               </button>
             </div>

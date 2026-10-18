@@ -3,14 +3,49 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthStore, roleHome } from '@waypoint/auth';
 import { ApiError, InvitationContext, InvitationsService } from '@waypoint/api';
-import { WIcon } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  IconButton,
+  Label,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Alert,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  Brand,
+} from '@waypoint/components';
 
 // Traces to: L2-AUTH-004, L2-AUTH-008, L2-PLATFORM-011
 @Component({
   selector: 'w-invite-accept',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WIcon],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    Icon,
+    Button,
+    IconButton,
+    FormField,
+    Label,
+    ErrorText,
+    TextField,
+    Checkbox,
+    CheckboxBox,
+    Alert,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    Brand,
+  ],
   templateUrl: './invite-accept.html',
+  styleUrl: './invite-accept.css',
 })
 export class InviteAcceptPage {
   private readonly fb = inject(FormBuilder);

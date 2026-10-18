@@ -5,20 +5,20 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-container--narrow w-page">
-    <a class="w-btn w-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+    <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (submission(); as view) {
       <div class="w-page__head">
         <div class="w-page__titles">
           <div class="w-eyebrow">Submission status</div>
           <h1 class="w-page__title">{{ view.assignmentTitle }}</h1>
-          <p class="w-badge" data-testid="submission-status">{{ displayStatus(view.status) }}</p>
+          <p w-badge data-testid="submission-status">{{ displayStatus(view.status) }}</p>
         </div>
       </div>
-      <section class="w-card">
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-body class="w-stack">
           <h2>Your submitted copy</h2>
           @if (view.bodyText) {
             @if (view.isCodingProject) {
@@ -28,8 +28,8 @@
             }
           }
           @if (view.youthNote) {
-            <div class="w-card w-card--greige">
-              <div class="w-card__body">
+            <div w-card variant="greige">
+              <div w-card-body>
                 <strong>Your note to the mentor</strong>
                 <p>{{ view.youthNote }}</p>
               </div>
@@ -47,24 +47,22 @@
           }
           @if (view.file; as file) {
             @if (fileUrl(); as url) {
-              <a class="w-link" [href]="url" [download]="file.fileName"
-                >Download {{ file.fileName }}</a
-              >
+              <a w-link [href]="url" [download]="file.fileName">Download {{ file.fileName }}</a>
             } @else {
               <p class="w-muted" role="status">Preparing {{ file.fileName }}…</p>
             }
           }
         </div>
       </section>
-      <section class="w-card w-card--greige">
-        <div class="w-card__body w-stack">
+      <section w-card variant="greige">
+        <div w-card-body class="w-stack">
           <h2>Timeline</h2>
           <ol class="w-stack">
             @for (item of view.timeline; track $index) {
               <li>
                 <strong>{{ item.label }}</strong>
                 @if (item.current) {
-                  <span class="w-badge">Current</span>
+                  <span w-badge>Current</span>
                 }
               </li>
             }
@@ -72,14 +70,14 @@
         </div>
       </section>
       @if (view.mentorComment) {
-        <section class="w-alert w-alert--info">
+        <section w-alert variant="info">
           <h2>Mentor feedback</h2>
           <p>{{ view.mentorComment }}</p>
         </section>
       }
       @if (view.totalAwarded !== null) {
-        <section class="w-card">
-          <div class="w-card__body w-stack">
+        <section w-card>
+          <div w-card-body class="w-stack">
             <h2>Rubric result</h2>
             <p>
               <strong>{{ view.totalAwarded }} of {{ view.totalPossible }} points</strong>
@@ -94,8 +92,8 @@
         </section>
       }
       @if (view.earnedBadge; as badge) {
-        <section class="w-card w-card--greige">
-          <div class="w-card__body">
+        <section w-card variant="greige">
+          <div w-card-body>
             <div class="w-eyebrow">Badge unlocked</div>
             <h2>{{ badge.name }}</h2>
             @if (badge.description) {
@@ -106,7 +104,9 @@
       }
       @if (view.status === 'NeedsRevision') {
         <a
-          class="w-btn w-btn--primary w-btn--block"
+          w-button
+          variant="primary"
+          block
           [routerLink]="['/youth/submissions', view.id, 'resubmit']"
           >Revise and resubmit</a
         >

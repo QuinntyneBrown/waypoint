@@ -5,19 +5,19 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-page">
-    <a class="w-link" routerLink="/admin/cohorts">Back to cohorts</a>
+    <a w-link standalone routerLink="/admin/cohorts">Back to cohorts</a>
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <div>
-          <div class="w-alert__title">{{ error }}</div>
+          <div w-alert-title>{{ error }}</div>
           Cohort details could not be loaded or saved.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
 
     @if (detail(); as cohort) {
@@ -30,13 +30,11 @@
             {{ cohort.leadMentorName ?? 'not assigned' }}
           </p>
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="openEdit()">
-          Edit cohort
-        </button>
+        <button w-button variant="secondary" type="button" (click)="openEdit()">Edit cohort</button>
       </div>
 
-      <section class="w-card w-mb-5" aria-labelledby="cohort-overview-heading">
-        <div class="w-card__body">
+      <section w-card class="w-mb-5" aria-labelledby="cohort-overview-heading">
+        <div w-card-body>
           <h2 id="cohort-overview-heading">Cohort details</h2>
           <div class="cohort-summary">
             <div>
@@ -61,8 +59,8 @@
       </section>
 
       <div class="member-layout">
-        <section class="w-card" aria-labelledby="cohort-members-heading">
-          <div class="w-card__body">
+        <section w-card aria-labelledby="cohort-members-heading">
+          <div w-card-body>
             <h2 id="cohort-members-heading">Members</h2>
             <ul class="member-list">
               @for (member of cohort.members; track member.id) {
@@ -73,10 +71,12 @@
                   </div>
                   <div class="w-actions">
                     @if (member.status !== 'Active') {
-                      <span class="w-badge w-badge--warning">{{ member.status }}</span>
+                      <span w-badge variant="warning">{{ member.status }}</span>
                     }
                     <a
-                      class="w-btn w-btn--ghost w-btn--sm"
+                      w-button
+                      variant="ghost"
+                      size="sm"
                       [routerLink]="['/admin/people', member.id]"
                     >
                       View record
@@ -90,19 +90,18 @@
           </div>
         </section>
 
-        <aside class="w-card" aria-labelledby="add-member-heading">
-          <div class="w-card__body member-actions">
+        <aside w-card aria-labelledby="add-member-heading">
+          <div w-card-body class="member-actions">
             <h2 id="add-member-heading">Add members</h2>
             @if (cohort.availableYouth.length > 0) {
-              <div class="w-field">
-                <label class="w-label" for="available-youth">Add existing youth</label>
+              <div w-form-field>
+                <label w-label for="available-youth">Add existing youth</label>
                 <select
-                  #youthSelect
-                  class="w-select"
+                  w-select
                   id="available-youth"
                   [value]="selectedYouthId()"
                   [disabled]="saving()"
-                  (change)="selectYouth(youthSelect.value)"
+                  (change)="selectYouth($any($event.target).value)"
                 >
                   <option value="">Choose a youth</option>
                   @for (youth of cohort.availableYouth; track youth.id) {
@@ -111,7 +110,8 @@
                 </select>
               </div>
               <button
-                class="w-btn w-btn--primary"
+                w-button
+                variant="primary"
                 type="button"
                 [disabled]="!selectedYouthId() || saving()"
                 (click)="addYouth()"
@@ -121,7 +121,7 @@
             } @else {
               <p class="w-muted">No unassigned active youth are available.</p>
             }
-            <a class="w-btn w-btn--secondary" routerLink="/admin/invitations">Invite a youth</a>
+            <a w-button variant="secondary" routerLink="/admin/invitations">Invite a youth</a>
           </div>
         </aside>
       </div>
@@ -131,81 +131,61 @@
   </div>
 
   @if (editOpen()) {
-    <div
-      class="w-modal w-modal--sm is-open"
-      wuAccessibleDialog
-      aria-labelledby="edit-cohort-heading"
-      (wuDialogEscape)="closeEdit()"
-    >
-      <div class="w-modal__scrim" (click)="closeEdit()"></div>
-      <div class="w-modal__panel">
-        <div class="w-modal__header">
-          <div>
-            <h2 class="w-modal__title" id="edit-cohort-heading">Edit cohort</h2>
-            <p class="w-modal__sub">Changes are recorded in the audit log.</p>
+    <div w-dialog size="sm" aria-labelledby="edit-cohort-heading" (dismiss)="closeEdit()">
+      <div w-dialog-header>
+        <div>
+          <h2 w-dialog-title id="edit-cohort-heading">Edit cohort</h2>
+          <p w-dialog-subtitle>Changes are recorded in the audit log.</p>
+        </div>
+        <button
+          w-icon-button
+          type="button"
+          aria-label="Close"
+          [disabled]="saving()"
+          (click)="closeEdit()"
+        >
+          <w-icon name="x" />
+        </button>
+      </div>
+      <div w-dialog-body>
+        <form class="w-stack" [formGroup]="editForm" (ngSubmit)="saveEdit()">
+          <div w-form-field>
+            <label w-label for="edit-cohort-name">Cohort name</label>
+            <input w-text-field id="edit-cohort-name" formControlName="name" maxlength="128" />
+            @if (editForm.controls.name.touched && editForm.controls.name.invalid) {
+              <p w-error-text>Enter a cohort name.</p>
+            }
           </div>
-          <button
-            class="w-iconbtn w-modal__close"
-            type="button"
-            aria-label="Close"
-            [disabled]="saving()"
-            (click)="closeEdit()"
-          >
-            <w-icon name="x" />
-          </button>
-        </div>
-        <div class="w-modal__body">
-          <form class="w-stack" [formGroup]="editForm" (ngSubmit)="saveEdit()">
-            <div class="w-field">
-              <label class="w-label" for="edit-cohort-name">Cohort name</label>
-              <input class="w-input" id="edit-cohort-name" formControlName="name" maxlength="128" />
-              @if (editForm.controls.name.touched && editForm.controls.name.invalid) {
-                <p class="w-field__error">Enter a cohort name.</p>
+          <div w-form-field>
+            <label w-label for="edit-cohort-mentor">Lead mentor</label>
+            <select w-select id="edit-cohort-mentor" formControlName="leadMentorId">
+              <option value="">Choose a mentor</option>
+              @for (mentor of options()?.mentors ?? []; track mentor.id) {
+                <option [value]="mentor.id">{{ mentor.name }}</option>
               }
-            </div>
-            <div class="w-field">
-              <label class="w-label" for="edit-cohort-mentor">Lead mentor</label>
-              <select class="w-select" id="edit-cohort-mentor" formControlName="leadMentorId">
-                <option value="">Choose a mentor</option>
-                @for (mentor of options()?.mentors ?? []; track mentor.id) {
-                  <option [value]="mentor.id">{{ mentor.name }}</option>
-                }
-              </select>
-              @if (
-                editForm.controls.leadMentorId.touched && editForm.controls.leadMentorId.invalid
-              ) {
-                <p class="w-field__error">Choose an active lead mentor.</p>
-              }
-            </div>
-            <div class="w-field">
-              <label class="w-label" for="edit-cohort-location">Meeting location</label>
-              <input
-                class="w-input"
-                id="edit-cohort-location"
-                formControlName="location"
-                maxlength="256"
-              />
-            </div>
-          </form>
-        </div>
-        <div class="w-modal__footer">
-          <button
-            class="w-btn w-btn--ghost"
-            type="button"
-            [disabled]="saving()"
-            (click)="closeEdit()"
-          >
-            Cancel
-          </button>
-          <button
-            class="w-btn w-btn--primary"
-            type="button"
-            [disabled]="saving()"
-            (click)="saveEdit()"
-          >
-            {{ saving() ? 'Saving…' : 'Save changes' }}
-          </button>
-        </div>
+            </select>
+            @if (editForm.controls.leadMentorId.touched && editForm.controls.leadMentorId.invalid) {
+              <p w-error-text>Choose an active lead mentor.</p>
+            }
+          </div>
+          <div w-form-field>
+            <label w-label for="edit-cohort-location">Meeting location</label>
+            <input
+              w-text-field
+              id="edit-cohort-location"
+              formControlName="location"
+              maxlength="256"
+            />
+          </div>
+        </form>
+      </div>
+      <div w-dialog-footer>
+        <button w-button variant="ghost" type="button" [disabled]="saving()" (click)="closeEdit()">
+          Cancel
+        </button>
+        <button w-button variant="primary" type="button" [disabled]="saving()" (click)="saveEdit()">
+          {{ saving() ? 'Saving…' : 'Save changes' }}
+        </button>
       </div>
     </div>
   }

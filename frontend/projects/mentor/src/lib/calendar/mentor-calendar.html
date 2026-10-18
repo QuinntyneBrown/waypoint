@@ -20,7 +20,7 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
 
@@ -29,14 +29,14 @@
         <div class="calendar-toolbar">
           <div>
             <h2 id="calendar-view-heading">{{ rangeLabel() }}</h2>
-            <div class="w-cluster" role="tablist" aria-label="Calendar view">
+            <div w-tabs role="tablist" aria-label="Calendar view">
               @for (mode of ['month', 'week', 'agenda']; track mode) {
                 <button
-                  class="w-btn w-btn--ghost"
+                  w-tab
+                  [active]="view() === mode"
                   type="button"
                   role="tab"
                   [attr.aria-selected]="view() === mode"
-                  [class.is-active]="view() === mode"
                   (click)="setView($any(mode))"
                 >
                   {{ mode[0].toUpperCase() + mode.slice(1) }}
@@ -45,10 +45,10 @@
             </div>
           </div>
           <div class="w-cluster">
-            <div class="w-field w-mb-0">
-              <label class="w-label" for="calendar-cohort-filter">Calendar cohort</label>
+            <div w-form-field class="w-mb-0">
+              <label w-label for="calendar-cohort-filter">Calendar cohort</label>
               <select
-                class="w-select"
+                w-select
                 id="calendar-cohort-filter"
                 [value]="cohortFilter()"
                 (change)="cohortFilter.set($any($event.target).value)"
@@ -59,9 +59,9 @@
                 }
               </select>
             </div>
-            <button class="w-btn w-btn--ghost" type="button" (click)="shift(-1)">Previous</button>
-            <button class="w-btn w-btn--ghost" type="button" (click)="today()">Today</button>
-            <button class="w-btn w-btn--ghost" type="button" (click)="shift(1)">Next</button>
+            <button w-button variant="ghost" type="button" (click)="shift(-1)">Previous</button>
+            <button w-button variant="ghost" type="button" (click)="today()">Today</button>
+            <button w-button variant="ghost" type="button" (click)="shift(1)">Next</button>
           </div>
         </div>
 
@@ -118,8 +118,8 @@
         } @else {
           <div class="agenda-list" data-testid="agenda-calendar">
             @for (session of agendaSessions(); track session.id) {
-              <article class="w-card">
-                <div class="w-card__body w-cluster w-cluster--between">
+              <article w-card>
+                <div w-card-body class="w-cluster w-cluster--between">
                   <div>
                     <p class="w-eyebrow">{{ session.startsAt | date: 'EEEE, MMM d' }}</p>
                     <h3>{{ session.title }}</h3>
@@ -132,37 +132,37 @@
                       {{ session.rosterCount }} youth
                     </p>
                   </div>
-                  <a class="w-btn w-btn--secondary" [routerLink]="[attendanceBase(), session.id]">
+                  <a w-button variant="secondary" [routerLink]="[attendanceBase(), session.id]">
                     {{ session.attendanceTaken ? 'Edit attendance' : 'Take attendance' }}
                   </a>
                 </div>
               </article>
             } @empty {
-              <div class="w-empty"><p>No sessions in this agenda range.</p></div>
+              <div w-empty-state><p>No sessions in this agenda range.</p></div>
             }
           </div>
         }
       </section>
 
-      <aside class="w-card session-form" aria-labelledby="new-session-heading">
-        <div class="w-card__header">
-          <h2 class="w-card__title" id="new-session-heading">New session</h2>
+      <aside w-card class="session-form" aria-labelledby="new-session-heading">
+        <div w-card-header>
+          <h2 w-card-title id="new-session-heading">New session</h2>
         </div>
-        <div class="w-card__body w-stack">
-          <div class="w-field">
-            <label class="w-label" for="session-title">Title</label>
+        <div w-card-body class="w-stack">
+          <div w-form-field>
+            <label w-label for="session-title">Title</label>
             <input
-              class="w-input"
+              w-text-field
               id="session-title"
               maxlength="200"
               [value]="title()"
               (input)="title.set($any($event.target).value)"
             />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="session-cohort">Cohort</label>
+          <div w-form-field>
+            <label w-label for="session-cohort">Cohort</label>
             <select
-              class="w-select"
+              w-select
               id="session-cohort"
               [value]="cohortId()"
               (change)="cohortId.set($any($event.target).value)"
@@ -173,10 +173,10 @@
               }
             </select>
           </div>
-          <div class="w-field">
-            <label class="w-label" for="session-mentor">Mentor</label>
+          <div w-form-field>
+            <label w-label for="session-mentor">Mentor</label>
             <select
-              class="w-select"
+              w-select
               id="session-mentor"
               [value]="mentorId()"
               (change)="mentorId.set($any($event.target).value)"
@@ -188,10 +188,10 @@
             </select>
           </div>
           <div class="w-grid w-grid--2">
-            <div class="w-field">
-              <label class="w-label" for="session-date">Date</label>
+            <div w-form-field>
+              <label w-label for="session-date">Date</label>
               <input
-                class="w-input"
+                w-text-field
                 id="session-date"
                 type="date"
                 [min]="selectedCohort()?.termStart?.slice(0, 10)"
@@ -200,10 +200,10 @@
                 (input)="date.set($any($event.target).value)"
               />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="session-time">Time</label>
+            <div w-form-field>
+              <label w-label for="session-time">Time</label>
               <input
-                class="w-input"
+                w-text-field
                 id="session-time"
                 type="time"
                 [value]="time()"
@@ -212,10 +212,10 @@
             </div>
           </div>
           <div class="w-grid w-grid--2">
-            <div class="w-field">
-              <label class="w-label" for="session-duration">Minutes</label>
+            <div w-form-field>
+              <label w-label for="session-duration">Minutes</label>
               <input
-                class="w-input"
+                w-text-field
                 id="session-duration"
                 type="number"
                 min="1"
@@ -224,10 +224,10 @@
                 (input)="durationMinutes.set($any($event.target).value)"
               />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="session-location">Location</label>
+            <div w-form-field>
+              <label w-label for="session-location">Location</label>
               <input
-                class="w-input"
+                w-text-field
                 id="session-location"
                 maxlength="256"
                 [value]="location()"
@@ -235,17 +235,18 @@
               />
             </div>
           </div>
-          <label class="w-check">
+          <label w-checkbox>
             <input
               type="checkbox"
               [checked]="repeatsWeekly()"
               (change)="repeatsWeekly.set($any($event.target).checked)"
             />
-            <span class="w-check__box"></span>
+            <span w-checkbox-box></span>
             <span>Repeat weekly through the cohort term</span>
           </label>
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="button"
             [disabled]="saving() || !options()?.cohorts?.length"
             (click)="createSession()"
@@ -253,7 +254,7 @@
             {{ saving() ? 'Scheduling…' : 'Schedule session' }}
           </button>
           @if (statusMessage(); as message) {
-            <p class="w-alert w-alert--success">{{ message }}</p>
+            <p w-alert variant="success">{{ message }}</p>
           }
         </div>
       </aside>

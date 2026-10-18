@@ -10,7 +10,28 @@ import {
   WRoleName,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  TableWrap,
+  Table,
+} from '@waypoint/components';
 import { Observable } from 'rxjs';
 import { shellRole } from '@waypoint/core';
 
@@ -26,39 +47,32 @@ const ROLES: readonly WRoleName[] = [
 @Component({
   selector: 'w-invitations',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, ReactiveFormsModule, WIcon, WShell],
+  imports: [
+    DatePipe,
+    ReactiveFormsModule,
+    Icon,
+    Shell,
+    Button,
+    FormField,
+    Label,
+    ErrorText,
+    TextField,
+    Textarea,
+    Select,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    TableWrap,
+    Table,
+  ],
   templateUrl: './invitations.html',
-  styles: `
-    .invite-layout {
-      display: grid;
-      gap: var(--w-s5);
-      grid-template-columns: minmax(18rem, 0.7fr) minmax(0, 1.3fr);
-    }
-    .invite-filters {
-      display: grid;
-      gap: var(--w-s3);
-      grid-template-columns: 2fr repeat(2, minmax(9rem, 1fr));
-    }
-    .invite-actions {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s2);
-    }
-    .invite-email {
-      overflow-wrap: anywhere;
-    }
-    @media (max-width: 62rem) {
-      .invite-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 48rem) {
-      .invite-filters {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './invitations.css',
 })
 export class InvitationsPage {
   protected readonly auth = inject(AuthStore);

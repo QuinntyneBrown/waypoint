@@ -4,13 +4,13 @@
       <div class="w-page__titles">
         <div class="w-eyebrow">Activity</div>
         <h1 class="w-page__title">Notifications</h1>
-        <span class="w-badge" data-testid="notification-realtime-status">
+        <span w-badge data-testid="notification-realtime-status">
           {{ realtime.state() === 'connected' ? 'Live updates on' : 'Reconnecting live updates' }}
         </span>
       </div>
       @if (hasUnread()) {
         <div class="w-page__actions">
-          <button class="w-btn w-btn--ghost" type="button" (click)="markAllRead()">
+          <button w-button variant="ghost" type="button" (click)="markAllRead()">
             Mark all read
           </button>
         </div>
@@ -19,16 +19,16 @@
 
     <p class="w-sr-only" role="status">{{ liveStatus() }}</p>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (loading()) {
       <p class="w-muted" role="status">Loading notifications…</p>
     } @else if (items().length === 0) {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="bell" /></div>
-        <h3 class="w-empty__title">You’re all caught up</h3>
-        <p class="w-empty__text">
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="bell" /></div>
+        <h3 w-empty-state-title>You’re all caught up</h3>
+        <p w-empty-state-text>
           Messages, reminders, and other activity that needs your attention will appear here.
         </p>
       </div>
@@ -37,33 +37,36 @@
         @for (item of items(); track item.id) {
           @if (item.linkPath) {
             <a
-              class="w-card w-card--link notification-card"
-              [class.w-card--greige]="!item.read"
+              w-card
+              link
+              class="notification-card"
+              [variant]="item.read ? '' : 'greige'"
               [routerLink]="item.linkPath"
               data-testid="notification-item"
             >
-              <div class="w-card__body">
+              <div w-card-body>
                 <div class="w-cluster w-cluster--between">
-                  <h3 class="w-card__title">{{ item.title }}</h3>
+                  <h3 w-card-title>{{ item.title }}</h3>
                   @if (!item.read) {
-                    <span class="w-badge w-badge--info w-badge--dot">New</span>
+                    <span w-badge variant="info" dot>New</span>
                   }
                 </div>
                 <p class="w-muted">{{ item.body }}</p>
-                <span class="w-link">Open notification</span>
+                <span>Open notification</span>
               </div>
             </a>
           } @else {
             <article
-              class="w-card notification-card"
-              [class.w-card--greige]="!item.read"
+              w-card
+              [variant]="!item.read ? 'greige' : ''"
+              class="notification-card"
               data-testid="notification-item"
             >
-              <div class="w-card__body">
+              <div w-card-body>
                 <div class="w-cluster w-cluster--between">
-                  <h3 class="w-card__title">{{ item.title }}</h3>
+                  <h3 w-card-title>{{ item.title }}</h3>
                   @if (!item.read) {
-                    <span class="w-badge w-badge--info w-badge--dot">New</span>
+                    <span w-badge variant="info" dot>New</span>
                   }
                 </div>
                 <p class="w-muted">{{ item.body }}</p>

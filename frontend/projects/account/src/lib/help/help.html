@@ -17,7 +17,7 @@
       <span class="help-search__icon"><w-icon name="search" /></span>
       <label class="w-sr-only" for="help-search">Search help</label>
       <input
-        class="w-input"
+        w-text-field
         id="help-search"
         type="search"
         placeholder="Search lessons, attendance, privacy…"
@@ -27,17 +27,17 @@
     </div>
 
     @if (topics().length === 0) {
-      <div class="w-empty" role="status">
-        <div class="w-empty__icon"><w-icon name="search" /></div>
-        <h2 class="w-empty__title">No help articles found</h2>
-        <p class="w-empty__text">Try a different word, or contact the support team.</p>
+      <div w-empty-state role="status">
+        <div w-empty-state-icon><w-icon name="search" /></div>
+        <h2 w-empty-state-title>No help articles found</h2>
+        <p w-empty-state-text>Try a different word, or contact the support team.</p>
       </div>
     } @else {
       <div class="help-grid">
         @for (topic of topics(); track topic.title) {
-          <section class="w-card">
-            <div class="w-card__body">
-              <h2 class="w-card__title help-topic__title">
+          <section w-card>
+            <div w-card-body>
+              <h2 w-card-title class="help-topic__title">
                 <w-icon [name]="topic.icon" />{{ topic.title }}
               </h2>
               @for (article of topic.articles; track article.question) {
@@ -52,13 +52,13 @@
       </div>
     }
 
-    <aside class="w-card w-mt-6">
-      <div class="w-card__body w-cluster w-cluster--between">
+    <aside w-card class="w-mt-6">
+      <div w-card-body class="w-cluster w-cluster--between">
         <div>
-          <h2 class="w-card__title">Still need a hand?</h2>
+          <h2 w-card-title>Still need a hand?</h2>
           <p class="w-muted">Send a private request and the program team will follow up.</p>
         </div>
-        <a class="w-btn w-btn--primary" routerLink="/support">Contact support</a>
+        <a w-button variant="primary" routerLink="/support">Contact support</a>
       </div>
     </aside>
   </div>

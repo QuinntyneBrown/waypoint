@@ -11,15 +11,50 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ApiError, SUPPORT_CATEGORIES, SupportService, SupportScreenshot } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 
 // Traces to: L2-PLATFORM-005
 @Component({
   selector: 'w-support',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, ReactiveFormsModule, RouterLink, WIcon],
+  imports: [
+    Shell,
+    ReactiveFormsModule,
+    RouterLink,
+    Icon,
+    Button,
+    FormField,
+    Label,
+    Help,
+    ErrorText,
+    TextField,
+    Textarea,
+    Select,
+    Alert,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './support.html',
+  styleUrl: './support.css',
 })
 export class Support implements OnDestroy {
   private readonly fb = inject(FormBuilder);

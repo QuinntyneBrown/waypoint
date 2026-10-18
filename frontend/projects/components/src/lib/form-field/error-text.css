@@ -1,0 +1,6 @@
+.w-error-text {
+  font-size: 0.8rem;
+  color: var(--w-error);
+  margin-top: 5px;
+  font-weight: 500;
+}

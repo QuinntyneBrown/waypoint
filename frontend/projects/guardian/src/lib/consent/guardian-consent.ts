@@ -3,15 +3,52 @@ import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@ang
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiError, GuardianService, GuardianConsentRecord } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Icon,
+  Label,
+  Shell,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 import { GuardianContextService } from '../guardian-context.service';
 
 // Traces to: L2-GUARDIAN-003, L2-CONSENT-001
 @Component({
   selector: 'w-guardian-consent',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, ReactiveFormsModule, DatePipe, WIcon],
+  imports: [
+    Shell,
+    ReactiveFormsModule,
+    DatePipe,
+    Icon,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Checkbox,
+    CheckboxBox,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './guardian-consent.html',
+  styleUrl: './guardian-consent.css',
 })
 export class GuardianConsent {
   protected readonly auth = inject(AuthStore);

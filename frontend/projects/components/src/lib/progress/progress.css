@@ -1,0 +1,14 @@
+.w-progress {
+  width: 100%;
+  height: 9px;
+  border-radius: var(--w-r-pill);
+  background: var(--w-g300);
+  overflow: hidden;
+}
+.w-progress__fill {
+  height: 100%;
+  width: var(--val, 0%);
+  background: var(--w-lime);
+  border-radius: inherit;
+  transition: width 0.4s;
+}

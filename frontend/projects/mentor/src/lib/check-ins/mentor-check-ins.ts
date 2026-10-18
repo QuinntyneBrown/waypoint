@@ -3,7 +3,29 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { ApiError, MentorService, MentorCheckIn, MentorRosterYouth } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Help,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  Textarea,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 
 type CheckInType = '1:1' | 'call' | 'session';
 
@@ -11,37 +33,32 @@ type CheckInType = '1:1' | 'call' | 'session';
 @Component({
   selector: 'w-mentor-check-ins',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, DatePipe],
+  imports: [
+    Shell,
+    Icon,
+    DatePipe,
+    Button,
+    FormField,
+    Label,
+    Help,
+    TextField,
+    Textarea,
+    Select,
+    Checkbox,
+    CheckboxBox,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './mentor-check-ins.html',
-  styles: `
-    .check-in-layout {
-      display: grid;
-      grid-template-columns: minmax(19rem, 0.75fr) minmax(0, 1.25fr);
-      gap: var(--w-s6);
-      align-items: start;
-    }
-    .history-filters {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .history-card p {
-      overflow-wrap: anywhere;
-    }
-    .save-button {
-      min-height: 44px;
-    }
-    @media (max-width: 56rem) {
-      .check-in-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 32rem) {
-      .history-filters {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './mentor-check-ins.css',
 })
 export class MentorCheckInsPage {
   protected readonly auth = inject(AuthStore);

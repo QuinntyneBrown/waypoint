@@ -16,16 +16,16 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <div>
-          <div class="w-alert__title">{{ error }}</div>
+          <div w-alert-title>{{ error }}</div>
           Settings could not be loaded or saved.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p class="w-alert w-alert--success" data-testid="settings-outcome" role="status">
+      <p w-alert variant="success" data-testid="settings-outcome" role="status">
         {{ message }}
       </p>
     }
@@ -33,27 +33,23 @@
     @if (loaded()) {
       <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
         <div class="settings-grid w-mb-5">
-          <section class="w-card settings-card" aria-labelledby="identity-heading">
-            <div class="w-card__body w-stack">
+          <section w-card class="settings-card" aria-labelledby="identity-heading">
+            <div w-card-body class="w-stack">
               <div>
                 <h2 id="identity-heading">Organization identity</h2>
                 <p class="w-muted">The platform colour palette remains fixed for accessibility.</p>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="organization-name">Organization name</label>
-                <input class="w-input" id="organization-name" formControlName="name" />
+              <div w-form-field>
+                <label w-label for="organization-name">Organization name</label>
+                <input w-text-field id="organization-name" formControlName="name" />
               </div>
-              <div class="w-field">
-                <label class="w-label" for="organization-display-name">Display name</label>
-                <input
-                  class="w-input"
-                  id="organization-display-name"
-                  formControlName="displayName"
-                />
+              <div w-form-field>
+                <label w-label for="organization-display-name">Display name</label>
+                <input w-text-field id="organization-display-name" formControlName="displayName" />
               </div>
-              <div class="w-field">
-                <label class="w-label" for="organization-logo">Logo URL</label>
-                <input class="w-input" id="organization-logo" formControlName="logoUrl" />
+              <div w-form-field>
+                <label w-label for="organization-logo">Logo URL</label>
+                <input w-text-field id="organization-logo" formControlName="logoUrl" />
               </div>
               @if (settingsForm.controls.logoUrl.value) {
                 <div class="logo-preview" aria-label="Logo preview">
@@ -63,33 +59,33 @@
                   />
                 </div>
               }
-              <div class="w-field">
-                <label class="w-label" for="organization-city">City</label>
-                <input class="w-input" id="organization-city" formControlName="city" />
+              <div w-form-field>
+                <label w-label for="organization-city">City</label>
+                <input w-text-field id="organization-city" formControlName="city" />
               </div>
-              <div class="w-field">
-                <label class="w-label" for="organization-contact">Contact email</label>
+              <div w-form-field>
+                <label w-label for="organization-contact">Contact email</label>
                 <input
-                  class="w-input"
+                  w-text-field
                   id="organization-contact"
                   type="email"
                   formControlName="contactEmail"
                 />
-                <p class="w-help">Shown to guardians on consent forms and emailed records.</p>
+                <p w-help>Shown to guardians on consent forms and emailed records.</p>
               </div>
             </div>
           </section>
 
-          <section class="w-card settings-card" aria-labelledby="consent-policy-heading">
-            <div class="w-card__body w-stack">
+          <section w-card class="settings-card" aria-labelledby="consent-policy-heading">
+            <div w-card-body class="w-stack">
               <div>
                 <h2 id="consent-policy-heading">Guardian consent policy</h2>
                 <p class="w-muted">These settings drive term access and youth-media safeguards.</p>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="consent-statement">Consent statement</label>
+              <div w-form-field>
+                <label w-label for="consent-statement">Consent statement</label>
                 <textarea
-                  class="w-textarea"
+                  w-textarea
                   id="consent-statement"
                   rows="7"
                   formControlName="consentStatement"
@@ -116,39 +112,45 @@
             </div>
           </section>
         </div>
-        <button class="w-btn w-btn--primary w-mb-6" type="submit" [disabled]="savingSettings()">
+        <button
+          w-button
+          variant="primary"
+          class="w-mb-6"
+          type="submit"
+          [disabled]="savingSettings()"
+        >
           {{ savingSettings() ? 'Saving…' : 'Save organization settings' }}
         </button>
       </form>
 
-      <section class="w-card w-mb-5" aria-labelledby="terms-heading">
-        <div class="w-card__body w-stack">
+      <section w-card class="w-mb-5" aria-labelledby="terms-heading">
+        <div w-card-body class="w-stack">
           <div>
             <h2 id="terms-heading">Terms and cohort cycles</h2>
             <p class="w-muted">Maintain date ranges and advance each term through its lifecycle.</p>
           </div>
           <form class="term-form" [formGroup]="termForm" (ngSubmit)="saveTerm()">
-            <div class="w-field">
-              <label class="w-label" for="term-name">Term name</label>
-              <input class="w-input" id="term-name" formControlName="name" />
+            <div w-form-field>
+              <label w-label for="term-name">Term name</label>
+              <input w-text-field id="term-name" formControlName="name" />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="term-start">Start date</label>
-              <input class="w-input" id="term-start" type="date" formControlName="startDate" />
+            <div w-form-field>
+              <label w-label for="term-start">Start date</label>
+              <input w-text-field id="term-start" type="date" formControlName="startDate" />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="term-end">End date</label>
-              <input class="w-input" id="term-end" type="date" formControlName="endDate" />
+            <div w-form-field>
+              <label w-label for="term-end">End date</label>
+              <input w-text-field id="term-end" type="date" formControlName="endDate" />
             </div>
-            <div class="w-field">
-              <label class="w-label" for="term-status">Term status</label>
-              <select class="w-select" id="term-status" formControlName="status">
+            <div w-form-field>
+              <label w-label for="term-status">Term status</label>
+              <select w-select id="term-status" formControlName="status">
                 <option value="Upcoming">Upcoming</option>
                 <option value="Active">Active</option>
                 <option value="Completed">Completed</option>
               </select>
             </div>
-            <button class="w-btn w-btn--primary" type="submit" [disabled]="savingTerm()">
+            <button w-button variant="primary" type="submit" [disabled]="savingTerm()">
               @if (savingTerm()) {
                 Saving…
               } @else if (editingTermId()) {
@@ -159,7 +161,7 @@
             </button>
           </form>
           @if (editingTermId()) {
-            <button class="w-btn w-btn--ghost" type="button" (click)="cancelTermEdit()">
+            <button w-button variant="ghost" type="button" (click)="cancelTermEdit()">
               Cancel term edit
             </button>
           }
@@ -176,15 +178,23 @@
                 </div>
                 <div class="w-actions">
                   <span
-                    class="w-badge"
-                    [class.w-badge--success]="term.status === 'Active'"
-                    [class.w-badge--info]="term.status === 'Upcoming'"
-                    [class.w-badge--ink]="term.status === 'Completed'"
+                    w-badge
+                    [variant]="
+                      term.status === 'Active'
+                        ? 'success'
+                        : term.status === 'Upcoming'
+                          ? 'info'
+                          : term.status === 'Completed'
+                            ? 'ink'
+                            : ''
+                    "
                   >
                     {{ term.status }}
                   </span>
                   <button
-                    class="w-btn w-btn--secondary w-btn--sm"
+                    w-button
+                    variant="secondary"
+                    size="sm"
                     type="button"
                     (click)="editTerm(term)"
                   >
@@ -193,18 +203,18 @@
                 </div>
               </li>
             } @empty {
-              <li class="w-empty">
-                <div class="w-empty__icon"><w-icon name="calendar" /></div>
-                <h3 class="w-empty__title">No terms yet</h3>
-                <p class="w-empty__text">Create the first program term above.</p>
+              <li w-empty-state>
+                <div w-empty-state-icon><w-icon name="calendar" /></div>
+                <h3 w-empty-state-title>No terms yet</h3>
+                <p w-empty-state-text>Create the first program term above.</p>
               </li>
             }
           </ul>
         </div>
       </section>
 
-      <section class="w-card" aria-labelledby="tracks-heading">
-        <div class="w-card__body">
+      <section w-card aria-labelledby="tracks-heading">
+        <div w-card-body>
           <h2 id="tracks-heading">Track availability</h2>
           <p class="w-muted">
             Pausing a track preserves existing progress but blocks new enrolment and work
@@ -219,14 +229,15 @@
                 </div>
                 <div class="w-actions">
                   <span
-                    class="w-badge"
-                    [class.w-badge--success]="track.enabled"
-                    [class.w-badge--warning]="!track.enabled"
+                    w-badge
+                    [variant]="track.enabled ? 'success' : !track.enabled ? 'warning' : ''"
                   >
                     {{ track.enabled ? 'Enabled' : 'Paused' }}
                   </span>
                   <button
-                    class="w-btn w-btn--secondary w-btn--sm"
+                    w-button
+                    variant="secondary"
+                    size="sm"
                     type="button"
                     [disabled]="savingTrackId() !== null"
                     (click)="toggleTrack(track)"
@@ -236,10 +247,10 @@
                 </div>
               </li>
             } @empty {
-              <li class="w-empty">
-                <div class="w-empty__icon"><w-icon name="book-open" /></div>
-                <h3 class="w-empty__title">No tracks available</h3>
-                <p class="w-empty__text">Published curriculum tracks will appear here.</p>
+              <li w-empty-state>
+                <div w-empty-state-icon><w-icon name="book-open" /></div>
+                <h3 w-empty-state-title>No tracks available</h3>
+                <p w-empty-state-text>Published curriculum tracks will appear here.</p>
               </li>
             }
           </ul>

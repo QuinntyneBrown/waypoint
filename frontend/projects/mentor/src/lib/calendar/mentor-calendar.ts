@@ -9,7 +9,25 @@ import {
   StaffOperationsService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WRole, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Label,
+  Role,
+  Select,
+  Shell,
+  TextField,
+  Checkbox,
+  CheckboxBox,
+  Alert,
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+  EmptyState,
+  Tabs,
+  Tab,
+} from '@waypoint/components';
 
 type CalendarView = 'month' | 'week' | 'agenda';
 
@@ -17,104 +35,28 @@ type CalendarView = 'month' | 'week' | 'agenda';
 @Component({
   selector: 'w-mentor-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe, RouterLink],
+  imports: [
+    Shell,
+    DatePipe,
+    RouterLink,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Select,
+    Checkbox,
+    CheckboxBox,
+    Alert,
+    Card,
+    CardBody,
+    CardHeader,
+    CardTitle,
+    EmptyState,
+    Tabs,
+    Tab,
+  ],
   templateUrl: './mentor-calendar.html',
-  styles: `
-    .calendar-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.34fr);
-      gap: var(--w-s6);
-      align-items: start;
-    }
-    .calendar-toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: end;
-      justify-content: space-between;
-      gap: var(--w-s3);
-    }
-    .calendar-scroll {
-      max-width: 100%;
-      overflow-x: auto;
-    }
-    .month-grid,
-    .week-grid {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-lg);
-      overflow: hidden;
-    }
-    .calendar-weekday {
-      padding: var(--w-s2);
-      background: var(--w-g100);
-      border-bottom: 1px solid var(--w-border);
-      font-weight: 700;
-      text-align: center;
-    }
-    .calendar-day {
-      min-height: 8rem;
-      padding: var(--w-s2);
-      border-right: 1px solid var(--w-border);
-      border-bottom: 1px solid var(--w-border);
-    }
-    .calendar-day:nth-child(7n) {
-      border-right: 0;
-    }
-    .calendar-day.is-outside {
-      color: var(--w-muted);
-      background: var(--w-surface);
-    }
-    .calendar-event {
-      display: block;
-      margin-top: var(--w-s2);
-      padding: var(--w-s1) var(--w-s2);
-      border-radius: var(--w-r-card);
-      background: var(--w-info-bg);
-      color: inherit;
-      font-size: 0.85rem;
-      text-decoration: none;
-      overflow-wrap: break-word;
-    }
-    .calendar-event:hover,
-    .calendar-event:focus-visible {
-      background: var(--w-surface-2);
-    }
-    .agenda-list {
-      display: grid;
-      gap: var(--w-s3);
-    }
-    .session-form {
-      position: sticky;
-      top: var(--w-s4);
-    }
-    .calendar-toolbar .w-btn,
-    .calendar-event,
-    [role='tab'] {
-      min-height: 44px;
-    }
-    @media (max-width: 62rem) {
-      .calendar-layout {
-        grid-template-columns: 1fr;
-      }
-      .session-form {
-        position: static;
-      }
-    }
-    .session-form .w-grid--2 {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    @media (max-width: 36rem) {
-      .month-grid,
-      .week-grid {
-        min-width: 36rem;
-      }
-      .calendar-toolbar > *,
-      .session-form .w-btn {
-        width: 100%;
-      }
-    }
-  `,
+  styleUrl: './mentor-calendar.css',
 })
 export class MentorCalendarPage {
   protected readonly auth = inject(AuthStore);
@@ -130,7 +72,7 @@ export class MentorCalendarPage {
   protected readonly anchor = signal(this.startOfDay(new Date()));
   protected readonly cohortFilter = signal('');
   protected readonly isAdmin = computed(() => this.auth.user()?.role === 'ProgramAdministrator');
-  protected readonly shellRole = computed<WRole>(() => (this.isAdmin() ? 'admin' : 'mentor'));
+  protected readonly shellRole = computed<Role>(() => (this.isAdmin() ? 'admin' : 'mentor'));
   protected readonly attendanceBase = computed(() =>
     this.isAdmin() ? '/admin/attendance' : '/mentor/attendance',
   );

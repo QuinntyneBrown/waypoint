@@ -11,7 +11,33 @@ import {
   YouthReport,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  AlertTitle,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  Progress,
+  Stat,
+  StatLabel,
+  StatValue,
+  ProgressRing,
+  ProgressRingLabel,
+  Tabs,
+  Tab,
+} from '@waypoint/components';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -21,128 +47,39 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
 @Component({
   selector: 'w-admin-reports',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, ReactiveFormsModule, DatePipe, DecimalPipe, PercentPipe],
+  imports: [
+    Shell,
+    Icon,
+    ReactiveFormsModule,
+    DatePipe,
+    DecimalPipe,
+    PercentPipe,
+    Button,
+    FormField,
+    Label,
+    ErrorText,
+    TextField,
+    Select,
+    Alert,
+    AlertTitle,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    Progress,
+    Stat,
+    StatLabel,
+    StatValue,
+    ProgressRing,
+    ProgressRingLabel,
+    Tabs,
+    Tab,
+  ],
   templateUrl: './admin-reports.html',
-  styles: `
-    .report-filters {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(8.5rem, 1fr)) auto;
-      gap: var(--w-s3);
-      align-items: end;
-    }
-    .report-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s2) var(--w-s5);
-      align-items: center;
-    }
-    .report-tabs {
-      display: flex;
-      gap: var(--w-s2);
-      overflow-x: auto;
-      padding-bottom: var(--w-s1);
-    }
-    .report-tabs .w-btn {
-      flex: 0 0 auto;
-    }
-    .report-kpis,
-    .report-rings,
-    .report-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--w-s4);
-    }
-    .report-kpi strong {
-      display: block;
-      font-size: clamp(1.5rem, 3vw, 2.25rem);
-      line-height: 1.1;
-    }
-    .report-chart-row {
-      display: grid;
-      grid-template-columns: minmax(8rem, 1fr) minmax(8rem, 3fr) auto;
-      gap: var(--w-s3);
-      align-items: center;
-    }
-    .report-bar {
-      height: 0.75rem;
-      overflow: hidden;
-      border-radius: 999px;
-      background: var(--w-g100);
-    }
-    .report-bar > span {
-      display: block;
-      height: 100%;
-      border-radius: inherit;
-      background: var(--w-teal);
-    }
-    .report-ring {
-      --report-value: 0%;
-      display: grid;
-      width: 7rem;
-      height: 7rem;
-      margin-inline: auto;
-      place-items: center;
-      border-radius: 50%;
-      background: conic-gradient(var(--w-teal) var(--report-value), var(--w-g100) 0);
-      position: relative;
-    }
-    .report-ring::before {
-      content: '';
-      position: absolute;
-      inset: 0.65rem;
-      border-radius: 50%;
-      background: var(--w-surface);
-    }
-    .report-ring strong {
-      position: relative;
-      font-size: 1.1rem;
-      z-index: 1;
-    }
-    .report-card {
-      min-width: 0;
-      overflow-wrap: anywhere;
-    }
-    .report-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .report-stat-line {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s3);
-    }
-    .report-status--risk {
-      color: var(--w-error);
-      font-weight: 700;
-    }
-    @media (max-width: 72rem) {
-      .report-filters {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-    @media (max-width: 48rem) {
-      .report-filters,
-      .report-kpis,
-      .report-grid {
-        grid-template-columns: 1fr;
-      }
-      .report-rings {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .report-chart-row {
-        grid-template-columns: 1fr auto;
-      }
-      .report-chart-row .report-bar {
-        grid-column: 1 / -1;
-      }
-      .report-filters .w-btn,
-      .report-selector .w-btn {
-        width: 100%;
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './admin-reports.css',
 })
 export class AdminReportsPage {
   protected readonly auth = inject(AuthStore);

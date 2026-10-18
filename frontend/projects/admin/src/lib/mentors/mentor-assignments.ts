@@ -6,87 +6,52 @@ import {
   MentorAssignmentsService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  Alert,
+  AlertTitle,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  StatLabel,
+  StatValue,
+} from '@waypoint/components';
 import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-005, L2-REPORT-001, L2-NFR-009, L2-NFR-010
 @Component({
   selector: 'w-mentor-assignments',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon],
+  imports: [
+    Shell,
+    Icon,
+    Button,
+    FormField,
+    Label,
+    Select,
+    Alert,
+    AlertTitle,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    StatLabel,
+    StatValue,
+  ],
   templateUrl: './mentor-assignments.html',
-  styles: `
-    .assignment-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s5);
-      align-items: start;
-    }
-    .assignment-card,
-    .load-card {
-      min-width: 0;
-    }
-    .supporting-list {
-      display: grid;
-      gap: var(--w-s2);
-      max-height: 16rem;
-      overflow-y: auto;
-      padding: var(--w-s2);
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-card);
-    }
-    .supporting-option {
-      display: flex;
-      gap: var(--w-s3);
-      align-items: flex-start;
-      min-height: 2.75rem;
-      padding: var(--w-s2);
-      border-radius: var(--w-r-sm);
-    }
-    .supporting-option:hover {
-      background: var(--w-g100);
-    }
-    .supporting-option input {
-      width: 1.25rem;
-      height: 1.25rem;
-      margin-top: 0.125rem;
-      flex: 0 0 auto;
-    }
-    .load-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-      gap: var(--w-s4);
-    }
-    .load-card__head,
-    .load-metrics {
-      display: flex;
-      justify-content: space-between;
-      gap: var(--w-s3);
-      align-items: flex-start;
-    }
-    .load-metrics {
-      margin-top: var(--w-s4);
-    }
-    .load-metric {
-      min-width: 0;
-    }
-    .load-metric strong {
-      display: block;
-      font-size: 1.25rem;
-    }
-    @media (max-width: 48rem) {
-      .assignment-grid {
-        grid-template-columns: 1fr;
-      }
-      .assignment-card .w-btn {
-        width: 100%;
-        min-height: 45px;
-      }
-      .load-card__head {
-        flex-direction: column;
-      }
-    }
-  `,
+  styleUrl: './mentor-assignments.css',
 })
 export class MentorAssignmentsPage {
   protected readonly auth = inject(AuthStore);

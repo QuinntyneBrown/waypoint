@@ -3,7 +3,26 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, PeopleService, PersonSummary, WRoleName } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WAvatar, WIcon, WShell } from '@waypoint/components';
+import {
+  Avatar,
+  Button,
+  FormField,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  TableWrap,
+  Table,
+} from '@waypoint/components';
 
 const ROLES: readonly WRoleName[] = [
   'Youth',
@@ -17,33 +36,30 @@ const ROLES: readonly WRoleName[] = [
 @Component({
   selector: 'w-users-roles',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, RouterLink, WAvatar, WIcon, WShell],
+  imports: [
+    DatePipe,
+    RouterLink,
+    Avatar,
+    Icon,
+    Shell,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Select,
+    Alert,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    TableWrap,
+    Table,
+  ],
   templateUrl: './users-roles.html',
-  styles: `
-    .users-filters {
-      display: grid;
-      gap: var(--w-s4);
-      grid-template-columns: minmax(14rem, 2fr) minmax(10rem, 1fr) auto;
-      align-items: end;
-    }
-    .user-cell {
-      align-items: center;
-      display: flex;
-      gap: var(--w-s3);
-      min-width: 14rem;
-    }
-    .role-action {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s2);
-    }
-    @media (max-width: 48rem) {
-      .users-filters {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './users-roles.css',
 })
 export class UsersRolesPage {
   protected readonly auth = inject(AuthStore);

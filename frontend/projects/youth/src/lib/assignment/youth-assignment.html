@@ -5,15 +5,15 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-container--narrow w-page">
-    <a class="w-btn w-btn--ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+    <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (fileError(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as status) {
-      <p class="w-alert w-alert--success" role="status">{{ status }}</p>
+      <p w-alert variant="success" role="status">{{ status }}</p>
     }
 
     @if (brief(); as view) {
@@ -26,14 +26,14 @@
           }
         </div>
       </div>
-      <section class="w-card">
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-body class="w-stack">
           <h2>Task</h2>
           <p>{{ view.taskDescription }}</p>
         </div>
       </section>
-      <section class="w-card w-card--greige">
-        <div class="w-card__body w-stack">
+      <section w-card variant="greige">
+        <div w-card-body class="w-stack">
           <h2>What you can submit</h2>
           <ul>
             @for (type of view.allowedSubmissionTypes; track type) {
@@ -52,8 +52,8 @@
           </ul>
         </div>
       </section>
-      <section class="w-card">
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-body class="w-stack">
           <h2>Rubric preview</h2>
           @for (criterion of view.rubric; track criterion.id) {
             <div class="w-cluster w-cluster--between">
@@ -66,67 +66,71 @@
 
       @if (view.existingSubmissionId) {
         <a
-          class="w-btn w-btn--primary w-btn--block"
+          w-button
+          variant="primary"
+          block
           [routerLink]="['/youth/submissions', view.existingSubmissionId]"
           >View submitted work</a
         >
       } @else {
         <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
           @if (view.allowedSubmissionTypes.includes('text')) {
-            <div class="w-field">
-              <label class="w-field__label" for="assignment-text">Written response</label
+            <div w-form-field>
+              <label w-label for="assignment-text">Written response</label
               ><textarea
+                w-textarea
                 id="assignment-text"
-                class="w-input"
                 formControlName="bodyText"
                 rows="7"
               ></textarea>
             </div>
           }
           @if (view.allowedSubmissionTypes.includes('photo')) {
-            <div class="w-field">
-              <label class="w-field__label" for="assignment-photo">Evidence photo</label>
+            <div w-form-field>
+              <label w-label for="assignment-photo">Evidence photo</label>
               <input
+                w-text-field
                 id="assignment-photo"
-                class="w-input"
                 type="file"
                 accept="image/jpeg,image/png,.jpg,.jpeg,.png"
                 (change)="photoSelected($event)"
               />
-              <p class="w-field__hint">JPG or PNG, up to 10 MB.</p>
+              <p w-help>JPG or PNG, up to 10 MB.</p>
             </div>
           }
           @if (view.allowedSubmissionTypes.includes('file')) {
-            <div class="w-field">
-              <label class="w-field__label" for="assignment-file">Evidence file</label>
+            <div w-form-field>
+              <label w-label for="assignment-file">Evidence file</label>
               <input
+                w-text-field
                 id="assignment-file"
-                class="w-input"
                 type="file"
                 accept="application/pdf,.pdf"
                 (change)="fileSelected($event)"
               />
-              <p class="w-field__hint">PDF, up to 10 MB.</p>
+              <p w-help>PDF, up to 10 MB.</p>
             </div>
           }
           @if (view.allowedSubmissionTypes.includes('link')) {
-            <div class="w-field">
-              <label class="w-field__label" for="assignment-link">Evidence link</label
-              ><input id="assignment-link" class="w-input" type="url" formControlName="linkUrl" />
+            <div w-form-field>
+              <label w-label for="assignment-link">Evidence link</label
+              ><input w-text-field id="assignment-link" type="url" formControlName="linkUrl" />
             </div>
           }
-          <label class="w-card w-card--greige"
-            ><span class="w-card__body w-cluster"
+          <label w-card variant="greige"
+            ><span w-card-body class="w-cluster"
               ><input type="checkbox" formControlName="attest" /><strong
                 >This is my own work and the evidence is truthful.</strong
               ></span
             ></label
           >
           @if (form.controls.attest.touched && form.controls.attest.hasError('required')) {
-            <p class="w-field__error">Confirm this is your own work before submitting.</p>
+            <p w-error-text>Confirm this is your own work before submitting.</p>
           }
           <button
-            class="w-btn w-btn--primary w-btn--block"
+            w-button
+            variant="primary"
+            block
             type="submit"
             [disabled]="saving() || statusMessage()?.startsWith('Uploading')"
           >

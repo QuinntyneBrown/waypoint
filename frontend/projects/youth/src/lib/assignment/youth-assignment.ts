@@ -4,14 +4,42 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, AssignmentBrief, AssignmentUpload, LearningService } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Label,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  Card,
+  CardBody,
+} from '@waypoint/components';
 
 // Traces to: L2-LEARN-006, L2-NFR-001
 @Component({
   selector: 'w-youth-assignment',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, ReactiveFormsModule, DatePipe],
+  imports: [
+    Shell,
+    RouterLink,
+    ReactiveFormsModule,
+    DatePipe,
+    Button,
+    FormField,
+    Label,
+    Help,
+    ErrorText,
+    TextField,
+    Textarea,
+    Alert,
+    Card,
+    CardBody,
+  ],
   templateUrl: './youth-assignment.html',
+  styleUrl: './youth-assignment.css',
 })
 export class YouthAssignmentPage {
   protected readonly auth = inject(AuthStore);

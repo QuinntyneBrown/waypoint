@@ -9,24 +9,24 @@
   @if (loading()) {
     <p class="w-muted" role="status">Loading programs…</p>
   } @else if (error()) {
-    <div class="w-alert w-alert--danger" role="alert">
+    <div w-alert variant="danger" role="alert">
       <p>{{ error() }}</p>
-      <button class="w-btn w-btn--ghost w-btn--sm" type="button" (click)="load()">Try again</button>
+      <button w-button variant="ghost" size="sm" type="button" (click)="load()">Try again</button>
     </div>
   } @else if (content(); as publicContent) {
     @if (publicContent.tracks.length === 0) {
-      <div class="w-empty w-mt-6">
+      <div w-empty-state class="w-mt-6">
         <h2>Programs are being prepared</h2>
         <p class="w-muted">Published program details will appear here soon.</p>
       </div>
     } @else {
       <div class="w-grid w-grid--2 w-mt-6">
         @for (track of publicContent.tracks; track track.id) {
-          <div class="w-card">
-            <div class="w-card__header">
-              <h2 class="w-card__title">{{ track.name }}</h2>
+          <div w-card>
+            <div w-card-header>
+              <h2 w-card-title>{{ track.name }}</h2>
             </div>
-            <div class="w-card__body">
+            <div w-card-body>
               <p class="w-muted">{{ track.description }}</p>
               <h3 class="w-text-base">Modules</h3>
               <ol>
@@ -34,7 +34,7 @@
                   <li>
                     <span>{{ module.name }}</span>
                     @if (module.outcomeBadge; as badge) {
-                      <span class="w-badge w-badge--lime">{{ badge.name }}</span>
+                      <span w-badge variant="lime">{{ badge.name }}</span>
                     }
                   </li>
                 }
@@ -54,8 +54,8 @@
     <p class="w-text-lg w-muted">{{ publicContent.mentorship.summary }}</p>
     <div class="w-grid w-grid--3 w-mt-6">
       @for (feature of publicContent.mentorship.features; track feature) {
-        <div class="w-card">
-          <div class="w-card__body">
+        <div w-card>
+          <div w-card-body>
             <p>{{ feature }}</p>
           </div>
         </div>
@@ -63,6 +63,6 @@
     </div>
   }
   <div class="w-cluster w-mt-6">
-    <a class="w-btn w-btn--primary" routerLink="/apply">Apply now</a>
+    <a w-button variant="primary" routerLink="/apply">Apply now</a>
   </div>
 </section>

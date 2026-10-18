@@ -1,29 +1,20 @@
 <div class="w-authpage">
   <div class="w-authcard">
     <div class="w-authcard__brand">
-      <span class="w-brand__mark" style="width: 38px; height: 38px; font-size: 1.1rem">W</span>
-      <span style="font-family: var(--w-font-head); font-weight: 700; font-size: 1.2rem"
-        >Waypoint</span
-      >
+      <div w-brand size="lg">Waypoint</div>
     </div>
     <h1 style="font-size: 1.5rem; text-align: center">Welcome back</h1>
     <p class="w-muted w-text-c w-mb-6">Sign in to continue your journey.</p>
 
     @if (errorMessage()) {
-      <div class="w-alert w-alert--error" role="alert">
-        <w-icon name="alert-circle" iconClass="w-alert__icon" />
-        <div>{{ errorMessage() }}</div>
-      </div>
+      <div w-alert variant="error" icon="alert-circle" role="alert">{{ errorMessage() }}</div>
     }
 
     <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-      <div
-        class="w-field"
-        [class.is-error]="form.controls.email.touched && form.controls.email.invalid"
-      >
-        <label class="w-label" for="email">Email</label>
+      <div w-form-field [invalid]="form.controls.email.touched && form.controls.email.invalid">
+        <label w-label for="email">Email</label>
         <input
-          class="w-input"
+          w-text-field
           id="email"
           type="email"
           autocomplete="username"
@@ -31,18 +22,18 @@
           placeholder="you@example.com"
         />
         @if (form.controls.email.touched && form.controls.email.invalid) {
-          <div class="w-error-text">Enter a valid email address.</div>
+          <div w-error-text>Enter a valid email address.</div>
         }
       </div>
 
       <div
-        class="w-field"
-        [class.is-error]="form.controls.password.touched && form.controls.password.invalid"
+        w-form-field
+        [invalid]="form.controls.password.touched && form.controls.password.invalid"
       >
-        <label class="w-label" for="password">Password</label>
+        <label w-label for="password">Password</label>
         <div style="position: relative">
           <input
-            class="w-input"
+            w-text-field
             id="password"
             [type]="showPassword() ? 'text' : 'password'"
             autocomplete="current-password"
@@ -50,7 +41,7 @@
             placeholder="••••••••"
           />
           <button
-            class="w-iconbtn"
+            w-icon-button
             type="button"
             style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%)"
             [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
@@ -61,21 +52,25 @@
           </button>
         </div>
         @if (form.controls.password.touched && form.controls.password.invalid) {
-          <div class="w-error-text">Enter your password.</div>
+          <div w-error-text>Enter your password.</div>
         }
       </div>
 
-      <label class="w-check">
+      <label w-checkbox>
         <input type="checkbox" formControlName="remember" />
-        <span class="w-check__box"><w-icon name="check" /></span>
+        <span w-checkbox-box><w-icon name="check" /></span>
         <span>Keep me signed in</span>
       </label>
       @if (form.controls.remember.value) {
-        <p class="w-help w-mt-2">Not recommended on shared or public devices.</p>
+        <p w-help class="w-mt-2">Not recommended on shared or public devices.</p>
       }
 
       <button
-        class="w-btn w-btn--primary w-btn--block w-btn--lg w-mt-4"
+        w-button
+        variant="primary"
+        block
+        size="lg"
+        class="w-mt-4"
         type="submit"
         [class.is-loading]="submitting()"
         [disabled]="submitting()"

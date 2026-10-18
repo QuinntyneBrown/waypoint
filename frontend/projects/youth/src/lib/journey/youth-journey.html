@@ -13,12 +13,12 @@
       </div>
     </div>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (journey(); as view) {
-      <section class="w-card w-card--ink">
-        <div class="w-card__body w-stack">
+      <section w-card variant="ink">
+        <div w-card-body class="w-stack">
           <div class="w-eyebrow">Overall progress</div>
           <h2>{{ completedModules() }} of {{ view.modules.length }} modules complete</h2>
           @if (currentModule(); as current) {
@@ -26,52 +26,53 @@
               You are in <strong>{{ current.name }}</strong> now.
             </p>
           }
-          <progress class="journey-progress" [value]="overallPercent()" max="100">
-            {{ overallPercent() }}%
-          </progress>
+          <div w-progress label="Overall progress" [value]="overallPercent()"></div>
           <strong>{{ overallPercent() }}%</strong>
         </div>
       </section>
 
-      <section class="w-card">
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-body class="w-stack">
           <h2>Your roadmap</h2>
           @if (view.modules.length === 0) {
-            <div class="w-empty">
-              <h3 class="w-empty__title">Your roadmap is being prepared</h3>
-              <p class="w-empty__text">
-                Your modules will appear after you join a curriculum track.
-              </p>
+            <div w-empty-state>
+              <h3 w-empty-state-title>Your roadmap is being prepared</h3>
+              <p w-empty-state-text>Your modules will appear after you join a curriculum track.</p>
             </div>
           } @else {
-            <div class="journey-timeline w-stack">
+            <div w-timeline>
               @for (module of view.modules; track module.moduleId) {
                 <article
-                  class="w-card w-card--greige journey-module"
-                  [class.journey-module--current]="module.current"
+                  w-timeline-item
+                  [done]="module.status === 'done'"
+                  [current]="module.current"
                   [attr.data-testid]="module.current ? 'current-module' : 'journey-module'"
                 >
-                  <div class="w-card__body w-stack">
-                    <div class="w-cluster w-cluster--between">
-                      <h3>{{ module.name }}</h3>
-                      <span
-                        class="w-badge"
-                        [class.w-badge--success]="module.status === 'done'"
-                        [class.w-badge--warning]="module.current"
-                        >{{ statusLabel(module.status) }}</span
-                      >
+                  <div w-card variant="greige">
+                    <div w-card-body class="w-stack">
+                      <div class="w-cluster w-cluster--between">
+                        <h3>{{ module.name }}</h3>
+                        <span
+                          w-badge
+                          [variant]="
+                            module.status === 'done' ? 'success' : module.current ? 'warning' : ''
+                          "
+                          >{{ statusLabel(module.status) }}</span
+                        >
+                      </div>
+                      <p>
+                        {{ module.completedItems }} of {{ module.totalItems }} required items
+                        complete
+                      </p>
+                      @if (module.unlockCondition) {
+                        <p class="w-muted">{{ module.unlockCondition }}</p>
+                      }
+                      @if (module.current) {
+                        <a w-button variant="primary" routerLink="/youth/curriculum"
+                          >Continue module</a
+                        >
+                      }
                     </div>
-                    <p>
-                      {{ module.completedItems }} of {{ module.totalItems }} required items complete
-                    </p>
-                    @if (module.unlockCondition) {
-                      <p class="w-muted">{{ module.unlockCondition }}</p>
-                    }
-                    @if (module.current) {
-                      <a class="w-btn w-btn--primary" routerLink="/youth/curriculum"
-                        >Continue module</a
-                      >
-                    }
                   </div>
                 </article>
               }
@@ -80,33 +81,33 @@
         </div>
       </section>
 
-      <section class="w-card">
-        <div class="w-card__body w-stack">
+      <section w-card>
+        <div w-card-body class="w-stack">
           <div class="w-cluster w-cluster--between">
             <h2>Badge collection</h2>
-            <span class="w-badge"
+            <span w-badge
               >{{ view.earned.length }} of {{ view.earned.length + view.locked.length }}</span
             >
           </div>
           <div class="w-grid w-grid--3">
             @for (badge of view.earned; track badge.badgeId) {
-              <div class="w-card w-card--greige">
-                <div class="w-card__body">
+              <div w-card variant="greige">
+                <div w-card-body>
                   <strong>{{ badge.name }}</strong>
                   <p class="w-muted">Earned</p>
                 </div>
               </div>
             }
             @for (badge of view.locked; track badge.badgeId) {
-              <div class="w-card w-card--greige">
-                <div class="w-card__body">
+              <div w-card variant="greige">
+                <div w-card-body>
                   <strong>{{ badge.name }}</strong>
                   <p class="w-muted">{{ badge.progressLabel }}</p>
                 </div>
               </div>
             }
           </div>
-          <a class="w-btn w-btn--ghost" routerLink="/youth/badges">View badge details</a>
+          <a w-button variant="ghost" routerLink="/youth/badges">View badge details</a>
         </div>
       </section>
     } @else {

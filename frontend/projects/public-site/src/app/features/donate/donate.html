@@ -7,31 +7,30 @@
 
   <form [formGroup]="form" (ngSubmit)="confirm()" novalidate class="w-stack w-mt-6">
     <div class="w-grid w-grid--2">
-      <div class="w-field" [class.is-error]="error('donorName')">
-        <label class="w-label" for="donorName">Your name <span class="w-label__req">*</span></label>
-        <input class="w-input" id="donorName" formControlName="donorName" />
+      <div w-form-field [invalid]="error('donorName')">
+        <label w-label for="donorName">Your name <span w-label-required>*</span></label>
+        <input w-text-field id="donorName" formControlName="donorName" />
         @if (error('donorName')) {
-          <div class="w-error-text">{{ error('donorName') }}</div>
+          <div w-error-text>{{ error('donorName') }}</div>
         }
       </div>
-      <div class="w-field" [class.is-error]="error('email')">
-        <label class="w-label" for="email">Email <span class="w-label__req">*</span></label>
-        <input class="w-input" id="email" type="email" formControlName="email" />
+      <div w-form-field [invalid]="error('email')">
+        <label w-label for="email">Email <span w-label-required>*</span></label>
+        <input w-text-field id="email" type="email" formControlName="email" />
         @if (error('email')) {
-          <div class="w-error-text">{{ error('email') }}</div>
+          <div w-error-text>{{ error('email') }}</div>
         }
       </div>
     </div>
 
     <fieldset style="border: 0; padding: 0; margin: 0">
-      <legend class="w-label">Monthly amount</legend>
+      <legend w-label>Monthly amount</legend>
       <div class="w-cluster w-mt-2">
         @for (tier of tiers; track tier) {
           <button
+            w-button
             type="button"
-            class="w-btn"
-            [class.w-btn--primary]="selected() === tier"
-            [class.w-btn--ghost]="selected() !== tier"
+            [variant]="selected() === tier ? 'primary' : 'ghost'"
             [attr.aria-pressed]="selected() === tier"
             (click)="select(tier)"
           >
@@ -41,20 +40,19 @@
       </div>
     </fieldset>
 
-    <p class="w-help">
+    <p w-help>
       Payments are processed securely by our external PCI-compliant provider — Waypoint never sees
       or stores your card details.
     </p>
 
     @if (serverError()) {
-      <div class="w-alert w-alert--error" role="alert">
-        <w-icon name="alert-circle" iconClass="w-alert__icon" />
-        <div>{{ serverError() }}</div>
-      </div>
+      <div w-alert variant="error" icon="alert-circle" role="alert">{{ serverError() }}</div>
     }
 
     <button
-      class="w-btn w-btn--primary w-btn--lg"
+      w-button
+      variant="primary"
+      size="lg"
       type="submit"
       [class.is-loading]="submitting()"
       [disabled]="selected() === null || submitting()"
@@ -64,15 +62,18 @@
   </form>
 
   @if (confirmed()) {
-    <div class="w-alert w-alert--success w-mt-6" role="status">
+    <div w-alert variant="success" class="w-mt-6" role="status">
       <div>
-        <div class="w-alert__title">Thank you!</div>
+        <div w-alert-title>Thank you!</div>
         You’re giving ${{ selected() }} monthly. Finish your donation with our secure provider — it
         opens in a new tab.
       </div>
     </div>
     <a
-      class="w-btn w-btn--primary w-btn--lg w-mt-4"
+      w-button
+      variant="primary"
+      size="lg"
+      class="w-mt-4"
       [href]="providerUrl()"
       target="_blank"
       rel="noopener noreferrer"

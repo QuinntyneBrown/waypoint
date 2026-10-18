@@ -13,7 +13,8 @@
       </div>
       @if (unreadCount() > 0) {
         <button
-          class="w-btn w-btn--secondary"
+          w-button
+          variant="secondary"
           type="button"
           [disabled]="saving()"
           (click)="markAllRead()"
@@ -28,12 +29,12 @@
     } @else if (announcements()!.length > 0) {
       <div class="w-stack">
         @for (announcement of announcements(); track announcement.id) {
-          <article class="w-card" data-testid="guardian-announcement">
-            <div class="w-card__body w-stack w-stack--sm">
+          <article w-card data-testid="guardian-announcement">
+            <div w-card-body class="w-stack w-stack--sm">
               <div class="w-cluster w-cluster--between">
-                <h2 class="w-card__title">{{ announcement.title }}</h2>
+                <h2 w-card-title>{{ announcement.title }}</h2>
                 @if (!announcement.read) {
-                  <span class="w-badge w-badge--lime">Unread</span>
+                  <span w-badge variant="lime">Unread</span>
                 }
               </div>
               @if (announcement.sentAt) {
@@ -45,17 +46,17 @@
         }
       </div>
     } @else {
-      <div class="w-empty">
-        <div class="w-empty__icon">
+      <div w-empty-state>
+        <div w-empty-state-icon>
           <w-icon name="bell" />
         </div>
-        <h2 class="w-empty__title">No announcements yet</h2>
-        <p class="w-empty__text">Program and cohort news will appear here.</p>
+        <h2 w-empty-state-title>No announcements yet</h2>
+        <p w-empty-state-text>Program and cohort news will appear here.</p>
       </div>
     }
 
     @if (error(); as message) {
-      <p class="w-alert w-alert--error" role="alert">{{ message }}</p>
+      <p w-alert variant="error" role="alert">{{ message }}</p>
     }
   </div>
 </w-shell>

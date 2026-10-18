@@ -2,7 +2,26 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ApiError, RsvpResponse, ScheduleService, YouthSession } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Label,
+  LabelOptional,
+  Shell,
+  Textarea,
+  Checkbox,
+  CheckboxBox,
+  Radio,
+  RadioBox,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 
 interface RsvpDraft {
   response: RsvpResponse | null;
@@ -14,48 +33,29 @@ interface RsvpDraft {
 @Component({
   selector: 'w-youth-schedule',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, DatePipe],
+  imports: [
+    Shell,
+    DatePipe,
+    Button,
+    FormField,
+    Label,
+    LabelOptional,
+    Textarea,
+    Checkbox,
+    CheckboxBox,
+    Radio,
+    RadioBox,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './youth-schedule.html',
-  styles: `
-    .schedule-list {
-      display: grid;
-      gap: var(--w-s5);
-    }
-    .session-card__layout {
-      display: grid;
-      grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 1fr);
-      gap: var(--w-s6);
-      align-items: start;
-    }
-    .session-meta {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .rsvp-options {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--w-s2);
-    }
-    .rsvp-option {
-      min-width: 0;
-      margin: 0;
-      padding: var(--w-s2);
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-input);
-    }
-    .rsvp-note {
-      min-height: 7rem;
-    }
-    @media (max-width: 48rem) {
-      .session-card__layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .rsvp-options {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-  `,
+  styleUrl: './youth-schedule.css',
 })
 export class YouthSchedulePage {
   protected readonly auth = inject(AuthStore);

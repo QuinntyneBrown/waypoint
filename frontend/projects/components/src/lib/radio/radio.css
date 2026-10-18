@@ -1,0 +1,29 @@
+.w-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  min-height: 44px;
+}
+.w-radio input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.w-radio input:checked + .w-radio__box {
+  border-color: var(--w-ink);
+}
+.w-radio input:checked + .w-radio__box::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--w-ink);
+}
+.w-radio input:focus-visible + .w-radio__box {
+  outline: 2px solid var(--w-ink);
+  outline-offset: 2px;
+}

@@ -11,95 +11,63 @@ import {
   ManagedAnnouncement,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  AlertTitle,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+  StatLabel,
+  StatValue,
+} from '@waypoint/components';
 import { finalize, forkJoin } from 'rxjs';
 
 // Traces to: L2-ENGAGE-006, L2-AUTH-010, L2-NFR-001/009/010
 @Component({
   selector: 'w-admin-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, ReactiveFormsModule, DatePipe, PercentPipe],
+  imports: [
+    Shell,
+    Icon,
+    ReactiveFormsModule,
+    DatePipe,
+    PercentPipe,
+    Button,
+    FormField,
+    Label,
+    ErrorText,
+    TextField,
+    Textarea,
+    Select,
+    Alert,
+    AlertTitle,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+    StatLabel,
+    StatValue,
+  ],
   templateUrl: './admin-announcements.html',
-  styles: `
-    .announcement-layout {
-      display: grid;
-      grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.35fr);
-      gap: var(--w-s5);
-      align-items: start;
-    }
-    .announcement-layout > * {
-      min-width: 0;
-    }
-    .announcement-options {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s3);
-      padding: 0;
-      border: 0;
-    }
-    .announcement-option {
-      display: flex;
-      align-items: center;
-      gap: var(--w-s2);
-      min-height: 2.75rem;
-      padding: var(--w-s2) var(--w-s3);
-      border: 1px solid var(--w-border);
-      border-radius: var(--w-r-card);
-      cursor: pointer;
-    }
-    .announcement-option:has(input:checked) {
-      border-color: var(--w-ink);
-      background: var(--w-g100);
-    }
-    .announcement-option input {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-    .announcement-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .announcement-item {
-      min-width: 0;
-      overflow-wrap: anywhere;
-    }
-    .announcement-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--w-s2);
-      align-items: center;
-    }
-    .announcement-stats {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--w-s3);
-      padding-top: var(--w-s3);
-      border-top: 1px solid var(--w-border);
-    }
-    .announcement-stat {
-      min-width: 0;
-    }
-    .announcement-stat strong {
-      display: block;
-      font-size: 1.125rem;
-    }
-    @media (max-width: 58rem) {
-      .announcement-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 36rem) {
-      .announcement-options,
-      .announcement-stats {
-        grid-template-columns: 1fr;
-      }
-      .announcement-submit {
-        width: 100%;
-        min-height: 45px;
-      }
-    }
-  `,
+  styleUrl: './admin-announcements.css',
 })
 export class AdminAnnouncementsPage {
   protected readonly auth = inject(AuthStore);

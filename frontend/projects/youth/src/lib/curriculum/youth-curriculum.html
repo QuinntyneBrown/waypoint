@@ -14,21 +14,20 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (curriculum(); as view) {
       @if (view.tracks.length > 1) {
         <div class="w-stack">
-          <h2 class="w-card__title">Your tracks</h2>
+          <h2 w-card-title>Your tracks</h2>
           <div class="w-cluster" aria-label="Choose curriculum track">
             @for (track of view.tracks; track track.trackId) {
               <button
-                class="w-btn"
+                w-button
                 type="button"
                 data-testid="curriculum-track"
-                [class.w-btn--primary]="track.selected"
-                [class.w-btn--ghost]="!track.selected"
+                [variant]="track.selected ? 'primary' : 'ghost'"
                 [attr.aria-pressed]="track.selected"
                 [disabled]="switching()"
                 (click)="switchTrack(track.trackId)"
@@ -41,27 +40,32 @@
       }
 
       @if (view.modules.length === 0) {
-        <div class="w-empty">
-          <div class="w-empty__icon">
+        <div w-empty-state>
+          <div w-empty-state-icon>
             <w-icon name="book-open" />
           </div>
-          <h2 class="w-empty__title">This track is not set up yet</h2>
-          <p class="w-empty__text">Published modules will appear here when they are ready.</p>
+          <h2 w-empty-state-title>This track is not set up yet</h2>
+          <p w-empty-state-text>Published modules will appear here when they are ready.</p>
         </div>
       } @else {
         <div class="w-stack">
           @for (module of view.modules; track module.moduleId) {
-            <section class="w-card" data-testid="curriculum-module">
-              <div class="w-card__body w-stack">
+            <section w-card data-testid="curriculum-module">
+              <div w-card-body class="w-stack">
                 <div class="w-cluster w-cluster--between">
                   <div>
                     <div class="w-eyebrow">Module {{ module.order }}</div>
-                    <h2 class="w-card__title">{{ module.name }}</h2>
+                    <h2 w-card-title>{{ module.name }}</h2>
                   </div>
                   <span
-                    class="w-badge"
-                    [class.w-badge--success]="module.status === 'done'"
-                    [class.w-badge--warning]="module.status === 'in-progress'"
+                    w-badge
+                    [variant]="
+                      module.status === 'done'
+                        ? 'success'
+                        : module.status === 'in-progress'
+                          ? 'warning'
+                          : ''
+                    "
                   >
                     {{
                       module.locked ? 'Locked' : (module.completionPercent | number: '1.0-0') + '%'
@@ -75,14 +79,14 @@
                   <p class="w-muted">Scripture anchor: {{ module.scriptureAnchor }}</p>
                 }
                 @if (module.unlockCondition) {
-                  <p class="w-alert w-alert--info">{{ module.unlockCondition }}</p>
+                  <p w-alert variant="info">{{ module.unlockCondition }}</p>
                 }
 
                 @if (module.items.length > 0) {
                   <ol class="w-stack">
                     @for (item of module.items; track item.itemId) {
-                      <li class="w-card w-card--greige" data-testid="curriculum-item">
-                        <div class="w-card__body w-cluster w-cluster--between">
+                      <li w-card variant="greige" data-testid="curriculum-item">
+                        <div w-card-body class="w-cluster w-cluster--between">
                           <div>
                             @if (!item.locked) {
                               <a
@@ -115,7 +119,7 @@
                               <span class="w-muted">{{ item.unlockCondition }}</span>
                             }
                           </div>
-                          <span class="w-badge">{{ item.locked ? 'Locked' : item.status }}</span>
+                          <span w-badge>{{ item.locked ? 'Locked' : item.status }}</span>
                         </div>
                       </li>
                     }

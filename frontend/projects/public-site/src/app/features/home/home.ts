@@ -1,13 +1,24 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiError, PublicContentView, PublicSiteService } from '@waypoint/api';
+import {
+  Button,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Stat,
+  StatValue,
+  StatLabel,
+} from '@waypoint/components';
 
 // Traces to: L2-PUB-002
 @Component({
   selector: 'w-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, Button, Alert, Card, CardBody, CardTitle, Stat, StatValue, StatLabel],
   templateUrl: './home.html',
+  styleUrl: './home.css',
 })
 export class Home {
   private readonly api = inject(PublicSiteService);

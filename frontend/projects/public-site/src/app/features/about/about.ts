@@ -2,13 +2,35 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiError, PublicContentView, PublicSiteService } from '@waypoint/api';
+import {
+  Button,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Badge,
+  EmptyState,
+} from '@waypoint/components';
 
 // Traces to: L2-PUB-002
 @Component({
   selector: 'w-about',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, RouterLink],
+  imports: [
+    DatePipe,
+    RouterLink,
+    Button,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    Badge,
+    EmptyState,
+  ],
   templateUrl: './about.html',
+  styleUrl: './about.css',
 })
 export class About {
   private readonly api = inject(PublicSiteService);

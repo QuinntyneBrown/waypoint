@@ -3,50 +3,42 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, ReportsService, ReportsHub } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  Icon,
+  Shell,
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  Stat,
+  StatLabel,
+  StatValue,
+} from '@waypoint/components';
 
 // Traces to: L2-ADMIN-004, L2-REPORT-001
 @Component({
   selector: 'w-admin-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, PercentPipe, RouterLink, WIcon, WShell],
+  imports: [
+    DatePipe,
+    PercentPipe,
+    RouterLink,
+    Icon,
+    Shell,
+    Button,
+    Alert,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    Stat,
+    StatLabel,
+    StatValue,
+  ],
   templateUrl: './admin-dashboard.html',
-  styles: `
-    .dashboard-grid {
-      display: grid;
-      gap: var(--w-s5);
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .dashboard-row {
-      border-top: 1px solid var(--w-border);
-      padding: var(--w-s4) 0;
-    }
-    .dashboard-row:first-child {
-      border-top: 0;
-    }
-    .dashboard-actions {
-      display: grid;
-      gap: var(--w-s3);
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .dashboard-action {
-      align-items: center;
-      display: flex;
-      gap: var(--w-s3);
-      min-height: 56px;
-    }
-    @media (max-width: 62rem) {
-      .dashboard-actions {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-    @media (max-width: 48rem) {
-      .dashboard-grid,
-      .dashboard-actions {
-        grid-template-columns: 1fr;
-      }
-    }
-  `,
+  styleUrl: './admin-dashboard.css',
 })
 export class AdminDashboardPage {
   protected readonly auth = inject(AuthStore);

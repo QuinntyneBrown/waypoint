@@ -2,7 +2,17 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ApiError, PublicSiteService } from '@waypoint/api';
-import { WIcon } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Label,
+  LabelRequired,
+  TextField,
+  Alert,
+  AlertTitle,
+} from '@waypoint/components';
 
 function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -12,8 +22,20 @@ function isEmail(value: string): boolean {
 @Component({
   selector: 'w-donate',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, WIcon],
+  imports: [
+    ReactiveFormsModule,
+    Button,
+    FormField,
+    Label,
+    LabelRequired,
+    Help,
+    ErrorText,
+    TextField,
+    Alert,
+    AlertTitle,
+  ],
   templateUrl: './donate.html',
+  styleUrl: './donate.css',
 })
 export class Donate {
   private readonly fb = inject(FormBuilder);

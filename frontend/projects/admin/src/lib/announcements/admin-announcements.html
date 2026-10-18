@@ -14,75 +14,70 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <div>
-          <div class="w-alert__title">{{ error }}</div>
+          <div w-alert-title>{{ error }}</div>
           Announcement information could not be loaded or saved.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
 
     <div class="announcement-layout">
-      <section class="w-card" aria-labelledby="compose-announcement-heading">
-        <div class="w-card__body w-stack">
+      <section w-card aria-labelledby="compose-announcement-heading">
+        <div w-card-body class="w-stack">
           <div>
             <h2 id="compose-announcement-heading">Compose announcement</h2>
             <p class="w-muted">Choose exactly who should receive this update.</p>
           </div>
           <form class="w-stack" [formGroup]="form" (ngSubmit)="compose()">
-            <div class="w-field">
-              <label class="w-label" for="announcement-title">Title</label>
-              <input
-                class="w-input"
-                id="announcement-title"
-                maxlength="200"
-                formControlName="title"
-              />
+            <div w-form-field>
+              <label w-label for="announcement-title">Title</label>
+              <input w-text-field id="announcement-title" maxlength="200" formControlName="title" />
               @if (form.controls.title.touched && form.controls.title.invalid) {
-                <p class="w-error">Enter a title up to 200 characters.</p>
+                <p w-error-text>Enter a title up to 200 characters.</p>
               }
             </div>
-            <div class="w-field">
-              <label class="w-label" for="announcement-message">Message</label>
+            <div w-form-field>
+              <label w-label for="announcement-message">Message</label>
               <textarea
-                class="w-textarea"
+                w-textarea
                 id="announcement-message"
                 rows="6"
                 maxlength="4000"
                 formControlName="message"
               ></textarea>
               @if (form.controls.message.touched && form.controls.message.invalid) {
-                <p class="w-error">Enter an announcement message.</p>
+                <p w-error-text>Enter an announcement message.</p>
               }
             </div>
-            <div class="w-field">
-              <label class="w-label" for="announcement-audience">Audience</label>
-              <select class="w-select" id="announcement-audience" formControlName="audienceScope">
+            <div w-form-field>
+              <label w-label for="announcement-audience">Audience</label>
+              <select w-select id="announcement-audience" formControlName="audienceScope">
                 <option value="org">Organization</option>
                 <option value="cohort">Cohort</option>
               </select>
             </div>
             @if (isCohort()) {
-              <div class="w-field">
-                <label class="w-label" for="announcement-cohort">Cohort</label>
-                <select class="w-select" id="announcement-cohort" formControlName="cohortId">
+              <div w-form-field>
+                <label w-label for="announcement-cohort">Cohort</label>
+                <select w-select id="announcement-cohort" formControlName="cohortId">
                   <option value="">Choose a cohort</option>
                   @for (cohort of cohorts(); track cohort.id) {
                     <option [value]="cohort.id">{{ cohort.name }}</option>
                   }
                 </select>
                 @if (targetError(); as message) {
-                  <p class="w-error">{{ message }}</p>
+                  <p w-error-text>{{ message }}</p>
                 }
               </div>
             }
-            <div class="w-field">
-              <label class="w-label" for="announcement-recipients">Recipients</label>
-              <select class="w-select" id="announcement-recipients" formControlName="roleTargeting">
+            <div w-form-field>
+              <label w-label for="announcement-recipients">Recipients</label>
+              <select w-select id="announcement-recipients" formControlName="roleTargeting">
                 <option value="Youth">Youth</option>
                 <option value="YouthGuardians">Youth + guardians</option>
                 <option value="Guardians">Guardians</option>
@@ -91,7 +86,7 @@
               </select>
             </div>
             <fieldset class="announcement-options">
-              <legend class="w-label">Delivery</legend>
+              <legend w-label>Delivery</legend>
               <label class="announcement-option">
                 <input type="radio" value="now" formControlName="delivery" />
                 <span>Send now</span>
@@ -102,21 +97,23 @@
               </label>
             </fieldset>
             @if (schedulesLater()) {
-              <div class="w-field">
-                <label class="w-label" for="announcement-scheduled-at">Send date and time</label>
+              <div w-form-field>
+                <label w-label for="announcement-scheduled-at">Send date and time</label>
                 <input
-                  class="w-input"
+                  w-text-field
                   id="announcement-scheduled-at"
                   type="datetime-local"
                   formControlName="scheduledAt"
                 />
                 @if (scheduleError(); as message) {
-                  <p class="w-error">{{ message }}</p>
+                  <p w-error-text>{{ message }}</p>
                 }
               </div>
             }
             <button
-              class="w-btn w-btn--primary announcement-submit"
+              w-button
+              variant="primary"
+              class="announcement-submit"
               type="submit"
               [disabled]="saving()"
             >
@@ -143,32 +140,31 @@
         @if (announcements() === undefined) {
           <p class="w-muted">Loading announcements…</p>
         } @else if (announcements()!.length === 0) {
-          <div class="w-empty">
-            <div class="w-empty__icon"><w-icon name="bell" /></div>
-            <h3 class="w-empty__title">No announcements yet</h3>
-            <p class="w-empty__text">Sent and scheduled updates will appear here.</p>
+          <div w-empty-state>
+            <div w-empty-state-icon><w-icon name="bell" /></div>
+            <h3 w-empty-state-title>No announcements yet</h3>
+            <p w-empty-state-text>Sent and scheduled updates will appear here.</p>
           </div>
         } @else {
           <ol class="announcement-list w-stack">
             @for (announcement of announcements(); track announcement.id) {
-              <li class="w-card announcement-item" data-testid="admin-announcement">
-                <div class="w-card__body w-stack w-stack--sm">
+              <li w-card class="announcement-item" data-testid="admin-announcement">
+                <div w-card-body class="w-stack w-stack--sm">
                   <div class="w-cluster w-cluster--between">
-                    <h3 class="w-card__title">{{ announcement.title }}</h3>
+                    <h3 w-card-title>{{ announcement.title }}</h3>
                     <span
-                      class="w-badge"
-                      [class.w-badge--lime]="announcement.sentAt"
-                      [class.w-badge--info]="!announcement.sentAt"
+                      w-badge
+                      [variant]="announcement.sentAt ? 'lime' : !announcement.sentAt ? 'info' : ''"
                     >
                       {{ announcement.sentAt ? 'Sent' : 'Scheduled' }}
                     </span>
                   </div>
                   <p>{{ announcement.message }}</p>
                   <div class="announcement-meta">
-                    <span class="w-badge w-badge--neutral">
+                    <span w-badge>
                       {{ announcement.cohortName ?? 'Organization' }}
                     </span>
-                    <span class="w-badge w-badge--neutral">
+                    <span w-badge>
                       {{ roleLabel(announcement.roleTargeting) }}
                     </span>
                     <span class="w-muted">
@@ -180,15 +176,17 @@
                     </span>
                   </div>
                   <div class="announcement-stats">
-                    <div class="announcement-stat">
-                      <strong
+                    <div class="w-kpi">
+                      <span w-stat-label>Recipient opens</span
+                      ><strong w-stat-value
                         >{{ announcement.reads }} of {{ announcement.recipients }} read</strong
                       >
-                      <span class="w-muted">Recipient opens</span>
                     </div>
-                    <div class="announcement-stat">
-                      <strong>{{ announcement.readRate | percent: '1.0-0' }} read</strong>
-                      <span class="w-muted">Aggregate read rate</span>
+                    <div class="w-kpi">
+                      <span w-stat-label>Aggregate read rate</span
+                      ><strong w-stat-value
+                        >{{ announcement.readRate | percent: '1.0-0' }} read</strong
+                      >
                     </div>
                   </div>
                 </div>

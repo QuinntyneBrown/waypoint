@@ -10,56 +10,55 @@ import {
   MessagingService,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  FormField,
+  Icon,
+  Label,
+  Select,
+  Shell,
+  Textarea,
+  TextField,
+  Alert,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 
 // Traces to: L2-MENTOR-007, L2-ENGAGE-007, L2-AUTH-010
 @Component({
   selector: 'w-mentor-flags',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon, RouterLink, DatePipe],
+  imports: [
+    Shell,
+    Icon,
+    RouterLink,
+    DatePipe,
+    Button,
+    FormField,
+    Label,
+    TextField,
+    Textarea,
+    Select,
+    Alert,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './mentor-flags.html',
-  styles: `
-    .raise-grid {
-      display: grid;
-      grid-template-columns: minmax(12rem, 0.75fr) minmax(16rem, 1.5fr) auto;
-      gap: var(--w-s4);
-      align-items: end;
-    }
-    .flag-list {
-      display: grid;
-      gap: var(--w-s4);
-    }
-    .flag-card {
-      overflow: hidden;
-    }
-    .reason-list {
-      margin: 0;
-      padding-left: 1.25rem;
-    }
-    .reason-list li {
-      overflow-wrap: anywhere;
-    }
-    .inline-action {
-      padding: var(--w-s4);
-      border-top: 1px solid var(--w-border);
-      background: var(--w-g100);
-    }
-    .action-field {
-      max-width: 38rem;
-    }
-    .flag-actions .w-btn,
-    .raise-button {
-      min-height: 44px;
-    }
-    @media (max-width: 48rem) {
-      .raise-grid {
-        grid-template-columns: 1fr;
-      }
-      .raise-button {
-        width: 100%;
-      }
-    }
-  `,
+  styleUrl: './mentor-flags.css',
 })
 export class MentorFlagsPage {
   protected readonly auth = inject(AuthStore);

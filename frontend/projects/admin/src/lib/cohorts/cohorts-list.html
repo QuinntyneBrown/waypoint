@@ -11,20 +11,20 @@
         <h1 class="w-page__title">Cohorts</h1>
         <p class="w-page__sub">Create cohorts and manage their membership and lead mentor.</p>
       </div>
-      <button class="w-btn w-btn--primary" type="button" (click)="openCreate()">New cohort</button>
+      <button w-button variant="primary" type="button" (click)="openCreate()">New cohort</button>
     </div>
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <div>
-          <div class="w-alert__title">{{ error }}</div>
+          <div w-alert-title>{{ error }}</div>
           Cohort data could not be loaded or saved.
         </div>
-        <button class="w-btn w-btn--secondary" type="button" (click)="retry()">Retry</button>
+        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
 
     @if (loading()) {
@@ -32,8 +32,8 @@
     } @else if (cohorts()!.length > 0) {
       <div class="cohort-grid">
         @for (cohort of cohorts(); track cohort.id) {
-          <article class="w-card cohort-card" data-testid="cohort-card">
-            <div class="w-card__body w-stack">
+          <article w-card class="cohort-card" data-testid="cohort-card">
+            <div w-card-body class="w-stack">
               <div>
                 <div class="w-eyebrow">{{ cohort.trackName ?? 'Track not assigned' }}</div>
                 <h2>
@@ -60,126 +60,103 @@
         }
       </div>
     } @else if (!errorMessage()) {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="layers" /></div>
-        <h2 class="w-empty__title">No cohorts yet</h2>
-        <p class="w-empty__text">Create the first cohort to begin placing young people.</p>
-        <button class="w-btn w-btn--primary" type="button" (click)="openCreate()">
-          New cohort
-        </button>
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="layers" /></div>
+        <h2 w-empty-state-title>No cohorts yet</h2>
+        <p w-empty-state-text>Create the first cohort to begin placing young people.</p>
+        <button w-button variant="primary" type="button" (click)="openCreate()">New cohort</button>
       </div>
     }
   </div>
 
   @if (createOpen()) {
-    <div
-      class="w-modal w-modal--lg is-open"
-      wuAccessibleDialog
-      aria-labelledby="create-cohort-heading"
-      (wuDialogEscape)="closeCreate()"
-    >
-      <div class="w-modal__scrim" (click)="closeCreate()"></div>
-      <div class="w-modal__panel">
-        <div class="w-modal__header">
-          <div>
-            <h2 class="w-modal__title" id="create-cohort-heading">Create cohort</h2>
-            <p class="w-modal__sub">Choose the learning track and accountable lead mentor.</p>
+    <div w-dialog size="lg" aria-labelledby="create-cohort-heading" (dismiss)="closeCreate()">
+      <div w-dialog-header>
+        <div>
+          <h2 w-dialog-title id="create-cohort-heading">Create cohort</h2>
+          <p w-dialog-subtitle>Choose the learning track and accountable lead mentor.</p>
+        </div>
+        <button
+          w-icon-button
+          type="button"
+          aria-label="Close"
+          [disabled]="saving()"
+          (click)="closeCreate()"
+        >
+          <w-icon name="x" />
+        </button>
+      </div>
+      <div w-dialog-body>
+        @if ((options()?.tracks?.length ?? 0) === 0 || (options()?.mentors?.length ?? 0) === 0) {
+          <div w-alert variant="warning">
+            An enabled published track and an active mentor are required before a cohort can be
+            created.
           </div>
-          <button
-            class="w-iconbtn w-modal__close"
-            type="button"
-            aria-label="Close"
-            [disabled]="saving()"
-            (click)="closeCreate()"
-          >
-            <w-icon name="x" />
-          </button>
-        </div>
-        <div class="w-modal__body">
-          @if ((options()?.tracks?.length ?? 0) === 0 || (options()?.mentors?.length ?? 0) === 0) {
-            <div class="w-alert w-alert--warning">
-              An enabled published track and an active mentor are required before a cohort can be
-              created.
-            </div>
-          }
-          <form class="form-grid" [formGroup]="form" (ngSubmit)="create()">
-            <div class="w-field form-grid__wide">
-              <label class="w-label" for="cohort-name">
-                Cohort name <span class="w-label__req">*</span>
-              </label>
-              <input class="w-input" id="cohort-name" formControlName="name" maxlength="128" />
-              @if (form.controls.name.touched && form.controls.name.invalid) {
-                <p class="w-field__error">Enter a cohort name.</p>
+        }
+        <form class="form-grid" [formGroup]="form" (ngSubmit)="create()">
+          <div w-form-field class="form-grid__wide">
+            <label w-label for="cohort-name"> Cohort name <span w-label-required>*</span> </label>
+            <input w-text-field id="cohort-name" formControlName="name" maxlength="128" />
+            @if (form.controls.name.touched && form.controls.name.invalid) {
+              <p w-error-text>Enter a cohort name.</p>
+            }
+          </div>
+          <div w-form-field>
+            <label w-label for="cohort-track">
+              Curriculum track <span w-label-required>*</span>
+            </label>
+            <select w-select id="cohort-track" formControlName="trackId">
+              <option value="">Choose a track</option>
+              @for (track of options()?.tracks ?? []; track track.id) {
+                <option [value]="track.id">{{ track.name }}</option>
               }
-            </div>
-            <div class="w-field">
-              <label class="w-label" for="cohort-track">
-                Curriculum track <span class="w-label__req">*</span>
-              </label>
-              <select class="w-select" id="cohort-track" formControlName="trackId">
-                <option value="">Choose a track</option>
-                @for (track of options()?.tracks ?? []; track track.id) {
-                  <option [value]="track.id">{{ track.name }}</option>
-                }
-              </select>
-              @if (form.controls.trackId.touched && form.controls.trackId.invalid) {
-                <p class="w-field__error">Choose a curriculum track.</p>
+            </select>
+            @if (form.controls.trackId.touched && form.controls.trackId.invalid) {
+              <p w-error-text>Choose a curriculum track.</p>
+            }
+          </div>
+          <div w-form-field>
+            <label w-label for="cohort-mentor"> Lead mentor <span w-label-required>*</span> </label>
+            <select w-select id="cohort-mentor" formControlName="leadMentorId">
+              <option value="">Choose a mentor</option>
+              @for (mentor of options()?.mentors ?? []; track mentor.id) {
+                <option [value]="mentor.id">{{ mentor.name }}</option>
               }
-            </div>
-            <div class="w-field">
-              <label class="w-label" for="cohort-mentor">
-                Lead mentor <span class="w-label__req">*</span>
-              </label>
-              <select class="w-select" id="cohort-mentor" formControlName="leadMentorId">
-                <option value="">Choose a mentor</option>
-                @for (mentor of options()?.mentors ?? []; track mentor.id) {
-                  <option [value]="mentor.id">{{ mentor.name }}</option>
-                }
-              </select>
-              @if (form.controls.leadMentorId.touched && form.controls.leadMentorId.invalid) {
-                <p class="w-field__error">Choose an active lead mentor.</p>
-              }
-            </div>
-            <div class="w-field">
-              <label class="w-label" for="cohort-start">Start date</label>
-              <input class="w-input" id="cohort-start" type="date" formControlName="startDate" />
-            </div>
-            <div class="w-field">
-              <label class="w-label" for="cohort-end">End date</label>
-              <input class="w-input" id="cohort-end" type="date" formControlName="endDate" />
-              @if (dateError()) {
-                <p class="w-field__error">End date must be after start date.</p>
-              }
-            </div>
-            <div class="w-field form-grid__wide">
-              <label class="w-label" for="cohort-location">Meeting location</label>
-              <input
-                class="w-input"
-                id="cohort-location"
-                formControlName="location"
-                maxlength="256"
-              />
-            </div>
-          </form>
-        </div>
-        <div class="w-modal__footer">
-          <button
-            class="w-btn w-btn--ghost"
-            type="button"
-            [disabled]="saving()"
-            (click)="closeCreate()"
-          >
-            Cancel
-          </button>
-          <button
-            class="w-btn w-btn--primary"
-            type="button"
-            [disabled]="saving()"
-            (click)="create()"
-          >
-            {{ saving() ? 'Creating…' : 'Create cohort' }}
-          </button>
-        </div>
+            </select>
+            @if (form.controls.leadMentorId.touched && form.controls.leadMentorId.invalid) {
+              <p w-error-text>Choose an active lead mentor.</p>
+            }
+          </div>
+          <div w-form-field>
+            <label w-label for="cohort-start">Start date</label>
+            <input w-text-field id="cohort-start" type="date" formControlName="startDate" />
+          </div>
+          <div w-form-field>
+            <label w-label for="cohort-end">End date</label>
+            <input w-text-field id="cohort-end" type="date" formControlName="endDate" />
+            @if (dateError()) {
+              <p w-error-text>End date must be after start date.</p>
+            }
+          </div>
+          <div w-form-field class="form-grid__wide">
+            <label w-label for="cohort-location">Meeting location</label>
+            <input w-text-field id="cohort-location" formControlName="location" maxlength="256" />
+          </div>
+        </form>
+      </div>
+      <div w-dialog-footer>
+        <button
+          w-button
+          variant="ghost"
+          type="button"
+          [disabled]="saving()"
+          (click)="closeCreate()"
+        >
+          Cancel
+        </button>
+        <button w-button variant="primary" type="button" [disabled]="saving()" (click)="create()">
+          {{ saving() ? 'Creating…' : 'Create cohort' }}
+        </button>
       </div>
     </div>
   }

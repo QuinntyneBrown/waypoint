@@ -1,0 +1,10 @@
+<w-state-page
+  icon="mail"
+  tone="info"
+  eyebrow="Reset link sent"
+  title="Check your email"
+  [text]="bodyText"
+>
+  <button w-button variant="ghost" type="button" (click)="resend()">Resend link</button>
+  <a w-button variant="primary" routerLink="/auth/sign-in">Back to sign in</a>
+</w-state-page>

@@ -1,4 +1,4 @@
-import { WIcon } from '@waypoint/components';
+import { Button, ErrorText, FormField, Label, TextField, Alert, Brand } from '@waypoint/components';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -8,8 +8,19 @@ import { PasswordResetService } from '@waypoint/api';
 @Component({
   selector: 'w-forgot-password',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, WIcon],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    Button,
+    FormField,
+    Label,
+    ErrorText,
+    TextField,
+    Alert,
+    Brand,
+  ],
   templateUrl: './forgot-password.html',
+  styleUrl: './forgot-password.css',
 })
 export class ForgotPassword {
   private readonly fb = inject(FormBuilder);

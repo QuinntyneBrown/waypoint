@@ -1,0 +1,29 @@
+.w-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  min-height: 44px;
+}
+.w-check input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.w-check input:checked + .w-check__box {
+  background: var(--w-lime);
+  border-color: var(--w-lime);
+}
+.w-check input:checked + .w-check__box .w-icon {
+  opacity: 1;
+}
+.w-check input:checked + .w-check__box:empty::after {
+  opacity: 1;
+}
+.w-check input:focus-visible + .w-check__box {
+  outline: 2px solid var(--w-ink);
+  outline-offset: 2px;
+}

@@ -1,15 +1,40 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { AnnouncementsService, AnnouncementView } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  Icon,
+  Shell,
+  Card,
+  CardBody,
+  CardTitle,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 import { shellRole } from '@waypoint/core';
 
 // Traces to: L2-ENGAGE-006
 @Component({
   selector: 'w-youth-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, WIcon],
+  imports: [
+    Shell,
+    Icon,
+    Button,
+    Card,
+    CardBody,
+    CardTitle,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './youth-announcements.html',
+  styleUrl: './youth-announcements.css',
 })
 export class YouthAnnouncements {
   private readonly api = inject(AnnouncementsService);

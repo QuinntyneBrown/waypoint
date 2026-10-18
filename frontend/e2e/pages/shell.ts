@@ -23,6 +23,16 @@ export class AppShell {
     return this.page.locator('.w-botnav');
   }
 
+  /** The "Skip to content" link: the first tab stop on every signed-in page. */
+  get skipLink() {
+    return this.page.getByRole('link', { name: 'Skip to content' });
+  }
+
+  /** The page's main landmark, the target of the skip link. */
+  get main() {
+    return this.page.getByRole('main');
+  }
+
   async signOut(): Promise<void> {
     await this.signOutButton.click();
   }

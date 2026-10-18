@@ -6,22 +6,20 @@
 >
   <div class="w-container w-container--narrow w-page">
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (conflictMessage(); as conflict) {
-      <div class="w-alert w-alert--warning w-stack" role="alert" data-testid="submission-conflict">
+      <div w-alert variant="warning" class="w-stack" role="alert" data-testid="submission-conflict">
         <p>{{ conflict }}</p>
         <div>
-          <button class="w-btn w-btn--secondary" type="button" (click)="reviewLatest()">
+          <button w-button variant="secondary" type="button" (click)="reviewLatest()">
             Review latest feedback
           </button>
         </div>
       </div>
     }
     @if (submission(); as view) {
-      <a class="w-btn w-btn--ghost" [routerLink]="['/youth/submissions', view.id]"
-        >Back to status</a
-      >
+      <a w-button variant="ghost" [routerLink]="['/youth/submissions', view.id]">Back to status</a>
       <div class="w-page__head">
         <div class="w-page__titles">
           <div class="w-eyebrow">Needs revision</div>
@@ -29,26 +27,21 @@
         </div>
       </div>
       @if (view.mentorComment) {
-        <div class="w-alert w-alert--info">
+        <div w-alert variant="info">
           <strong>Mentor feedback</strong>
           <p>{{ view.mentorComment }}</p>
         </div>
       }
       <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
-        <div class="w-field">
-          <label class="w-field__label" for="revised-text">Revised response</label
-          ><textarea
-            id="revised-text"
-            class="w-input"
-            rows="8"
-            formControlName="bodyText"
-          ></textarea>
+        <div w-form-field>
+          <label w-label for="revised-text">Revised response</label
+          ><textarea w-textarea id="revised-text" rows="8" formControlName="bodyText"></textarea>
         </div>
-        <div class="w-field">
-          <label class="w-field__label" for="revised-link">Evidence link</label
-          ><input id="revised-link" class="w-input" type="url" formControlName="linkUrl" />
+        <div w-form-field>
+          <label w-label for="revised-link">Evidence link</label
+          ><input w-text-field id="revised-link" type="url" formControlName="linkUrl" />
         </div>
-        <button class="w-btn w-btn--primary w-btn--block" type="submit" [disabled]="saving()">
+        <button w-button variant="primary" block type="submit" [disabled]="saving()">
           Resubmit assignment
         </button>
       </form>

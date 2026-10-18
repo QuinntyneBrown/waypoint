@@ -2,14 +2,15 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthQuizResult } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WShell } from '@waypoint/components';
+import { Button, Shell, Alert, Card, CardBody, CardTitle, Badge } from '@waypoint/components';
 
 // Traces to: L2-LEARN-005
 @Component({
   selector: 'w-youth-quiz-result',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink],
+  imports: [Shell, RouterLink, Button, Alert, Card, CardBody, CardTitle, Badge],
   templateUrl: './youth-quiz-result.html',
+  styleUrl: './youth-quiz-result.css',
 })
 export class YouthQuizResultPage {
   protected readonly auth = inject(AuthStore);

@@ -5,9 +5,9 @@
   (signOut)="auth.signOut()"
 >
   <div class="w-container w-page">
-    <a class="w-link" [routerLink]="['/mentor/youth', youthId]">Back to youth record</a>
+    <a w-link standalone [routerLink]="['/mentor/youth', youthId]">Back to youth record</a>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
     @if (summary(); as view) {
@@ -21,52 +21,60 @@
         </div>
       </div>
 
-      <section class="w-card" data-testid="competency-summary" aria-label="Competency summary">
-        <div class="w-card__body summary-grid">
+      <section w-card data-testid="competency-summary" aria-label="Competency summary">
+        <div w-card-body class="summary-grid">
           <div>
-            <p class="w-muted">Proficient or mastered</p>
-            <p class="summary-value">{{ view.masteredOrProficient }} of {{ view.total }}</p>
+            <div class="w-kpi">
+              <span w-stat-label>Proficient or mastered</span
+              ><span w-stat-value>{{ view.masteredOrProficient }} of {{ view.total }}</span>
+            </div>
           </div>
           <div>
-            <p class="w-muted">Framework coverage</p>
-            <p class="summary-value">{{ view.total }} competencies</p>
+            <div class="w-kpi">
+              <span w-stat-label>Framework coverage</span
+              ><span w-stat-value>{{ view.total }} competencies</span>
+            </div>
           </div>
           <div>
-            <p class="w-muted">Current stage</p>
-            <p class="summary-value">{{ view.currentStageName ?? 'Not configured' }}</p>
+            <div class="w-kpi">
+              <span w-stat-label>Current stage</span
+              ><span w-stat-value>{{ view.currentStageName ?? 'Not configured' }}</span>
+            </div>
             <p class="w-muted">{{ view.currentStageProgress }}% complete</p>
           </div>
         </div>
       </section>
 
       @if (view.items.length === 0) {
-        <div class="w-card w-empty">
-          <div class="w-empty__icon"><w-icon name="award" /></div>
-          <h2 class="w-empty__title">No competencies configured</h2>
-          <p class="w-empty__text">A program administrator can add the progression framework.</p>
+        <div w-card>
+          <div w-empty-state>
+            <div w-empty-state-icon><w-icon name="award" /></div>
+            <h2 w-empty-state-title>No competencies configured</h2>
+            <p w-empty-state-text>A program administrator can add the progression framework.</p>
+          </div>
         </div>
       } @else {
         <div class="competency-grid">
           @for (item of view.items; track item.competencyId) {
             <article
-              class="w-card"
+              w-card
               data-testid="competency-card"
               [attr.data-competency-id]="item.competencyId"
             >
-              <div class="w-card__header">
+              <div w-card-header>
                 <div>
                   <p class="w-eyebrow">{{ item.stageName }}</p>
-                  <h2 class="w-card__title">{{ item.name }}</h2>
+                  <h2 w-card-title>{{ item.name }}</h2>
                 </div>
-                <span class="w-badge">{{ levelLabel(draft(item).level) }}</span>
+                <span w-badge>{{ levelLabel(draft(item).level) }}</span>
               </div>
-              <div class="w-card__body w-stack">
-                <div class="w-field">
-                  <label class="w-label" [for]="'level-' + item.competencyId">
+              <div w-card-body class="w-stack">
+                <div w-form-field>
+                  <label w-label [for]="'level-' + item.competencyId">
                     {{ item.name }} level
                   </label>
                   <select
-                    class="w-select"
+                    w-select
                     [id]="'level-' + item.competencyId"
                     (change)="setLevel(item, $any($event.target).value)"
                   >
@@ -77,12 +85,12 @@
                     }
                   </select>
                 </div>
-                <div class="w-field">
-                  <label class="w-label" [for]="'notes-' + item.competencyId">
+                <div w-form-field>
+                  <label w-label [for]="'notes-' + item.competencyId">
                     {{ item.name }} notes
                   </label>
                   <textarea
-                    class="w-textarea"
+                    w-textarea
                     [id]="'notes-' + item.competencyId"
                     rows="4"
                     maxlength="2000"
@@ -101,7 +109,9 @@
                   }
                 </div>
                 <button
-                  class="w-btn w-btn--primary save-button"
+                  w-button
+                  variant="primary"
+                  class="save-button"
                   type="button"
                   [disabled]="savingId() !== null"
                   (click)="save(item)"

@@ -11,15 +11,43 @@ import {
   ApiError,
 } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon } from '@waypoint/components';
+import {
+  Button,
+  ErrorText,
+  FormField,
+  Help,
+  Icon,
+  Label,
+  LabelRequired,
+  TextField,
+  Switch,
+  SwitchTrack,
+  Alert,
+  Brand,
+} from '@waypoint/components';
 import { forkJoin, of, switchMap } from 'rxjs';
 
 // Traces to: L2-AUTH-011
 @Component({
   selector: 'w-onboarding',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, WIcon],
+  imports: [
+    ReactiveFormsModule,
+    Icon,
+    Button,
+    FormField,
+    Label,
+    LabelRequired,
+    Help,
+    ErrorText,
+    TextField,
+    Switch,
+    SwitchTrack,
+    Alert,
+    Brand,
+  ],
   templateUrl: './onboarding.html',
+  styleUrl: './onboarding.css',
 })
 export class Onboarding implements OnDestroy {
   private readonly fb = inject(FormBuilder);

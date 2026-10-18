@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="w-alert w-alert--info">
+    <div w-alert variant="info">
       <w-icon name="info" />
       <div>
         Export a Google Sheet as CSV first. The source sheet stays untouched, and only rows marked
@@ -24,28 +24,28 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <div class="w-alert w-alert--error" role="alert">
+      <div w-alert variant="error" role="alert">
         <w-icon name="alert-triangle" />
         <div>{{ error }}</div>
       </div>
     }
 
-    <section class="w-card" aria-labelledby="import-upload-heading">
-      <div class="w-card__header">
-        <h2 class="w-card__title" id="import-upload-heading">1 · Upload CSV</h2>
+    <section w-card aria-labelledby="import-upload-heading">
+      <div w-card-header>
+        <h2 w-card-title id="import-upload-heading">1 · Upload CSV</h2>
       </div>
-      <div class="w-card__body w-stack">
-        <div class="w-field">
-          <label class="w-label" for="roster-file">Roster CSV</label>
+      <div w-card-body class="w-stack">
+        <div w-form-field>
+          <label w-label for="roster-file">Roster CSV</label>
           <input
+            w-text-field
             #fileInput
-            class="w-input"
             id="roster-file"
             type="file"
             accept=".csv,text/csv,application/vnd.ms-excel"
             (change)="chooseFile($event)"
           />
-          <p class="w-hint">CSV only, up to 2 MB. The file is validated before it is sent.</p>
+          <p w-help>CSV only, up to 2 MB. The file is validated before it is sent.</p>
         </div>
         @if (fileName(); as name) {
           <div class="import-file" data-testid="import-file-summary">
@@ -59,7 +59,7 @@
                 }}
               </div>
             </div>
-            <button class="w-btn w-btn--secondary" type="button" (click)="removeFile(fileInput)">
+            <button w-button variant="secondary" type="button" (click)="removeFile()">
               Remove file
             </button>
           </div>
@@ -68,14 +68,14 @@
     </section>
 
     @if (columns().length > 0) {
-      <section class="w-card" aria-labelledby="import-map-heading">
-        <div class="w-card__header">
+      <section w-card aria-labelledby="import-map-heading">
+        <div w-card-header>
           <div>
-            <h2 class="w-card__title" id="import-map-heading">2 · Map columns</h2>
+            <h2 w-card-title id="import-map-heading">2 · Map columns</h2>
             <p class="w-muted">CSV column → Waypoint field. Leave unneeded columns as Skip.</p>
           </div>
         </div>
-        <div class="w-table-wrap">
+        <div w-table-wrap>
           <table class="import-columns">
             <thead>
               <tr>
@@ -93,7 +93,7 @@
                   <td data-label="Sample value" class="w-muted">{{ column.sample }}</td>
                   <td data-label="Waypoint field">
                     <select
-                      class="w-select"
+                      w-select
                       [attr.aria-label]="'Map ' + column.header"
                       [ngModel]="column.field"
                       (ngModelChange)="updateMapping(column.header, $event)"
@@ -108,12 +108,13 @@
             </tbody>
           </table>
         </div>
-        <div class="w-card__footer w-stack">
+        <div w-card-footer class="w-stack">
           @if (mappingError(); as mappingMessage) {
-            <p class="w-error">{{ mappingMessage }}</p>
+            <p w-error-text>{{ mappingMessage }}</p>
           }
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="button"
             [disabled]="mappingError() !== null || loading()"
             (click)="previewRoster()"
@@ -125,39 +126,39 @@
     }
 
     @if (preview(); as roster) {
-      <section class="w-card" aria-labelledby="import-preview-heading">
-        <div class="w-card__header">
+      <section w-card aria-labelledby="import-preview-heading">
+        <div w-card-header>
           <div>
-            <h2 class="w-card__title" id="import-preview-heading">3 · Preview</h2>
+            <h2 w-card-title id="import-preview-heading">3 · Preview</h2>
             <p class="w-muted">Review every row before confirming the import.</p>
           </div>
         </div>
-        <div class="w-card__body w-stack">
+        <div w-card-body class="w-stack">
           <div class="import-counts" data-testid="import-preview-summary">
-            <div class="w-card import-count">
-              <div class="w-card__body">
+            <div w-card class="import-count">
+              <div w-card-body>
                 <strong>{{ roster.ready }}</strong> ready
               </div>
             </div>
-            <div class="w-card import-count">
-              <div class="w-card__body">
+            <div w-card class="import-count">
+              <div w-card-body>
                 <strong>{{ roster.needsConsent }}</strong> needs consent
               </div>
             </div>
-            <div class="w-card import-count">
-              <div class="w-card__body">
+            <div w-card class="import-count">
+              <div w-card-body>
                 <strong>{{ roster.duplicates }}</strong> duplicate{{
                   roster.duplicates === 1 ? '' : 's'
                 }}
               </div>
             </div>
-            <div class="w-card import-count">
-              <div class="w-card__body">
+            <div w-card class="import-count">
+              <div w-card-body>
                 <strong>{{ roster.invalid }}</strong> invalid
               </div>
             </div>
           </div>
-          <div class="w-table-wrap">
+          <div w-table-wrap>
             <table class="import-preview">
               <thead>
                 <tr>
@@ -178,10 +179,7 @@
                     <td data-label="Mentor">{{ row.mentor || '—' }}</td>
                     <td data-label="Track">{{ row.track || '—' }}</td>
                     <td data-label="Import">
-                      <span
-                        class="import-status"
-                        [class]="'import-status import-status--' + statusClass(row.status)"
-                      >
+                      <span w-badge [variant]="statusBadge(row.status)">
                         {{ statusLabel(row.status) }}
                       </span>
                       @if (row.message) {
@@ -194,9 +192,10 @@
             </table>
           </div>
         </div>
-        <div class="w-card__footer import-actions">
+        <div w-card-footer class="import-actions">
           <button
-            class="w-btn w-btn--primary"
+            w-button
+            variant="primary"
             type="button"
             [disabled]="roster.ready === 0 || loading()"
             (click)="requestConfirmation()"
@@ -208,8 +207,8 @@
     }
 
     @if (result(); as imported) {
-      <section class="w-card" data-testid="import-result" aria-labelledby="import-result-heading">
-        <div class="w-card__body w-stack">
+      <section w-card data-testid="import-result" aria-labelledby="import-result-heading">
+        <div w-card-body class="w-stack">
           <div>
             <div class="w-eyebrow">Roster saved</div>
             <h2 id="import-result-heading">Import complete</h2>
@@ -228,44 +227,37 @@
               <strong>{{ imported.invalid }}</strong> invalid
             </div>
           </div>
-          <a class="w-btn w-btn--secondary" href="/admin/people">View people</a>
+          <a w-button variant="secondary" href="/admin/people">View people</a>
         </div>
       </section>
     }
   </div>
 
   @if (confirming() && preview(); as roster) {
-    <div class="import-dialog-backdrop" (click)="cancelConfirmation()">
-      <div
-        class="w-card import-dialog"
-        wuAccessibleDialog
-        aria-labelledby="confirm-import-title"
-        (click)="$event.stopPropagation()"
-        (wuDialogEscape)="cancelConfirmation()"
-      >
-        <div class="w-card__header">
-          <h2 class="w-card__title" id="confirm-import-title">Confirm roster import</h2>
-        </div>
-        <div class="w-card__body">
-          <p>
-            Only {{ roster.ready }} ready {{ roster.ready === 1 ? 'row' : 'rows' }} will create an
-            account. Duplicates, missing-consent rows, and invalid rows will remain unchanged.
-          </p>
-        </div>
-        <div class="w-card__footer w-cluster">
-          <button class="w-btn w-btn--ghost" type="button" (click)="cancelConfirmation()">
-            Cancel
-          </button>
-          <button
-            class="w-btn w-btn--primary"
-            type="button"
-            wuDialogInitialFocus
-            [disabled]="loading()"
-            (click)="confirmImport()"
-          >
-            {{ loading() ? 'Importing…' : 'Confirm import' }}
-          </button>
-        </div>
+    <div w-dialog size="sm" aria-labelledby="confirm-import-title" (dismiss)="cancelConfirmation()">
+      <div w-dialog-header>
+        <h2 w-dialog-title id="confirm-import-title">Confirm roster import</h2>
+      </div>
+      <div w-dialog-body>
+        <p>
+          Only {{ roster.ready }} ready {{ roster.ready === 1 ? 'row' : 'rows' }} will create an
+          account. Duplicates, missing-consent rows, and invalid rows will remain unchanged.
+        </p>
+      </div>
+      <div w-dialog-footer>
+        <button w-button variant="ghost" type="button" (click)="cancelConfirmation()">
+          Cancel
+        </button>
+        <button
+          w-button
+          variant="primary"
+          type="button"
+          wuDialogInitialFocus
+          [disabled]="loading()"
+          (click)="confirmImport()"
+        >
+          {{ loading() ? 'Importing…' : 'Confirm import' }}
+        </button>
       </div>
     </div>
   }

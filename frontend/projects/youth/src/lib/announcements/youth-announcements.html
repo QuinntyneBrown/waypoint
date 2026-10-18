@@ -7,7 +7,7 @@
       </div>
       @if (hasUnread()) {
         <div class="w-page__actions">
-          <button class="w-btn w-btn--ghost" type="button" (click)="markAllRead()">
+          <button w-button variant="ghost" type="button" (click)="markAllRead()">
             Mark all read
           </button>
         </div>
@@ -15,22 +15,22 @@
     </div>
 
     @if (!loading() && items().length === 0) {
-      <div class="w-empty">
-        <div class="w-empty__icon"><w-icon name="bell" /></div>
-        <h3 class="w-empty__title">No announcements yet</h3>
-        <p class="w-empty__text">
+      <div w-empty-state>
+        <div w-empty-state-icon><w-icon name="bell" /></div>
+        <h3 w-empty-state-title>No announcements yet</h3>
+        <p w-empty-state-text>
           Program-wide news will show up here. Check back soon — you’re all caught up.
         </p>
       </div>
     } @else {
       <div class="w-stack">
         @for (item of items(); track item.id) {
-          <div class="w-card" [class.w-card--greige]="!item.read">
-            <div class="w-card__body">
+          <div w-card [variant]="!item.read ? 'greige' : ''">
+            <div w-card-body>
               <div class="w-cluster w-cluster--between">
-                <h3 class="w-card__title">{{ item.title }}</h3>
+                <h3 w-card-title>{{ item.title }}</h3>
                 @if (!item.read) {
-                  <span class="w-badge w-badge--info w-badge--dot">New</span>
+                  <span w-badge variant="info" dot>New</span>
                 }
               </div>
               <p class="w-muted">{{ item.message }}</p>

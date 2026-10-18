@@ -3,14 +3,43 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { ApiError, LearningService, YouthCurriculum } from '@waypoint/api';
 import { AuthStore } from '@waypoint/auth';
-import { WIcon, WShell } from '@waypoint/components';
+import {
+  Button,
+  Icon,
+  Shell,
+  Alert,
+  CardTitle,
+  Card,
+  CardBody,
+  Badge,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateTitle,
+  EmptyStateText,
+} from '@waypoint/components';
 
 // Traces to: L2-LEARN-001
 @Component({
   selector: 'w-youth-curriculum',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [WShell, RouterLink, DecimalPipe, WIcon],
+  imports: [
+    Shell,
+    RouterLink,
+    DecimalPipe,
+    Icon,
+    Button,
+    Alert,
+    CardTitle,
+    Card,
+    CardBody,
+    Badge,
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateTitle,
+    EmptyStateText,
+  ],
   templateUrl: './youth-curriculum.html',
+  styleUrl: './youth-curriculum.css',
 })
 export class YouthCurriculumPage {
   protected readonly auth = inject(AuthStore);

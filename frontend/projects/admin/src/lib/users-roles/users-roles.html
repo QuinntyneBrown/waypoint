@@ -11,29 +11,29 @@
         <h1 class="w-page__title">Users &amp; roles</h1>
         <p class="w-page__sub">Review active accounts and change access deliberately.</p>
       </div>
-      <a class="w-btn w-btn--primary" routerLink="/admin/invitations"
+      <a w-button variant="primary" routerLink="/admin/invitations"
         ><w-icon name="user-plus" />Invitations</a
       >
     </header>
 
-    <div class="w-alert w-alert--info">
+    <div w-alert variant="info">
       Staff roles can access other people’s records. Every role change takes effect immediately and
       is audit logged.
     </div>
     @if (errorMessage(); as error) {
-      <p class="w-alert w-alert--error" role="alert">{{ error }}</p>
+      <p w-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as message) {
-      <p class="w-alert w-alert--success" role="status">{{ message }}</p>
+      <p w-alert variant="success" role="status">{{ message }}</p>
     }
 
-    <section class="w-card">
-      <div class="w-card__body">
+    <section w-card>
+      <div w-card-body>
         <div class="users-filters w-mb-5">
-          <div class="w-field">
-            <label class="w-label" for="users-search">Search users</label>
+          <div w-form-field>
+            <label w-label for="users-search">Search users</label>
             <input
-              class="w-input"
+              w-text-field
               id="users-search"
               type="search"
               [value]="search()"
@@ -41,10 +41,10 @@
               (keyup.enter)="applySearch()"
             />
           </div>
-          <div class="w-field">
-            <label class="w-label" for="users-role-filter">Current role</label>
+          <div w-form-field>
+            <label w-label for="users-role-filter">Current role</label>
             <select
-              class="w-select"
+              w-select
               id="users-role-filter"
               [value]="roleFilter()"
               (change)="roleFilterChanged($event)"
@@ -55,16 +55,14 @@
               }
             </select>
           </div>
-          <button class="w-btn w-btn--secondary" type="button" (click)="applySearch()">
-            Search
-          </button>
+          <button w-button variant="secondary" type="button" (click)="applySearch()">Search</button>
         </div>
 
         @if (loading()) {
           <p class="w-muted" role="status">Loading users and roles…</p>
         } @else {
-          <div class="w-table-wrap">
-            <table class="w-table w-table--cards">
+          <div w-table-wrap>
+            <table w-table cards>
               <thead>
                 <tr>
                   <th>User</th>
@@ -87,7 +85,7 @@
                       </div>
                     </td>
                     <td data-label="Status">
-                      <span class="w-badge" [class.w-badge--lime]="person.status === 'Active'">{{
+                      <span w-badge [variant]="person.status === 'Active' ? 'lime' : ''">{{
                         person.status
                       }}</span>
                     </td>
@@ -103,7 +101,7 @@
                           >Role for {{ person.displayName }}</label
                         >
                         <select
-                          class="w-select"
+                          w-select
                           [id]="'role-' + person.id"
                           [value]="selectedRoles()[person.id]"
                           (change)="selectedRoleChanged(person, $event)"
@@ -115,7 +113,9 @@
                         @if (confirmId() === person.id) {
                           <span>Apply now?</span>
                           <button
-                            class="w-btn w-btn--danger w-btn--sm"
+                            w-button
+                            variant="danger"
+                            size="sm"
                             type="button"
                             [disabled]="savingId() === person.id"
                             (click)="changeRole(person)"
@@ -123,7 +123,9 @@
                             Confirm
                           </button>
                           <button
-                            class="w-btn w-btn--ghost w-btn--sm"
+                            w-button
+                            variant="ghost"
+                            size="sm"
                             type="button"
                             (click)="confirmId.set(null)"
                           >
@@ -131,7 +133,9 @@
                           </button>
                         } @else {
                           <button
-                            class="w-btn w-btn--ghost w-btn--sm"
+                            w-button
+                            variant="ghost"
+                            size="sm"
                             type="button"
                             [disabled]="selectedRoles()[person.id] === person.role"
                             (click)="requestRoleChange(person)"
@@ -145,10 +149,10 @@
                 } @empty {
                   <tr>
                     <td colspan="5">
-                      <div class="w-empty">
-                        <div class="w-empty__icon"><w-icon name="users" /></div>
-                        <h2 class="w-empty__title">No users found</h2>
-                        <p class="w-empty__text">Change the filters or invite someone new.</p>
+                      <div w-empty-state>
+                        <div w-empty-state-icon><w-icon name="users" /></div>
+                        <h2 w-empty-state-title>No users found</h2>
+                        <p w-empty-state-text>Change the filters or invite someone new.</p>
                       </div>
                     </td>
                   </tr>
@@ -158,7 +162,8 @@
           </div>
           <div class="w-cluster w-cluster--between w-mt-4">
             <button
-              class="w-btn w-btn--ghost"
+              w-button
+              variant="ghost"
               type="button"
               [disabled]="page() <= 1"
               (click)="previous()"
@@ -167,7 +172,8 @@
             </button>
             <span class="w-muted">Page {{ page() }} · {{ total() }} total</span>
             <button
-              class="w-btn w-btn--ghost"
+              w-button
+              variant="ghost"
               type="button"
               [disabled]="page() * 25 >= total()"
               (click)="next()"
