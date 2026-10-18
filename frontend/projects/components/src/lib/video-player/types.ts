@@ -1,6 +1,14 @@
 /** The single state a video player is in at any moment. */
 export type VideoPlayerState =
-  'idle' | 'connecting' | 'live' | 'buffering' | 'paused' | 'reconnecting' | 'ended' | 'error';
+  | 'idle'
+  | 'connecting'
+  | 'live'
+  | 'playing'
+  | 'buffering'
+  | 'paused'
+  | 'reconnecting'
+  | 'ended'
+  | 'error';
 
 /** Stream metadata returned by the hub's `Describe` method. Every field is untrusted text. */
 export interface VideoStreamDescriptor {
@@ -35,7 +43,14 @@ export interface VideoStreamTransportOptions {
 
 /** Classifies a failure shown in the error panel and emitted through `error`. */
 export type VideoPlayerErrorCode =
-  'unsupported' | 'unauthorized' | 'not-found' | 'connection' | 'source' | 'decode' | 'stalled';
+  | 'unsupported'
+  | 'unauthorized'
+  | 'not-found'
+  | 'connection'
+  | 'source'
+  | 'decode'
+  | 'stalled'
+  | 'configuration';
 
 /** A failure as emitted by the `error` output. `cause` carries raw details, never the token. */
 export interface VideoPlayerError {

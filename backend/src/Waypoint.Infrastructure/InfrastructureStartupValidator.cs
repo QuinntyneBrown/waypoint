@@ -20,6 +20,14 @@ public static class InfrastructureStartupValidator
         RequireSecret(configuration, "AuditIntegrity:SigningKey");
         RequireSecret(configuration, "SensitiveData:EncryptionKey");
 
+        if (configuration.GetValue<bool>("Media:Enabled"))
+        {
+            // Playback addresses are signed with this key, so a placeholder would be forgeable.
+            RequireSecret(configuration, "Media:PlaybackSigningKey");
+            if (string.IsNullOrWhiteSpace(configuration["Media:RootPath"]))
+                throw new InvalidOperationException("Production requires Media:RootPath when lesson video is enabled.");
+        }
+
         RequireHttpsUrl(configuration, "ApplicationUrls:PortalBaseUrl");
         RequireHttpsUrl(configuration, "ApplicationUrls:PublicSiteBaseUrl");
 

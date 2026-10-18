@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video 116 Slides</title>
+<link rel="stylesheet" href="../assets/slides.css">
+</head>
+<body data-video-number="116" data-video-title="Streaming a lesson video" data-parts="Welcome|Why a plain tag fails|Permission|Token in the path|Serving|Player|Expiry|Recap">
+
+<section id="title" data-part="0">
+  <div class="kicker">Waypoint · Video 116</div>
+  <h1>Streaming a lesson video</h1>
+  <p class="lead">Fast to start, adaptive, seekable, and only for the right youth</p>
+</section>
+
+<section id="why" data-part="1" data-cue="Today the lesson page puts the address of the file">
+  <div class="heading-row"><h2>A video tag cannot send the access token</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/lesson-watch-1280.png" alt="The lesson mock with an optional Watch card holding a video placeholder"><figcaption>The Watch card in the lesson mock</figcaption></figure>
+  </div>
+</section>
+
+<section id="components-front" data-part="2" data-cue="When a lesson with a ready video opens">
+  <div class="heading-row"><h2>In the browser: page, player, session</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/c4-component-frontend.png" alt="C4 component view, frontend part: lesson page, typed client, player and on-demand HLS session"><figcaption>Design diagram: frontend components</figcaption></figure>
+  </div>
+</section>
+
+<section id="components-back" data-part="2" data-cue="The server applies the same lesson access rule">
+  <div class="heading-row"><h2>On the server: handler, signer, endpoint</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/c4-component-backend.png" alt="C4 component view, backend part: controllers, playback handler, signer, media delivery endpoint and media store"><figcaption>Design diagram: backend components</figcaption></figure>
+  </div>
+</section>
+
+<section id="authorize" data-part="2" data-cue="The address has four parts">
+  <div class="heading-row"><h2>Authorize once, then sign</h2></div>
+  <div class="pics">
+    <figure><img class="shot h680" src="images/seq-authorize.png" alt="Sequence diagram: lesson loaded, playback requested, access checked, URL signed and returned"><figcaption>Design diagram: authorize and sign</figcaption></figure>
+  </div>
+</section>
+
+<section id="path" data-part="3" data-cue="The master playlist lists the renditions by relative addresses">
+  <div class="heading-row"><h2>Relative addresses inherit the token</h2></div>
+  <pre class="code" data-lang="md">/api/media/{token}/{mediaId}/master.m3u8
+/api/media/{token}/{mediaId}/{rendition}/index.m3u8
+/api/media/{token}/{mediaId}/{rendition}/seg_NNNNN.m4s</pre>
+  <p class="muted small">No redirects: the base address must not change</p>
+</section>
+
+<section id="serve" data-part="4" data-cue="The media endpoint is one route that allows anonymous calls">
+  <div class="heading-row"><h2>Validate, resolve, send from disk</h2></div>
+  <div class="pics">
+    <figure><img class="shot h680" src="images/seq-play.png" alt="Sequence diagram: master playlist, variant playlist, and segment loop, none touching the database"><figcaption>Design diagram: play adaptively, no database access</figcaption></figure>
+  </div>
+</section>
+
+<section id="cache" data-part="4" data-cue="Playlists are cached for five minutes.">
+  <div class="heading-row"><h2>Cache rules</h2></div>
+  <div class="coming">
+    <div class="card"><span class="t">Playlists · private, 5 minutes</span></div>
+    <div class="card"><span class="t">Segments, init, poster · immutable, one year</span></div>
+    <div class="card"><span class="t">Any rejection · plain 404</span></div>
+  </div>
+</section>
+
+<section id="player" data-part="5" data-cue="The existing video player gains a source input">
+  <div class="heading-row"><h2>Shared controls (live player captures)</h2></div>
+  <div class="pics">
+    <figure><img class="shot h440" src="images/live-light.png" alt="Light theme: the player with its control bar"><figcaption>Light</figcaption></figure>
+    <figure><img class="shot h440" src="images/live-dark.png" alt="Dark theme: the player with its control bar"><figcaption>Dark</figcaption></figure>
+  </div>
+  <p class="muted small">On demand mode adds a seek bar, elapsed and total time, and a quality label</p>
+</section>
+
+<section id="renew" data-part="6" data-cue="If a token expires while someone is watching">
+  <div class="heading-row"><h2>Renew without losing position</h2></div>
+  <div class="pics">
+    <figure><img class="shot h680" src="images/seq-renew.png" alt="Sequence diagram: expired token refused, player reports it, fresh address loaded at the same position"><figcaption>Design diagram: renew an expired token</figcaption></figure>
+  </div>
+</section>
+
+<section id="reject" data-part="6" data-cue="A forged token, or a token for another video">
+  <div class="heading-row"><h2>Forged or mismatched tokens</h2></div>
+  <div class="pics">
+    <figure><img class="shot h680" src="images/seq-reject.png" alt="Sequence diagram: forged token gets a 404 and the lesson text stays readable with retry offered"><figcaption>Design diagram: reject an invalid request</figcaption></figure>
+  </div>
+</section>
+
+<section id="recap" data-part="7" data-cue="Authorize once, then serve without the database.">
+  <h2>Things to remember</h2>
+  <ul>
+    <li>Authorize once, then serve without the database</li>
+    <li>Put the token in the path</li>
+    <li>Playlists are short lived, segments are immutable</li>
+    <li>The player adapts, seeks anywhere, and renews</li>
+  </ul>
+</section>
+
+<script src="../assets/slides.js"></script>
+</body>
+</html>

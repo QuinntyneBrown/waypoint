@@ -49,6 +49,8 @@ export interface LessonWorkspace {
   assignments: AssignmentWorkspace[];
 }
 
+export type VideoStatus = 'None' | 'Queued' | 'Processing' | 'Ready' | 'Failed';
+
 export interface LessonMediaWorkspace {
   id: string;
   mediaType: string;
@@ -56,6 +58,21 @@ export interface LessonMediaWorkspace {
   contentType: string;
   sizeBytes: number;
   url: string;
+  /** 'None' for documents and for videos stored before streaming existed. */
+  videoStatus: VideoStatus;
+  progressPercent: number;
+  durationSeconds: number | null;
+  failureCode: string | null;
+}
+
+export interface VideoUploadSession {
+  uploadId: string;
+  chunkSizeBytes: number;
+  chunkCount: number;
+}
+
+export interface VideoUploadStatus extends VideoUploadSession {
+  receivedChunks: number[];
 }
 
 export interface QuizWorkspace {

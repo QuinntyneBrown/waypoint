@@ -21,6 +21,8 @@ public interface IAppDbContext
     DbSet<Lesson> Lessons { get; }
     DbSet<CodingLessonStep> CodingLessonSteps { get; }
     DbSet<LessonMedia> LessonMedia { get; }
+    DbSet<VideoUploadSession> VideoUploadSessions { get; }
+    DbSet<VideoTranscodeJob> VideoTranscodeJobs { get; }
     DbSet<Quiz> Quizzes { get; }
     DbSet<QuizQuestion> QuizQuestions { get; }
     DbSet<Assignment> Assignments { get; }

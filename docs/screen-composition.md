@@ -30,7 +30,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | Textarea | 32 | in library |
 | Table | 30 | in library |
 | Pagination | — | in library |
-| Progress | 30 | in library |
+| Progress | 31 | in library |
 | Stat | 28 | in library |
 | Divider | 25 | in library |
 | List | 20 | in library |
@@ -106,7 +106,7 @@ Binding map from every screen in `docs/mocks/` to the components of `@waypoint/c
 | --- | --- | --- |
 | Assignment builder · Waypoint (`assignment-builder.html`) | Avatar, Badge, Button, Card, Checkbox, Divider, Form field, Icon, Icon button, Select, Shell, Switch, Table, Text field, Textarea | `w-person` |
 | Badges · Waypoint (`badge-builder.html`) | Alert, Badge, Button, Card, Dialog, Empty state, Form field, Icon, Icon button, Radio group, Select, Shell, Skeleton, Stat, Text field, Textarea | `w-badgeitem` |
-| Lesson editor · Waypoint (`lesson-editor.html`) | Alert, Avatar, Badge, Button, Button group, Card, Dialog, Divider, Form field, Icon, Icon button, List, Scripture, Shell, Text field, Textarea | `w-lessonstep`, `w-person` |
+| Lesson editor · Waypoint (`lesson-editor.html`) | Alert, Avatar, Badge, Button, Button group, Card, Dialog, Divider, Form field, Icon, Icon button, List, Progress, Scripture, Shell, Text field, Textarea | `w-lessonstep`, `w-person` |
 | Module editor · Waypoint (`module-editor.html`) | Alert, Badge, Button, Card, Dialog, Divider, Form field, Icon, Icon button, List, Scripture, Select, Shell, Switch, Text field, Textarea | `w-lessonstep` |
 | Progression framework · Waypoint (`progression-editor.html`) | Avatar, Badge, Button, Card, Dialog, Divider, Form field, Icon, Icon button, List, Select, Shell, Text field, Timeline | `w-lessonstep`, `w-person` |
 | Quiz builder · Waypoint (`quiz-builder.html`) | Badge, Button, Card, Dialog, Divider, Empty state, Form field, Icon, Icon button, List, Progress, Quiz option, Radio group, Select, Shell, Switch, Text field, Textarea | — |

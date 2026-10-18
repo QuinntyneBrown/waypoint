@@ -1,0 +1,27 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 2 — Upload a lesson video — containers
+Person(admin, "Program administrator", "Attaches a lesson video")
+System_Boundary(waypoint, "Waypoint software system") {
+  Container_Boundary(frontend, "Frontend") {
+    Container(portal, "Portal application", "Angular", "Lesson editor: chunked upload, progress, retry")
+  }
+  Container_Boundary(backend, "Backend") {
+    Container(api, "Waypoint API application", "ASP.NET Core", "Upload-session endpoints, validation, media and job state")
+    Container(worker, "Transcode worker", "BackgroundService in the API process", "Claims leased jobs, drives ffmpeg, publishes renditions")
+  }
+  ContainerDb(db, "Waypoint database", "SQL Server", "LessonMedia, VideoUploadSession, VideoTranscodeJob")
+  ContainerDb(store, "Media root", "File system (Media:RootPath)", "uploads/, sources/, work/, hls/, trash/")
+}
+System_Ext(ffmpeg, "ffmpeg and ffprobe", "Self-hosted binaries")
+Rel(admin, portal, "Uses", "HTTPS")
+Rel(portal, api, "Starts session, PUTs 8 MiB chunks, completes", "HTTPS octet-stream and JSON")
+Rel(api, db, "Reads and writes", "EF Core")
+Rel(api, store, "Writes chunks at offset; moves completed source", "File I/O")
+Rel(worker, db, "Claims job with lease; records progress and status", "EF Core")
+Rel(worker, ffmpeg, "Runs once per video", "Child process")
+Rel(ffmpeg, store, "Reads sources/; writes work/", "File I/O")
+Rel(worker, store, "Moves work/ to hls/ atomically; sweeps trash/", "File I/O")
+SHOW_LEGEND()
+@enduml

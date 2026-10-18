@@ -6,6 +6,7 @@
     "@angular/core": "^21.2.0",
     "@microsoft/signalr": "^9.0.6",
     "@microsoft/signalr-protocol-msgpack": "^9.0.6",
+    "hls.js": "^1.7.3",
     "rxjs": "~7.8.0"
   },
   "dependencies": {

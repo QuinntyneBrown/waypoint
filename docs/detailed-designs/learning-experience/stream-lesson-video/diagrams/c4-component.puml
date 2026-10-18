@@ -1,0 +1,48 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 3 — Stream a lesson video — components
+System_Boundary(waypoint, "Waypoint software system") {
+  Container_Boundary(frontend, "Frontend") {
+    Container_Boundary(frontend_app, "Portal application") {
+      Component(page, "YouthLesson", "Angular page component", "Chooses player, preparing card, or legacy video per media item")
+      Component(player, "w-video-player", "Angular component", "Controls, captions, keyboard, theming; mode from src or streamId")
+      Component(vod, "HlsVodSession", "On-demand session", "Native HLS or hls.js via HLS_FACTORY; seek, quality, token renewal")
+      Component(client, "LearningService", "Typed API client", "lesson() and lessonVideoPlayback()")
+    }
+  }
+  Container_Boundary(backend, "Backend") {
+    Container_Boundary(api_app, "Waypoint API application") {
+      Component(controller, "YouthCurriculumController", "API controller", "YouthParticipation policy; playback endpoint")
+      Component(preview, "LessonMediaController", "API controller", "Administrator and mentor preview playback endpoint")
+      Component(delivery, "MediaDeliveryEndpoint", "Minimal API endpoint", "Anonymous; validates token and path; serves file with Range")
+    }
+    Container_Boundary(application, "Waypoint Application") {
+      Component(handler, "LessonVideoPlaybackQueryHandler", "MediatR handler", "Requires Ready; applies lesson access rule; signs URL")
+      Component(access, "CurriculumProgressCalculator", "Access rule", "EnsureLessonAccessibleAsync")
+    }
+    Container_Boundary(domain, "Waypoint Domain") {
+      Component(media, "LessonMedia", "Domain type", "VideoStatus, DurationSeconds")
+    }
+    Container_Boundary(infrastructure, "Waypoint Infrastructure") {
+      Component(signer, "HmacPlaybackUrlSigner", "IPlaybackUrlSigner adapter", "HMAC-SHA256 sign and constant-time validate")
+      Component(mediastore, "FileSystemMediaStore", "IMediaStore adapter", "Resolves hls/{mediaId}/{path} within the media root")
+      Component(persistence, "AppDbContext", "EF Core adapter", "Queries authoritative state")
+    }
+  }
+}
+Rel(page, client, "Calls")
+Rel(page, player, "Binds src and poster")
+Rel(player, vod, "Owns in on-demand mode")
+Rel(client, controller, "Calls", "HTTPS JSON")
+Rel(controller, handler, "Sends LessonVideoPlaybackQuery")
+Rel(preview, handler, "Sends LessonVideoPlaybackQuery")
+Rel(handler, access, "Applies for youth")
+Rel(handler, persistence, "Reads media and lesson state")
+Rel(persistence, media, "Maps")
+Rel(handler, signer, "Signs playback URL")
+Rel(vod, delivery, "Fetches master, variant playlists, segments", "HTTPS, Range")
+Rel(delivery, signer, "Validates token")
+Rel(delivery, mediastore, "Resolves and reads file")
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video 115 Slides</title>
+<link rel="stylesheet" href="../assets/slides.css">
+</head>
+<body data-video-number="115" data-video-title="Uploading a lesson video" data-parts="Welcome|Why a new path|Chunked upload|Checks|Transcoding|Failures|Author view|Recap">
+
+<section id="title" data-part="0">
+  <div class="kicker">Waypoint · Video 115</div>
+  <h1>Uploading a lesson video</h1>
+  <p class="lead">From a recording of any length to a stream-ready ladder</p>
+</section>
+
+<section id="why" data-part="1" data-cue="Today the lesson editor has an attach media button.">
+  <div class="heading-row"><h2>Today: one 25 MB file, stored in the database</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/editor-media-1280.png" alt="The lesson editor mock with a Media card, an Attach media button and a video row"><figcaption>The Media card in the lesson editor mock</figcaption></figure>
+  </div>
+</section>
+
+<section id="containers" data-part="2" data-cue="The editor cuts the file into chunks of eight MiB">
+  <div class="heading-row"><h2>Portal, API, worker, database, media root</h2></div>
+  <div class="pics">
+    <figure><img class="shot h620" src="images/c4-container.png" alt="C4 container view: Portal, API, transcode worker, database and the media root file store"><figcaption>Design diagram: containers</figcaption></figure>
+  </div>
+</section>
+
+<section id="chunks" data-part="2" data-cue="Each chunk is written straight to disk">
+  <div class="heading-row"><h2>Resumable: chunks land at their own offset</h2></div>
+  <div class="pics">
+    <figure><img class="shot h680" src="images/seq-upload.png" alt="Sequence diagram: start session, chunk uploads in a loop, resume after reload"><figcaption>Design diagram: start, chunks, resume</figcaption></figure>
+  </div>
+</section>
+
+<section id="complete" data-part="3" data-cue="When every chunk is in, the editor asks the server to complete the upload.">
+  <div class="heading-row"><h2>Complete: verify, probe, queue</h2></div>
+  <div class="pics">
+    <figure><img class="shot h680" src="images/seq-complete.png" alt="Sequence diagram: completion checks, probe rejection or success, media and job created"><figcaption>Design diagram: completion</figcaption></figure>
+  </div>
+</section>
+
+<section id="worker" data-part="4" data-cue="A background worker inside the API process picks up the job.">
+  <h2>A leased job, one worker</h2>
+  <ol class="steps">
+    <li><span class="num">1</span>Claim the job with a five minute lease</li>
+    <li><span class="num">2</span>Extend the lease while ffmpeg runs</li>
+    <li><span class="num">3</span>Write to a work folder</li>
+    <li><span class="num">4</span>Move it to the published folder in one step</li>
+  </ol>
+</section>
+
+<section id="ladder" data-part="4" data-cue="The worker runs ffmpeg once.">
+  <div class="heading-row"><h2>One pass, up to four renditions</h2></div>
+  <div class="coming">
+    <div class="card"><span class="t">1080p · 5000 kbit/s</span></div>
+    <div class="card"><span class="t">720p · 2800 kbit/s</span></div>
+    <div class="card"><span class="t">480p · 1400 kbit/s</span></div>
+    <div class="card"><span class="t">360p · 800 kbit/s</span></div>
+  </div>
+  <p class="muted small">Six second fragmented MP4 segments · key frame every two seconds · poster image</p>
+</section>
+
+<section id="failure" data-part="5" data-cue="A job has a time limit of thirty minutes">
+  <div class="heading-row"><h2>Transcode, publish, or fail and retry</h2></div>
+  <div class="pics">
+    <figure><img class="shot h680" src="images/seq-transcode.png" alt="Sequence diagram: worker claims the job, heartbeats, then publishes or records a failure"><figcaption>Design diagram: background transcode</figcaption></figure>
+  </div>
+</section>
+
+<section id="states" data-part="6" data-cue="The author sees four states">
+  <h2>What the author sees</h2>
+  <ul>
+    <li>Queued</li>
+    <li>Processing, with a percentage</li>
+    <li>Ready, with the duration</li>
+    <li>Failed, with a retry button</li>
+  </ul>
+  <p class="muted small">The current mock does not yet draw the progress or failure states</p>
+</section>
+
+<section id="recap" data-part="7" data-cue="Upload in resumable chunks.">
+  <h2>Things to remember</h2>
+  <ul>
+    <li>Upload in resumable chunks</li>
+    <li>Reject bad files at completion</li>
+    <li>Transcode once into a ladder</li>
+    <li>Publish in one atomic move</li>
+  </ul>
+</section>
+
+<script src="../assets/slides.js"></script>
+</body>
+</html>

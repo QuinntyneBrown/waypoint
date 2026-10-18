@@ -29,7 +29,8 @@ public sealed class LessonQueryHandler : IRequestHandler<LessonQuery, LessonView
         var media = await _db.LessonMedia
             .Where(item => item.LessonId == lesson.Id)
             .OrderBy(item => item.CreatedAt)
-            .Select(item => new LessonMediaView(item.Id, item.MediaType, item.Url))
+            .Select(item => new LessonMediaView(
+                item.Id, item.MediaType, item.Url, item.VideoStatus.ToString(), item.DurationSeconds))
             .ToListAsync(cancellationToken);
         var readingState = await _db.LessonReadingStates.FirstOrDefaultAsync(
             item => item.YouthUserId == youthId && item.LessonId == lesson.Id,

@@ -1,0 +1,16 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 1 — Stream a lesson video — system context
+Person(youth, "Youth participant", "Watches a lesson video inside a lesson")
+Person(staff, "Mentor or program administrator", "Previews a lesson video")
+System(waypoint, "Waypoint software system", "Youth leadership, learning, mentoring, and program operations")
+System_Ext(browser, "Browser HLS engine", "Safari native HLS, or hls.js over Media Source Extensions")
+
+Rel(youth, waypoint, "Opens a lesson and plays its video through the Portal", "HTTPS")
+Rel(staff, waypoint, "Previews a lesson video", "HTTPS")
+Rel(waypoint, browser, "Hands a signed playback URL to", "In-page")
+Rel(browser, waypoint, "Fetches playlists and segments through the signed path", "HTTPS")
+
+SHOW_LEGEND()
+@enduml

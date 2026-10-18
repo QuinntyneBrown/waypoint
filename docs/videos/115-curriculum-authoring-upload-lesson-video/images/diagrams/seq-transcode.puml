@@ -1,0 +1,32 @@
+@startuml
+title Transcode: claim, encode, publish or fail
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam defaultFontSize 20
+skinparam ArrowColor #344054
+skinparam sequenceMessageAlign left
+box "Backend — Worker" #FFF4E5
+  participant "VideoTranscodeProcessor" as processor
+  participant "ffmpeg" as ffmpeg
+  participant "FileSystemMediaStore" as store
+  database "Database" as db
+end box
+processor -> db : Claim job (5 minute lease)
+processor -> db : Status = Processing
+processor -> ffmpeg : Encode once into work/{mediaId}
+loop every 60 seconds
+  ffmpeg --> processor : Progress
+  processor -> db : Extend lease, save percent
+end
+alt success
+  ffmpeg --> processor : Exit 0
+  processor -> store : Move work/ to hls/ in one step
+  processor -> db : Status = Ready, save duration
+else failure or time limit
+  ffmpeg --> processor : Error or timeout
+  processor -> store : Delete work folder
+  processor -> db : Record reason; Failed after 2 attempts
+end
+@enduml

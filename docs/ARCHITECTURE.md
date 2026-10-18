@@ -88,6 +88,18 @@ A guardian-consent request illustrates the boundary between transport, policy, a
 
 Clients must treat the API result as authoritative. Hiding an action in an Angular screen is not a substitute for server-side authorization or safeguarding checks.
 
+## Lesson video
+
+Lesson videos are streamed from Waypoint's own server with no video vendor. An administrator uploads a recording in 8 MiB chunks that resume after an interruption. A leased background job runs `ffmpeg` once per video into a 1080p, 720p, 480p and 360p HLS ladder of six second CMAF segments (never taller than the source), then publishes it in one move. A youth asks for a playback address, the lesson access rule is applied, and the server returns an expiring URL whose path carries an HMAC token. The anonymous `/api/media/{token}/{mediaId}/{path}` route validates the token, serves only the known playlist, segment and poster file shapes with byte ranges and cache headers, and never reads the database. The designs are `docs/detailed-designs/curriculum-authoring/upload-lesson-video` and `docs/detailed-designs/learning-experience/stream-lesson-video`.
+
+Deployment prerequisites, all off until `Media:Enabled` is true:
+
+- `ffmpeg` and `ffprobe` on the API host, at `Media:FfmpegPath` and `Media:FfprobePath`.
+- `Media:RootPath`, a directory on storage large enough for the sources and renditions (about one and a half times each source). It must be shared storage if more than one API instance runs.
+- `Media:PlaybackSigningKey`, a secret of at least 32 characters. Production refuses to start with media enabled and a placeholder key or no root path.
+- A reverse proxy body limit of at least 16 MiB for `/api/lessons/*/video-uploads`.
+- The portal declares a Content Security Policy in `frontend/projects/portal/src/index.html` that already includes `media-src 'self' blob:`, `connect-src 'self'` and `img-src 'self' data: blob:`. Any additional host the video is served from must be added there (the player README lists the requirements).
+
 ## Authentication and sensitive data
 
 The API issues short-lived JWT access tokens and opaque rotating refresh tokens. Refresh-token reuse revokes the token family. Passwords are hashed with BCrypt; invitation and password-reset tokens are stored as hashes. Sign-in failures are deliberately uniform to reduce account enumeration, and repeated failures lock the account according to the application policy.

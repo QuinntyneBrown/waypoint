@@ -33,6 +33,7 @@ import { SignalRVideoStreamTransport } from './signalr-video-stream-transport';
 import { VideoPlayerHost, VideoStreamSession } from './video-stream-session';
 import { VideoPlayerAnnouncer } from './video-player-announcer';
 import { ControlsVisibility } from './controls-visibility';
+import { HLS_FACTORY, HlsVodHost, HlsVodSession } from './hls-vod-session';
 
 /** Live video player that plays a fragmented-MP4 stream delivered by a hub. */
 @Component({
@@ -50,11 +51,17 @@ import { ControlsVisibility } from './controls-visibility';
     '[class.w-video-player--cursor-hidden]': 'isFullscreen() && !visibility.visible()',
   },
 })
-export class VideoPlayer implements VideoPlayerHost {
+export class VideoPlayer implements VideoPlayerHost, HlsVodHost {
   /** Hub endpoint passed unchanged to the transport. */
   readonly hubUrl = input<string | null>(null);
   /** Stream to describe and subscribe to; `null` releases the stream. */
   readonly streamId = input<string | null>(null);
+  /** Signed HLS master playlist URL; selects on-demand playback. */
+  readonly src = input<string | null>(null);
+  /** Image shown before the first play of an on-demand video. */
+  readonly poster = input<string | null>(null);
+  /** Emits when the signed `src` stopped working; the host replies with a fresh `src`. */
+  readonly tokenExpired = output<void>();
   /** Supplies the access token to the transport only. */
   readonly accessTokenFactory = input<(() => string | Promise<string>) | undefined>(undefined);
   /** Replaces the descriptor title in the region name and announcements. */
@@ -87,7 +94,19 @@ export class VideoPlayer implements VideoPlayerHost {
   protected readonly reconnectAttemptValue = signal(1);
   private resumingAfterReconnect = false;
   protected readonly liveDuration = signal('');
-  protected readonly controlsDisabled = computed(() => this.state() === 'ended');
+  protected readonly mode = computed(() => {
+    if (this.src() && this.streamId()) return 'conflict';
+    return this.src() ? 'vod' : this.streamId() ? 'live' : 'idle';
+  });
+  protected readonly isVod = computed(() => this.mode() === 'vod');
+  protected readonly currentTime = signal(0);
+  protected readonly mediaDuration = signal(0);
+  protected readonly quality = signal<number | null>(null);
+  protected readonly renewing = signal(false);
+  protected readonly timeText = computed(
+    () => `${formatClock(this.currentTime())} / ${formatClock(this.mediaDuration())}`,
+  );
+  protected readonly controlsDisabled = computed(() => this.state() === 'ended' && !this.isVod());
   private bufferingAnnouncement: ReturnType<typeof setTimeout> | undefined;
   protected readonly volumeValue = linkedSignal(() => clampVolume(this.volume()));
   private readonly isMuted = linkedSignal(() => this.muted());
@@ -103,9 +122,13 @@ export class VideoPlayer implements VideoPlayerHost {
   protected readonly fullscreenSupported = document.fullscreenEnabled;
   protected readonly isFullscreen = signal(false);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  protected readonly playing = computed(() => ['live', 'buffering'].includes(this.state()));
-  protected readonly playPauseDisabled = computed(
-    () => !['live', 'buffering', 'paused'].includes(this.state()),
+  protected readonly playing = computed(() =>
+    ['live', 'playing', 'buffering'].includes(this.state()),
+  );
+  protected readonly playPauseDisabled = computed(() =>
+    this.isVod()
+      ? ['idle', 'error'].includes(this.state())
+      : !['live', 'buffering', 'paused'].includes(this.state()),
   );
   protected readonly behindLive = computed(() => this.latency() > 5);
   protected readonly liveName = computed(() =>
@@ -144,17 +167,25 @@ export class VideoPlayer implements VideoPlayerHost {
     inject(VIDEO_STREAM_TRANSPORT, { optional: true }) ?? new SignalRVideoStreamTransport();
   private warnedHubUrl = false;
   private session: VideoStreamSession | undefined;
+  private vod: HlsVodSession | undefined;
+  private readonly hlsFactory = inject(HLS_FACTORY);
 
   constructor() {
     effect(() => {
       const connection = [this.hubUrl(), this.accessTokenFactory()] as const;
       this.streamId();
+      this.src();
       untracked(() => {
         const sameConnection =
           connection[0] === this.connection[0] && connection[1] === this.connection[1];
         this.connection = connection;
         this.startSession(!sameConnection);
       });
+    });
+    effect(() => {
+      const src = this.src();
+      const conflict = !!src && !!this.streamId();
+      untracked(() => this.startVod(src, conflict));
     });
     effect(() => {
       const video = this.video().nativeElement;
@@ -184,6 +215,7 @@ export class VideoPlayer implements VideoPlayerHost {
       document.removeEventListener('fullscreenchange', onFullscreenChange);
       clearTimeout(this.bufferingAnnouncement);
       this.session?.stop();
+      this.vod?.dispose();
       this.announcer.destroy();
       this.visibility.destroy();
       resize.disconnect();
@@ -199,6 +231,7 @@ export class VideoPlayer implements VideoPlayerHost {
     this.session?.stop(newConnection || !streamId);
     this.session = undefined;
     this.currentError.set(null);
+    if (this.src()) return;
     if (!streamId) {
       this.descriptor.set(null);
       this.setState('idle');
@@ -209,6 +242,24 @@ export class VideoPlayer implements VideoPlayerHost {
       hubUrl: this.hubUrl(),
       accessTokenFactory: this.accessTokenFactory(),
     });
+  }
+
+  /** Starts, reloads or releases the on-demand session for the current `src`. */
+  private startVod(src: string | null, conflict: boolean): void {
+    if (!src || conflict) {
+      this.vod?.dispose();
+      this.vod = undefined;
+      this.renewing.set(false);
+      if (conflict) this.fail('configuration');
+      return;
+    }
+    this.currentError.set(null);
+    if (this.vod) return this.vod.loadSource(src, this.currentTime() || undefined);
+    this.currentTime.set(0);
+    this.mediaDuration.set(0);
+    this.quality.set(null);
+    this.vod = new HlsVodSession(this, this.hlsFactory);
+    void this.vod.attach(src);
   }
 
   /** Development builds warn once when a remote hub URL is not protected by TLS. */
@@ -232,9 +283,14 @@ export class VideoPlayer implements VideoPlayerHost {
 
   /** Closes the error panel and starts a fresh connection. */
   retry(): void {
-    if (this.state() !== 'error' || this.currentError()?.code === 'unsupported') return;
+    const code = this.currentError()?.code;
+    if (this.state() !== 'error' || code === 'unsupported' || code === 'configuration') return;
     this.currentError.set(null);
-    this.startSession();
+    if (this.src()) {
+      this.vod?.dispose();
+      this.vod = undefined;
+      this.startVod(this.src(), false);
+    } else this.startSession();
     this.afterRender(() => this.playPause().nativeElement.focus());
   }
 
@@ -261,6 +317,7 @@ export class VideoPlayer implements VideoPlayerHost {
     this.stateValue.set(state);
     this.stateChange.emit(state);
     clearTimeout(this.bufferingAnnouncement);
+    if (state === 'playing') this.renewing.set(false);
     if (state === 'buffering')
       this.bufferingAnnouncement = setTimeout(
         () => this.announcer.status(this.strings.buffering),
@@ -295,8 +352,31 @@ export class VideoPlayer implements VideoPlayerHost {
       source: strings.errorSource,
       decode: strings.errorDecode,
       stalled: strings.errorStalled,
+      configuration: strings.errorConfiguration,
     };
     return messages[code];
+  }
+
+  timeChanged(currentTime: number, duration: number): void {
+    this.currentTime.set(Number.isFinite(currentTime) ? currentTime : 0);
+    this.mediaDuration.set(Number.isFinite(duration) ? duration : 0);
+  }
+
+  qualityChanged(height: number | null): void {
+    this.quality.set(height);
+  }
+
+  linkExpired(): void {
+    this.renewing.set(true);
+    this.tokenExpired.emit();
+  }
+
+  protected seekTo(seconds: number): void {
+    const duration = this.mediaDuration();
+    if (!duration) return;
+    const target = Math.min(duration, Math.max(0, seconds));
+    this.videoElement().currentTime = target;
+    this.currentTime.set(target);
   }
 
   protected onVideoError(): void {
@@ -365,6 +445,10 @@ export class VideoPlayer implements VideoPlayerHost {
     if (event.ctrlKey || event.altKey || event.metaKey) return;
     const onSlider = event.target === this.slider().nativeElement;
     const key = event.key === ' ' ? 'space' : event.key.toLowerCase();
+    if (this.isVod() && !onSlider && (key === 'arrowleft' || key === 'arrowright')) {
+      this.seekTo(this.videoElement().currentTime + (key === 'arrowright' ? 5 : -5));
+      return event.preventDefault();
+    }
     if ((key === 'space' || key === 'k') && !onSlider) this.togglePlayback();
     else if (key === 'm') this.toggleMute();
     else if (key === 'f' && this.fullscreenSupported) this.toggleFullscreen();
@@ -436,6 +520,7 @@ export class VideoPlayer implements VideoPlayerHost {
   }
 
   protected onPlaying(): void {
+    if (this.isVod()) return;
     const state = this.state();
     if (state === 'reconnecting' && !this.resumingAfterReconnect) return;
     if (state !== 'connecting' && state !== 'buffering' && state !== 'reconnecting') return;
@@ -445,10 +530,12 @@ export class VideoPlayer implements VideoPlayerHost {
   }
 
   protected onWaiting(): void {
+    if (this.isVod()) return;
     if (this.state() === 'live') this.setState('buffering');
   }
 
   protected onEnded(): void {
+    if (this.isVod()) return;
     const startedAt = this.descriptor()?.startedAt;
     const duration = this.strings.duration(
       startedAt ? (Date.now() - Date.parse(startedAt)) / 1000 : 0,
@@ -479,6 +566,18 @@ export class VideoPlayer implements VideoPlayerHost {
 
   protected togglePlayback(): void {
     const video = this.videoElement();
+    if (this.isVod()) {
+      if (this.playPauseDisabled()) return;
+      if (this.playing()) {
+        video.pause();
+        this.setState('paused');
+        this.announcer.toggle(this.strings.paused);
+      } else {
+        video.play().catch(() => undefined);
+        this.announcer.toggle(this.strings.playing);
+      }
+      return;
+    }
     if (this.playing()) {
       video.pause();
       this.setState('paused');
@@ -498,6 +597,7 @@ export class VideoPlayer implements VideoPlayerHost {
   }
 
   protected goToLive(): void {
+    if (this.isVod()) return;
     if (!this.behindLive() || this.controlsDisabled()) return;
     this.session?.goToLive();
     this.latency.set(0);

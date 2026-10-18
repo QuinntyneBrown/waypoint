@@ -2,6 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <!--
+      Everything the portal loads comes from its own origin. media-src allows blob: for the lesson
+      video player (hls.js attaches a MediaSource object URL); connect-src covers the API, the
+      realtime hub and video segments; img-src covers lesson posters. style-src needs
+      'unsafe-inline' for Angular's component styles.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
     <title>Portal</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -376,6 +376,26 @@ export class CurriculumBuilderPage extends BasePage {
   assignment(title: string) {
     return this.page.getByTestId('curriculum-assignment').filter({ hasText: title });
   }
+  /** Attaches a streamed video to a lesson card through the chunked upload control. */
+  async attachVideo(
+    lesson: ReturnType<CurriculumBuilderPage['lesson']>,
+    file: { name: string; buffer: Buffer },
+  ): Promise<void> {
+    await lesson
+      .getByLabel('Attach video')
+      .setInputFiles({ name: file.name, mimeType: 'video/mp4', buffer: file.buffer });
+  }
+  /** The row for an upload that has not completed (uploading, interrupted or rejected). */
+  videoUpload(lesson: ReturnType<CurriculumBuilderPage['lesson']>, fileName: string) {
+    return lesson.getByTestId('lesson-video-upload').filter({ hasText: fileName });
+  }
+  /** The row for an accepted video and its Queued, Processing, Ready or Failed state. */
+  video(lesson: ReturnType<CurriculumBuilderPage['lesson']>, fileName: string) {
+    return lesson.getByTestId('lesson-video').filter({ hasText: fileName });
+  }
+  videoRetryButton(video: ReturnType<CurriculumBuilderPage['video']>) {
+    return video.getByRole('button', { name: 'Retry' });
+  }
   quiz(id: string) {
     return this.page.locator('[data-testid="curriculum-quiz"][data-quiz-id="' + id + '"]');
   }

@@ -1,0 +1,100 @@
+@startuml
+
+title UML sequence behaviour — Upload a lesson video
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+actor "Program administrator" as actor
+box "Frontend — Portal application" #E0F2FE
+  participant "CurriculumBuilder" as page
+  participant "CurriculumAuthoringService" as client
+end box
+box "Backend — Waypoint API application" #D1FADF
+  participant "LessonVideoUploadsController" as controller
+end box
+box "Backend — Waypoint Application and Domain" #ECFDF3
+  participant "CompleteVideoUploadCommandHandler" as handler
+  participant "LessonMedia / VideoTranscodeJob" as entity
+end box
+box "Backend — Waypoint Infrastructure" #FFF4E5
+  participant "FileSystemMediaStore" as store
+  participant "VideoTranscodeProcessor" as processor
+  participant "FfmpegVideoTranscoder" as ffmpeg
+  database "Waypoint database" as db
+end box
+
+== Upload ==
+actor -> page : Choose a video file
+page -> client : startVideoUpload(lessonId, name, size)
+client -> controller : POST api/lessons/{id}/video-uploads
+controller -> controller : Authenticate; apply EditCurriculum policy
+controller -> db : Validate lesson, size limit (L2-CURRIC-002 AC2), free space; save VideoUploadSession
+db --> controller : uploadId, chunkSize
+controller --> client : 201 UploadSessionResult
+loop each chunk, at most 3 in flight
+  client -> controller : PUT .../chunks/{index} (octet-stream)
+  controller -> store : WriteChunkAsync at index × chunkSize
+  store --> controller : written
+  controller -> db : Mark index received
+  controller --> client : 204
+end
+opt page reload or network loss
+  client -> controller : GET .../video-uploads/{uploadId}
+  controller --> client : received-chunk bitmap (L2-CURRIC-002 AC6)
+  client -> controller : PUT missing chunks only
+end
+page -> client : completeVideoUpload(lessonId, uploadId)
+client -> controller : POST .../complete
+controller -> handler : Send CompleteVideoUploadCommand
+handler -> store : Verify length; read head bytes
+handler -> handler : Apply ftyp signature rule (L2-NFR-001 AC4)
+handler -> ffmpeg : ProbeAsync(sourcePath)
+alt probe rejects file
+  ffmpeg --> handler : not a decodable video
+  handler --> controller : ValidationException
+  controller --> client : 400 ProblemDetails
+  client --> page : Show rejection
+else probe succeeds
+  ffmpeg --> handler : duration, width, height, rotation
+  handler -> store : PromoteUploadAsync → sources/{mediaId}.mp4
+  handler -> entity : Create LessonMedia (Queued) and VideoTranscodeJob (L2-CURRIC-002 AC7)
+  handler -> db : Save changes in one unit of work; audit LessonVideoUploaded (L2-CONSENT-003)
+  db --> handler : Commit
+  handler --> controller : LessonMediaResult
+  controller --> client : 201
+  client --> page : Show Queued
+end
+
+== Background transcode ==
+processor -> db : Claim job whose lease is empty or expired (5 min lease)
+db --> processor : Claimed job
+processor -> db : Set LessonMedia.VideoStatus = Processing
+processor -> ffmpeg : TranscodeAsync(source, work/{mediaId}, ladder, progress)
+loop every 60 s while ffmpeg runs
+  ffmpeg --> processor : out_time progress
+  processor -> db : Extend LeaseUntil; set ProgressPercent
+end
+alt success
+  ffmpeg --> processor : exit 0
+  processor -> store : PublishAsync → move work/{mediaId} to hls/{mediaId}
+  processor -> db : Set Ready, duration, width, height; release lease
+else failure or hard timeout
+  ffmpeg --> processor : non-zero exit or timeout
+  processor -> store : Delete work/{mediaId}
+  processor -> db : Record LastError; AttemptCount++; set Failed when attempts reach 2
+end
+page -> client : Poll lesson detail every 5 s while Queued or Processing
+client --> page : VideoStatus, ProgressPercent, DurationSeconds
+page --> actor : Show Processing %, Ready, or Failed with Retry
+@enduml

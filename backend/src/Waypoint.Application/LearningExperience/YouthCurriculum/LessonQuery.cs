@@ -20,6 +20,7 @@ public sealed record LessonView(
     IReadOnlyList<LessonMediaView> Media,
     LessonReadingStateView ReadingState);
 
-public sealed record LessonMediaView(Guid MediaId, string MediaType, string Url);
+public sealed record LessonMediaView(
+    Guid MediaId, string MediaType, string Url, string VideoStatus, double? DurationSeconds);
 
 public sealed record LessonReadingStateView(string TextSize, bool Bookmarked, int Position);

@@ -1,0 +1,58 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 4 — Upload a lesson video — code elements
+System_Boundary(waypoint, "Waypoint software system") {
+  Container_Boundary(frontend, "Frontend") {
+    Container_Boundary(frontend_app, "Portal application") {
+      Component(page, "CurriculumBuilder", "Angular component", "Feature page code element")
+      Component(client, "CurriculumAuthoringService", "TypeScript API client", "Typed API boundary code element")
+    }
+  }
+  Container_Boundary(backend, "Backend") {
+    Container_Boundary(api_app, "Waypoint API application") {
+      Component(controller, "LessonVideoUploadsController", "C# controller", "HTTP endpoint code element")
+    }
+    Container_Boundary(application, "Waypoint Application") {
+      Component(startcmd, "StartVideoUploadCommand", "C# request record", "Application request code element")
+      Component(completecmd, "CompleteVideoUploadCommand", "C# request record", "Application request code element")
+      Component(completeh, "CompleteVideoUploadCommandHandler", "C# handler class", "Application handler code element")
+      Component(uploadport, "IUploadStore", "C# interface", "Chunk write port")
+      Component(mediaport, "IMediaStore", "C# interface", "Media root layout port")
+      Component(transport, "IVideoTranscoder", "C# interface", "Probe and transcode port")
+      Component(dbport, "IAppDbContext", "C# interface", "Persistence port")
+      Component(audit, "IAuditLogger", "C# interface", "Audit port")
+    }
+    Container_Boundary(domain, "Waypoint Domain") {
+      Component(media, "LessonMedia", "C# domain type", "Extended with video status fields")
+      Component(job, "VideoTranscodeJob", "C# domain type", "Leased queue row")
+    }
+    Container_Boundary(infrastructure, "Waypoint Infrastructure") {
+      Component(ffmpeg, "FfmpegVideoTranscoder", "C# adapter", "Implements IVideoTranscoder over child processes")
+      Component(fsmedia, "FileSystemMediaStore", "C# adapter", "Implements IMediaStore and IUploadStore")
+      Component(processor, "VideoTranscodeProcessor", "C# class", "Leased-queue processor")
+    }
+  }
+}
+Rel(page, client, "Invokes")
+Rel(client, controller, "Calls")
+Rel(controller, startcmd, "Constructs")
+Rel(controller, completecmd, "Constructs")
+Rel(controller, uploadport, "Streams chunk through")
+Rel(completecmd, completeh, "Dispatched to")
+Rel(completeh, transport, "Probes through")
+Rel(completeh, mediaport, "Moves source through")
+Rel(completeh, dbport, "Depends on")
+Rel(completeh, audit, "Audits through")
+Rel(completeh, media, "Creates")
+Rel(completeh, job, "Enqueues")
+Rel(ffmpeg, transport, "Implements")
+Rel(fsmedia, mediaport, "Implements")
+Rel(fsmedia, uploadport, "Implements")
+Rel(processor, transport, "Depends on")
+Rel(processor, mediaport, "Depends on")
+Rel(processor, dbport, "Depends on")
+Rel(processor, job, "Claims and updates")
+Rel(processor, media, "Sets Processing, Ready, Failed")
+SHOW_LEGEND()
+@enduml

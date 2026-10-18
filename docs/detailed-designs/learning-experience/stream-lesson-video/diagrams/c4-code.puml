@@ -1,0 +1,58 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 4 — Stream a lesson video — code elements
+System_Boundary(waypoint, "Waypoint software system") {
+  Container_Boundary(frontend, "Frontend") {
+    Container_Boundary(frontend_app, "Portal application") {
+      Component(page, "YouthLesson", "Angular component", "Feature page code element")
+      Component(client, "LearningService", "TypeScript API client", "Typed API boundary code element")
+    }
+    Container_Boundary(components_lib, "Components library") {
+      Component(player, "VideoPlayer", "Angular component", "Player shell code element")
+      Component(vod, "HlsVodSession", "TypeScript class", "On-demand session code element")
+      Component(factory, "HLS_FACTORY", "Injection token", "Creates an hls.js instance lazily")
+      Component(live, "VideoStreamSession", "TypeScript class", "Existing live session, unchanged")
+    }
+  }
+  Container_Boundary(backend, "Backend") {
+    Container_Boundary(api_app, "Waypoint API application") {
+      Component(controller, "YouthCurriculumController", "C# controller", "HTTP endpoint code element")
+      Component(delivery, "MediaDeliveryEndpoint", "C# static class", "Minimal API handler code element")
+    }
+    Container_Boundary(application, "Waypoint Application") {
+      Component(query, "LessonVideoPlaybackQuery", "C# request record", "Application request code element")
+      Component(handler, "LessonVideoPlaybackQueryHandler", "C# handler class", "Application handler code element")
+      Component(signerport, "IPlaybackUrlSigner", "C# interface", "Sign and validate port")
+      Component(mediaport, "IMediaStore", "C# interface", "Published file resolution port")
+      Component(dbport, "IAppDbContext", "C# interface", "Persistence port")
+      Component(current, "ICurrentUser", "C# interface", "Current-user port")
+    }
+    Container_Boundary(domain, "Waypoint Domain") {
+      Component(media, "LessonMedia", "C# domain type", "Feature domain code element")
+    }
+    Container_Boundary(infrastructure, "Waypoint Infrastructure") {
+      Component(hmac, "HmacPlaybackUrlSigner", "C# adapter", "Implements IPlaybackUrlSigner")
+      Component(fsstore, "FileSystemMediaStore", "C# adapter", "Implements IMediaStore")
+    }
+  }
+}
+Rel(page, client, "Invokes")
+Rel(page, player, "Binds")
+Rel(player, vod, "Creates when src is set")
+Rel(player, live, "Creates when streamId is set")
+Rel(vod, factory, "Resolves")
+Rel(client, controller, "Calls")
+Rel(controller, query, "Constructs")
+Rel(query, handler, "Dispatched to")
+Rel(handler, dbport, "Depends on")
+Rel(handler, current, "Scopes by")
+Rel(handler, media, "Reads")
+Rel(handler, signerport, "Signs through")
+Rel(vod, delivery, "Requests files from")
+Rel(delivery, signerport, "Validates through")
+Rel(delivery, mediaport, "Resolves through")
+Rel(hmac, signerport, "Implements")
+Rel(fsstore, mediaport, "Implements")
+SHOW_LEGEND()
+@enduml

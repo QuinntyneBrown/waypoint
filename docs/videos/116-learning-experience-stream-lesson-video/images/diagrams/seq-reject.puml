@@ -1,0 +1,26 @@
+@startuml
+title Reject a forged or mismatched token
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam defaultFontSize 20
+skinparam ArrowColor #344054
+skinparam sequenceMessageAlign left
+box "Frontend — Portal" #E0F2FE
+  participant "w-video-player" as player
+  participant "YouthLesson" as page
+end box
+box "Backend — API" #D1FADF
+  participant "MediaDeliveryEndpoint" as delivery
+end box
+box "Backend — Infrastructure" #FFF4E5
+  participant "HmacPlaybackUrlSigner" as signer
+end box
+player -> delivery : GET /api/media/{forged}/{otherMediaId}/master.m3u8
+delivery -> signer : Validate token and mediaId
+signer --> delivery : Invalid signature or mediaId mismatch
+delivery --> player : 404
+player -> page : error
+page -> page : Teaching text stays readable, offer Retry
+@enduml
