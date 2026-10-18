@@ -1,4 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 /**
  * E2E acceptance harness for the Waypoint frontend.
@@ -28,6 +30,7 @@ const QUALITY_VIEWPORTS = [
 
 // e2e-only signing key (>= 32 chars) — never a production secret.
 const E2E_SIGNING_KEY = 'e2e-only-signing-key-do-not-use-in-production-0123456789';
+const E2E_MEDIA_KEY = 'e2e-only-media-signing-key-do-not-use-in-production-0123456789';
 
 export default defineConfig({
   testDir: './e2e',
@@ -89,6 +92,9 @@ export default defineConfig({
         ASPNETCORE_ENVIRONMENT: 'Testing',
         ConnectionStrings__Default: 'InMemory',
         Jwt__SigningKey: E2E_SIGNING_KEY,
+        Media__Enabled: 'true',
+        Media__RootPath: join(tmpdir(), 'waypoint-e2e-media'),
+        Media__PlaybackSigningKey: E2E_MEDIA_KEY,
       },
     },
     {

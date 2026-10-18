@@ -1,0 +1,22 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 2 — Stream a lesson video — containers
+Person(youth, "Youth participant", "Plays a lesson video")
+System_Boundary(waypoint, "Waypoint software system") {
+  Container_Boundary(frontend, "Frontend") {
+    Container(portal, "Portal application", "Angular", "Lesson page hosting w-video-player in on-demand mode")
+  }
+  Container_Boundary(backend, "Backend") {
+    Container(api, "Waypoint API application", "ASP.NET Core", "Playback URL issuance; anonymous media delivery endpoint")
+  }
+  ContainerDb(db, "Waypoint database", "SQL Server", "LessonMedia status and lesson access state")
+  ContainerDb(store, "Media root", "File system (Media:RootPath)", "hls/{mediaId}/ playlists, segments, poster")
+}
+Rel(youth, portal, "Uses", "HTTPS")
+Rel(portal, api, "GET api/me/lessons/{id}/media/{mediaId}/playback", "HTTPS JSON, bearer token")
+Rel(api, db, "Authorizes lesson access once per playback URL", "EF Core")
+Rel(portal, api, "GET /api/media/{token}/{mediaId}/… playlists and segments", "HTTPS, Range")
+Rel(api, store, "Validates token, then reads file", "SendFileAsync")
+SHOW_LEGEND()
+@enduml

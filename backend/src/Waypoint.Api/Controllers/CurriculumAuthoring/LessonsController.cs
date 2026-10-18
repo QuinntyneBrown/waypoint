@@ -92,6 +92,16 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("{lessonId:guid}/media/{mediaId:guid}/retry-transcode")]
+    public async Task<IActionResult> RetryTranscode(
+        Guid lessonId,
+        Guid mediaId,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new RetryVideoTranscodeCommand(lessonId, mediaId), cancellationToken);
+        return NoContent();
+    }
+
     [HttpDelete("{lessonId:guid}/media/{mediaId:guid}")]
     public async Task<IActionResult> RemoveMedia(
         Guid lessonId,

@@ -1,0 +1,36 @@
+@startuml
+title Complete: verify, probe, queue
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam defaultFontSize 20
+skinparam ArrowColor #344054
+skinparam sequenceMessageAlign left
+box "Frontend — Portal" #E0F2FE
+  participant "CurriculumBuilder" as page
+end box
+box "Backend — API and Application" #D1FADF
+  participant "LessonVideoUploadsController" as controller
+  participant "CompleteVideoUploadCommandHandler" as handler
+end box
+box "Backend — Infrastructure" #FFF4E5
+  participant "FileSystemMediaStore" as store
+  participant "ffprobe" as probe
+  database "Database" as db
+end box
+page -> controller : Complete upload
+controller -> handler : CompleteVideoUploadCommand
+handler -> store : Verify length, read first bytes
+handler -> handler : Check the MP4 signature
+handler -> probe : Probe the source file
+alt probe rejects the file
+  probe --> handler : Not a decodable video
+  handler --> page : 400, show rejection
+else probe succeeds
+  probe --> handler : Duration, size, rotation
+  handler -> store : Move to sources/{mediaId}.mp4
+  handler -> db : Save media (Queued), job, audit — one unit of work
+  handler --> page : 201, show Queued
+end
+@enduml

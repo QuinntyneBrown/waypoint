@@ -213,22 +213,141 @@
                       </div>
                       <div class="media-list">
                         @for (media of lesson.media; track media.id) {
-                          <div class="media-row">
-                            <a [href]="media.url" target="_blank" rel="noopener">
-                              {{ media.fileName }}
-                            </a>
-                            <button
-                              w-button
-                              variant="ghost"
-                              size="sm"
-                              type="button"
-                              (click)="removeMedia(lesson.id, media.id)"
-                            >
-                              Remove {{ media.fileName }}
-                            </button>
+                          @if (media.videoStatus === 'None') {
+                            <div class="media-row">
+                              <a [href]="media.url" target="_blank" rel="noopener">
+                                {{ media.fileName }}
+                              </a>
+                              <button
+                                w-button
+                                variant="ghost"
+                                size="sm"
+                                type="button"
+                                (click)="removeMedia(lesson.id, media.id)"
+                              >
+                                Remove {{ media.fileName }}
+                              </button>
+                            </div>
+                          } @else {
+                            <div class="media-row" data-testid="lesson-video">
+                              <div>
+                                <strong>{{ media.fileName }}</strong>
+                                @switch (media.videoStatus) {
+                                  @case ('Queued') {
+                                    <div role="status">
+                                      <span w-badge variant="info" dot>Queued</span>
+                                      Upload complete. Waiting for its turn to be prepared.
+                                    </div>
+                                  }
+                                  @case ('Processing') {
+                                    <div role="status">
+                                      <span w-badge variant="warning" dot>Processing</span>
+                                      {{ media.progressPercent }}% · youth cannot watch it yet
+                                    </div>
+                                    <div
+                                      w-progress
+                                      label="Processing progress"
+                                      [value]="media.progressPercent"
+                                    ></div>
+                                  }
+                                  @case ('Ready') {
+                                    <div>
+                                      <span w-badge variant="success" dot>Ready</span>
+                                      Video · {{ formatDuration(media.durationSeconds) }}
+                                    </div>
+                                  }
+                                  @case ('Failed') {
+                                    <div role="alert">
+                                      <span w-badge variant="error" dot>Failed</span>
+                                      {{ failureText(media.failureCode) }}
+                                    </div>
+                                  }
+                                }
+                              </div>
+                              <div class="w-actions">
+                                @if (media.videoStatus === 'Failed') {
+                                  <button
+                                    w-button
+                                    variant="primary"
+                                    size="sm"
+                                    type="button"
+                                    (click)="retryVideo(lesson.id, media.id)"
+                                  >
+                                    Retry
+                                  </button>
+                                }
+                                <button
+                                  w-button
+                                  variant="ghost"
+                                  size="sm"
+                                  type="button"
+                                  (click)="removeMedia(lesson.id, media.id)"
+                                >
+                                  Remove {{ media.fileName }}
+                                </button>
+                              </div>
+                            </div>
+                          }
+                        }
+                        @if (videoUploads()[lesson.id]; as upload) {
+                          <div class="media-row" data-testid="lesson-video-upload">
+                            <div>
+                              <strong>{{ upload.fileName }}</strong>
+                              @switch (upload.phase) {
+                                @case ('uploading') {
+                                  <div role="status">Uploading · {{ percent(upload) }}%</div>
+                                  <div
+                                    w-progress
+                                    label="Upload progress"
+                                    [value]="percent(upload)"
+                                  ></div>
+                                }
+                                @case ('interrupted') {
+                                  <div role="status">
+                                    Upload interrupted at {{ percent(upload) }}%. Resuming picks up
+                                    from the last chunk Waypoint received.
+                                  </div>
+                                }
+                                @case ('rejected') {
+                                  <div w-alert variant="error" role="alert">
+                                    {{ upload.message }}
+                                  </div>
+                                }
+                              }
+                            </div>
+                            <div class="w-actions">
+                              @if (upload.phase === 'interrupted') {
+                                <button
+                                  w-button
+                                  variant="primary"
+                                  size="sm"
+                                  type="button"
+                                  (click)="resumeVideo(lesson.id)"
+                                >
+                                  Resume upload
+                                </button>
+                              }
+                              <button
+                                w-button
+                                variant="ghost"
+                                size="sm"
+                                type="button"
+                                (click)="cancelVideo(lesson.id)"
+                              >
+                                {{ upload.phase === 'rejected' ? 'Dismiss' : 'Cancel' }}
+                              </button>
+                            </div>
                           </div>
                         }
                       </div>
+                      <label w-label [for]="'lesson-video-' + lesson.id"> Attach video </label>
+                      <input
+                        w-text-field
+                        [id]="'lesson-video-' + lesson.id"
+                        type="file"
+                        accept="video/mp4"
+                        (change)="attachVideo(lesson, $event)"
+                      />
                       <label w-label [for]="'lesson-media-' + lesson.id"> Upload PDF or MP4 </label>
                       <input
                         w-text-field

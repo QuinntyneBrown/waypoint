@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 1 — Upload a lesson video — system context
+Person(admin, "Program administrator", "Authors lessons and attaches video recordings")
+Person(youth, "Youth participant", "Streams the published video through the adjacent slice")
+System(waypoint, "Waypoint software system", "Youth leadership, learning, mentoring, and program operations")
+System_Ext(ffmpeg, "ffmpeg and ffprobe", "Self-hosted binaries on the API host; probe and transcode video")
+
+Rel(admin, waypoint, "Uploads a lesson video in resumable chunks through the Portal", "HTTPS")
+Rel(waypoint, ffmpeg, "Probes the source and transcodes it into an HLS rendition ladder", "Child process")
+Rel(youth, waypoint, "Plays a Ready lesson video")
+
+SHOW_LEGEND()
+@enduml

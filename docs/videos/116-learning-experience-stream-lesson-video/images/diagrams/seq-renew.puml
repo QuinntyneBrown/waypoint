@@ -1,0 +1,24 @@
+@startuml
+title Renew an expired token
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam defaultFontSize 20
+skinparam ArrowColor #344054
+skinparam sequenceMessageAlign left
+box "Frontend — Portal" #E0F2FE
+  participant "w-video-player" as player
+  participant "YouthLesson" as page
+end box
+box "Backend — API" #D1FADF
+  participant "MediaDeliveryEndpoint" as delivery
+  participant "YouthCurriculumController" as controller
+end box
+player -> delivery : GET …/seg_NNNNN.m4s after expiry
+delivery --> player : 404
+player -> page : tokenExpired
+page -> controller : Ask for a fresh playback address
+controller --> page : New url
+page -> player : loadSource(url, resume at current time)
+@enduml

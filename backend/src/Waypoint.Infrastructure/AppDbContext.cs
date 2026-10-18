@@ -40,6 +40,8 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<Lesson> Lessons => Set<Lesson>();
     public DbSet<CodingLessonStep> CodingLessonSteps => Set<CodingLessonStep>();
     public DbSet<LessonMedia> LessonMedia => Set<LessonMedia>();
+    public DbSet<VideoUploadSession> VideoUploadSessions => Set<VideoUploadSession>();
+    public DbSet<VideoTranscodeJob> VideoTranscodeJobs => Set<VideoTranscodeJob>();
     public DbSet<Quiz> Quizzes => Set<Quiz>();
     public DbSet<QuizQuestion> QuizQuestions => Set<QuizQuestion>();
     public DbSet<Assignment> Assignments => Set<Assignment>();
@@ -293,6 +295,21 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(x => x.Url).HasMaxLength(2048).IsRequired();
             b.Property(x => x.OriginalFileName).HasMaxLength(255);
             b.Property(x => x.ContentType).HasMaxLength(128);
+            b.Property(x => x.FailureCode).HasMaxLength(64);
+        });
+        modelBuilder.Entity<VideoTranscodeJob>(b =>
+        {
+            b.Property(x => x.LastError).HasMaxLength(2000);
+            b.HasIndex(x => x.MediaId).IsUnique();
+            b.HasIndex(x => x.LeaseUntil);
+        });
+        modelBuilder.Entity<VideoUploadSession>(b =>
+        {
+            b.Property(x => x.FileName).HasMaxLength(255).IsRequired();
+            b.Property(x => x.ReceivedChunks).IsRequired();
+            b.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
+            b.HasIndex(x => x.LessonId);
+            b.HasIndex(x => x.ExpiresAt);
         });
         modelBuilder.Entity<Quiz>(b => b.Property(x => x.FeedbackMode).HasMaxLength(32));
         modelBuilder.Entity<QuizQuestion>(b =>

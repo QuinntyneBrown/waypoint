@@ -14,6 +14,11 @@ public sealed class LessonMediaController : ControllerBase
 
     public LessonMediaController(IMediator mediator) => _mediator = mediator;
 
+    [HttpGet("{id:guid}/playback")]
+    public async Task<ActionResult<VideoPlaybackResult>> Playback(
+        Guid id, CancellationToken cancellationToken) =>
+        Ok(await _mediator.Send(new LessonVideoPlaybackQuery(id, null), cancellationToken));
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> Get(Guid id, CancellationToken cancellationToken)
     {

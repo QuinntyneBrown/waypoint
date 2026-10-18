@@ -42,8 +42,16 @@ if (builder.Environment.IsEnvironment("Testing"))
     builder.Services.AddSingleton<Waypoint.Api.TestSupport.TestingEmailSender>();
     builder.Services.AddSingleton<IEmailSender>(serviceProvider =>
         serviceProvider.GetRequiredService<Waypoint.Api.TestSupport.TestingEmailSender>());
+    builder.Services.RemoveAll<IVideoTranscoder>();
+    builder.Services.AddSingleton<IVideoTranscoder, Waypoint.Api.TestSupport.FakeVideoTranscoder>();
 }
 
+builder.Services.AddResponseCompression(options =>
+{
+    // Playlists are small text and compress well; media segments are already compressed.
+    options.EnableForHttps = true;
+    options.MimeTypes = ["application/vnd.apple.mpegurl"];
+});
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IExceptionAlertSink, LoggingExceptionAlertSink>();
 builder.Services.AddEndpointsApiExplorer();
@@ -228,6 +236,7 @@ app.UseMiddleware<RequestLoggingMiddleware>();
 // First in the pipeline so security headers cover every response, including the exception (500) and
 // maintenance (503) short-circuits below (L2-NFR-002 AC3).
 app.UseMiddleware<SecurityHeadersMiddleware>();
+app.UseResponseCompression();
 
 if (app.Environment.IsProduction())
 {
@@ -322,6 +331,7 @@ if (!app.Environment.IsEnvironment("Testing"))
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+Waypoint.Api.MediaDeliveryEndpoint.MapMediaDelivery(app);
 app.MapHub<RealtimeHub>("/hubs/realtime", options =>
 {
     // Stop long-lived transports at JWT expiry; the publisher also rejects an expired registry

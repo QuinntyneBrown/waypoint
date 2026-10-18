@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  HostListener,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   ApiError,
@@ -29,6 +36,7 @@ import {
   Card,
   CardBody,
   Badge,
+  Progress,
   EmptyState,
   EmptyStateTitle,
   EmptyStateText,
@@ -37,7 +45,8 @@ import {
   DialogTitle,
   DialogBody,
 } from '@waypoint/components';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
+import { forgetSession, uploadLessonVideo } from './lesson-video-upload';
 import {
   EditorDraftService,
   UnsavedChangesAware,
@@ -113,6 +122,18 @@ interface CurriculumAuthoringDraft {
   };
 }
 
+/** An upload that has not completed: sending, interrupted (can resume) or rejected by the server. */
+interface VideoUpload {
+  fileName: string;
+  sentBytes: number;
+  totalBytes: number;
+  phase: 'uploading' | 'interrupted' | 'rejected';
+  message: string | null;
+}
+
+/** How often the builder re-reads the workspace while a video is queued or processing. */
+const VIDEO_POLL_MS = 5000;
+
 // Traces to: L2-CURRIC-001..004, L2-NFR-001, L2-NFR-009, L2-NFR-010
 @Component({
   selector: 'w-curriculum-builder',
@@ -131,6 +152,7 @@ interface CurriculumAuthoringDraft {
     Card,
     CardBody,
     Badge,
+    Progress,
     EmptyState,
     EmptyStateTitle,
     EmptyStateText,
@@ -151,7 +173,11 @@ export class CurriculumBuilderPage implements UnsavedChangesAware {
   private readonly draftKey = 'admin.curriculum';
   private pendingDraft: CurriculumAuthoringDraft | null = null;
   private workspaceRequest = 0;
+  private pollTimer: ReturnType<typeof setTimeout> | null = null;
+  private readonly uploadFiles = new Map<string, File>();
+  private readonly uploadRuns = new Map<string, Subscription>();
 
+  protected readonly videoUploads = signal<Record<string, VideoUpload>>({});
   protected readonly tracks = signal<TrackSummary[]>([]);
   protected readonly workspace = signal<TrackWorkspace | null>(null);
   protected readonly selectedTrackId = signal('');
@@ -219,6 +245,10 @@ export class CurriculumBuilderPage implements UnsavedChangesAware {
   constructor() {
     this.pendingDraft = this.drafts.take<CurriculumAuthoringDraft>(this.draftKey);
     this.loadTracks(this.pendingDraft?.selectedTrackId);
+    inject(DestroyRef).onDestroy(() => {
+      if (this.pollTimer) clearTimeout(this.pollTimer);
+      this.uploadRuns.forEach((run) => run.unsubscribe());
+    });
   }
 
   canDeactivate(): DraftSaveResult {
@@ -419,6 +449,144 @@ export class CurriculumBuilderPage implements UnsavedChangesAware {
       input.value = '';
       this.reload();
     });
+  }
+
+  protected attachVideo(lesson: LessonWorkspace, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (file) this.sendVideo(lesson.id, file);
+  }
+
+  protected resumeVideo(lessonId: string): void {
+    const file = this.uploadFiles.get(lessonId);
+    if (file) this.sendVideo(lessonId, file);
+  }
+
+  protected cancelVideo(lessonId: string): void {
+    this.uploadRuns.get(lessonId)?.unsubscribe();
+    this.uploadRuns.delete(lessonId);
+    this.uploadFiles.delete(lessonId);
+    this.setUpload(lessonId, null);
+  }
+
+  protected retryVideo(lessonId: string, mediaId: string): void {
+    this.run(
+      this.api.retryVideoTranscode(lessonId, mediaId),
+      'The video is back in the queue.',
+      () => this.reload(),
+    );
+  }
+
+  protected formatDuration(seconds: number | null): string {
+    const total = Math.round(seconds ?? 0);
+    const hours = Math.floor(total / 3600);
+    const minutes = Math.floor((total % 3600) / 60);
+    const rest = String(total % 60).padStart(2, '0');
+    return hours > 0
+      ? `${hours}:${String(minutes).padStart(2, '0')}:${rest}`
+      : `${minutes}:${rest}`;
+  }
+
+  protected failureText(code: string | null): string {
+    switch (code) {
+      case 'TranscodeTimeout':
+        return 'Preparing the video took too long.';
+      case 'SourceMissing':
+        return 'The original file is no longer available. Remove this video and upload it again.';
+      default:
+        return 'Preparing the video stopped.';
+    }
+  }
+
+  protected percent(upload: VideoUpload): number {
+    return upload.totalBytes > 0 ? Math.floor((upload.sentBytes / upload.totalBytes) * 100) : 0;
+  }
+
+  private sendVideo(lessonId: string, file: File): void {
+    this.uploadRuns.get(lessonId)?.unsubscribe();
+    this.uploadFiles.set(lessonId, file);
+    this.errorMessage.set(null);
+    this.outcome.set(null);
+    const upload = (
+      phase: VideoUpload['phase'],
+      sentBytes: number,
+      message: string | null = null,
+    ) =>
+      this.setUpload(lessonId, {
+        fileName: file.name,
+        totalBytes: file.size,
+        sentBytes,
+        phase,
+        message,
+      });
+    upload('uploading', 0);
+    let sent = 0;
+    this.uploadRuns.set(
+      lessonId,
+      uploadLessonVideo(this.api, lessonId, file).subscribe({
+        next: (event) => {
+          if (event.kind === 'progress') {
+            sent = event.sentBytes;
+            upload('uploading', sent);
+            return;
+          }
+          this.uploadFiles.delete(lessonId);
+          this.setUpload(lessonId, null);
+          this.outcome.set('Video uploaded. It will be ready to watch once it has been prepared.');
+          this.reload();
+        },
+        error: (error: unknown) => {
+          const problem = ApiError.from(error);
+          if (problem.status === 0 || problem.status >= 500) {
+            upload('interrupted', sent, problem.title);
+            return;
+          }
+          forgetSession(lessonId, file);
+          this.uploadFiles.delete(lessonId);
+          upload('rejected', sent, problem.fieldErrors[0]?.errorMessage ?? problem.title);
+        },
+      }),
+    );
+  }
+
+  private setUpload(lessonId: string, upload: VideoUpload | null): void {
+    this.videoUploads.update((current) => {
+      const next = { ...current };
+      if (upload) next[lessonId] = upload;
+      else delete next[lessonId];
+      return next;
+    });
+  }
+
+  private hasPendingVideo(): boolean {
+    return (
+      this.workspace()?.modules.some((module) =>
+        module.lessons.some((lesson) =>
+          lesson.media.some(
+            (media) => media.videoStatus === 'Queued' || media.videoStatus === 'Processing',
+          ),
+        ),
+      ) ?? false
+    );
+  }
+
+  // While a video is being prepared the workspace is re-read quietly so its status stays current.
+  private schedulePoll(): void {
+    if (this.pollTimer) clearTimeout(this.pollTimer);
+    this.pollTimer = null;
+    if (!this.hasPendingVideo()) return;
+    this.pollTimer = setTimeout(() => {
+      const id = this.selectedTrackId();
+      if (!id) return;
+      this.api.track(id).subscribe({
+        next: (workspace) => {
+          if (id === this.selectedTrackId()) this.workspace.set(workspace);
+          this.schedulePoll();
+        },
+        error: () => this.schedulePoll(),
+      });
+    }, VIDEO_POLL_MS);
   }
 
   protected removeMedia(lessonId: string, mediaId: string): void {
@@ -680,6 +848,7 @@ export class CurriculumBuilderPage implements UnsavedChangesAware {
         next: (workspace) => {
           if (request !== this.workspaceRequest) return;
           this.workspace.set(workspace);
+          this.schedulePoll();
           this.restorePendingDraft();
         },
         error: (error: unknown) => {

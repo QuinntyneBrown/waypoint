@@ -18,6 +18,8 @@ import {
   SaveTrack,
   TrackSummary,
   TrackWorkspace,
+  VideoUploadSession,
+  VideoUploadStatus,
 } from '../models/curriculum-authoring/curriculum-authoring';
 
 @Injectable({ providedIn: 'root' })
@@ -82,6 +84,49 @@ export class CurriculumAuthoringService {
   }
   removeLessonMedia(lessonId: string, mediaId: string): Observable<void> {
     return this.http.delete<void>(this.url('/api/lessons/' + lessonId + '/media/' + mediaId));
+  }
+  startVideoUpload(
+    lessonId: string,
+    fileName: string,
+    sizeBytes: number,
+  ): Observable<VideoUploadSession> {
+    return this.http.post<VideoUploadSession>(
+      this.url('/api/lessons/' + lessonId + '/video-uploads'),
+      {
+        fileName,
+        sizeBytes,
+      },
+    );
+  }
+  videoUploadStatus(lessonId: string, uploadId: string): Observable<VideoUploadStatus> {
+    return this.http.get<VideoUploadStatus>(this.videoUploadUrl(lessonId, uploadId));
+  }
+  /** Sends one chunk as a raw body; resending the same index is harmless. */
+  uploadVideoChunk(
+    lessonId: string,
+    uploadId: string,
+    index: number,
+    chunk: Blob,
+  ): Observable<void> {
+    return this.http.put<void>(
+      this.videoUploadUrl(lessonId, uploadId) + '/chunks/' + index,
+      chunk,
+      {
+        headers: { 'Content-Type': 'application/octet-stream' },
+      },
+    );
+  }
+  completeVideoUpload(lessonId: string, uploadId: string): Observable<IdResult> {
+    return this.http.post<IdResult>(this.videoUploadUrl(lessonId, uploadId) + '/complete', {});
+  }
+  retryVideoTranscode(lessonId: string, mediaId: string): Observable<void> {
+    return this.http.post<void>(
+      this.url('/api/lessons/' + lessonId + '/media/' + mediaId + '/retry-transcode'),
+      {},
+    );
+  }
+  private videoUploadUrl(lessonId: string, uploadId: string): string {
+    return this.url('/api/lessons/' + lessonId + '/video-uploads/' + uploadId);
   }
 
   createQuiz(value: SaveQuiz): Observable<IdResult> {

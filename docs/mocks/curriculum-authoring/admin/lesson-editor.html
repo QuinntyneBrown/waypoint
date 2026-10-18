@@ -80,9 +80,87 @@ Talk it through: Where in your week could you "pick up the towel" for someone �
           <div class="w-card w-mb-6">
             <div class="w-card__header">
               <h3 class="w-card__title">Media</h3>
-              <button class="w-btn w-btn--subtle w-btn--sm"><svg class="w-icon"><use href="#i-upload"></use></svg>Attach media</button>
+              <div class="w-cluster w-gap-2">
+                <button class="w-btn w-btn--subtle w-btn--sm" data-toast="The file picker opens here." data-toast-type="info"><svg class="w-icon"><use href="#i-video"></use></svg>Attach video</button>
+                <button class="w-btn w-btn--subtle w-btn--sm"><svg class="w-icon"><use href="#i-upload"></use></svg>Attach media</button>
+              </div>
             </div>
             <div class="w-card__body">
+              <!-- ===== video states: ?state=upload-progress | upload-interrupted | upload-rejected | video-queued | video-processing | video-ready | video-failed ===== -->
+              <div data-when-state="upload-rejected" class="w-hide w-alert w-alert--error w-mb-4" role="alert">
+                <svg class="w-alert__icon w-icon"><use href="#i-alert-circle"></use></svg>
+                <div>
+                  <div class="w-alert__title">This file is not a video we can read.</div>
+                  “weekly-schedule.pdf” was not attached. Choose a video recording between 2 minutes and 3 hours long, up to 20 GB.
+                  <div class="w-mt-3"><button class="w-btn w-btn--secondary w-btn--sm" data-toast="The file picker opens here." data-toast-type="info"><svg class="w-icon"><use href="#i-video"></use></svg>Choose another video</button></div>
+                </div>
+              </div>
+
+              <div data-when-state="upload-progress" class="w-hide w-lessonstep" style="flex-wrap:wrap">
+                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-upload"></use></svg></span>
+                <div class="w-listitem__body" style="flex:1 1 14rem">
+                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="w-listitem__meta" role="status">Uploading · 63% · 903 MB of 1.4 GB</div>
+                  <div class="w-progress w-progress--thin w-mt-2" role="progressbar" aria-label="Upload progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63"><div class="w-progress__fill" style="--val:63%"></div></div>
+                </div>
+                <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Upload cancelled. Nothing was attached." data-toast-type="info">Cancel</button>
+              </div>
+
+              <div data-when-state="upload-interrupted" class="w-hide w-lessonstep is-error" style="flex-wrap:wrap">
+                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-wifi-off"></use></svg></span>
+                <div class="w-listitem__body" style="flex:1 1 14rem">
+                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="w-listitem__meta" role="status">Upload interrupted at 63% · 903 MB of 1.4 GB sent</div>
+                  <div class="w-progress w-progress--thin w-mt-2" role="progressbar" aria-label="Upload progress, paused" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63"><div class="w-progress__fill" style="--val:63%"></div></div>
+                  <div class="w-help w-mt-2">Your connection dropped. Resuming picks up from the last chunk Waypoint received, so nothing is sent twice.</div>
+                </div>
+                <div class="w-cluster w-gap-2">
+                  <button class="w-btn w-btn--primary w-btn--sm" data-toast="Resuming from 903 MB." data-toast-type="info"><svg class="w-icon"><use href="#i-refresh"></use></svg>Resume upload</button>
+                  <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Upload cancelled. Nothing was attached." data-toast-type="info">Cancel</button>
+                </div>
+              </div>
+
+              <div data-when-state="video-queued" class="w-hide w-lessonstep" style="flex-wrap:wrap">
+                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-play-circle"></use></svg></span>
+                <div class="w-listitem__body" style="flex:1 1 14rem">
+                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="w-listitem__meta" role="status"><span class="w-badge w-badge--info w-badge--dot">Queued</span> Upload complete. Waiting for its turn to be prepared.</div>
+                </div>
+                <button class="w-iconbtn" aria-label="Remove video" data-toast="Video removed" data-toast-type="info"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
+              </div>
+
+              <div data-when-state="video-processing" class="w-hide w-lessonstep" style="flex-wrap:wrap">
+                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-play-circle"></use></svg></span>
+                <div class="w-listitem__body" style="flex:1 1 14rem">
+                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="w-listitem__meta" role="status"><span class="w-badge w-badge--warning w-badge--dot">Processing</span> 42% · youth cannot watch it yet</div>
+                  <div class="w-progress w-progress--thin w-mt-2" role="progressbar" aria-label="Processing progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"><div class="w-progress__fill" style="--val:42%"></div></div>
+                </div>
+                <button class="w-iconbtn" aria-label="Remove video" data-toast="Video removed" data-toast-type="info"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
+              </div>
+
+              <div data-when-state="video-ready" class="w-hide w-lessonstep is-done" style="flex-wrap:wrap">
+                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-play-circle"></use></svg></span>
+                <div class="w-listitem__body" style="flex:1 1 14rem">
+                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="w-listitem__meta"><span class="w-badge w-badge--success w-badge--dot">Ready</span> Video · 1:12:08 · plays at up to 1080p</div>
+                </div>
+                <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Video removed" data-toast-type="info"><svg class="w-icon"><use href="#i-trash"></use></svg>Remove</button>
+              </div>
+
+              <div data-when-state="video-failed" class="w-hide w-lessonstep is-error" style="flex-wrap:wrap">
+                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-alert-triangle"></use></svg></span>
+                <div class="w-listitem__body" style="flex:1 1 14rem">
+                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="w-listitem__meta" role="alert"><span class="w-badge w-badge--error w-badge--dot">Failed</span> Preparing the video stopped: the audio track could not be read.</div>
+                  <div class="w-help w-mt-2">Try again. If it keeps failing, remove this video and upload a fresh export.</div>
+                </div>
+                <div class="w-cluster w-gap-2">
+                  <button class="w-btn w-btn--primary w-btn--sm" data-toast="Back in the queue." data-toast-type="info"><svg class="w-icon"><use href="#i-refresh"></use></svg>Retry</button>
+                  <button class="w-iconbtn" aria-label="Remove video" data-toast="Video removed" data-toast-type="info"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
+                </div>
+              </div>
+
               <div class="w-lessonstep">
                 <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-play-circle"></use></svg></span>
                 <div class="w-listitem__body">

@@ -238,6 +238,68 @@ export class YouthLessonPage extends BasePage {
   get completeButton() {
     return this.page.getByRole('button', { name: /mark lesson complete/i });
   }
+  /** The on-demand player shown for a lesson video that is ready. */
+  get videoPlayer() {
+    return this.page.locator('w-video-player');
+  }
+  /**
+   * Forces the hls.js path, which plays through a MediaSource `blob:` object URL, and records each
+   * such URL as it is created. Recording at creation keeps the check reliable even if the player
+   * later gives up on the stand-in media the Testing API serves. Call before navigating.
+   */
+  async forceHlsJsAndRecordMediaSources(): Promise<void> {
+    await this.page.addInitScript(() => {
+      const original = HTMLMediaElement.prototype.canPlayType;
+      HTMLMediaElement.prototype.canPlayType = function (type: string) {
+        return /mpegurl/i.test(type) ? '' : original.call(this, type);
+      };
+      const created: string[] = [];
+      (window as unknown as { __mediaSourceUrls: string[] }).__mediaSourceUrls = created;
+      const createObjectURL = URL.createObjectURL.bind(URL);
+      URL.createObjectURL = (object: Blob | MediaSource) => {
+        const url = createObjectURL(object);
+        if (object instanceof MediaSource) created.push(url);
+        return url;
+      };
+    });
+  }
+  /**
+   * Starts recording whether the video player was ever rendered. The Testing API serves stand-in
+   * media that cannot be decoded, so the lesson page may replace the player with its retry message
+   * moments after it appears; this keeps "the player rendered" checkable regardless. Call before
+   * navigating.
+   */
+  async recordPlayerRendering(): Promise<void> {
+    await this.page.addInitScript(() => {
+      const state = window as unknown as { __playerRendered?: boolean };
+      state.__playerRendered = false;
+      new MutationObserver(() => {
+        if (document.querySelector('w-video-player')) state.__playerRendered = true;
+      }).observe(document, { childList: true, subtree: true });
+    });
+  }
+  /** True once a video player has been rendered since the page loaded. */
+  playerWasRendered(): Promise<boolean> {
+    return this.page.evaluate(
+      () => (window as unknown as { __playerRendered?: boolean }).__playerRendered === true,
+    );
+  }
+  /** `blob:` addresses created for a MediaSource since the page loaded. */
+  mediaSourceUrls(): Promise<string[]> {
+    return this.page.evaluate(
+      () => (window as unknown as { __mediaSourceUrls?: string[] }).__mediaSourceUrls ?? [],
+    );
+  }
+  /** Shown instead of the player while a lesson video is queued or processing. */
+  get videoPreparingNotice() {
+    return this.page.getByText(/your video is being prepared/i);
+  }
+  /** Resolves with the master playlist response; start waiting before opening the lesson. */
+  waitForMasterPlaylist() {
+    return this.page.waitForResponse((response) =>
+      /^\/api\/media\/[^/]+\/[0-9a-f-]{36}\/master\.m3u8$/.test(new URL(response.url()).pathname),
+    );
+  }
 }
 
 export class YouthCodingPage extends BasePage {

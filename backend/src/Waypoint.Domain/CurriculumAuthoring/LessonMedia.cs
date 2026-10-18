@@ -11,4 +11,13 @@ public class LessonMedia
     public long SizeBytes { get; set; }
     public byte[]? Content { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    // Self-hosted streaming pipeline (upload-lesson-video design). A streamed video keeps no
+    // bytes in Content and has an empty Url; it is served through a signed playback URL.
+    public VideoStatus VideoStatus { get; set; } = VideoStatus.None;
+    public double? DurationSeconds { get; set; }
+    public int? Width { get; set; }
+    public int? Height { get; set; }
+    public int ProgressPercent { get; set; }
+    public string? FailureCode { get; set; }
 }

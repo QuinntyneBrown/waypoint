@@ -69,6 +69,7 @@ Narrated videos made from a script, a slide deck and captions, one per detailed 
 | [041 · Viewing badges](041-learning-experience-view-badges/README.md) | view badges | 2 min 18 s |
 | [042 · The learning journey](042-learning-experience-view-learning-journey/README.md) | view learning journey | 2 min 25 s |
 | [043 · Writing a reflection](043-learning-experience-write-reflections/README.md) | write reflections | 2 min 44 s |
+| [116 · Streaming a lesson video](116-learning-experience-stream-lesson-video/README.md) | stream lesson video | 5 min 33 s |
 
 ## Curriculum authoring
 
@@ -81,6 +82,7 @@ Narrated videos made from a script, a slide deck and captions, one per detailed 
 | [048 · Authoring quizzes](048-curriculum-authoring-author-quizzes/README.md) | author quizzes | 3 min 16 s |
 | [049 · Authoring tracks and modules](049-curriculum-authoring-author-tracks-and-modules/README.md) | author tracks and modules | 3 min 19 s |
 | [050 · Awarding badges](050-curriculum-authoring-award-badges/README.md) | award badges | 2 min 37 s |
+| [115 · Uploading a lesson video](115-curriculum-authoring-upload-lesson-video/README.md) | upload lesson video | 5 min 39 s |
 
 ## Mentoring
 
@@ -184,3 +186,9 @@ Narrated videos made from a script, a slide deck and captions, one per detailed 
 | [111 · Securing the browser boundary](111-non-functional-secure-browser-boundary/README.md) | secure browser boundary | 3 min 11 s |
 | [112 · Syncing attendance reliably](112-non-functional-sync-attendance-reliably/README.md) | sync attendance reliably | 3 min 19 s |
 | [113 · Checking what goes in and what comes out](113-non-functional-validate-input-and-output/README.md) | validate input and output | 2 min 56 s |
+
+## Components
+
+| Video | Topic | Runtime |
+| --- | --- | --- |
+| [114 · The Waypoint video player](114-components-video-player/README.md) | video player | 5 min 27 s |

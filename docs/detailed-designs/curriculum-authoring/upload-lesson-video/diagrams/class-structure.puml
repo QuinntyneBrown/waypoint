@@ -1,0 +1,159 @@
+@startuml
+left to right direction
+title UML class structure — Upload a lesson video
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+package "Frontend — Portal application" {
+  class "CurriculumBuilder" as page <<Angular component>> {
+    +attachVideo(lessonId, file): void
+    +resumeUpload(uploadId): void
+    +retryTranscode(mediaId): void
+  }
+  class "CurriculumAuthoringService" as client <<API client>> {
+    +startVideoUpload(lessonId, fileName, sizeBytes): Observable<UploadSessionResult>
+    +uploadVideoChunk(lessonId, uploadId, index, bytes): Observable<void>
+    +videoUploadStatus(lessonId, uploadId): Observable<UploadStatusResult>
+    +completeVideoUpload(lessonId, uploadId): Observable<LessonMediaResult>
+    +retryVideoTranscode(lessonId, mediaId): Observable<void>
+  }
+}
+package "Backend — Waypoint API application" {
+  class "LessonVideoUploadsController" as controller <<controller>> {
+    +Start(lessonId, request, ct): ActionResult<UploadSessionResult>
+    +PutChunk(lessonId, uploadId, index, ct): IActionResult
+    +Status(lessonId, uploadId, ct): ActionResult<UploadStatusResult>
+    +Complete(lessonId, uploadId, ct): ActionResult<LessonMediaResult>
+    +Retry(lessonId, mediaId, ct): IActionResult
+  }
+}
+package "Backend — Waypoint Application" {
+  class "StartVideoUploadCommand" as startcmd <<record>>
+  class "CompleteVideoUploadCommand" as completecmd <<record>>
+  class "RetryVideoTranscodeCommand" as retrycmd <<record>>
+  class "CompleteVideoUploadCommandHandler" as completeh <<handler>> {
+    +Handle(request, ct): LessonMediaResult
+  }
+  class "LessonVideoUploadPolicy" as policy <<static>> {
+    +MaxSourceBytes(options): long
+    +HasValidSignature(bytes): bool
+  }
+  interface IUploadStore {
+    +WriteChunkAsync(uploadId, index, chunkSize, body, ct): Task
+    +LengthAsync(uploadId, ct): long
+    +OpenHeadAsync(uploadId, ct): Stream
+  }
+  interface IMediaStore {
+    +AvailableFreeBytes(): long
+    +PromoteUploadAsync(uploadId, mediaId, ct): string
+    +WorkDirectory(mediaId): string
+    +PublishAsync(mediaId, ct): Task
+    +MoveToTrashAsync(mediaId, ct): Task
+  }
+  interface IVideoTranscoder {
+    +ProbeAsync(sourcePath, ct): VideoProbe
+    +TranscodeAsync(sourcePath, workDir, ladder, progress, ct): Task
+  }
+  interface IAppDbContext {
+    +SaveChangesAsync(ct): int
+  }
+}
+package "Backend — Waypoint Domain" {
+  enum VideoStatus {
+    None
+    Queued
+    Processing
+    Ready
+    Failed
+  }
+  class "LessonMedia" as media <<domain type>> {
+    +Guid Id
+    +Guid LessonId
+    +string MediaType
+    +string? Url
+    +byte[]? Content
+    +VideoStatus VideoStatus
+    +double? DurationSeconds
+    +int? Width
+    +int? Height
+    +int ProgressPercent
+    +string? FailureCode
+  }
+  class "VideoUploadSession" as session <<domain type>> {
+    +Guid Id
+    +Guid LessonId
+    +string FileName
+    +long ExpectedBytes
+    +int ChunkSizeBytes
+    +byte[] ReceivedChunks
+    +DateTime CreatedAt
+    +DateTime ExpiresAt
+  }
+  class "VideoTranscodeJob" as job <<domain type>> {
+    +Guid Id
+    +Guid MediaId
+    +int AttemptCount
+    +Guid? LeaseId
+    +DateTime? LeaseUntil
+    +DateTime? StartedAt
+    +DateTime? LastProgressAt
+    +string? LastError
+  }
+}
+package "Backend — Waypoint Infrastructure" {
+  class "VideoTranscodeWorker" as worker <<BackgroundService>> {
+    #ExecuteAsync(stoppingToken): Task
+  }
+  class "VideoTranscodeProcessor" as processor <<processor>> {
+    +RunOnceAsync(ct): int
+    +SweepAsync(ct): Task
+    -TryClaimAsync(id, leaseId, now, ct): bool
+    -HeartbeatAsync(id, leaseId, percent, ct): Task
+  }
+  class "FfmpegVideoTranscoder" as ffmpeg <<adapter>> {
+    +BuildArguments(probe, workDir, ladder): string
+  }
+  class "FileSystemMediaStore" as fsstore <<adapter>>
+}
+page --> client : invokes
+client --> controller : calls
+controller --> IUploadStore : streams chunks
+controller ..> startcmd : creates
+controller ..> completecmd : creates
+controller ..> retrycmd : creates
+completecmd --> completeh : dispatched to
+completeh --> policy : applies
+completeh --> IVideoTranscoder : probes
+completeh --> IMediaStore : promotes upload
+completeh --> IAppDbContext : depends on
+completeh --> media : creates
+completeh --> job : enqueues
+media --> VideoStatus : has
+job --> media : transcodes
+worker --> processor : runs
+processor --> IAppDbContext : claims and updates
+processor --> IVideoTranscoder : transcodes
+processor --> IMediaStore : publishes and sweeps
+ffmpeg ..|> IVideoTranscoder
+fsstore ..|> IMediaStore
+fsstore ..|> IUploadStore
+IAppDbContext o-- media : persists
+IAppDbContext o-- session : persists
+IAppDbContext o-- job : persists
+legend right
+  Solid arrows show runtime collaboration.
+  Dashed arrows show construction or realization.
+  Aggregation shows persistence ownership.
+endlegend
+@enduml
