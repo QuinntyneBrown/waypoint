@@ -52,7 +52,7 @@
     "@angular/build": "^21.2.27",
     "@angular/cli": "^21.2.27",
     "@angular/compiler-cli": "^21.2.25",
-    "@angular/platform-browser-dynamic": "^21.2.25",
+    "@angular/platform-browser-dynamic": "^22.2.3",
     "@axe-core/playwright": "^4.12.1",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.61.1",
