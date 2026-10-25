@@ -4,64 +4,64 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Help center · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
   <style>
     .help-search{position:relative;margin-bottom:8px}
-    .help-search .w-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--color-fg-muted)}
-    .help-search .w-input{padding-left:44px;height:52px;font-size:1.05rem}
+    .help-search .ph-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--color-fg-muted)}
+    .help-search .ph-input{padding-left:44px;height:52px;font-size:1.05rem}
     .help-cat{display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit;height:100%}
     .help-cat__icon{width:40px;height:40px;border-radius:11px;background:var(--color-bg-surface-sunken);display:grid;place-items:center;flex:none}
-    .help-cat__icon .w-icon{width:20px;height:20px}
+    .help-cat__icon .ph-icon{width:20px;height:20px}
     .help-cat__title{font-weight:650;margin:0}
     .help-cat__sub{font-size:.82rem;color:var(--color-fg-muted);margin:2px 0 0}
     .faq summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;font-family:var(--font-family-heading);font-weight:650;font-size:1.02rem}
     .faq summary::-webkit-details-marker{display:none}
-    .faq summary .w-icon{flex:none;transition:transform .18s ease}
-    .faq[open] summary .w-icon{transform:rotate(90deg)}
+    .faq summary .ph-icon{flex:none;transition:transform .18s ease}
+    .faq[open] summary .ph-icon{transform:rotate(90deg)}
     .faq__answer{margin-top:12px;color:var(--color-fg-muted);line-height:1.55}
   </style>
 </head>
 <body data-role="youth" data-active="profile" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-container--narrow w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-container--narrow ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Help center</div>
-          <h1 class="w-page__title">How can we help?</h1>
-          <p class="w-page__sub">Search answers or browse a topic below.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Help center</div>
+          <h1 class="ph-page__title">How can we help?</h1>
+          <p class="ph-page__sub">Search answers or browse a topic below.</p>
         </div>
       </div>
 
       <form class="help-search" role="search" onsubmit="return false">
-        <svg class="w-icon" aria-hidden="true"><use href="#i-search"></use></svg>
-        <input class="w-input" type="search" placeholder="Search help articles…" autocomplete="off" aria-label="Search help articles">
+        <svg class="ph-icon" aria-hidden="true"><use href="#i-search"></use></svg>
+        <input class="ph-input" type="search" placeholder="Search help articles…" autocomplete="off" aria-label="Search help articles">
       </form>
 
-      <div class="w-grid w-grid--3 w-mt-4 w-mb-6">
-        <a class="w-card" href="#getting-started">
-          <div class="w-card__body help-cat">
-            <div class="help-cat__icon"><svg class="w-icon"><use href="#i-play-circle"></use></svg></div>
+      <div class="ph-grid ph-grid--3 ph-mt-4 ph-mb-6">
+        <a class="ph-card" href="#getting-started">
+          <div class="ph-card__body help-cat">
+            <div class="help-cat__icon"><svg class="ph-icon"><use href="#i-play-circle"></use></svg></div>
             <div>
               <p class="help-cat__title">Getting started</p>
               <p class="help-cat__sub">Sign in, your journey, the basics</p>
             </div>
           </div>
         </a>
-        <a class="w-card" href="#lessons">
-          <div class="w-card__body help-cat">
-            <div class="help-cat__icon"><svg class="w-icon"><use href="#i-book-open"></use></svg></div>
+        <a class="ph-card" href="#lessons">
+          <div class="ph-card__body help-cat">
+            <div class="help-cat__icon"><svg class="ph-icon"><use href="#i-book-open"></use></svg></div>
             <div>
               <p class="help-cat__title">Lessons &amp; quizzes</p>
               <p class="help-cat__sub">Submitting work, taking quizzes</p>
             </div>
           </div>
         </a>
-        <a class="w-card" href="#account">
-          <div class="w-card__body help-cat">
-            <div class="help-cat__icon"><svg class="w-icon"><use href="#i-user"></use></svg></div>
+        <a class="ph-card" href="#account">
+          <div class="ph-card__body help-cat">
+            <div class="help-cat__icon"><svg class="ph-icon"><use href="#i-user"></use></svg></div>
             <div>
               <p class="help-cat__title">Account</p>
               <p class="help-cat__sub">Password, settings, privacy</p>
@@ -70,78 +70,78 @@
         </a>
       </div>
 
-      <h2 id="getting-started" class="w-mb-3">Getting started</h2>
-      <div class="w-stack w-stack--sm w-mb-6">
-        <details class="w-card faq" open>
-          <summary class="w-card__body">
+      <h2 id="getting-started" class="ph-mb-3">Getting started</h2>
+      <div class="ph-stack ph-stack--sm ph-mb-6">
+        <details class="ph-card faq" open>
+          <summary class="ph-card__body">
             <span>What is Waypoint?</span>
-            <svg class="w-icon"><use href="#i-chevron-right"></use></svg>
+            <svg class="ph-icon"><use href="#i-chevron-right"></use></svg>
           </summary>
-          <div class="w-card__body faq__answer" style="padding-top:0">
+          <div class="ph-card__body faq__answer" style="padding-top:0">
             Waypoint is a program that helps youth across Toronto grow in the Word and in leadership, one lesson at a time. You'll work through modules like Servant Leadership with your mentor, Marcus Bello.
           </div>
         </details>
-        <details class="w-card faq">
-          <summary class="w-card__body">
+        <details class="ph-card faq">
+          <summary class="ph-card__body">
             <span>Where do I find this week's lesson?</span>
-            <svg class="w-icon"><use href="#i-chevron-right"></use></svg>
+            <svg class="ph-icon"><use href="#i-chevron-right"></use></svg>
           </summary>
-          <div class="w-card__body faq__answer" style="padding-top:0">
+          <div class="ph-card__body faq__answer" style="padding-top:0">
             Open <a href="../../learning-experience/youth/home.html">Home</a> to see what's next, or browse everything under <a href="../../learning-experience/youth/curriculum.html">Curriculum</a>.
           </div>
         </details>
       </div>
 
-      <h2 id="lessons" class="w-mb-3">Lessons &amp; quizzes</h2>
-      <div class="w-stack w-stack--sm w-mb-6">
-        <details class="w-card faq">
-          <summary class="w-card__body">
+      <h2 id="lessons" class="ph-mb-3">Lessons &amp; quizzes</h2>
+      <div class="ph-stack ph-stack--sm ph-mb-6">
+        <details class="ph-card faq">
+          <summary class="ph-card__body">
             <span>How do I submit my work?</span>
-            <svg class="w-icon"><use href="#i-chevron-right"></use></svg>
+            <svg class="ph-icon"><use href="#i-chevron-right"></use></svg>
           </summary>
-          <div class="w-card__body faq__answer" style="padding-top:0">
+          <div class="ph-card__body faq__answer" style="padding-top:0">
             Open your lesson, type your reflection at the bottom, and tap the green <strong>Submit</strong> button. Your mentor sees it right away and sends feedback.
           </div>
         </details>
-        <details class="w-card faq">
-          <summary class="w-card__body">
+        <details class="ph-card faq">
+          <summary class="ph-card__body">
             <span>Can I retake a quiz?</span>
-            <svg class="w-icon"><use href="#i-chevron-right"></use></svg>
+            <svg class="ph-icon"><use href="#i-chevron-right"></use></svg>
           </summary>
-          <div class="w-card__body faq__answer" style="padding-top:0">
+          <div class="ph-card__body faq__answer" style="padding-top:0">
             Yes. Quizzes are about learning, not grades — you can retake any quiz as many times as you like.
           </div>
         </details>
       </div>
 
-      <h2 id="account" class="w-mb-3">Account</h2>
-      <div class="w-stack w-stack--sm w-mb-6">
-        <details class="w-card faq">
-          <summary class="w-card__body">
+      <h2 id="account" class="ph-mb-3">Account</h2>
+      <div class="ph-stack ph-stack--sm ph-mb-6">
+        <details class="ph-card faq">
+          <summary class="ph-card__body">
             <span>How do I change my password?</span>
-            <svg class="w-icon"><use href="#i-chevron-right"></use></svg>
+            <svg class="ph-icon"><use href="#i-chevron-right"></use></svg>
           </summary>
-          <div class="w-card__body faq__answer" style="padding-top:0">
+          <div class="ph-card__body faq__answer" style="padding-top:0">
             Go to <a href="settings-profile.html">Settings &rsaquo; Profile</a> and tap <strong>Change password</strong>.
           </div>
         </details>
-        <details class="w-card faq">
-          <summary class="w-card__body">
+        <details class="ph-card faq">
+          <summary class="ph-card__body">
             <span>How do I turn off notifications?</span>
-            <svg class="w-icon"><use href="#i-chevron-right"></use></svg>
+            <svg class="ph-icon"><use href="#i-chevron-right"></use></svg>
           </summary>
-          <div class="w-card__body faq__answer" style="padding-top:0">
+          <div class="ph-card__body faq__answer" style="padding-top:0">
             Manage email and push preferences under <a href="settings-notifications.html">Settings &rsaquo; Notifications</a>, including quiet hours.
           </div>
         </details>
       </div>
 
-      <div class="w-card w-card--ink">
-        <div class="w-card__body">
-          <div class="w-eyebrow">Still stuck?</div>
-          <h3 class="w-mt-2 w-mb-1">We're here to help</h3>
-          <p class="w-mb-3">Can't find your answer? Report a problem and our team will get back to you.</p>
-          <a class="w-btn w-btn--primary" href="support.html"><svg class="w-icon"><use href="#i-message-square"></use></svg>Contact support</a>
+      <div class="ph-card ph-card--ink">
+        <div class="ph-card__body">
+          <div class="ph-eyebrow">Still stuck?</div>
+          <h3 class="ph-mt-2 ph-mb-1">We're here to help</h3>
+          <p class="ph-mb-3">Can't find your answer? Report a problem and our team will get back to you.</p>
+          <a class="ph-btn ph-btn--primary" href="support.html"><svg class="ph-icon"><use href="#i-message-square"></use></svg>Contact support</a>
         </div>
       </div>
 

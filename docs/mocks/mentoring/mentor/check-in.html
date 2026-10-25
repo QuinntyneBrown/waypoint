@@ -4,35 +4,35 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Log check-in · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="mentor" data-active="check-ins" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Check-ins</div>
-          <h1 class="w-page__title">Log a check-in</h1>
-          <p class="w-page__sub">Capture how a youth is doing so their journey stays on track.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Check-ins</div>
+          <h1 class="ph-page__title">Log a check-in</h1>
+          <p class="ph-page__sub">Capture how a youth is doing so their journey stays on track.</p>
         </div>
-        <div class="w-page__actions">
-          <a class="w-btn w-btn--ghost" href="check-in-history.html"><svg class="w-icon"><use href="#i-clock"></use></svg>History</a>
+        <div class="ph-page__actions">
+          <a class="ph-btn ph-btn--ghost" href="check-in-history.html"><svg class="ph-icon"><use href="#i-clock"></use></svg>History</a>
         </div>
       </div>
 
-      <form class="w-grid w-grid--3" onsubmit="return false">
+      <form class="ph-grid ph-grid--3" onsubmit="return false">
         <!-- Main column -->
         <div style="grid-column:span 2">
-          <div class="w-card">
-            <div class="w-card__header"><h3 class="w-card__title">Details</h3></div>
-            <div class="w-card__body">
-              <div class="w-grid w-grid--2">
-                <div class="w-field">
-                  <label class="w-label" for="ci-youth">Youth <span class="w-label__req">*</span></label>
-                  <select class="w-select" id="ci-youth">
+          <div class="ph-card">
+            <div class="ph-card__header"><h3 class="ph-card__title">Details</h3></div>
+            <div class="ph-card__body">
+              <div class="ph-grid ph-grid--2">
+                <div class="ph-field">
+                  <label class="ph-label" for="ci-youth">Youth <span class="ph-label__req">*</span></label>
+                  <select class="ph-select" id="ci-youth">
                     <option>Jayden Alcantara</option>
                     <option>Amara Okafor</option>
                     <option>Devon Grant</option>
@@ -40,48 +40,48 @@
                     <option>Malik Johnson</option>
                     <option>Sofia Nguyen</option>
                   </select>
-                  <div class="w-help">Rexdale Fall '25 · mentored by Marcus Bello</div>
+                  <div class="ph-help">Rexdale Fall '25 · mentored by Marcus Bello</div>
                 </div>
-                <div class="w-field">
-                  <label class="w-label" for="ci-date">Date <span class="w-label__req">*</span></label>
-                  <input class="w-input" type="date" id="ci-date" value="2026-07-17">
-                </div>
-              </div>
-
-              <div class="w-field">
-                <label class="w-label">Type <span class="w-label__req">*</span></label>
-                <div class="w-segment">
-                  <label class="w-segment__item"><input type="radio" name="ci-type" checked><span>1:1</span></label>
-                  <label class="w-segment__item"><input type="radio" name="ci-type"><span>Call</span></label>
-                  <label class="w-segment__item"><input type="radio" name="ci-type"><span>Session</span></label>
+                <div class="ph-field">
+                  <label class="ph-label" for="ci-date">Date <span class="ph-label__req">*</span></label>
+                  <input class="ph-input" type="date" id="ci-date" value="2026-07-17">
                 </div>
               </div>
 
-              <div class="w-field">
-                <label class="w-label">Engagement &amp; mood</label>
-                <div class="w-segment" style="flex-wrap:wrap">
-                  <label class="w-segment__item"><input type="radio" name="ci-mood"><span>Struggling</span></label>
-                  <label class="w-segment__item"><input type="radio" name="ci-mood"><span>Low</span></label>
-                  <label class="w-segment__item"><input type="radio" name="ci-mood" checked><span>Steady</span></label>
-                  <label class="w-segment__item"><input type="radio" name="ci-mood"><span>Engaged</span></label>
-                  <label class="w-segment__item"><input type="radio" name="ci-mood"><span>Thriving</span></label>
+              <div class="ph-field">
+                <label class="ph-label">Type <span class="ph-label__req">*</span></label>
+                <div class="ph-segment">
+                  <label class="ph-segment__item"><input type="radio" name="ci-type" checked><span>1:1</span></label>
+                  <label class="ph-segment__item"><input type="radio" name="ci-type"><span>Call</span></label>
+                  <label class="ph-segment__item"><input type="radio" name="ci-type"><span>Session</span></label>
                 </div>
-                <div class="w-help">Shown as a dot + label so it never relies on color alone.</div>
               </div>
 
-              <div class="w-field">
-                <label class="w-label" for="ci-goals">Goals discussed</label>
-                <textarea class="w-textarea" id="ci-goals" placeholder="What did you work on together?">Reviewed “Servant Leadership” module. Jayden is leading a small group icebreaker next session and wanted to prep questions on Mark 10.</textarea>
+              <div class="ph-field">
+                <label class="ph-label">Engagement &amp; mood</label>
+                <div class="ph-segment" style="flex-wrap:wrap">
+                  <label class="ph-segment__item"><input type="radio" name="ci-mood"><span>Struggling</span></label>
+                  <label class="ph-segment__item"><input type="radio" name="ci-mood"><span>Low</span></label>
+                  <label class="ph-segment__item"><input type="radio" name="ci-mood" checked><span>Steady</span></label>
+                  <label class="ph-segment__item"><input type="radio" name="ci-mood"><span>Engaged</span></label>
+                  <label class="ph-segment__item"><input type="radio" name="ci-mood"><span>Thriving</span></label>
+                </div>
+                <div class="ph-help">Shown as a dot + label so it never relies on color alone.</div>
               </div>
 
-              <div class="w-field">
-                <label class="w-label" for="ci-prayer">Prayer requests</label>
-                <textarea class="w-textarea" id="ci-prayer" placeholder="Anything to pray for this week?">Praying for confidence speaking in front of the group, and for his younger sister’s health.</textarea>
+              <div class="ph-field">
+                <label class="ph-label" for="ci-goals">Goals discussed</label>
+                <textarea class="ph-textarea" id="ci-goals" placeholder="What did you work on together?">Reviewed “Servant Leadership” module. Jayden is leading a small group icebreaker next session and wanted to prep questions on Mark 10.</textarea>
               </div>
 
-              <div class="w-field">
-                <label class="w-label" for="ci-actions">Action items</label>
-                <textarea class="w-textarea" id="ci-actions" placeholder="What happens before the next check-in?">Finish “Leading Like Jesus” lesson · draft 3 discussion questions · text Marcus by Friday.</textarea>
+              <div class="ph-field">
+                <label class="ph-label" for="ci-prayer">Prayer requests</label>
+                <textarea class="ph-textarea" id="ci-prayer" placeholder="Anything to pray for this week?">Praying for confidence speaking in front of the group, and for his younger sister’s health.</textarea>
+              </div>
+
+              <div class="ph-field">
+                <label class="ph-label" for="ci-actions">Action items</label>
+                <textarea class="ph-textarea" id="ci-actions" placeholder="What happens before the next check-in?">Finish “Leading Like Jesus” lesson · draft 3 discussion questions · text Marcus by Friday.</textarea>
               </div>
             </div>
           </div>
@@ -89,31 +89,31 @@
 
         <!-- Side column -->
         <div>
-          <div class="w-card">
-            <div class="w-card__header"><h3 class="w-card__title">Visibility &amp; follow-up</h3></div>
-            <div class="w-card__body">
-              <div class="w-field">
-                <label class="w-label">Sharing</label>
-                <label class="w-switch"><input type="checkbox"><span class="w-switch__track"></span><span>Shareable with youth &amp; guardian</span></label>
-                <div class="w-help">Off = private mentor note. On = visible on their progress page.</div>
+          <div class="ph-card">
+            <div class="ph-card__header"><h3 class="ph-card__title">Visibility &amp; follow-up</h3></div>
+            <div class="ph-card__body">
+              <div class="ph-field">
+                <label class="ph-label">Sharing</label>
+                <label class="ph-switch"><input type="checkbox"><span class="ph-switch__track"></span><span>Shareable with youth &amp; guardian</span></label>
+                <div class="ph-help">Off = private mentor note. On = visible on their progress page.</div>
               </div>
 
-              <div class="w-divider"></div>
+              <div class="ph-divider"></div>
 
-              <div class="w-field">
-                <label class="w-label" for="ci-next">Next follow-up date</label>
-                <input class="w-input" type="date" id="ci-next" value="2026-07-24">
+              <div class="ph-field">
+                <label class="ph-label" for="ci-next">Next follow-up date</label>
+                <input class="ph-input" type="date" id="ci-next" value="2026-07-24">
               </div>
 
-              <div class="w-alert w-alert--info">
-                <svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg>
-                <div><div class="w-alert__title">Private by default</div>Prayer requests stay mentor-only unless you toggle sharing on.</div>
+              <div class="ph-alert ph-alert--info">
+                <svg class="ph-alert__icon ph-icon"><use href="#i-info"></use></svg>
+                <div><div class="ph-alert__title">Private by default</div>Prayer requests stay mentor-only unless you toggle sharing on.</div>
               </div>
             </div>
-            <div class="w-card__footer w-cluster w-justify-between">
-              <a class="w-btn w-btn--ghost" href="check-in-history.html">Cancel</a>
-              <button class="w-btn w-btn--primary" data-toast="Check-in saved" data-toast-type="success" data-toast-title="Logged" data-then="mentoring/mentor/check-in-history.html">
-                <svg class="w-icon"><use href="#i-check"></use></svg>Save check-in
+            <div class="ph-card__footer ph-cluster ph-justify-between">
+              <a class="ph-btn ph-btn--ghost" href="check-in-history.html">Cancel</a>
+              <button class="ph-btn ph-btn--primary" data-toast="Check-in saved" data-toast-type="success" data-toast-title="Logged" data-then="mentoring/mentor/check-in-history.html">
+                <svg class="ph-icon"><use href="#i-check"></use></svg>Save check-in
               </button>
             </div>
           </div>

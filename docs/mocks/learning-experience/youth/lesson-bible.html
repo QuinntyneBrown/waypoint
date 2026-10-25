@@ -4,195 +4,195 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bible lesson · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
   <style>
     .lb-topbar{display:flex;align-items:center;gap:12px;margin-bottom:var(--space-4)}
-    .lb-topbar .w-progress{flex:1}
+    .lb-topbar .ph-progress{flex:1}
     .lb-read{max-width:64ch}
     .lb-read p{line-height:1.7;margin:0 0 var(--space-4)}
     .lb-read[data-size="lg"]{font-size:1.12rem}
     .lb-video{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:var(--color-bg-inverse);color:var(--color-fg-inverse);aspect-ratio:16/9;display:grid;place-items:center}
     .lb-video__play{width:60px;height:60px;border-radius:50%;background:var(--color-brand);display:grid;place-items:center}
-    .lb-video__play .w-icon{width:26px;height:26px;color:var(--color-fg-default)}
+    .lb-video__play .ph-icon{width:26px;height:26px;color:var(--color-fg-default)}
     .lb-video__cap{position:absolute;left:14px;bottom:12px;font-size:.82rem;color:rgba(255,255,255,.82)}
     .lb-sizectl{display:flex;align-items:center;gap:8px}
     .lb-player{border-radius:var(--radius-lg);overflow:hidden;border:var(--border-width-hairline) solid var(--color-border-default);background:var(--color-bg-surface)}
     .lb-player__stage{position:relative;aspect-ratio:16/9;display:grid;place-items:center;background:linear-gradient(160deg,var(--palette-ink-950) 55%,var(--palette-ink-700) 160%);color:var(--palette-ink-25)}
     .lb-player__chip{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:center}
-    .lb-player__chip .w-spinner{background:var(--color-bg-surface);color:var(--color-fg-default);padding:var(--space-2) var(--space-4);border-radius:var(--radius-full)}
+    .lb-player__chip .ph-spinner{background:var(--color-bg-surface);color:var(--color-fg-default);padding:var(--space-2) var(--space-4);border-radius:var(--radius-full)}
     .lb-player__bar{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3)}
     .lb-player__seek{flex:1 1 100%;min-width:0;height:2.75rem;margin:0;accent-color:var(--color-accent)}
     .lb-player__time{font:var(--text-body-sm);font-variant-numeric:tabular-nums;color:var(--color-fg-muted);margin-right:auto;white-space:nowrap}
     .lb-prep{display:flex;gap:var(--space-4);align-items:flex-start}
     .lb-prep__icon{flex:none;width:3rem;height:3rem;border-radius:var(--radius-full);background:var(--color-bg-subtle-hover);display:grid;place-items:center}
     .lb-actions{position:sticky;bottom:0;background:var(--color-bg-surface);border-top:var(--border-width-hairline) solid var(--color-border-default);padding:var(--space-4) 0;margin-top:var(--space-6);display:flex;gap:12px}
-    .lb-actions .w-btn--primary{flex:1}
+    .lb-actions .ph-btn--primary{flex:1}
   </style>
 </head>
 <body data-role="youth" data-active="curriculum" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-container--narrow w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-container--narrow ph-page">
 
       <!-- ===== loading skeleton ===== -->
-      <div data-when-state="loading" class="w-hide">
-        <span class="w-skeleton w-skeleton--text" style="width:40%"></span>
-        <span class="w-skeleton w-skeleton--title"></span>
-        <div class="w-mt-4"></div>
-        <span class="w-skeleton w-skeleton--block"></span>
-        <div class="w-mt-4"></div>
-        <span class="w-skeleton w-skeleton--text"></span>
-        <span class="w-skeleton w-skeleton--text"></span>
-        <span class="w-skeleton w-skeleton--text" style="width:70%"></span>
+      <div data-when-state="loading" class="ph-hide">
+        <span class="ph-skeleton ph-skeleton--text" style="width:40%"></span>
+        <span class="ph-skeleton ph-skeleton--title"></span>
+        <div class="ph-mt-4"></div>
+        <span class="ph-skeleton ph-skeleton--block"></span>
+        <div class="ph-mt-4"></div>
+        <span class="ph-skeleton ph-skeleton--text"></span>
+        <span class="ph-skeleton ph-skeleton--text"></span>
+        <span class="ph-skeleton ph-skeleton--text" style="width:70%"></span>
       </div>
 
       <!-- ===== default (reading experience) ===== -->
       <div data-when-state="default video-ready video-preparing video-renewing media-failed video-legacy">
         <div class="lb-topbar">
-          <a class="w-btn w-btn--ghost w-btn--icon" href="module.html" aria-label="Back to module"><svg class="w-icon"><use href="#i-arrow-left"></use></svg></a>
-          <div class="w-progress" aria-label="Lesson progress: 40%"><div class="w-progress__fill" style="--val:40%"></div></div>
-          <span class="w-progress__num">Step 2/5</span>
-          <button class="w-iconbtn" data-toast="Bookmarked. Pick up here anytime." data-toast-type="success" aria-label="Bookmark this lesson"><svg class="w-icon"><use href="#i-bookmark"></use></svg></button>
+          <a class="ph-btn ph-btn--ghost ph-btn--icon" href="module.html" aria-label="Back to module"><svg class="ph-icon"><use href="#i-arrow-left"></use></svg></a>
+          <div class="ph-progress" aria-label="Lesson progress: 40%"><div class="ph-progress__fill" style="--val:40%"></div></div>
+          <span class="ph-progress__num">Step 2/5</span>
+          <button class="ph-iconbtn" data-toast="Bookmarked. Pick up here anytime." data-toast-type="success" aria-label="Bookmark this lesson"><svg class="ph-icon"><use href="#i-bookmark"></use></svg></button>
         </div>
 
-        <div class="w-cluster w-justify-between w-mb-4">
+        <div class="ph-cluster ph-justify-between ph-mb-4">
           <div>
-            <div class="w-eyebrow">Servant Leadership · Lesson 2</div>
-            <h1 class="w-page__title w-mb-0">Last Shall Be First</h1>
-            <p class="w-muted w-text-sm w-mb-0">Mark 10 · about 12 min</p>
+            <div class="ph-eyebrow">Servant Leadership · Lesson 2</div>
+            <h1 class="ph-page__title ph-mb-0">Last Shall Be First</h1>
+            <p class="ph-muted ph-text-sm ph-mb-0">Mark 10 · about 12 min</p>
           </div>
           <div class="lb-sizectl" role="group" aria-label="Text size">
-            <button class="w-btn w-btn--subtle w-btn--sm" aria-label="Smaller text" onclick="document.querySelector('.lb-read').removeAttribute('data-size')">A−</button>
-            <button class="w-btn w-btn--subtle w-btn--sm" aria-label="Larger text" onclick="document.querySelector('.lb-read').setAttribute('data-size','lg')">A+</button>
+            <button class="ph-btn ph-btn--subtle ph-btn--sm" aria-label="Smaller text" onclick="document.querySelector('.lb-read').removeAttribute('data-size')">A−</button>
+            <button class="ph-btn ph-btn--subtle ph-btn--sm" aria-label="Larger text" onclick="document.querySelector('.lb-read').setAttribute('data-size','lg')">A+</button>
           </div>
         </div>
 
-        <div class="w-scripture">“For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many.”<span class="w-scripture__ref">Mark 10:45</span></div>
+        <div class="ph-scripture">“For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many.”<span class="ph-scripture__ref">Mark 10:45</span></div>
 
-        <div class="lb-read w-mt-6">
+        <div class="lb-read ph-mt-6">
           <p>James and John wanted the best seats — one on Jesus’ right, one on his left. It’s an honest ask. Most of us want to be seen, to matter, to lead. Jesus doesn’t shut that desire down. He redirects it.</p>
           <p>In the world, greatness flows downhill: the more important you are, the more people serve you. Jesus flips it. “Whoever wants to become great among you must be your servant.” The path up runs through the towel and the basin, not the throne.</p>
           <p>That’s the shape of Waypoint leadership. Being first isn’t about status — it’s about who you’re willing to put first. This week, watch for one person you can quietly serve without being asked.</p>
         </div>
 
         <!-- ===== video Ready: adaptive stream; seek bar spans the full 1:12:08 ===== -->
-        <div class="w-card w-mt-6" data-when-state="video-ready">
-          <div class="w-card__header"><h3 class="w-card__title">Watch (1 hr 12 min)</h3><span class="w-badge w-badge--lime">Optional</span></div>
-          <div class="w-card__body">
+        <div class="ph-card ph-mt-6" data-when-state="video-ready">
+          <div class="ph-card__header"><h3 class="ph-card__title">Watch (1 hr 12 min)</h3><span class="ph-badge ph-badge--lime">Optional</span></div>
+          <div class="ph-card__body">
             <div class="lb-player" role="region" aria-label="Lesson video: Last Shall Be First">
               <div class="lb-player__stage">
-                <button class="lb-video__play" data-toast="Video would play here in the live app." aria-label="Play video"><svg class="w-icon"><use href="#i-play"></use></svg></button>
+                <button class="lb-video__play" data-toast="Video would play here in the live app." aria-label="Play video"><svg class="ph-icon"><use href="#i-play"></use></svg></button>
                 <span class="lb-video__cap">Last Shall Be First, a teaching from Marcus Bello</span>
               </div>
               <div class="lb-player__bar" role="group" aria-label="Video controls">
                 <input class="lb-player__seek" type="range" min="0" max="4328" step="1" aria-label="Seek" value="0" aria-valuetext="0:00 of 1:12:08">
-                <button class="w-iconbtn" aria-label="Play" data-toast="Video would play here in the live app."><svg class="w-icon"><use href="#i-play"></use></svg></button>
-                <button class="w-iconbtn" aria-label="Mute" aria-pressed="false"><svg class="w-icon"><use href="#i-volume-2"></use></svg></button>
+                <button class="ph-iconbtn" aria-label="Play" data-toast="Video would play here in the live app."><svg class="ph-icon"><use href="#i-play"></use></svg></button>
+                <button class="ph-iconbtn" aria-label="Mute" aria-pressed="false"><svg class="ph-icon"><use href="#i-volume-2"></use></svg></button>
                 <span class="lb-player__time">0:00 / 1:12:08</span>
-                <span class="w-badge" aria-label="Quality 720p">720p</span>
-                <button class="w-iconbtn" aria-label="Full screen"><svg class="w-icon"><use href="#i-maximize"></use></svg></button>
+                <span class="ph-badge" aria-label="Quality 720p">720p</span>
+                <button class="ph-iconbtn" aria-label="Full screen"><svg class="ph-icon"><use href="#i-maximize"></use></svg></button>
               </div>
             </div>
           </div>
         </div>
 
         <!-- ===== video Queued or Processing: youth see one calm card, no progress and no retry ===== -->
-        <div class="w-card w-mt-6" data-when-state="video-preparing">
-          <div class="w-card__header"><h3 class="w-card__title">Watch</h3><span class="w-badge w-badge--lime">Optional</span></div>
-          <div class="w-card__body">
+        <div class="ph-card ph-mt-6" data-when-state="video-preparing">
+          <div class="ph-card__header"><h3 class="ph-card__title">Watch</h3><span class="ph-badge ph-badge--lime">Optional</span></div>
+          <div class="ph-card__body">
             <div class="lb-prep" role="status">
-              <span class="lb-prep__icon"><svg class="w-icon"><use href="#i-video"></use></svg></span>
+              <span class="lb-prep__icon"><svg class="ph-icon"><use href="#i-video"></use></svg></span>
               <div>
-                <h4 class="w-mb-1">Your video is being prepared</h4>
-                <p class="w-muted w-text-sm w-mb-0">A teaching video was added to this lesson and is getting ready to play. Check back in a few minutes. Everything else in this lesson is ready now.</p>
+                <h4 class="ph-mb-1">Your video is being prepared</h4>
+                <p class="ph-muted ph-text-sm ph-mb-0">A teaching video was added to this lesson and is getting ready to play. Check back in a few minutes. Everything else in this lesson is ready now.</p>
               </div>
             </div>
           </div>
         </div>
 
         <!-- ===== playback link expired: brief inline notice, same position, no action needed ===== -->
-        <div class="w-card w-mt-6" data-when-state="video-renewing">
-          <div class="w-card__header"><h3 class="w-card__title">Watch (1 hr 12 min)</h3><span class="w-badge w-badge--lime">Optional</span></div>
-          <div class="w-card__body">
+        <div class="ph-card ph-mt-6" data-when-state="video-renewing">
+          <div class="ph-card__header"><h3 class="ph-card__title">Watch (1 hr 12 min)</h3><span class="ph-badge ph-badge--lime">Optional</span></div>
+          <div class="ph-card__body">
             <div class="lb-player" role="region" aria-label="Lesson video: Last Shall Be First">
               <div class="lb-player__stage">
-                <div class="lb-player__chip"><span class="w-spinner">Renewing your video link</span></div>
+                <div class="lb-player__chip"><span class="ph-spinner">Renewing your video link</span></div>
                 <span class="lb-video__cap">Last Shall Be First, a teaching from Marcus Bello</span>
               </div>
               <div class="lb-player__bar" role="group" aria-label="Video controls">
                 <input class="lb-player__seek" type="range" min="0" max="4328" step="1" aria-label="Seek" value="1421" aria-valuetext="23:41 of 1:12:08">
-                <button class="w-iconbtn" aria-label="Pause"><svg class="w-icon"><use href="#i-pause"></use></svg></button>
-                <button class="w-iconbtn" aria-label="Mute" aria-pressed="false"><svg class="w-icon"><use href="#i-volume-2"></use></svg></button>
+                <button class="ph-iconbtn" aria-label="Pause"><svg class="ph-icon"><use href="#i-pause"></use></svg></button>
+                <button class="ph-iconbtn" aria-label="Mute" aria-pressed="false"><svg class="ph-icon"><use href="#i-volume-2"></use></svg></button>
                 <span class="lb-player__time">23:41 / 1:12:08</span>
-                <span class="w-badge" aria-label="Quality 720p">720p</span>
-                <button class="w-iconbtn" aria-label="Full screen"><svg class="w-icon"><use href="#i-maximize"></use></svg></button>
+                <span class="ph-badge" aria-label="Quality 720p">720p</span>
+                <button class="ph-iconbtn" aria-label="Full screen"><svg class="ph-icon"><use href="#i-maximize"></use></svg></button>
               </div>
             </div>
-            <div class="w-alert w-alert--info w-mt-4" role="status">
-              <svg class="w-alert__icon w-icon"><use href="#i-refresh"></use></svg>
+            <div class="ph-alert ph-alert--info ph-mt-4" role="status">
+              <svg class="ph-alert__icon ph-icon"><use href="#i-refresh"></use></svg>
               <div>Your video link expired, so Waypoint is renewing it. Playback will carry on from 23:41.</div>
             </div>
           </div>
         </div>
 
         <!-- ===== media could not load: text stays readable, retry repeats the playback request ===== -->
-        <div class="w-card w-mt-6" data-when-state="media-failed">
-          <div class="w-card__header"><h3 class="w-card__title">Optional media</h3></div>
-          <div class="w-card__body">
-            <div class="w-alert w-alert--warning" role="alert">
-              <svg class="w-alert__icon w-icon"><use href="#i-alert-triangle"></use></svg>
+        <div class="ph-card ph-mt-6" data-when-state="media-failed">
+          <div class="ph-card__header"><h3 class="ph-card__title">Optional media</h3></div>
+          <div class="ph-card__body">
+            <div class="ph-alert ph-alert--warning" role="alert">
+              <svg class="ph-alert__icon ph-icon"><use href="#i-alert-triangle"></use></svg>
               <div>
-                <p class="w-mb-2">The media could not be loaded. The full lesson text remains available.</p>
-                <button class="w-btn w-btn--ghost" data-toast="Trying the video again." data-toast-type="info">Retry media</button>
+                <p class="ph-mb-2">The media could not be loaded. The full lesson text remains available.</p>
+                <button class="ph-btn ph-btn--ghost" data-toast="Trying the video again." data-toast-type="info">Retry media</button>
               </div>
             </div>
           </div>
         </div>
 
         <!-- ===== media without a stream (documents and older small videos): the pre-existing path ===== -->
-        <div class="w-card w-mt-6" data-when-state="default video-legacy">
-          <div class="w-card__header"><h3 class="w-card__title">Watch (2 min)</h3><span class="w-badge w-badge--lime">Optional</span></div>
-          <div class="w-card__body">
+        <div class="ph-card ph-mt-6" data-when-state="default video-legacy">
+          <div class="ph-card__header"><h3 class="ph-card__title">Watch (2 min)</h3><span class="ph-badge ph-badge--lime">Optional</span></div>
+          <div class="ph-card__body">
             <div class="lb-video">
-              <button class="lb-video__play" data-toast="Video would play here in the live app." aria-label="Play video: Servant Leadership"><svg class="w-icon"><use href="#i-play"></use></svg></button>
+              <button class="lb-video__play" data-toast="Video would play here in the live app." aria-label="Play video: Servant Leadership"><svg class="ph-icon"><use href="#i-play"></use></svg></button>
               <span class="lb-video__cap">Servant leadership, in 2 minutes</span>
             </div>
           </div>
         </div>
 
-        <div class="w-alert w-alert--lime w-mt-6">
-          <svg class="w-alert__icon w-icon"><use href="#i-help-circle"></use></svg>
+        <div class="ph-alert ph-alert--lime ph-mt-6">
+          <svg class="ph-alert__icon ph-icon"><use href="#i-help-circle"></use></svg>
           <div>
-            <div class="w-alert__title">Reflect before you move on</div>
+            <div class="ph-alert__title">Reflect before you move on</div>
             Where in your week are you being asked to serve when you’d rather be served? Hold that thought — you’ll write about it next.
           </div>
         </div>
       </div>
     </div>
 
-    <div class="w-container w-container--narrow">
+    <div class="ph-container ph-container--narrow">
       <div class="lb-actions" data-when-state="default video-ready video-preparing video-renewing media-failed video-legacy">
-        <a class="w-btn w-btn--ghost" href="module.html"><svg class="w-icon"><use href="#i-arrow-left"></use></svg>Back</a>
-        <button class="w-btn w-btn--primary" data-open-modal="m-complete">Mark complete</button>
+        <a class="ph-btn ph-btn--ghost" href="module.html"><svg class="ph-icon"><use href="#i-arrow-left"></use></svg>Back</a>
+        <button class="ph-btn ph-btn--primary" data-open-modal="m-complete">Mark complete</button>
       </div>
     </div>
   </main>
 
   <!-- ===== page-scoped modals ===== -->
-  <div class="w-modal w-modal--sm" id="m-complete" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div><h2 class="w-modal__title">Mark lesson complete?</h2><p class="w-modal__sub">“Last Shall Be First” will be checked off in Servant Leadership.</p></div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+  <div class="ph-modal ph-modal--sm" id="m-complete" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div><h2 class="ph-modal__title">Mark lesson complete?</h2><p class="ph-modal__sub">“Last Shall Be First” will be checked off in Servant Leadership.</p></div>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-alert w-alert--info"><svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg><div>Next up: a short reflection your mentor Marcus Bello may read.</div></div>
+      <div class="ph-modal__body">
+        <div class="ph-alert ph-alert--info"><svg class="ph-alert__icon ph-icon"><use href="#i-info"></use></svg><div>Next up: a short reflection your mentor Marcus Bello may read.</div></div>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Not yet</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="Lesson complete — nice work!" data-toast-type="success" data-then="learning-experience/youth/reflection.html">Complete &amp; reflect</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Not yet</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="Lesson complete — nice work!" data-toast-type="success" data-then="learning-experience/youth/reflection.html">Complete &amp; reflect</button>
       </div>
     </div>
   </div>

@@ -4,42 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Guardian consent · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body>
-  <div class="w-authpage">
-    <div class="w-authcard" style="max-width:560px">
-      <div class="w-authcard__brand">
-        <span class="w-brand__mark" style="width:38px;height:38px;font-size:1.1rem">W</span>
+  <div class="ph-authpage">
+    <div class="ph-authcard" style="max-width:560px">
+      <div class="ph-authcard__brand">
+        <span class="ph-brand__mark" style="width:38px;height:38px;font-size:1.1rem">W</span>
         <span style="font-family:var(--font-family-heading);font-weight:700;font-size:1.2rem">Waypoint</span>
       </div>
 
-      <div class="w-eyebrow w-text-c">Guardian e-consent</div>
+      <div class="ph-eyebrow ph-text-c">Guardian e-consent</div>
       <h1 style="font-size:1.5rem;text-align:center">Consent for your young person</h1>
 
-      <div class="w-person w-mb-6" style="justify-content:center">
-        <span class="w-avatar w-avatar--lg" data-name="Sofia Nguyen"></span>
+      <div class="ph-person ph-mb-6" style="justify-content:center">
+        <span class="ph-avatar ph-avatar--lg" data-name="Sofia Nguyen"></span>
         <div>
-          <div class="w-person__name">Sofia Nguyen</div>
-          <div class="w-person__meta">Rexdale Fall '25 · Mentor Marcus Bello</div>
+          <div class="ph-person__name">Sofia Nguyen</div>
+          <div class="ph-person__meta">Rexdale Fall '25 · Mentor Marcus Bello</div>
         </div>
       </div>
 
-      <div class="w-alert w-alert--info w-mb-6">
-        <svg class="w-alert__icon w-icon"><use href="#i-shield"></use></svg>
-        <div><div class="w-alert__title">Your privacy matters</div>Waypoint only collects what's needed to run the program. We never sell data, and you can withdraw consent anytime by contacting the director, Shawn Peters.</div>
+      <div class="ph-alert ph-alert--info ph-mb-6">
+        <svg class="ph-alert__icon ph-icon"><use href="#i-shield"></use></svg>
+        <div><div class="ph-alert__title">Your privacy matters</div>Waypoint only collects what's needed to run the program. We never sell data, and you can withdraw consent anytime by contacting the director, Shawn Peters.</div>
       </div>
 
       <form onsubmit="event.preventDefault()">
-        <div class="w-field">
-          <label class="w-label" for="gname">Guardian full name <span class="w-label__req">*</span></label>
-          <input class="w-input" id="gname" type="text" placeholder="Parent or guardian name">
+        <div class="ph-field">
+          <label class="ph-label" for="gname">Guardian full name <span class="ph-label__req">*</span></label>
+          <input class="ph-input" id="gname" type="text" placeholder="Parent or guardian name">
         </div>
-        <div class="w-field">
-          <label class="w-label" for="rel">Relationship to youth <span class="w-label__req">*</span></label>
-          <select class="w-select" id="rel">
+        <div class="ph-field">
+          <label class="ph-label" for="rel">Relationship to youth <span class="ph-label__req">*</span></label>
+          <select class="ph-select" id="rel">
             <option>Parent</option>
             <option>Legal guardian</option>
             <option>Grandparent</option>
@@ -47,22 +47,22 @@
           </select>
         </div>
 
-        <div class="w-divider"></div>
+        <div class="ph-divider"></div>
 
-        <label class="w-check w-mb-4"><input type="checkbox"><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span><strong>Participation consent</strong> <span class="w-label__req">*</span><br><span class="w-muted w-text-sm">I consent to Sofia taking part in Waypoint lessons, mentoring and cohort activities.</span></span></label>
+        <label class="ph-check ph-mb-4"><input type="checkbox"><span class="ph-check__box"><svg class="ph-icon"><use href="#i-check"></use></svg></span><span><strong>Participation consent</strong> <span class="ph-label__req">*</span><br><span class="ph-muted ph-text-sm">I consent to Sofia taking part in Waypoint lessons, mentoring and cohort activities.</span></span></label>
 
-        <label class="w-check w-mb-6"><input type="checkbox"><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span><strong>Photo &amp; media consent</strong> <span class="w-muted">(optional)</span><br><span class="w-muted w-text-sm">I allow photos or video that may include Sofia to be used in Waypoint materials.</span></span></label>
+        <label class="ph-check ph-mb-6"><input type="checkbox"><span class="ph-check__box"><svg class="ph-icon"><use href="#i-check"></use></svg></span><span><strong>Photo &amp; media consent</strong> <span class="ph-muted">(optional)</span><br><span class="ph-muted ph-text-sm">I allow photos or video that may include Sofia to be used in Waypoint materials.</span></span></label>
 
-        <div class="w-field">
-          <label class="w-label" for="sig">Typed signature <span class="w-label__req">*</span></label>
-          <input class="w-input" id="sig" type="text" placeholder="Type your full name to sign">
-          <div class="w-help">Signed on July 17, 2026. Typing your name acts as your legal signature.</div>
+        <div class="ph-field">
+          <label class="ph-label" for="sig">Typed signature <span class="ph-label__req">*</span></label>
+          <input class="ph-input" id="sig" type="text" placeholder="Type your full name to sign">
+          <div class="ph-help">Signed on July 17, 2026. Typing your name acts as your legal signature.</div>
         </div>
 
-        <button class="w-btn w-btn--primary w-btn--block w-btn--lg" type="submit" data-toast="Consent recorded" data-toast-type="success" data-toast-title="Thank you" data-then="learning-experience/youth/home.html">Give consent</button>
+        <button class="ph-btn ph-btn--primary ph-btn--block ph-btn--lg" type="submit" data-toast="Consent recorded" data-toast-type="success" data-toast-title="Thank you" data-then="learning-experience/youth/home.html">Give consent</button>
       </form>
 
-      <p class="w-text-c w-mt-6 w-text-sm w-muted">Questions? <a href="../../guardian-portal/guardian/home.html">Visit the guardian portal</a></p>
+      <p class="ph-text-c ph-mt-6 ph-text-sm ph-muted">Questions? <a href="../../guardian-portal/guardian/home.html">Visit the guardian portal</a></p>
     </div>
   </div>
 </body>

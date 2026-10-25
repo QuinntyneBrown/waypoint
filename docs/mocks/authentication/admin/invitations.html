@@ -4,95 +4,95 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Invitations · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="invitations" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">People</div>
-          <h1 class="w-page__title">Invitations</h1>
-          <p class="w-page__sub">Invite mentors, youth, guardians and volunteers by email. Track what's pending, accepted or expired.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">People</div>
+          <h1 class="ph-page__title">Invitations</h1>
+          <p class="ph-page__sub">Invite mentors, youth, guardians and volunteers by email. Track what's pending, accepted or expired.</p>
         </div>
-        <div class="w-page__actions">
-          <button class="w-btn w-btn--ghost"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
-          <button class="w-btn w-btn--primary" data-open-modal="m-bulk-invite"><svg class="w-icon"><use href="#i-user-plus"></use></svg>Bulk invite</button>
+        <div class="ph-page__actions">
+          <button class="ph-btn ph-btn--ghost"><svg class="ph-icon"><use href="#i-download"></use></svg>Export</button>
+          <button class="ph-btn ph-btn--primary" data-open-modal="m-bulk-invite"><svg class="ph-icon"><use href="#i-user-plus"></use></svg>Bulk invite</button>
         </div>
       </div>
 
       <!-- ===== DEFAULT ===== -->
       <div data-when-state="default">
 
-        <div class="w-grid w-grid--4 w-mb-4">
-          <div class="w-card w-statcard"><div class="w-statcard__label">Pending</div><div class="w-statcard__value">4</div></div>
-          <div class="w-card w-statcard"><div class="w-statcard__label">Accepted</div><div class="w-statcard__value">12</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>75% accept rate</div></div>
-          <div class="w-card w-statcard"><div class="w-statcard__label">Expired</div><div class="w-statcard__value">2</div></div>
-          <div class="w-card w-statcard"><div class="w-statcard__label">Sent this term</div><div class="w-statcard__value">18</div></div>
+        <div class="ph-grid ph-grid--4 ph-mb-4">
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Pending</div><div class="ph-statcard__value">4</div></div>
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Accepted</div><div class="ph-statcard__value">12</div><div class="ph-statcard__delta is-up"><svg class="ph-icon"><use href="#i-trending-up"></use></svg>75% accept rate</div></div>
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Expired</div><div class="ph-statcard__value">2</div></div>
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Sent this term</div><div class="ph-statcard__value">18</div></div>
         </div>
 
         <div data-tabs-root>
-          <div class="w-tabs">
-            <button class="w-tab is-active" data-tab="pending">Pending <span class="w-badge w-badge--lime">4</span></button>
-            <button class="w-tab" data-tab="accepted">Accepted <span class="w-badge">12</span></button>
-            <button class="w-tab" data-tab="expired">Expired <span class="w-badge">2</span></button>
+          <div class="ph-tabs">
+            <button class="ph-tab is-active" data-tab="pending">Pending <span class="ph-badge ph-badge--lime">4</span></button>
+            <button class="ph-tab" data-tab="accepted">Accepted <span class="ph-badge">12</span></button>
+            <button class="ph-tab" data-tab="expired">Expired <span class="ph-badge">2</span></button>
           </div>
 
           <!-- PENDING -->
-          <div data-tabpanel="pending" class="w-tabpanel is-active">
-            <div class="w-card">
-              <div class="w-table-wrap">
-                <table class="w-table w-table--cards">
+          <div data-tabpanel="pending" class="ph-tabpanel is-active">
+            <div class="ph-card">
+              <div class="ph-table-wrap">
+                <table class="ph-table ph-table--cards">
                   <thead><tr><th>Email</th><th>Role</th><th>Sent</th><th>Status</th><th>Actions</th></tr></thead>
                   <tbody>
                     <tr>
                       <td data-label="Email">grace.adeyemi@waypoint.to</td>
-                      <td data-label="Role"><span class="w-badge w-badge--ink">Mentor</span></td>
+                      <td data-label="Role"><span class="ph-badge ph-badge--ink">Mentor</span></td>
                       <td data-label="Sent">Jul 15, 2026</td>
-                      <td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">Pending</span></td>
+                      <td data-label="Status"><span class="ph-badge ph-badge--warning ph-badge--dot">Pending</span></td>
                       <td data-label="Actions">
-                        <div class="w-cluster w-gap-2">
-                          <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
-                          <button class="w-btn w-btn--danger w-btn--sm" data-open-modal="m-revoke">Revoke</button>
+                        <div class="ph-cluster ph-gap-2">
+                          <button class="ph-btn ph-btn--ghost ph-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
+                          <button class="ph-btn ph-btn--danger ph-btn--sm" data-open-modal="m-revoke">Revoke</button>
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td data-label="Email">j.alcantara.guardian@gmail.com</td>
-                      <td data-label="Role"><span class="w-badge w-badge--ink">Guardian</span></td>
+                      <td data-label="Role"><span class="ph-badge ph-badge--ink">Guardian</span></td>
                       <td data-label="Sent">Jul 14, 2026</td>
-                      <td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">Pending</span></td>
+                      <td data-label="Status"><span class="ph-badge ph-badge--warning ph-badge--dot">Pending</span></td>
                       <td data-label="Actions">
-                        <div class="w-cluster w-gap-2">
-                          <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
-                          <button class="w-btn w-btn--danger w-btn--sm" data-open-modal="m-revoke">Revoke</button>
+                        <div class="ph-cluster ph-gap-2">
+                          <button class="ph-btn ph-btn--ghost ph-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
+                          <button class="ph-btn ph-btn--danger ph-btn--sm" data-open-modal="m-revoke">Revoke</button>
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td data-label="Email">tyrone.clarke@student.tdsb.on.ca</td>
-                      <td data-label="Role"><span class="w-badge w-badge--ink">Youth</span></td>
+                      <td data-label="Role"><span class="ph-badge ph-badge--ink">Youth</span></td>
                       <td data-label="Sent">Jul 12, 2026</td>
-                      <td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">Pending</span></td>
+                      <td data-label="Status"><span class="ph-badge ph-badge--warning ph-badge--dot">Pending</span></td>
                       <td data-label="Actions">
-                        <div class="w-cluster w-gap-2">
-                          <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
-                          <button class="w-btn w-btn--danger w-btn--sm" data-open-modal="m-revoke">Revoke</button>
+                        <div class="ph-cluster ph-gap-2">
+                          <button class="ph-btn ph-btn--ghost ph-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
+                          <button class="ph-btn ph-btn--danger ph-btn--sm" data-open-modal="m-revoke">Revoke</button>
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td data-label="Email">volunteer.help@waypoint.to</td>
-                      <td data-label="Role"><span class="w-badge w-badge--ink">Volunteer</span></td>
+                      <td data-label="Role"><span class="ph-badge ph-badge--ink">Volunteer</span></td>
                       <td data-label="Sent">Jul 11, 2026</td>
-                      <td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">Pending</span></td>
+                      <td data-label="Status"><span class="ph-badge ph-badge--warning ph-badge--dot">Pending</span></td>
                       <td data-label="Actions">
-                        <div class="w-cluster w-gap-2">
-                          <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
-                          <button class="w-btn w-btn--danger w-btn--sm" data-open-modal="m-revoke">Revoke</button>
+                        <div class="ph-cluster ph-gap-2">
+                          <button class="ph-btn ph-btn--ghost ph-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button>
+                          <button class="ph-btn ph-btn--danger ph-btn--sm" data-open-modal="m-revoke">Revoke</button>
                         </div>
                       </td>
                     </tr>
@@ -103,35 +103,35 @@
           </div>
 
           <!-- ACCEPTED -->
-          <div data-tabpanel="accepted" class="w-tabpanel">
-            <div class="w-card">
-              <div class="w-table-wrap">
-                <table class="w-table w-table--cards">
+          <div data-tabpanel="accepted" class="ph-tabpanel">
+            <div class="ph-card">
+              <div class="ph-table-wrap">
+                <table class="ph-table ph-table--cards">
                   <thead><tr><th>Email</th><th>Role</th><th>Sent</th><th>Status</th></tr></thead>
                   <tbody>
                     <tr>
                       <td data-label="Email">marcus.bello@waypoint.to</td>
-                      <td data-label="Role"><span class="w-badge w-badge--ink">Mentor</span></td>
+                      <td data-label="Role"><span class="ph-badge ph-badge--ink">Mentor</span></td>
                       <td data-label="Sent">Jun 2, 2026</td>
-                      <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Accepted</span></td>
+                      <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Accepted</span></td>
                     </tr>
                     <tr>
                       <td data-label="Email">danielle.osei@waypoint.to</td>
-                      <td data-label="Role"><span class="w-badge w-badge--ink">Mentor</span></td>
+                      <td data-label="Role"><span class="ph-badge ph-badge--ink">Mentor</span></td>
                       <td data-label="Sent">Jun 2, 2026</td>
-                      <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Accepted</span></td>
+                      <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Accepted</span></td>
                     </tr>
                     <tr>
                       <td data-label="Email">jayden.alcantara@student.tdsb.on.ca</td>
-                      <td data-label="Role"><span class="w-badge w-badge--ink">Youth</span></td>
+                      <td data-label="Role"><span class="ph-badge ph-badge--ink">Youth</span></td>
                       <td data-label="Sent">Jun 5, 2026</td>
-                      <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Accepted</span></td>
+                      <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Accepted</span></td>
                     </tr>
                     <tr>
                       <td data-label="Email">priya.sharma@student.tdsb.on.ca</td>
-                      <td data-label="Role"><span class="w-badge w-badge--ink">Youth</span></td>
+                      <td data-label="Role"><span class="ph-badge ph-badge--ink">Youth</span></td>
                       <td data-label="Sent">Jun 5, 2026</td>
-                      <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Accepted</span></td>
+                      <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Accepted</span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -140,25 +140,25 @@
           </div>
 
           <!-- EXPIRED -->
-          <div data-tabpanel="expired" class="w-tabpanel">
-            <div class="w-card">
-              <div class="w-table-wrap">
-                <table class="w-table w-table--cards">
+          <div data-tabpanel="expired" class="ph-tabpanel">
+            <div class="ph-card">
+              <div class="ph-table-wrap">
+                <table class="ph-table ph-table--cards">
                   <thead><tr><th>Email</th><th>Role</th><th>Sent</th><th>Status</th><th>Actions</th></tr></thead>
                   <tbody>
                     <tr>
                       <td data-label="Email">devon.grant@student.tdsb.on.ca</td>
-                      <td data-label="Role"><span class="w-badge w-badge--ink">Youth</span></td>
+                      <td data-label="Role"><span class="ph-badge ph-badge--ink">Youth</span></td>
                       <td data-label="Sent">May 18, 2026</td>
-                      <td data-label="Status"><span class="w-badge w-badge--error w-badge--dot">Expired</span></td>
-                      <td data-label="Actions"><button class="w-btn w-btn--secondary w-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button></td>
+                      <td data-label="Status"><span class="ph-badge ph-badge--error ph-badge--dot">Expired</span></td>
+                      <td data-label="Actions"><button class="ph-btn ph-btn--secondary ph-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button></td>
                     </tr>
                     <tr>
                       <td data-label="Email">old.volunteer@example.org</td>
-                      <td data-label="Role"><span class="w-badge w-badge--ink">Volunteer</span></td>
+                      <td data-label="Role"><span class="ph-badge ph-badge--ink">Volunteer</span></td>
                       <td data-label="Sent">May 3, 2026</td>
-                      <td data-label="Status"><span class="w-badge w-badge--error w-badge--dot">Expired</span></td>
-                      <td data-label="Actions"><button class="w-btn w-btn--secondary w-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button></td>
+                      <td data-label="Status"><span class="ph-badge ph-badge--error ph-badge--dot">Expired</span></td>
+                      <td data-label="Actions"><button class="ph-btn ph-btn--secondary ph-btn--sm" data-toast="Invitation resent" data-toast-type="success">Resend</button></td>
                     </tr>
                   </tbody>
                 </table>
@@ -170,28 +170,28 @@
       </div>
 
       <!-- ===== LOADING ===== -->
-      <div data-when-state="loading" class="w-hide">
-        <div class="w-grid w-grid--4 w-mb-4">
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+      <div data-when-state="loading" class="ph-hide">
+        <div class="ph-grid ph-grid--4 ph-mb-4">
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
         </div>
-        <div class="w-card"><div class="w-card__body">
-          <span class="w-skeleton w-skeleton--title"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <div class="w-mt-4"></div>
-          <span class="w-skeleton w-skeleton--block"></span>
+        <div class="ph-card"><div class="ph-card__body">
+          <span class="ph-skeleton ph-skeleton--title"></span>
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <div class="ph-mt-4"></div>
+          <span class="ph-skeleton ph-skeleton--block"></span>
         </div></div>
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="w-hide">
-        <div class="w-card"><div class="w-empty">
-          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-mail"></use></svg></div>
-          <h3 class="w-empty__title">No invitations yet</h3>
-          <p class="w-empty__text">Invite mentors, youth, guardians and volunteers to join Waypoint. You can send them one at a time or in bulk.</p>
-          <button class="w-btn w-btn--primary" data-open-modal="m-bulk-invite"><svg class="w-icon"><use href="#i-user-plus"></use></svg>Bulk invite</button>
+      <div data-when-state="empty" class="ph-hide">
+        <div class="ph-card"><div class="ph-empty">
+          <div class="ph-empty__icon"><svg class="ph-icon"><use href="#i-mail"></use></svg></div>
+          <h3 class="ph-empty__title">No invitations yet</h3>
+          <p class="ph-empty__text">Invite mentors, youth, guardians and volunteers to join Waypoint. You can send them one at a time or in bulk.</p>
+          <button class="ph-btn ph-btn--primary" data-open-modal="m-bulk-invite"><svg class="ph-icon"><use href="#i-user-plus"></use></svg>Bulk invite</button>
         </div></div>
       </div>
 
@@ -199,52 +199,52 @@
   </main>
 
   <!-- ===== BULK INVITE MODAL ===== -->
-  <div class="w-modal" id="m-bulk-invite" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div><h2 class="w-modal__title">Bulk invite</h2><p class="w-modal__sub">Paste one email per line. Everyone gets the same role.</p></div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+  <div class="ph-modal" id="m-bulk-invite" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div><h2 class="ph-modal__title">Bulk invite</h2><p class="ph-modal__sub">Paste one email per line. Everyone gets the same role.</p></div>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-field">
-          <label class="w-label">Role <span class="w-label__req">*</span></label>
-          <select class="w-select"><option>Youth</option><option>Mentor</option><option>Guardian</option><option>Volunteer</option></select>
+      <div class="ph-modal__body">
+        <div class="ph-field">
+          <label class="ph-label">Role <span class="ph-label__req">*</span></label>
+          <select class="ph-select"><option>Youth</option><option>Mentor</option><option>Guardian</option><option>Volunteer</option></select>
         </div>
-        <div class="w-field">
-          <label class="w-label">Assign to cohort</label>
-          <select class="w-select"><option>Rexdale Fall '25</option><option>Warden Winter '26</option><option>St. Clair Spring '26</option><option>No cohort</option></select>
+        <div class="ph-field">
+          <label class="ph-label">Assign to cohort</label>
+          <select class="ph-select"><option>Rexdale Fall '25</option><option>Warden Winter '26</option><option>St. Clair Spring '26</option><option>No cohort</option></select>
         </div>
-        <div class="w-field">
-          <label class="w-label">Email addresses <span class="w-label__req">*</span></label>
-          <textarea class="w-textarea" rows="5" placeholder="malik.johnson@student.tdsb.on.ca&#10;amara.okafor@student.tdsb.on.ca&#10;zara.mensah@student.tdsb.on.ca"></textarea>
-          <div class="w-help">3 addresses detected · invites expire after 14 days.</div>
+        <div class="ph-field">
+          <label class="ph-label">Email addresses <span class="ph-label__req">*</span></label>
+          <textarea class="ph-textarea" rows="5" placeholder="malik.johnson@student.tdsb.on.ca&#10;amara.okafor@student.tdsb.on.ca&#10;zara.mensah@student.tdsb.on.ca"></textarea>
+          <div class="ph-help">3 addresses detected · invites expire after 14 days.</div>
         </div>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="3 invitations sent" data-toast-type="success" data-toast-title="Bulk invite"><svg class="w-icon"><use href="#i-send"></use></svg>Send invites</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="3 invitations sent" data-toast-type="success" data-toast-title="Bulk invite"><svg class="ph-icon"><use href="#i-send"></use></svg>Send invites</button>
       </div>
     </div>
   </div>
 
   <!-- ===== REVOKE MODAL ===== -->
-  <div class="w-modal w-modal--sm" id="m-revoke" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div class="w-cluster w-gap-2">
-          <span class="w-modal__icon w-modal__icon--danger"><svg class="w-icon"><use href="#i-alert-triangle"></use></svg></span>
-          <div><h2 class="w-modal__title">Revoke invitation?</h2><p class="w-modal__sub">grace.adeyemi@waypoint.to</p></div>
+  <div class="ph-modal ph-modal--sm" id="m-revoke" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div class="ph-cluster ph-gap-2">
+          <span class="ph-modal__icon ph-modal__icon--danger"><svg class="ph-icon"><use href="#i-alert-triangle"></use></svg></span>
+          <div><h2 class="ph-modal__title">Revoke invitation?</h2><p class="ph-modal__sub">grace.adeyemi@waypoint.to</p></div>
         </div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <p class="w-muted">The invite link will stop working immediately. You can always send a fresh invitation later.</p>
+      <div class="ph-modal__body">
+        <p class="ph-muted">The invite link will stop working immediately. You can always send a fresh invitation later.</p>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--danger" data-close-modal data-toast="Invitation revoked" data-toast-type="warning"><svg class="w-icon"><use href="#i-trash"></use></svg>Revoke</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--danger" data-close-modal data-toast="Invitation revoked" data-toast-type="warning"><svg class="ph-icon"><use href="#i-trash"></use></svg>Revoke</button>
       </div>
     </div>
   </div>

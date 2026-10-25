@@ -4,57 +4,57 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cohort report · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="reports" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow"><a href="reports.html">Reports</a> · Cohort</div>
-          <h1 class="w-page__title">Cohort report</h1>
-          <p class="w-page__sub">Aggregate outcomes and trends for a whole cohort — completion, attendance and engagement.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow"><a href="reports.html">Reports</a> · Cohort</div>
+          <h1 class="ph-page__title">Cohort report</h1>
+          <p class="ph-page__sub">Aggregate outcomes and trends for a whole cohort — completion, attendance and engagement.</p>
         </div>
-        <div class="w-page__actions">
-          <a class="w-btn w-btn--ghost" href="report-attendance.html"><svg class="w-icon"><use href="#i-calendar"></use></svg>Attendance</a>
-          <button class="w-btn w-btn--primary" data-open-modal="m-export"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
+        <div class="ph-page__actions">
+          <a class="ph-btn ph-btn--ghost" href="report-attendance.html"><svg class="ph-icon"><use href="#i-calendar"></use></svg>Attendance</a>
+          <button class="ph-btn ph-btn--primary" data-open-modal="m-export"><svg class="ph-icon"><use href="#i-download"></use></svg>Export</button>
         </div>
       </div>
 
       <!-- cohort selector -->
-      <div class="w-card w-mb-4">
-        <div class="w-card__body">
-          <div class="w-grid w-grid--3">
-            <div class="w-field w-mb-0">
-              <label class="w-label" for="f-cohort">Cohort</label>
-              <select class="w-select" id="f-cohort">
+      <div class="ph-card ph-mb-4">
+        <div class="ph-card__body">
+          <div class="ph-grid ph-grid--3">
+            <div class="ph-field ph-mb-0">
+              <label class="ph-label" for="f-cohort">Cohort</label>
+              <select class="ph-select" id="f-cohort">
                 <option selected>Rexdale Fall '25</option>
                 <option>Warden Winter '26</option>
                 <option>St. Clair Spring '26</option>
               </select>
             </div>
-            <div class="w-field w-mb-0">
-              <label class="w-label" for="f-term">Term</label>
-              <select class="w-select" id="f-term">
+            <div class="ph-field ph-mb-0">
+              <label class="ph-label" for="f-term">Term</label>
+              <select class="ph-select" id="f-term">
                 <option selected>Sep–Dec 2025</option>
                 <option>Jan–Apr 2026</option>
                 <option>Apr–Jul 2026</option>
               </select>
             </div>
-            <div class="w-field w-mb-0">
-              <label class="w-label" for="f-comp">Compare with</label>
-              <select class="w-select" id="f-comp">
+            <div class="ph-field ph-mb-0">
+              <label class="ph-label" for="f-comp">Compare with</label>
+              <select class="ph-select" id="f-comp">
                 <option selected>Program average</option>
                 <option>Warden Winter '26</option>
                 <option>Previous term</option>
               </select>
             </div>
           </div>
-          <div class="w-cluster w-gap-2 w-mt-4">
-            <span class="w-muted w-text-sm">Rexdale Fall '25 · Mentor Marcus Bello · 8 youth · Bible &amp; Leadership</span>
+          <div class="ph-cluster ph-gap-2 ph-mt-4">
+            <span class="ph-muted ph-text-sm">Rexdale Fall '25 · Mentor Marcus Bello · 8 youth · Bible &amp; Leadership</span>
           </div>
         </div>
       </div>
@@ -63,115 +63,115 @@
       <div data-when-state="default">
 
         <!-- KPI cards -->
-        <div class="w-grid w-grid--4 w-mb-4">
-          <div class="w-card w-statcard"><div class="w-statcard__label">Youth enrolled</div><div class="w-statcard__value">8</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+1 mid-term</div></div>
-          <div class="w-card w-statcard"><div class="w-statcard__label">Avg completion</div><div class="w-statcard__value">59%</div><div class="w-statcard__delta is-down"><svg class="w-icon"><use href="#i-trending-down"></use></svg>-5% vs program</div></div>
-          <div class="w-card w-statcard"><div class="w-statcard__label">Attendance</div><div class="w-statcard__value">86%</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+1%</div></div>
-          <div class="w-card w-card--lime"><div class="w-card__body"><div class="w-statcard__label" style="color:var(--color-fg-default)">Retention</div><div class="w-statcard__value">88%</div></div></div>
+        <div class="ph-grid ph-grid--4 ph-mb-4">
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Youth enrolled</div><div class="ph-statcard__value">8</div><div class="ph-statcard__delta is-up"><svg class="ph-icon"><use href="#i-trending-up"></use></svg>+1 mid-term</div></div>
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Avg completion</div><div class="ph-statcard__value">59%</div><div class="ph-statcard__delta is-down"><svg class="ph-icon"><use href="#i-trending-down"></use></svg>-5% vs program</div></div>
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Attendance</div><div class="ph-statcard__value">86%</div><div class="ph-statcard__delta is-up"><svg class="ph-icon"><use href="#i-trending-up"></use></svg>+1%</div></div>
+          <div class="ph-card ph-card--lime"><div class="ph-card__body"><div class="ph-statcard__label" style="color:var(--color-fg-default)">Retention</div><div class="ph-statcard__value">88%</div></div></div>
         </div>
 
-        <div class="w-grid w-grid--2 w-mb-4">
+        <div class="ph-grid ph-grid--2 ph-mb-4">
           <!-- Completion by module -->
-          <div class="w-card">
-            <div class="w-card__header"><h3 class="w-card__title">Completion by module</h3><span class="w-badge">Rexdale Fall '25</span></div>
-            <div class="w-card__body">
-              <div class="w-stack w-stack--sm">
-                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Who Is Jesus?</span><span class="w-progress__num">100%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:100%"></div></div></div>
-                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Identity in Christ</span><span class="w-progress__num">88%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:88%"></div></div></div>
-                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Servant Leadership</span><span class="w-progress__num">54%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:54%"></div></div></div>
-                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Leading a Small Group</span><span class="w-progress__num">31%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:31%"></div></div></div>
-                <div><div class="w-cluster w-justify-between w-mb-0"><span class="w-text-sm w-fw-600">Sharing Your Story</span><span class="w-progress__num">12%</span></div><div class="w-progress"><div class="w-progress__fill" style="--val:12%"></div></div></div>
+          <div class="ph-card">
+            <div class="ph-card__header"><h3 class="ph-card__title">Completion by module</h3><span class="ph-badge">Rexdale Fall '25</span></div>
+            <div class="ph-card__body">
+              <div class="ph-stack ph-stack--sm">
+                <div><div class="ph-cluster ph-justify-between ph-mb-0"><span class="ph-text-sm ph-fw-600">Who Is Jesus?</span><span class="ph-progress__num">100%</span></div><div class="ph-progress"><div class="ph-progress__fill" style="--val:100%"></div></div></div>
+                <div><div class="ph-cluster ph-justify-between ph-mb-0"><span class="ph-text-sm ph-fw-600">Identity in Christ</span><span class="ph-progress__num">88%</span></div><div class="ph-progress"><div class="ph-progress__fill" style="--val:88%"></div></div></div>
+                <div><div class="ph-cluster ph-justify-between ph-mb-0"><span class="ph-text-sm ph-fw-600">Servant Leadership</span><span class="ph-progress__num">54%</span></div><div class="ph-progress"><div class="ph-progress__fill" style="--val:54%"></div></div></div>
+                <div><div class="ph-cluster ph-justify-between ph-mb-0"><span class="ph-text-sm ph-fw-600">Leading a Small Group</span><span class="ph-progress__num">31%</span></div><div class="ph-progress"><div class="ph-progress__fill" style="--val:31%"></div></div></div>
+                <div><div class="ph-cluster ph-justify-between ph-mb-0"><span class="ph-text-sm ph-fw-600">Sharing Your Story</span><span class="ph-progress__num">12%</span></div><div class="ph-progress"><div class="ph-progress__fill" style="--val:12%"></div></div></div>
               </div>
             </div>
           </div>
 
           <!-- Attendance trend (vertical bars) -->
-          <div class="w-card">
-            <div class="w-card__header"><h3 class="w-card__title">Attendance by week</h3><span class="w-badge w-badge--success w-badge--dot">86% avg</span></div>
-            <div class="w-card__body">
+          <div class="ph-card">
+            <div class="ph-card__header"><h3 class="ph-card__title">Attendance by week</h3><span class="ph-badge ph-badge--success ph-badge--dot">86% avg</span></div>
+            <div class="ph-card__body">
               <div style="display:flex;align-items:flex-end;gap:8px;height:160px;padding-top:8px">
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:100%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W1</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:88%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W2</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:75%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W3</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:88%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W4</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:100%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W5</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:63%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W6</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:88%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W7</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:100%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W8</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:100%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W1</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:88%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W2</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:75%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W3</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:88%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W4</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:100%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W5</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:63%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W6</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:88%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W7</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:100%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W8</span></div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Engagement bars -->
-        <div class="w-card w-mb-4">
-          <div class="w-card__header"><h3 class="w-card__title">Engagement — lessons completed per week</h3><span class="w-muted w-text-sm">Rexdale Fall '25 vs program average</span></div>
-          <div class="w-card__body">
+        <div class="ph-card ph-mb-4">
+          <div class="ph-card__header"><h3 class="ph-card__title">Engagement — lessons completed per week</h3><span class="ph-muted ph-text-sm">Rexdale Fall '25 vs program average</span></div>
+          <div class="ph-card__body">
             <div style="display:flex;align-items:flex-end;gap:10px;height:150px;padding-top:8px">
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:40%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W1</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:55%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W2</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:48%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W3</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:70%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W4</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:65%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W5</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:52%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W6</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:80%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W7</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="w-progress__fill" style="height:90%;width:100%;border-radius:6px"></div></div><span class="w-text-sm w-muted">W8</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:40%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W1</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:55%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W2</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:48%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W3</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:70%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W4</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:65%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W5</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:52%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W6</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:80%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W7</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%"><div style="flex:1;width:100%;display:flex;align-items:flex-end"><div class="ph-progress__fill" style="height:90%;width:100%;border-radius:6px"></div></div><span class="ph-text-sm ph-muted">W8</span></div>
             </div>
           </div>
         </div>
 
         <!-- Youth summary table -->
-        <div class="w-card">
-          <div class="w-card__header">
-            <h3 class="w-card__title">Youth summary · 8</h3>
-            <div class="w-cluster w-gap-2">
-              <span class="w-badge w-badge--success w-badge--dot">5 on track</span>
-              <span class="w-badge w-badge--warning w-badge--dot">2 in progress</span>
-              <span class="w-badge w-badge--error w-badge--dot">1 at risk</span>
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h3 class="ph-card__title">Youth summary · 8</h3>
+            <div class="ph-cluster ph-gap-2">
+              <span class="ph-badge ph-badge--success ph-badge--dot">5 on track</span>
+              <span class="ph-badge ph-badge--warning ph-badge--dot">2 in progress</span>
+              <span class="ph-badge ph-badge--error ph-badge--dot">1 at risk</span>
             </div>
           </div>
-          <div class="w-card__body">
-            <div class="w-table-wrap">
-              <table class="w-table w-table--cards">
+          <div class="ph-card__body">
+            <div class="ph-table-wrap">
+              <table class="ph-table ph-table--cards">
                 <thead><tr><th>Youth</th><th>Progress</th><th>Attendance</th><th>Avg quiz</th><th>Status</th></tr></thead>
                 <tbody>
-                  <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Priya Sharma"></span><a href="report-youth.html">Priya Sharma</a></div></td><td data-label="Progress">91%</td><td data-label="Attendance">96%</td><td data-label="Avg quiz">88%</td><td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">On track</span></td></tr>
-                  <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td><td data-label="Progress">82%</td><td data-label="Attendance">92%</td><td data-label="Avg quiz">80%</td><td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">On track</span></td></tr>
-                  <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td><td data-label="Progress">74%</td><td data-label="Attendance">88%</td><td data-label="Avg quiz">76%</td><td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">On track</span></td></tr>
-                  <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Zara Mensah"></span>Zara Mensah</div></td><td data-label="Progress">70%</td><td data-label="Attendance">84%</td><td data-label="Avg quiz">72%</td><td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">On track</span></td></tr>
-                  <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Fatima Ali"></span>Fatima Ali</div></td><td data-label="Progress">63%</td><td data-label="Attendance">80%</td><td data-label="Avg quiz">68%</td><td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">On track</span></td></tr>
-                  <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td><td data-label="Progress">55%</td><td data-label="Attendance">76%</td><td data-label="Avg quiz">61%</td><td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">In progress</span></td></tr>
-                  <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Elijah Brown"></span>Elijah Brown</div></td><td data-label="Progress">47%</td><td data-label="Attendance">72%</td><td data-label="Avg quiz">58%</td><td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">In progress</span></td></tr>
-                  <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td><td data-label="Progress">38%</td><td data-label="Attendance">58%</td><td data-label="Avg quiz">44%</td><td data-label="Status"><span class="w-badge w-badge--error w-badge--dot">At risk</span></td></tr>
+                  <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Priya Sharma"></span><a href="report-youth.html">Priya Sharma</a></div></td><td data-label="Progress">91%</td><td data-label="Attendance">96%</td><td data-label="Avg quiz">88%</td><td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">On track</span></td></tr>
+                  <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td><td data-label="Progress">82%</td><td data-label="Attendance">92%</td><td data-label="Avg quiz">80%</td><td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">On track</span></td></tr>
+                  <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td><td data-label="Progress">74%</td><td data-label="Attendance">88%</td><td data-label="Avg quiz">76%</td><td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">On track</span></td></tr>
+                  <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Zara Mensah"></span>Zara Mensah</div></td><td data-label="Progress">70%</td><td data-label="Attendance">84%</td><td data-label="Avg quiz">72%</td><td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">On track</span></td></tr>
+                  <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Fatima Ali"></span>Fatima Ali</div></td><td data-label="Progress">63%</td><td data-label="Attendance">80%</td><td data-label="Avg quiz">68%</td><td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">On track</span></td></tr>
+                  <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td><td data-label="Progress">55%</td><td data-label="Attendance">76%</td><td data-label="Avg quiz">61%</td><td data-label="Status"><span class="ph-badge ph-badge--warning ph-badge--dot">In progress</span></td></tr>
+                  <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Elijah Brown"></span>Elijah Brown</div></td><td data-label="Progress">47%</td><td data-label="Attendance">72%</td><td data-label="Avg quiz">58%</td><td data-label="Status"><span class="ph-badge ph-badge--warning ph-badge--dot">In progress</span></td></tr>
+                  <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td><td data-label="Progress">38%</td><td data-label="Attendance">58%</td><td data-label="Avg quiz">44%</td><td data-label="Status"><span class="ph-badge ph-badge--error ph-badge--dot">At risk</span></td></tr>
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="w-card__footer"><a class="w-btn w-btn--ghost w-btn--sm" href="report-youth.html"><svg class="w-icon"><use href="#i-file-text"></use></svg>Open individual reports</a></div>
+          <div class="ph-card__footer"><a class="ph-btn ph-btn--ghost ph-btn--sm" href="report-youth.html"><svg class="ph-icon"><use href="#i-file-text"></use></svg>Open individual reports</a></div>
         </div>
 
       </div>
 
       <!-- ===== LOADING ===== -->
-      <div data-when-state="loading" class="w-hide">
-        <div class="w-grid w-grid--4 w-mb-4">
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+      <div data-when-state="loading" class="ph-hide">
+        <div class="ph-grid ph-grid--4 ph-mb-4">
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
         </div>
-        <div class="w-card"><div class="w-card__body">
-          <span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--text" style="width:80%"></span><span class="w-skeleton w-skeleton--text" style="width:60%"></span>
+        <div class="ph-card"><div class="ph-card__body">
+          <span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--text" style="width:80%"></span><span class="ph-skeleton ph-skeleton--text" style="width:60%"></span>
         </div></div>
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="w-hide">
-        <div class="w-card"><div class="w-empty">
-          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-users"></use></svg></div>
-          <h3 class="w-empty__title">No youth in this cohort yet</h3>
-          <p class="w-empty__text">St. Clair Spring '26 hasn’t started. Assign youth to see cohort outcomes.</p>
-          <a class="w-btn w-btn--primary" href="../../program-administration/admin/cohorts.html"><svg class="w-icon"><use href="#i-folder"></use></svg>Manage cohorts</a>
+      <div data-when-state="empty" class="ph-hide">
+        <div class="ph-card"><div class="ph-empty">
+          <div class="ph-empty__icon"><svg class="ph-icon"><use href="#i-users"></use></svg></div>
+          <h3 class="ph-empty__title">No youth in this cohort yet</h3>
+          <p class="ph-empty__text">St. Clair Spring '26 hasn’t started. Assign youth to see cohort outcomes.</p>
+          <a class="ph-btn ph-btn--primary" href="../../program-administration/admin/cohorts.html"><svg class="ph-icon"><use href="#i-folder"></use></svg>Manage cohorts</a>
         </div></div>
       </div>
 
@@ -179,25 +179,25 @@
   </main>
 
   <!-- ===== modal: export ===== -->
-  <div class="w-modal w-modal--sm" id="m-export" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div><h2 class="w-modal__title">Export cohort report</h2><p class="w-modal__sub">Rexdale Fall '25 · Sep–Dec 2025</p></div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+  <div class="ph-modal ph-modal--sm" id="m-export" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div><h2 class="ph-modal__title">Export cohort report</h2><p class="ph-modal__sub">Rexdale Fall '25 · Sep–Dec 2025</p></div>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-field">
-          <label class="w-label">Format</label>
-          <label class="w-radio"><input type="radio" name="fmt" checked><span class="w-radio__box"></span><span>PDF — board-ready summary</span></label>
-          <label class="w-radio"><input type="radio" name="fmt"><span class="w-radio__box"></span><span>CSV — youth-level rows</span></label>
+      <div class="ph-modal__body">
+        <div class="ph-field">
+          <label class="ph-label">Format</label>
+          <label class="ph-radio"><input type="radio" name="fmt" checked><span class="ph-radio__box"></span><span>PDF — board-ready summary</span></label>
+          <label class="ph-radio"><input type="radio" name="fmt"><span class="ph-radio__box"></span><span>CSV — youth-level rows</span></label>
         </div>
-        <label class="w-check"><input type="checkbox" checked><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span>Include charts</span></label>
-        <label class="w-check"><input type="checkbox" checked><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span>Include youth summary table</span></label>
+        <label class="ph-check"><input type="checkbox" checked><span class="ph-check__box"><svg class="ph-icon"><use href="#i-check"></use></svg></span><span>Include charts</span></label>
+        <label class="ph-check"><input type="checkbox" checked><span class="ph-check__box"><svg class="ph-icon"><use href="#i-check"></use></svg></span><span>Include youth summary table</span></label>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="Cohort report exported" data-toast-type="success"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="Cohort report exported" data-toast-type="success"><svg class="ph-icon"><use href="#i-download"></use></svg>Export</button>
       </div>
     </div>
   </div>

@@ -5,34 +5,34 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sign in · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body>
-  <div class="w-authpage">
-    <div class="w-authcard">
-      <div class="w-authcard__brand">
-        <span class="w-brand__mark" style="width:38px;height:38px;font-size:1.1rem">W</span>
+  <div class="ph-authpage">
+    <div class="ph-authcard">
+      <div class="ph-authcard__brand">
+        <span class="ph-brand__mark" style="width:38px;height:38px;font-size:1.1rem">W</span>
         <span style="font-family:var(--font-family-heading);font-weight:700;font-size:1.2rem">Waypoint</span>
       </div>
       <h1 style="font-size:1.5rem;text-align:center">Welcome back</h1>
-      <p class="w-muted w-text-c w-mb-6">Sign in to continue your journey.</p>
+      <p class="ph-muted ph-text-c ph-mb-6">Sign in to continue your journey.</p>
 
       <form onsubmit="event.preventDefault();Waypoint.toast('Signed in','');window.location.href=Waypoint.href('learning-experience/youth/home.html')">
-        <div class="w-field">
-          <label class="w-label" for="email">Email</label>
-          <input class="w-input" id="email" type="email" placeholder="you@example.com">
+        <div class="ph-field">
+          <label class="ph-label" for="email">Email</label>
+          <input class="ph-input" id="email" type="email" placeholder="you@example.com">
         </div>
-        <div class="w-field">
-          <label class="w-label" for="pw">Password</label>
-          <input class="w-input" id="pw" type="password" placeholder="••••••••">
-          <div class="w-error-text">Incorrect password.</div>
+        <div class="ph-field">
+          <label class="ph-label" for="pw">Password</label>
+          <input class="ph-input" id="pw" type="password" placeholder="••••••••">
+          <div class="ph-error-text">Incorrect password.</div>
         </div>
-        <button class="w-btn w-btn--primary w-btn--block w-btn--lg" type="submit">Sign in</button>
+        <button class="ph-btn ph-btn--primary ph-btn--block ph-btn--lg" type="submit">Sign in</button>
       </form>
 
-      <p class="w-text-c w-mt-6 w-text-sm"><a href="forgot-password.html">Forgot password?</a></p>
+      <p class="ph-text-c ph-mt-6 ph-text-sm"><a href="forgot-password.html">Forgot password?</a></p>
     </div>
   </div>
 </body>

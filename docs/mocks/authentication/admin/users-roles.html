@@ -4,23 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Users &amp; roles · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="users-roles" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Access</div>
-          <h1 class="w-page__title">Users &amp; roles</h1>
-          <p class="w-page__sub">Manage who's in Waypoint, what they can do, and how mentors and youth are paired.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Access</div>
+          <h1 class="ph-page__title">Users &amp; roles</h1>
+          <p class="ph-page__sub">Manage who's in Waypoint, what they can do, and how mentors and youth are paired.</p>
         </div>
-        <div class="w-page__actions">
-          <a class="w-btn w-btn--ghost" href="invitations.html"><svg class="w-icon"><use href="#i-mail"></use></svg>Invitations</a>
-          <button class="w-btn w-btn--primary" data-open-modal="m-role"><svg class="w-icon"><use href="#i-user-plus"></use></svg>Add user</button>
+        <div class="ph-page__actions">
+          <a class="ph-btn ph-btn--ghost" href="invitations.html"><svg class="ph-icon"><use href="#i-mail"></use></svg>Invitations</a>
+          <button class="ph-btn ph-btn--primary" data-open-modal="m-role"><svg class="ph-icon"><use href="#i-user-plus"></use></svg>Add user</button>
         </div>
       </div>
 
@@ -28,73 +28,73 @@
       <div data-when-state="default">
 
         <!-- Users table -->
-        <div class="w-card w-mb-6">
-          <div class="w-card__header">
-            <h3 class="w-card__title">Users</h3>
-            <div class="w-cluster w-gap-2">
-              <div class="w-field w-mb-0">
-                <input class="w-input" placeholder="Search users" aria-label="Search users">
+        <div class="ph-card ph-mb-6">
+          <div class="ph-card__header">
+            <h3 class="ph-card__title">Users</h3>
+            <div class="ph-cluster ph-gap-2">
+              <div class="ph-field ph-mb-0">
+                <input class="ph-input" placeholder="Search users" aria-label="Search users">
               </div>
-              <button class="w-btn w-btn--ghost w-btn--sm"><svg class="w-icon"><use href="#i-filter"></use></svg>Filter</button>
+              <button class="ph-btn ph-btn--ghost ph-btn--sm"><svg class="ph-icon"><use href="#i-filter"></use></svg>Filter</button>
             </div>
           </div>
-          <div class="w-table-wrap">
-            <table class="w-table w-table--cards">
+          <div class="ph-table-wrap">
+            <table class="ph-table ph-table--cards">
               <thead><tr><th>User</th><th>Role</th><th>Cohort</th><th>Active</th><th>Actions</th></tr></thead>
               <tbody>
                 <tr>
-                  <td data-label="User"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
+                  <td data-label="User"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
                   <td data-label="Role">
-                    <select class="w-select" aria-label="Role for Shawn Peters"><option>Director</option><option>Admin</option><option>Mentor</option></select>
+                    <select class="ph-select" aria-label="Role for Shawn Peters"><option>Director</option><option>Admin</option><option>Mentor</option></select>
                   </td>
-                  <td data-label="Cohort"><span class="w-muted">All cohorts</span></td>
-                  <td data-label="Active"><label class="w-switch"><input type="checkbox" checked aria-label="Active"><span class="w-switch__track"></span></label></td>
-                  <td data-label="Actions"><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-role">Change role</button></td>
+                  <td data-label="Cohort"><span class="ph-muted">All cohorts</span></td>
+                  <td data-label="Active"><label class="ph-switch"><input type="checkbox" checked aria-label="Active"><span class="ph-switch__track"></span></label></td>
+                  <td data-label="Actions"><button class="ph-btn ph-btn--ghost ph-btn--sm" data-open-modal="m-role">Change role</button></td>
                 </tr>
                 <tr>
-                  <td data-label="User"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
+                  <td data-label="User"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
                   <td data-label="Role">
-                    <select class="w-select" aria-label="Role for Marcus Bello"><option>Mentor</option><option>Admin</option><option>Director</option></select>
+                    <select class="ph-select" aria-label="Role for Marcus Bello"><option>Mentor</option><option>Admin</option><option>Director</option></select>
                   </td>
                   <td data-label="Cohort">Rexdale Fall '25</td>
-                  <td data-label="Active"><label class="w-switch"><input type="checkbox" checked aria-label="Active"><span class="w-switch__track"></span></label></td>
-                  <td data-label="Actions"><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-role">Change role</button></td>
+                  <td data-label="Active"><label class="ph-switch"><input type="checkbox" checked aria-label="Active"><span class="ph-switch__track"></span></label></td>
+                  <td data-label="Actions"><button class="ph-btn ph-btn--ghost ph-btn--sm" data-open-modal="m-role">Change role</button></td>
                 </tr>
                 <tr>
-                  <td data-label="User"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Grace Adeyemi"></span>Grace Adeyemi</div></td>
+                  <td data-label="User"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Grace Adeyemi"></span>Grace Adeyemi</div></td>
                   <td data-label="Role">
-                    <select class="w-select" aria-label="Role for Grace Adeyemi"><option>Mentor</option><option>Admin</option><option>Director</option></select>
+                    <select class="ph-select" aria-label="Role for Grace Adeyemi"><option>Mentor</option><option>Admin</option><option>Director</option></select>
                   </td>
                   <td data-label="Cohort">St. Clair Spring '26</td>
-                  <td data-label="Active"><label class="w-switch"><input type="checkbox" checked aria-label="Active"><span class="w-switch__track"></span></label></td>
-                  <td data-label="Actions"><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-role">Change role</button></td>
+                  <td data-label="Active"><label class="ph-switch"><input type="checkbox" checked aria-label="Active"><span class="ph-switch__track"></span></label></td>
+                  <td data-label="Actions"><button class="ph-btn ph-btn--ghost ph-btn--sm" data-open-modal="m-role">Change role</button></td>
                 </tr>
                 <tr>
-                  <td data-label="User"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Danielle Osei"></span>Danielle Osei</div></td>
+                  <td data-label="User"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Danielle Osei"></span>Danielle Osei</div></td>
                   <td data-label="Role">
-                    <select class="w-select" aria-label="Role for Danielle Osei"><option>Mentor</option><option>Admin</option><option>Director</option></select>
+                    <select class="ph-select" aria-label="Role for Danielle Osei"><option>Mentor</option><option>Admin</option><option>Director</option></select>
                   </td>
                   <td data-label="Cohort">Warden Winter '26</td>
-                  <td data-label="Active"><label class="w-switch"><input type="checkbox" checked aria-label="Active"><span class="w-switch__track"></span></label></td>
-                  <td data-label="Actions"><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-role">Change role</button></td>
+                  <td data-label="Active"><label class="ph-switch"><input type="checkbox" checked aria-label="Active"><span class="ph-switch__track"></span></label></td>
+                  <td data-label="Actions"><button class="ph-btn ph-btn--ghost ph-btn--sm" data-open-modal="m-role">Change role</button></td>
                 </tr>
                 <tr>
-                  <td data-label="User"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
+                  <td data-label="User"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
                   <td data-label="Role">
-                    <select class="w-select" aria-label="Role for Jayden Alcantara"><option>Youth</option><option>Mentor</option></select>
+                    <select class="ph-select" aria-label="Role for Jayden Alcantara"><option>Youth</option><option>Mentor</option></select>
                   </td>
                   <td data-label="Cohort">Rexdale Fall '25</td>
-                  <td data-label="Active"><label class="w-switch"><input type="checkbox" checked aria-label="Active"><span class="w-switch__track"></span></label></td>
-                  <td data-label="Actions"><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-role">Change role</button></td>
+                  <td data-label="Active"><label class="ph-switch"><input type="checkbox" checked aria-label="Active"><span class="ph-switch__track"></span></label></td>
+                  <td data-label="Actions"><button class="ph-btn ph-btn--ghost ph-btn--sm" data-open-modal="m-role">Change role</button></td>
                 </tr>
                 <tr>
-                  <td data-label="User"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td>
+                  <td data-label="User"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td>
                   <td data-label="Role">
-                    <select class="w-select" aria-label="Role for Devon Grant"><option>Youth</option><option>Mentor</option></select>
+                    <select class="ph-select" aria-label="Role for Devon Grant"><option>Youth</option><option>Mentor</option></select>
                   </td>
                   <td data-label="Cohort">Rexdale Fall '25</td>
-                  <td data-label="Active"><label class="w-switch"><input type="checkbox" aria-label="Active"><span class="w-switch__track"></span></label></td>
-                  <td data-label="Actions"><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-role">Change role</button></td>
+                  <td data-label="Active"><label class="ph-switch"><input type="checkbox" aria-label="Active"><span class="ph-switch__track"></span></label></td>
+                  <td data-label="Actions"><button class="ph-btn ph-btn--ghost ph-btn--sm" data-open-modal="m-role">Change role</button></td>
                 </tr>
               </tbody>
             </table>
@@ -102,13 +102,13 @@
         </div>
 
         <!-- Permissions matrix -->
-        <div class="w-card w-mb-6">
-          <div class="w-card__header">
-            <h3 class="w-card__title">Roles &amp; permissions</h3>
-            <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Permissions saved" data-toast-type="success"><svg class="w-icon"><use href="#i-check"></use></svg>Save changes</button>
+        <div class="ph-card ph-mb-6">
+          <div class="ph-card__header">
+            <h3 class="ph-card__title">Roles &amp; permissions</h3>
+            <button class="ph-btn ph-btn--ghost ph-btn--sm" data-toast="Permissions saved" data-toast-type="success"><svg class="ph-icon"><use href="#i-check"></use></svg>Save changes</button>
           </div>
-          <div class="w-table-wrap">
-            <table class="w-table">
+          <div class="ph-table-wrap">
+            <table class="ph-table">
               <thead>
                 <tr>
                   <th>Permission</th>
@@ -121,52 +121,52 @@
               <tbody>
                 <tr>
                   <td data-label="Permission">Manage users &amp; roles</td>
-                  <td data-label="Director"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Admin"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Mentor"><span class="w-muted">—</span></td>
-                  <td data-label="Guardian"><span class="w-muted">—</span></td>
+                  <td data-label="Director"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Admin"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Mentor"><span class="ph-muted">—</span></td>
+                  <td data-label="Guardian"><span class="ph-muted">—</span></td>
                 </tr>
                 <tr>
                   <td data-label="Permission">Approve applications</td>
-                  <td data-label="Director"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Admin"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Mentor"><span class="w-muted">—</span></td>
-                  <td data-label="Guardian"><span class="w-muted">—</span></td>
+                  <td data-label="Director"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Admin"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Mentor"><span class="ph-muted">—</span></td>
+                  <td data-label="Guardian"><span class="ph-muted">—</span></td>
                 </tr>
                 <tr>
                   <td data-label="Permission">Edit curriculum</td>
-                  <td data-label="Director"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Admin"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Mentor"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Guardian"><span class="w-muted">—</span></td>
+                  <td data-label="Director"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Admin"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Mentor"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Guardian"><span class="ph-muted">—</span></td>
                 </tr>
                 <tr>
                   <td data-label="Permission">Record attendance</td>
-                  <td data-label="Director"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Admin"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Mentor"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Guardian"><span class="w-muted">—</span></td>
+                  <td data-label="Director"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Admin"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Mentor"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Guardian"><span class="ph-muted">—</span></td>
                 </tr>
                 <tr>
                   <td data-label="Permission">View youth progress</td>
-                  <td data-label="Director"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Admin"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Mentor"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Guardian"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Director"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Admin"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Mentor"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Guardian"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
                 </tr>
                 <tr>
                   <td data-label="Permission">Give guardian consent</td>
-                  <td data-label="Director"><span class="w-muted">—</span></td>
-                  <td data-label="Admin"><span class="w-muted">—</span></td>
-                  <td data-label="Mentor"><span class="w-muted">—</span></td>
-                  <td data-label="Guardian"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Director"><span class="ph-muted">—</span></td>
+                  <td data-label="Admin"><span class="ph-muted">—</span></td>
+                  <td data-label="Mentor"><span class="ph-muted">—</span></td>
+                  <td data-label="Guardian"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
                 </tr>
                 <tr>
                   <td data-label="Permission">Export &amp; import data</td>
-                  <td data-label="Director"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Admin"><svg class="w-icon w-text-success"><use href="#i-check"></use></svg></td>
-                  <td data-label="Mentor"><span class="w-muted">—</span></td>
-                  <td data-label="Guardian"><span class="w-muted">—</span></td>
+                  <td data-label="Director"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Admin"><svg class="ph-icon ph-text-success"><use href="#i-check"></use></svg></td>
+                  <td data-label="Mentor"><span class="ph-muted">—</span></td>
+                  <td data-label="Guardian"><span class="ph-muted">—</span></td>
                 </tr>
               </tbody>
             </table>
@@ -174,53 +174,53 @@
         </div>
 
         <!-- Assign mentor <-> youth -->
-        <div class="w-card">
-          <div class="w-card__header">
-            <h3 class="w-card__title">Assign mentors &amp; youth</h3>
-            <p class="w-muted w-mb-0">Pair each youth with a mentor for their cohort.</p>
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h3 class="ph-card__title">Assign mentors &amp; youth</h3>
+            <p class="ph-muted ph-mb-0">Pair each youth with a mentor for their cohort.</p>
           </div>
-          <div class="w-card__body">
-            <div class="w-grid w-grid--2">
-              <div class="w-field">
-                <label class="w-label">Youth</label>
-                <select class="w-select"><option>Sofia Nguyen</option><option>Tyrone Clarke</option><option>Malik Johnson</option><option>Amara Okafor</option></select>
+          <div class="ph-card__body">
+            <div class="ph-grid ph-grid--2">
+              <div class="ph-field">
+                <label class="ph-label">Youth</label>
+                <select class="ph-select"><option>Sofia Nguyen</option><option>Tyrone Clarke</option><option>Malik Johnson</option><option>Amara Okafor</option></select>
               </div>
-              <div class="w-field">
-                <label class="w-label">Mentor</label>
-                <select class="w-select"><option>Marcus Bello</option><option>Grace Adeyemi</option><option>Danielle Osei</option></select>
+              <div class="ph-field">
+                <label class="ph-label">Mentor</label>
+                <select class="ph-select"><option>Marcus Bello</option><option>Grace Adeyemi</option><option>Danielle Osei</option></select>
               </div>
             </div>
-            <div class="w-cluster w-justify-between">
-              <span class="w-muted">Marcus Bello currently mentors 4 youth.</span>
-              <button class="w-btn w-btn--secondary" data-toast="Mentor assigned" data-toast-type="success" data-toast-title="Sofia Nguyen → Marcus Bello"><svg class="w-icon"><use href="#i-user-check"></use></svg>Assign pairing</button>
+            <div class="ph-cluster ph-justify-between">
+              <span class="ph-muted">Marcus Bello currently mentors 4 youth.</span>
+              <button class="ph-btn ph-btn--secondary" data-toast="Mentor assigned" data-toast-type="success" data-toast-title="Sofia Nguyen → Marcus Bello"><svg class="ph-icon"><use href="#i-user-check"></use></svg>Assign pairing</button>
             </div>
 
-            <div class="w-divider"></div>
+            <div class="ph-divider"></div>
 
-            <div class="w-stack w-stack--sm">
-              <div class="w-cluster w-justify-between">
-                <div class="w-person"><span class="w-avatar w-avatar--sm" data-name="Marcus Bello"></span><div><div class="w-person__name">Marcus Bello</div><div class="w-person__meta">Rexdale Fall '25</div></div></div>
-                <div class="w-avatarstack">
-                  <span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span>
-                  <span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span>
-                  <span class="w-avatar w-avatar--sm" data-name="Priya Sharma"></span>
-                  <span class="w-avatar w-avatar--sm" data-name="Malik Johnson"></span>
+            <div class="ph-stack ph-stack--sm">
+              <div class="ph-cluster ph-justify-between">
+                <div class="ph-person"><span class="ph-avatar ph-avatar--sm" data-name="Marcus Bello"></span><div><div class="ph-person__name">Marcus Bello</div><div class="ph-person__meta">Rexdale Fall '25</div></div></div>
+                <div class="ph-avatarstack">
+                  <span class="ph-avatar ph-avatar--sm" data-name="Jayden Alcantara"></span>
+                  <span class="ph-avatar ph-avatar--sm" data-name="Devon Grant"></span>
+                  <span class="ph-avatar ph-avatar--sm" data-name="Priya Sharma"></span>
+                  <span class="ph-avatar ph-avatar--sm" data-name="Malik Johnson"></span>
                 </div>
               </div>
-              <div class="w-cluster w-justify-between">
-                <div class="w-person"><span class="w-avatar w-avatar--sm" data-name="Danielle Osei"></span><div><div class="w-person__name">Danielle Osei</div><div class="w-person__meta">Warden Winter '26</div></div></div>
-                <div class="w-avatarstack">
-                  <span class="w-avatar w-avatar--sm" data-name="Noah Williams"></span>
-                  <span class="w-avatar w-avatar--sm" data-name="Fatima Ali"></span>
-                  <span class="w-avatar w-avatar--sm" data-name="Zara Mensah"></span>
+              <div class="ph-cluster ph-justify-between">
+                <div class="ph-person"><span class="ph-avatar ph-avatar--sm" data-name="Danielle Osei"></span><div><div class="ph-person__name">Danielle Osei</div><div class="ph-person__meta">Warden Winter '26</div></div></div>
+                <div class="ph-avatarstack">
+                  <span class="ph-avatar ph-avatar--sm" data-name="Noah Williams"></span>
+                  <span class="ph-avatar ph-avatar--sm" data-name="Fatima Ali"></span>
+                  <span class="ph-avatar ph-avatar--sm" data-name="Zara Mensah"></span>
                 </div>
               </div>
-              <div class="w-cluster w-justify-between">
-                <div class="w-person"><span class="w-avatar w-avatar--sm" data-name="Grace Adeyemi"></span><div><div class="w-person__name">Grace Adeyemi</div><div class="w-person__meta">St. Clair Spring '26</div></div></div>
-                <div class="w-avatarstack">
-                  <span class="w-avatar w-avatar--sm" data-name="Amara Okafor"></span>
-                  <span class="w-avatar w-avatar--sm" data-name="Elijah Brown"></span>
-                  <span class="w-avatar w-avatar--sm" data-name="Leila Haddad"></span>
+              <div class="ph-cluster ph-justify-between">
+                <div class="ph-person"><span class="ph-avatar ph-avatar--sm" data-name="Grace Adeyemi"></span><div><div class="ph-person__name">Grace Adeyemi</div><div class="ph-person__meta">St. Clair Spring '26</div></div></div>
+                <div class="ph-avatarstack">
+                  <span class="ph-avatar ph-avatar--sm" data-name="Amara Okafor"></span>
+                  <span class="ph-avatar ph-avatar--sm" data-name="Elijah Brown"></span>
+                  <span class="ph-avatar ph-avatar--sm" data-name="Leila Haddad"></span>
                 </div>
               </div>
             </div>
@@ -230,28 +230,28 @@
       </div>
 
       <!-- ===== LOADING ===== -->
-      <div data-when-state="loading" class="w-hide">
-        <div class="w-card w-mb-6"><div class="w-card__body">
-          <span class="w-skeleton w-skeleton--title"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <div class="w-mt-4"></div>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <div class="w-mt-4"></div>
-          <span class="w-skeleton w-skeleton--block"></span>
+      <div data-when-state="loading" class="ph-hide">
+        <div class="ph-card ph-mb-6"><div class="ph-card__body">
+          <span class="ph-skeleton ph-skeleton--title"></span>
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <div class="ph-mt-4"></div>
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <div class="ph-mt-4"></div>
+          <span class="ph-skeleton ph-skeleton--block"></span>
         </div></div>
-        <div class="w-card"><div class="w-card__body">
-          <span class="w-skeleton w-skeleton--title"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
+        <div class="ph-card"><div class="ph-card__body">
+          <span class="ph-skeleton ph-skeleton--title"></span>
+          <span class="ph-skeleton ph-skeleton--block"></span>
         </div></div>
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="w-hide">
-        <div class="w-card"><div class="w-empty">
-          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-users"></use></svg></div>
-          <h3 class="w-empty__title">No users yet</h3>
-          <p class="w-empty__text">Once people accept their invitations they'll appear here, where you can set roles and permissions.</p>
-          <a class="w-btn w-btn--primary" href="invitations.html"><svg class="w-icon"><use href="#i-mail"></use></svg>Invite people</a>
+      <div data-when-state="empty" class="ph-hide">
+        <div class="ph-card"><div class="ph-empty">
+          <div class="ph-empty__icon"><svg class="ph-icon"><use href="#i-users"></use></svg></div>
+          <h3 class="ph-empty__title">No users yet</h3>
+          <p class="ph-empty__text">Once people accept their invitations they'll appear here, where you can set roles and permissions.</p>
+          <a class="ph-btn ph-btn--primary" href="invitations.html"><svg class="ph-icon"><use href="#i-mail"></use></svg>Invite people</a>
         </div></div>
       </div>
 
@@ -259,31 +259,31 @@
   </main>
 
   <!-- ===== CHANGE ROLE MODAL ===== -->
-  <div class="w-modal w-modal--sm" id="m-role" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div><h2 class="w-modal__title">Change role</h2><p class="w-modal__sub">Marcus Bello · marcus.bello@waypoint.to</p></div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+  <div class="ph-modal ph-modal--sm" id="m-role" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div><h2 class="ph-modal__title">Change role</h2><p class="ph-modal__sub">Marcus Bello · marcus.bello@waypoint.to</p></div>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-field">
-          <label class="w-label">Role <span class="w-label__req">*</span></label>
-          <select class="w-select"><option>Mentor</option><option>Admin</option><option>Director</option><option>Guardian</option><option>Volunteer</option></select>
-          <div class="w-help">Roles determine what this person can see and do across Waypoint.</div>
+      <div class="ph-modal__body">
+        <div class="ph-field">
+          <label class="ph-label">Role <span class="ph-label__req">*</span></label>
+          <select class="ph-select"><option>Mentor</option><option>Admin</option><option>Director</option><option>Guardian</option><option>Volunteer</option></select>
+          <div class="ph-help">Roles determine what this person can see and do across Waypoint.</div>
         </div>
-        <div class="w-field">
-          <label class="w-label">Scope to cohort</label>
-          <select class="w-select"><option>Rexdale Fall '25</option><option>Warden Winter '26</option><option>St. Clair Spring '26</option><option>All cohorts</option></select>
+        <div class="ph-field">
+          <label class="ph-label">Scope to cohort</label>
+          <select class="ph-select"><option>Rexdale Fall '25</option><option>Warden Winter '26</option><option>St. Clair Spring '26</option><option>All cohorts</option></select>
         </div>
-        <div class="w-alert w-alert--info">
-          <svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg>
+        <div class="ph-alert ph-alert--info">
+          <svg class="ph-alert__icon ph-icon"><use href="#i-info"></use></svg>
           <div>Changing a role updates this person's permissions immediately.</div>
         </div>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="Role updated" data-toast-type="success" data-toast-title="Marcus Bello">Save role</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="Role updated" data-toast-type="success" data-toast-title="Marcus Bello">Save role</button>
       </div>
     </div>
   </div>

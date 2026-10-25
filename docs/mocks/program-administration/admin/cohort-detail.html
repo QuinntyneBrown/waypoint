@@ -4,81 +4,81 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cohort detail · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="cohorts" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
-      <a class="w-btn w-btn--ghost w-btn--sm w-mb-4" href="cohorts.html"><svg class="w-icon"><use href="#i-arrow-left"></use></svg>All cohorts</a>
+  <main class="ph-main">
+    <div class="ph-container ph-page">
+      <a class="ph-btn ph-btn--ghost ph-btn--sm ph-mb-4" href="cohorts.html"><svg class="ph-icon"><use href="#i-arrow-left"></use></svg>All cohorts</a>
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Cohort · Bible &amp; Leadership</div>
-          <h1 class="w-page__title">Rexdale Fall '25</h1>
-          <p class="w-page__sub">Sep–Dec 2025 · Rexdale Community Hub · Lead Mentor Marcus Bello</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Cohort · Bible &amp; Leadership</div>
+          <h1 class="ph-page__title">Rexdale Fall '25</h1>
+          <p class="ph-page__sub">Sep–Dec 2025 · Rexdale Community Hub · Lead Mentor Marcus Bello</p>
         </div>
-        <div class="w-page__actions">
-          <button class="w-btn w-btn--ghost" data-open-modal="m-edit-cohort"><svg class="w-icon"><use href="#i-edit"></use></svg>Edit</button>
-          <button class="w-btn w-btn--primary" data-open-modal="m-add-youth"><svg class="w-icon"><use href="#i-user-plus"></use></svg>Add youth</button>
+        <div class="ph-page__actions">
+          <button class="ph-btn ph-btn--ghost" data-open-modal="m-edit-cohort"><svg class="ph-icon"><use href="#i-edit"></use></svg>Edit</button>
+          <button class="ph-btn ph-btn--primary" data-open-modal="m-add-youth"><svg class="ph-icon"><use href="#i-user-plus"></use></svg>Add youth</button>
         </div>
       </div>
 
       <!-- Summary strip -->
-      <div class="w-grid w-grid--4 w-mb-6">
-        <div class="w-card"><div class="w-card__body w-cluster w-gap-4">
-          <div class="w-ring" style="--val:68"><span class="w-ring__label">68%</span></div>
-          <div><div class="w-statcard__label">Aggregate progress</div><div class="w-muted">Across 5 youth</div></div>
+      <div class="ph-grid ph-grid--4 ph-mb-6">
+        <div class="ph-card"><div class="ph-card__body ph-cluster ph-gap-4">
+          <div class="ph-ring" style="--val:68"><span class="ph-ring__label">68%</span></div>
+          <div><div class="ph-statcard__label">Aggregate progress</div><div class="ph-muted">Across 5 youth</div></div>
         </div></div>
-        <div class="w-card w-statcard"><div class="w-statcard__label">Attendance rate</div><div class="w-statcard__value">86%</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+3% vs last month</div></div>
-        <div class="w-card w-statcard"><div class="w-statcard__label">Members</div><div class="w-statcard__value">5</div><div class="w-statcard__delta"><svg class="w-icon"><use href="#i-users"></use></svg>1 at risk</div></div>
-        <div class="w-card w-statcard"><div class="w-statcard__label">Modules complete</div><div class="w-statcard__value">3 / 5</div><div class="w-statcard__delta"><svg class="w-icon"><use href="#i-book-open"></use></svg>Servant Leadership active</div></div>
+        <div class="ph-card ph-statcard"><div class="ph-statcard__label">Attendance rate</div><div class="ph-statcard__value">86%</div><div class="ph-statcard__delta is-up"><svg class="ph-icon"><use href="#i-trending-up"></use></svg>+3% vs last month</div></div>
+        <div class="ph-card ph-statcard"><div class="ph-statcard__label">Members</div><div class="ph-statcard__value">5</div><div class="ph-statcard__delta"><svg class="ph-icon"><use href="#i-users"></use></svg>1 at risk</div></div>
+        <div class="ph-card ph-statcard"><div class="ph-statcard__label">Modules complete</div><div class="ph-statcard__value">3 / 5</div><div class="ph-statcard__delta"><svg class="ph-icon"><use href="#i-book-open"></use></svg>Servant Leadership active</div></div>
       </div>
 
       <div data-tabs-root>
-        <div class="w-tabs">
-          <button class="w-tab is-active" data-tab="overview">Overview</button>
-          <button class="w-tab" data-tab="members">Members <span class="w-badge w-badge--lime">5</span></button>
-          <button class="w-tab" data-tab="curriculum">Curriculum</button>
-          <button class="w-tab" data-tab="attendance">Attendance</button>
+        <div class="ph-tabs">
+          <button class="ph-tab is-active" data-tab="overview">Overview</button>
+          <button class="ph-tab" data-tab="members">Members <span class="ph-badge ph-badge--lime">5</span></button>
+          <button class="ph-tab" data-tab="curriculum">Curriculum</button>
+          <button class="ph-tab" data-tab="attendance">Attendance</button>
         </div>
 
         <!-- ===== OVERVIEW ===== -->
-        <div data-tabpanel="overview" class="w-tabpanel is-active">
-          <div class="w-grid w-grid--3">
-            <div class="w-card" style="grid-column:span 2">
-              <div class="w-card__header"><h3 class="w-card__title">Assigned track &amp; curriculum</h3></div>
-              <div class="w-card__body">
-                <div class="w-cluster w-justify-between w-mb-4">
-                  <div><div class="w-eyebrow">Track</div><strong>Bible &amp; Leadership</strong></div>
-                  <a class="w-btn w-btn--ghost w-btn--sm" href="../../curriculum-authoring/admin/tracks.html">View track</a>
+        <div data-tabpanel="overview" class="ph-tabpanel is-active">
+          <div class="ph-grid ph-grid--3">
+            <div class="ph-card" style="grid-column:span 2">
+              <div class="ph-card__header"><h3 class="ph-card__title">Assigned track &amp; curriculum</h3></div>
+              <div class="ph-card__body">
+                <div class="ph-cluster ph-justify-between ph-mb-4">
+                  <div><div class="ph-eyebrow">Track</div><strong>Bible &amp; Leadership</strong></div>
+                  <a class="ph-btn ph-btn--ghost ph-btn--sm" href="../../curriculum-authoring/admin/tracks.html">View track</a>
                 </div>
-                <div class="w-divider"></div>
-                <div class="w-timeline">
-                  <div class="w-timeline__item is-done"><strong>Who Is Jesus?</strong><div class="w-muted">Completed · Sep 2025</div></div>
-                  <div class="w-timeline__item is-done"><strong>Identity in Christ</strong><div class="w-muted">Completed · Oct 2025</div></div>
-                  <div class="w-timeline__item is-current"><strong>Servant Leadership</strong><div class="w-muted">In progress · anchor Mark 10:45</div></div>
-                  <div class="w-timeline__item"><strong>Leading a Small Group</strong><div class="w-muted">Upcoming</div></div>
-                  <div class="w-timeline__item"><strong>Sharing Your Story</strong><div class="w-muted">Upcoming</div></div>
+                <div class="ph-divider"></div>
+                <div class="ph-timeline">
+                  <div class="ph-timeline__item is-done"><strong>Who Is Jesus?</strong><div class="ph-muted">Completed · Sep 2025</div></div>
+                  <div class="ph-timeline__item is-done"><strong>Identity in Christ</strong><div class="ph-muted">Completed · Oct 2025</div></div>
+                  <div class="ph-timeline__item is-current"><strong>Servant Leadership</strong><div class="ph-muted">In progress · anchor Mark 10:45</div></div>
+                  <div class="ph-timeline__item"><strong>Leading a Small Group</strong><div class="ph-muted">Upcoming</div></div>
+                  <div class="ph-timeline__item"><strong>Sharing Your Story</strong><div class="ph-muted">Upcoming</div></div>
                 </div>
               </div>
             </div>
-            <div class="w-stack">
-              <div class="w-card">
-                <div class="w-card__header"><h3 class="w-card__title">Mentors</h3></div>
-                <div class="w-card__body w-stack w-stack--sm">
-                  <div class="w-person"><span class="w-avatar" data-name="Marcus Bello"></span><div><div class="w-person__name">Marcus Bello</div><div class="w-person__meta">Lead Mentor</div></div></div>
-                  <div class="w-person"><span class="w-avatar" data-name="Grace Adeyemi"></span><div><div class="w-person__name">Grace Adeyemi</div><div class="w-person__meta">Support Mentor</div></div></div>
+            <div class="ph-stack">
+              <div class="ph-card">
+                <div class="ph-card__header"><h3 class="ph-card__title">Mentors</h3></div>
+                <div class="ph-card__body ph-stack ph-stack--sm">
+                  <div class="ph-person"><span class="ph-avatar" data-name="Marcus Bello"></span><div><div class="ph-person__name">Marcus Bello</div><div class="ph-person__meta">Lead Mentor</div></div></div>
+                  <div class="ph-person"><span class="ph-avatar" data-name="Grace Adeyemi"></span><div><div class="ph-person__name">Grace Adeyemi</div><div class="ph-person__meta">Support Mentor</div></div></div>
                 </div>
               </div>
-              <div class="w-card">
-                <div class="w-card__header"><h3 class="w-card__title">Schedule</h3></div>
-                <div class="w-card__body w-stack w-stack--sm">
-                  <div class="w-cluster w-gap-2"><svg class="w-icon"><use href="#i-calendar"></use></svg><span>Wednesdays · 6:30–8:00 PM</span></div>
-                  <div class="w-cluster w-gap-2"><svg class="w-icon"><use href="#i-map-pin"></use></svg><span>Rexdale Community Hub</span></div>
-                  <div class="w-cluster w-gap-2"><svg class="w-icon"><use href="#i-clock"></use></svg><span>12 sessions · Sep 3 – Dec 10</span></div>
-                  <a class="w-btn w-btn--ghost w-btn--sm w-mt-2" href="../../engagement/admin/calendar.html">Open calendar</a>
+              <div class="ph-card">
+                <div class="ph-card__header"><h3 class="ph-card__title">Schedule</h3></div>
+                <div class="ph-card__body ph-stack ph-stack--sm">
+                  <div class="ph-cluster ph-gap-2"><svg class="ph-icon"><use href="#i-calendar"></use></svg><span>Wednesdays · 6:30–8:00 PM</span></div>
+                  <div class="ph-cluster ph-gap-2"><svg class="ph-icon"><use href="#i-map-pin"></use></svg><span>Rexdale Community Hub</span></div>
+                  <div class="ph-cluster ph-gap-2"><svg class="ph-icon"><use href="#i-clock"></use></svg><span>12 sessions · Sep 3 – Dec 10</span></div>
+                  <a class="ph-btn ph-btn--ghost ph-btn--sm ph-mt-2" href="../../engagement/admin/calendar.html">Open calendar</a>
                 </div>
               </div>
             </div>
@@ -86,54 +86,54 @@
         </div>
 
         <!-- ===== MEMBERS ===== -->
-        <div data-tabpanel="members" class="w-tabpanel">
-          <div class="w-cluster w-justify-between w-mb-4">
-            <h3 class="w-mb-0">Members</h3>
-            <button class="w-btn w-btn--secondary w-btn--sm" data-open-modal="m-add-youth"><svg class="w-icon"><use href="#i-user-plus"></use></svg>Add youth</button>
+        <div data-tabpanel="members" class="ph-tabpanel">
+          <div class="ph-cluster ph-justify-between ph-mb-4">
+            <h3 class="ph-mb-0">Members</h3>
+            <button class="ph-btn ph-btn--secondary ph-btn--sm" data-open-modal="m-add-youth"><svg class="ph-icon"><use href="#i-user-plus"></use></svg>Add youth</button>
           </div>
-          <div class="w-table-wrap">
-            <table class="w-table w-table--cards">
+          <div class="ph-table-wrap">
+            <table class="ph-table ph-table--cards">
               <thead><tr><th>Youth</th><th>Current module</th><th>Progress</th><th>Attendance</th><th>Status</th><th></th></tr></thead>
               <tbody>
                 <tr>
-                  <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
+                  <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
                   <td data-label="Current module">Servant Leadership</td>
-                  <td data-label="Progress"><div class="w-progress__row"><div class="w-progress w-progress--thin"><div class="w-progress__fill" style="--val:82%"></div></div><span class="w-progress__num">82%</span></div></td>
+                  <td data-label="Progress"><div class="ph-progress__row"><div class="ph-progress ph-progress--thin"><div class="ph-progress__fill" style="--val:82%"></div></div><span class="ph-progress__num">82%</span></div></td>
                   <td data-label="Attendance">11 / 12</td>
-                  <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">On track</span></td>
-                  <td data-label=""><a class="w-btn w-btn--ghost w-btn--sm" href="../../mentoring/mentor/my-youth.html">View</a></td>
+                  <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">On track</span></td>
+                  <td data-label=""><a class="ph-btn ph-btn--ghost ph-btn--sm" href="../../mentoring/mentor/my-youth.html">View</a></td>
                 </tr>
                 <tr>
-                  <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
+                  <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
                   <td data-label="Current module">Servant Leadership</td>
-                  <td data-label="Progress"><div class="w-progress__row"><div class="w-progress w-progress--thin"><div class="w-progress__fill" style="--val:74%"></div></div><span class="w-progress__num">74%</span></div></td>
+                  <td data-label="Progress"><div class="ph-progress__row"><div class="ph-progress ph-progress--thin"><div class="ph-progress__fill" style="--val:74%"></div></div><span class="ph-progress__num">74%</span></div></td>
                   <td data-label="Attendance">10 / 12</td>
-                  <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">On track</span></td>
-                  <td data-label=""><a class="w-btn w-btn--ghost w-btn--sm" href="../../mentoring/mentor/my-youth.html">View</a></td>
+                  <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">On track</span></td>
+                  <td data-label=""><a class="ph-btn ph-btn--ghost ph-btn--sm" href="../../mentoring/mentor/my-youth.html">View</a></td>
                 </tr>
                 <tr>
-                  <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td>
+                  <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td>
                   <td data-label="Current module">Identity in Christ</td>
-                  <td data-label="Progress"><div class="w-progress__row"><div class="w-progress w-progress--thin"><div class="w-progress__fill" style="--val:38%"></div></div><span class="w-progress__num">38%</span></div></td>
+                  <td data-label="Progress"><div class="ph-progress__row"><div class="ph-progress ph-progress--thin"><div class="ph-progress__fill" style="--val:38%"></div></div><span class="ph-progress__num">38%</span></div></td>
                   <td data-label="Attendance">6 / 12</td>
-                  <td data-label="Status"><span class="w-badge w-badge--error w-badge--dot">At risk</span></td>
-                  <td data-label=""><a class="w-btn w-btn--ghost w-btn--sm" href="../../mentoring/mentor/my-youth.html">View</a></td>
+                  <td data-label="Status"><span class="ph-badge ph-badge--error ph-badge--dot">At risk</span></td>
+                  <td data-label=""><a class="ph-btn ph-btn--ghost ph-btn--sm" href="../../mentoring/mentor/my-youth.html">View</a></td>
                 </tr>
                 <tr>
-                  <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
+                  <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
                   <td data-label="Current module">Leading a Small Group</td>
-                  <td data-label="Progress"><div class="w-progress__row"><div class="w-progress w-progress--thin"><div class="w-progress__fill" style="--val:91%"></div></div><span class="w-progress__num">91%</span></div></td>
+                  <td data-label="Progress"><div class="ph-progress__row"><div class="ph-progress ph-progress--thin"><div class="ph-progress__fill" style="--val:91%"></div></div><span class="ph-progress__num">91%</span></div></td>
                   <td data-label="Attendance">12 / 12</td>
-                  <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">On track</span></td>
-                  <td data-label=""><a class="w-btn w-btn--ghost w-btn--sm" href="../../mentoring/mentor/my-youth.html">View</a></td>
+                  <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">On track</span></td>
+                  <td data-label=""><a class="ph-btn ph-btn--ghost ph-btn--sm" href="../../mentoring/mentor/my-youth.html">View</a></td>
                 </tr>
                 <tr>
-                  <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
+                  <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
                   <td data-label="Current module">Servant Leadership</td>
-                  <td data-label="Progress"><div class="w-progress__row"><div class="w-progress w-progress--thin"><div class="w-progress__fill" style="--val:55%"></div></div><span class="w-progress__num">55%</span></div></td>
+                  <td data-label="Progress"><div class="ph-progress__row"><div class="ph-progress ph-progress--thin"><div class="ph-progress__fill" style="--val:55%"></div></div><span class="ph-progress__num">55%</span></div></td>
                   <td data-label="Attendance">9 / 12</td>
-                  <td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">In progress</span></td>
-                  <td data-label=""><a class="w-btn w-btn--ghost w-btn--sm" href="../../mentoring/mentor/my-youth.html">View</a></td>
+                  <td data-label="Status"><span class="ph-badge ph-badge--warning ph-badge--dot">In progress</span></td>
+                  <td data-label=""><a class="ph-btn ph-btn--ghost ph-btn--sm" href="../../mentoring/mentor/my-youth.html">View</a></td>
                 </tr>
               </tbody>
             </table>
@@ -141,54 +141,54 @@
         </div>
 
         <!-- ===== CURRICULUM ===== -->
-        <div data-tabpanel="curriculum" class="w-tabpanel">
-          <div class="w-cluster w-justify-between w-mb-4">
-            <div><div class="w-eyebrow">Track</div><h3 class="w-mb-0">Bible &amp; Leadership</h3></div>
-            <a class="w-btn w-btn--ghost w-btn--sm" href="../../curriculum-authoring/admin/tracks.html">Edit track</a>
+        <div data-tabpanel="curriculum" class="ph-tabpanel">
+          <div class="ph-cluster ph-justify-between ph-mb-4">
+            <div><div class="ph-eyebrow">Track</div><h3 class="ph-mb-0">Bible &amp; Leadership</h3></div>
+            <a class="ph-btn ph-btn--ghost ph-btn--sm" href="../../curriculum-authoring/admin/tracks.html">Edit track</a>
           </div>
-          <div class="w-stack w-stack--sm">
-            <div class="w-card"><div class="w-card__body w-cluster w-justify-between">
-              <div><strong>Who Is Jesus?</strong><div class="w-muted">3 lessons · Introduction to the Gospels</div></div>
-              <span class="w-badge w-badge--success w-badge--dot">Complete</span>
+          <div class="ph-stack ph-stack--sm">
+            <div class="ph-card"><div class="ph-card__body ph-cluster ph-justify-between">
+              <div><strong>Who Is Jesus?</strong><div class="ph-muted">3 lessons · Introduction to the Gospels</div></div>
+              <span class="ph-badge ph-badge--success ph-badge--dot">Complete</span>
             </div></div>
-            <div class="w-card"><div class="w-card__body w-cluster w-justify-between">
-              <div><strong>Identity in Christ</strong><div class="w-muted">3 lessons · Who God says you are</div></div>
-              <span class="w-badge w-badge--success w-badge--dot">Complete</span>
+            <div class="ph-card"><div class="ph-card__body ph-cluster ph-justify-between">
+              <div><strong>Identity in Christ</strong><div class="ph-muted">3 lessons · Who God says you are</div></div>
+              <span class="ph-badge ph-badge--success ph-badge--dot">Complete</span>
             </div></div>
-            <div class="w-card w-card--lime"><div class="w-card__body w-cluster w-justify-between">
-              <div><strong>Servant Leadership</strong><div class="w-muted">3 lessons · The Towel and the Basin · Last Shall Be First · Leading Like Jesus</div></div>
-              <span class="w-badge w-badge--warning w-badge--dot">In progress</span>
+            <div class="ph-card ph-card--lime"><div class="ph-card__body ph-cluster ph-justify-between">
+              <div><strong>Servant Leadership</strong><div class="ph-muted">3 lessons · The Towel and the Basin · Last Shall Be First · Leading Like Jesus</div></div>
+              <span class="ph-badge ph-badge--warning ph-badge--dot">In progress</span>
             </div></div>
-            <div class="w-card"><div class="w-card__body w-cluster w-justify-between">
-              <div><strong>Leading a Small Group</strong><div class="w-muted">3 lessons · Facilitation basics</div></div>
-              <span class="w-badge">Upcoming</span>
+            <div class="ph-card"><div class="ph-card__body ph-cluster ph-justify-between">
+              <div><strong>Leading a Small Group</strong><div class="ph-muted">3 lessons · Facilitation basics</div></div>
+              <span class="ph-badge">Upcoming</span>
             </div></div>
-            <div class="w-card"><div class="w-card__body w-cluster w-justify-between">
-              <div><strong>Sharing Your Story</strong><div class="w-muted">3 lessons · Testimony &amp; evangelism</div></div>
-              <span class="w-badge">Upcoming</span>
+            <div class="ph-card"><div class="ph-card__body ph-cluster ph-justify-between">
+              <div><strong>Sharing Your Story</strong><div class="ph-muted">3 lessons · Testimony &amp; evangelism</div></div>
+              <span class="ph-badge">Upcoming</span>
             </div></div>
           </div>
         </div>
 
         <!-- ===== ATTENDANCE ===== -->
-        <div data-tabpanel="attendance" class="w-tabpanel">
-          <div class="w-cluster w-justify-between w-mb-4">
-            <h3 class="w-mb-0">Attendance</h3>
-            <a class="w-btn w-btn--ghost w-btn--sm" href="../../engagement/admin/attendance-admin.html">Full register</a>
+        <div data-tabpanel="attendance" class="ph-tabpanel">
+          <div class="ph-cluster ph-justify-between ph-mb-4">
+            <h3 class="ph-mb-0">Attendance</h3>
+            <a class="ph-btn ph-btn--ghost ph-btn--sm" href="../../engagement/admin/attendance-admin.html">Full register</a>
           </div>
-          <div class="w-alert w-alert--info w-mb-4">
-            <svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg>
+          <div class="ph-alert ph-alert--info ph-mb-4">
+            <svg class="ph-alert__icon ph-icon"><use href="#i-info"></use></svg>
             <div>Cohort attendance rate is <strong>86%</strong> across 12 sessions. Devon Grant has missed 6 sessions.</div>
           </div>
-          <div class="w-table-wrap">
-            <table class="w-table w-table--cards">
+          <div class="ph-table-wrap">
+            <table class="ph-table ph-table--cards">
               <thead><tr><th>Youth</th><th>Present</th><th>Absent</th><th>Rate</th></tr></thead>
               <tbody>
-                <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td><td data-label="Present">11</td><td data-label="Absent">1</td><td data-label="Rate">92%</td></tr>
-                <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td><td data-label="Present">10</td><td data-label="Absent">2</td><td data-label="Rate">83%</td></tr>
-                <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td><td data-label="Present">6</td><td data-label="Absent">6</td><td data-label="Rate">50%</td></tr>
-                <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td><td data-label="Present">12</td><td data-label="Absent">0</td><td data-label="Rate">100%</td></tr>
-                <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td><td data-label="Present">9</td><td data-label="Absent">3</td><td data-label="Rate">75%</td></tr>
+                <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td><td data-label="Present">11</td><td data-label="Absent">1</td><td data-label="Rate">92%</td></tr>
+                <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td><td data-label="Present">10</td><td data-label="Absent">2</td><td data-label="Rate">83%</td></tr>
+                <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td><td data-label="Present">6</td><td data-label="Absent">6</td><td data-label="Rate">50%</td></tr>
+                <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td><td data-label="Present">12</td><td data-label="Absent">0</td><td data-label="Rate">100%</td></tr>
+                <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td><td data-label="Present">9</td><td data-label="Absent">3</td><td data-label="Rate">75%</td></tr>
               </tbody>
             </table>
           </div>
@@ -198,58 +198,58 @@
   </main>
 
   <!-- ===== Add youth modal ===== -->
-  <div class="w-modal w-modal--sm" id="m-add-youth" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div><h2 class="w-modal__title">Add youth to Rexdale Fall '25</h2><p class="w-modal__sub">Enroll an existing youth or invite a new one.</p></div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+  <div class="ph-modal ph-modal--sm" id="m-add-youth" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div><h2 class="ph-modal__title">Add youth to Rexdale Fall '25</h2><p class="ph-modal__sub">Enroll an existing youth or invite a new one.</p></div>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-field">
-          <label class="w-label">Find youth</label>
-          <input class="w-input" type="search" placeholder="Search by name">
+      <div class="ph-modal__body">
+        <div class="ph-field">
+          <label class="ph-label">Find youth</label>
+          <input class="ph-input" type="search" placeholder="Search by name">
         </div>
-        <div class="w-stack w-stack--sm">
-          <label class="w-check"><input type="checkbox"><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span>Sofia Nguyen · New</span></label>
-          <label class="w-check"><input type="checkbox"><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span>Elijah Brown · 47%</span></label>
-          <label class="w-check"><input type="checkbox"><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span>Fatima Ali · 63%</span></label>
+        <div class="ph-stack ph-stack--sm">
+          <label class="ph-check"><input type="checkbox"><span class="ph-check__box"><svg class="ph-icon"><use href="#i-check"></use></svg></span><span>Sofia Nguyen · New</span></label>
+          <label class="ph-check"><input type="checkbox"><span class="ph-check__box"><svg class="ph-icon"><use href="#i-check"></use></svg></span><span>Elijah Brown · 47%</span></label>
+          <label class="ph-check"><input type="checkbox"><span class="ph-check__box"><svg class="ph-icon"><use href="#i-check"></use></svg></span><span>Fatima Ali · 63%</span></label>
         </div>
-        <div class="w-divider"></div>
-        <a class="w-btn w-btn--ghost w-btn--sm" href="../../authentication/admin/invitations.html"><svg class="w-icon"><use href="#i-mail"></use></svg>Invite a new youth by email</a>
+        <div class="ph-divider"></div>
+        <a class="ph-btn ph-btn--ghost ph-btn--sm" href="../../authentication/admin/invitations.html"><svg class="ph-icon"><use href="#i-mail"></use></svg>Invite a new youth by email</a>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="Youth added to cohort" data-toast-type="success">Add selected</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="Youth added to cohort" data-toast-type="success">Add selected</button>
       </div>
     </div>
   </div>
 
   <!-- ===== Edit cohort modal ===== -->
-  <div class="w-modal w-modal--sm" id="m-edit-cohort" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div><h2 class="w-modal__title">Edit cohort</h2></div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+  <div class="ph-modal ph-modal--sm" id="m-edit-cohort" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div><h2 class="ph-modal__title">Edit cohort</h2></div>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-field">
-          <label class="w-label">Cohort name</label>
-          <input class="w-input" value="Rexdale Fall '25">
+      <div class="ph-modal__body">
+        <div class="ph-field">
+          <label class="ph-label">Cohort name</label>
+          <input class="ph-input" value="Rexdale Fall '25">
         </div>
-        <div class="w-field">
-          <label class="w-label">Lead mentor</label>
-          <select class="w-select"><option>Marcus Bello</option><option>Grace Adeyemi</option><option>Danielle Osei</option></select>
+        <div class="ph-field">
+          <label class="ph-label">Lead mentor</label>
+          <select class="ph-select"><option>Marcus Bello</option><option>Grace Adeyemi</option><option>Danielle Osei</option></select>
         </div>
-        <div class="w-field w-mb-0">
-          <label class="w-label">Meeting location</label>
-          <input class="w-input" value="Rexdale Community Hub">
+        <div class="ph-field ph-mb-0">
+          <label class="ph-label">Meeting location</label>
+          <input class="ph-input" value="Rexdale Community Hub">
         </div>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="Cohort updated" data-toast-type="success">Save changes</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="Cohort updated" data-toast-type="success">Save changes</button>
       </div>
     </div>
   </div>

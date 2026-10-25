@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Messages · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
   <style>
     .msg-thread{display:flex;gap:12px;align-items:center;padding:12px;border-radius:var(--radius-lg);border:var(--border-width-hairline) solid var(--color-border-default);text-decoration:none;color:inherit}
@@ -21,25 +21,25 @@
     .msg-bubble__time{display:block;font-size:.68rem;color:var(--color-fg-muted);margin-top:4px}
     .msg-daysep{text-align:center;font-size:.72rem;color:var(--color-fg-muted);text-transform:uppercase;letter-spacing:.08em;margin:8px 0}
     .msg-compose{display:flex;gap:8px;align-items:flex-end;position:sticky;bottom:0;background:var(--color-bg-surface);padding-top:10px}
-    .msg-compose .w-textarea{flex:1;min-height:44px}
+    .msg-compose .ph-textarea{flex:1;min-height:44px}
   </style>
 </head>
 <body data-role="youth" data-active="messages" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-container--narrow w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-container--narrow ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Messages</div>
-          <h1 class="w-page__title">Chat with your mentor</h1>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Messages</div>
+          <h1 class="ph-page__title">Chat with your mentor</h1>
         </div>
       </div>
 
       <!-- ===== default ===== -->
       <div data-when-state="default">
-        <div class="w-stack w-stack--sm w-mb-6" aria-label="Conversations">
+        <div class="ph-stack ph-stack--sm ph-mb-6" aria-label="Conversations">
           <a class="msg-thread is-active" href="messages.html" aria-current="true">
-            <span class="w-avatar" data-name="Marcus Bello"></span>
+            <span class="ph-avatar" data-name="Marcus Bello"></span>
             <div class="msg-thread__body">
               <p class="msg-thread__name">Marcus Bello</p>
               <p class="msg-thread__preview">Proud of you for finishing that reflection.</p>
@@ -47,7 +47,7 @@
             <span class="msg-thread__time">9:12 AM</span>
           </a>
           <a class="msg-thread" href="messages.html">
-            <span class="w-avatar" data-name="Grace Adeyemi"></span>
+            <span class="ph-avatar" data-name="Grace Adeyemi"></span>
             <div class="msg-thread__body">
               <p class="msg-thread__name">Grace Adeyemi</p>
               <p class="msg-thread__preview">See you Saturday at the crew hangout!</p>
@@ -56,15 +56,15 @@
           </a>
         </div>
 
-        <div class="w-card">
-          <div class="w-card__header">
-            <div class="w-person">
-              <span class="w-avatar" data-name="Marcus Bello"></span>
-              <div><div class="w-person__name">Marcus Bello</div><div class="w-person__meta">Lead Mentor · Rexdale Fall '25</div></div>
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <div class="ph-person">
+              <span class="ph-avatar" data-name="Marcus Bello"></span>
+              <div><div class="ph-person__name">Marcus Bello</div><div class="ph-person__meta">Lead Mentor · Rexdale Fall '25</div></div>
             </div>
-            <span class="w-badge w-badge--success w-badge--dot">Online</span>
+            <span class="ph-badge ph-badge--success ph-badge--dot">Online</span>
           </div>
-          <div class="w-card__body">
+          <div class="ph-card__body">
             <div class="msg-log">
               <div class="msg-daysep">Yesterday</div>
               <div class="msg-bubble msg-bubble--in">Hey Jayden, how did “The Towel and the Basin” land for you?<span class="msg-bubble__time">Marcus · 6:40 PM</span></div>
@@ -75,38 +75,38 @@
               <div class="msg-bubble msg-bubble--out">Yes! I’ll be there. Thanks Marcus.<span class="msg-bubble__time">Me · 9:15 AM</span></div>
             </div>
           </div>
-          <div class="w-card__footer">
+          <div class="ph-card__footer">
             <form class="msg-compose" onsubmit="return false">
-              <button type="button" class="w-btn w-btn--ghost w-btn--icon" aria-label="Attach a file" data-toast="Attachments are coming soon."><svg class="w-icon"><use href="#i-paperclip"></use></svg></button>
-              <label class="w-hide" for="msg-text">Message</label>
-              <textarea class="w-textarea" id="msg-text" rows="1" placeholder="Message Marcus…"></textarea>
-              <button type="submit" class="w-btn w-btn--primary w-btn--icon" aria-label="Send message" data-toast="Message sent" data-toast-type="success"><svg class="w-icon"><use href="#i-send"></use></svg></button>
+              <button type="button" class="ph-btn ph-btn--ghost ph-btn--icon" aria-label="Attach a file" data-toast="Attachments are coming soon."><svg class="ph-icon"><use href="#i-paperclip"></use></svg></button>
+              <label class="ph-hide" for="msg-text">Message</label>
+              <textarea class="ph-textarea" id="msg-text" rows="1" placeholder="Message Marcus…"></textarea>
+              <button type="submit" class="ph-btn ph-btn--primary ph-btn--icon" aria-label="Send message" data-toast="Message sent" data-toast-type="success"><svg class="ph-icon"><use href="#i-send"></use></svg></button>
             </form>
           </div>
         </div>
       </div>
 
       <!-- ===== loading ===== -->
-      <div data-when-state="loading" class="w-hide">
-        <div class="w-card"><div class="w-card__body">
-          <span class="w-skeleton w-skeleton--text" style="width:55%"></span>
-          <div class="w-mt-4"></div>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <div class="w-mt-4"></div>
-          <span class="w-skeleton w-skeleton--block" style="width:70%"></span>
-          <div class="w-mt-4"></div>
-          <span class="w-skeleton w-skeleton--btn"></span>
+      <div data-when-state="loading" class="ph-hide">
+        <div class="ph-card"><div class="ph-card__body">
+          <span class="ph-skeleton ph-skeleton--text" style="width:55%"></span>
+          <div class="ph-mt-4"></div>
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <div class="ph-mt-4"></div>
+          <span class="ph-skeleton ph-skeleton--block" style="width:70%"></span>
+          <div class="ph-mt-4"></div>
+          <span class="ph-skeleton ph-skeleton--btn"></span>
         </div></div>
       </div>
 
       <!-- ===== empty ===== -->
-      <div data-when-state="empty" class="w-hide">
-        <div class="w-card">
-          <div class="w-empty">
-            <div class="w-empty__icon"><svg class="w-icon"><use href="#i-message-square"></use></svg></div>
-            <h3 class="w-empty__title">Say hi to your mentor</h3>
-            <p class="w-empty__text">Marcus Bello is here to cheer you on. Start the conversation.</p>
-            <button class="w-btn w-btn--primary" data-toast="Say hello!" data-toast-type="info">New message</button>
+      <div data-when-state="empty" class="ph-hide">
+        <div class="ph-card">
+          <div class="ph-empty">
+            <div class="ph-empty__icon"><svg class="ph-icon"><use href="#i-message-square"></use></svg></div>
+            <h3 class="ph-empty__title">Say hi to your mentor</h3>
+            <p class="ph-empty__text">Marcus Bello is here to cheer you on. Start the conversation.</p>
+            <button class="ph-btn ph-btn--primary" data-toast="Say hello!" data-toast-type="info">New message</button>
           </div>
         </div>
       </div>

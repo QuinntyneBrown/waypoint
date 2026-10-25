@@ -4,143 +4,143 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Audit log · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="audit" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Youth safety</div>
-          <h1 class="w-page__title">Audit log</h1>
-          <p class="w-page__sub">A tamper-evident record of who did what, when — for accountability and safeguarding.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Youth safety</div>
+          <h1 class="ph-page__title">Audit log</h1>
+          <p class="ph-page__sub">A tamper-evident record of who did what, when — for accountability and safeguarding.</p>
         </div>
-        <div class="w-page__actions">
-          <button class="w-btn w-btn--ghost"><svg class="w-icon"><use href="#i-download"></use></svg>Export CSV</button>
+        <div class="ph-page__actions">
+          <button class="ph-btn ph-btn--ghost"><svg class="ph-icon"><use href="#i-download"></use></svg>Export CSV</button>
         </div>
       </div>
 
       <!-- ===== DEFAULT ===== -->
       <div data-when-state="default">
 
-        <div class="w-card w-mb-4">
-          <div class="w-card__body">
-            <div class="w-grid w-grid--3">
-              <div class="w-field w-mb-0">
-                <label class="w-label">User</label>
-                <select class="w-select"><option>All users</option><option>Shawn Peters</option><option>Marcus Bello</option><option>Grace Adeyemi</option><option>Danielle Osei</option></select>
+        <div class="ph-card ph-mb-4">
+          <div class="ph-card__body">
+            <div class="ph-grid ph-grid--3">
+              <div class="ph-field ph-mb-0">
+                <label class="ph-label">User</label>
+                <select class="ph-select"><option>All users</option><option>Shawn Peters</option><option>Marcus Bello</option><option>Grace Adeyemi</option><option>Danielle Osei</option></select>
               </div>
-              <div class="w-field w-mb-0">
-                <label class="w-label">Action</label>
-                <select class="w-select"><option>All actions</option><option>Approved application</option><option>Logged check-in</option><option>Edited lesson</option><option>Signed in</option><option>Changed role</option></select>
+              <div class="ph-field ph-mb-0">
+                <label class="ph-label">Action</label>
+                <select class="ph-select"><option>All actions</option><option>Approved application</option><option>Logged check-in</option><option>Edited lesson</option><option>Signed in</option><option>Changed role</option></select>
               </div>
-              <div class="w-field w-mb-0">
-                <label class="w-label">Date range</label>
-                <input class="w-input" type="date" value="2026-07-01">
+              <div class="ph-field ph-mb-0">
+                <label class="ph-label">Date range</label>
+                <input class="ph-input" type="date" value="2026-07-01">
               </div>
             </div>
           </div>
         </div>
 
-        <div class="w-card">
-          <div class="w-table-wrap">
-            <table class="w-table w-table--cards">
+        <div class="ph-card">
+          <div class="ph-table-wrap">
+            <table class="ph-table ph-table--cards">
               <thead>
                 <tr><th>Who</th><th>Action</th><th>Target</th><th>When</th><th>Source</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td data-label="Who"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
-                  <td data-label="Action"><span class="w-badge w-badge--success w-badge--dot">Approved application</span></td>
+                  <td data-label="Who"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
+                  <td data-label="Action"><span class="ph-badge ph-badge--success ph-badge--dot">Approved application</span></td>
                   <td data-label="Target">Sofia Nguyen → Rexdale Fall '25</td>
                   <td data-label="When">Jul 17, 2026 · 2:41 PM</td>
-                  <td data-label="Source"><span class="w-muted">web · Toronto</span></td>
+                  <td data-label="Source"><span class="ph-muted">web · Toronto</span></td>
                 </tr>
                 <tr>
-                  <td data-label="Who"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
-                  <td data-label="Action"><span class="w-badge w-badge--info w-badge--dot">Logged check-in</span></td>
-                  <td data-label="Target"><span class="w-cluster w-gap-2">Devon Grant <svg class="w-icon"><use href="#i-lock"></use></svg> <span class="w-muted">private</span></span></td>
+                  <td data-label="Who"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
+                  <td data-label="Action"><span class="ph-badge ph-badge--info ph-badge--dot">Logged check-in</span></td>
+                  <td data-label="Target"><span class="ph-cluster ph-gap-2">Devon Grant <svg class="ph-icon"><use href="#i-lock"></use></svg> <span class="ph-muted">private</span></span></td>
                   <td data-label="When">Jul 17, 2026 · 11:08 AM</td>
-                  <td data-label="Source"><span class="w-muted">mobile</span></td>
+                  <td data-label="Source"><span class="ph-muted">mobile</span></td>
                 </tr>
                 <tr>
-                  <td data-label="Who"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Grace Adeyemi"></span>Grace Adeyemi</div></td>
-                  <td data-label="Action"><span class="w-badge w-badge--warning w-badge--dot">Edited lesson</span></td>
+                  <td data-label="Who"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Grace Adeyemi"></span>Grace Adeyemi</div></td>
+                  <td data-label="Action"><span class="ph-badge ph-badge--warning ph-badge--dot">Edited lesson</span></td>
                   <td data-label="Target">"Leading Like Jesus" · Servant Leadership</td>
                   <td data-label="When">Jul 16, 2026 · 5:22 PM</td>
-                  <td data-label="Source"><span class="w-muted">web</span></td>
+                  <td data-label="Source"><span class="ph-muted">web</span></td>
                 </tr>
                 <tr>
-                  <td data-label="Who"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Danielle Osei"></span>Danielle Osei</div></td>
-                  <td data-label="Action"><span class="w-badge w-badge--info w-badge--dot">Logged check-in</span></td>
-                  <td data-label="Target"><span class="w-cluster w-gap-2">Noah Williams <svg class="w-icon"><use href="#i-lock"></use></svg> <span class="w-muted">private</span></span></td>
+                  <td data-label="Who"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Danielle Osei"></span>Danielle Osei</div></td>
+                  <td data-label="Action"><span class="ph-badge ph-badge--info ph-badge--dot">Logged check-in</span></td>
+                  <td data-label="Target"><span class="ph-cluster ph-gap-2">Noah Williams <svg class="ph-icon"><use href="#i-lock"></use></svg> <span class="ph-muted">private</span></span></td>
                   <td data-label="When">Jul 16, 2026 · 1:15 PM</td>
-                  <td data-label="Source"><span class="w-muted">mobile</span></td>
+                  <td data-label="Source"><span class="ph-muted">mobile</span></td>
                 </tr>
                 <tr>
-                  <td data-label="Who"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
-                  <td data-label="Action"><span class="w-badge w-badge--ink w-badge--dot">Changed role</span></td>
+                  <td data-label="Who"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
+                  <td data-label="Action"><span class="ph-badge ph-badge--ink ph-badge--dot">Changed role</span></td>
                   <td data-label="Target">Marcus Bello → Lead Mentor</td>
                   <td data-label="When">Jul 15, 2026 · 9:03 AM</td>
-                  <td data-label="Source"><span class="w-muted">web · Toronto</span></td>
+                  <td data-label="Source"><span class="ph-muted">web · Toronto</span></td>
                 </tr>
                 <tr>
-                  <td data-label="Who"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
-                  <td data-label="Action"><span class="w-badge w-badge--outline w-badge--dot">Took attendance</span></td>
+                  <td data-label="Who"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
+                  <td data-label="Action"><span class="ph-badge ph-badge--outline ph-badge--dot">Took attendance</span></td>
                   <td data-label="Target">Rexdale Fall '25 · Week 6 session</td>
                   <td data-label="When">Jul 14, 2026 · 6:12 PM</td>
-                  <td data-label="Source"><span class="w-muted">mobile</span></td>
+                  <td data-label="Source"><span class="ph-muted">mobile</span></td>
                 </tr>
                 <tr>
-                  <td data-label="Who"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
-                  <td data-label="Action"><span class="w-badge w-badge--outline w-badge--dot">Signed in</span></td>
-                  <td data-label="Target"><span class="w-muted">—</span></td>
+                  <td data-label="Who"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Shawn Peters"></span>Shawn Peters</div></td>
+                  <td data-label="Action"><span class="ph-badge ph-badge--outline ph-badge--dot">Signed in</span></td>
+                  <td data-label="Target"><span class="ph-muted">—</span></td>
                   <td data-label="When">Jul 14, 2026 · 8:55 AM</td>
-                  <td data-label="Source"><span class="w-muted">web · Toronto</span></td>
+                  <td data-label="Source"><span class="ph-muted">web · Toronto</span></td>
                 </tr>
                 <tr>
-                  <td data-label="Who"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Grace Adeyemi"></span>Grace Adeyemi</div></td>
-                  <td data-label="Action"><span class="w-badge w-badge--success w-badge--dot">Awarded badge</span></td>
+                  <td data-label="Who"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Grace Adeyemi"></span>Grace Adeyemi</div></td>
+                  <td data-label="Action"><span class="ph-badge ph-badge--success ph-badge--dot">Awarded badge</span></td>
                   <td data-label="Target">Servant Heart → Jayden Alcantara</td>
                   <td data-label="When">Jul 12, 2026 · 3:47 PM</td>
-                  <td data-label="Source"><span class="w-muted">web</span></td>
+                  <td data-label="Source"><span class="ph-muted">web</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <div class="w-cluster w-cluster--between w-mt-4">
-          <span class="w-muted">Showing 8 of 214 events</span>
-          <button class="w-btn w-btn--ghost w-btn--sm"><svg class="w-icon"><use href="#i-refresh"></use></svg>Load more</button>
+        <div class="ph-cluster ph-cluster--between ph-mt-4">
+          <span class="ph-muted">Showing 8 of 214 events</span>
+          <button class="ph-btn ph-btn--ghost ph-btn--sm"><svg class="ph-icon"><use href="#i-refresh"></use></svg>Load more</button>
         </div>
 
       </div>
 
       <!-- ===== LOADING ===== -->
-      <div data-when-state="loading" class="w-hide">
-        <div class="w-card"><div class="w-card__body">
-          <span class="w-skeleton w-skeleton--title"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <div class="w-mt-4"></div>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <div class="w-mt-4"></div>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <div class="w-mt-4"></div>
-          <span class="w-skeleton w-skeleton--block"></span>
+      <div data-when-state="loading" class="ph-hide">
+        <div class="ph-card"><div class="ph-card__body">
+          <span class="ph-skeleton ph-skeleton--title"></span>
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <div class="ph-mt-4"></div>
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <div class="ph-mt-4"></div>
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <div class="ph-mt-4"></div>
+          <span class="ph-skeleton ph-skeleton--block"></span>
         </div></div>
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="w-hide">
-        <div class="w-card"><div class="w-empty">
-          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-shield"></use></svg></div>
-          <h3 class="w-empty__title">No activity for this filter</h3>
-          <p class="w-empty__text">No audit events match the users, actions or dates you selected. Try widening the range.</p>
-          <button class="w-btn w-btn--secondary"><svg class="w-icon"><use href="#i-refresh"></use></svg>Clear filters</button>
+      <div data-when-state="empty" class="ph-hide">
+        <div class="ph-card"><div class="ph-empty">
+          <div class="ph-empty__icon"><svg class="ph-icon"><use href="#i-shield"></use></svg></div>
+          <h3 class="ph-empty__title">No activity for this filter</h3>
+          <p class="ph-empty__text">No audit events match the users, actions or dates you selected. Try widening the range.</p>
+          <button class="ph-btn ph-btn--secondary"><svg class="ph-icon"><use href="#i-refresh"></use></svg>Clear filters</button>
         </div></div>
       </div>
 

@@ -4,22 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Take attendance · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="volunteer" data-active="attendance">
-  <main class="w-main">
-    <div class="w-container w-container--narrow w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-container--narrow ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Rexdale Fall '25 · Today 4:00 PM</div>
-          <h1 class="w-page__title">Take attendance</h1>
-          <p class="w-page__sub">Tap present or absent for each youth. Saves on this device, even offline.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Rexdale Fall '25 · Today 4:00 PM</div>
+          <h1 class="ph-page__title">Take attendance</h1>
+          <p class="ph-page__sub">Tap present or absent for each youth. Saves on this device, even offline.</p>
         </div>
-        <div class="w-page__actions">
-          <button class="w-btn w-btn--secondary" data-toggle-offline><svg class="w-icon"><use href="#i-wifi-off"></use></svg>Simulate offline</button>
+        <div class="ph-page__actions">
+          <button class="ph-btn ph-btn--secondary" data-toggle-offline><svg class="ph-icon"><use href="#i-wifi-off"></use></svg>Simulate offline</button>
         </div>
       </div>
 
@@ -27,109 +27,109 @@
       <div data-when-state="default">
 
         <!-- Offline note -->
-        <div class="w-alert w-alert--info w-mb-4">
-          <svg class="w-alert__icon w-icon"><use href="#i-wifi-off"></use></svg>
+        <div class="ph-alert ph-alert--info ph-mb-4">
+          <svg class="ph-alert__icon ph-icon"><use href="#i-wifi-off"></use></svg>
           <div>
-            <div class="w-alert__title">Works offline</div>
+            <div class="ph-alert__title">Works offline</div>
             No signal at the Hub? No problem — your marks are saved here and sync when you reconnect.
           </div>
         </div>
 
         <!-- Session summary -->
-        <div class="w-card w-mb-4">
-          <div class="w-card__body">
-            <div class="w-cluster w-cluster--between">
+        <div class="ph-card ph-mb-4">
+          <div class="ph-card__body">
+            <div class="ph-cluster ph-cluster--between">
               <div>
-                <div class="w-person__name">Servant Leadership — “Leading Like Jesus”</div>
-                <div class="w-person__meta"><svg class="w-icon"><use href="#i-map-pin"></use></svg> Rexdale Community Hub · Room 2 · with Marcus Bello</div>
+                <div class="ph-person__name">Servant Leadership — “Leading Like Jesus”</div>
+                <div class="ph-person__meta"><svg class="ph-icon"><use href="#i-map-pin"></use></svg> Rexdale Community Hub · Room 2 · with Marcus Bello</div>
               </div>
-              <span class="w-badge w-badge--lime">Thu Jul 17</span>
+              <span class="ph-badge ph-badge--lime">Thu Jul 17</span>
             </div>
           </div>
         </div>
 
         <!-- Quick mark -->
-        <div class="w-cluster w-justify-between w-mb-4">
-          <span class="w-muted">Roster · 8 youth</span>
-          <button class="w-btn w-btn--subtle w-btn--sm" data-toast="Marked everyone present" data-toast-type="info"><svg class="w-icon"><use href="#i-check-circle"></use></svg>All present</button>
+        <div class="ph-cluster ph-justify-between ph-mb-4">
+          <span class="ph-muted">Roster · 8 youth</span>
+          <button class="ph-btn ph-btn--subtle ph-btn--sm" data-toast="Marked everyone present" data-toast-type="info"><svg class="ph-icon"><use href="#i-check-circle"></use></svg>All present</button>
         </div>
 
         <!-- Roster: present/absent toggles -->
-        <div class="w-card">
-          <div class="w-card__body">
-            <div class="w-table-wrap">
-              <table class="w-table w-table--cards">
+        <div class="ph-card">
+          <div class="ph-card__body">
+            <div class="ph-table-wrap">
+              <table class="ph-table ph-table--cards">
                 <thead><tr><th>Youth</th><th>Attendance</th></tr></thead>
                 <tbody>
                   <tr>
-                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
+                    <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td>
                     <td data-label="Attendance">
-                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Jayden Alcantara">
-                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="ph-segment" role="radiogroup" aria-label="Attendance for Jayden Alcantara">
+                        <button class="ph-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="ph-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
+                    <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td>
                     <td data-label="Attendance">
-                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Amara Okafor">
-                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="ph-segment" role="radiogroup" aria-label="Attendance for Amara Okafor">
+                        <button class="ph-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="ph-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
+                    <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td>
                     <td data-label="Attendance">
-                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Priya Sharma">
-                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="ph-segment" role="radiogroup" aria-label="Attendance for Priya Sharma">
+                        <button class="ph-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="ph-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
+                    <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Malik Johnson"></span>Malik Johnson</div></td>
                     <td data-label="Attendance">
-                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Malik Johnson">
-                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="ph-segment" role="radiogroup" aria-label="Attendance for Malik Johnson">
+                        <button class="ph-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="ph-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Elijah Brown"></span>Elijah Brown</div></td>
+                    <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Elijah Brown"></span>Elijah Brown</div></td>
                     <td data-label="Attendance">
-                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Elijah Brown">
-                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="ph-segment" role="radiogroup" aria-label="Attendance for Elijah Brown">
+                        <button class="ph-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="ph-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Fatima Ali"></span>Fatima Ali</div></td>
+                    <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Fatima Ali"></span>Fatima Ali</div></td>
                     <td data-label="Attendance">
-                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Fatima Ali">
-                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="ph-segment" role="radiogroup" aria-label="Attendance for Fatima Ali">
+                        <button class="ph-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="ph-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span>Devon Grant <span class="w-badge w-badge--error w-badge--dot">At risk</span></div></td>
+                    <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Devon Grant"></span>Devon Grant <span class="ph-badge ph-badge--error ph-badge--dot">At risk</span></div></td>
                     <td data-label="Attendance">
-                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Devon Grant">
-                        <button class="w-segment__item" role="radio" aria-checked="false">Present</button>
-                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Absent</button>
+                      <div class="ph-segment" role="radiogroup" aria-label="Attendance for Devon Grant">
+                        <button class="ph-segment__item" role="radio" aria-checked="false">Present</button>
+                        <button class="ph-segment__item is-active" role="radio" aria-checked="true">Absent</button>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Zara Mensah"></span>Zara Mensah</div></td>
+                    <td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Zara Mensah"></span>Zara Mensah</div></td>
                     <td data-label="Attendance">
-                      <div class="w-segment" role="radiogroup" aria-label="Attendance for Zara Mensah">
-                        <button class="w-segment__item is-active" role="radio" aria-checked="true">Present</button>
-                        <button class="w-segment__item" role="radio" aria-checked="false">Absent</button>
+                      <div class="ph-segment" role="radiogroup" aria-label="Attendance for Zara Mensah">
+                        <button class="ph-segment__item is-active" role="radio" aria-checked="true">Present</button>
+                        <button class="ph-segment__item" role="radio" aria-checked="false">Absent</button>
                       </div>
                     </td>
                   </tr>
@@ -140,11 +140,11 @@
         </div>
 
         <!-- Sticky save bar -->
-        <div class="w-card w-mt-4" style="position:sticky;bottom:12px">
-          <div class="w-card__body">
-            <div class="w-cluster w-justify-between">
-              <span class="w-muted"><strong>7 present</strong> · 1 absent</span>
-              <a class="w-btn w-btn--primary" href="home.html" data-toast="Attendance saved" data-toast-type="success" data-toast-title="Rexdale — Thu 4pm"><svg class="w-icon"><use href="#i-check"></use></svg>Save attendance</a>
+        <div class="ph-card ph-mt-4" style="position:sticky;bottom:12px">
+          <div class="ph-card__body">
+            <div class="ph-cluster ph-justify-between">
+              <span class="ph-muted"><strong>7 present</strong> · 1 absent</span>
+              <a class="ph-btn ph-btn--primary" href="home.html" data-toast="Attendance saved" data-toast-type="success" data-toast-title="Rexdale — Thu 4pm"><svg class="ph-icon"><use href="#i-check"></use></svg>Save attendance</a>
             </div>
           </div>
         </div>
@@ -152,27 +152,27 @@
       </div>
 
       <!-- ===== loading ===== -->
-      <div data-when-state="loading" class="w-hide">
-        <div class="w-card w-mb-4"><div class="w-card__body">
-          <span class="w-skeleton w-skeleton--title"></span>
-          <span class="w-skeleton w-skeleton--text"></span>
+      <div data-when-state="loading" class="ph-hide">
+        <div class="ph-card ph-mb-4"><div class="ph-card__body">
+          <span class="ph-skeleton ph-skeleton--title"></span>
+          <span class="ph-skeleton ph-skeleton--text"></span>
         </div></div>
-        <div class="w-card"><div class="w-card__body">
-          <span class="w-skeleton w-skeleton--text"></span>
-          <span class="w-skeleton w-skeleton--text" style="width:85%"></span>
-          <span class="w-skeleton w-skeleton--text" style="width:70%"></span>
-          <div class="w-mt-4"></div>
-          <span class="w-skeleton w-skeleton--block"></span>
+        <div class="ph-card"><div class="ph-card__body">
+          <span class="ph-skeleton ph-skeleton--text"></span>
+          <span class="ph-skeleton ph-skeleton--text" style="width:85%"></span>
+          <span class="ph-skeleton ph-skeleton--text" style="width:70%"></span>
+          <div class="ph-mt-4"></div>
+          <span class="ph-skeleton ph-skeleton--block"></span>
         </div></div>
       </div>
 
       <!-- ===== empty ===== -->
-      <div data-when-state="empty" class="w-hide">
-        <div class="w-card"><div class="w-empty">
-          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-calendar"></use></svg></div>
-          <h3 class="w-empty__title">No session assigned today</h3>
-          <p class="w-empty__text">You don’t have a session to take attendance for right now. Check your schedule for upcoming assignments.</p>
-          <a class="w-btn w-btn--primary" href="schedule.html"><svg class="w-icon"><use href="#i-calendar"></use></svg>View schedule</a>
+      <div data-when-state="empty" class="ph-hide">
+        <div class="ph-card"><div class="ph-empty">
+          <div class="ph-empty__icon"><svg class="ph-icon"><use href="#i-calendar"></use></svg></div>
+          <h3 class="ph-empty__title">No session assigned today</h3>
+          <p class="ph-empty__text">You don’t have a session to take attendance for right now. Check your schedule for upcoming assignments.</p>
+          <a class="ph-btn ph-btn--primary" href="schedule.html"><svg class="ph-icon"><use href="#i-calendar"></use></svg>View schedule</a>
         </div></div>
       </div>
 

@@ -4,50 +4,50 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Attendance · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="attendance" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Attendance</div>
-          <h1 class="w-page__title">Attendance</h1>
-          <p class="w-page__sub">Manage attendance across every cohort — review recent sessions and follow up on gaps.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Attendance</div>
+          <h1 class="ph-page__title">Attendance</h1>
+          <p class="ph-page__sub">Manage attendance across every cohort — review recent sessions and follow up on gaps.</p>
         </div>
-        <div class="w-page__actions">
-          <a class="w-btn w-btn--ghost" href="../../reporting-and-data/admin/report-attendance.html"><svg class="w-icon"><use href="#i-bar-chart"></use></svg>Attendance report</a>
-          <button class="w-btn w-btn--primary" data-open-modal="m-add-session"><svg class="w-icon"><use href="#i-plus"></use></svg>Add session</button>
+        <div class="ph-page__actions">
+          <a class="ph-btn ph-btn--ghost" href="../../reporting-and-data/admin/report-attendance.html"><svg class="ph-icon"><use href="#i-bar-chart"></use></svg>Attendance report</a>
+          <button class="ph-btn ph-btn--primary" data-open-modal="m-add-session"><svg class="ph-icon"><use href="#i-plus"></use></svg>Add session</button>
         </div>
       </div>
 
       <!-- filter bar -->
-      <div class="w-card w-mb-4">
-        <div class="w-card__body">
-          <div class="w-grid w-grid--3">
-            <div class="w-field w-mb-0">
-              <label class="w-label" for="f-cohort">Cohort</label>
-              <select class="w-select" id="f-cohort">
+      <div class="ph-card ph-mb-4">
+        <div class="ph-card__body">
+          <div class="ph-grid ph-grid--3">
+            <div class="ph-field ph-mb-0">
+              <label class="ph-label" for="f-cohort">Cohort</label>
+              <select class="ph-select" id="f-cohort">
                 <option selected>All cohorts</option>
                 <option>Rexdale Fall '25</option>
                 <option>Warden Winter '26</option>
                 <option>St. Clair Spring '26</option>
               </select>
             </div>
-            <div class="w-field w-mb-0">
-              <label class="w-label" for="f-when">When</label>
-              <select class="w-select" id="f-when">
+            <div class="ph-field ph-mb-0">
+              <label class="ph-label" for="f-when">When</label>
+              <select class="ph-select" id="f-when">
                 <option selected>Last 30 days</option>
                 <option>This week</option>
                 <option>This term</option>
               </select>
             </div>
-            <div class="w-field w-mb-0">
-              <label class="w-label" for="f-status">Status</label>
-              <select class="w-select" id="f-status">
+            <div class="ph-field ph-mb-0">
+              <label class="ph-label" for="f-status">Status</label>
+              <select class="ph-select" id="f-status">
                 <option selected>All sessions</option>
                 <option>Needs review</option>
                 <option>Low attendance</option>
@@ -61,24 +61,24 @@
       <div data-when-state="default">
 
         <!-- overview cards -->
-        <div class="w-grid w-grid--4 w-mb-4">
-          <div class="w-card w-statcard"><div class="w-statcard__label">Overall rate</div><div class="w-statcard__value">89%</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+2%</div></div>
-          <div class="w-card w-statcard"><div class="w-statcard__label">Sessions this week</div><div class="w-statcard__value">3</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-calendar"></use></svg>1 today</div></div>
-          <div class="w-card w-statcard"><div class="w-statcard__label">Needs review</div><div class="w-statcard__value">1</div><div class="w-statcard__delta is-down"><svg class="w-icon"><use href="#i-alert-triangle"></use></svg>not yet marked</div></div>
-          <div class="w-card w-statcard"><div class="w-statcard__label">Follow-ups</div><div class="w-statcard__value">2</div><div class="w-statcard__delta is-down"><svg class="w-icon"><use href="#i-flag"></use></svg>chronic absence</div></div>
+        <div class="ph-grid ph-grid--4 ph-mb-4">
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Overall rate</div><div class="ph-statcard__value">89%</div><div class="ph-statcard__delta is-up"><svg class="ph-icon"><use href="#i-trending-up"></use></svg>+2%</div></div>
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Sessions this week</div><div class="ph-statcard__value">3</div><div class="ph-statcard__delta is-up"><svg class="ph-icon"><use href="#i-calendar"></use></svg>1 today</div></div>
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Needs review</div><div class="ph-statcard__value">1</div><div class="ph-statcard__delta is-down"><svg class="ph-icon"><use href="#i-alert-triangle"></use></svg>not yet marked</div></div>
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Follow-ups</div><div class="ph-statcard__value">2</div><div class="ph-statcard__delta is-down"><svg class="ph-icon"><use href="#i-flag"></use></svg>chronic absence</div></div>
         </div>
 
-        <div class="w-alert w-alert--warning w-mb-4">
-          <svg class="w-alert__icon w-icon"><use href="#i-alert-triangle"></use></svg>
-          <div><div class="w-alert__title">1 session needs attendance</div>Thursday’s Rexdale Fall '25 session hasn’t been marked. <a href="#" data-open-modal="m-session">Open session</a> to record it.</div>
+        <div class="ph-alert ph-alert--warning ph-mb-4">
+          <svg class="ph-alert__icon ph-icon"><use href="#i-alert-triangle"></use></svg>
+          <div><div class="ph-alert__title">1 session needs attendance</div>Thursday’s Rexdale Fall '25 session hasn’t been marked. <a href="#" data-open-modal="m-session">Open session</a> to record it.</div>
         </div>
 
         <!-- recent sessions table -->
-        <div class="w-card w-mb-4">
-          <div class="w-card__header"><h3 class="w-card__title">Recent sessions</h3><span class="w-muted w-text-sm">Across all cohorts</span></div>
-          <div class="w-card__body">
-            <div class="w-table-wrap">
-              <table class="w-table w-table--cards">
+        <div class="ph-card ph-mb-4">
+          <div class="ph-card__header"><h3 class="ph-card__title">Recent sessions</h3><span class="ph-muted ph-text-sm">Across all cohorts</span></div>
+          <div class="ph-card__body">
+            <div class="ph-table-wrap">
+              <table class="ph-table ph-table--cards">
                 <thead><tr><th>Date</th><th>Cohort</th><th>Lesson</th><th>Present</th><th>Rate</th><th>Status</th><th></th></tr></thead>
                 <tbody>
                   <tr>
@@ -87,44 +87,44 @@
                     <td data-label="Lesson">Servant Leadership — “Last Shall Be First”</td>
                     <td data-label="Present">—</td>
                     <td data-label="Rate">—</td>
-                    <td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">Needs review</span></td>
-                    <td data-label=""><button class="w-btn w-btn--secondary w-btn--sm" data-open-modal="m-session">Open</button></td>
+                    <td data-label="Status"><span class="ph-badge ph-badge--warning ph-badge--dot">Needs review</span></td>
+                    <td data-label=""><button class="ph-btn ph-btn--secondary ph-btn--sm" data-open-modal="m-session">Open</button></td>
                   </tr>
                   <tr>
                     <td data-label="Date">Wed Jul 15</td>
                     <td data-label="Cohort">St. Clair Spring '26</td>
                     <td data-label="Lesson">Who Is Jesus?</td>
                     <td data-label="Present">8/9</td>
-                    <td data-label="Rate"><span class="w-badge w-badge--success w-badge--dot">89%</span></td>
-                    <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Complete</span></td>
-                    <td data-label=""><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-session">View</button></td>
+                    <td data-label="Rate"><span class="ph-badge ph-badge--success ph-badge--dot">89%</span></td>
+                    <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Complete</span></td>
+                    <td data-label=""><button class="ph-btn ph-btn--ghost ph-btn--sm" data-open-modal="m-session">View</button></td>
                   </tr>
                   <tr>
                     <td data-label="Date">Tue Jul 14</td>
                     <td data-label="Cohort">Warden Winter '26</td>
                     <td data-label="Lesson">Identity in Christ</td>
                     <td data-label="Present">9/9</td>
-                    <td data-label="Rate"><span class="w-badge w-badge--success w-badge--dot">100%</span></td>
-                    <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Complete</span></td>
-                    <td data-label=""><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-session">View</button></td>
+                    <td data-label="Rate"><span class="ph-badge ph-badge--success ph-badge--dot">100%</span></td>
+                    <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Complete</span></td>
+                    <td data-label=""><button class="ph-btn ph-btn--ghost ph-btn--sm" data-open-modal="m-session">View</button></td>
                   </tr>
                   <tr>
                     <td data-label="Date">Thu Jul 9</td>
                     <td data-label="Cohort">Rexdale Fall '25</td>
                     <td data-label="Lesson">Servant Leadership — “The Towel and the Basin”</td>
                     <td data-label="Present">6/8</td>
-                    <td data-label="Rate"><span class="w-badge w-badge--warning w-badge--dot">75%</span></td>
-                    <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Complete</span></td>
-                    <td data-label=""><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-session">View</button></td>
+                    <td data-label="Rate"><span class="ph-badge ph-badge--warning ph-badge--dot">75%</span></td>
+                    <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Complete</span></td>
+                    <td data-label=""><button class="ph-btn ph-btn--ghost ph-btn--sm" data-open-modal="m-session">View</button></td>
                   </tr>
                   <tr>
                     <td data-label="Date">Thu Jul 2</td>
                     <td data-label="Cohort">Rexdale Fall '25</td>
                     <td data-label="Lesson">Leading a Small Group</td>
                     <td data-label="Present">5/8</td>
-                    <td data-label="Rate"><span class="w-badge w-badge--error w-badge--dot">63%</span></td>
-                    <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Complete</span></td>
-                    <td data-label=""><button class="w-btn w-btn--ghost w-btn--sm" data-open-modal="m-session">View</button></td>
+                    <td data-label="Rate"><span class="ph-badge ph-badge--error ph-badge--dot">63%</span></td>
+                    <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Complete</span></td>
+                    <td data-label=""><button class="ph-btn ph-btn--ghost ph-btn--sm" data-open-modal="m-session">View</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -133,66 +133,66 @@
         </div>
 
         <!-- per-cohort summary -->
-        <div class="w-card">
-          <div class="w-card__header"><h3 class="w-card__title">Per-cohort summary</h3></div>
-          <div class="w-card__body">
-            <div class="w-table-wrap">
-              <table class="w-table w-table--cards">
+        <div class="ph-card">
+          <div class="ph-card__header"><h3 class="ph-card__title">Per-cohort summary</h3></div>
+          <div class="ph-card__body">
+            <div class="ph-table-wrap">
+              <table class="ph-table ph-table--cards">
                 <thead><tr><th>Cohort</th><th>Mentor</th><th>Sessions</th><th>Avg rate</th><th>Trend</th></tr></thead>
                 <tbody>
                   <tr>
-                    <td data-label="Cohort"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Warden Winter"></span>Warden Winter '26</div></td>
+                    <td data-label="Cohort"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Warden Winter"></span>Warden Winter '26</div></td>
                     <td data-label="Mentor">Danielle Osei</td>
                     <td data-label="Sessions">12</td>
-                    <td data-label="Avg rate"><div class="w-progress__row"><div class="w-progress"><div class="w-progress__fill" style="--val:93%"></div></div><span class="w-progress__num">93%</span></div></td>
-                    <td data-label="Trend"><span class="w-badge w-badge--success w-badge--dot">Rising</span></td>
+                    <td data-label="Avg rate"><div class="ph-progress__row"><div class="ph-progress"><div class="ph-progress__fill" style="--val:93%"></div></div><span class="ph-progress__num">93%</span></div></td>
+                    <td data-label="Trend"><span class="ph-badge ph-badge--success ph-badge--dot">Rising</span></td>
                   </tr>
                   <tr>
-                    <td data-label="Cohort"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="St Clair Spring"></span>St. Clair Spring '26</div></td>
+                    <td data-label="Cohort"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="St Clair Spring"></span>St. Clair Spring '26</div></td>
                     <td data-label="Mentor">Grace Adeyemi</td>
                     <td data-label="Sessions">10</td>
-                    <td data-label="Avg rate"><div class="w-progress__row"><div class="w-progress"><div class="w-progress__fill" style="--val:90%"></div></div><span class="w-progress__num">90%</span></div></td>
-                    <td data-label="Trend"><span class="w-badge w-badge--success w-badge--dot">Steady</span></td>
+                    <td data-label="Avg rate"><div class="ph-progress__row"><div class="ph-progress"><div class="ph-progress__fill" style="--val:90%"></div></div><span class="ph-progress__num">90%</span></div></td>
+                    <td data-label="Trend"><span class="ph-badge ph-badge--success ph-badge--dot">Steady</span></td>
                   </tr>
                   <tr>
-                    <td data-label="Cohort"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Rexdale Fall"></span>Rexdale Fall '25</div></td>
+                    <td data-label="Cohort"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Rexdale Fall"></span>Rexdale Fall '25</div></td>
                     <td data-label="Mentor">Marcus Bello</td>
                     <td data-label="Sessions">14</td>
-                    <td data-label="Avg rate"><div class="w-progress__row"><div class="w-progress"><div class="w-progress__fill" style="--val:86%"></div></div><span class="w-progress__num">86%</span></div></td>
-                    <td data-label="Trend"><span class="w-badge w-badge--warning w-badge--dot">Watch</span></td>
+                    <td data-label="Avg rate"><div class="ph-progress__row"><div class="ph-progress"><div class="ph-progress__fill" style="--val:86%"></div></div><span class="ph-progress__num">86%</span></div></td>
+                    <td data-label="Trend"><span class="ph-badge ph-badge--warning ph-badge--dot">Watch</span></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="w-card__footer"><a class="w-btn w-btn--ghost w-btn--sm" href="../../reporting-and-data/admin/report-attendance.html"><svg class="w-icon"><use href="#i-bar-chart"></use></svg>Full attendance report</a></div>
+          <div class="ph-card__footer"><a class="ph-btn ph-btn--ghost ph-btn--sm" href="../../reporting-and-data/admin/report-attendance.html"><svg class="ph-icon"><use href="#i-bar-chart"></use></svg>Full attendance report</a></div>
         </div>
 
       </div>
 
       <!-- ===== LOADING ===== -->
-      <div data-when-state="loading" class="w-hide">
-        <div class="w-grid w-grid--4 w-mb-4">
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
-          <div class="w-card"><div class="w-card__body"><span class="w-skeleton w-skeleton--text"></span><span class="w-skeleton w-skeleton--title"></span></div></div>
+      <div data-when-state="loading" class="ph-hide">
+        <div class="ph-grid ph-grid--4 ph-mb-4">
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
+          <div class="ph-card"><div class="ph-card__body"><span class="ph-skeleton ph-skeleton--text"></span><span class="ph-skeleton ph-skeleton--title"></span></div></div>
         </div>
-        <div class="w-card"><div class="w-card__body">
-          <span class="w-skeleton w-skeleton--title"></span>
-          <span class="w-skeleton w-skeleton--text"></span>
-          <span class="w-skeleton w-skeleton--text" style="width:80%"></span>
-          <span class="w-skeleton w-skeleton--text" style="width:65%"></span>
+        <div class="ph-card"><div class="ph-card__body">
+          <span class="ph-skeleton ph-skeleton--title"></span>
+          <span class="ph-skeleton ph-skeleton--text"></span>
+          <span class="ph-skeleton ph-skeleton--text" style="width:80%"></span>
+          <span class="ph-skeleton ph-skeleton--text" style="width:65%"></span>
         </div></div>
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="w-hide">
-        <div class="w-card"><div class="w-empty">
-          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-clipboard-check"></use></svg></div>
-          <h3 class="w-empty__title">No sessions yet</h3>
-          <p class="w-empty__text">Nothing has been scheduled for these filters. Add a session to start tracking attendance.</p>
-          <button class="w-btn w-btn--primary" data-open-modal="m-add-session"><svg class="w-icon"><use href="#i-plus"></use></svg>Add session</button>
+      <div data-when-state="empty" class="ph-hide">
+        <div class="ph-card"><div class="ph-empty">
+          <div class="ph-empty__icon"><svg class="ph-icon"><use href="#i-clipboard-check"></use></svg></div>
+          <h3 class="ph-empty__title">No sessions yet</h3>
+          <p class="ph-empty__text">Nothing has been scheduled for these filters. Add a session to start tracking attendance.</p>
+          <button class="ph-btn ph-btn--primary" data-open-modal="m-add-session"><svg class="ph-icon"><use href="#i-plus"></use></svg>Add session</button>
         </div></div>
       </div>
 
@@ -200,71 +200,71 @@
   </main>
 
   <!-- ===== modal: view/open session ===== -->
-  <div class="w-modal w-modal--lg" id="m-session" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div><h2 class="w-modal__title">Rexdale — Thu Jul 16</h2><p class="w-modal__sub">Servant Leadership · “Last Shall Be First” (Mark 10) · Marcus Bello</p></div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+  <div class="ph-modal ph-modal--lg" id="m-session" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div><h2 class="ph-modal__title">Rexdale — Thu Jul 16</h2><p class="ph-modal__sub">Servant Leadership · “Last Shall Be First” (Mark 10) · Marcus Bello</p></div>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-cluster w-justify-between w-mb-4">
-          <span class="w-muted">Present <strong>7</strong> · Late <strong>0</strong> · Excused <strong>0</strong> · Absent <strong>1</strong></span>
-          <span class="w-badge w-badge--warning w-badge--dot">Not yet saved</span>
+      <div class="ph-modal__body">
+        <div class="ph-cluster ph-justify-between ph-mb-4">
+          <span class="ph-muted">Present <strong>7</strong> · Late <strong>0</strong> · Excused <strong>0</strong> · Absent <strong>1</strong></span>
+          <span class="ph-badge ph-badge--warning ph-badge--dot">Not yet saved</span>
         </div>
-        <div class="w-table-wrap">
-          <table class="w-table w-table--cards w-table--compact">
+        <div class="ph-table-wrap">
+          <table class="ph-table ph-table--cards ph-table--compact">
             <thead><tr><th>Youth</th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td><td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Present</span></td></tr>
-              <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td><td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Present</span></td></tr>
-              <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td><td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Present</span></td></tr>
-              <tr><td data-label="Youth"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td><td data-label="Status"><span class="w-badge w-badge--error w-badge--dot">Absent</span></td></tr>
+              <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</div></td><td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Present</span></td></tr>
+              <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</div></td><td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Present</span></td></tr>
+              <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</div></td><td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Present</span></td></tr>
+              <tr><td data-label="Youth"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Devon Grant"></span>Devon Grant</div></td><td data-label="Status"><span class="ph-badge ph-badge--error ph-badge--dot">Absent</span></td></tr>
             </tbody>
           </table>
         </div>
-        <div class="w-alert w-alert--info w-mt-4"><svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg><div>Mentors record attendance from their own device. You can edit and save here on their behalf.</div></div>
+        <div class="ph-alert ph-alert--info ph-mt-4"><svg class="ph-alert__icon ph-icon"><use href="#i-info"></use></svg><div>Mentors record attendance from their own device. You can edit and save here on their behalf.</div></div>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Close</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="Attendance saved" data-toast-type="success" data-toast-title="Rexdale — Thu Jul 16"><svg class="w-icon"><use href="#i-check"></use></svg>Save attendance</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Close</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="Attendance saved" data-toast-type="success" data-toast-title="Rexdale — Thu Jul 16"><svg class="ph-icon"><use href="#i-check"></use></svg>Save attendance</button>
       </div>
     </div>
   </div>
 
   <!-- ===== modal: add session ===== -->
-  <div class="w-modal w-modal--sm" id="m-add-session" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div><h2 class="w-modal__title">Add session</h2><p class="w-modal__sub">Schedule a meeting to track attendance.</p></div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+  <div class="ph-modal ph-modal--sm" id="m-add-session" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div><h2 class="ph-modal__title">Add session</h2><p class="ph-modal__sub">Schedule a meeting to track attendance.</p></div>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-field">
-          <label class="w-label" for="f-scohort">Cohort <span class="w-label__req">*</span></label>
-          <select class="w-select" id="f-scohort">
+      <div class="ph-modal__body">
+        <div class="ph-field">
+          <label class="ph-label" for="f-scohort">Cohort <span class="ph-label__req">*</span></label>
+          <select class="ph-select" id="f-scohort">
             <option>Rexdale Fall '25</option>
             <option>Warden Winter '26</option>
             <option>St. Clair Spring '26</option>
           </select>
         </div>
-        <div class="w-field">
-          <label class="w-label" for="f-sdate">Date <span class="w-label__req">*</span></label>
-          <input class="w-input" id="f-sdate" type="date" value="2026-07-23">
+        <div class="ph-field">
+          <label class="ph-label" for="f-sdate">Date <span class="ph-label__req">*</span></label>
+          <input class="ph-input" id="f-sdate" type="date" value="2026-07-23">
         </div>
-        <div class="w-field w-mb-0">
-          <label class="w-label" for="f-slesson">Lesson</label>
-          <select class="w-select" id="f-slesson">
+        <div class="ph-field ph-mb-0">
+          <label class="ph-label" for="f-slesson">Lesson</label>
+          <select class="ph-select" id="f-slesson">
             <option>Servant Leadership — “Leading Like Jesus”</option>
             <option>Leading a Small Group</option>
             <option>Sharing Your Story</option>
           </select>
         </div>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="Session added" data-toast-type="success"><svg class="w-icon"><use href="#i-check"></use></svg>Add session</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="Session added" data-toast-type="success"><svg class="ph-icon"><use href="#i-check"></use></svg>Add session</button>
       </div>
     </div>
   </div>
