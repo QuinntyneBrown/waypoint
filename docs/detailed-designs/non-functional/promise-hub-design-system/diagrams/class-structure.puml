@@ -1,0 +1,38 @@
+@startuml
+title Class structure — Adopt the PromiseHub design system
+skinparam classAttributeIconSize 0
+class Button <<Component>> {
+  +variant: ButtonVariant
+  +size: ButtonSize
+  +busy: boolean
+  selector = "button[ph-button], a[ph-button]"
+}
+class AccessibleDialog <<Directive>> {
+  +escape: output "phDialogEscape"
+  selector = "[phAccessibleDialog]"
+}
+class Shell <<Component>> {
+  selector = "ph-shell"
+}
+class DisplayPreferencesService <<Service>> {
+  +apply(preferences)
+  sets data-theme, ph-a11y-*, --ph-text-scale
+}
+class "tokens.css" as Tokens <<Stylesheet>> {
+  PromiseHub primitives and semantic tokens
+  light, dark, preference overrides
+  Waypoint extensions
+}
+class "core.css" as Core <<Stylesheet>> {
+  --ph-* aliases
+  ph-* layout utilities and shell
+}
+class "button.css" as ButtonCss <<Stylesheet>>
+Button ..> ButtonCss : styled by
+Shell ..> Core : styled by
+ButtonCss ..> Core : reads --ph-*
+ButtonCss ..> Tokens : reads --color-*
+Core ..> Tokens : aliases
+DisplayPreferencesService --> Tokens : selects theme
+AccessibleDialog --> Shell : used inside screens of
+@enduml

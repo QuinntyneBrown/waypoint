@@ -66,4 +66,4 @@ Each item below is the **canonical rule now stated in the owning subsystem's L2*
 - **Offline attendance** (`NFR` L2-NFR-004) underpins ENGAGE and VOLUNTEER attendance capture. Offline is limited to attendance (see `out-of-scope.md`).
 - **Near-real-time delivery** (`NFR` L2-NFR-005) delivers **notifications and messages** to LEARN, MENTOR, ENGAGE, and ADMIN clients. Broader live domain-event fan-out is out of scope (see `out-of-scope.md`).
 - **Data export** (`REPORT` L2-REPORT-003) — **CSV/PDF** — is invoked by the ADMIN progress board and ENGAGE attendance history.
-- **Responsive** (`NFR` L2-NFR-009) and **accessibility** (`NFR` L2-NFR-010) apply to every UI-facing subsystem.
+- **Responsive** (`NFR` L2-NFR-009), **accessibility** (`NFR` L2-NFR-010) and the **PromiseHub design system** (`NFR` L2-NFR-012) apply to every UI-facing subsystem.

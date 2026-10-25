@@ -1,0 +1,19 @@
+@startuml
+title Sequence — rendering a page with the PromiseHub tokens (dark theme)
+actor Participant
+box "Frontend" #E3F2FD
+participant "Browser" as Browser
+participant "DisplayPreferencesService" as Prefs
+participant "tokens.css" as Tokens
+participant "button[ph-button]" as Button
+end box
+Participant -> Browser : open page
+Browser -> Tokens : load tokens.css, core.css, a11y.css
+Browser -> Prefs : bootstrap application
+Prefs -> Browser : set data-theme="dark" on <html>
+Browser -> Tokens : resolve [data-theme="dark"] values
+Tokens --> Browser : --color-accent = violet-300, --color-bg-canvas = gray-950
+Browser -> Button : render host classes ph-btn ph-btn--primary
+Button -> Tokens : read --color-brand (alias of --color-accent)
+Browser --> Participant : page in the PromiseHub dark theme, AA contrast
+@enduml
