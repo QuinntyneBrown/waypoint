@@ -179,11 +179,11 @@ ol {
 code,
 kbd,
 pre {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--font-family-mono);
 }
 :focus-visible {
-  outline: 2px solid var(--ph-ink);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
   border-radius: 2px;
 }
 ::selection {
@@ -242,8 +242,8 @@ pre {
   margin-bottom: 0.5em;
 }
 .ph-eyebrow--lime {
-  color: var(--ph-on-lime);
-  background: var(--ph-lime);
+  color: var(--color-fg-accent);
+  background: var(--color-accent-subtle);
   padding: 0.25em 0.6em;
   border-radius: var(--ph-r-pill);
 }
@@ -456,8 +456,8 @@ pre {
   opacity: 0.8;
 }
 .ph-sidenav__item.is-active {
-  background: var(--color-accent);
-  color: var(--color-fg-on-accent);
+  background: var(--color-accent-subtle);
+  color: var(--color-fg-accent);
 }
 .ph-sidenav__item.is-active .ph-icon {
   opacity: 1;
@@ -542,10 +542,10 @@ pre {
     height: 23px;
   }
   .ph-botnav__item.is-active {
-    color: var(--ph-ink);
+    color: var(--color-fg-accent);
   }
   .ph-botnav__item.is-active .ph-icon {
-    color: var(--ph-ink);
+    color: var(--color-fg-accent);
   }
   .ph-botnav__item.is-active::before {
     content: '';

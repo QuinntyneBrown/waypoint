@@ -1,6 +1,6 @@
 .ph-segment {
   display: inline-flex;
-  background: var(--ph-g200);
+  background: var(--ph-g100);
   border-radius: var(--ph-r-pill);
   padding: 3px;
 }

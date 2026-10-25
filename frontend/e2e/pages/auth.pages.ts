@@ -31,6 +31,23 @@ export class SignInPage extends BasePage {
     return this.page.locator('button.ph-btn.ph-btn--primary', { hasText: /sign in/i });
   }
 
+  /** Outline of a focused field (design-system check). */
+  async focusedFieldOutline(): Promise<{ width: string; style: string; color: string }> {
+    await this.email.focus();
+    return this.email.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return { width: style.outlineWidth, style: style.outlineStyle, color: style.outlineColor };
+    });
+  }
+
+  /** Edge of the error alert: its left rule and corner radius (design-system check). */
+  errorAlertFrame(): Promise<{ leftRule: string; radius: string }> {
+    return this.errorAlert.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return { leftRule: style.borderLeftWidth, radius: style.borderTopLeftRadius };
+    });
+  }
+
   /** Fill and label colours of the primary action (design-system check). */
   primaryActionColors(): Promise<{ background: string; color: string }> {
     return this.submitButton.evaluate((el) => {

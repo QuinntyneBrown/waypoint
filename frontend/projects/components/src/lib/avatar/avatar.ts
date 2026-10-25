@@ -8,17 +8,10 @@ import {
 
 export type AvatarSize = 'xs' | 'sm' | 'lg' | 'xl';
 
-/** 8-colour accent palette for avatar backgrounds (mirrors `waypoint.js` AV_BG). */
-export const W_AVATAR_PALETTE = [
-  '#c6fb50',
-  '#8adfff',
-  '#ffd700',
-  '#ffb300',
-  '#bae386',
-  '#e4e0d8',
-  '#f05228',
-  '#1d8fb9',
-];
+/** PromiseHub pastel covers for avatar backgrounds (mirrors `waypoint.js` AV_BG). */
+export const W_AVATAR_PALETTE = ['sage', 'rose', 'sky', 'sun', 'lilac', 'mint', 'peach'].map(
+  (cover) => `var(--color-cover-${cover})`,
+);
 
 export function wuInitials(name: string): string {
   const parts = (name || '?').trim().split(/\s+/);
@@ -34,8 +27,8 @@ export function wuAvatarColor(name: string): string {
 }
 
 /**
- * Initials avatar with a deterministic colour derived from the name. Ink text
- * keeps contrast on the light accent palette. Decorative — the surrounding
+ * Initials avatar with a deterministic colour derived from the name. The
+ * on-cover text token keeps contrast on every pastel cover in both themes. Decorative — the surrounding
  * context supplies the accessible name, so the glyph is aria-hidden.
  */
 @Component({
@@ -49,7 +42,7 @@ export function wuAvatarColor(name: string): string {
     '[class.ph-avatar--lg]': "size() === 'lg'",
     '[class.ph-avatar--xl]': "size() === 'xl'",
     '[style.background]': 'bg()',
-    '[style.color]': "'#16160c'",
+    '[style.color]': "'var(--color-fg-on-cover)'",
     '[attr.aria-hidden]': "'true'",
   },
   templateUrl: './avatar.html',

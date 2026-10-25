@@ -12,6 +12,10 @@ describe('avatar helpers', () => {
   it('is deterministic for the same name', () => {
     expect(wuAvatarColor('Jayden Alcantara')).toBe(wuAvatarColor('Jayden Alcantara'));
   });
+
+  it('paints from the PromiseHub pastel covers', () => {
+    expect(wuAvatarColor('Jayden Alcantara')).toMatch(/^var\(--color-cover-[a-z]+\)$/);
+  });
 });
 
 @Component({ imports: [Avatar], template: `<ph-avatar [name]="n" size="sm" />` })
@@ -28,6 +32,7 @@ describe('Avatar', () => {
     expect(el.textContent?.trim()).toBe('AO');
     expect(el.classList.contains('ph-avatar')).toBe(true);
     expect(el.classList.contains('ph-avatar--sm')).toBe(true);
-    expect(el.style.background).not.toBe('');
+    expect(el.style.background).toMatch(/--color-cover-/);
+    expect(el.style.color).toBe('var(--color-fg-on-cover)');
   });
 });

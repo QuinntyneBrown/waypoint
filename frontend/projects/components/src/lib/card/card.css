@@ -2,6 +2,7 @@
   background: var(--ph-white);
   border: var(--ph-bw) solid var(--ph-border);
   border-radius: var(--ph-r-card);
+  box-shadow: var(--shadow-1);
   overflow: hidden;
 }
 .ph-card--greige {
@@ -14,17 +15,9 @@
   border-color: transparent;
 }
 .ph-card--lime {
-  background: var(--ph-lime);
-  color: var(--ph-on-lime);
+  background: var(--color-accent-subtle);
+  color: var(--color-fg-default);
   border-color: transparent;
-}
-/* Primary buttons on a lime card would be lime-on-lime; invert them. */
-.ph-card--lime .ph-btn--primary {
-  background: var(--ph-ink);
-  color: var(--ph-white);
-}
-.ph-card--lime .ph-btn--primary:hover {
-  background: var(--color-accent-active);
 }
 /* Headings default to ink; on an ink card they must follow the card colour. */
 .ph-card--ink :is(h1, h2, h3, h4, h5, h6) {
@@ -51,5 +44,5 @@
   border-color: color-mix(in srgb, var(--ph-white) 18%, transparent);
 }
 .ph-card--lime .ph-card__footer {
-  border-color: color-mix(in srgb, var(--ph-on-lime) 18%, transparent);
+  border-color: var(--color-accent-subtle-hover);
 }

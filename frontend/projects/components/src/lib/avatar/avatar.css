@@ -5,9 +5,7 @@
   flex: none;
   display: inline-grid;
   place-items: center;
-  font-family: var(--ph-font-head);
-  font-weight: 500;
-  font-size: 0.9rem;
+  font: var(--text-label);
   color: var(--ph-ink);
   background: var(--ph-g300);
   overflow: hidden;

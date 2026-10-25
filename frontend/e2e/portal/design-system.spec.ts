@@ -39,6 +39,22 @@ for (const theme of THEMES) {
   });
 }
 
+// Traces to: L2-NFR-012 AC1
+test('fields and alerts take the PromiseHub component styles', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  const signIn = new SignInPage(page);
+  await signIn.goto();
+
+  expect(await signIn.focusedFieldOutline()).toEqual({
+    width: '2px',
+    style: 'solid',
+    color: 'rgb(124, 58, 237)',
+  });
+  await signIn.submitCredentials('nobody@example.com', 'not-the-password');
+  await expect(signIn.errorAlert).toBeVisible();
+  expect(await signIn.errorAlertFrame()).toEqual({ leftRule: '4px', radius: '12px' });
+});
+
 // Traces to: L2-NFR-012 AC3/AC4
 test('the app root, shell and library components use the ph prefix', async ({ page, request }) => {
   const signIn = new SignInPage(page);

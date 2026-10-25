@@ -1,15 +1,15 @@
 .ph-badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-family: var(--ph-font-head);
-  font-weight: 600;
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
-  padding: 3px 10px;
-  border-radius: var(--ph-r-pill);
-  background: var(--ph-g200);
-  color: var(--ph-ink);
+  gap: var(--space-1);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-wide);
+  padding: var(--space-0-5) var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-subtle);
+  color: var(--color-fg-muted);
   white-space: nowrap;
   line-height: 1.4;
 }
@@ -35,8 +35,8 @@
   color: var(--color-info-fg);
 }
 .ph-badge--lime {
-  background: var(--ph-lime);
-  color: var(--ph-on-lime);
+  background: var(--color-accent-subtle);
+  color: var(--color-fg-accent);
 }
 .ph-badge--ink {
   background: var(--ph-ink);

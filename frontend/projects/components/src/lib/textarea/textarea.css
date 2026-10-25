@@ -1,16 +1,13 @@
 .ph-textarea {
   width: 100%;
-  font-family: var(--ph-font-body);
-  font-size: 1rem;
+  font: var(--text-body);
   color: var(--ph-ink);
   background: var(--ph-white);
   border: var(--ph-bw) solid var(--ph-border-strong);
   border-radius: var(--ph-r-input);
-  padding: 11px 13px;
-  line-height: 1.4;
-  transition:
-    border-color 0.15s,
-    box-shadow 0.15s;
+  min-height: var(--control-height-md);
+  padding: var(--space-2) var(--space-3);
+  transition: border-color var(--duration-fast) var(--ease-standard);
   -webkit-appearance: none;
   appearance: none;
   min-height: 104px;
@@ -19,8 +16,11 @@
 .ph-textarea::placeholder {
   color: var(--ph-ink-45);
 }
+.ph-textarea:hover {
+  border-color: var(--color-fg-muted);
+}
 .ph-textarea:focus {
-  outline: none;
-  border-color: var(--ph-ink);
-  box-shadow: 0 0 0 3px var(--ph-lime-soft);
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: 0;
+  border-color: var(--color-focus-ring);
 }
