@@ -37,6 +37,8 @@ async function shotOf(page: Page, name: string, target: Locator, pad = 12): Prom
 /** Screenshot an element at the current (narrow) viewport. */
 async function shotNarrow(page: Page, name: string, target: Locator): Promise<void> {
   await target.scrollIntoViewIfNeeded();
+  // Keep the page at its left edge so the section is never shot half off screen.
+  await page.evaluate(() => window.scrollTo(0, window.scrollY));
   await target.screenshot({ path: join(VIDEOS, FOLDER, 'images', `${name}-1280.png`) });
 }
 

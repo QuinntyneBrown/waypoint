@@ -5,7 +5,7 @@ import { shot } from './shots';
 import { shotFull } from './shotOf';
 
 const FOLDER = '054-mentoring-grade-submissions';
-const FULL = { x: 250, y: 70, width: 1030, height: 810 };
+const FULL = { x: 250, y: 70, width: 1030, height: 880 };
 
 test('capture: grade submissions', async ({ page, request }) => {
   await page.setViewportSize({ width: 1280, height: 800 });

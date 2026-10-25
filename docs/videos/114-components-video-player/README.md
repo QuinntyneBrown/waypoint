@@ -6,7 +6,7 @@
 
 ## Why this video exists
 
-`w-video-player` in `@waypoint/components` plays a live fragmented-MP4 stream from a hub. This video shows every feature once in the light theme and once in the dark theme, so a team can see that the player follows the design system without extra code. It documents behaviour that is described in [the component README](../../../frontend/projects/components/src/lib/video-player/README.md).
+`ph-video-player` in `@waypoint/components` plays a live fragmented-MP4 stream from a hub. This video shows every feature once in the light theme and once in the dark theme, so a team can see that the player follows the design system without extra code. It documents behaviour that is described in [the component README](../../../frontend/projects/components/src/lib/video-player/README.md).
 
 ## Learning objectives
 

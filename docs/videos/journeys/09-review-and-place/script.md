@@ -18,7 +18,7 @@ Applicants under eighteen carry a small badge that says minor. The status tells 
 
 Pat presses review on Imani's row, and a review window opens. A yellow notice says, guardian participation consent required. It explains that this minor cannot be approved into active participation until a valid consent record is linked.
 
-Below the notice is everything the applicant submitted, including the guardian's name and contact details. And look at the approve button. It is switched off. Pat does not have to remember the rule. The screen enforces it.
+Below the notice is everything the applicant submitted, including the guardian's name and contact details. And look at the approve button. It is still available. Approving places Imani in a cohort, but she cannot take part until a guardian's consent is linked. Pat does not have to remember the rule. Waypoint enforces it.
 
 [pause 2s]
 
@@ -42,6 +42,6 @@ Pat confirms, and the page says Amara was approved and enrolled. Behind that mes
 
 ## Things to remember
 
-Every application lands in one queue, and minors are clearly marked. A minor without guardian consent cannot be approved, and the approve button stays off. A decline is soft. An approval needs a cohort and a mentor, and it creates the account and enrolls the youth. Only program administrators decide, and every decision is audited.
+Every application lands in one queue, and minors are clearly marked. A minor without guardian consent can be approved, but cannot take part until that consent is linked. A decline is soft. An approval needs a cohort and a mentor, and it creates the account and enrolls the youth. Only program administrators decide, and every decision is audited.
 
 Next, we will look at how a youth submits assignments and tracks the review.
