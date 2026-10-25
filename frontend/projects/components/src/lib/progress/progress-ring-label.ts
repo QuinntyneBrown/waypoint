@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
-/** The figure in the middle of a `w-progress-ring`. */
+/** The figure in the middle of a `ph-progress-ring`. */
 @Component({
-  selector: 'span[w-progress-ring-label]',
+  selector: 'span[ph-progress-ring-label]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-ring__label' },
+  host: { class: 'ph-ring__label' },
   templateUrl: './progress-ring-label.html',
   styleUrl: './progress-ring-label.css',
 })

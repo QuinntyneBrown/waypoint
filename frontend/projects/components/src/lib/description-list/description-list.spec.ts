@@ -5,11 +5,11 @@ import { DescriptionList } from './description-list';
 @Component({
   imports: [DescriptionList],
   template: `
-    <dl w-description-list>
+    <dl ph-description-list>
       <dt>Role</dt>
       <dd>Mentor</dd>
     </dl>
-    <dl w-description-list vertical>
+    <dl ph-description-list vertical>
       <dt>Email</dt>
       <dd>ana@example.org</dd>
     </dl>
@@ -27,13 +27,13 @@ describe('DescriptionList', () => {
 
   it('pairs terms with details side by side by default', async () => {
     const [list] = await render();
-    expect(list.className).toBe('w-dl');
+    expect(list.className).toBe('ph-dl');
     expect(list.querySelector('dt')?.textContent).toBe('Role');
     expect(list.querySelector('dd')?.textContent).toBe('Mentor');
   });
 
   it('can stack terms above details', async () => {
     const [, vertical] = await render();
-    expect(vertical.classList.contains('w-dl--vertical')).toBe(true);
+    expect(vertical.classList.contains('ph-dl--vertical')).toBe(true);
   });
 });

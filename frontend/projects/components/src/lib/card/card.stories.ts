@@ -17,10 +17,10 @@ const meta: Meta<Card> = {
   render: (args) => ({
     props: args,
     template: `
-      <section w-card [variant]="variant" style="max-width: 24rem">
-        <div w-card-header><h2 w-card-title>This week</h2></div>
-        <div w-card-body>Two sessions and one assignment are due.</div>
-        <div w-card-footer>Updated today</div>
+      <section ph-card [variant]="variant" style="max-width: 24rem">
+        <div ph-card-header><h2 ph-card-title>This week</h2></div>
+        <div ph-card-body>Two sessions and one assignment are due.</div>
+        <div ph-card-footer>Updated today</div>
       </section>`,
   }),
 };

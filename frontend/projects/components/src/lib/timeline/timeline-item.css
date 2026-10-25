@@ -1,8 +1,8 @@
-.w-timeline__item {
+.ph-timeline__item {
   position: relative;
-  padding-bottom: var(--w-s5);
+  padding-bottom: var(--ph-s5);
 }
-.w-timeline__item::before {
+.ph-timeline__item::before {
   content: '';
   position: absolute;
   left: -26px;
@@ -10,13 +10,13 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--w-white);
-  border: 2px solid var(--w-ink);
+  background: var(--ph-white);
+  border: 2px solid var(--ph-ink);
 }
-.w-timeline__item.is-done::before {
-  background: var(--w-lime);
-  border-color: var(--w-lime);
+.ph-timeline__item.is-done::before {
+  background: var(--ph-lime);
+  border-color: var(--ph-lime);
 }
-.w-timeline__item.is-current::before {
-  background: var(--w-ink);
+.ph-timeline__item.is-current::before {
+  background: var(--ph-ink);
 }

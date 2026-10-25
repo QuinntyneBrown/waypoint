@@ -1,36 +1,36 @@
-<w-shell
+<ph-shell
   role="mentor"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Curriculum</div>
-        <h1 class="w-page__title">Assign work</h1>
-        <p class="w-page__sub">
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Curriculum</div>
+        <h1 class="ph-page__title">Assign work</h1>
+        <p class="ph-page__sub">
           Add a published lesson, module, or project to individual journeys or a whole cohort.
         </p>
       </div>
     </div>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
-    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="ph-sr-only" role="status">{{ statusMessage() }}</p>
 
     @if (options(); as view) {
       <div class="assign-layout">
-        <section w-card aria-labelledby="assignment-details-heading">
-          <div w-card-header>
-            <h2 w-card-title id="assignment-details-heading">Assignment details</h2>
+        <section ph-card aria-labelledby="assignment-details-heading">
+          <div ph-card-header>
+            <h2 ph-card-title id="assignment-details-heading">Assignment details</h2>
           </div>
-          <div w-card-body class="w-stack">
-            <div w-form-field>
-              <label w-label for="assign-item-type">What are you assigning?</label>
+          <div ph-card-body class="ph-stack">
+            <div ph-form-field>
+              <label ph-label for="assign-item-type">What are you assigning?</label>
               <select
-                w-select
+                ph-select
                 id="assign-item-type"
                 [value]="itemType()"
                 (change)="setItemType($any($event.target).value)"
@@ -40,10 +40,10 @@
                 <option value="Project">Project / assignment</option>
               </select>
             </div>
-            <div w-form-field>
-              <label w-label for="assign-item">Item</label>
+            <div ph-form-field>
+              <label ph-label for="assign-item">Item</label>
               <select
-                w-select
+                ph-select
                 id="assign-item"
                 [value]="itemId()"
                 (change)="itemId.set($any($event.target).value)"
@@ -55,15 +55,15 @@
                 }
               </select>
               @if (filteredItems().length === 0) {
-                <p w-help>No published {{ itemType().toLowerCase() }} items are available.</p>
+                <p ph-help>No published {{ itemType().toLowerCase() }} items are available.</p>
               }
             </div>
 
-            <div w-divider></div>
-            <fieldset class="w-stack">
-              <legend w-label>Who is this for?</legend>
-              <div class="w-cluster">
-                <label w-radio>
+            <div ph-divider></div>
+            <fieldset class="ph-stack">
+              <legend ph-label>Who is this for?</legend>
+              <div class="ph-cluster">
+                <label ph-radio>
                   <input
                     type="radio"
                     name="target-mode"
@@ -71,10 +71,10 @@
                     [checked]="targetMode() === 'individual'"
                     (change)="setTargetMode('individual')"
                   />
-                  <span w-radio-box></span>
+                  <span ph-radio-box></span>
                   <span>Selected youth</span>
                 </label>
-                <label w-radio>
+                <label ph-radio>
                   <input
                     type="radio"
                     name="target-mode"
@@ -82,7 +82,7 @@
                     [checked]="targetMode() === 'cohort'"
                     (change)="setTargetMode('cohort')"
                   />
-                  <span w-radio-box></span>
+                  <span ph-radio-box></span>
                   <span>Whole cohort</span>
                 </label>
               </div>
@@ -90,32 +90,32 @@
               @if (targetMode() === 'individual') {
                 <div class="recipient-list" data-testid="assign-youth-list">
                   @for (person of view.youth; track person.youthId) {
-                    <label w-checkbox>
+                    <label ph-checkbox>
                       <input
                         type="checkbox"
                         [checked]="youthIds().includes(person.youthId)"
                         (change)="toggleYouth(person.youthId, $any($event.target).checked)"
                       />
-                      <span w-checkbox-box>
-                        <w-icon name="check" />
+                      <span ph-checkbox-box>
+                        <ph-icon name="check" />
                       </span>
                       <span>
                         {{ person.displayName }}
                         @if (person.atRisk) {
-                          <span w-badge variant="error">At risk</span>
+                          <span ph-badge variant="error">At risk</span>
                         }
                         @if (person.cohortName) {
-                          <span class="w-muted">· {{ person.cohortName }}</span>
+                          <span class="ph-muted">· {{ person.cohortName }}</span>
                         }
                       </span>
                     </label>
                   }
                 </div>
               } @else {
-                <div w-form-field class="w-mb-0">
-                  <label w-label for="assign-cohort">Cohort</label>
+                <div ph-form-field class="ph-mb-0">
+                  <label ph-label for="assign-cohort">Cohort</label>
                   <select
-                    w-select
+                    ph-select
                     id="assign-cohort"
                     [value]="cohortId()"
                     (change)="cohortId.set($any($event.target).value)"
@@ -131,22 +131,22 @@
               }
             </fieldset>
 
-            <div w-divider></div>
-            <div class="w-grid w-grid--2">
-              <div w-form-field>
-                <label w-label for="assign-due-date">Due date</label>
+            <div ph-divider></div>
+            <div class="ph-grid ph-grid--2">
+              <div ph-form-field>
+                <label ph-label for="assign-due-date">Due date</label>
                 <input
-                  w-text-field
+                  ph-text-field
                   id="assign-due-date"
                   type="date"
                   [value]="dueDate()"
                   (input)="dueDate.set($any($event.target).value)"
                 />
               </div>
-              <div w-form-field>
-                <label w-label for="assign-reminder">Reminder</label>
+              <div ph-form-field>
+                <label ph-label for="assign-reminder">Reminder</label>
                 <select
-                  w-select
+                  ph-select
                   id="assign-reminder"
                   [value]="reminderCadence()"
                   (change)="reminderCadence.set($any($event.target).value)"
@@ -157,10 +157,10 @@
                 </select>
               </div>
             </div>
-            <div w-form-field>
-              <label w-label for="assign-message">Message to youth</label>
+            <div ph-form-field>
+              <label ph-label for="assign-message">Message to youth</label>
               <textarea
-                w-textarea
+                ph-textarea
                 id="assign-message"
                 rows="4"
                 maxlength="4000"
@@ -168,11 +168,11 @@
                 [value]="message()"
                 (input)="message.set($any($event.target).value)"
               ></textarea>
-              <p w-help>Each recipient receives this in their mentor message thread.</p>
+              <p ph-help>Each recipient receives this in their mentor message thread.</p>
             </div>
-            <div class="w-actions">
+            <div class="ph-actions">
               <button
-                w-button
+                ph-button
                 variant="primary"
                 class="review-button"
                 type="button"
@@ -186,33 +186,33 @@
         </section>
 
         <aside
-          w-card
+          ph-card
           variant="greige"
           class="summary-card"
           aria-labelledby="assign-summary-heading"
         >
-          <div w-card-header>
-            <h2 w-card-title id="assign-summary-heading">Summary</h2>
+          <div ph-card-header>
+            <h2 ph-card-title id="assign-summary-heading">Summary</h2>
           </div>
-          <div w-card-body class="w-stack selection-summary">
+          <div ph-card-body class="ph-stack selection-summary">
             <div>
-              <p class="w-eyebrow">Item</p>
+              <p class="ph-eyebrow">Item</p>
               <p>
                 <strong>{{ selectedItem()?.title ?? 'Choose an item' }}</strong>
               </p>
-              <p class="w-muted">{{ selectedItem()?.moduleName }}</p>
+              <p class="ph-muted">{{ selectedItem()?.moduleName }}</p>
             </div>
-            <div w-divider></div>
+            <div ph-divider></div>
             <div>
-              <p class="w-eyebrow">Recipients</p>
+              <p class="ph-eyebrow">Recipients</p>
               <p>
                 <strong>{{ recipientCount() }} youth</strong>
               </p>
-              <p class="w-muted">{{ recipientSummary() }}</p>
+              <p class="ph-muted">{{ recipientSummary() }}</p>
             </div>
-            <div w-divider></div>
+            <div ph-divider></div>
             <div>
-              <p class="w-eyebrow">Due</p>
+              <p class="ph-eyebrow">Due</p>
               <p>
                 <strong>{{ dueDate() || 'Not set' }}</strong>
               </p>
@@ -221,27 +221,27 @@
         </aside>
       </div>
     } @else {
-      <p class="w-muted" role="status">Loading assignable work…</p>
+      <p class="ph-muted" role="status">Loading assignable work…</p>
     }
   </div>
 
   @if (reviewing()) {
-    <div w-dialog size="sm" aria-labelledby="confirm-assign-heading" (dismiss)="cancelReview()">
-      <div w-dialog-header>
+    <div ph-dialog size="sm" aria-labelledby="confirm-assign-heading" (dismiss)="cancelReview()">
+      <div ph-dialog-header>
         <div>
-          <h2 w-dialog-title id="confirm-assign-heading">Assign {{ selectedItem()?.title }}?</h2>
-          <p w-dialog-subtitle>Due {{ dueDate() }}</p>
+          <h2 ph-dialog-title id="confirm-assign-heading">Assign {{ selectedItem()?.title }}?</h2>
+          <p ph-dialog-subtitle>Due {{ dueDate() }}</p>
         </div>
-        <button w-icon-button type="button" aria-label="Close" (click)="cancelReview()">
-          <w-icon name="x" />
+        <button ph-icon-button type="button" aria-label="Close" (click)="cancelReview()">
+          <ph-icon name="x" />
         </button>
       </div>
-      <div w-dialog-body class="w-stack">
+      <div ph-dialog-body class="ph-stack">
         <p>
           This adds the item to {{ recipientCount() }} youth
           {{ recipientCount() === 1 ? 'journey' : 'journeys' }}.
         </p>
-        <p class="w-muted">{{ recipientSummary() }}</p>
+        <p class="ph-muted">{{ recipientSummary() }}</p>
         @if (message().trim()) {
           <p>Each recipient will also receive your message right away.</p>
         }
@@ -249,18 +249,18 @@
           <p>A due reminder will be scheduled for each recipient.</p>
         }
       </div>
-      <div w-dialog-footer>
+      <div ph-dialog-footer>
         <button
-          w-button
+          ph-button
           variant="ghost"
           type="button"
-          wuDialogInitialFocus
+          phDialogInitialFocus
           (click)="cancelReview()"
         >
           Cancel
         </button>
         <button
-          w-button
+          ph-button
           variant="primary"
           class="confirm-button"
           type="button"
@@ -272,4 +272,4 @@
       </div>
     </div>
   }
-</w-shell>
+</ph-shell>

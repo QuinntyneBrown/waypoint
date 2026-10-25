@@ -1,42 +1,42 @@
-<w-shell
+<ph-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
-    <a w-button variant="ghost" [routerLink]="['/youth/lessons', editor()?.lessonId]">
+  <div class="ph-container ph-container--narrow ph-page">
+    <a ph-button variant="ghost" [routerLink]="['/youth/lessons', editor()?.lessonId]">
       Back to lesson
     </a>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as status) {
-      <p w-alert variant="success" role="status">{{ status }}</p>
+      <p ph-alert variant="success" role="status">{{ status }}</p>
     }
 
     @if (editor(); as view) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Lesson reflection</div>
-          <h1 class="w-page__title">Reflect on {{ view.lessonTitle }}</h1>
-          <p class="w-page__sub">Take your time. You can save this as a private draft.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Lesson reflection</div>
+          <h1 class="ph-page__title">Reflect on {{ view.lessonTitle }}</h1>
+          <p class="ph-page__sub">Take your time. You can save this as a private draft.</p>
         </div>
       </div>
 
       @if (view.prompt) {
-        <section w-card variant="greige">
-          <div w-card-body>
-            <div class="w-eyebrow">Think about it</div>
-            <p w-scripture>{{ view.prompt }}</p>
+        <section ph-card variant="greige">
+          <div ph-card-body>
+            <div class="ph-eyebrow">Think about it</div>
+            <p ph-scripture>{{ view.prompt }}</p>
           </div>
         </section>
       }
 
-      <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
-        <fieldset w-card>
-          <div w-card-body class="w-stack">
+      <form class="ph-stack" [formGroup]="form" (ngSubmit)="submit()">
+        <fieldset ph-card>
+          <div ph-card-body class="ph-stack">
             <legend><strong>How are you feeling?</strong></legend>
             <div class="mood-options">
               @for (mood of ['Hopeful', 'Thoughtful', 'Unsure', 'Challenged']; track mood) {
@@ -52,53 +52,53 @@
               }
             </div>
             @if (form.controls.mood.touched && form.controls.mood.hasError('required')) {
-              <p w-error-text>Choose how you are feeling.</p>
+              <p ph-error-text>Choose how you are feeling.</p>
             }
           </div>
         </fieldset>
 
-        <div w-form-field>
-          <label w-label for="reflection-text">Your reflection</label>
+        <div ph-form-field>
+          <label ph-label for="reflection-text">Your reflection</label>
           <textarea
-            w-textarea
+            ph-textarea
             id="reflection-text"
             formControlName="text"
             maxlength="8000"
             aria-describedby="reflection-help reflection-error"
           ></textarea>
-          <p w-help id="reflection-help">Required when you submit. Drafts can be unfinished.</p>
+          <p ph-help id="reflection-help">Required when you submit. Drafts can be unfinished.</p>
           @if (form.controls.text.touched && form.controls.text.hasError('required')) {
-            <p w-error-text id="reflection-error">Reflection text is required.</p>
+            <p ph-error-text id="reflection-error">Reflection text is required.</p>
           }
         </div>
 
-        <div w-form-field>
-          <label w-label for="secondary-response">One action I will take</label>
+        <div ph-form-field>
+          <label ph-label for="secondary-response">One action I will take</label>
           <textarea
-            w-textarea
+            ph-textarea
             id="secondary-response"
             formControlName="secondaryResponse"
             maxlength="4000"
           ></textarea>
-          <p w-help>Optional</p>
+          <p ph-help>Optional</p>
         </div>
 
-        <section w-card variant="greige">
-          <div w-card-body class="w-stack">
+        <section ph-card variant="greige">
+          <div ph-card-body class="ph-stack">
             <label class="share-option">
               <input type="checkbox" formControlName="shareWithMentor" />
               <strong>Share with my mentor</strong>
             </label>
-            <p class="w-muted">
+            <p class="ph-muted">
               Off by default. When it is off, this reflection is private to you. Turn it on only if
               you want your assigned mentor to read it and respond during check-ins.
             </p>
           </div>
         </section>
 
-        <div class="w-actions">
+        <div class="ph-actions">
           <button
-            w-button
+            ph-button
             variant="secondary"
             type="button"
             [disabled]="saving()"
@@ -106,13 +106,13 @@
           >
             Save draft
           </button>
-          <button w-button variant="primary" type="submit" [disabled]="saving()">
+          <button ph-button variant="primary" type="submit" [disabled]="saving()">
             Submit reflection
           </button>
         </div>
       </form>
     } @else {
-      <p class="w-muted">Loading reflection…</p>
+      <p class="ph-muted">Loading reflection…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

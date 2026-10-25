@@ -19,7 +19,7 @@ import { helpTopicsFor } from './help-content';
 
 // Traces to: L2-PLATFORM-005
 @Component({
-  selector: 'w-help',
+  selector: 'ph-help',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,

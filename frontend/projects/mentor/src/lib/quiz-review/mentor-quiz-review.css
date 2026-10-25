@@ -1,20 +1,20 @@
 .assessment-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.65fr);
-  gap: var(--w-s6);
+  gap: var(--ph-s6);
   align-items: start;
 }
 .score-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 .answer-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
 }
 .answer-copy {
   min-width: 0;

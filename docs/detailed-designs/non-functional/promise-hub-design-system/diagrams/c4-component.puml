@@ -1,0 +1,26 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 3 — Adopt the PromiseHub design system — components
+System_Boundary(waypoint, "Waypoint software system") {
+  Container_Boundary(frontend, "Frontend") {
+    Container_Boundary(apps, "Portal and Public Site applications") {
+      Component(screens, "Feature screens", "Angular components", "ph-root, ph-youth-home, ...; compose library components")
+      Component(prefs, "DisplayPreferencesService", "Angular service", "Sets data-theme, ph-a11y-* classes and --ph-text-scale on <html>")
+    }
+    Container_Boundary(lib, "@waypoint/components") {
+      Component(lib_components, "Library components", "Angular components and directives", "button[ph-button], ph-shell, [phAccessibleDialog], ...")
+      Component(core, "core.css and a11y.css", "Shared CSS", "Reset, --ph-* aliases, shell, ph-stack / ph-cluster / ph-grid utilities")
+      Component(tokens, "tokens.css", "Design tokens", "PromiseHub light and dark tokens plus Waypoint extensions")
+    }
+    Component(lint, "ESLint selector rules", "eslint.config.js", "Require the ph prefix for components and directives")
+  }
+}
+Rel(screens, lib_components, "Uses")
+Rel(prefs, tokens, "Selects theme of", "data-theme")
+Rel(lib_components, core, "Reads aliases from")
+Rel(core, tokens, "Aliases")
+Rel(lint, lib_components, "Checks selectors of")
+Rel(lint, screens, "Checks selectors of")
+SHOW_LEGEND()
+@enduml

@@ -16,7 +16,7 @@ const meta: Meta<Alert> = {
   decorators: [moduleMetadata({ imports: [Alert, AlertTitle] })],
   render: (args) => ({
     props: args,
-    template: `<div w-alert [variant]="variant" [icon]="icon">Applications close 30 April.</div>`,
+    template: `<div ph-alert [variant]="variant" [icon]="icon">Applications close 30 April.</div>`,
   }),
 };
 
@@ -32,8 +32,8 @@ export const WithTitle: Story = {
   render: (args) => ({
     props: args,
     template: `
-      <div w-alert [variant]="variant" [icon]="icon" role="note">
-        <div w-alert-title>Guardian consent missing</div>
+      <div ph-alert [variant]="variant" [icon]="icon" role="note">
+        <div ph-alert-title>Guardian consent missing</div>
         Maya cannot join sessions until Ana signs the form.
       </div>`,
   }),

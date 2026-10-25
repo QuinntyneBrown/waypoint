@@ -1,54 +1,54 @@
-<div class="w-authpage">
-  <div class="w-authcard" style="max-width: 560px">
-    <div class="w-authcard__brand">
-      <div w-brand size="lg">Waypoint</div>
+<div class="ph-authpage">
+  <div class="ph-authcard" style="max-width: 560px">
+    <div class="ph-authcard__brand">
+      <div ph-brand size="lg">Waypoint</div>
     </div>
 
-    <div class="w-cluster w-cluster--between w-mb-4">
-      <div class="w-eyebrow">Set up your profile</div>
-      <div class="w-muted w-text-sm">Step {{ step() }} of 3</div>
+    <div class="ph-cluster ph-cluster--between ph-mb-4">
+      <div class="ph-eyebrow">Set up your profile</div>
+      <div class="ph-muted ph-text-sm">Step {{ step() }} of 3</div>
     </div>
 
     @if (step() === 1) {
       <h1 style="font-size: 1.5rem">Tell us about you</h1>
-      <p class="w-muted w-mb-6">This is how you’ll show up across Waypoint.</p>
+      <p class="ph-muted ph-mb-6">This is how you’ll show up across Waypoint.</p>
       <form [formGroup]="profile">
         <div
-          w-form-field
+          ph-form-field
           [invalid]="profile.controls.displayName.touched && profile.controls.displayName.invalid"
         >
-          <label w-label for="displayName">Display name <span w-label-required>*</span></label>
-          <input w-text-field id="displayName" formControlName="displayName" autocomplete="name" />
+          <label ph-label for="displayName">Display name <span ph-label-required>*</span></label>
+          <input ph-text-field id="displayName" formControlName="displayName" autocomplete="name" />
           @if (profile.controls.displayName.touched && profile.controls.displayName.invalid) {
-            <div w-error-text>Please enter a display name.</div>
+            <div ph-error-text>Please enter a display name.</div>
           }
         </div>
-        <div w-form-field>
-          <label w-label for="pronouns">Pronouns</label>
+        <div ph-form-field>
+          <label ph-label for="pronouns">Pronouns</label>
           <input
-            w-text-field
+            ph-text-field
             id="pronouns"
             formControlName="pronouns"
             placeholder="e.g. she/her, he/him, they/them"
           />
         </div>
-        <div w-form-field>
-          <label w-label for="profilePhoto">Profile photo</label>
+        <div ph-form-field>
+          <label ph-label for="profilePhoto">Profile photo</label>
           <input
-            w-text-field
+            ph-text-field
             id="profilePhoto"
             type="file"
             accept="image/jpeg,image/png,.jpg,.jpeg,.png"
             [disabled]="uploadingPhoto()"
             (change)="photoSelected($event)"
           />
-          <div w-help>Optional JPG or PNG, up to 5 MB. Stored privately.</div>
+          <div ph-help>Optional JPG or PNG, up to 5 MB. Stored privately.</div>
         </div>
         @if (photoError(); as error) {
-          <div w-alert variant="error" role="alert">{{ error }}</div>
+          <div ph-alert variant="error" role="alert">{{ error }}</div>
         }
         @if (photoStatus(); as status) {
-          <p w-alert variant="success" role="status">{{ status }}</p>
+          <p ph-alert variant="success" role="status">{{ status }}</p>
         }
         @if (photoPreview(); as photo) {
           <img
@@ -63,15 +63,15 @@
     @if (step() === 2) {
       <h1 style="font-size: 1.5rem">Your cohort</h1>
       @if (placed()) {
-        <p class="w-muted w-mb-6">
+        <p class="ph-muted ph-mb-6">
           You’re placed in a cohort. Your mentor will guide your journey.
         </p>
-        <div w-alert variant="lime" icon="users">You’re all set with a cohort and mentor.</div>
+        <div ph-alert variant="lime" icon="users">You’re all set with a cohort and mentor.</div>
       } @else {
-        <p class="w-muted w-mb-6">
+        <p class="ph-muted ph-mb-6">
           Cohorts are assigned by your program team — you don’t pick one.
         </p>
-        <div w-alert variant="info" icon="info">
+        <div ph-alert variant="info" icon="info">
           You’re not placed in a cohort yet. Your mentor will add you soon — program content unlocks
           once you’re placed.
         </div>
@@ -80,42 +80,42 @@
 
     @if (step() === 3) {
       <h1 style="font-size: 1.5rem">Notifications</h1>
-      <p class="w-muted w-mb-6">You can change these anytime in settings.</p>
+      <p class="ph-muted ph-mb-6">You can change these anytime in settings.</p>
       @for (cat of categories; track cat.eventKey) {
-        <div class="w-cluster w-cluster--between w-mb-4">
+        <div class="ph-cluster ph-cluster--between ph-mb-4">
           <div>
             <div>{{ cat.label }}</div>
-            <div class="w-muted w-text-sm">{{ cat.description }}</div>
+            <div class="ph-muted ph-text-sm">{{ cat.description }}</div>
           </div>
-          <label w-switch>
+          <label ph-switch>
             <input
               type="checkbox"
               [attr.aria-label]="cat.label"
               [checked]="prefs()[cat.eventKey]"
               (change)="toggle(cat.eventKey)"
             />
-            <span w-switch-track></span>
+            <span ph-switch-track></span>
           </label>
         </div>
       }
     }
 
-    <div class="w-cluster w-cluster--between w-mt-6">
+    <div class="ph-cluster ph-cluster--between ph-mt-6">
       @if (step() > 1) {
-        <button w-button variant="ghost" type="button" (click)="back()">
-          <w-icon name="chevron-left" />Back
+        <button ph-button variant="ghost" type="button" (click)="back()">
+          <ph-icon name="chevron-left" />Back
         </button>
       } @else {
         <span></span>
       }
 
       @if (step() < 3) {
-        <button w-button variant="primary" type="button" (click)="next()">
-          Next<w-icon name="chevron-right" />
+        <button ph-button variant="primary" type="button" (click)="next()">
+          Next<ph-icon name="chevron-right" />
         </button>
       } @else {
         <button
-          w-button
+          ph-button
           variant="primary"
           type="button"
           [class.is-loading]="saving()"
@@ -127,8 +127,8 @@
       }
     </div>
 
-    <p class="w-text-c w-mt-6 w-text-sm">
-      <button w-button variant="link" type="button" (click)="skip()">Skip for now</button>
+    <p class="ph-text-c ph-mt-6 ph-text-sm">
+      <button ph-button variant="link" type="button" (click)="skip()">Skip for now</button>
     </p>
   </div>
 </div>

@@ -14,12 +14,12 @@ type Story = StoryObj<Switch>;
 
 export const Off: Story = {
   render: () => ({
-    template: `<label w-switch><input type="checkbox" aria-label="Reduce motion" /><span w-switch-track></span></label>`,
+    template: `<label ph-switch><input type="checkbox" aria-label="Reduce motion" /><span ph-switch-track></span></label>`,
   }),
 };
 
 export const On: Story = {
   render: () => ({
-    template: `<label w-switch><input type="checkbox" aria-label="Reduce motion" checked /><span w-switch-track></span></label>`,
+    template: `<label ph-switch><input type="checkbox" aria-label="Reduce motion" checked /><span ph-switch-track></span></label>`,
   }),
 };

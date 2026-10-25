@@ -1,7 +1,7 @@
-.w-tabs {
+.ph-tabs {
   display: flex;
   gap: 2px;
-  border-bottom: var(--w-bw) solid var(--w-border);
-  margin-bottom: var(--w-s5);
+  border-bottom: var(--ph-bw) solid var(--ph-border);
+  margin-bottom: var(--ph-s5);
   overflow-x: auto;
 }

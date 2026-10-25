@@ -1,4 +1,4 @@
-.w-radio {
+.ph-radio {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -7,23 +7,23 @@
   margin-bottom: 10px;
   min-height: 44px;
 }
-.w-radio input {
+.ph-radio input {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-.w-radio input:checked + .w-radio__box {
-  border-color: var(--w-ink);
+.ph-radio input:checked + .ph-radio__box {
+  border-color: var(--ph-ink);
 }
-.w-radio input:checked + .w-radio__box::after {
+.ph-radio input:checked + .ph-radio__box::after {
   content: '';
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--w-ink);
+  background: var(--ph-ink);
 }
-.w-radio input:focus-visible + .w-radio__box {
-  outline: 2px solid var(--w-ink);
+.ph-radio input:focus-visible + .ph-radio__box {
+  outline: 2px solid var(--ph-ink);
   outline-offset: 2px;
 }

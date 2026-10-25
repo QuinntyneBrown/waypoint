@@ -12,8 +12,8 @@ test('capture: manage consent settings', async ({ page, request }) => {
   const consent = new GuardianConsentPage(page);
   await consent.goto();
   await expect(consent.participationStatus).toContainText(/active/i);
-  const record = page.locator('section.w-card', { hasText: 'Participation consent' });
-  const media = page.locator('section.w-card', { hasText: 'Media consent' });
+  const record = page.locator('section.ph-card', { hasText: 'Participation consent' });
+  const media = page.locator('section.ph-card', { hasText: 'Media consent' });
   await shotOf(page, FOLDER, 'record', record);
 
   await consent.mediaConsentOption.click();
@@ -24,7 +24,7 @@ test('capture: manage consent settings', async ({ page, request }) => {
   await consent.saveMediaButton.click();
   await expect(consent.status).toContainText(/media consent saved/i);
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  await shotWithMessage(page, FOLDER, 'media-saved', page.locator('.w-alert--success'));
+  await shotWithMessage(page, FOLDER, 'media-saved', page.locator('.ph-alert--success'));
 
   page.once('dialog', (dialog) => dialog.accept());
   await consent.withdrawButton.click();

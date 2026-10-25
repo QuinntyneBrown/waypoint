@@ -20,7 +20,7 @@ import {
 
 // Traces to: L2-LEARN-001
 @Component({
-  selector: 'w-youth-curriculum',
+  selector: 'ph-youth-curriculum',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

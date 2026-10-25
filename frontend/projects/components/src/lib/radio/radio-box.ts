@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
-/** The visible circle of a `w-radio`; leave it empty. */
+/** The visible circle of a `ph-radio`; leave it empty. */
 @Component({
-  selector: 'span[w-radio-box]',
+  selector: 'span[ph-radio-box]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-radio__box' },
+  host: { class: 'ph-radio__box' },
   templateUrl: './radio-box.html',
   styleUrl: './radio-box.css',
 })

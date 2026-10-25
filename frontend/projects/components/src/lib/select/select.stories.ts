@@ -5,7 +5,7 @@ const meta: Meta<Select> = {
   title: 'Components/Select',
   component: Select,
   render: () => ({
-    template: `<select w-select><option>All youth</option><option>One cohort</option></select>`,
+    template: `<select ph-select><option>All youth</option><option>One cohort</option></select>`,
   }),
 };
 

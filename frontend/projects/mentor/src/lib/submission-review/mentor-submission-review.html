@@ -1,40 +1,46 @@
-<w-shell
+<ph-shell
   role="mentor"
   active="reviews"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <a w-link standalone routerLink="/mentor/reviews">Back to reviews</a>
+  <div class="ph-container ph-page">
+    <a ph-link standalone routerLink="/mentor/reviews">Back to reviews</a>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (conflictMessage(); as conflict) {
-      <div w-alert variant="warning" class="w-stack" role="alert" data-testid="submission-conflict">
+      <div
+        ph-alert
+        variant="warning"
+        class="ph-stack"
+        role="alert"
+        data-testid="submission-conflict"
+      >
         <p>{{ conflict }}</p>
         <div>
-          <button w-button variant="secondary" type="button" (click)="loadLatest()">
+          <button ph-button variant="secondary" type="button" (click)="loadLatest()">
             Load latest review
           </button>
         </div>
       </div>
     }
-    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="ph-sr-only" role="status">{{ statusMessage() }}</p>
     @if (review(); as item) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">
             {{ item.isCodingProject ? 'Coding project' : 'Assignment' }} · {{ item.youthName }}
           </div>
-          <h1 class="w-page__title">{{ item.assignmentTitle }}</h1>
-          <p class="w-page__sub">Submitted {{ item.submittedAt | date: 'medium' }}</p>
+          <h1 class="ph-page__title">{{ item.assignmentTitle }}</h1>
+          <p class="ph-page__sub">Submitted {{ item.submittedAt | date: 'medium' }}</p>
         </div>
       </div>
 
       <div class="review-layout">
-        <section w-card data-testid="submitted-copy">
-          <div w-card-header><h2 w-card-title>Submitted work</h2></div>
-          <div w-card-body class="w-stack">
+        <section ph-card data-testid="submitted-copy">
+          <div ph-card-header><h2 ph-card-title>Submitted work</h2></div>
+          <div ph-card-body class="ph-stack">
             <p>{{ item.taskDescription }}</p>
             @if (item.bodyText) {
               <div class="submitted-body">{{ item.bodyText }}</div>
@@ -43,15 +49,15 @@
               <img class="evidence-image" [src]="photo" alt="Evidence submitted by the youth" />
             }
             @if (item.linkUrl) {
-              <a w-link [href]="item.linkUrl" target="_blank" rel="noopener noreferrer"
+              <a ph-link [href]="item.linkUrl" target="_blank" rel="noopener noreferrer"
                 >Open submitted link</a
               >
             }
             @if (item.file; as file) {
               @if (fileUrl(); as url) {
-                <a w-link [href]="url" [download]="file.fileName">Download {{ file.fileName }}</a>
+                <a ph-link [href]="url" [download]="file.fileName">Download {{ file.fileName }}</a>
               } @else {
-                <p class="w-muted" role="status">Preparing {{ file.fileName }}…</p>
+                <p class="ph-muted" role="status">Preparing {{ file.fileName }}…</p>
               }
             }
             @if (item.youthNote) {
@@ -60,16 +66,16 @@
           </div>
         </section>
 
-        <section w-card>
-          <div w-card-header><h2 w-card-title>Rubric and outcome</h2></div>
-          <div w-card-body class="w-stack">
+        <section ph-card>
+          <div ph-card-header><h2 ph-card-title>Rubric and outcome</h2></div>
+          <div ph-card-body class="ph-stack">
             @for (criterion of item.rubric; track criterion.criterionId) {
               <div class="rubric-row">
-                <label w-label [for]="'score-' + criterion.criterionId">
+                <label ph-label [for]="'score-' + criterion.criterionId">
                   {{ criterion.description }} (0–{{ criterion.possiblePoints }})
                 </label>
                 <input
-                  w-text-field
+                  ph-text-field
                   type="number"
                   [id]="'score-' + criterion.criterionId"
                   min="0"
@@ -80,11 +86,11 @@
                 />
               </div>
             }
-            <p w-card-title data-testid="rubric-total">{{ total() }} / {{ item.totalPossible }}</p>
-            <div w-form-field>
-              <label w-label for="mentor-feedback">Feedback for the youth</label>
+            <p ph-card-title data-testid="rubric-total">{{ total() }} / {{ item.totalPossible }}</p>
+            <div ph-form-field>
+              <label ph-label for="mentor-feedback">Feedback for the youth</label>
               <textarea
-                w-textarea
+                ph-textarea
                 id="mentor-feedback"
                 rows="5"
                 maxlength="4000"
@@ -92,20 +98,20 @@
                 (input)="setComment($any($event.target).value)"
               ></textarea>
             </div>
-            <label w-checkbox>
+            <label ph-checkbox>
               <input
                 type="checkbox"
                 [checked]="guardianNotified()"
                 (change)="guardianNotified.set($any($event.target).checked)"
               />
-              <span w-checkbox-box>
-                <w-icon name="check" />
+              <span ph-checkbox-box>
+                <ph-icon name="check" />
               </span>
               <span>Notify guardian about the outcome</span>
             </label>
-            <div class="w-actions review-actions">
+            <div class="ph-actions review-actions">
               <button
-                w-button
+                ph-button
                 variant="ghost"
                 type="button"
                 [disabled]="saving()"
@@ -114,7 +120,7 @@
                 Save draft
               </button>
               <button
-                w-button
+                ph-button
                 variant="secondary"
                 type="button"
                 [disabled]="saving()"
@@ -123,7 +129,7 @@
                 Request revision
               </button>
               <button
-                w-button
+                ph-button
                 variant="primary"
                 type="button"
                 [disabled]="saving()"
@@ -136,7 +142,7 @@
         </section>
       </div>
     } @else if (!errorMessage()) {
-      <p class="w-muted" role="status">Loading submission…</p>
+      <p class="ph-muted" role="status">Loading submission…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

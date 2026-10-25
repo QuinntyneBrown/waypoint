@@ -50,7 +50,7 @@ interface ImportColumn {
 
 // Traces to: L2-REPORT-004, L2-NFR-001, L2-NFR-009/010, L2-CONSENT-003
 @Component({
-  selector: 'w-import-roster',
+  selector: 'ph-import-roster',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

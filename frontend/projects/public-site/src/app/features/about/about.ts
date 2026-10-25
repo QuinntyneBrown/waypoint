@@ -15,7 +15,7 @@ import {
 
 // Traces to: L2-PUB-002
 @Component({
-  selector: 'w-about',
+  selector: 'ph-about',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,

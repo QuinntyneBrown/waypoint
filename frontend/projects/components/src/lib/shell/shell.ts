@@ -20,19 +20,19 @@ import { SkipLink } from '../skip-link/skip-link';
  * Authenticated app shell: fixed topbar, role-aware sidenav (+ mobile bottom
  * nav), offline banner, and an account menu. Renders what the caller says the
  * user may see — never the access authority itself (DECISIONS.md #5).
- * Page content is projected into `<main class="w-main">`.
+ * Page content is projected into `<main class="ph-main">`.
  */
 @Component({
-  selector: 'w-shell',
+  selector: 'ph-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, Icon, Avatar, IconButton, Brand, SkipLink],
   host: {
-    class: 'w-shell',
+    class: 'ph-shell',
     // `role` is the product-role input name, not an ARIA role. Static Angular
     // inputs remain as host attributes unless explicitly removed.
     '[attr.role]': 'null',
-    '[class.w-has-sidenav]': 'true',
-    '[class.w-has-botnav]': 'botItems().length > 0',
+    '[class.ph-has-sidenav]': 'true',
+    '[class.ph-has-botnav]': 'botItems().length > 0',
     '[class.is-nav-open]': 'navOpen()',
     '[class.is-offline]': 'showOffline()',
   },

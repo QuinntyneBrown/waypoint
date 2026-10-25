@@ -8,10 +8,10 @@ import {
 
 /** Groups a control with its label, help text and error message. */
 @Component({
-  selector: 'div[w-form-field], fieldset[w-form-field]',
+  selector: 'div[ph-form-field], fieldset[ph-form-field]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-field', '[class.is-error]': 'invalid()' },
+  host: { class: 'ph-field', '[class.is-error]': 'invalid()' },
   templateUrl: './form-field.html',
   styleUrl: './form-field.css',
 })

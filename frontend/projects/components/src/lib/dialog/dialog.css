@@ -1,35 +1,35 @@
-.w-modal {
+.ph-modal {
   position: fixed;
   inset: 0;
   z-index: 80;
   display: none;
   align-items: center;
   justify-content: center;
-  padding: var(--w-s4);
+  padding: var(--ph-s4);
 }
-.w-modal.is-open {
+.ph-modal.is-open {
   display: flex;
-  animation: w-fade 0.18s ease;
+  animation: ph-fade 0.18s ease;
 }
-.w-modal__scrim {
+.ph-modal__scrim {
   position: absolute;
   inset: 0;
   background: var(--color-bg-backdrop);
 }
-.w-modal__panel {
+.ph-modal__panel {
   position: relative;
-  background: var(--w-white);
-  border-radius: var(--w-r-lg);
+  background: var(--ph-white);
+  border-radius: var(--ph-r-lg);
   width: 100%;
   max-width: 480px;
   max-height: 90vh;
   overflow: auto;
-  box-shadow: var(--w-shadow-pop);
-  animation: w-pop 0.2s ease;
+  box-shadow: var(--ph-shadow-pop);
+  animation: ph-pop 0.2s ease;
 }
-.w-modal--lg .w-modal__panel {
+.ph-modal--lg .ph-modal__panel {
   max-width: 720px;
 }
-.w-modal--sm .w-modal__panel {
+.ph-modal--sm .ph-modal__panel {
   max-width: 400px;
 }

@@ -1,67 +1,67 @@
-<w-shell
+<ph-shell
   role="guardian"
   active="home"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
+  <div class="ph-container ph-container--narrow ph-page">
     @if (context.loading()) {
-      <p class="w-muted">Loading your family view…</p>
+      <p class="ph-muted">Loading your family view…</p>
     } @else if (context.progress(); as progress) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Guardian home</div>
-          <h1 class="w-page__title">Your youth at a glance</h1>
-          <p class="w-page__sub" data-testid="guardian-child-name">{{ progress.childName }}</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Guardian home</div>
+          <h1 class="ph-page__title">Your youth at a glance</h1>
+          <p class="ph-page__sub" data-testid="guardian-child-name">{{ progress.childName }}</p>
         </div>
       </div>
 
-      <div class="w-grid w-grid--3">
-        <div w-card data-testid="guardian-overall-progress">
-          <div w-stat>
-            <div w-stat-value>{{ progress.overallPercent.toFixed(0) }}%</div>
-            <div w-stat-label>Overall progress</div>
+      <div class="ph-grid ph-grid--3">
+        <div ph-card data-testid="guardian-overall-progress">
+          <div ph-stat>
+            <div ph-stat-value>{{ progress.overallPercent.toFixed(0) }}%</div>
+            <div ph-stat-label>Overall progress</div>
           </div>
         </div>
-        <div w-card>
-          <div w-stat>
-            <div w-stat-value>{{ (progress.attendance.rate * 100).toFixed(0) }}%</div>
-            <div w-stat-label>Attendance rate</div>
+        <div ph-card>
+          <div ph-stat>
+            <div ph-stat-value>{{ (progress.attendance.rate * 100).toFixed(0) }}%</div>
+            <div ph-stat-label>Attendance rate</div>
           </div>
         </div>
-        <div w-card>
-          <div w-stat>
-            <div w-stat-value>{{ progress.earnedBadges.length }}</div>
-            <div w-stat-label>Badges earned</div>
+        <div ph-card>
+          <div ph-stat>
+            <div ph-stat-value>{{ progress.earnedBadges.length }}</div>
+            <div ph-stat-label>Badges earned</div>
           </div>
         </div>
       </div>
 
-      <div w-card>
-        <div w-card-body class="w-stack">
-          <h2 w-card-title>What’s next</h2>
+      <div ph-card>
+        <div ph-card-body class="ph-stack">
+          <h2 ph-card-title>What’s next</h2>
           @if (progress.upcomingSessions[0]; as session) {
             <p>{{ session.title }}</p>
           } @else {
-            <p class="w-muted">No upcoming sessions.</p>
+            <p class="ph-muted">No upcoming sessions.</p>
           }
-          <a w-button variant="primary" routerLink="/guardian/progress">View full progress</a>
+          <a ph-button variant="primary" routerLink="/guardian/progress">View full progress</a>
         </div>
       </div>
     } @else {
-      <div w-empty-state>
-        <div w-empty-state-icon>
-          <w-icon name="users" />
+      <div ph-empty-state>
+        <div ph-empty-state-icon>
+          <ph-icon name="users" />
         </div>
-        <h1 w-empty-state-title>No linked youth yet</h1>
-        <p w-empty-state-text>
+        <h1 ph-empty-state-title>No linked youth yet</h1>
+        <p ph-empty-state-text>
           Your youth’s read-only progress will appear here once the program links your accounts.
         </p>
       </div>
     }
 
     @if (context.error(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
   </div>
-</w-shell>
+</ph-shell>

@@ -1,28 +1,28 @@
 /* Display & accessibility preference hooks (L2-PLATFORM-004). A preferences
-   service sets `--w-text-scale` and toggles these classes on <html>; the rules
+   service sets `--ph-text-scale` and toggles these classes on <html>; the rules
    here turn those hooks into real rendering changes. Loaded after core.css. */
 
 :root {
-  --w-text-scale: 1;
+  --ph-text-scale: 1;
 }
 
 body {
-  font-size: calc(1rem * var(--w-text-scale));
+  font-size: calc(1rem * var(--ph-text-scale));
 }
 
 /* Higher-contrast borders, text, and focus. */
 /* Mixed from the theme's default text colour, so it strengthens light and dark. */
-.w-a11y-contrast {
-  --w-border: color-mix(in srgb, var(--color-fg-default) 55%, transparent);
-  --w-border-strong: color-mix(in srgb, var(--color-fg-default) 75%, transparent);
-  --w-muted: color-mix(in srgb, var(--color-fg-default) 82%, transparent);
-  --w-ink-60: color-mix(in srgb, var(--color-fg-default) 82%, transparent);
+.ph-a11y-contrast {
+  --ph-border: color-mix(in srgb, var(--color-fg-default) 55%, transparent);
+  --ph-border-strong: color-mix(in srgb, var(--color-fg-default) 75%, transparent);
+  --ph-muted: color-mix(in srgb, var(--color-fg-default) 82%, transparent);
+  --ph-ink-60: var(--color-fg-default);
 }
 
 /* Respect reduced-motion by neutralising animations/transitions. */
-.w-a11y-reduce-motion *,
-.w-a11y-reduce-motion *::before,
-.w-a11y-reduce-motion *::after {
+.ph-a11y-reduce-motion *,
+.ph-a11y-reduce-motion *::before,
+.ph-a11y-reduce-motion *::after {
   animation-duration: 0.001ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.001ms !important;
@@ -30,12 +30,12 @@ body {
 }
 
 /* Always underline links for clearer affordance. */
-.w-a11y-underline a {
+.ph-a11y-underline a {
   text-decoration: underline;
 }
 
 /* Serif reading font for body copy. */
-.w-a11y-reading-font body,
-body.w-a11y-reading-font {
-  font-family: var(--w-font-serif);
+.ph-a11y-reading-font body,
+body.ph-a11y-reading-font {
+  font-family: var(--ph-font-serif);
 }

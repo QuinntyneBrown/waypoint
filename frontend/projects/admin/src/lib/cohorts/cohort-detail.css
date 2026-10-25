@@ -1,12 +1,12 @@
 .cohort-summary {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 .member-layout {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(17rem, 1fr);
-  gap: var(--w-s5);
+  gap: var(--ph-s5);
   align-items: start;
 }
 .member-list {
@@ -18,9 +18,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--w-s4);
-  padding: var(--w-s4) 0;
-  border-bottom: 1px solid var(--w-border);
+  gap: var(--ph-s4);
+  padding: var(--ph-s4) 0;
+  border-bottom: 1px solid var(--ph-border);
   overflow-wrap: anywhere;
 }
 .member-row:last-child {
@@ -28,7 +28,7 @@
 }
 .member-actions {
   display: grid;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
 }
 @media (max-width: 48rem) {
   .member-layout,
@@ -39,7 +39,7 @@
     align-items: flex-start;
     flex-direction: column;
   }
-  .w-modal__footer .w-btn {
+  .ph-modal__footer .ph-btn {
     flex: 1 1 100%;
     min-height: 45px;
   }

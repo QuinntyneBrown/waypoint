@@ -1,4 +1,4 @@
-.w-link {
+.ph-link {
   color: var(--color-fg-link);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -6,24 +6,24 @@
   font-weight: 500;
   overflow-wrap: anywhere;
 }
-.w-link:hover {
+.ph-link:hover {
   color: var(--color-fg-link-hover);
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
-.w-link:visited {
+.ph-link:visited {
   color: var(--color-fg-link);
 }
-.w-link--standalone {
+.ph-link--standalone {
   display: inline-flex;
   align-items: center;
-  gap: var(--w-s1);
+  gap: var(--ph-s1);
   text-decoration: none;
 }
-.w-link--standalone:hover {
+.ph-link--standalone:hover {
   text-decoration: underline;
 }
-.w-link .w-icon {
+.ph-link .ph-icon {
   width: 1em;
   height: 1em;
 }

@@ -19,7 +19,7 @@ import {
 
 // Traces to: L2-ADMIN-004, L2-REPORT-001
 @Component({
-  selector: 'w-admin-dashboard',
+  selector: 'ph-admin-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,

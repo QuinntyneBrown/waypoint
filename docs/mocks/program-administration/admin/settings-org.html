@@ -4,176 +4,176 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Organization settings · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="settings" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Administration</div>
-          <h1 class="w-page__title">Organization settings</h1>
-          <p class="w-page__sub">Configure Waypoint for your org — tracks, terms, consent and integrations.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Administration</div>
+          <h1 class="ph-page__title">Organization settings</h1>
+          <p class="ph-page__sub">Configure Waypoint for your org — tracks, terms, consent and integrations.</p>
         </div>
-        <div class="w-page__actions">
-          <a class="w-btn w-btn--ghost" href="../../platform-services/admin/profile.html"><svg class="w-icon"><use href="#i-user"></use></svg>My profile</a>
-          <button class="w-btn w-btn--primary" data-toast="Settings saved" data-toast-type="success"><svg class="w-icon"><use href="#i-check"></use></svg>Save changes</button>
+        <div class="ph-page__actions">
+          <a class="ph-btn ph-btn--ghost" href="../../platform-services/admin/profile.html"><svg class="ph-icon"><use href="#i-user"></use></svg>My profile</a>
+          <button class="ph-btn ph-btn--primary" data-toast="Settings saved" data-toast-type="success"><svg class="ph-icon"><use href="#i-check"></use></svg>Save changes</button>
         </div>
       </div>
 
       <div data-tabs-root>
-        <div class="w-tabs">
-          <button class="w-tab is-active" data-tab="general">General</button>
-          <button class="w-tab" data-tab="tracks">Tracks</button>
-          <button class="w-tab" data-tab="consent">Consent</button>
-          <button class="w-tab" data-tab="integrations">Integrations</button>
+        <div class="ph-tabs">
+          <button class="ph-tab is-active" data-tab="general">General</button>
+          <button class="ph-tab" data-tab="tracks">Tracks</button>
+          <button class="ph-tab" data-tab="consent">Consent</button>
+          <button class="ph-tab" data-tab="integrations">Integrations</button>
         </div>
 
         <!-- ===== GENERAL ===== -->
-        <div data-tabpanel="general" class="w-tabpanel is-active">
-          <div class="w-grid w-grid--2">
-            <div class="w-card">
-              <div class="w-card__header"><h3 class="w-card__title">Organization</h3></div>
-              <div class="w-card__body">
-                <div class="w-field">
-                  <label class="w-label">Organization name <span class="w-label__req">*</span></label>
-                  <input class="w-input" value="Waypoint">
+        <div data-tabpanel="general" class="ph-tabpanel is-active">
+          <div class="ph-grid ph-grid--2">
+            <div class="ph-card">
+              <div class="ph-card__header"><h3 class="ph-card__title">Organization</h3></div>
+              <div class="ph-card__body">
+                <div class="ph-field">
+                  <label class="ph-label">Organization name <span class="ph-label__req">*</span></label>
+                  <input class="ph-input" value="Waypoint">
                 </div>
-                <div class="w-field">
-                  <label class="w-label">City</label>
-                  <input class="w-input" value="Toronto">
+                <div class="ph-field">
+                  <label class="ph-label">City</label>
+                  <input class="ph-input" value="Toronto">
                 </div>
-                <div class="w-field">
-                  <label class="w-label">Contact email</label>
-                  <input class="w-input" type="email" value="hello@waypoint.org">
-                  <div class="w-help">Shown to guardians on consent forms and receipts.</div>
+                <div class="ph-field">
+                  <label class="ph-label">Contact email</label>
+                  <input class="ph-input" type="email" value="hello@waypoint.org">
+                  <div class="ph-help">Shown to guardians on consent forms and receipts.</div>
                 </div>
               </div>
             </div>
 
-            <div class="w-card">
-              <div class="w-card__header"><h3 class="w-card__title">Logo &amp; branding</h3></div>
-              <div class="w-card__body">
-                <div class="w-cluster w-gap-3 w-mb-4">
-                  <span class="w-avatar w-avatar--xl" data-name="Waypoint"></span>
+            <div class="ph-card">
+              <div class="ph-card__header"><h3 class="ph-card__title">Logo &amp; branding</h3></div>
+              <div class="ph-card__body">
+                <div class="ph-cluster ph-gap-3 ph-mb-4">
+                  <span class="ph-avatar ph-avatar--xl" data-name="Waypoint"></span>
                   <div>
-                    <button class="w-btn w-btn--secondary w-btn--sm"><svg class="w-icon"><use href="#i-upload"></use></svg>Upload logo</button>
-                    <div class="w-help">PNG or SVG, square, at least 256px.</div>
+                    <button class="ph-btn ph-btn--secondary ph-btn--sm"><svg class="ph-icon"><use href="#i-upload"></use></svg>Upload logo</button>
+                    <div class="ph-help">PNG or SVG, square, at least 256px.</div>
                   </div>
                 </div>
-                <div class="w-field">
-                  <label class="w-label">Brand accent</label>
-                  <div class="w-cluster w-gap-2">
-                    <span class="w-badge w-badge--lime">Lime</span>
-                    <span class="w-muted">Waypoint uses the FaithTech lime + ink palette.</span>
+                <div class="ph-field">
+                  <label class="ph-label">Brand accent</label>
+                  <div class="ph-cluster ph-gap-2">
+                    <span class="ph-badge ph-badge--lime">Lime</span>
+                    <span class="ph-muted">Waypoint uses the FaithTech lime + ink palette.</span>
                   </div>
-                  <div class="w-help">Brand colours are locked to the design system and can't be changed per-org.</div>
+                  <div class="ph-help">Brand colours are locked to the design system and can't be changed per-org.</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="w-card w-mt-4">
-            <div class="w-card__header"><h3 class="w-card__title">Terms &amp; cohort cycles</h3></div>
-            <div class="w-card__body">
-              <div class="w-table-wrap">
-                <table class="w-table w-table--cards">
+          <div class="ph-card ph-mt-4">
+            <div class="ph-card__header"><h3 class="ph-card__title">Terms &amp; cohort cycles</h3></div>
+            <div class="ph-card__body">
+              <div class="ph-table-wrap">
+                <table class="ph-table ph-table--cards">
                   <thead><tr><th>Term</th><th>Runs</th><th>Cohorts</th><th>Status</th></tr></thead>
                   <tbody>
-                    <tr><td data-label="Term">Fall '25</td><td data-label="Runs">Sep – Dec 2025</td><td data-label="Cohorts">Rexdale Fall '25</td><td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Active</span></td></tr>
-                    <tr><td data-label="Term">Winter '26</td><td data-label="Runs">Jan – Apr 2026</td><td data-label="Cohorts">Warden Winter '26</td><td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Active</span></td></tr>
-                    <tr><td data-label="Term">Spring '26</td><td data-label="Runs">Apr – Jul 2026</td><td data-label="Cohorts">St. Clair Spring '26</td><td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">Wrapping up</span></td></tr>
+                    <tr><td data-label="Term">Fall '25</td><td data-label="Runs">Sep – Dec 2025</td><td data-label="Cohorts">Rexdale Fall '25</td><td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Active</span></td></tr>
+                    <tr><td data-label="Term">Winter '26</td><td data-label="Runs">Jan – Apr 2026</td><td data-label="Cohorts">Warden Winter '26</td><td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Active</span></td></tr>
+                    <tr><td data-label="Term">Spring '26</td><td data-label="Runs">Apr – Jul 2026</td><td data-label="Cohorts">St. Clair Spring '26</td><td data-label="Status"><span class="ph-badge ph-badge--warning ph-badge--dot">Wrapping up</span></td></tr>
                   </tbody>
                 </table>
               </div>
-              <div class="w-mt-4"><button class="w-btn w-btn--secondary w-btn--sm"><svg class="w-icon"><use href="#i-plus"></use></svg>Add term</button></div>
+              <div class="ph-mt-4"><button class="ph-btn ph-btn--secondary ph-btn--sm"><svg class="ph-icon"><use href="#i-plus"></use></svg>Add term</button></div>
             </div>
           </div>
         </div>
 
         <!-- ===== TRACKS ===== -->
-        <div data-tabpanel="tracks" class="w-tabpanel">
-          <p class="w-muted">Enable the learning tracks your org offers. Disabled tracks are hidden from youth and mentors.</p>
-          <div class="w-stack w-mt-4">
-            <div class="w-card">
-              <div class="w-card__body w-cluster w-cluster--between">
-                <div class="w-cluster w-gap-3">
-                  <span class="w-badge w-badge--lime"><svg class="w-icon"><use href="#i-book-open"></use></svg></span>
+        <div data-tabpanel="tracks" class="ph-tabpanel">
+          <p class="ph-muted">Enable the learning tracks your org offers. Disabled tracks are hidden from youth and mentors.</p>
+          <div class="ph-stack ph-mt-4">
+            <div class="ph-card">
+              <div class="ph-card__body ph-cluster ph-cluster--between">
+                <div class="ph-cluster ph-gap-3">
+                  <span class="ph-badge ph-badge--lime"><svg class="ph-icon"><use href="#i-book-open"></use></svg></span>
                   <div>
-                    <div class="w-person__name">Bible &amp; Leadership</div>
-                    <div class="w-person__meta">5 modules · Who Is Jesus?, Identity in Christ, Servant Leadership, Leading a Small Group, Sharing Your Story</div>
+                    <div class="ph-person__name">Bible &amp; Leadership</div>
+                    <div class="ph-person__meta">5 modules · Who Is Jesus?, Identity in Christ, Servant Leadership, Leading a Small Group, Sharing Your Story</div>
                   </div>
                 </div>
-                <label class="w-switch"><input type="checkbox" checked><span class="w-switch__track"></span><span>Enabled</span></label>
+                <label class="ph-switch"><input type="checkbox" checked><span class="ph-switch__track"></span><span>Enabled</span></label>
               </div>
             </div>
-            <div class="w-card">
-              <div class="w-card__body w-cluster w-cluster--between">
-                <div class="w-cluster w-gap-3">
-                  <span class="w-badge w-badge--ink"><svg class="w-icon"><use href="#i-code"></use></svg></span>
+            <div class="ph-card">
+              <div class="ph-card__body ph-cluster ph-cluster--between">
+                <div class="ph-cluster ph-gap-3">
+                  <span class="ph-badge ph-badge--ink"><svg class="ph-icon"><use href="#i-code"></use></svg></span>
                   <div>
-                    <div class="w-person__name">Coding for Kingdom</div>
-                    <div class="w-person__meta">2 modules · Intro to Scratch, Web Basics: HTML &amp; CSS</div>
+                    <div class="ph-person__name">Coding for Kingdom</div>
+                    <div class="ph-person__meta">2 modules · Intro to Scratch, Web Basics: HTML &amp; CSS</div>
                   </div>
                 </div>
-                <label class="w-switch"><input type="checkbox" checked><span class="w-switch__track"></span><span>Enabled</span></label>
+                <label class="ph-switch"><input type="checkbox" checked><span class="ph-switch__track"></span><span>Enabled</span></label>
               </div>
             </div>
           </div>
-          <div class="w-alert w-alert--info w-mt-4">
-            <svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg>
+          <div class="ph-alert ph-alert--info ph-mt-4">
+            <svg class="ph-alert__icon ph-icon"><use href="#i-info"></use></svg>
             <div>Turning off a track keeps youth progress on record but pauses new assignments.</div>
           </div>
         </div>
 
         <!-- ===== CONSENT ===== -->
-        <div data-tabpanel="consent" class="w-tabpanel">
-          <div class="w-card">
-            <div class="w-card__header"><h3 class="w-card__title">Guardian consent text</h3></div>
-            <div class="w-card__body">
-              <div class="w-field">
-                <label class="w-label">Consent statement</label>
-                <textarea class="w-textarea" style="min-height:160px">I give permission for my child to participate in Waypoint programming, including in-person sessions, mentorship, and the Summer Leadership Retreat. I understand mentors may keep private check-in notes for youth-safety accountability, and that photos may be taken at group events.</textarea>
-                <div class="w-help">Guardians must agree to this before a youth can start. Shown on the guardian consent page.</div>
+        <div data-tabpanel="consent" class="ph-tabpanel">
+          <div class="ph-card">
+            <div class="ph-card__header"><h3 class="ph-card__title">Guardian consent text</h3></div>
+            <div class="ph-card__body">
+              <div class="ph-field">
+                <label class="ph-label">Consent statement</label>
+                <textarea class="ph-textarea" style="min-height:160px">I give permission for my child to participate in Waypoint programming, including in-person sessions, mentorship, and the Summer Leadership Retreat. I understand mentors may keep private check-in notes for youth-safety accountability, and that photos may be taken at group events.</textarea>
+                <div class="ph-help">Guardians must agree to this before a youth can start. Shown on the guardian consent page.</div>
               </div>
-              <label class="w-switch"><input type="checkbox" checked><span class="w-switch__track"></span><span>Require re-consent each new term</span></label>
-              <div class="w-mt-4"></div>
-              <label class="w-switch"><input type="checkbox" checked><span class="w-switch__track"></span><span>Require photo/media consent</span></label>
+              <label class="ph-switch"><input type="checkbox" checked><span class="ph-switch__track"></span><span>Require re-consent each new term</span></label>
+              <div class="ph-mt-4"></div>
+              <label class="ph-switch"><input type="checkbox" checked><span class="ph-switch__track"></span><span>Require photo/media consent</span></label>
             </div>
           </div>
         </div>
 
         <!-- ===== INTEGRATIONS ===== -->
-        <div data-tabpanel="integrations" class="w-tabpanel">
-          <div class="w-stack">
-            <div class="w-card">
-              <div class="w-card__body w-cluster w-cluster--between">
-                <div class="w-cluster w-gap-3">
-                  <span class="w-badge w-badge--ink"><svg class="w-icon"><use href="#i-calendar"></use></svg></span>
+        <div data-tabpanel="integrations" class="ph-tabpanel">
+          <div class="ph-stack">
+            <div class="ph-card">
+              <div class="ph-card__body ph-cluster ph-cluster--between">
+                <div class="ph-cluster ph-gap-3">
+                  <span class="ph-badge ph-badge--ink"><svg class="ph-icon"><use href="#i-calendar"></use></svg></span>
                   <div>
-                    <div class="w-person__name">Google Workspace</div>
-                    <div class="w-person__meta">Sync sessions to Google Calendar and send invites from Gmail.</div>
+                    <div class="ph-person__name">Google Workspace</div>
+                    <div class="ph-person__meta">Sync sessions to Google Calendar and send invites from Gmail.</div>
                   </div>
                 </div>
-                <div class="w-cluster w-gap-2">
-                  <span class="w-badge w-badge--success w-badge--dot">Connected</span>
-                  <button class="w-btn w-btn--ghost w-btn--sm">Manage</button>
+                <div class="ph-cluster ph-gap-2">
+                  <span class="ph-badge ph-badge--success ph-badge--dot">Connected</span>
+                  <button class="ph-btn ph-btn--ghost ph-btn--sm">Manage</button>
                 </div>
               </div>
             </div>
-            <div class="w-card">
-              <div class="w-card__body w-cluster w-cluster--between">
-                <div class="w-cluster w-gap-3">
-                  <span class="w-badge w-badge--outline"><svg class="w-icon"><use href="#i-folder"></use></svg></span>
+            <div class="ph-card">
+              <div class="ph-card__body ph-cluster ph-cluster--between">
+                <div class="ph-cluster ph-gap-3">
+                  <span class="ph-badge ph-badge--outline"><svg class="ph-icon"><use href="#i-folder"></use></svg></span>
                   <div>
-                    <div class="w-person__name">Google Drive</div>
-                    <div class="w-person__meta">Store lesson resources and retreat forms.</div>
+                    <div class="ph-person__name">Google Drive</div>
+                    <div class="ph-person__meta">Store lesson resources and retreat forms.</div>
                   </div>
                 </div>
-                <button class="w-btn w-btn--secondary w-btn--sm"><svg class="w-icon"><use href="#i-link"></use></svg>Connect</button>
+                <button class="ph-btn ph-btn--secondary ph-btn--sm"><svg class="ph-icon"><use href="#i-link"></use></svg>Connect</button>
               </div>
             </div>
           </div>

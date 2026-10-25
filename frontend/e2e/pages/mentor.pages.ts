@@ -274,13 +274,13 @@ export class MentorCheckInsPage extends BasePage {
     return this.page.getByRole('checkbox', { name: /share this check-in/i });
   }
   get shareControl() {
-    return this.page.locator('label.w-check').filter({ hasText: /share this check-in/i });
+    return this.page.locator('label.ph-check').filter({ hasText: /share this check-in/i });
   }
   get guardianInformed() {
     return this.page.getByRole('checkbox', { name: /guardian was informed/i });
   }
   get guardianInformedControl() {
-    return this.page.locator('label.w-check').filter({ hasText: /guardian was informed/i });
+    return this.page.locator('label.ph-check').filter({ hasText: /guardian was informed/i });
   }
   get save() {
     return this.page.getByRole('button', { name: /save check-in/i });
@@ -334,7 +334,7 @@ export class MentorAssignWorkPage extends BasePage {
     return this.page.getByRole('checkbox', { name: new RegExp(name, 'i') });
   }
   youthControl(name: string) {
-    return this.page.locator('label.w-check').filter({ hasText: name });
+    return this.page.locator('label.ph-check').filter({ hasText: name });
   }
   get dueDate() {
     return this.page.getByLabel('Due date', { exact: true });
@@ -403,13 +403,13 @@ export class MentorCalendarPage extends BasePage {
     return this.page.getByRole('checkbox', { name: /repeat weekly/i });
   }
   get repeatsWeeklyControl() {
-    return this.page.locator('label.w-check').filter({ hasText: /repeat weekly/i });
+    return this.page.locator('label.ph-check').filter({ hasText: /repeat weekly/i });
   }
   get schedule() {
     return this.page.getByRole('button', { name: /schedule session/i });
   }
   get status() {
-    return this.page.locator('p.w-sr-only[role="status"]');
+    return this.page.locator('p.ph-sr-only[role="status"]');
   }
 }
 

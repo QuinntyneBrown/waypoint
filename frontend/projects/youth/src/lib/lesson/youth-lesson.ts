@@ -20,7 +20,7 @@ import { Button, Shell, Alert, Card, CardBody, Scripture, VideoPlayer } from '@w
 
 // Traces to: L2-LEARN-002
 @Component({
-  selector: 'w-youth-lesson',
+  selector: 'ph-youth-lesson',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Shell, RouterLink, Button, Alert, Card, CardBody, Scripture, VideoPlayer],
   templateUrl: './youth-lesson.html',

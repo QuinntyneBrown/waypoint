@@ -1,50 +1,50 @@
-<w-shell
+<ph-shell
   role="admin"
   active="badges"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <main class="w-container w-page">
-    <header class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Program administration</div>
-        <h1 class="w-page__title">Badge builder</h1>
-        <p class="w-page__sub">
+  <main class="ph-container ph-page">
+    <header class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Program administration</div>
+        <h1 class="ph-page__title">Badge builder</h1>
+        <p class="ph-page__sub">
           Define automatic milestones and manual recognition that mentors can award.
         </p>
       </div>
     </header>
 
     @if (errorMessage(); as error) {
-      <div w-alert variant="error" role="alert">
+      <div ph-alert variant="error" role="alert">
         <span>{{ error }}</span>
-        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
+        <button ph-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p w-alert variant="success" data-testid="badge-outcome" role="status">
+      <p ph-alert variant="success" data-testid="badge-outcome" role="status">
         {{ message }}
       </p>
     }
 
-    <section w-card class="w-mb-5">
-      <form w-card-body class="admin-form" [formGroup]="form" (ngSubmit)="saveBadge()">
+    <section ph-card class="ph-mb-5">
+      <form ph-card-body class="admin-form" [formGroup]="form" (ngSubmit)="saveBadge()">
         <div class="admin-form__wide">
           <h2>New badge definition</h2>
-          <p class="w-muted">Archived badges remain on youth records but stop earning.</p>
+          <p class="ph-muted">Archived badges remain on youth records but stop earning.</p>
         </div>
-        <div w-form-field>
-          <label w-label for="badge-name">Badge name</label>
-          <input w-text-field id="badge-name" formControlName="name" />
+        <div ph-form-field>
+          <label ph-label for="badge-name">Badge name</label>
+          <input ph-text-field id="badge-name" formControlName="name" />
         </div>
-        <div w-form-field>
-          <label w-label for="badge-icon">Badge icon</label>
-          <input w-text-field id="badge-icon" formControlName="icon" />
+        <div ph-form-field>
+          <label ph-label for="badge-icon">Badge icon</label>
+          <input ph-text-field id="badge-icon" formControlName="icon" />
         </div>
-        <div w-form-field>
-          <label w-label for="criteria-kind">Criteria kind</label>
+        <div ph-form-field>
+          <label ph-label for="criteria-kind">Criteria kind</label>
           <select
-            w-select
+            ph-select
             id="criteria-kind"
             formControlName="criteriaKind"
             (change)="criteriaChanged()"
@@ -53,20 +53,20 @@
             <option value="Manual">Manual</option>
           </select>
         </div>
-        <div w-form-field class="admin-form__wide">
-          <label w-label for="badge-description">Badge description</label>
+        <div ph-form-field class="admin-form__wide">
+          <label ph-label for="badge-description">Badge description</label>
           <textarea
-            w-textarea
+            ph-textarea
             id="badge-description"
             rows="3"
             formControlName="description"
           ></textarea>
         </div>
         @if (form.controls.criteriaKind.value === 'Auto') {
-          <div w-form-field>
-            <label w-label for="automatic-rule">Automatic rule</label>
+          <div ph-form-field>
+            <label ph-label for="automatic-rule">Automatic rule</label>
             <select
-              w-select
+              ph-select
               id="automatic-rule"
               formControlName="autoRule"
               (change)="ruleChanged()"
@@ -79,9 +79,9 @@
             </select>
           </div>
           @if (form.controls.autoRule.value !== 'attendance-streak') {
-            <div w-form-field>
-              <label w-label for="rule-target">Rule target</label>
-              <select w-select id="rule-target" formControlName="targetRefId">
+            <div ph-form-field>
+              <label ph-label for="rule-target">Rule target</label>
+              <select ph-select id="rule-target" formControlName="targetRefId">
                 <option value="">Choose a curriculum item</option>
                 @for (target of targets(); track target.id) {
                   <option [value]="target.id">{{ target.label }}</option>
@@ -90,9 +90,9 @@
             </div>
           }
         }
-        <div w-form-field>
-          <label w-label for="mapped-competency">Mapped competency</label>
-          <select w-select id="mapped-competency" formControlName="competencyId">
+        <div ph-form-field>
+          <label ph-label for="mapped-competency">Mapped competency</label>
+          <select ph-select id="mapped-competency" formControlName="competencyId">
             <option value="">No competency mapping</option>
             @for (stage of stages(); track stage.id) {
               <optgroup [label]="stage.name">
@@ -104,26 +104,26 @@
           </select>
         </div>
         <div class="admin-form__wide">
-          <button w-button variant="primary" type="submit" [disabled]="busy()">Save badge</button>
+          <button ph-button variant="primary" type="submit" [disabled]="busy()">Save badge</button>
         </div>
       </form>
     </section>
 
     @if (loading()) {
-      <p class="w-muted" role="status">Loading badge definitions…</p>
+      <p class="ph-muted" role="status">Loading badge definitions…</p>
     } @else {
       <section class="card-grid" aria-label="Badge definitions">
         @for (badge of badges(); track badge.id) {
           <article
-            w-card
+            ph-card
             class="admin-card"
             data-testid="badge-definition"
             [attr.data-badge-id]="badge.id"
           >
-            <div w-card-body class="w-stack">
+            <div ph-card-body class="ph-stack">
               <header class="card-head">
                 <div>
-                  <p class="w-eyebrow">{{ badge.criteriaKind }}</p>
+                  <p class="ph-eyebrow">{{ badge.criteriaKind }}</p>
                   <h2>{{ badge.name }}</h2>
                 </div>
                 <span class="badge-icon" aria-hidden="true">{{ badge.icon }}</span>
@@ -131,7 +131,7 @@
               @if (badge.description) {
                 <p>{{ badge.description }}</p>
               }
-              <dl w-description-list>
+              <dl ph-description-list>
                 @if (badge.autoRule) {
                   <dt>Rule</dt>
                   <dd>{{ badge.autoRule }}</dd>
@@ -143,14 +143,14 @@
                 <dt>Awards</dt>
                 <dd>{{ badge.awardedCount }}</dd>
               </dl>
-              <div class="w-actions card-actions">
+              <div class="ph-actions card-actions">
                 @if (badge.criteriaKind === 'Manual') {
-                  <button w-button variant="primary" type="button" (click)="openAward(badge)">
+                  <button ph-button variant="primary" type="button" (click)="openAward(badge)">
                     Award badge
                   </button>
                 }
                 <button
-                  w-button
+                  ph-button
                   variant="danger"
                   type="button"
                   [disabled]="busy()"
@@ -162,9 +162,9 @@
             </div>
           </article>
         } @empty {
-          <section w-empty-state>
-            <h2 w-empty-state-title>No active badges</h2>
-            <p w-empty-state-text>Create the first badge definition above.</p>
+          <section ph-empty-state>
+            <h2 ph-empty-state-title>No active badges</h2>
+            <p ph-empty-state-text>Create the first badge definition above.</p>
           </section>
         }
       </section>
@@ -172,26 +172,26 @@
   </main>
 
   @if (awardBadge(); as badge) {
-    <div w-dialog [attr.aria-label]="'Award ' + badge.name" (dismiss)="awardBadge.set(null)">
-      <div w-dialog-header>
-        <h2 w-dialog-title>Award {{ badge.name }}</h2>
+    <div ph-dialog [attr.aria-label]="'Award ' + badge.name" (dismiss)="awardBadge.set(null)">
+      <div ph-dialog-header>
+        <h2 ph-dialog-title>Award {{ badge.name }}</h2>
       </div>
-      <div w-dialog-body>
-        <form class="w-stack" [formGroup]="awardForm" (ngSubmit)="confirmAward()">
-          <div w-form-field>
-            <label w-label for="youth-recipient">Youth recipient</label>
-            <select w-select id="youth-recipient" formControlName="youthUserId">
+      <div ph-dialog-body>
+        <form class="ph-stack" [formGroup]="awardForm" (ngSubmit)="confirmAward()">
+          <div ph-form-field>
+            <label ph-label for="youth-recipient">Youth recipient</label>
+            <select ph-select id="youth-recipient" formControlName="youthUserId">
               <option value="">Choose a youth</option>
               @for (person of youth(); track person.id) {
                 <option [value]="person.id">{{ person.displayName }}</option>
               }
             </select>
           </div>
-          <div class="w-actions">
-            <button w-button variant="primary" type="submit" [disabled]="busy()">
+          <div class="ph-actions">
+            <button ph-button variant="primary" type="submit" [disabled]="busy()">
               Confirm award
             </button>
-            <button w-button variant="ghost" type="button" (click)="awardBadge.set(null)">
+            <button ph-button variant="ghost" type="button" (click)="awardBadge.set(null)">
               Cancel
             </button>
           </div>
@@ -199,4 +199,4 @@
       </div>
     </div>
   }
-</w-shell>
+</ph-shell>

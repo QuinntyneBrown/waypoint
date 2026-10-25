@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Divider } from './divider';
 
-@Component({ imports: [Divider], template: `<div w-divider></div>` })
+@Component({ imports: [Divider], template: `<div ph-divider></div>` })
 class Host {}
 
 describe('Divider', () => {
@@ -11,6 +11,6 @@ describe('Divider', () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const divider = (fixture.nativeElement as HTMLElement).querySelector('div')!;
-    expect(divider.className).toBe('w-divider');
+    expect(divider.className).toBe('ph-divider');
   });
 });

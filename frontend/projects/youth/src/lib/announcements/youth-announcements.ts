@@ -18,7 +18,7 @@ import { shellRole } from '@waypoint/core';
 
 // Traces to: L2-ENGAGE-006
 @Component({
-  selector: 'w-youth-announcements',
+  selector: 'ph-youth-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

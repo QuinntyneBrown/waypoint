@@ -6,9 +6,9 @@ import { SwitchTrack } from './switch-track';
 @Component({
   imports: [Switch, SwitchTrack],
   template: `
-    <label w-switch>
+    <label ph-switch>
       <input type="checkbox" aria-label="Reduce motion" />
-      <span w-switch-track></span>
+      <span ph-switch-track></span>
     </label>
   `,
 })
@@ -24,7 +24,7 @@ describe('Switch', () => {
 
   it('wraps a native checkbox and keeps its accessible name', async () => {
     const label = (await render()).querySelector('label')!;
-    expect(label.classList.contains('w-switch')).toBe(true);
+    expect(label.classList.contains('ph-switch')).toBe(true);
     expect(label.querySelector('input[type="checkbox"]')?.getAttribute('aria-label')).toBe(
       'Reduce motion',
     );
@@ -32,6 +32,6 @@ describe('Switch', () => {
 
   it('renders the track next to the input', async () => {
     const track = (await render()).querySelector('input + span')!;
-    expect(track.classList.contains('w-switch__track')).toBe(true);
+    expect(track.classList.contains('ph-switch__track')).toBe(true);
   });
 });

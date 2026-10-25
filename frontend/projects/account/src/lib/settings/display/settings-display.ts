@@ -23,7 +23,7 @@ import { DisplayPreferencesService } from '@waypoint/core';
 
 // Traces to: L2-PLATFORM-004, L2-PLATFORM-013
 @Component({
-  selector: 'w-settings-display',
+  selector: 'ph-settings-display',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SettingsShell,

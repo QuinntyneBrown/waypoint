@@ -5,7 +5,7 @@ import { Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-PLATFORM-007
 @Component({
-  selector: 'w-not-found',
+  selector: 'ph-not-found',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
   templateUrl: './not-found.html',

@@ -1,7 +1,7 @@
 .home-hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--w-s5);
+  gap: var(--ph-s5);
   align-items: center;
 }
 .home-progress__value {
@@ -17,10 +17,10 @@
 .assignment-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
   align-items: center;
-  padding-block: var(--w-s4);
-  border-top: 1px solid var(--w-border);
+  padding-block: var(--ph-s4);
+  border-top: 1px solid var(--ph-border);
 }
 .assignment-row:first-child {
   border-top: 0;
@@ -30,7 +30,7 @@
   .assignment-row {
     grid-template-columns: minmax(0, 1fr);
   }
-  .assignment-row .w-btn {
+  .assignment-row .ph-btn {
     width: 100%;
   }
 }

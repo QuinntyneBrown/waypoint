@@ -6,6 +6,6 @@
   overflow-wrap: anywhere;
 }
 .notification-card:focus-visible {
-  outline: 3px solid var(--w-ink);
+  outline: 3px solid var(--ph-ink);
   outline-offset: 2px;
 }

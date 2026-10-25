@@ -8,11 +8,11 @@ const FOLDER = '020-application-intake-decide-and-enroll-applicant';
 const CONFIRM = { x: 340, y: 200, width: 600, height: 400 };
 
 async function tall(page: Page, name: string): Promise<void> {
-  await page.setViewportSize({ width: 1280, height: 1100 });
+  await page.setViewportSize({ width: 1280, height: 1240 });
   await page.waitForTimeout(800);
   await page.screenshot({
     path: join(__dirname, '..', '..', 'docs', 'videos', FOLDER, 'images', `${name}-1280.png`),
-    clip: { x: 240, y: 0, width: 800, height: 1100 },
+    clip: { x: 240, y: 0, width: 800, height: 1240 },
   });
   await page.setViewportSize({ width: 1280, height: 800 });
 }
@@ -65,10 +65,10 @@ test('capture: decide and enroll an applicant', async ({ page, request }) => {
   await applications.goto();
   await expect(applications.rowFor(adultLastName)).toBeVisible();
 
-  // A minor without consent cannot be approved.
+  // A minor without consent can be approved but cannot take part until consent is linked.
   await applications.review(minorLastName).click();
   await expect(applications.reviewDialog).toContainText('Guardian participation consent');
-  await expect(applications.approve).toBeDisabled();
+  await expect(applications.approve).toBeEnabled();
   await tall(page, 'blocked');
 
   // Soft decline with a note.

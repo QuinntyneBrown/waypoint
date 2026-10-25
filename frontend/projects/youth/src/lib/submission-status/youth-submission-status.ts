@@ -7,7 +7,7 @@ import { Button, Link, Shell, Alert, Card, CardBody, Badge } from '@waypoint/com
 
 // Traces to: L2-LEARN-007
 @Component({
-  selector: 'w-youth-submission-status',
+  selector: 'ph-youth-submission-status',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Shell, RouterLink, Button, Link, Alert, Card, CardBody, Badge],
   templateUrl: './youth-submission-status.html',

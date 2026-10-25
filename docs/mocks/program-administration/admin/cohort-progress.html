@@ -4,39 +4,39 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Progress board · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="cohort-progress" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Programs</div>
-          <h1 class="w-page__title">Progress board</h1>
-          <p class="w-page__sub">Every youth, every module, at a glance — the spreadsheet, replaced.</p>
+  <main class="ph-main">
+    <div class="ph-container ph-page">
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Programs</div>
+          <h1 class="ph-page__title">Progress board</h1>
+          <p class="ph-page__sub">Every youth, every module, at a glance — the spreadsheet, replaced.</p>
         </div>
-        <div class="w-page__actions">
-          <a class="w-btn w-btn--ghost" href="cohorts.html"><svg class="w-icon"><use href="#i-users"></use></svg>Cohorts</a>
-          <button class="w-btn w-btn--primary" data-open-modal="m-export"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
+        <div class="ph-page__actions">
+          <a class="ph-btn ph-btn--ghost" href="cohorts.html"><svg class="ph-icon"><use href="#i-users"></use></svg>Cohorts</a>
+          <button class="ph-btn ph-btn--primary" data-open-modal="m-export"><svg class="ph-icon"><use href="#i-download"></use></svg>Export</button>
         </div>
       </div>
 
       <!-- Controls -->
-      <div class="w-cluster w-justify-between w-mb-4">
-        <div class="w-cluster w-gap-3">
-          <div class="w-field w-mb-0" style="min-width:220px">
-            <label class="w-label">Cohort</label>
-            <select class="w-select" aria-label="Select cohort">
+      <div class="ph-cluster ph-justify-between ph-mb-4">
+        <div class="ph-cluster ph-gap-3">
+          <div class="ph-field ph-mb-0" style="min-width:220px">
+            <label class="ph-label">Cohort</label>
+            <select class="ph-select" aria-label="Select cohort">
               <option>Rexdale Fall '25</option>
               <option>Warden Winter '26</option>
               <option>St. Clair Spring '26</option>
             </select>
           </div>
-          <div class="w-field w-mb-0" style="min-width:200px">
-            <label class="w-label">Track</label>
-            <select class="w-select" aria-label="Select track">
+          <div class="ph-field ph-mb-0" style="min-width:200px">
+            <label class="ph-label">Track</label>
+            <select class="ph-select" aria-label="Select track">
               <option>Bible &amp; Leadership</option>
               <option>Coding for Kingdom</option>
             </select>
@@ -45,18 +45,18 @@
       </div>
 
       <!-- Legend -->
-      <div class="w-cluster w-gap-4 w-mb-4">
-        <span class="w-cluster w-gap-2"><span class="w-cell w-cell--done">✓</span><span class="w-muted">Done</span></span>
-        <span class="w-cluster w-gap-2"><span class="w-cell w-cell--prog">•</span><span class="w-muted">In progress</span></span>
-        <span class="w-cluster w-gap-2"><span class="w-cell w-cell--none">—</span><span class="w-muted">Not started</span></span>
-        <span class="w-cluster w-gap-2"><span class="w-cell w-cell--na">n/a</span><span class="w-muted">Not assigned</span></span>
+      <div class="ph-cluster ph-gap-4 ph-mb-4">
+        <span class="ph-cluster ph-gap-2"><span class="ph-cell ph-cell--done">✓</span><span class="ph-muted">Done</span></span>
+        <span class="ph-cluster ph-gap-2"><span class="ph-cell ph-cell--prog">•</span><span class="ph-muted">In progress</span></span>
+        <span class="ph-cluster ph-gap-2"><span class="ph-cell ph-cell--none">—</span><span class="ph-muted">Not started</span></span>
+        <span class="ph-cluster ph-gap-2"><span class="ph-cell ph-cell--na">n/a</span><span class="ph-muted">Not assigned</span></span>
       </div>
 
       <!-- ===== DEFAULT ===== -->
       <div data-when-state="default">
-        <div class="w-card">
-          <div class="w-progressmatrix">
-            <table class="w-matrix">
+        <div class="ph-card">
+          <div class="ph-progressmatrix">
+            <table class="ph-matrix">
               <thead>
                 <tr>
                   <th>Youth</th>
@@ -72,51 +72,51 @@
               <tbody>
                 <tr>
                   <td>Jayden Alcantara</td>
-                  <td><span class="w-cell w-cell--done">✓</span></td>
-                  <td><span class="w-cell w-cell--done">✓</span></td>
-                  <td><span class="w-cell w-cell--prog">•</span></td>
-                  <td><span class="w-cell w-cell--none">—</span></td>
-                  <td><span class="w-cell w-cell--none">—</span></td>
+                  <td><span class="ph-cell ph-cell--done">✓</span></td>
+                  <td><span class="ph-cell ph-cell--done">✓</span></td>
+                  <td><span class="ph-cell ph-cell--prog">•</span></td>
+                  <td><span class="ph-cell ph-cell--none">—</span></td>
+                  <td><span class="ph-cell ph-cell--none">—</span></td>
                   <td>88%</td>
                   <td><strong>82%</strong></td>
                 </tr>
                 <tr>
                   <td>Amara Okafor</td>
-                  <td><span class="w-cell w-cell--done">✓</span></td>
-                  <td><span class="w-cell w-cell--done">✓</span></td>
-                  <td><span class="w-cell w-cell--prog">•</span></td>
-                  <td><span class="w-cell w-cell--none">—</span></td>
-                  <td><span class="w-cell w-cell--none">—</span></td>
+                  <td><span class="ph-cell ph-cell--done">✓</span></td>
+                  <td><span class="ph-cell ph-cell--done">✓</span></td>
+                  <td><span class="ph-cell ph-cell--prog">•</span></td>
+                  <td><span class="ph-cell ph-cell--none">—</span></td>
+                  <td><span class="ph-cell ph-cell--none">—</span></td>
                   <td>79%</td>
                   <td><strong>74%</strong></td>
                 </tr>
                 <tr>
                   <td>Devon Grant</td>
-                  <td><span class="w-cell w-cell--done">✓</span></td>
-                  <td><span class="w-cell w-cell--prog">•</span></td>
-                  <td><span class="w-cell w-cell--none">—</span></td>
-                  <td><span class="w-cell w-cell--none">—</span></td>
-                  <td><span class="w-cell w-cell--none">—</span></td>
+                  <td><span class="ph-cell ph-cell--done">✓</span></td>
+                  <td><span class="ph-cell ph-cell--prog">•</span></td>
+                  <td><span class="ph-cell ph-cell--none">—</span></td>
+                  <td><span class="ph-cell ph-cell--none">—</span></td>
+                  <td><span class="ph-cell ph-cell--none">—</span></td>
                   <td>61%</td>
                   <td><strong>38%</strong></td>
                 </tr>
                 <tr>
                   <td>Priya Sharma</td>
-                  <td><span class="w-cell w-cell--done">✓</span></td>
-                  <td><span class="w-cell w-cell--done">✓</span></td>
-                  <td><span class="w-cell w-cell--done">✓</span></td>
-                  <td><span class="w-cell w-cell--prog">•</span></td>
-                  <td><span class="w-cell w-cell--none">—</span></td>
+                  <td><span class="ph-cell ph-cell--done">✓</span></td>
+                  <td><span class="ph-cell ph-cell--done">✓</span></td>
+                  <td><span class="ph-cell ph-cell--done">✓</span></td>
+                  <td><span class="ph-cell ph-cell--prog">•</span></td>
+                  <td><span class="ph-cell ph-cell--none">—</span></td>
                   <td>94%</td>
                   <td><strong>91%</strong></td>
                 </tr>
                 <tr>
                   <td>Malik Johnson</td>
-                  <td><span class="w-cell w-cell--done">✓</span></td>
-                  <td><span class="w-cell w-cell--done">✓</span></td>
-                  <td><span class="w-cell w-cell--prog">•</span></td>
-                  <td><span class="w-cell w-cell--none">—</span></td>
-                  <td><span class="w-cell w-cell--none">—</span></td>
+                  <td><span class="ph-cell ph-cell--done">✓</span></td>
+                  <td><span class="ph-cell ph-cell--done">✓</span></td>
+                  <td><span class="ph-cell ph-cell--prog">•</span></td>
+                  <td><span class="ph-cell ph-cell--none">—</span></td>
+                  <td><span class="ph-cell ph-cell--none">—</span></td>
                   <td>70%</td>
                   <td><strong>55%</strong></td>
                 </tr>
@@ -137,68 +137,68 @@
           </div>
         </div>
 
-        <div class="w-grid w-grid--3 w-mt-4">
-          <div class="w-card w-statcard"><div class="w-statcard__label">Cohort progress</div><div class="w-statcard__value">68%</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>3 of 5 modules underway</div></div>
-          <div class="w-card w-statcard"><div class="w-statcard__label">Quiz average</div><div class="w-statcard__value">78%</div><div class="w-statcard__delta is-up"><svg class="w-icon"><use href="#i-trending-up"></use></svg>+4% this month</div></div>
-          <div class="w-card w-statcard"><div class="w-statcard__label">Needs attention</div><div class="w-statcard__value">1</div><div class="w-statcard__delta is-down"><svg class="w-icon"><use href="#i-alert-triangle"></use></svg>Devon Grant behind</div></div>
+        <div class="ph-grid ph-grid--3 ph-mt-4">
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Cohort progress</div><div class="ph-statcard__value">68%</div><div class="ph-statcard__delta is-up"><svg class="ph-icon"><use href="#i-trending-up"></use></svg>3 of 5 modules underway</div></div>
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Quiz average</div><div class="ph-statcard__value">78%</div><div class="ph-statcard__delta is-up"><svg class="ph-icon"><use href="#i-trending-up"></use></svg>+4% this month</div></div>
+          <div class="ph-card ph-statcard"><div class="ph-statcard__label">Needs attention</div><div class="ph-statcard__value">1</div><div class="ph-statcard__delta is-down"><svg class="ph-icon"><use href="#i-alert-triangle"></use></svg>Devon Grant behind</div></div>
         </div>
       </div>
 
       <!-- ===== LOADING ===== -->
-      <div data-when-state="loading" class="w-hide">
-        <div class="w-card"><div class="w-card__body w-stack w-stack--sm">
-          <span class="w-skeleton w-skeleton--block"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
-          <span class="w-skeleton w-skeleton--block"></span>
+      <div data-when-state="loading" class="ph-hide">
+        <div class="ph-card"><div class="ph-card__body ph-stack ph-stack--sm">
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <span class="ph-skeleton ph-skeleton--block"></span>
+          <span class="ph-skeleton ph-skeleton--block"></span>
         </div></div>
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="w-hide">
-        <div class="w-card"><div class="w-empty">
-          <div class="w-empty__icon"><svg class="w-icon"><use href="#i-table"></use></svg></div>
-          <h3 class="w-empty__title">No youth in this cohort yet</h3>
-          <p class="w-empty__text">Add youth to the cohort to start tracking module progress here.</p>
-          <a class="w-btn w-btn--primary" href="cohort-detail.html"><svg class="w-icon"><use href="#i-user-plus"></use></svg>Add youth</a>
+      <div data-when-state="empty" class="ph-hide">
+        <div class="ph-card"><div class="ph-empty">
+          <div class="ph-empty__icon"><svg class="ph-icon"><use href="#i-table"></use></svg></div>
+          <h3 class="ph-empty__title">No youth in this cohort yet</h3>
+          <p class="ph-empty__text">Add youth to the cohort to start tracking module progress here.</p>
+          <a class="ph-btn ph-btn--primary" href="cohort-detail.html"><svg class="ph-icon"><use href="#i-user-plus"></use></svg>Add youth</a>
         </div></div>
       </div>
 
       <!-- ===== ERROR ===== -->
-      <div data-when-state="error" class="w-hide">
-        <div class="w-alert w-alert--error">
-          <svg class="w-alert__icon w-icon"><use href="#i-alert-circle"></use></svg>
-          <div><div class="w-alert__title">Couldn't load the progress board</div>Something went wrong on our end. <a href="cohort-progress.html">Retry</a>.</div>
+      <div data-when-state="error" class="ph-hide">
+        <div class="ph-alert ph-alert--error">
+          <svg class="ph-alert__icon ph-icon"><use href="#i-alert-circle"></use></svg>
+          <div><div class="ph-alert__title">Couldn't load the progress board</div>Something went wrong on our end. <a href="cohort-progress.html">Retry</a>.</div>
         </div>
       </div>
     </div>
   </main>
 
   <!-- ===== Export modal ===== -->
-  <div class="w-modal w-modal--sm" id="m-export" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div><h2 class="w-modal__title">Export progress board</h2><p class="w-modal__sub">Rexdale Fall '25 · Bible &amp; Leadership</p></div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+  <div class="ph-modal ph-modal--sm" id="m-export" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div><h2 class="ph-modal__title">Export progress board</h2><p class="ph-modal__sub">Rexdale Fall '25 · Bible &amp; Leadership</p></div>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-field">
-          <label class="w-label">Format</label>
-          <label class="w-radio"><input type="radio" name="fmt" checked><span class="w-radio__box"></span><span>CSV (spreadsheet)</span></label>
-          <label class="w-radio"><input type="radio" name="fmt"><span class="w-radio__box"></span><span>PDF report</span></label>
+      <div class="ph-modal__body">
+        <div class="ph-field">
+          <label class="ph-label">Format</label>
+          <label class="ph-radio"><input type="radio" name="fmt" checked><span class="ph-radio__box"></span><span>CSV (spreadsheet)</span></label>
+          <label class="ph-radio"><input type="radio" name="fmt"><span class="ph-radio__box"></span><span>PDF report</span></label>
         </div>
-        <div class="w-field w-mb-0">
-          <label class="w-label">Include</label>
-          <label class="w-check"><input type="checkbox" checked><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span>Module completion</span></label>
-          <label class="w-check"><input type="checkbox" checked><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span>Quiz averages</span></label>
-          <label class="w-check"><input type="checkbox"><span class="w-check__box"><svg class="w-icon"><use href="#i-check"></use></svg></span><span>Attendance rate</span></label>
+        <div class="ph-field ph-mb-0">
+          <label class="ph-label">Include</label>
+          <label class="ph-check"><input type="checkbox" checked><span class="ph-check__box"><svg class="ph-icon"><use href="#i-check"></use></svg></span><span>Module completion</span></label>
+          <label class="ph-check"><input type="checkbox" checked><span class="ph-check__box"><svg class="ph-icon"><use href="#i-check"></use></svg></span><span>Quiz averages</span></label>
+          <label class="ph-check"><input type="checkbox"><span class="ph-check__box"><svg class="ph-icon"><use href="#i-check"></use></svg></span><span>Attendance rate</span></label>
         </div>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="Export ready — download started" data-toast-type="success" data-toast-title="Exported">Export</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="Export ready — download started" data-toast-type="success" data-toast-title="Exported">Export</button>
       </div>
     </div>
   </div>

@@ -1,13 +1,13 @@
 .report-filters {
   display: grid;
   grid-template-columns: repeat(5, minmax(8.5rem, 1fr)) auto;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   align-items: end;
 }
 .report-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--w-s2) var(--w-s5);
+  gap: var(--ph-s2) var(--ph-s5);
   align-items: center;
 }
 .report-kpis,
@@ -15,12 +15,12 @@
 .report-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 .report-chart-row {
   display: grid;
   grid-template-columns: minmax(8rem, 1fr) minmax(8rem, 3fr) auto;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   align-items: center;
 }
 .report-card {
@@ -35,10 +35,10 @@
 .report-stat-line {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
 }
 .report-status--risk {
-  color: var(--w-error);
+  color: var(--ph-error);
   font-weight: 700;
 }
 @media (max-width: 72rem) {
@@ -58,11 +58,11 @@
   .report-chart-row {
     grid-template-columns: 1fr auto;
   }
-  .report-chart-row .w-progress {
+  .report-chart-row .ph-progress {
     grid-column: 1 / -1;
   }
-  .report-filters .w-btn,
-  .report-selector .w-btn {
+  .report-filters .ph-btn,
+  .report-selector .ph-btn {
     width: 100%;
     min-height: 45px;
   }

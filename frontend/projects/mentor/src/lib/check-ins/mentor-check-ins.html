@@ -1,30 +1,30 @@
-<w-shell
+<ph-shell
   role="mentor"
   active="check-ins"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Mentor journal</div>
-        <h1 class="w-page__title">Check-ins</h1>
-        <p class="w-page__sub">Record conversations, actions, and planned follow-up.</p>
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Mentor journal</div>
+        <h1 class="ph-page__title">Check-ins</h1>
+        <p class="ph-page__sub">Record conversations, actions, and planned follow-up.</p>
       </div>
     </div>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
-    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="ph-sr-only" role="status">{{ statusMessage() }}</p>
 
     <div class="check-in-layout">
-      <section w-card>
-        <div w-card-header><h2 w-card-title>Log check-in</h2></div>
-        <div w-card-body class="w-stack">
-          <div w-form-field>
-            <label w-label for="check-in-youth">Youth</label>
+      <section ph-card>
+        <div ph-card-header><h2 ph-card-title>Log check-in</h2></div>
+        <div ph-card-body class="ph-stack">
+          <div ph-form-field>
+            <label ph-label for="check-in-youth">Youth</label>
             <select
-              w-select
+              ph-select
               id="check-in-youth"
               [value]="selectedYouthId()"
               (change)="selectedYouthId.set($any($event.target).value)"
@@ -37,21 +37,21 @@
               }
             </select>
           </div>
-          <div class="w-grid w-grid--2">
-            <div w-form-field>
-              <label w-label for="check-in-date">Date</label>
+          <div class="ph-grid ph-grid--2">
+            <div ph-form-field>
+              <label ph-label for="check-in-date">Date</label>
               <input
-                w-text-field
+                ph-text-field
                 id="check-in-date"
                 type="date"
                 [value]="date()"
                 (input)="date.set($any($event.target).value)"
               />
             </div>
-            <div w-form-field>
-              <label w-label for="check-in-type">Type</label>
+            <div ph-form-field>
+              <label ph-label for="check-in-type">Type</label>
               <select
-                w-select
+                ph-select
                 id="check-in-type"
                 [value]="type()"
                 (change)="type.set($any($event.target).value)"
@@ -62,10 +62,10 @@
               </select>
             </div>
           </div>
-          <div w-form-field>
-            <label w-label for="engagement">Engagement / mood</label>
+          <div ph-form-field>
+            <label ph-label for="engagement">Engagement / mood</label>
             <textarea
-              w-textarea
+              ph-textarea
               id="engagement"
               rows="3"
               maxlength="2000"
@@ -73,10 +73,10 @@
               (input)="engagement.set($any($event.target).value)"
             ></textarea>
           </div>
-          <div w-form-field>
-            <label w-label for="goals-discussed">Goals discussed</label>
+          <div ph-form-field>
+            <label ph-label for="goals-discussed">Goals discussed</label>
             <textarea
-              w-textarea
+              ph-textarea
               id="goals-discussed"
               rows="3"
               maxlength="2000"
@@ -84,22 +84,22 @@
               (input)="goalsDiscussed.set($any($event.target).value)"
             ></textarea>
           </div>
-          <div w-form-field>
-            <label w-label for="prayer-requests">Prayer requests</label>
+          <div ph-form-field>
+            <label ph-label for="prayer-requests">Prayer requests</label>
             <textarea
-              w-textarea
+              ph-textarea
               id="prayer-requests"
               rows="3"
               maxlength="2000"
               [value]="prayerRequests()"
               (input)="prayerRequests.set($any($event.target).value)"
             ></textarea>
-            <p w-help>Private unless you explicitly enable sharing below.</p>
+            <p ph-help>Private unless you explicitly enable sharing below.</p>
           </div>
-          <div w-form-field>
-            <label w-label for="action-items">Action items</label>
+          <div ph-form-field>
+            <label ph-label for="action-items">Action items</label>
             <textarea
-              w-textarea
+              ph-textarea
               id="action-items"
               rows="3"
               maxlength="2000"
@@ -107,46 +107,46 @@
               (input)="actionItems.set($any($event.target).value)"
             ></textarea>
           </div>
-          <div w-form-field>
-            <label w-label for="next-follow-up">Next follow-up</label>
+          <div ph-form-field>
+            <label ph-label for="next-follow-up">Next follow-up</label>
             <input
-              w-text-field
+              ph-text-field
               id="next-follow-up"
               type="date"
               [value]="nextFollowUp()"
               (input)="nextFollowUp.set($any($event.target).value)"
             />
           </div>
-          <label w-checkbox>
+          <label ph-checkbox>
             <input
               type="checkbox"
               [checked]="share()"
               (change)="share.set($any($event.target).checked)"
             />
-            <span w-checkbox-box>
-              <w-icon name="check" />
+            <span ph-checkbox-box>
+              <ph-icon name="check" />
             </span>
             <span>Share this check-in with the youth and guardian</span>
           </label>
           @if (share()) {
-            <p w-alert>
+            <p ph-alert>
               All entered fields, including prayer requests, will be visible to the youth and their
               linked guardian.
             </p>
           }
-          <label w-checkbox>
+          <label ph-checkbox>
             <input
               type="checkbox"
               [checked]="guardianInformed()"
               (change)="guardianInformed.set($any($event.target).checked)"
             />
-            <span w-checkbox-box>
-              <w-icon name="check" />
+            <span ph-checkbox-box>
+              <ph-icon name="check" />
             </span>
             <span>Guardian was informed</span>
           </label>
           <button
-            w-button
+            ph-button
             variant="primary"
             class="save-button"
             type="button"
@@ -158,14 +158,14 @@
         </div>
       </section>
 
-      <section class="w-stack" aria-labelledby="history-heading">
+      <section class="ph-stack" aria-labelledby="history-heading">
         <div>
           <h2 id="history-heading">Check-in history</h2>
           <div class="history-filters">
-            <div w-form-field>
-              <label w-label for="filter-youth">Filter by youth</label>
+            <div ph-form-field>
+              <label ph-label for="filter-youth">Filter by youth</label>
               <select
-                w-select
+                ph-select
                 id="filter-youth"
                 [value]="filterYouthId()"
                 (change)="filterYouthId.set($any($event.target).value); applyFilters()"
@@ -178,10 +178,10 @@
                 }
               </select>
             </div>
-            <div w-form-field>
-              <label w-label for="filter-type">Filter by type</label>
+            <div ph-form-field>
+              <label ph-label for="filter-type">Filter by type</label>
               <select
-                w-select
+                ph-select
                 id="filter-type"
                 [value]="filterType()"
                 (change)="filterType.set($any($event.target).value); applyFilters()"
@@ -196,17 +196,17 @@
         </div>
         @if (history(); as items) {
           @for (item of items; track item.id) {
-            <article w-card class="history-card" data-testid="check-in-history-item">
-              <div w-card-header>
+            <article ph-card class="history-card" data-testid="check-in-history-item">
+              <div ph-card-header>
                 <div>
-                  <p class="w-eyebrow">{{ item.youthName }}</p>
-                  <h3 w-card-title>{{ item.type }} · {{ item.date | date: 'mediumDate' }}</h3>
+                  <p class="ph-eyebrow">{{ item.youthName }}</p>
+                  <h3 ph-card-title>{{ item.type }} · {{ item.date | date: 'mediumDate' }}</h3>
                 </div>
-                <span w-badge>
+                <span ph-badge>
                   {{ item.visibility === 'Private' ? 'Private mentor note' : 'Shared' }}
                 </span>
               </div>
-              <div w-card-body class="w-stack">
+              <div ph-card-body class="ph-stack">
                 @if (item.engagement) {
                   <p><strong>Engagement:</strong> {{ item.engagement }}</p>
                 }
@@ -222,24 +222,24 @@
                 @if (item.nextFollowUp) {
                   <p><strong>Follow-up:</strong> {{ item.nextFollowUp | date: 'mediumDate' }}</p>
                 }
-                <p class="w-muted">
+                <p class="ph-muted">
                   Guardian {{ item.guardianInformed ? 'was informed' : 'was not marked informed' }}.
                 </p>
               </div>
             </article>
           } @empty {
-            <div w-card>
-              <div w-empty-state>
-                <div w-empty-state-icon><w-icon name="clipboard-check" /></div>
-                <h3 w-empty-state-title>No matching check-ins</h3>
-                <p w-empty-state-text>Adjust the youth or type filter.</p>
+            <div ph-card>
+              <div ph-empty-state>
+                <div ph-empty-state-icon><ph-icon name="clipboard-check" /></div>
+                <h3 ph-empty-state-title>No matching check-ins</h3>
+                <p ph-empty-state-text>Adjust the youth or type filter.</p>
               </div>
             </div>
           }
         } @else {
-          <p class="w-muted" role="status">Loading check-in history…</p>
+          <p class="ph-muted" role="status">Loading check-in history…</p>
         }
       </section>
     </div>
   </div>
-</w-shell>
+</ph-shell>

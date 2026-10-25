@@ -1,12 +1,12 @@
-.w-switch__track {
+.ph-switch__track {
   width: 42px;
   height: 24px;
-  border-radius: var(--w-r-pill);
-  background: var(--w-g400);
+  border-radius: var(--ph-r-pill);
+  background: var(--ph-g400);
   position: relative;
   transition: background 0.18s;
 }
-.w-switch__track::after {
+.ph-switch__track::after {
   content: '';
   position: absolute;
   top: 2px;
@@ -14,6 +14,6 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--w-white);
+  background: var(--ph-white);
   transition: transform 0.18s;
 }

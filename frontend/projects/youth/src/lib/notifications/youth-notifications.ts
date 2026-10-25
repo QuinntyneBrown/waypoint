@@ -29,7 +29,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
 
 // Traces to: L2-ENGAGE-008, L2-NFR-005
 @Component({
-  selector: 'w-notifications',
+  selector: 'ph-notifications',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

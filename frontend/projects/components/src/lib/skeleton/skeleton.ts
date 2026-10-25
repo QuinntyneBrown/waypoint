@@ -7,16 +7,16 @@ export type SkeletonVariant = 'text' | 'title' | 'circle' | 'block' | 'btn';
  * `span`; it is decorative, so put the loading announcement on the container.
  */
 @Component({
-  selector: 'span[w-skeleton]',
+  selector: 'span[ph-skeleton]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'w-skeleton',
-    '[class.w-skeleton--text]': "variant() === 'text'",
-    '[class.w-skeleton--title]': "variant() === 'title'",
-    '[class.w-skeleton--circle]': "variant() === 'circle'",
-    '[class.w-skeleton--block]': "variant() === 'block'",
-    '[class.w-skeleton--btn]': "variant() === 'btn'",
+    class: 'ph-skeleton',
+    '[class.ph-skeleton--text]': "variant() === 'text'",
+    '[class.ph-skeleton--title]': "variant() === 'title'",
+    '[class.ph-skeleton--circle]': "variant() === 'circle'",
+    '[class.ph-skeleton--block]': "variant() === 'block'",
+    '[class.ph-skeleton--btn]': "variant() === 'btn'",
   },
   templateUrl: './skeleton.html',
   styleUrl: './skeleton.css',

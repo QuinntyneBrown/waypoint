@@ -34,7 +34,7 @@ import { finalize, forkJoin, map } from 'rxjs';
 
 // Traces to: L2-ADMIN-006, L2-CONSENT-001, L2-NFR-009, L2-NFR-010
 @Component({
-  selector: 'w-organization-settings',
+  selector: 'ph-organization-settings',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

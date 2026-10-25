@@ -1,34 +1,34 @@
-<w-shell
+<ph-shell
   [role]="shellRole()"
   active="attendance"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">{{ isAdmin() ? 'Program administration' : 'Mentoring' }}</div>
-        <h1 class="w-page__title">
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">{{ isAdmin() ? 'Program administration' : 'Mentoring' }}</div>
+        <h1 class="ph-page__title">
           {{ isAdmin() ? 'Attendance administration' : 'Attendance' }}
         </h1>
-        <p class="w-page__sub">Review turnout by session or attendance patterns by youth.</p>
+        <p class="ph-page__sub">Review turnout by session or attendance patterns by youth.</p>
       </div>
-      <a w-button variant="primary" [routerLink]="calendarPath()">Open calendar</a>
+      <a ph-button variant="primary" [routerLink]="calendarPath()">Open calendar</a>
     </div>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
-    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="ph-sr-only" role="status">{{ statusMessage() }}</p>
 
-    <section w-card aria-labelledby="attendance-history-heading">
-      <div w-card-header>
+    <section ph-card aria-labelledby="attendance-history-heading">
+      <div ph-card-header>
         <div class="history-toolbar">
           <div>
-            <h2 w-card-title id="attendance-history-heading">Attendance history</h2>
-            <div w-tabs role="tablist" aria-label="Attendance history view">
+            <h2 ph-card-title id="attendance-history-heading">Attendance history</h2>
+            <div ph-tabs role="tablist" aria-label="Attendance history view">
               <button
-                w-tab
+                ph-tab
                 [active]="view() === 'session'"
                 type="button"
                 role="tab"
@@ -38,7 +38,7 @@
                 By session
               </button>
               <button
-                w-tab
+                ph-tab
                 [active]="view() === 'youth'"
                 type="button"
                 role="tab"
@@ -49,9 +49,9 @@
               </button>
             </div>
           </div>
-          <div class="w-cluster">
+          <div class="ph-cluster">
             <button
-              w-button
+              ph-button
               variant="secondary"
               type="button"
               [disabled]="exporting()"
@@ -60,7 +60,7 @@
               Export CSV
             </button>
             <button
-              w-button
+              ph-button
               variant="secondary"
               type="button"
               [disabled]="exporting()"
@@ -71,12 +71,12 @@
           </div>
         </div>
       </div>
-      <div w-card-body class="w-stack">
+      <div ph-card-body class="ph-stack">
         <div class="history-filters" aria-label="Attendance filters">
-          <div w-form-field class="w-mb-0">
-            <label w-label for="attendance-cohort-filter">Cohort</label>
+          <div ph-form-field class="ph-mb-0">
+            <label ph-label for="attendance-cohort-filter">Cohort</label>
             <select
-              w-select
+              ph-select
               id="attendance-cohort-filter"
               [value]="cohortId()"
               (change)="cohortId.set($any($event.target).value)"
@@ -87,34 +87,34 @@
               }
             </select>
           </div>
-          <div w-form-field class="w-mb-0">
-            <label w-label for="attendance-from">From</label>
+          <div ph-form-field class="ph-mb-0">
+            <label ph-label for="attendance-from">From</label>
             <input
-              w-text-field
+              ph-text-field
               id="attendance-from"
               type="date"
               [value]="from()"
               (input)="from.set($any($event.target).value)"
             />
           </div>
-          <div w-form-field class="w-mb-0">
-            <label w-label for="attendance-to">To</label>
+          <div ph-form-field class="ph-mb-0">
+            <label ph-label for="attendance-to">To</label>
             <input
-              w-text-field
+              ph-text-field
               id="attendance-to"
               type="date"
               [value]="to()"
               (input)="to.set($any($event.target).value)"
             />
           </div>
-          <button w-button variant="primary" type="button" (click)="load()">Apply filters</button>
+          <button ph-button variant="primary" type="button" (click)="load()">Apply filters</button>
         </div>
 
         @if (loading()) {
-          <p class="w-muted" role="status">Loading attendance history…</p>
+          <p class="ph-muted" role="status">Loading attendance history…</p>
         } @else if (view() === 'session') {
-          <div w-table-wrap data-testid="attendance-by-session">
-            <table w-table>
+          <div ph-table-wrap data-testid="attendance-by-session">
+            <table ph-table>
               <thead>
                 <tr>
                   <th scope="col">Session</th>
@@ -132,7 +132,7 @@
                     <td>
                       <strong>{{ row.title }}</strong
                       ><br />
-                      <span class="w-muted">{{ row.startsAt | date: 'medium' }}</span>
+                      <span class="ph-muted">{{ row.startsAt | date: 'medium' }}</span>
                     </td>
                     <td>{{ row.cohortName }}</td>
                     <td>{{ row.present }}</td>
@@ -140,7 +140,7 @@
                     <td>{{ row.rate | percent: '1.0-0' }}</td>
                     <td>
                       <span
-                        w-badge
+                        ph-badge
                         [variant]="
                           row.status === 'saved'
                             ? 'success'
@@ -156,7 +156,7 @@
                     </td>
                     <td>
                       <a
-                        w-button
+                        ph-button
                         variant="ghost"
                         size="sm"
                         [routerLink]="[attendanceBase(), row.sessionId]"
@@ -174,8 +174,8 @@
             </table>
           </div>
         } @else {
-          <div w-table-wrap data-testid="attendance-by-youth">
-            <table w-table>
+          <div ph-table-wrap data-testid="attendance-by-youth">
+            <table ph-table>
               <thead>
                 <tr>
                   <th scope="col">Youth</th>
@@ -193,7 +193,7 @@
                     <td>
                       <strong>{{ row.displayName }}</strong>
                       @if (row.belowThreshold) {
-                        <span w-badge variant="error">Below 70%</span>
+                        <span ph-badge variant="error">Below 70%</span>
                       }
                     </td>
                     <td>{{ row.attended }} / {{ row.total }}</td>
@@ -215,4 +215,4 @@
       </div>
     </section>
   </div>
-</w-shell>
+</ph-shell>

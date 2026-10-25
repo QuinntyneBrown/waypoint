@@ -23,7 +23,7 @@ import {
 
 // Traces to: L2-AUTH-005
 @Component({
-  selector: 'w-reset-password',
+  selector: 'ph-reset-password',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,

@@ -1,15 +1,15 @@
-<w-shell
+<ph-shell
   [role]="shellRole()"
   active="calendar"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Program</div>
-        <h1 class="w-page__title">{{ isAdmin() ? 'Program calendar' : 'Calendar' }}</h1>
-        <p class="w-page__sub">
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Program</div>
+        <h1 class="ph-page__title">{{ isAdmin() ? 'Program calendar' : 'Calendar' }}</h1>
+        <p class="ph-page__sub">
           {{
             isAdmin()
               ? 'Schedule sessions across cohorts and open their attendance rosters.'
@@ -20,19 +20,19 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
-    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="ph-sr-only" role="status">{{ statusMessage() }}</p>
 
     <div class="calendar-layout">
-      <section class="w-stack" aria-labelledby="calendar-view-heading">
+      <section class="ph-stack" aria-labelledby="calendar-view-heading">
         <div class="calendar-toolbar">
           <div>
             <h2 id="calendar-view-heading">{{ rangeLabel() }}</h2>
-            <div w-tabs role="tablist" aria-label="Calendar view">
+            <div ph-tabs role="tablist" aria-label="Calendar view">
               @for (mode of ['month', 'week', 'agenda']; track mode) {
                 <button
-                  w-tab
+                  ph-tab
                   [active]="view() === mode"
                   type="button"
                   role="tab"
@@ -44,11 +44,11 @@
               }
             </div>
           </div>
-          <div class="w-cluster">
-            <div w-form-field class="w-mb-0">
-              <label w-label for="calendar-cohort-filter">Calendar cohort</label>
+          <div class="ph-cluster">
+            <div ph-form-field class="ph-mb-0">
+              <label ph-label for="calendar-cohort-filter">Calendar cohort</label>
               <select
-                w-select
+                ph-select
                 id="calendar-cohort-filter"
                 [value]="cohortFilter()"
                 (change)="cohortFilter.set($any($event.target).value)"
@@ -59,14 +59,14 @@
                 }
               </select>
             </div>
-            <button w-button variant="ghost" type="button" (click)="shift(-1)">Previous</button>
-            <button w-button variant="ghost" type="button" (click)="today()">Today</button>
-            <button w-button variant="ghost" type="button" (click)="shift(1)">Next</button>
+            <button ph-button variant="ghost" type="button" (click)="shift(-1)">Previous</button>
+            <button ph-button variant="ghost" type="button" (click)="today()">Today</button>
+            <button ph-button variant="ghost" type="button" (click)="shift(1)">Next</button>
           </div>
         </div>
 
         @if (loading()) {
-          <p class="w-muted" role="status">Loading sessions…</p>
+          <p class="ph-muted" role="status">Loading sessions…</p>
         } @else if (view() === 'month') {
           <div class="calendar-scroll" data-testid="month-calendar">
             <div class="month-grid" role="grid" aria-label="Month calendar">
@@ -118,51 +118,51 @@
         } @else {
           <div class="agenda-list" data-testid="agenda-calendar">
             @for (session of agendaSessions(); track session.id) {
-              <article w-card>
-                <div w-card-body class="w-cluster w-cluster--between">
+              <article ph-card>
+                <div ph-card-body class="ph-cluster ph-cluster--between">
                   <div>
-                    <p class="w-eyebrow">{{ session.startsAt | date: 'EEEE, MMM d' }}</p>
+                    <p class="ph-eyebrow">{{ session.startsAt | date: 'EEEE, MMM d' }}</p>
                     <h3>{{ session.title }}</h3>
                     <p>
                       {{ session.startsAt | date: 'shortTime' }} ·
                       {{ session.location || 'Location TBD' }}
                     </p>
-                    <p class="w-muted">
+                    <p class="ph-muted">
                       {{ session.cohortName }} · {{ session.mentorName }} ·
                       {{ session.rosterCount }} youth
                     </p>
                   </div>
-                  <a w-button variant="secondary" [routerLink]="[attendanceBase(), session.id]">
+                  <a ph-button variant="secondary" [routerLink]="[attendanceBase(), session.id]">
                     {{ session.attendanceTaken ? 'Edit attendance' : 'Take attendance' }}
                   </a>
                 </div>
               </article>
             } @empty {
-              <div w-empty-state><p>No sessions in this agenda range.</p></div>
+              <div ph-empty-state><p>No sessions in this agenda range.</p></div>
             }
           </div>
         }
       </section>
 
-      <aside w-card class="session-form" aria-labelledby="new-session-heading">
-        <div w-card-header>
-          <h2 w-card-title id="new-session-heading">New session</h2>
+      <aside ph-card class="session-form" aria-labelledby="new-session-heading">
+        <div ph-card-header>
+          <h2 ph-card-title id="new-session-heading">New session</h2>
         </div>
-        <div w-card-body class="w-stack">
-          <div w-form-field>
-            <label w-label for="session-title">Title</label>
+        <div ph-card-body class="ph-stack">
+          <div ph-form-field>
+            <label ph-label for="session-title">Title</label>
             <input
-              w-text-field
+              ph-text-field
               id="session-title"
               maxlength="200"
               [value]="title()"
               (input)="title.set($any($event.target).value)"
             />
           </div>
-          <div w-form-field>
-            <label w-label for="session-cohort">Cohort</label>
+          <div ph-form-field>
+            <label ph-label for="session-cohort">Cohort</label>
             <select
-              w-select
+              ph-select
               id="session-cohort"
               [value]="cohortId()"
               (change)="cohortId.set($any($event.target).value)"
@@ -173,10 +173,10 @@
               }
             </select>
           </div>
-          <div w-form-field>
-            <label w-label for="session-mentor">Mentor</label>
+          <div ph-form-field>
+            <label ph-label for="session-mentor">Mentor</label>
             <select
-              w-select
+              ph-select
               id="session-mentor"
               [value]="mentorId()"
               (change)="mentorId.set($any($event.target).value)"
@@ -187,11 +187,11 @@
               }
             </select>
           </div>
-          <div class="w-grid w-grid--2">
-            <div w-form-field>
-              <label w-label for="session-date">Date</label>
+          <div class="ph-grid ph-grid--2">
+            <div ph-form-field>
+              <label ph-label for="session-date">Date</label>
               <input
-                w-text-field
+                ph-text-field
                 id="session-date"
                 type="date"
                 [min]="selectedCohort()?.termStart?.slice(0, 10)"
@@ -200,10 +200,10 @@
                 (input)="date.set($any($event.target).value)"
               />
             </div>
-            <div w-form-field>
-              <label w-label for="session-time">Time</label>
+            <div ph-form-field>
+              <label ph-label for="session-time">Time</label>
               <input
-                w-text-field
+                ph-text-field
                 id="session-time"
                 type="time"
                 [value]="time()"
@@ -211,11 +211,11 @@
               />
             </div>
           </div>
-          <div class="w-grid w-grid--2">
-            <div w-form-field>
-              <label w-label for="session-duration">Minutes</label>
+          <div class="ph-grid ph-grid--2">
+            <div ph-form-field>
+              <label ph-label for="session-duration">Minutes</label>
               <input
-                w-text-field
+                ph-text-field
                 id="session-duration"
                 type="number"
                 min="1"
@@ -224,10 +224,10 @@
                 (input)="durationMinutes.set($any($event.target).value)"
               />
             </div>
-            <div w-form-field>
-              <label w-label for="session-location">Location</label>
+            <div ph-form-field>
+              <label ph-label for="session-location">Location</label>
               <input
-                w-text-field
+                ph-text-field
                 id="session-location"
                 maxlength="256"
                 [value]="location()"
@@ -235,17 +235,17 @@
               />
             </div>
           </div>
-          <label w-checkbox>
+          <label ph-checkbox>
             <input
               type="checkbox"
               [checked]="repeatsWeekly()"
               (change)="repeatsWeekly.set($any($event.target).checked)"
             />
-            <span w-checkbox-box></span>
+            <span ph-checkbox-box></span>
             <span>Repeat weekly through the cohort term</span>
           </label>
           <button
-            w-button
+            ph-button
             variant="primary"
             type="button"
             [disabled]="saving() || !options()?.cohorts?.length"
@@ -254,10 +254,10 @@
             {{ saving() ? 'Scheduling…' : 'Schedule session' }}
           </button>
           @if (statusMessage(); as message) {
-            <p w-alert variant="success">{{ message }}</p>
+            <p ph-alert variant="success">{{ message }}</p>
           }
         </div>
       </aside>
     </div>
   </div>
-</w-shell>
+</ph-shell>

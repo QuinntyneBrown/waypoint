@@ -1,10 +1,10 @@
-.w-marketing-nav__links {
+.ph-marketing-nav__links {
   display: none;
-  gap: var(--w-s5);
-  margin-left: var(--w-s5);
+  gap: var(--ph-s5);
+  margin-left: var(--ph-s5);
 }
 @media (min-width: 820px) {
-  .w-marketing-nav__links {
+  .ph-marketing-nav__links {
     display: flex;
   }
 }

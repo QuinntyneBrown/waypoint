@@ -51,7 +51,7 @@ type Decision = 'approve' | 'decline';
 
 // Traces to: L2-INTAKE-002, L2-CONSENT-002, L2-AUTH-009
 @Component({
-  selector: 'w-applications-list',
+  selector: 'ph-applications-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

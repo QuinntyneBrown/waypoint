@@ -8,7 +8,7 @@ skinparam defaultFontSize 20
 skinparam ArrowColor #344054
 skinparam sequenceMessageAlign left
 box "Frontend — Portal" #E0F2FE
-  participant "w-video-player" as player
+  participant "ph-video-player" as player
 end box
 box "Backend — API" #D1FADF
   participant "MediaDeliveryEndpoint" as delivery

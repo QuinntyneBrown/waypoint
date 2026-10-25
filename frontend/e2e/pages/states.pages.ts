@@ -64,8 +64,9 @@ export class RequestedGuardianConsentPage extends BasePage {
   get participationConsent() {
     return this.page.getByLabel(/i give permission.*participate/i);
   }
+  /** The participation checkbox label (not the organization's consent statement above it). */
   get participationOption() {
-    return this.page.getByText(/i give permission.*participate/i);
+    return this.page.locator('label').filter({ hasText: /i give permission.*participate/i });
   }
   get mediaConsentOption() {
     return this.page.getByText(/allow waypoint to use photos or video/i);

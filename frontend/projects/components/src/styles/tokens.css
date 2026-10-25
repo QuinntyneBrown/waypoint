@@ -1,27 +1,27 @@
 /* ==========================================================================
-   Waypoint design tokens: the single source of truth for colour, type,
-   space, shape, elevation, motion, layout and z-order.
-
    Copy of docs/design-system/tokens/tokens.css; keep the values in sync.
-   Light by default; dark via [data-theme="dark"] or the device colour
-   scheme when no data-theme="light" is set (L2-PLATFORM-013).
 
-   Extracted from docs/mocks/assets/css/_core.css (the --w-* draft) and the
-   118 HTML mocks. Every value traces to a mock or to a correction logged in
-   docs/design-system/README.md ("Drift found in the mocks").
+   Waypoint design tokens: the PromiseHub design system, copied verbatim from
+   promise-hub/docs/design-system/tokens/tokens.css on 2026-10-25, plus the
+   "Waypoint extensions" block at the end (DECISIONS #25).
 
    Three tiers:
-     1. Primitives  (--palette-*, --font-*)  raw values; only semantic tokens
-                    read them.
+     1. Primitives  (--palette-*, --font-*, --size-*)  raw values, never used
+                    directly by components.
      2. Semantic    (--color-*, --text-*, --space-*, --radius-*, --shadow-*,
                     --duration-*, --ease-*, --z-*, --layout-*) meaning-based
                     aliases that components consume. Themes override these.
-     3. Component   (--btn-*, --field-*, ...) declared in components.css;
+     3. Component   (--ph-*, --btn-*, ...) declared in components.css,
                     always alias a semantic token.
 
-   Brand: lime highlight (--color-brand) carries the one primary action per
-   view; ink (--color-accent in light) carries selection, focus and current
-   state. In dark, lime does both jobs.
+   Themes: light is the default (:root). Dark applies with
+   [data-theme="dark"], or automatically when the OS prefers dark and the
+   page has not forced [data-theme="light"] (L2-PLATFORM-013). Every pair in
+   contrast-pairs.json passes WCAG 2.2 AA in both themes
+   (check_contrast.py, L2-NFR-012).
+
+   Do not edit the PromiseHub section by hand; re-copy it and keep the
+   Waypoint extensions below it.
    ========================================================================== */
 
 :root {
@@ -29,174 +29,257 @@
   --palette-white: #ffffff;
   --palette-black: #000000;
 
-  /* warm greige-to-ink neutrals (mocks: --w-g100..g500, --w-ink) */
-  --palette-ink-25: #fbf9f8;
-  --palette-ink-50: #f5f0f0;
-  --palette-ink-100: #e9e7e4;
-  --palette-ink-200: #e4e0d8;
-  --palette-ink-300: #cdcbc4;
-  --palette-ink-400: #a6a49a;
-  --palette-ink-500: #85837a;
-  --palette-ink-600: #62615a;
-  --palette-ink-700: #45443b;
-  --palette-ink-800: #2a2a20;
-  --palette-ink-850: #222219;
-  --palette-ink-900: #16160c;
-  --palette-ink-950: #0e0e08;
+  --palette-gray-25: #fbfbfc;
+  --palette-gray-50: #f6f7f9;
+  --palette-gray-100: #eef0f3;
+  --palette-gray-150: #e9ecf1; /* dark-theme body text */
+  --palette-gray-200: #dfe3e8;
+  --palette-gray-300: #c9cfd8;
+  --palette-gray-350: #b3bac5; /* dark-theme muted text */
+  --palette-gray-400: #a3abb8;
+  --palette-gray-450: #959eab; /* dark-theme subtle text */
+  --palette-gray-475: #8d97a5; /* dark-theme control edges */
+  --palette-gray-500: #677080;
+  --palette-gray-600: #5e6675;
+  --palette-gray-700: #444b58;
+  --palette-gray-750: #2f3640; /* dark-theme dividers */
+  --palette-gray-800: #2c323c;
+  --palette-gray-900: #1a1e26;
+  --palette-gray-925: #14181e; /* dark-theme sunken wells */
+  --palette-gray-950: #0f1216;
 
-  /* lime brand (mocks: --w-lime, --w-lime-600, --w-lime-soft) */
-  --palette-lime-50: #f6ffe0;
-  --palette-lime-100: #ecfdc4;
-  --palette-lime-200: #dcfd94;
-  --palette-lime-300: #d2fc74;
-  --palette-lime-400: #c6fb50;
-  --palette-lime-500: #b2e93a;
-  --palette-lime-800: #33410f;
-  --palette-lime-900: #262f0c;
-  --palette-lime-950: #1a2008;
+  --palette-blue-50: #ebf2ff;
+  --palette-blue-100: #d6e3ff;
+  --palette-blue-200: #adc6ff;
+  --palette-blue-300: #8ab4ff;
+  --palette-blue-400: #5f93f7;
+  --palette-blue-500: #3b7af0;
+  --palette-blue-600: #2563eb;
+  --palette-blue-700: #1d4ed8;
+  --palette-blue-800: #1e3fae;
+  --palette-blue-900: #1b2f7a;
+  --palette-blue-950: #0f1f3d;
 
-  /* green (mocks: --w-green, --w-success) */
-  --palette-green-50: #e6f4e6;
-  --palette-green-300: #8fd68f;
-  --palette-green-500: #2e8f2e;
-  --palette-green-700: #1c6b1c;
-  --palette-green-800: #1f4f1f;
-  --palette-green-950: #0f240f;
+  /* Brand hue: violet (Shelfie default, kept per docs/mocks/README.md). Blue stays for informational messages. */
+  --palette-violet-50: #f5f3ff;
+  --palette-violet-100: #ede9fe;
+  --palette-violet-200: #ddd6fe;
+  --palette-violet-300: #c4b5fd;
+  --palette-violet-400: #a78bfa;
+  --palette-violet-500: #8b5cf6;
+  --palette-violet-600: #7c3aed;
+  --palette-violet-700: #6d28d9;
+  --palette-violet-800: #5b21b6;
+  --palette-violet-900: #4c1d95;
+  --palette-violet-950: #2e1065;
 
-  /* amber (mocks: --w-amber, --w-gold, --w-warning) */
-  --palette-amber-50: #fff4d9;
-  --palette-amber-300: #ffd166;
-  --palette-amber-400: #ffd700;
-  --palette-amber-500: #a86b00;
-  --palette-amber-700: #7d5000;
-  --palette-amber-800: #5a3c05;
-  --palette-amber-950: #2a1e05;
+  /* Google sign-in button: Google's brand guidelines fix these values; used only by the social button. */
+  --palette-google-light-bg: #ffffff;
+  --palette-google-light-fg: #1f1f1f;
+  --palette-google-light-border: #747775;
+  --palette-google-dark-bg: #131314;
+  --palette-google-dark-fg: #e3e3e3;
+  --palette-google-dark-border: #8e918f;
+  /* GitHub sign-in button: GitHub's dark mark-on-fill in light, inverted in dark; used only by the social button. */
+  --palette-github-light-bg: #1f2328;
+  --palette-github-light-fg: #ffffff;
+  --palette-github-light-border: #1f2328;
+  --palette-github-dark-bg: #f6f8fa;
+  --palette-github-dark-fg: #1f2328;
+  --palette-github-dark-border: #d1d9e0;
 
-  /* tomato (mocks: --w-tomato, --w-error) */
-  --palette-tomato-50: #fde9e3;
-  --palette-tomato-200: #ffbba8;
-  --palette-tomato-300: #ff9b80;
-  --palette-tomato-500: #d5421b;
-  --palette-tomato-600: #b8380f;
-  --palette-tomato-700: #a5310f;
-  --palette-tomato-800: #8a290c;
-  --palette-tomato-900: #5e1d0a;
-  --palette-tomato-950: #2e1108;
+  /* Pastel tints for avatars, event and partner accents. Always paired with --color-fg-on-cover (dark text) in both themes. */
+  --palette-cover-sage: #cfe8d5;
+  --palette-cover-rose: #f9d5e0;
+  --palette-cover-sky: #cfe6fb;
+  --palette-cover-sun: #fbe7b2;
+  --palette-cover-lilac: #e3d9fb;
+  --palette-cover-mint: #cdf1ec;
+  --palette-cover-peach: #fddcc8;
 
-  /* teal / sky (mocks: --w-teal, --w-sky, --w-info) */
-  --palette-teal-50: #e1f1f7;
-  --palette-teal-300: #8adfff;
-  --palette-teal-500: #17769a;
-  --palette-teal-700: #136080;
-  --palette-teal-800: #134a60;
-  --palette-teal-950: #08222d;
+  /* Tinted surfaces: a card takes a wash of its cover colour. Light is the cover at 50% over white;
+     dark keeps the hue on a near-black base. Both pass fg-muted and fg-accent at 4.5:1. */
+  --palette-cover-sage-tint: #e7f4ea;
+  --palette-cover-sage-deep: #1f2d25;
+  --palette-cover-rose-tint: #fceaf0;
+  --palette-cover-rose-deep: #33222b;
+  --palette-cover-sky-tint: #e7f2fd;
+  --palette-cover-sky-deep: #1f2a38;
+  --palette-cover-sun-tint: #fdf3d8;
+  --palette-cover-sun-deep: #332a17;
+  --palette-cover-lilac-tint: #f1ecfd;
+  --palette-cover-lilac-deep: #2a2340;
+  --palette-cover-mint-tint: #e6f8f6;
+  --palette-cover-mint-deep: #1c302d;
+  --palette-cover-peach-tint: #feeee4;
+  --palette-cover-peach-deep: #352620;
+
+  --palette-green-50: #e9f8ee;
+  --palette-green-100: #cdf0d9;
+  --palette-green-300: #7ed69a;
+  --palette-green-500: #2a8f52;
+  --palette-green-700: #1b6b3c;
+  --palette-green-900: #0f3b22;
+  --palette-green-950: #0b2918;
+
+  --palette-amber-50: #fff6e5;
+  --palette-amber-100: #ffe9c2;
+  --palette-amber-300: #f7c15c;
+  --palette-amber-500: #b26f00;
+  --palette-amber-700: #8a5300;
+  --palette-amber-900: #4d2f00;
+  --palette-amber-950: #2e1d05;
+
+  --palette-red-50: #fdecec;
+  --palette-red-100: #fbd5d4;
+  --palette-red-300: #f59b96;
+  --palette-red-500: #d93a30;
+  --palette-red-600: #c42c22;
+  --palette-red-700: #a0221b;
+  --palette-red-900: #5a1410;
+  --palette-red-950: #3a110d;
 
   /* ---------- Primitives: typography ----------------------------------- */
-  --font-family-sans: 'Inter', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-family-heading:
-    'Space Grotesk', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-family-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-family-sans:
+    ui-rounded, 'SF Pro Rounded', 'Nunito', 'Segoe UI', system-ui, -apple-system, Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-family-display:
+    ui-rounded, 'SF Pro Rounded', 'Nunito', 'Segoe UI', system-ui, -apple-system, Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-family-mono:
+    ui-monospace, 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
 
-  --font-size-xs: 0.75rem; /* 12px  captions, badges, overlines */
-  --font-size-sm: 0.875rem; /* 14px  secondary text, labels, table cells */
-  --font-size-md: 1rem; /* 16px  body, inputs */
-  --font-size-lg: 1.125rem; /* 18px  h4, lead, scripture */
-  --font-size-xl: 1.25rem; /* 20px  dialog and empty-state titles */
-  --font-size-2xl: 1.375rem; /* 22px  h3 */
-  --font-size-3xl: 2rem; /* 32px  h2, stat values */
-  --font-size-4xl: 2.75rem; /* 44px  h1 */
-  --font-size-5xl: 3.5rem; /* 56px  public-site hero */
+  --font-size-xs: 0.75rem; /* 12px  captions, badges */
+  --font-size-sm: 0.875rem; /* 14px  secondary text, table cells */
+  --font-size-md: 1rem; /* 16px  body */
+  --font-size-lg: 1.125rem; /* 18px  lead paragraph, large body */
+  --font-size-xl: 1.25rem; /* 20px  h4 */
+  --font-size-2xl: 1.5rem; /* 24px  h3 */
+  --font-size-3xl: 1.875rem; /* 30px  h2 */
+  --font-size-4xl: 2.25rem; /* 36px  h1 */
+  --font-size-5xl: 3rem; /* 48px  display */
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  --line-height-tight: 1.1; /* headings, stat values */
-  --line-height-snug: 1.25; /* list titles, nav items */
+  --line-height-tight: 1.2; /* display, h1-h2 */
+  --line-height-snug: 1.3; /* h3-h4 */
   --line-height-normal: 1.5; /* body */
-  --line-height-relaxed: 1.6; /* scripture, long reading */
+  --line-height-relaxed: 1.65; /* long-form reading */
 
-  --letter-spacing-tight: -0.02em; /* headings */
-  --letter-spacing-normal: -0.01em; /* body (mocks set it on <body>) */
-  --letter-spacing-wide: 0.08em; /* uppercase eyebrows, table headers */
+  --letter-spacing-tight: -0.01em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.04em; /* all-caps labels */
 
   /* ---------- Semantic: colour (light) --------------------------------- */
-  --color-bg-canvas: var(--palette-white); /* page background */
-  --color-bg-surface: var(--palette-white); /* cards, inputs, tables */
-  --color-bg-surface-raised: var(--palette-white); /* dialogs, menus */
-  --color-bg-surface-sunken: var(--palette-ink-50); /* greige wells, table headers, auth page */
-  --color-bg-subtle: var(--palette-ink-50); /* hover rows, ghost hover */
-  --color-bg-subtle-hover: var(--palette-ink-100); /* neutral buttons, chips, segmented track */
-  --color-bg-inverse: var(--palette-ink-900); /* toasts, ink cards, footer */
-  --color-bg-backdrop: rgb(22 22 12 / 0.5); /* modal scrim */
+  --color-bg-canvas: var(--palette-gray-50); /* page background */
+  --color-bg-surface: var(--palette-white); /* cards, panels, inputs */
+  --color-bg-surface-raised: var(--palette-white); /* dialogs, menus, popovers */
+  --color-bg-surface-sunken: var(--palette-gray-100); /* wells, code blocks, table headers */
+  --color-bg-subtle: var(--palette-gray-100); /* hover rows, chips */
+  --color-bg-subtle-hover: var(--palette-gray-200);
+  --color-bg-inverse: var(--palette-gray-900); /* tooltips, dark toasts */
+  --color-bg-backdrop: rgba(15, 18, 22, 0.55); /* modal scrim */
 
-  --color-fg-default: var(--palette-ink-900);
-  --color-fg-muted: var(--palette-ink-600);
-  --color-fg-subtle: var(--palette-ink-600);
-  --color-fg-disabled: var(--palette-ink-400);
-  --color-fg-inverse: var(--palette-white);
-  --color-fg-inverse-muted: var(--palette-ink-300);
-  --color-fg-link: var(--palette-ink-900);
-  --color-fg-link-hover: var(--palette-black);
+  --color-fg-default: var(--palette-gray-900); /* body text */
+  --color-fg-muted: var(--palette-gray-600); /* secondary text */
+  --color-fg-subtle: var(--palette-gray-500); /* placeholders, metadata (4.5:1 on surface) */
+  --color-fg-disabled: var(--palette-gray-400); /* disabled text; exempt from contrast */
+  --color-fg-inverse: var(--palette-white); /* text on inverse/accent backgrounds */
+  --color-fg-link: var(--palette-violet-700);
+  --color-fg-link-hover: var(--palette-violet-800);
 
-  --color-border-default: var(--palette-ink-200); /* dividers, card edges (decorative) */
-  --color-border-strong: var(--palette-ink-500); /* form control edges (>= 3:1) */
-  --color-border-inverse: var(--palette-ink-700);
+  --color-border-default: var(--palette-gray-200); /* dividers, card edges (decorative) */
+  --color-border-strong: var(--palette-gray-500); /* form control edges (>= 3:1) */
+  --color-border-inverse: var(--palette-gray-700);
 
-  --color-accent: var(--palette-ink-900); /* selected, current, checked, focus */
-  --color-accent-hover: var(--palette-ink-800);
-  --color-accent-active: var(--palette-black);
-  --color-accent-subtle: var(--palette-lime-100); /* selected answer, selected row */
-  --color-accent-subtle-hover: var(--palette-lime-200);
+  --color-accent: var(--palette-violet-600); /* primary actions, selected states */
+  --color-accent-hover: var(--palette-violet-700);
+  --color-accent-active: var(--palette-violet-800);
+  --color-accent-subtle: var(--palette-violet-50); /* selected row, accent chip background */
+  --color-accent-subtle-hover: var(--palette-violet-100);
   --color-fg-on-accent: var(--palette-white);
-  --color-fg-accent: var(--palette-ink-900);
+  --color-fg-accent: var(--palette-violet-700); /* accent-coloured text on surfaces */
 
-  --color-brand: var(--palette-lime-400); /* primary button, brand mark, progress fill */
-  --color-brand-hover: var(--palette-lime-500);
-  --color-fg-on-brand: var(--palette-ink-900);
+  /* Scoped organization accent. Only use a validated foreground/background pair; no branding behavior is implemented. */
+  --color-org-accent: var(--color-accent);
+  --color-org-accent-foreground: var(--color-fg-on-accent);
 
-  --color-focus-ring: var(--palette-ink-900);
+  --color-focus-ring: var(--palette-violet-600);
+  --color-social-google-bg: var(--palette-google-light-bg);
+  --color-social-google-fg: var(--palette-google-light-fg);
+  --color-social-google-border: var(--palette-google-light-border);
+  --color-social-github-bg: var(--palette-github-light-bg);
+  --color-social-github-fg: var(--palette-github-light-fg);
+  --color-social-github-border: var(--palette-github-light-border);
   --color-focus-ring-offset: var(--color-bg-surface);
 
-  --color-info-bg: var(--palette-teal-50);
-  --color-info-fg: var(--palette-teal-700);
-  --color-info-border: var(--palette-teal-300);
-  --color-info-icon: var(--palette-teal-500);
-  --color-info-solid: var(--palette-teal-500);
+  --color-info-bg: var(--palette-blue-50);
+  --color-info-fg: var(--palette-blue-800);
+  --color-info-border: var(--palette-blue-300);
+  --color-info-icon: var(--palette-blue-600);
+  --color-info-solid: var(--palette-blue-600);
+  --color-info-icon-on-inverse: var(--palette-blue-600); /* status icon in a toast */
 
   --color-success-bg: var(--palette-green-50);
   --color-success-fg: var(--palette-green-700);
   --color-success-border: var(--palette-green-300);
   --color-success-icon: var(--palette-green-500);
   --color-success-solid: var(--palette-green-700);
+  --color-success-icon-on-inverse: var(--palette-green-500); /* status icon in a toast */
 
   --color-warning-bg: var(--palette-amber-50);
   --color-warning-fg: var(--palette-amber-700);
   --color-warning-border: var(--palette-amber-300);
   --color-warning-icon: var(--palette-amber-500);
   --color-warning-solid: var(--palette-amber-700);
+  --color-warning-icon-on-inverse: var(--palette-amber-500); /* status icon in a toast */
 
-  --color-danger-bg: var(--palette-tomato-50);
-  --color-danger-fg: var(--palette-tomato-700);
-  --color-danger-border: var(--palette-tomato-300);
-  --color-danger-icon: var(--palette-tomato-600);
-  --color-danger-solid: var(--palette-tomato-600);
-  --color-danger-solid-hover: var(--palette-tomato-800);
+  --color-danger-bg: var(--palette-red-50);
+  --color-danger-fg: var(--palette-red-700);
+  --color-danger-border: var(--palette-red-300);
+  --color-danger-icon: var(--palette-red-500);
+  --color-danger-solid: var(--palette-red-600);
+  --color-danger-icon-on-inverse: var(
+    --palette-red-500
+  ); /* status icon in a toast */ /* destructive buttons */
+  --color-danger-solid-hover: var(--palette-red-700);
   --color-fg-on-danger: var(--palette-white);
 
+  --color-cover-sage: var(--palette-cover-sage);
+  --color-cover-rose: var(--palette-cover-rose);
+  --color-cover-sky: var(--palette-cover-sky);
+  --color-cover-sun: var(--palette-cover-sun);
+  --color-cover-lilac: var(--palette-cover-lilac);
+  --color-cover-mint: var(--palette-cover-mint);
+  --color-cover-peach: var(--palette-cover-peach);
+  --color-fg-on-cover: var(--palette-gray-900);
+  /* Surface tints (R1): hero and book cards take a wash of their cover colour. */
+  --color-tint-sage: var(--palette-cover-sage-tint);
+  --color-tint-rose: var(--palette-cover-rose-tint);
+  --color-tint-sky: var(--palette-cover-sky-tint);
+  --color-tint-sun: var(--palette-cover-sun-tint);
+  --color-tint-lilac: var(--palette-cover-lilac-tint);
+  --color-tint-mint: var(--palette-cover-mint-tint);
+  --color-tint-peach: var(--palette-cover-peach-tint);
+  /* Machine-readable codes (QR): dark modules on a light plate in every theme, so any camera reads them.
+     Deliberately not overridden by the dark theme. */
+  --color-code-plate: var(--palette-white);
+  --color-code-module: var(--palette-black);
+
   /* ---------- Semantic: typography roles ------------------------------- */
-  --text-display: var(--font-weight-medium) var(--font-size-5xl) / var(--line-height-tight)
-    var(--font-family-heading);
-  --text-h1: var(--font-weight-medium) var(--font-size-4xl) / var(--line-height-tight)
-    var(--font-family-heading);
-  --text-h2: var(--font-weight-medium) var(--font-size-3xl) / var(--line-height-tight)
-    var(--font-family-heading);
-  --text-h3: var(--font-weight-medium) var(--font-size-2xl) / var(--line-height-tight)
-    var(--font-family-heading);
-  --text-h4: var(--font-weight-medium) var(--font-size-lg) / var(--line-height-snug)
-    var(--font-family-heading);
+  --text-display: var(--font-weight-bold) var(--font-size-5xl) / var(--line-height-tight)
+    var(--font-family-display);
+  --text-h1: var(--font-weight-bold) var(--font-size-4xl) / var(--line-height-tight)
+    var(--font-family-display);
+  --text-h2: var(--font-weight-bold) var(--font-size-3xl) / var(--line-height-tight)
+    var(--font-family-display);
+  --text-h3: var(--font-weight-bold) var(--font-size-2xl) / var(--line-height-snug)
+    var(--font-family-display);
+  --text-h4: var(--font-weight-semibold) var(--font-size-xl) / var(--line-height-snug)
+    var(--font-family-display);
   --text-body-lg: var(--font-weight-regular) var(--font-size-lg) / var(--line-height-normal)
     var(--font-family-sans);
   --text-body: var(--font-weight-regular) var(--font-size-md) / var(--line-height-normal)
@@ -205,241 +288,384 @@
     var(--font-family-sans);
   --text-caption: var(--font-weight-regular) var(--font-size-xs) / var(--line-height-normal)
     var(--font-family-sans);
-  --text-label: var(--font-weight-semibold) var(--font-size-sm) / var(--line-height-normal)
+  --text-label: var(--font-weight-medium) var(--font-size-sm) / var(--line-height-normal)
     var(--font-family-sans);
   --text-overline: var(--font-weight-semibold) var(--font-size-xs) / var(--line-height-normal)
-    var(--font-family-heading);
+    var(--font-family-sans);
   --text-code: var(--font-weight-regular) var(--font-size-sm) / var(--line-height-normal)
     var(--font-family-mono);
-  --text-scripture: var(--font-weight-regular) var(--font-size-lg) / var(--line-height-relaxed)
-    var(--font-family-serif);
 
   /* ---------- Semantic: spacing (4px base) ----------------------------- */
   --space-0: 0;
-  --space-0-5: 0.125rem; /* 2px  hairline gaps, nav item gap */
+  --space-0-5: 0.125rem; /* 2px  hairline gaps */
   --space-1: 0.25rem; /* 4px  icon-to-label */
   --space-2: 0.5rem; /* 8px  inside chips, between inline items */
-  --space-3: 0.75rem; /* 12px compact padding, cluster gap */
-  --space-4: 1rem; /* 16px default padding, table cells */
-  --space-5: 1.25rem; /* 20px card padding, stack gap, page margin (phone) */
-  --space-6: 1.5rem; /* 24px dialog padding, page head gap */
-  --space-8: 2rem; /* 32px page block padding */
-  --space-10: 2.5rem; /* 40px auth card padding */
-  --space-12: 3rem; /* 48px empty-state padding */
+  --space-3: 0.75rem; /* 12px compact padding */
+  --space-4: 1rem; /* 16px default padding, stack gap */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px card padding, section gap (mobile) */
+  --space-8: 2rem; /* 32px section gap */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px page section spacing */
   --space-16: 4rem; /* 64px hero spacing */
   --space-20: 5rem; /* 80px */
   --space-24: 6rem; /* 96px */
 
   /* ---------- Semantic: layout ----------------------------------------- */
-  --layout-breakpoint-sm: 40rem; /* 640px  large phones: grids go to 2 columns */
-  --layout-breakpoint-md: 48rem; /* 768px  tablets: tables leave card mode */
-  --layout-breakpoint-lg: 60rem; /* 960px  sidebar shell replaces bottom nav */
+  --layout-breakpoint-sm: 40rem; /* 640px  large phones */
+  --layout-breakpoint-md: 48rem; /* 768px  tablets */
+  --layout-breakpoint-lg: 64rem; /* 1024px small laptops */
   --layout-breakpoint-xl: 80rem; /* 1280px desktops */
-  --layout-breakpoint-2xl: 90rem; /* 1440px wide container */
+  --layout-breakpoint-2xl: 96rem; /* 1536px wide screens */
 
-  --layout-columns: 4;
-  --layout-gutter: var(--space-4);
-  --layout-margin: var(--space-5);
-  --layout-container-max: 75rem; /* 1200px */
-  --layout-container-wide: 90rem; /* 1440px */
-  --layout-container-narrow: 47.5rem; /* 760px forms, reading */
-  --layout-measure: 65ch;
-  --layout-sidebar-width: 15rem; /* 240px */
+  --layout-columns: 4; /* grid columns at the current breakpoint */
+  --layout-gutter: var(--space-4); /* gap between columns */
+  --layout-margin: var(--space-4); /* page edge to content */
+  --layout-container-max: 80rem; /* 1280px */
+  --layout-measure: 65ch; /* max line length for prose */
+  --layout-sidebar-width: 16rem; /* 256px */
   --layout-topbar-height: 3.5rem; /* 56px */
-  --layout-botnav-height: 4.75rem; /* 76px */
+  --layout-topbar-search-width: 14rem; /* 224px inline search in the top bar, from 1024px */
+  --layout-tabbar-height: 4rem; /* 64px bottom tab bar on phones */
 
   /* ---------- Semantic: shape ------------------------------------------ */
-  --radius-xs: 0.125rem; /* 2px  focus outline corners */
-  --radius-sm: 0.25rem; /* 4px  checkbox, skeleton text */
-  --radius-md: 0.375rem; /* 6px  inputs, menu items */
-  --radius-lg: 0.5rem; /* 8px  cards, tables, alerts, toasts */
-  --radius-xl: 0.875rem; /* 14px dialogs, auth cards */
-  --radius-full: 9999px; /* buttons, badges, chips, avatars */
+  --radius-xs: 0.125rem; /* 2px  checkbox */
+  --radius-sm: 0.25rem; /* 4px  badges, inputs (compact) */
+  --radius-md: 0.75rem; /* 12px buttons, inputs, cards */
+  --radius-lg: 1.5rem; /* 24px dialogs, cards, hero, trophies */
+  --radius-xl: 2rem; /* 32px sheets, streak rewards, feature cards */
+  --radius-full: 9999px; /* pills, avatars */
 
-  --border-width-hairline: 1.5px; /* the Waypoint default stroke */
-  --border-width-thick: 2px; /* tab indicator, timeline nodes */
-  --border-width-accent: 3px; /* scripture rule */
+  --border-width-hairline: 1px;
+  --border-width-thick: 2px;
 
-  /* ---------- Semantic: elevation (flat aesthetic, used sparingly) ----- */
-  --shadow-color: 22 22 12;
-  --shadow-1: 0 1px 2px rgb(var(--shadow-color) / 0.06);
-  --shadow-2: 0 2px 8px rgb(var(--shadow-color) / 0.1);
-  --shadow-3: 0 8px 28px rgb(var(--shadow-color) / 0.16);
-  --shadow-4: 0 20px 48px rgb(var(--shadow-color) / 0.22);
+  /* ---------- Semantic: elevation -------------------------------------- */
+  --shadow-color: 20 25 35;
+  --shadow-1: 0 1px 2px rgb(var(--shadow-color) / 0.08); /* cards */
+  --shadow-2:
+    0 2px 6px rgb(var(--shadow-color) / 0.1), 0 1px 2px rgb(var(--shadow-color) / 0.06); /* raised cards, dropdowns */
+  --shadow-3:
+    0 8px 24px rgb(var(--shadow-color) / 0.14), 0 2px 6px rgb(var(--shadow-color) / 0.08); /* popovers, menus */
+  --shadow-4:
+    0 20px 48px rgb(var(--shadow-color) / 0.22), 0 4px 12px rgb(var(--shadow-color) / 0.1); /* dialogs, sheets */
   --shadow-focus: 0 0 0 2px var(--color-focus-ring-offset), 0 0 0 4px var(--color-focus-ring);
 
   /* ---------- Semantic: motion ----------------------------------------- */
   --duration-instant: 0ms;
-  --duration-fast: 150ms; /* hover, colour, border */
-  --duration-base: 200ms; /* fade, dialog pop, tab panel */
-  --duration-slow: 250ms; /* sidenav slide, toast slide-in */
-  --duration-deliberate: 400ms; /* progress fill */
-  --ease-standard: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
-  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --duration-fast: 120ms; /* hover, colour changes */
+  --duration-base: 200ms; /* reveal, menus, tooltips */
+  --duration-slow: 320ms; /* dialogs, sheets, page transitions */
+  --duration-deliberate: 500ms; /* celebrations, progress fills */
+  --duration-loop: 1400ms; /* one cycle of a looping indicator: shimmer, spinner (x0.5), pulse */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.3, 0, 1, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* ---------- Semantic: z-order ---------------------------------------- */
   --z-base: 0;
   --z-raised: 1;
-  --z-sticky: 100; /* topbar, sidenav, bottom nav, offline banner */
-  --z-dropdown: 1000; /* menus */
-  --z-overlay: 1200; /* nav scrim */
+  --z-sticky: 100;
+  --z-dropdown: 1000;
+  --z-overlay: 1200;
   --z-modal: 1300;
   --z-popover: 1400;
   --z-toast: 1500;
   --z-tooltip: 1600;
 
   /* ---------- Semantic: interaction ------------------------------------ */
-  --target-min: 1.5rem; /* 24px WCAG 2.5.8 */
-  --target-comfortable: 2.75rem; /* 44px */
+  --target-min: 1.5rem; /* 24px  WCAG 2.2 AA minimum target size */
+  --target-comfortable: 2.75rem; /* 44px recommended touch target */
   --focus-ring-width: 2px;
-  --focus-ring-offset: 3px;
-  --control-height-sm: 2rem; /* 32px */
-  --control-height-md: 2.75rem; /* 44px */
+  --focus-ring-offset: 2px;
+  --control-height-sm: 2.25rem; /* 36px */
+  --control-height-md: 2.75rem; /* 44px: every control is a comfortable touch target */
   --control-height-lg: 3.25rem; /* 52px */
+
+  /* ---------- Semantic: sizes ------------------------------------------ */
+  --size-icon-sm: 1rem; /* 16px inline with small text */
+  --size-icon-md: 1.25rem; /* 20px default, buttons and alerts */
+  --size-icon-lg: 1.5rem; /* 24px tab bar, empty states */
+  --size-avatar-sm: 2rem; /* 32px top bar */
+  --size-avatar-md: 2.5rem; /* 40px lists */
+  --size-avatar-lg: 3.5rem; /* 56px settings */
+  --size-avatar-xl: 4rem; /* 64px profile tiles */
+  --size-cover-sm: 2.75rem; /* 44px lists, tables */
+  --size-cover-md: 5rem; /* 80px book cards */
+  --size-cover-lg: 7.5rem; /* 120px book page */
+  --size-cover-xl: 10rem; /* 160px finished-book celebration */
 
   color-scheme: light;
 }
 
+/* Responsive layout tokens: columns, gutters and margins grow with the viewport. */
 @media (min-width: 48rem) {
   :root {
     --layout-columns: 8;
-    --layout-gutter: var(--space-5);
-    --layout-margin: var(--space-8);
-  }
-}
-
-@media (min-width: 60rem) {
-  :root {
-    --layout-columns: 12;
     --layout-gutter: var(--space-6);
     --layout-margin: var(--space-8);
   }
 }
 
+@media (min-width: 64rem) {
+  :root {
+    --layout-columns: 12;
+    --layout-gutter: var(--space-8);
+    --layout-margin: var(--space-12);
+  }
+}
+
+/* Forced light: identical to the :root values, so a light preview nested in a dark page stays light. */
+[data-theme='light'] {
+  --color-bg-canvas: var(--palette-gray-50);
+  --color-bg-surface: var(--palette-white);
+  --color-bg-surface-raised: var(--palette-white);
+  --color-bg-surface-sunken: var(--palette-gray-100);
+  --color-bg-subtle: var(--palette-gray-100);
+  --color-bg-subtle-hover: var(--palette-gray-200);
+  --color-bg-inverse: var(--palette-gray-900);
+  --color-bg-backdrop: rgba(15, 18, 22, 0.55);
+  --color-fg-default: var(--palette-gray-900);
+  --color-fg-muted: var(--palette-gray-600);
+  --color-fg-subtle: var(--palette-gray-500);
+  --color-fg-disabled: var(--palette-gray-400);
+  --color-fg-inverse: var(--palette-white);
+  --color-fg-link: var(--palette-violet-700);
+  --color-fg-link-hover: var(--palette-violet-800);
+  --color-border-default: var(--palette-gray-200);
+  --color-border-strong: var(--palette-gray-500);
+  --color-border-inverse: var(--palette-gray-700);
+  --color-accent: var(--palette-violet-600);
+  --color-accent-hover: var(--palette-violet-700);
+  --color-accent-active: var(--palette-violet-800);
+  --color-accent-subtle: var(--palette-violet-50);
+  --color-accent-subtle-hover: var(--palette-violet-100);
+  --color-fg-on-accent: var(--palette-white);
+  --color-fg-accent: var(--palette-violet-700);
+  --color-org-accent: var(
+    --color-accent
+  ); /* re-declared per theme so nested [data-theme] scopes recompute it */
+  --color-org-accent-foreground: var(--color-fg-on-accent);
+  --color-focus-ring: var(--palette-violet-600);
+  --color-social-google-bg: var(--palette-google-light-bg);
+  --color-social-google-fg: var(--palette-google-light-fg);
+  --color-social-google-border: var(--palette-google-light-border);
+  --color-social-github-bg: var(--palette-github-light-bg);
+  --color-social-github-fg: var(--palette-github-light-fg);
+  --color-social-github-border: var(--palette-github-light-border);
+  --color-info-bg: var(--palette-blue-50);
+  --color-info-fg: var(--palette-blue-800);
+  --color-info-border: var(--palette-blue-300);
+  --color-info-icon: var(--palette-blue-600);
+  --color-info-solid: var(--palette-blue-600);
+  --color-info-icon-on-inverse: var(--palette-blue-600);
+  --color-success-bg: var(--palette-green-50);
+  --color-success-fg: var(--palette-green-700);
+  --color-success-border: var(--palette-green-300);
+  --color-success-icon: var(--palette-green-500);
+  --color-success-solid: var(--palette-green-700);
+  --color-success-icon-on-inverse: var(--palette-green-500);
+  --color-warning-bg: var(--palette-amber-50);
+  --color-warning-fg: var(--palette-amber-700);
+  --color-warning-border: var(--palette-amber-300);
+  --color-warning-icon: var(--palette-amber-500);
+  --color-warning-solid: var(--palette-amber-700);
+  --color-warning-icon-on-inverse: var(--palette-amber-500);
+  --color-danger-bg: var(--palette-red-50);
+  --color-danger-fg: var(--palette-red-700);
+  --color-danger-border: var(--palette-red-300);
+  --color-danger-icon: var(--palette-red-500);
+  --color-danger-solid: var(--palette-red-600);
+  --color-danger-icon-on-inverse: var(--palette-red-500);
+  --color-danger-solid-hover: var(--palette-red-700);
+  --color-fg-on-danger: var(--palette-white);
+  --shadow-color: 20 25 35;
+  --shadow-1: 0 1px 2px rgb(var(--shadow-color) / 0.08);
+  --shadow-2: 0 2px 6px rgb(var(--shadow-color) / 0.1), 0 1px 2px rgb(var(--shadow-color) / 0.06);
+  --shadow-3: 0 8px 24px rgb(var(--shadow-color) / 0.14), 0 2px 6px rgb(var(--shadow-color) / 0.08);
+  --shadow-4:
+    0 20px 48px rgb(var(--shadow-color) / 0.22), 0 4px 12px rgb(var(--shadow-color) / 0.1);
+
+  --color-tint-sage: var(--palette-cover-sage-tint);
+  --color-tint-rose: var(--palette-cover-rose-tint);
+  --color-tint-sky: var(--palette-cover-sky-tint);
+  --color-tint-sun: var(--palette-cover-sun-tint);
+  --color-tint-lilac: var(--palette-cover-lilac-tint);
+  --color-tint-mint: var(--palette-cover-mint-tint);
+  --color-tint-peach: var(--palette-cover-peach-tint);
+
+  color-scheme: light;
+}
+
 /* ---------- Dark theme ----------------------------------------------------- */
 [data-theme='dark'] {
-  --color-bg-canvas: var(--palette-ink-950);
-  --color-bg-surface: var(--palette-ink-900);
-  --color-bg-surface-raised: var(--palette-ink-850);
-  --color-bg-surface-sunken: var(--palette-ink-950);
-  --color-bg-subtle: var(--palette-ink-850);
-  --color-bg-subtle-hover: var(--palette-ink-800);
-  --color-bg-inverse: var(--palette-ink-50);
-  --color-bg-backdrop: rgb(0 0 0 / 0.65);
-  --color-fg-default: var(--palette-ink-50);
-  --color-fg-muted: var(--palette-ink-300);
-  --color-fg-subtle: var(--palette-ink-400);
-  --color-fg-disabled: var(--palette-ink-600);
-  --color-fg-inverse: var(--palette-ink-900);
-  --color-fg-inverse-muted: var(--palette-ink-600);
-  --color-fg-link: var(--palette-lime-300);
-  --color-fg-link-hover: var(--palette-lime-100);
-  --color-border-default: var(--palette-ink-800);
-  --color-border-strong: var(--palette-ink-500);
-  --color-border-inverse: var(--palette-ink-300);
-  --color-accent: var(--palette-lime-400);
-  --color-accent-hover: var(--palette-lime-300);
-  --color-accent-active: var(--palette-lime-200);
-  --color-accent-subtle: var(--palette-lime-950);
-  --color-accent-subtle-hover: var(--palette-lime-900);
-  --color-fg-on-accent: var(--palette-ink-900);
-  --color-fg-accent: var(--palette-lime-400);
-  --color-brand: var(--palette-lime-400);
-  --color-brand-hover: var(--palette-lime-300);
-  --color-fg-on-brand: var(--palette-ink-900);
-  --color-focus-ring: var(--palette-lime-400);
-  --color-info-bg: var(--palette-teal-950);
-  --color-info-fg: var(--palette-teal-300);
-  --color-info-border: var(--palette-teal-800);
-  --color-info-icon: var(--palette-teal-300);
-  --color-info-solid: var(--palette-teal-300);
+  --color-bg-canvas: var(--palette-gray-950);
+  --color-bg-surface: var(--palette-gray-900);
+  --color-bg-surface-raised: var(--palette-gray-800);
+  --color-bg-surface-sunken: var(--palette-gray-925);
+  --color-bg-subtle: var(--palette-gray-800);
+  --color-bg-subtle-hover: var(--palette-gray-700);
+  --color-bg-inverse: var(--palette-gray-100);
+  --color-bg-backdrop: rgba(0, 0, 0, 0.65);
+
+  --color-fg-default: var(--palette-gray-150);
+  --color-fg-muted: var(--palette-gray-350);
+  --color-fg-subtle: var(--palette-gray-450);
+  --color-fg-disabled: var(--palette-gray-600);
+  --color-fg-inverse: var(--palette-gray-900);
+  --color-fg-link: var(--palette-violet-300);
+  --color-fg-link-hover: var(--palette-violet-200);
+
+  --color-border-default: var(--palette-gray-750);
+  --color-border-strong: var(--palette-gray-475);
+  --color-border-inverse: var(--palette-gray-300);
+
+  --color-accent: var(--palette-violet-300);
+  --color-accent-hover: var(--palette-violet-200);
+  --color-accent-active: var(--palette-violet-100);
+  --color-accent-subtle: var(--palette-violet-950);
+  --color-accent-subtle-hover: var(--palette-violet-900);
+  --color-fg-on-accent: var(--palette-violet-950);
+  --color-fg-accent: var(--palette-violet-300);
+  --color-org-accent: var(
+    --color-accent
+  ); /* re-declared per theme so nested [data-theme] scopes recompute it */
+  --color-org-accent-foreground: var(--color-fg-on-accent);
+
+  --color-focus-ring: var(--palette-violet-300);
+  --color-social-google-bg: var(--palette-google-dark-bg);
+  --color-social-google-fg: var(--palette-google-dark-fg);
+  --color-social-google-border: var(--palette-google-dark-border);
+  --color-social-github-bg: var(--palette-github-dark-bg);
+  --color-social-github-fg: var(--palette-github-dark-fg);
+  --color-social-github-border: var(--palette-github-dark-border);
+
+  --color-info-bg: var(--palette-blue-950);
+  --color-info-fg: var(--palette-blue-200);
+  --color-info-border: var(--palette-blue-800);
+  --color-info-icon: var(--palette-blue-300);
+  --color-info-solid: var(--palette-blue-300);
+  --color-info-icon-on-inverse: var(--palette-blue-700);
+
   --color-success-bg: var(--palette-green-950);
   --color-success-fg: var(--palette-green-300);
-  --color-success-border: var(--palette-green-800);
+  --color-success-border: var(--palette-green-700);
   --color-success-icon: var(--palette-green-300);
   --color-success-solid: var(--palette-green-300);
+  --color-success-icon-on-inverse: var(--palette-green-700);
+
   --color-warning-bg: var(--palette-amber-950);
   --color-warning-fg: var(--palette-amber-300);
-  --color-warning-border: var(--palette-amber-800);
+  --color-warning-border: var(--palette-amber-700);
   --color-warning-icon: var(--palette-amber-300);
   --color-warning-solid: var(--palette-amber-300);
-  --color-danger-bg: var(--palette-tomato-950);
-  --color-danger-fg: var(--palette-tomato-300);
-  --color-danger-border: var(--palette-tomato-900);
-  --color-danger-icon: var(--palette-tomato-300);
-  --color-danger-solid: var(--palette-tomato-300);
-  --color-danger-solid-hover: var(--palette-tomato-200);
-  --color-fg-on-danger: var(--palette-ink-900);
+  --color-warning-icon-on-inverse: var(--palette-amber-700);
+
+  --color-danger-bg: var(--palette-red-950);
+  --color-danger-fg: var(--palette-red-300);
+  --color-danger-border: var(--palette-red-700);
+  --color-danger-icon: var(--palette-red-300);
+  --color-danger-solid: var(--palette-red-300);
+  --color-danger-icon-on-inverse: var(--palette-red-600);
+  --color-danger-solid-hover: var(--palette-red-100);
+  --color-fg-on-danger: var(--palette-red-950);
+
   --shadow-color: 0 0 0;
   --shadow-1: 0 1px 2px rgb(var(--shadow-color) / 0.4);
-  --shadow-2: 0 2px 8px rgb(var(--shadow-color) / 0.45);
-  --shadow-3: 0 8px 28px rgb(var(--shadow-color) / 0.55);
-  --shadow-4: 0 20px 48px rgb(var(--shadow-color) / 0.65);
+  --shadow-2: 0 2px 6px rgb(var(--shadow-color) / 0.45), 0 1px 2px rgb(var(--shadow-color) / 0.3);
+  --shadow-3: 0 8px 24px rgb(var(--shadow-color) / 0.5), 0 2px 6px rgb(var(--shadow-color) / 0.35);
+  --shadow-4: 0 20px 48px rgb(var(--shadow-color) / 0.6), 0 4px 12px rgb(var(--shadow-color) / 0.4);
+
+  --color-tint-sage: var(--palette-cover-sage-deep);
+  --color-tint-rose: var(--palette-cover-rose-deep);
+  --color-tint-sky: var(--palette-cover-sky-deep);
+  --color-tint-sun: var(--palette-cover-sun-deep);
+  --color-tint-lilac: var(--palette-cover-lilac-deep);
+  --color-tint-mint: var(--palette-cover-mint-deep);
+  --color-tint-peach: var(--palette-cover-peach-deep);
+
   color-scheme: dark;
 }
 
 /* Follow the OS preference unless the page has explicitly chosen light. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --color-bg-canvas: var(--palette-ink-950);
-    --color-bg-surface: var(--palette-ink-900);
-    --color-bg-surface-raised: var(--palette-ink-850);
-    --color-bg-surface-sunken: var(--palette-ink-950);
-    --color-bg-subtle: var(--palette-ink-850);
-    --color-bg-subtle-hover: var(--palette-ink-800);
-    --color-bg-inverse: var(--palette-ink-50);
-    --color-bg-backdrop: rgb(0 0 0 / 0.65);
-    --color-fg-default: var(--palette-ink-50);
-    --color-fg-muted: var(--palette-ink-300);
-    --color-fg-subtle: var(--palette-ink-400);
-    --color-fg-disabled: var(--palette-ink-600);
-    --color-fg-inverse: var(--palette-ink-900);
-    --color-fg-inverse-muted: var(--palette-ink-600);
-    --color-fg-link: var(--palette-lime-300);
-    --color-fg-link-hover: var(--palette-lime-100);
-    --color-border-default: var(--palette-ink-800);
-    --color-border-strong: var(--palette-ink-500);
-    --color-border-inverse: var(--palette-ink-300);
-    --color-accent: var(--palette-lime-400);
-    --color-accent-hover: var(--palette-lime-300);
-    --color-accent-active: var(--palette-lime-200);
-    --color-accent-subtle: var(--palette-lime-950);
-    --color-accent-subtle-hover: var(--palette-lime-900);
-    --color-fg-on-accent: var(--palette-ink-900);
-    --color-fg-accent: var(--palette-lime-400);
-    --color-brand: var(--palette-lime-400);
-    --color-brand-hover: var(--palette-lime-300);
-    --color-fg-on-brand: var(--palette-ink-900);
-    --color-focus-ring: var(--palette-lime-400);
-    --color-info-bg: var(--palette-teal-950);
-    --color-info-fg: var(--palette-teal-300);
-    --color-info-border: var(--palette-teal-800);
-    --color-info-icon: var(--palette-teal-300);
-    --color-info-solid: var(--palette-teal-300);
+    --color-bg-canvas: var(--palette-gray-950);
+    --color-bg-surface: var(--palette-gray-900);
+    --color-bg-surface-raised: var(--palette-gray-800);
+    --color-bg-surface-sunken: var(--palette-gray-925);
+    --color-bg-subtle: var(--palette-gray-800);
+    --color-bg-subtle-hover: var(--palette-gray-700);
+    --color-bg-inverse: var(--palette-gray-100);
+    --color-bg-backdrop: rgba(0, 0, 0, 0.65);
+    --color-fg-default: var(--palette-gray-150);
+    --color-fg-muted: var(--palette-gray-350);
+    --color-fg-subtle: var(--palette-gray-450);
+    --color-fg-disabled: var(--palette-gray-600);
+    --color-fg-inverse: var(--palette-gray-900);
+    --color-fg-link: var(--palette-violet-300);
+    --color-fg-link-hover: var(--palette-violet-200);
+    --color-border-default: var(--palette-gray-750);
+    --color-border-strong: var(--palette-gray-475);
+    --color-border-inverse: var(--palette-gray-300);
+    --color-accent: var(--palette-violet-300);
+    --color-accent-hover: var(--palette-violet-200);
+    --color-accent-active: var(--palette-violet-100);
+    --color-accent-subtle: var(--palette-violet-950);
+    --color-accent-subtle-hover: var(--palette-violet-900);
+    --color-fg-on-accent: var(--palette-violet-950);
+    --color-fg-accent: var(--palette-violet-300);
+    --color-org-accent: var(
+      --color-accent
+    ); /* re-declared per theme so nested [data-theme] scopes recompute it */
+    --color-org-accent-foreground: var(--color-fg-on-accent);
+    --color-focus-ring: var(--palette-violet-300);
+    --color-social-google-bg: var(--palette-google-dark-bg);
+    --color-social-google-fg: var(--palette-google-dark-fg);
+    --color-social-google-border: var(--palette-google-dark-border);
+    --color-social-github-bg: var(--palette-github-dark-bg);
+    --color-social-github-fg: var(--palette-github-dark-fg);
+    --color-social-github-border: var(--palette-github-dark-border);
+    --color-info-bg: var(--palette-blue-950);
+    --color-info-fg: var(--palette-blue-200);
+    --color-info-border: var(--palette-blue-800);
+    --color-info-icon: var(--palette-blue-300);
+    --color-info-solid: var(--palette-blue-300);
+    --color-info-icon-on-inverse: var(--palette-blue-700);
     --color-success-bg: var(--palette-green-950);
     --color-success-fg: var(--palette-green-300);
-    --color-success-border: var(--palette-green-800);
+    --color-success-border: var(--palette-green-700);
     --color-success-icon: var(--palette-green-300);
     --color-success-solid: var(--palette-green-300);
+    --color-success-icon-on-inverse: var(--palette-green-700);
     --color-warning-bg: var(--palette-amber-950);
     --color-warning-fg: var(--palette-amber-300);
-    --color-warning-border: var(--palette-amber-800);
+    --color-warning-border: var(--palette-amber-700);
     --color-warning-icon: var(--palette-amber-300);
     --color-warning-solid: var(--palette-amber-300);
-    --color-danger-bg: var(--palette-tomato-950);
-    --color-danger-fg: var(--palette-tomato-300);
-    --color-danger-border: var(--palette-tomato-900);
-    --color-danger-icon: var(--palette-tomato-300);
-    --color-danger-solid: var(--palette-tomato-300);
-    --color-danger-solid-hover: var(--palette-tomato-200);
-    --color-fg-on-danger: var(--palette-ink-900);
+    --color-warning-icon-on-inverse: var(--palette-amber-700);
+    --color-danger-bg: var(--palette-red-950);
+    --color-danger-fg: var(--palette-red-300);
+    --color-danger-border: var(--palette-red-700);
+    --color-danger-icon: var(--palette-red-300);
+    --color-danger-solid: var(--palette-red-300);
+    --color-danger-icon-on-inverse: var(--palette-red-600);
+    --color-danger-solid-hover: var(--palette-red-100);
+    --color-fg-on-danger: var(--palette-red-950);
     --shadow-color: 0 0 0;
     --shadow-1: 0 1px 2px rgb(var(--shadow-color) / 0.4);
-    --shadow-2: 0 2px 8px rgb(var(--shadow-color) / 0.45);
-    --shadow-3: 0 8px 28px rgb(var(--shadow-color) / 0.55);
-    --shadow-4: 0 20px 48px rgb(var(--shadow-color) / 0.65);
+    --shadow-2: 0 2px 6px rgb(var(--shadow-color) / 0.45), 0 1px 2px rgb(var(--shadow-color) / 0.3);
+    --shadow-3:
+      0 8px 24px rgb(var(--shadow-color) / 0.5), 0 2px 6px rgb(var(--shadow-color) / 0.35);
+    --shadow-4:
+      0 20px 48px rgb(var(--shadow-color) / 0.6), 0 4px 12px rgb(var(--shadow-color) / 0.4);
+    --color-tint-sage: var(--palette-cover-sage-deep);
+    --color-tint-rose: var(--palette-cover-rose-deep);
+    --color-tint-sky: var(--palette-cover-sky-deep);
+    --color-tint-sun: var(--palette-cover-sun-deep);
+    --color-tint-lilac: var(--palette-cover-lilac-deep);
+    --color-tint-mint: var(--palette-cover-mint-deep);
+    --color-tint-peach: var(--palette-cover-peach-deep);
     color-scheme: dark;
   }
 }
@@ -451,6 +677,7 @@
     --duration-base: 0.01ms;
     --duration-slow: 0.01ms;
     --duration-deliberate: 0.01ms;
+    --duration-loop: 0.01ms;
   }
 }
 
@@ -462,10 +689,83 @@
   }
 }
 
+/* Windows High Contrast / forced colours: hand control to system colours. */
 @media (forced-colors: active) {
   :root {
     --color-focus-ring: Highlight;
     --color-border-default: CanvasText;
     --color-border-strong: CanvasText;
+  }
+}
+
+/* PromiseHub dimensions harvested from shared and mock component styles, 2026-10-25. */
+:root {
+  --layout-form-wide: 40rem;
+  --layout-dialog-max: 48rem;
+  --layout-card-min: 18rem;
+  --layout-dialog-wide: 44rem;
+  --layout-auth-compact: 26rem;
+  --layout-control-width: 12rem;
+  --layout-panel-compact: 20rem;
+  --layout-form-medium: 32rem;
+  --layout-notification-width: 24rem;
+  --layout-hero-measure: 36ch;
+  --layout-mark-height: 4.5rem;
+  --layout-sheet-width: 28rem;
+  --layout-cover-width: 13rem;
+  --layout-prompt-measure: 34ch;
+  --layout-tile-width: 8.5rem;
+  --layout-action-narrow: 5.5rem;
+  --layout-search-min: 9rem;
+  --layout-label-short: 7rem;
+  --layout-copy-measure: 40ch;
+  --layout-label-wide: 8rem;
+  --layout-filter-min: 10rem;
+  --layout-compact-measure: 18ch;
+  --layout-message-width: 22rem;
+  --layout-reward-width: 13.5rem;
+  --layout-action-wide: 6.5rem;
+  --layout-guardian-width: 36rem;
+  --layout-wizard-width: 60rem;
+  --layout-onboarding-measure: 48ch;
+  --layout-role-width: 11rem;
+  --duration-tooltip-delay: 300ms;
+}
+
+/* ---------- Waypoint extensions ----------------------------------------
+   Tokens Waypoint components use that PromiseHub does not define. Each one
+   aliases a PromiseHub token where one fits, so it follows both themes.
+   Declared on every theme scope so nested [data-theme] previews recompute.
+   ------------------------------------------------------------------------ */
+:root,
+[data-theme='light'],
+[data-theme='dark'] {
+  --color-brand: var(--color-accent); /* was lime; primary action fill */
+  --color-brand-hover: var(--color-accent-hover);
+  --color-fg-on-brand: var(--color-fg-on-accent);
+
+  --font-family-heading: var(--font-family-display);
+  --font-family-serif: Georgia, 'Times New Roman', serif; /* scripture only */
+  --text-scripture: var(--font-weight-regular) var(--font-size-lg) / var(--line-height-relaxed)
+    var(--font-family-serif);
+
+  --layout-container-wide: 90rem; /* 1440px public site */
+  --layout-container-narrow: 47.5rem; /* 760px forms, reading */
+  --layout-botnav-height: var(--layout-tabbar-height);
+  --border-width-accent: 3px; /* scripture rule */
+}
+
+:root,
+[data-theme='light'] {
+  --color-fg-inverse-muted: var(--palette-gray-300); /* toast body, footer links */
+}
+
+[data-theme='dark'] {
+  --color-fg-inverse-muted: var(--palette-gray-600);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-fg-inverse-muted: var(--palette-gray-600);
   }
 }

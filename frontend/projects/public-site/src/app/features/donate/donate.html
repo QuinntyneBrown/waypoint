@@ -1,34 +1,34 @@
-<section class="w-container w-section" style="max-width: 640px">
-  <div class="w-eyebrow">Give</div>
+<section class="ph-container ph-section" style="max-width: 640px">
+  <div class="ph-eyebrow">Give</div>
   <h1>Back a young leader</h1>
-  <p class="w-text-lg w-muted">
+  <p class="ph-text-lg ph-muted">
     A monthly gift helps a young person belong, grow, and lead. Choose a tier to get started.
   </p>
 
-  <form [formGroup]="form" (ngSubmit)="confirm()" novalidate class="w-stack w-mt-6">
-    <div class="w-grid w-grid--2">
-      <div w-form-field [invalid]="error('donorName')">
-        <label w-label for="donorName">Your name <span w-label-required>*</span></label>
-        <input w-text-field id="donorName" formControlName="donorName" />
+  <form [formGroup]="form" (ngSubmit)="confirm()" novalidate class="ph-stack ph-mt-6">
+    <div class="ph-grid ph-grid--2">
+      <div ph-form-field [invalid]="error('donorName')">
+        <label ph-label for="donorName">Your name <span ph-label-required>*</span></label>
+        <input ph-text-field id="donorName" formControlName="donorName" />
         @if (error('donorName')) {
-          <div w-error-text>{{ error('donorName') }}</div>
+          <div ph-error-text>{{ error('donorName') }}</div>
         }
       </div>
-      <div w-form-field [invalid]="error('email')">
-        <label w-label for="email">Email <span w-label-required>*</span></label>
-        <input w-text-field id="email" type="email" formControlName="email" />
+      <div ph-form-field [invalid]="error('email')">
+        <label ph-label for="email">Email <span ph-label-required>*</span></label>
+        <input ph-text-field id="email" type="email" formControlName="email" />
         @if (error('email')) {
-          <div w-error-text>{{ error('email') }}</div>
+          <div ph-error-text>{{ error('email') }}</div>
         }
       </div>
     </div>
 
     <fieldset style="border: 0; padding: 0; margin: 0">
-      <legend w-label>Monthly amount</legend>
-      <div class="w-cluster w-mt-2">
+      <legend ph-label>Monthly amount</legend>
+      <div class="ph-cluster ph-mt-2">
         @for (tier of tiers; track tier) {
           <button
-            w-button
+            ph-button
             type="button"
             [variant]="selected() === tier ? 'primary' : 'ghost'"
             [attr.aria-pressed]="selected() === tier"
@@ -40,17 +40,17 @@
       </div>
     </fieldset>
 
-    <p w-help>
+    <p ph-help>
       Payments are processed securely by our external PCI-compliant provider — Waypoint never sees
       or stores your card details.
     </p>
 
     @if (serverError()) {
-      <div w-alert variant="error" icon="alert-circle" role="alert">{{ serverError() }}</div>
+      <div ph-alert variant="error" icon="alert-circle" role="alert">{{ serverError() }}</div>
     }
 
     <button
-      w-button
+      ph-button
       variant="primary"
       size="lg"
       type="submit"
@@ -62,18 +62,18 @@
   </form>
 
   @if (confirmed()) {
-    <div w-alert variant="success" class="w-mt-6" role="status">
+    <div ph-alert variant="success" class="ph-mt-6" role="status">
       <div>
-        <div w-alert-title>Thank you!</div>
+        <div ph-alert-title>Thank you!</div>
         You’re giving ${{ selected() }} monthly. Finish your donation with our secure provider — it
         opens in a new tab.
       </div>
     </div>
     <a
-      w-button
+      ph-button
       variant="primary"
       size="lg"
-      class="w-mt-4"
+      class="ph-mt-4"
       [href]="providerUrl()"
       target="_blank"
       rel="noopener noreferrer"

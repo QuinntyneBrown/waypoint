@@ -15,7 +15,12 @@ export default defineConfig({
   projects: [
     {
       name: 'capture',
-      use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:4200' },
+      // Reduced motion: stills never catch a dialog or toast mid-animation.
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'http://localhost:4200',
+        reducedMotion: 'reduce',
+      },
     },
   ],
   webServer: base.webServer,

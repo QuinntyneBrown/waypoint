@@ -1,21 +1,21 @@
-<w-shell
+<ph-shell
   role="admin"
   active="audit"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Youth safety</div>
-        <h1 class="w-page__title">Audit log</h1>
-        <p class="w-page__sub">
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Youth safety</div>
+        <h1 class="ph-page__title">Audit log</h1>
+        <p class="ph-page__sub">
           An append-only record of who did what and when, with safeguarding details kept private.
         </p>
       </div>
-      <div class="w-page__actions">
+      <div class="ph-page__actions">
         <button
-          w-button
+          ph-button
           variant="secondary"
           type="button"
           aria-label="Export filtered audit log as CSV"
@@ -28,24 +28,24 @@
     </div>
 
     @if (exportStatus(); as status) {
-      <p w-alert variant="success" role="status">{{ status }}</p>
+      <p ph-alert variant="success" role="status">{{ status }}</p>
     }
 
     @if (errorMessage(); as error) {
-      <div w-alert variant="error" role="alert">
+      <div ph-alert variant="error" role="alert">
         <div>
-          <div w-alert-title>{{ error }}</div>
+          <div ph-alert-title>{{ error }}</div>
           Audit activity could not be loaded.
         </div>
-        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
+        <button ph-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
 
     @if (result(); as audit) {
       @if (!audit.integrityValid) {
-        <div w-alert variant="error" role="alert" data-testid="audit-integrity-warning">
+        <div ph-alert variant="error" role="alert" data-testid="audit-integrity-warning">
           <div>
-            <div w-alert-title>Audit integrity check failed</div>
+            <div ph-alert-title>Audit integrity check failed</div>
             One or more audit records may have been changed, removed, or inserted outside the
             protected audit writer. Escalate this incident before relying on the log.
           </div>
@@ -53,41 +53,43 @@
       }
     }
 
-    <section w-card class="w-mb-4" aria-labelledby="audit-filters-heading">
-      <div w-card-body class="w-stack">
+    <section ph-card class="ph-mb-4" aria-labelledby="audit-filters-heading">
+      <div ph-card-body class="ph-stack">
         <div>
           <h2 id="audit-filters-heading">Audit filters</h2>
-          <p class="w-muted">Filter the view and CSV export by user, action, or inclusive dates.</p>
+          <p class="ph-muted">
+            Filter the view and CSV export by user, action, or inclusive dates.
+          </p>
         </div>
         <form class="audit-filters" [formGroup]="filterForm" (ngSubmit)="applyFilters()">
-          <div w-form-field class="w-mb-0">
-            <label w-label for="audit-user">Audit user</label>
-            <select w-select id="audit-user" formControlName="actorUserId">
+          <div ph-form-field class="ph-mb-0">
+            <label ph-label for="audit-user">Audit user</label>
+            <select ph-select id="audit-user" formControlName="actorUserId">
               <option value="">All users</option>
               @for (actor of result()?.actors ?? []; track actor.id) {
                 <option [value]="actor.id">{{ actor.name }}</option>
               }
             </select>
           </div>
-          <div w-form-field class="w-mb-0">
-            <label w-label for="audit-action">Audit action</label>
-            <select w-select id="audit-action" formControlName="action">
+          <div ph-form-field class="ph-mb-0">
+            <label ph-label for="audit-action">Audit action</label>
+            <select ph-select id="audit-action" formControlName="action">
               <option value="">All actions</option>
               @for (action of result()?.actions ?? []; track action) {
                 <option [value]="action">{{ actionLabel(action) }}</option>
               }
             </select>
           </div>
-          <div w-form-field class="w-mb-0">
-            <label w-label for="audit-from">Audit date from</label>
-            <input w-text-field id="audit-from" type="date" formControlName="from" />
+          <div ph-form-field class="ph-mb-0">
+            <label ph-label for="audit-from">Audit date from</label>
+            <input ph-text-field id="audit-from" type="date" formControlName="from" />
           </div>
-          <div w-form-field class="w-mb-0">
-            <label w-label for="audit-to">Audit date to</label>
-            <input w-text-field id="audit-to" type="date" formControlName="to" />
+          <div ph-form-field class="ph-mb-0">
+            <label ph-label for="audit-to">Audit date to</label>
+            <input ph-text-field id="audit-to" type="date" formControlName="to" />
           </div>
           <button
-            w-button
+            ph-button
             variant="primary"
             type="submit"
             aria-label="Apply audit filters"
@@ -96,7 +98,7 @@
             Apply filters
           </button>
           <button
-            w-button
+            ph-button
             variant="ghost"
             type="button"
             aria-label="Clear audit filters"
@@ -107,30 +109,30 @@
           </button>
         </form>
         @if (dateError(); as error) {
-          <p w-alert variant="error" role="alert">{{ error }}</p>
+          <p ph-alert variant="error" role="alert">{{ error }}</p>
         }
       </div>
     </section>
 
     @if (loading() && !result()) {
-      <div w-card aria-label="Loading audit activity">
-        <div w-card-body class="w-stack">
-          <span w-skeleton variant="title"></span>
-          <span w-skeleton variant="block"></span>
-          <span w-skeleton variant="block"></span>
-          <span w-skeleton variant="block"></span>
+      <div ph-card aria-label="Loading audit activity">
+        <div ph-card-body class="ph-stack">
+          <span ph-skeleton variant="title"></span>
+          <span ph-skeleton variant="block"></span>
+          <span ph-skeleton variant="block"></span>
+          <span ph-skeleton variant="block"></span>
         </div>
       </div>
     } @else if (result(); as audit) {
       @if (audit.items.length === 0) {
-        <div w-card>
-          <div w-empty-state>
-            <h2 w-empty-state-title>No activity for this filter</h2>
-            <p w-empty-state-text>
+        <div ph-card>
+          <div ph-empty-state>
+            <h2 ph-empty-state-title>No activity for this filter</h2>
+            <p ph-empty-state-text>
               No audit events match the users, actions, or dates selected. Try widening the range.
             </p>
             <button
-              w-button
+              ph-button
               variant="secondary"
               type="button"
               aria-label="Clear audit filters"
@@ -141,9 +143,9 @@
           </div>
         </div>
       } @else {
-        <div w-card>
-          <div w-table-wrap>
-            <table w-table cards>
+        <div ph-card>
+          <div ph-table-wrap>
+            <table ph-table cards>
               <thead>
                 <tr>
                   <th>Who</th>
@@ -160,19 +162,19 @@
                       <strong>{{ item.actorName }}</strong>
                     </td>
                     <td data-label="Action">
-                      <span w-badge variant="outline">{{ actionLabel(item.action) }}</span>
-                      <span class="w-sr-only">{{ item.action }}</span>
+                      <span ph-badge variant="outline">{{ actionLabel(item.action) }}</span>
+                      <span class="ph-sr-only">{{ item.action }}</span>
                     </td>
                     <td data-label="Target and detail" class="audit-target">
                       <div>{{ targetLabel(item.targetType, item.targetId) }}</div>
                       @if (item.isPrivate) {
                         <div class="audit-private">Private · {{ item.details }}</div>
                       } @else if (item.details) {
-                        <div class="w-muted audit-detail">{{ item.details }}</div>
+                        <div class="ph-muted audit-detail">{{ item.details }}</div>
                       }
                     </td>
                     <td data-label="When">{{ item.at | date: 'medium' }}</td>
-                    <td data-label="Source" class="w-muted audit-source">
+                    <td data-label="Source" class="ph-muted audit-source">
                       {{ item.source || 'Not captured' }}
                     </td>
                   </tr>
@@ -182,16 +184,16 @@
           </div>
         </div>
 
-        <nav w-pagination aria-label="Audit pages">
-          <p class="w-muted" data-testid="audit-page-summary">
+        <nav ph-pagination aria-label="Audit pages">
+          <p class="ph-muted" data-testid="audit-page-summary">
             Page {{ audit.page }} of {{ pageCount() }} · Showing {{ firstShown() }}–{{
               lastShown()
             }}
             of {{ audit.total }} events
           </p>
-          <div class="w-cluster">
+          <div class="ph-cluster">
             <button
-              w-button
+              ph-button
               variant="ghost"
               type="button"
               aria-label="Previous audit page"
@@ -201,7 +203,7 @@
               Previous
             </button>
             <button
-              w-button
+              ph-button
               variant="ghost"
               type="button"
               aria-label="Next audit page"
@@ -215,4 +217,4 @@
       }
     }
   </div>
-</w-shell>
+</ph-shell>

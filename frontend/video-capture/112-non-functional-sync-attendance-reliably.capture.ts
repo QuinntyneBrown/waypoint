@@ -1,7 +1,6 @@
 import { expect, test } from '@playwright/test';
 import {
   MentorAttendanceCapturePage,
-  SignInPage,
   VolunteerAttendancePage,
   VolunteerTodayPage,
 } from '../e2e/pages';
@@ -38,7 +37,7 @@ test('capture: volunteer attendance queued offline then synced once', async ({
   await attendance.allPresentButton.click();
   await page.waitForLoadState('networkidle');
 
-  const banner = page.locator('.w-offline');
+  const banner = page.locator('.ph-offline');
   await context.setOffline(true);
   await page.evaluate(() => window.dispatchEvent(new Event('offline')));
   await expect(banner).toHaveClass(/is-visible/);

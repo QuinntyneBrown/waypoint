@@ -1,17 +1,17 @@
-.w-bubble {
+.ph-bubble {
   max-width: min(75%, 32rem);
-  padding: var(--w-s3) var(--w-s4);
-  border-radius: var(--w-r-lg);
+  padding: var(--ph-s3) var(--ph-s4);
+  border-radius: var(--ph-r-lg);
   overflow-wrap: anywhere;
 }
-.w-bubble--in {
+.ph-bubble--in {
   align-self: flex-start;
-  background: var(--w-g200);
-  border-bottom-left-radius: var(--w-r-sm);
+  background: var(--ph-g200);
+  border-bottom-left-radius: var(--ph-r-sm);
 }
-.w-bubble--out {
+.ph-bubble--out {
   align-self: flex-end;
   background: var(--color-accent);
   color: var(--color-fg-on-accent);
-  border-bottom-right-radius: var(--w-r-sm);
+  border-bottom-right-radius: var(--ph-r-sm);
 }

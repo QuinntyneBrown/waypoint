@@ -5,10 +5,10 @@ import { Badge } from './badge';
 @Component({
   imports: [Badge],
   template: `
-    <span w-badge>Draft</span>
-    <span w-badge [variant]="variant()">Status</span>
-    <span w-badge variant="danger">Overloaded</span>
-    <span w-badge variant="info" dot>New</span>
+    <span ph-badge>Draft</span>
+    <span ph-badge [variant]="variant()">Status</span>
+    <span ph-badge variant="danger">Overloaded</span>
+    <span ph-badge variant="info" dot>New</span>
   `,
 })
 class Host {
@@ -26,22 +26,22 @@ describe('Badge', () => {
 
   it('is a neutral badge by default and keeps its text', async () => {
     const [plain] = (await render()).badges;
-    expect(plain.className).toBe('w-badge');
+    expect(plain.className).toBe('ph-badge');
     expect(plain.textContent).toBe('Draft');
   });
 
   it('applies and removes a tone variant', async () => {
     const { fixture, badges } = await render();
-    expect(badges[1].classList.contains('w-badge--success')).toBe(true);
+    expect(badges[1].classList.contains('ph-badge--success')).toBe(true);
     fixture.componentInstance.variant.set('');
     await fixture.whenStable();
-    expect(badges[1].classList.contains('w-badge--success')).toBe(false);
+    expect(badges[1].classList.contains('ph-badge--success')).toBe(false);
   });
 
   it('supports danger and the dot', async () => {
     const { badges } = await render();
-    expect(badges[2].classList.contains('w-badge--danger')).toBe(true);
-    expect(badges[3].classList.contains('w-badge--info')).toBe(true);
-    expect(badges[3].classList.contains('w-badge--dot')).toBe(true);
+    expect(badges[2].classList.contains('ph-badge--danger')).toBe(true);
+    expect(badges[3].classList.contains('ph-badge--info')).toBe(true);
+    expect(badges[3].classList.contains('ph-badge--dot')).toBe(true);
   });
 });

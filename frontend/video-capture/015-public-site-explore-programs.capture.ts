@@ -15,6 +15,6 @@ test('capture: explore programs', async ({ page }) => {
   await page.evaluate(() => window.scrollTo(0, 0));
   await shot(page, FOLDER, 'programs', { x: 0, y: 70, width: 1280, height: 730 });
 
-  await shot(page, FOLDER, 'tracks', await clipOf(page.locator('.w-grid--2'), 12));
+  await shot(page, FOLDER, 'tracks', await clipOf(page.locator('.ph-grid--2'), 12));
   await shot(page, FOLDER, 'mentorship', await clipOf(page.locator('section').nth(1), 8));
 });

@@ -1,62 +1,62 @@
-<w-shell
+<ph-shell
   role="mentor"
   active="messages"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Stay connected</div>
-        <h1 class="w-page__title">Messages</h1>
-        <p class="w-page__sub">Private youth threads and personal cohort broadcasts.</p>
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Stay connected</div>
+        <h1 class="ph-page__title">Messages</h1>
+        <p class="ph-page__sub">Private youth threads and personal cohort broadcasts.</p>
       </div>
-      <span w-badge data-testid="mentor-realtime-status">
+      <span ph-badge data-testid="mentor-realtime-status">
         {{ realtime.state() === 'connected' ? 'Live updates on' : 'Reconnecting live updates' }}
       </span>
     </div>
 
-    <p class="w-sr-only" role="status">{{ liveStatus() }}</p>
+    <p class="ph-sr-only" role="status">{{ liveStatus() }}</p>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (inbox(); as view) {
       @if (view.conversations.length === 0) {
-        <section w-card>
-          <div w-empty-state>
-            <div w-empty-state-icon><w-icon name="message-square" /></div>
-            <h2 w-empty-state-title>No youth conversations yet</h2>
-            <p w-empty-state-text>Threads appear when active youth are assigned to you.</p>
+        <section ph-card>
+          <div ph-empty-state>
+            <div ph-empty-state-icon><ph-icon name="message-square" /></div>
+            <h2 ph-empty-state-title>No youth conversations yet</h2>
+            <p ph-empty-state-text>Threads appear when active youth are assigned to you.</p>
           </div>
         </section>
       } @else {
         <section
-          w-card
+          ph-card
           class="messages-layout"
           [class.show-thread]="selectedYouthId() || mode() === 'broadcast'"
           aria-label="Mentor messaging workspace"
         >
           <aside class="inbox-panel" aria-label="Youth conversations">
-            <div class="inbox-head w-stack">
-              <div class="w-cluster w-cluster--between">
-                <h2 class="w-h3">Inbox</h2>
+            <div class="inbox-head ph-stack">
+              <div class="ph-cluster ph-cluster--between">
+                <h2 class="ph-h3">Inbox</h2>
                 @if (totalUnread() > 0) {
-                  <span w-badge variant="info" data-testid="mentor-unread-count">
+                  <span ph-badge variant="info" data-testid="mentor-unread-count">
                     {{ totalUnread() }} unread
                   </span>
                 }
               </div>
-              <label class="w-sr-only" for="conversation-search">Search conversations</label>
+              <label class="ph-sr-only" for="conversation-search">Search conversations</label>
               <input
-                w-text-field
+                ph-text-field
                 id="conversation-search"
                 type="search"
                 placeholder="Search youth or cohort"
                 [formControl]="search"
               />
               <button
-                w-button
+                ph-button
                 variant="secondary"
                 type="button"
                 data-testid="open-broadcast"
@@ -66,7 +66,7 @@
                 Broadcast to my group
               </button>
               @if (view.groups.length === 0) {
-                <p w-help>Assign youth to a cohort before broadcasting.</p>
+                <p ph-help>Assign youth to a cohort before broadcasting.</p>
               }
             </div>
             <ul class="conversation-list">
@@ -80,23 +80,23 @@
                     [attr.data-youth-id]="conversation.youthId"
                     (click)="selectConversation(conversation)"
                   >
-                    <span class="w-cluster w-cluster--between">
+                    <span class="ph-cluster ph-cluster--between">
                       <strong>{{ conversation.youthName }}</strong>
                       @if (conversation.unreadCount > 0) {
-                        <span w-badge variant="info">{{ conversation.unreadCount }}</span>
+                        <span ph-badge variant="info">{{ conversation.unreadCount }}</span>
                       }
                     </span>
-                    <span class="w-muted w-text-sm">
+                    <span class="ph-muted ph-text-sm">
                       {{ conversation.cohortName ?? 'No cohort' }}
                     </span>
-                    <span class="conversation-preview w-muted w-text-sm">
+                    <span class="conversation-preview ph-muted ph-text-sm">
                       {{ conversation.lastMessagePreview ?? 'Start a conversation' }}
                     </span>
                   </button>
                 </li>
               } @empty {
-                <li w-empty-state>
-                  <p w-empty-state-text>No conversations match your search.</p>
+                <li ph-empty-state>
+                  <p ph-empty-state-text>No conversations match your search.</p>
                 </li>
               }
             </ul>
@@ -106,7 +106,7 @@
             @if (mode() === 'broadcast') {
               <div class="conversation-head">
                 <button
-                  w-button
+                  ph-button
                   variant="ghost"
                   class="mobile-back"
                   type="button"
@@ -114,20 +114,20 @@
                 >
                   Back to inbox
                 </button>
-                <h2 class="w-h3">Broadcast to my group</h2>
-                <p class="w-muted">
+                <h2 class="ph-h3">Broadcast to my group</h2>
+                <p class="ph-muted">
                   Every recipient gets a private personal message; youth never see the recipient
                   list.
                 </p>
               </div>
               <form
-                class="broadcast-panel w-stack"
+                class="broadcast-panel ph-stack"
                 [formGroup]="broadcastForm"
                 (ngSubmit)="reviewBroadcast()"
               >
-                <div w-form-field>
-                  <label w-label for="broadcast-cohort">Cohort</label>
-                  <select w-select id="broadcast-cohort" formControlName="cohortId">
+                <div ph-form-field>
+                  <label ph-label for="broadcast-cohort">Cohort</label>
+                  <select ph-select id="broadcast-cohort" formControlName="cohortId">
                     @for (group of view.groups; track group.cohortId) {
                       <option [value]="group.cohortId">
                         {{ group.cohortName }} · {{ group.recipientCount }} youth
@@ -135,32 +135,32 @@
                     }
                   </select>
                 </div>
-                <div w-form-field>
-                  <label w-label for="broadcast-body">Message</label>
+                <div ph-form-field>
+                  <label ph-label for="broadcast-body">Message</label>
                   <textarea
-                    w-textarea
+                    ph-textarea
                     id="broadcast-body"
                     formControlName="body"
                     maxlength="4000"
                     rows="8"
                     aria-describedby="broadcast-help"
                   ></textarea>
-                  <p w-help id="broadcast-help">
+                  <p ph-help id="broadcast-help">
                     Review the recipient count before the broadcast is sent.
                   </p>
                   @if (broadcastForm.controls.body.touched && broadcastForm.controls.body.invalid) {
-                    <p w-error-text>Write a message before continuing.</p>
+                    <p ph-error-text>Write a message before continuing.</p>
                   }
                 </div>
-                <div class="w-actions w-actions--between">
-                  <span class="w-muted">{{ broadcastForm.controls.body.value.length }}/4000</span>
-                  <button w-button variant="primary" type="submit">Review broadcast</button>
+                <div class="ph-actions ph-actions--between">
+                  <span class="ph-muted">{{ broadcastForm.controls.body.value.length }}/4000</span>
+                  <button ph-button variant="primary" type="submit">Review broadcast</button>
                 </div>
               </form>
             } @else if (selectedConversation(); as conversation) {
               <div class="conversation-head">
                 <button
-                  w-button
+                  ph-button
                   variant="ghost"
                   class="mobile-back"
                   type="button"
@@ -168,11 +168,11 @@
                 >
                   Back to inbox
                 </button>
-                <h2 class="w-h3">{{ conversation.youthName }}</h2>
-                <p class="w-muted">{{ conversation.cohortName ?? 'No cohort' }}</p>
+                <h2 class="ph-h3">{{ conversation.youthName }}</h2>
+                <p class="ph-muted">{{ conversation.cohortName ?? 'No cohort' }}</p>
               </div>
               <div
-                w-message-thread
+                ph-message-thread
                 class="thread-log"
                 role="log"
                 aria-live="polite"
@@ -180,38 +180,38 @@
                 data-testid="mentor-message-thread"
               >
                 @if (loadingThread()) {
-                  <p class="w-muted" role="status">Loading conversation…</p>
+                  <p class="ph-muted" role="status">Loading conversation…</p>
                 } @else if (thread()?.length === 0) {
-                  <div w-empty-state>
-                    <h3 w-empty-state-title>Start the conversation</h3>
-                    <p w-empty-state-text>Send encouragement, a reminder, or a check-in.</p>
+                  <div ph-empty-state>
+                    <h3 ph-empty-state-title>Start the conversation</h3>
+                    <p ph-empty-state-text>Send encouragement, a reminder, or a check-in.</p>
                   </div>
                 }
                 @for (message of thread() ?? []; track message.id) {
                   <article
-                    w-message-bubble
+                    ph-message-bubble
                     [direction]="message.senderId === auth.user()?.userId ? 'out' : 'in'"
                     [attr.data-message-id]="message.id"
                   >
-                    <span class="w-sr-only"
+                    <span class="ph-sr-only"
                       >{{
                         message.senderId === auth.user()?.userId ? 'You' : conversation.youthName
                       }}:</span
                     >
                     <span class="message-body">{{ message.body }}</span>
-                    <time w-message-bubble-time [attr.datetime]="message.sentAt">{{
+                    <time ph-message-bubble-time [attr.datetime]="message.sentAt">{{
                       message.sentAt | date: 'medium'
                     }}</time>
                   </article>
                 }
               </div>
-              <form class="composer w-stack" [formGroup]="composer" (ngSubmit)="send()">
-                <div w-form-field>
-                  <label w-label for="mentor-message-body">
+              <form class="composer ph-stack" [formGroup]="composer" (ngSubmit)="send()">
+                <div ph-form-field>
+                  <label ph-label for="mentor-message-body">
                     Message {{ conversation.youthName }}
                   </label>
                   <textarea
-                    w-textarea
+                    ph-textarea
                     id="mentor-message-body"
                     formControlName="body"
                     maxlength="4000"
@@ -219,14 +219,14 @@
                     aria-describedby="mentor-message-help"
                     (keydown.control.enter)="send()"
                   ></textarea>
-                  <p w-help id="mentor-message-help">Ctrl + Enter also sends.</p>
+                  <p ph-help id="mentor-message-help">Ctrl + Enter also sends.</p>
                   @if (composer.controls.body.touched && composer.controls.body.invalid) {
-                    <p w-error-text>Write a message before sending.</p>
+                    <p ph-error-text>Write a message before sending.</p>
                   }
                 </div>
-                <div class="w-actions w-actions--between">
-                  <span class="w-muted">{{ composer.controls.body.value.length }}/4000</span>
-                  <button w-button variant="primary" type="submit" [disabled]="sending()">
+                <div class="ph-actions ph-actions--between">
+                  <span class="ph-muted">{{ composer.controls.body.value.length }}/4000</span>
+                  <button ph-button variant="primary" type="submit" [disabled]="sending()">
                     {{ sending() ? 'Sending…' : 'Send message' }}
                   </button>
                 </div>
@@ -236,44 +236,44 @@
         </section>
       }
     } @else {
-      <p class="w-muted" role="status">Loading conversations…</p>
+      <p class="ph-muted" role="status">Loading conversations…</p>
     }
   </div>
 
   @if (reviewingBroadcast()) {
     <div
-      w-dialog
+      ph-dialog
       size="sm"
       aria-labelledby="confirm-broadcast-heading"
       (dismiss)="reviewingBroadcast.set(false)"
     >
-      <div w-dialog-header>
+      <div ph-dialog-header>
         <div>
-          <h2 w-dialog-title id="confirm-broadcast-heading">Send this broadcast?</h2>
-          <p w-dialog-subtitle>{{ selectedGroup()?.cohortName }}</p>
+          <h2 ph-dialog-title id="confirm-broadcast-heading">Send this broadcast?</h2>
+          <p ph-dialog-subtitle>{{ selectedGroup()?.cohortName }}</p>
         </div>
         <button
-          w-icon-button
+          ph-icon-button
           type="button"
           aria-label="Close"
           (click)="reviewingBroadcast.set(false)"
         >
-          <w-icon name="x" />
+          <ph-icon name="x" />
         </button>
       </div>
-      <div w-dialog-body class="w-stack">
+      <div ph-dialog-body class="ph-stack">
         <p>
           Send one private message to
           <strong>{{ selectedGroup()?.recipientCount }} youth</strong>?
         </p>
         <p class="message-body">{{ broadcastForm.controls.body.value }}</p>
       </div>
-      <div w-dialog-footer>
-        <button w-button variant="ghost" type="button" (click)="reviewingBroadcast.set(false)">
+      <div ph-dialog-footer>
+        <button ph-button variant="ghost" type="button" (click)="reviewingBroadcast.set(false)">
           Cancel
         </button>
         <button
-          w-button
+          ph-button
           variant="primary"
           type="button"
           data-testid="confirm-broadcast"
@@ -285,4 +285,4 @@
       </div>
     </div>
   }
-</w-shell>
+</ph-shell>

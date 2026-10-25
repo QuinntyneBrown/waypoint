@@ -6,10 +6,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@a
  * Use the `lg` size on sign-in cards.
  */
 @Component({
-  selector: 'a[w-brand], div[w-brand]',
+  selector: 'a[ph-brand], div[ph-brand]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-brand', '[class.w-brand--lg]': "size() === 'lg'" },
+  host: { class: 'ph-brand', '[class.ph-brand--lg]': "size() === 'lg'" },
   templateUrl: './brand.html',
   styleUrl: './brand.css',
 })

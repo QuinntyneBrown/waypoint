@@ -28,7 +28,7 @@ By the end, the viewer can:
 
 | File | What to show |
 | --- | --- |
-| `images/blocked-1280.png` | Review window for a minor with approve switched off |
+| `images/blocked-1280.png` | Review window for a minor with the consent-required warning |
 | `images/decline-confirm-1280.png` | Decline confirmation |
 | `images/declined-1280.png` | Declined message and list |
 | `images/placement-1280.png` | Track, cohort, mentor and note |
@@ -42,7 +42,7 @@ Captures are made by `frontend/video-capture/020-application-intake-decide-and-e
 | Time | Segment | Content |
 | --- | --- | --- |
 | 00:00-00:20 | Welcome | Purpose and who may decide |
-| 00:20-01:05 | A minor without consent | Needs consent, approve switched off |
+| 00:20-01:05 | A minor without consent | Needs consent; approval allowed, participation waits for consent |
 | 01:05-01:50 | Declining softly | Note, confirmation, declined |
 | 01:50-02:50 | Approving and enrolling | Cohort, mentor, confirmation, enrolled |
 | 02:50-03:20 | Recap | Things to remember |

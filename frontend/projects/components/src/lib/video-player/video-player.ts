@@ -37,7 +37,7 @@ import { HLS_FACTORY, HlsVodHost, HlsVodSession } from './hls-vod-session';
 
 /** Live video player that plays a fragmented-MP4 stream delivered by a hub. */
 @Component({
-  selector: 'w-video-player',
+  selector: 'ph-video-player',
   imports: [Icon],
   templateUrl: './video-player.html',
   styleUrl: './video-player.css',
@@ -48,7 +48,7 @@ import { HLS_FACTORY, HlsVodHost, HlsVodSession } from './hls-vod-session';
     '(focusin)': 'onFocusin($event)',
     '(focusout)': 'onFocusout($event)',
     '(pointermove)': 'visibility.show()',
-    '[class.w-video-player--cursor-hidden]': 'isFullscreen() && !visibility.visible()',
+    '[class.ph-video-player--cursor-hidden]': 'isFullscreen() && !visibility.visible()',
   },
 })
 export class VideoPlayer implements VideoPlayerHost, HlsVodHost {
@@ -276,7 +276,7 @@ export class VideoPlayer implements VideoPlayerHost, HlsVodHost {
     if (secure || local) return;
     this.warnedHubUrl = true;
     console.warn(
-      `w-video-player: the hubUrl origin ${url.origin} does not use TLS. The access token travels ` +
+      `ph-video-player: the hubUrl origin ${url.origin} does not use TLS. The access token travels ` +
         'in the WebSocket query string; use https: or wss: outside localhost.',
     );
   }

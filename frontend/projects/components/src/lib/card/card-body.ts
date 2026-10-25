@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
-/** The padded content area of a `w-card`. */
+/** The padded content area of a `ph-card`. */
 @Component({
-  selector: 'div[w-card-body], form[w-card-body], a[w-card-body], span[w-card-body]',
+  selector: 'div[ph-card-body], form[ph-card-body], a[ph-card-body], span[ph-card-body]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-card__body' },
+  host: { class: 'ph-card__body' },
   templateUrl: './card-body.html',
   styleUrl: './card-body.css',
 })

@@ -1,25 +1,25 @@
-<w-settings-shell heading="Privacy & data rights">
-  <p class="w-page__sub w-mb-6">
+<ph-settings-shell heading="Privacy & data rights">
+  <p class="ph-page__sub ph-mb-6">
     Review the account information Waypoint stores and make a trackable request about it.
   </p>
 
   @if (errorMessage(); as error) {
-    <p w-alert variant="error" role="alert">{{ error }}</p>
+    <p ph-alert variant="error" role="alert">{{ error }}</p>
   }
   @if (acknowledgement(); as request) {
-    <div w-alert variant="success" role="status">
+    <div ph-alert variant="success" role="status">
       Request received. Keep reference <strong>{{ request.reference }}</strong> for your records.
     </div>
   }
 
   @if (loading()) {
-    <p class="w-muted" role="status">Loading your privacy information…</p>
+    <p class="ph-muted" role="status">Loading your privacy information…</p>
   } @else {
     <div class="privacy-grid">
-      <section w-card>
-        <div w-card-body>
-          <h2 w-card-title>Your stored account data</h2>
-          <p class="w-muted w-mb-4">Placement identifiers are managed by program staff.</p>
+      <section ph-card>
+        <div ph-card-body>
+          <h2 ph-card-title>Your stored account data</h2>
+          <p class="ph-muted ph-mb-4">Placement identifiers are managed by program staff.</p>
           @if (data(); as person) {
             <dl class="privacy-data">
               <div>
@@ -56,9 +56,9 @@
               </div>
             </dl>
             <button
-              w-button
+              ph-button
               variant="secondary"
-              class="w-mt-4"
+              class="ph-mt-4"
               type="button"
               [disabled]="!canExport() || downloading()"
               (click)="downloadPersonalData()"
@@ -66,7 +66,7 @@
               {{ downloading() ? 'Preparing export…' : 'Download complete data export (JSON)' }}
             </button>
             @if (!canExport()) {
-              <p class="w-muted w-text-sm w-mt-3">
+              <p class="ph-muted ph-text-sm ph-mt-3">
                 Submit an access request. The complete export becomes available after program staff
                 verify and complete it.
               </p>
@@ -75,13 +75,13 @@
         </div>
       </section>
 
-      <section w-card>
-        <div w-card-body>
-          <h2 w-card-title>Make a data-rights request</h2>
-          <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
-            <div w-form-field>
-              <label w-label for="privacy-action">Request type</label>
-              <select w-select id="privacy-action" formControlName="actionType">
+      <section ph-card>
+        <div ph-card-body>
+          <h2 ph-card-title>Make a data-rights request</h2>
+          <form class="ph-stack" [formGroup]="form" (ngSubmit)="submit()">
+            <div ph-form-field>
+              <label ph-label for="privacy-action">Request type</label>
+              <select ph-select id="privacy-action" formControlName="actionType">
                 <option value="access">Access a copy of my data</option>
                 <option value="correction">Correct my information</option>
                 <option value="removal">Remove my information</option>
@@ -90,28 +90,28 @@
             </div>
 
             @if (form.controls.actionType.value === 'correction') {
-              <div w-form-field>
-                <label w-label for="privacy-name">Correct name</label>
-                <input w-text-field id="privacy-name" formControlName="displayName" />
+              <div ph-form-field>
+                <label ph-label for="privacy-name">Correct name</label>
+                <input ph-text-field id="privacy-name" formControlName="displayName" />
               </div>
-              <div w-form-field>
-                <label w-label for="privacy-email">Correct email</label>
-                <input w-text-field id="privacy-email" type="email" formControlName="email" />
+              <div ph-form-field>
+                <label ph-label for="privacy-email">Correct email</label>
+                <input ph-text-field id="privacy-email" type="email" formControlName="email" />
                 @if (form.controls.email.touched && form.controls.email.invalid) {
-                  <p w-error-text>Enter a valid email address.</p>
+                  <p ph-error-text>Enter a valid email address.</p>
                 }
               </div>
-              <div w-form-field>
-                <label w-label for="privacy-pronouns">Correct pronouns</label>
+              <div ph-form-field>
+                <label ph-label for="privacy-pronouns">Correct pronouns</label>
                 <input
-                  w-text-field
+                  ph-text-field
                   id="privacy-pronouns"
                   formControlName="pronouns"
                   [disabled]="form.controls.clearPronouns.value"
                 />
               </div>
-              <div w-form-field>
-                <label w-checkbox for="privacy-clear-pronouns">
+              <div ph-form-field>
+                <label ph-checkbox for="privacy-clear-pronouns">
                   <input
                     id="privacy-clear-pronouns"
                     type="checkbox"
@@ -123,21 +123,21 @@
               </div>
             }
 
-            <div w-form-field>
-              <label w-label for="privacy-details">Details</label>
+            <div ph-form-field>
+              <label ph-label for="privacy-details">Details</label>
               <textarea
-                w-textarea
+                ph-textarea
                 id="privacy-details"
                 rows="4"
                 formControlName="details"
                 placeholder="Tell the program team what you need."
               ></textarea>
             </div>
-            <p class="w-muted w-text-sm">
+            <p class="ph-muted ph-text-sm">
               Removal and consent requests may require follow-up so safeguarding and legal records
               are handled correctly.
             </p>
-            <button w-button variant="primary" type="submit" [disabled]="submitting()">
+            <button ph-button variant="primary" type="submit" [disabled]="submitting()">
               {{ submitting() ? 'Sending…' : 'Submit request' }}
             </button>
           </form>
@@ -145,24 +145,24 @@
       </section>
     </div>
 
-    <section w-card class="w-mt-6">
-      <div w-card-body>
-        <h2 w-card-title>Your requests</h2>
+    <section ph-card class="ph-mt-6">
+      <div ph-card-body>
+        <h2 ph-card-title>Your requests</h2>
         @if (requestTotal() > 0) {
-          <p class="w-muted w-text-sm">
+          <p class="ph-muted ph-text-sm">
             Showing {{ requests().length }} of {{ requestTotal() }} requests.
           </p>
         }
         @for (request of requests(); track request.id) {
           <article class="request-row">
-            <div class="w-cluster w-cluster--between">
+            <div class="ph-cluster ph-cluster--between">
               <div>
                 <strong>{{ request.actionType }}</strong>
-                <p class="w-muted">
+                <p class="ph-muted">
                   {{ request.reference }} · {{ request.requestedAt | date: 'medium' }}
                 </p>
               </div>
-              <span w-badge [variant]="request.status === 'Completed' ? 'lime' : ''">
+              <span ph-badge [variant]="request.status === 'Completed' ? 'lime' : ''">
                 {{ request.status }}
               </span>
             </div>
@@ -171,13 +171,13 @@
             }
           </article>
         } @empty {
-          <p class="w-muted">You have not made any data-rights requests.</p>
+          <p class="ph-muted">You have not made any data-rights requests.</p>
         }
         @if (hasMoreRequests()) {
           <button
-            w-button
+            ph-button
             variant="secondary"
-            class="w-mt-3"
+            class="ph-mt-3"
             type="button"
             [disabled]="loadingMore()"
             (click)="loadMoreRequests()"
@@ -188,4 +188,4 @@
       </div>
     </section>
   }
-</w-settings-shell>
+</ph-settings-shell>

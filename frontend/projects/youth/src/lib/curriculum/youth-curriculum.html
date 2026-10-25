@@ -1,30 +1,30 @@
-<w-shell
+<ph-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Learning</div>
-        <h1 class="w-page__title">Curriculum</h1>
-        <p class="w-page__sub">Follow your modules in order and see what unlocks next.</p>
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Learning</div>
+        <h1 class="ph-page__title">Curriculum</h1>
+        <p class="ph-page__sub">Follow your modules in order and see what unlocks next.</p>
       </div>
     </div>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (curriculum(); as view) {
       @if (view.tracks.length > 1) {
-        <div class="w-stack">
-          <h2 w-card-title>Your tracks</h2>
-          <div class="w-cluster" aria-label="Choose curriculum track">
+        <div class="ph-stack">
+          <h2 ph-card-title>Your tracks</h2>
+          <div class="ph-cluster" aria-label="Choose curriculum track">
             @for (track of view.tracks; track track.trackId) {
               <button
-                w-button
+                ph-button
                 type="button"
                 data-testid="curriculum-track"
                 [variant]="track.selected ? 'primary' : 'ghost'"
@@ -40,25 +40,25 @@
       }
 
       @if (view.modules.length === 0) {
-        <div w-empty-state>
-          <div w-empty-state-icon>
-            <w-icon name="book-open" />
+        <div ph-empty-state>
+          <div ph-empty-state-icon>
+            <ph-icon name="book-open" />
           </div>
-          <h2 w-empty-state-title>This track is not set up yet</h2>
-          <p w-empty-state-text>Published modules will appear here when they are ready.</p>
+          <h2 ph-empty-state-title>This track is not set up yet</h2>
+          <p ph-empty-state-text>Published modules will appear here when they are ready.</p>
         </div>
       } @else {
-        <div class="w-stack">
+        <div class="ph-stack">
           @for (module of view.modules; track module.moduleId) {
-            <section w-card data-testid="curriculum-module">
-              <div w-card-body class="w-stack">
-                <div class="w-cluster w-cluster--between">
+            <section ph-card data-testid="curriculum-module">
+              <div ph-card-body class="ph-stack">
+                <div class="ph-cluster ph-cluster--between">
                   <div>
-                    <div class="w-eyebrow">Module {{ module.order }}</div>
-                    <h2 w-card-title>{{ module.name }}</h2>
+                    <div class="ph-eyebrow">Module {{ module.order }}</div>
+                    <h2 ph-card-title>{{ module.name }}</h2>
                   </div>
                   <span
-                    w-badge
+                    ph-badge
                     [variant]="
                       module.status === 'done'
                         ? 'success'
@@ -76,17 +76,17 @@
                   <p>{{ module.description }}</p>
                 }
                 @if (module.scriptureAnchor) {
-                  <p class="w-muted">Scripture anchor: {{ module.scriptureAnchor }}</p>
+                  <p class="ph-muted">Scripture anchor: {{ module.scriptureAnchor }}</p>
                 }
                 @if (module.unlockCondition) {
-                  <p w-alert variant="info">{{ module.unlockCondition }}</p>
+                  <p ph-alert variant="info">{{ module.unlockCondition }}</p>
                 }
 
                 @if (module.items.length > 0) {
-                  <ol class="w-stack">
+                  <ol class="ph-stack">
                     @for (item of module.items; track item.itemId) {
-                      <li w-card variant="greige" data-testid="curriculum-item">
-                        <div w-card-body class="w-cluster w-cluster--between">
+                      <li ph-card variant="greige" data-testid="curriculum-item">
+                        <div ph-card-body class="ph-cluster ph-cluster--between">
                           <div>
                             @if (!item.locked) {
                               <a
@@ -103,7 +103,7 @@
                             } @else {
                               <strong>{{ item.title }}</strong>
                             }
-                            <p class="w-muted">
+                            <p class="ph-muted">
                               {{
                                 item.type === 'lesson'
                                   ? 'Lesson'
@@ -116,10 +116,10 @@
                               }
                             </p>
                             @if (item.unlockCondition) {
-                              <span class="w-muted">{{ item.unlockCondition }}</span>
+                              <span class="ph-muted">{{ item.unlockCondition }}</span>
                             }
                           </div>
-                          <span w-badge>{{ item.locked ? 'Locked' : item.status }}</span>
+                          <span ph-badge>{{ item.locked ? 'Locked' : item.status }}</span>
                         </div>
                       </li>
                     }
@@ -131,7 +131,7 @@
         </div>
       }
     } @else {
-      <p class="w-muted">Loading curriculum…</p>
+      <p class="ph-muted">Loading curriculum…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

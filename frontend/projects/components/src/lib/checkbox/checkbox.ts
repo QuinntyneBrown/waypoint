@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 /**
  * Lets people turn one option on or off. Applied to a native `label` that wraps
- * a native `input[type=checkbox]` followed by a `w-checkbox-box`, so forms, focus
+ * a native `input[type=checkbox]` followed by a `ph-checkbox-box`, so forms, focus
  * and the accessible name stay native.
  */
 @Component({
-  selector: 'label[w-checkbox]',
+  selector: 'label[ph-checkbox]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-check' },
+  host: { class: 'ph-check' },
   templateUrl: './checkbox.html',
   styleUrl: './checkbox.css',
 })

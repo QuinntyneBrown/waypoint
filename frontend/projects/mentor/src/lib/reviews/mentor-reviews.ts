@@ -20,7 +20,7 @@ import {
 
 // Traces to: L2-MENTOR-001, L2-MENTOR-003, L2-MENTOR-004
 @Component({
-  selector: 'w-mentor-reviews',
+  selector: 'ph-mentor-reviews',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

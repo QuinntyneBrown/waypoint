@@ -7,7 +7,7 @@ import { Button, FormField, Label, Shell, Textarea, TextField, Alert } from '@wa
 
 // Traces to: L2-LEARN-007
 @Component({
-  selector: 'w-youth-resubmit',
+  selector: 'ph-youth-resubmit',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

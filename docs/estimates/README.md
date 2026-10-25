@@ -1,6 +1,6 @@
 # Estimates
 
-- Overall effort: 432 days
+- Overall effort: 437 days
 - Complete: 100% of the designed scope, with the known gaps below
 
 | Subsystem | Effort | Complete |
@@ -18,7 +18,7 @@
 | [volunteer-portal](volunteer-portal.md) | 12 days | 100% |
 | [reporting-and-data](reporting-and-data.md) | 26 days | 100% |
 | [platform-services](platform-services.md) | 57 days | 100% |
-| [non-functional](non-functional.md) | 36 days | 100% |
+| [non-functional](non-functional.md) | 41 days | 100% |
 
 ## Known gaps
 
@@ -27,8 +27,8 @@ Percentages measure the designs as written. These gaps sit outside them:
 - **Volunteer assignment** — no product path assigns a volunteer to a session, so the volunteer portal is empty outside seeded data (descoped, `out-of-scope.md` #14).
 - **Donation provider** — `start-donation` hands off to a placeholder provider URL until the product owner supplies the real one (DECISIONS #13).
 - **Keyboard accessibility** — about 48 click handlers on non-focusable elements are lint warnings, not yet fixed (issue #35).
-- **Journey and feature videos** — 115 videos have screenshots captured before the CSS fixes and need re-recording (issues #51, #62).
+- **Journey and feature videos** — 115 videos have screenshots captured before the CSS fixes and need re-recording (issues #51, #62); they also predate the PromiseHub look (DECISIONS #25).
 
 ## Roadmap
 
-1. Every subsystem is implemented and tested, so no work remains.
+1. Every subsystem is implemented and tested, including the PromiseHub design system and the `ph` prefix (DECISIONS #25), so no work remains.

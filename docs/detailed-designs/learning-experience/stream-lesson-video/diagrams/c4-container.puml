@@ -5,7 +5,7 @@ title C4 level 2 — Stream a lesson video — containers
 Person(youth, "Youth participant", "Plays a lesson video")
 System_Boundary(waypoint, "Waypoint software system") {
   Container_Boundary(frontend, "Frontend") {
-    Container(portal, "Portal application", "Angular", "Lesson page hosting w-video-player in on-demand mode")
+    Container(portal, "Portal application", "Angular", "Lesson page hosting ph-video-player in on-demand mode")
   }
   Container_Boundary(backend, "Backend") {
     Container(api, "Waypoint API application", "ASP.NET Core", "Playback URL issuance; anonymous media delivery endpoint")

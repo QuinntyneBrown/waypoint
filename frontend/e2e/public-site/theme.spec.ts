@@ -7,10 +7,10 @@ test('the public site follows the device colour scheme', async ({ page }) => {
 
   await page.emulateMedia({ colorScheme: 'dark' });
   await landing.goto();
-  expect(await landing.canvasBackground()).toBe('rgb(14, 14, 8)');
+  expect(await landing.canvasBackground()).toBe('rgb(15, 18, 22)');
   expect(await landing.colorScheme()).toBe('dark');
 
   await page.emulateMedia({ colorScheme: 'light' });
-  expect(await landing.canvasBackground()).toBe('rgb(255, 255, 255)');
+  expect(await landing.canvasBackground()).toBe('rgb(246, 247, 249)');
   expect(await landing.colorScheme()).toBe('light');
 });

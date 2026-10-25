@@ -10,7 +10,7 @@ const meta: Meta<DescriptionList> = {
   render: (args) => ({
     props: args,
     template: `
-      <dl w-description-list [vertical]="vertical">
+      <dl ph-description-list [vertical]="vertical">
         <dt>Role</dt><dd>Mentor</dd>
         <dt>Cohort</dt><dd>Spring 2026</dd>
         <dt>Email</dt><dd>ana@example.org</dd>

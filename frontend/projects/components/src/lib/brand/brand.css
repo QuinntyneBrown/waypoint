@@ -1,34 +1,34 @@
-.w-brand {
+.ph-brand {
   display: inline-flex;
   align-items: center;
-  gap: var(--w-s2);
-  font-family: var(--w-font-head);
+  gap: var(--ph-s2);
+  font-family: var(--ph-font-head);
   font-weight: 700;
   letter-spacing: -0.03em;
   font-size: 1.05rem;
-  color: var(--w-ink);
+  color: var(--ph-ink);
 }
-.w-brand:hover {
+.ph-brand:hover {
   text-decoration: none;
 }
-.w-brand__mark {
+.ph-brand__mark {
   width: 30px;
   height: 30px;
   border-radius: 7px;
-  background: var(--w-lime);
-  color: var(--w-on-lime);
+  background: var(--ph-lime);
+  color: var(--ph-on-lime);
   display: grid;
   place-items: center;
   font-weight: 700;
   font-size: 0.95rem;
   flex: none;
 }
-.w-brand--lg {
+.ph-brand--lg {
   gap: 10px;
   letter-spacing: 0;
   font-size: 1.2rem;
 }
-.w-brand--lg .w-brand__mark {
+.ph-brand--lg .ph-brand__mark {
   width: 38px;
   height: 38px;
   font-size: 1.1rem;

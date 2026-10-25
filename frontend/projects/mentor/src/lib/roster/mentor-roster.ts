@@ -30,7 +30,7 @@ type RosterFilter = 'all' | 'on-track' | 'at-risk' | 'new';
 
 // Traces to: L2-MENTOR-001, L2-AUTH-010
 @Component({
-  selector: 'w-mentor-roster',
+  selector: 'ph-mentor-roster',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

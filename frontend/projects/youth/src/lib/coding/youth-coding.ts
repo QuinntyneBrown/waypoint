@@ -21,7 +21,7 @@ import {
 
 // Traces to: L2-LEARN-008
 @Component({
-  selector: 'w-youth-coding',
+  selector: 'ph-youth-coding',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

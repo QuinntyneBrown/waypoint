@@ -34,7 +34,7 @@ type HistoryView = 'session' | 'youth';
 
 // Traces to: L2-ENGAGE-004, L2-REPORT-003, L2-NFR-009/010
 @Component({
-  selector: 'w-mentor-attendance-history',
+  selector: 'ph-mentor-attendance-history',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

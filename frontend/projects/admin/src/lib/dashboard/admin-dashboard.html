@@ -1,136 +1,136 @@
-<w-shell
+<ph-shell
   role="admin"
   active="dashboard"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <header class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Director dashboard</div>
-        <h1 class="w-page__title">Welcome back, {{ auth.user()?.displayName }}.</h1>
-        <p class="w-page__sub">
+  <div class="ph-container ph-page">
+    <header class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Director dashboard</div>
+        <h1 class="ph-page__title">Welcome back, {{ auth.user()?.displayName }}.</h1>
+        <p class="ph-page__sub">
           A current view of program participation, progress, and staff load.
         </p>
       </div>
-      <button w-button variant="ghost" type="button" [disabled]="loading()" (click)="load()">
-        <w-icon name="refresh-cw" />Refresh
+      <button ph-button variant="ghost" type="button" [disabled]="loading()" (click)="load()">
+        <ph-icon name="refresh-cw" />Refresh
       </button>
     </header>
     @if (errorMessage(); as error) {
-      <div w-alert variant="error" role="alert">
+      <div ph-alert variant="error" role="alert">
         {{ error }}
-        <button w-button variant="ghost" type="button" (click)="load()">Try again</button>
+        <button ph-button variant="ghost" type="button" (click)="load()">Try again</button>
       </div>
     }
     @if (loading()) {
-      <p class="w-muted" role="status">Loading the director dashboard…</p>
+      <p class="ph-muted" role="status">Loading the director dashboard…</p>
     } @else if (hub(); as view) {
-      <div class="w-grid w-grid--4" aria-label="Program summary">
-        <article w-card>
-          <div w-stat>
-            <div w-stat-label>Active youth</div>
-            <div w-stat-value>{{ view.kpis.activeYouth }}</div>
+      <div class="ph-grid ph-grid--4" aria-label="Program summary">
+        <article ph-card>
+          <div ph-stat>
+            <div ph-stat-label>Active youth</div>
+            <div ph-stat-value>{{ view.kpis.activeYouth }}</div>
           </div>
         </article>
-        <article w-card>
-          <div w-stat>
-            <div w-stat-label>Active cohorts</div>
-            <div w-stat-value>{{ view.kpis.cohorts }}</div>
+        <article ph-card>
+          <div ph-stat>
+            <div ph-stat-label>Active cohorts</div>
+            <div ph-stat-value>{{ view.kpis.cohorts }}</div>
           </div>
         </article>
-        <article w-card>
-          <div w-stat>
-            <div w-stat-label>Average completion</div>
-            <div w-stat-value>{{ view.kpis.avgCompletion | percent: '1.0-0' }}</div>
+        <article ph-card>
+          <div ph-stat>
+            <div ph-stat-label>Average completion</div>
+            <div ph-stat-value>{{ view.kpis.avgCompletion | percent: '1.0-0' }}</div>
           </div>
         </article>
-        <article w-card>
-          <div w-stat>
-            <div w-stat-label>Attendance rate</div>
-            <div w-stat-value>{{ view.kpis.attendanceRate | percent: '1.0-0' }}</div>
+        <article ph-card>
+          <div ph-stat>
+            <div ph-stat-label>Attendance rate</div>
+            <div ph-stat-value>{{ view.kpis.attendanceRate | percent: '1.0-0' }}</div>
           </div>
         </article>
       </div>
 
-      <section class="w-mt-6">
+      <section class="ph-mt-6">
         <h2>Quick actions</h2>
         <div class="dashboard-actions">
-          <a w-card class="dashboard-action" routerLink="/admin/invitations"
-            ><w-icon name="user-plus" /><strong>Invite people</strong></a
+          <a ph-card class="dashboard-action" routerLink="/admin/invitations"
+            ><ph-icon name="user-plus" /><strong>Invite people</strong></a
           >
-          <a w-card class="dashboard-action" routerLink="/admin/applications"
-            ><w-icon name="clipboard-check" /><strong>Review applications</strong></a
+          <a ph-card class="dashboard-action" routerLink="/admin/applications"
+            ><ph-icon name="clipboard-check" /><strong>Review applications</strong></a
           >
-          <a w-card class="dashboard-action" routerLink="/admin/cohort-progress"
-            ><w-icon name="trending-up" /><strong>Open progress board</strong></a
+          <a ph-card class="dashboard-action" routerLink="/admin/cohort-progress"
+            ><ph-icon name="trending-up" /><strong>Open progress board</strong></a
           >
-          <a w-card class="dashboard-action" routerLink="/admin/calendar"
-            ><w-icon name="calendar" /><strong>Manage calendar</strong></a
+          <a ph-card class="dashboard-action" routerLink="/admin/calendar"
+            ><ph-icon name="calendar" /><strong>Manage calendar</strong></a
           >
-          <a w-card class="dashboard-action" routerLink="/admin/reports"
-            ><w-icon name="bar-chart" /><strong>Explore reports</strong></a
+          <a ph-card class="dashboard-action" routerLink="/admin/reports"
+            ><ph-icon name="bar-chart" /><strong>Explore reports</strong></a
           >
-          <a w-card class="dashboard-action" routerLink="/admin/privacy"
-            ><w-icon name="shield" /><strong>Privacy requests</strong></a
+          <a ph-card class="dashboard-action" routerLink="/admin/privacy"
+            ><ph-icon name="shield" /><strong>Privacy requests</strong></a
           >
         </div>
       </section>
 
-      <div class="dashboard-grid w-mt-6">
-        <section w-card>
-          <div w-card-body>
-            <div class="w-cluster w-cluster--between">
-              <h2 w-card-title>Cohort health</h2>
+      <div class="dashboard-grid ph-mt-6">
+        <section ph-card>
+          <div ph-card-body>
+            <div class="ph-cluster ph-cluster--between">
+              <h2 ph-card-title>Cohort health</h2>
               <a routerLink="/admin/reports">Full report</a>
             </div>
             @for (cohort of view.cohorts; track cohort.cohortId) {
               <article class="dashboard-row">
-                <div class="w-cluster w-cluster--between">
+                <div class="ph-cluster ph-cluster--between">
                   <strong>{{ cohort.cohortName }}</strong
-                  ><span w-badge [variant]="cohort.atRisk > 0 ? 'error' : ''"
+                  ><span ph-badge [variant]="cohort.atRisk > 0 ? 'error' : ''"
                     >{{ cohort.atRisk }} at risk</span
                   >
                 </div>
-                <p class="w-muted">
+                <p class="ph-muted">
                   {{ cohort.enrolment }} youth ·
                   {{ cohort.completionRate | percent: '1.0-0' }} complete ·
                   {{ cohort.attendanceRate | percent: '1.0-0' }} attendance
                 </p>
               </article>
             } @empty {
-              <p class="w-muted">No cohort data is available yet.</p>
+              <p class="ph-muted">No cohort data is available yet.</p>
             }
           </div>
         </section>
-        <section w-card>
-          <div w-card-body>
-            <div class="w-cluster w-cluster--between">
-              <h2 w-card-title>Staff load</h2>
+        <section ph-card>
+          <div ph-card-body>
+            <div class="ph-cluster ph-cluster--between">
+              <h2 ph-card-title>Staff load</h2>
               <a routerLink="/admin/mentor-assignments">Balance caseloads</a>
             </div>
             @for (mentor of view.staff.slice(0, 6); track mentor.mentorId) {
               <article class="dashboard-row">
-                <div class="w-cluster w-cluster--between">
+                <div class="ph-cluster ph-cluster--between">
                   <strong>{{ mentor.mentorName }}</strong
-                  ><span w-badge [variant]="mentor.overloaded ? 'error' : ''">{{
+                  ><span ph-badge [variant]="mentor.overloaded ? 'error' : ''">{{
                     mentor.loadBalance
                   }}</span>
                 </div>
-                <p class="w-muted">
+                <p class="ph-muted">
                   {{ mentor.caseload }} youth · {{ mentor.checkIns }} check-ins ·
                   {{ mentor.reviews }} reviews
                 </p>
               </article>
             } @empty {
-              <p class="w-muted">No mentor activity is available yet.</p>
+              <p class="ph-muted">No mentor activity is available yet.</p>
             }
           </div>
         </section>
       </div>
-      <p class="w-muted w-text-sm w-mt-4">
+      <p class="ph-muted ph-text-sm ph-mt-4">
         Updated {{ view.generatedAt | date: 'medium' }} · {{ view.recordCount }} records
       </p>
     }
   </div>
-</w-shell>
+</ph-shell>

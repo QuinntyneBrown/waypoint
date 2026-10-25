@@ -1,40 +1,40 @@
-<w-shell
+<ph-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
+  <div class="ph-container ph-container--narrow ph-page">
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (saveStatus(); as status) {
-      <p class="w-muted" role="status">{{ status }}</p>
+      <p class="ph-muted" role="status">{{ status }}</p>
     }
 
     @if (attempt(); as view) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">
             Attempt {{ view.attemptNumber }} of {{ view.attemptsAllowed }}
           </div>
-          <h1 class="w-page__title">{{ view.title }}</h1>
-          <p class="w-page__sub" data-testid="quiz-progress">
+          <h1 class="ph-page__title">{{ view.title }}</h1>
+          <p class="ph-page__sub" data-testid="quiz-progress">
             Question {{ currentIndex() + 1 }} of {{ view.questionCount }}
           </p>
         </div>
       </div>
 
       @if (currentQuestion(); as question) {
-        <section w-card>
-          <div w-card-body class="w-stack">
-            <h2 w-card-title>{{ question.text }}</h2>
-            <div class="w-stack">
+        <section ph-card>
+          <div ph-card-body class="ph-stack">
+            <h2 ph-card-title>{{ question.text }}</h2>
+            <div class="ph-stack">
               @if (question.type === 'ShortAnswer') {
-                <div w-form-field>
-                  <label w-label [for]="'short-answer-' + question.id"> Your answer </label>
+                <div ph-form-field>
+                  <label ph-label [for]="'short-answer-' + question.id"> Your answer </label>
                   <input
-                    w-text-field
+                    ph-text-field
                     [id]="'short-answer-' + question.id"
                     type="text"
                     maxlength="1000"
@@ -42,11 +42,11 @@
                     [value]="textAnswer(question.id)"
                     (change)="writeText(question.id, $any($event.target).value)"
                   />
-                  <p w-help>Your answer saves when you leave this field.</p>
+                  <p ph-help>Your answer saves when you leave this field.</p>
                 </div>
               } @else {
                 @for (option of question.options; track $index) {
-                  <label w-quiz-option [selected]="isSelected(question.id, $index)">
+                  <label ph-quiz-option [selected]="isSelected(question.id, $index)">
                     @if (question.type === 'MultipleAnswer') {
                       <input
                         type="checkbox"
@@ -69,15 +69,15 @@
           </div>
         </section>
 
-        <div class="w-actions w-actions--between">
+        <div class="ph-actions ph-actions--between">
           @if (currentIndex() > 0) {
-            <button w-button variant="ghost" type="button" (click)="move(-1)">
+            <button ph-button variant="ghost" type="button" (click)="move(-1)">
               Previous question
             </button>
           }
           @if (currentIndex() < view.questionCount - 1) {
             <button
-              w-button
+              ph-button
               variant="primary"
               type="button"
               [disabled]="!answered(question.id) || saveStatus() === 'Saving answer…'"
@@ -87,7 +87,7 @@
             </button>
           } @else {
             <button
-              w-button
+              ph-button
               variant="primary"
               type="button"
               [disabled]="
@@ -101,7 +101,7 @@
         </div>
       }
     } @else {
-      <p class="w-muted">Preparing your attempt…</p>
+      <p class="ph-muted">Preparing your attempt…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

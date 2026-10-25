@@ -1,5 +1,5 @@
-.w-modal__sub {
-  color: var(--w-muted);
+.ph-modal__sub {
+  color: var(--ph-muted);
   font-size: 0.9rem;
   margin: 4px 0 0;
 }

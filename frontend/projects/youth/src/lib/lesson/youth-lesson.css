@@ -14,8 +14,8 @@
 .lesson-media {
   width: 100%;
   max-height: 28rem;
-  background: var(--w-ink);
-  border-radius: var(--w-r-card);
+  background: var(--ph-ink);
+  border-radius: var(--ph-r-card);
 }
 .reading-size-button {
   min-inline-size: 2.75rem;

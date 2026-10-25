@@ -1,71 +1,71 @@
-<w-shell
+<ph-shell
   role="guardian"
   active="consent"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Guardian settings</div>
-        <h1 class="w-page__title">Consent and contact</h1>
-        <p class="w-page__sub">Manage your own details and your youth’s consent record.</p>
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Guardian settings</div>
+        <h1 class="ph-page__title">Consent and contact</h1>
+        <p class="ph-page__sub">Manage your own details and your youth’s consent record.</p>
       </div>
     </div>
 
-    <div class="w-grid w-grid--2">
-      <section w-card>
-        <form w-card-body class="w-stack" [formGroup]="contactForm" (ngSubmit)="saveContact()">
-          <h2 w-card-title>Contact details</h2>
-          <div w-form-field>
-            <label w-label for="guardian-name">Name</label>
-            <input w-text-field id="guardian-name" formControlName="displayName" />
+    <div class="ph-grid ph-grid--2">
+      <section ph-card>
+        <form ph-card-body class="ph-stack" [formGroup]="contactForm" (ngSubmit)="saveContact()">
+          <h2 ph-card-title>Contact details</h2>
+          <div ph-form-field>
+            <label ph-label for="guardian-name">Name</label>
+            <input ph-text-field id="guardian-name" formControlName="displayName" />
           </div>
-          <div w-form-field>
-            <label w-label for="guardian-email">Email</label>
-            <input w-text-field id="guardian-email" type="email" formControlName="email" />
+          <div ph-form-field>
+            <label ph-label for="guardian-email">Email</label>
+            <input ph-text-field id="guardian-email" type="email" formControlName="email" />
           </div>
-          <div w-form-field>
-            <label w-label for="guardian-relationship">Relationship</label>
-            <input w-text-field id="guardian-relationship" formControlName="relationship" />
+          <div ph-form-field>
+            <label ph-label for="guardian-relationship">Relationship</label>
+            <input ph-text-field id="guardian-relationship" formControlName="relationship" />
           </div>
-          <div w-form-field>
-            <label w-label for="guardian-phone">Phone</label>
-            <input w-text-field id="guardian-phone" type="tel" formControlName="phone" />
+          <div ph-form-field>
+            <label ph-label for="guardian-phone">Phone</label>
+            <input ph-text-field id="guardian-phone" type="tel" formControlName="phone" />
           </div>
-          <div w-form-field>
-            <label w-label for="guardian-emergency-name">Emergency contact name</label>
+          <div ph-form-field>
+            <label ph-label for="guardian-emergency-name">Emergency contact name</label>
             <input
-              w-text-field
+              ph-text-field
               id="guardian-emergency-name"
               formControlName="emergencyContactName"
             />
           </div>
-          <div w-form-field>
-            <label w-label for="guardian-emergency-phone">Emergency contact phone</label>
+          <div ph-form-field>
+            <label ph-label for="guardian-emergency-phone">Emergency contact phone</label>
             <input
-              w-text-field
+              ph-text-field
               id="guardian-emergency-phone"
               type="tel"
               formControlName="emergencyContactPhone"
             />
           </div>
-          <button w-button variant="primary" type="submit" [disabled]="saving()">
+          <button ph-button variant="primary" type="submit" [disabled]="saving()">
             Save contact details
           </button>
         </form>
       </section>
 
-      <div class="w-stack">
+      <div class="ph-stack">
         @if (records() === undefined) {
-          <p class="w-muted">Loading consent record…</p>
+          <p class="ph-muted">Loading consent record…</p>
         } @else if (records()![0]; as record) {
-          <section w-card>
-            <div w-card-body class="w-stack">
-              <div class="w-cluster w-cluster--between">
-                <h2 w-card-title>Participation consent</h2>
+          <section ph-card>
+            <div ph-card-body class="ph-stack">
+              <div class="ph-cluster ph-cluster--between">
+                <h2 ph-card-title>Participation consent</h2>
                 <span
-                  w-badge
+                  ph-badge
                   [variant]="
                     record.withdrawnAt === null
                       ? 'success'
@@ -90,9 +90,9 @@
                 <dt>Reference</dt>
                 <dd data-testid="consent-reference">{{ record.referenceId }}</dd>
               </dl>
-              <div class="w-cluster">
+              <div class="ph-cluster">
                 <button
-                  w-button
+                  ph-button
                   variant="secondary"
                   type="button"
                   [disabled]="saving()"
@@ -102,7 +102,7 @@
                 </button>
                 @if (!record.withdrawnAt) {
                   <button
-                    w-button
+                    ph-button
                     variant="danger"
                     type="button"
                     [disabled]="saving()"
@@ -115,46 +115,46 @@
             </div>
           </section>
 
-          <section w-card>
-            <form w-card-body class="w-stack" [formGroup]="mediaForm" (ngSubmit)="saveMedia()">
-              <h2 w-card-title>Media consent</h2>
-              <label w-checkbox>
+          <section ph-card>
+            <form ph-card-body class="ph-stack" [formGroup]="mediaForm" (ngSubmit)="saveMedia()">
+              <h2 ph-card-title>Media consent</h2>
+              <label ph-checkbox>
                 <input type="checkbox" formControlName="mediaConsent" />
-                <span w-checkbox-box>
-                  <w-icon name="check" />
+                <span ph-checkbox-box>
+                  <ph-icon name="check" />
                 </span>
                 <span>Allow media use</span>
               </label>
-              <label w-checkbox>
+              <label ph-checkbox>
                 <input type="checkbox" formControlName="mediaAllPhotosVideo" />
-                <span w-checkbox-box>
-                  <w-icon name="check" />
+                <span ph-checkbox-box>
+                  <ph-icon name="check" />
                 </span>
                 <span>All photos and video</span>
               </label>
-              <label w-checkbox>
+              <label ph-checkbox>
                 <input type="checkbox" formControlName="mediaGroupOnly" />
-                <span w-checkbox-box>
-                  <w-icon name="check" />
+                <span ph-checkbox-box>
+                  <ph-icon name="check" />
                 </span>
                 <span>Group photos only</span>
               </label>
-              <label w-checkbox>
+              <label ph-checkbox>
                 <input type="checkbox" formControlName="mediaFirstNameCaptions" />
-                <span w-checkbox-box>
-                  <w-icon name="check" />
+                <span ph-checkbox-box>
+                  <ph-icon name="check" />
                 </span>
                 <span>First-name captions</span>
               </label>
-              <button w-button variant="primary" type="submit" [disabled]="saving()">
+              <button ph-button variant="primary" type="submit" [disabled]="saving()">
                 Save media consent
               </button>
             </form>
           </section>
         } @else {
-          <div w-empty-state>
-            <h2 w-empty-state-title>No consent record yet</h2>
-            <p w-empty-state-text>
+          <div ph-empty-state>
+            <h2 ph-empty-state-title>No consent record yet</h2>
+            <p ph-empty-state-text>
               A participation and media consent record will appear once a youth is linked.
             </p>
           </div>
@@ -163,12 +163,12 @@
     </div>
 
     @if (statusMessage(); as message) {
-      <p w-alert variant="success" role="status" aria-live="polite">{{ message }}</p>
+      <p ph-alert variant="success" role="status" aria-live="polite">{{ message }}</p>
     } @else {
       <p role="status" aria-live="polite"></p>
     }
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
   </div>
-</w-shell>
+</ph-shell>

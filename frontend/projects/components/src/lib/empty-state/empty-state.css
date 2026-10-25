@@ -1,6 +1,6 @@
-.w-empty {
+.ph-empty {
   text-align: center;
-  padding: var(--w-s9) var(--w-s5);
+  padding: var(--ph-s9) var(--ph-s5);
   max-width: 420px;
   margin-inline: auto;
 }

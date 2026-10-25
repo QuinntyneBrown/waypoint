@@ -6,9 +6,9 @@ import { RadioBox } from './radio-box';
 @Component({
   imports: [Radio, RadioBox],
   template: `
-    <label w-radio>
+    <label ph-radio>
       <input type="radio" name="rsvp" value="going" />
-      <span w-radio-box></span>
+      <span ph-radio-box></span>
       <span>Going</span>
     </label>
   `,
@@ -25,13 +25,13 @@ describe('Radio', () => {
 
   it('wraps a native radio and keeps its label text', async () => {
     const label = (await render()).querySelector('label')!;
-    expect(label.classList.contains('w-radio')).toBe(true);
+    expect(label.classList.contains('ph-radio')).toBe(true);
     expect(label.querySelector('input[type="radio"]')).not.toBeNull();
     expect(label.textContent).toContain('Going');
   });
 
   it('renders the box next to the input', async () => {
     const box = (await render()).querySelector('input + span')!;
-    expect(box.classList.contains('w-radio__box')).toBe(true);
+    expect(box.classList.contains('ph-radio__box')).toBe(true);
   });
 });

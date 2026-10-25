@@ -129,8 +129,8 @@
   };
 
   function buildSprite() {
-    if (document.getElementById("w-sprite")) return;
-    var parts = ['<svg id="w-sprite" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">'];
+    if (document.getElementById("ph-sprite")) return;
+    var parts = ['<svg id="ph-sprite" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">'];
     for (var k in ICONS) {
       if (ICONS.hasOwnProperty(k)) {
         parts.push('<symbol id="i-' + k + '" viewBox="0 0 24 24">' + ICONS[k] + '</symbol>');
@@ -142,7 +142,7 @@
     document.body.insertBefore(d.firstChild, document.body.firstChild);
   }
   function icon(name, cls) {
-    return '<svg class="w-icon ' + (cls || "") + '" aria-hidden="true"><use href="#i-' + name + '"></use></svg>';
+    return '<svg class="ph-icon ' + (cls || "") + '" aria-hidden="true"><use href="#i-' + name + '"></use></svg>';
   }
   Waypoint.icon = icon;
 
@@ -295,15 +295,15 @@
     var cfg = NAV[role];
     if (!cfg) return;
     var shell = document.body;
-    shell.classList.add("w-shell", "w-has-sidenav");
+    shell.classList.add("ph-shell", "ph-has-sidenav");
     var hasBot = cfg.botnav && cfg.botnav.length;
-    if (hasBot) shell.classList.add("w-has-botnav");
+    if (hasBot) shell.classList.add("ph-has-botnav");
 
     // sidenav items
     var sideItems = cfg.items.map(function (it) {
-      if (it.group) return '<div class="w-sidenav__group">' + it.group + "</div>";
-      var badge = it.badge ? '<span class="w-sidenav__badge">' + it.badge + "</span>" : "";
-      return '<a class="w-sidenav__item' + (it.key === active ? " is-active" : "") +
+      if (it.group) return '<div class="ph-sidenav__group">' + it.group + "</div>";
+      var badge = it.badge ? '<span class="ph-sidenav__badge">' + it.badge + "</span>" : "";
+      return '<a class="ph-sidenav__item' + (it.key === active ? " is-active" : "") +
         '" href="' + Waypoint.href(it.path) + '">' + icon(it.icon) + "<span>" + it.label + "</span>" + badge + "</a>";
     }).join("");
 
@@ -312,7 +312,7 @@
     if (hasBot) {
       botItems = cfg.botnav.map(function (key) {
         var it = findItem(cfg, key); if (!it) return "";
-        return '<a class="w-botnav__item' + (key === active ? " is-active" : "") +
+        return '<a class="ph-botnav__item' + (key === active ? " is-active" : "") +
           '" href="' + Waypoint.href(it.path) + '">' + icon(it.icon) + "<span>" + it.label + "</span></a>";
       }).join("");
     }
@@ -321,46 +321,46 @@
     var showTrack = (role === "youth" || role === "mentor" || role === "admin");
 
     var topbar =
-      '<header class="w-topbar">' +
-        '<button class="w-iconbtn w-topbar__burger" data-nav-toggle aria-label="Menu">' + icon("menu") + "</button>" +
-        '<a class="w-brand" href="' + Waypoint.href(cfg.brandHref) + '"><span class="w-brand__mark">W</span><span class="w-brand__name">Waypoint</span></a>' +
-        '<div class="w-topbar__actions">' +
-          (showTrack ? '<button class="w-trackswitch" data-menu-toggle="w-trackmenu">' + icon(track === "coding" ? "code" : "book-open") + '<span class="w-trackswitch__label" data-track-label>' + trackName + "</span>" + icon("chevron-down") + "</button>" : "") +
-          '<button class="w-iconbtn" data-menu-toggle="w-notifmenu" aria-label="Notifications">' + icon("bell") + '<span class="w-dot"></span></button>' +
-          '<button class="w-iconbtn" data-menu-toggle="w-accountmenu" aria-label="Account"><span class="w-avatar w-avatar--sm" data-name="' + ROLE_USER[role] + '"></span></button>' +
+      '<header class="ph-topbar">' +
+        '<button class="ph-iconbtn ph-topbar__burger" data-nav-toggle aria-label="Menu">' + icon("menu") + "</button>" +
+        '<a class="ph-brand" href="' + Waypoint.href(cfg.brandHref) + '"><span class="ph-brand__mark">W</span><span class="ph-brand__name">Waypoint</span></a>' +
+        '<div class="ph-topbar__actions">' +
+          (showTrack ? '<button class="ph-trackswitch" data-menu-toggle="ph-trackmenu">' + icon(track === "coding" ? "code" : "book-open") + '<span class="ph-trackswitch__label" data-track-label>' + trackName + "</span>" + icon("chevron-down") + "</button>" : "") +
+          '<button class="ph-iconbtn" data-menu-toggle="ph-notifmenu" aria-label="Notifications">' + icon("bell") + '<span class="ph-dot"></span></button>' +
+          '<button class="ph-iconbtn" data-menu-toggle="ph-accountmenu" aria-label="Account"><span class="ph-avatar ph-avatar--sm" data-name="' + ROLE_USER[role] + '"></span></button>' +
         "</div>" +
       "</header>";
 
     var offline =
-      '<div class="w-offline" data-offline-banner>' + icon("wifi-off") +
+      '<div class="ph-offline" data-offline-banner>' + icon("wifi-off") +
       '<span>You’re offline — changes will save when you reconnect.</span></div>';
 
-    var scrim = '<div class="w-navscrim" data-nav-toggle></div>';
-    var sidenav = '<nav class="w-sidenav" aria-label="Main">' + sideItems +
-      '<div class="w-sidenav__foot"><a class="w-sidenav__item" href="' + Waypoint.href("authentication/auth/signed-out.html") + '">' + icon("log-out") + "<span>Sign out</span></a></div></nav>";
-    var botnav = hasBot ? '<nav class="w-botnav" aria-label="Primary">' + botItems + "</nav>" : "";
+    var scrim = '<div class="ph-navscrim" data-nav-toggle></div>';
+    var sidenav = '<nav class="ph-sidenav" aria-label="Main">' + sideItems +
+      '<div class="ph-sidenav__foot"><a class="ph-sidenav__item" href="' + Waypoint.href("authentication/auth/signed-out.html") + '">' + icon("log-out") + "<span>Sign out</span></a></div></nav>";
+    var botnav = hasBot ? '<nav class="ph-botnav" aria-label="Primary">' + botItems + "</nav>" : "";
 
     // menus (popovers)
     var trackMenu = showTrack ?
-      '<div class="w-menu w-hide" id="w-trackmenu" style="top:52px;right:auto">' +
-        '<div class="w-menu__item" data-track-switch="bible">' + icon("book-open") + "Bible &amp; Leadership</div>" +
-        '<div class="w-menu__item" data-track-switch="coding">' + icon("code") + "Coding for Kingdom</div>" +
+      '<div class="ph-menu ph-hide" id="ph-trackmenu" style="top:52px;right:auto">' +
+        '<div class="ph-menu__item" data-track-switch="bible">' + icon("book-open") + "Bible &amp; Leadership</div>" +
+        '<div class="ph-menu__item" data-track-switch="coding">' + icon("code") + "Coding for Kingdom</div>" +
       "</div>" : "";
     var notifMenu =
-      '<div class="w-menu w-hide" id="w-notifmenu" style="top:52px;right:56px;min-width:280px">' +
-        '<div class="w-menu__item"><span>' + icon("check-circle") + "</span><span><b>Quiz graded</b><br><span class=\"w-muted w-text-sm\">You scored 8/10 on “Who Is Jesus?”</span></span></div>" +
-        '<div class="w-menu__item"><span>' + icon("award") + '</span><span><b>New badge earned</b><br><span class="w-muted w-text-sm">Faithful Five — 5-day streak</span></span></div>' +
-        '<div class="w-menu__sep"></div>' +
-        '<a class="w-menu__item" href="' + Waypoint.href(role === "mentor" ? "engagement/mentor/notifications.html" : "engagement/youth/notifications.html") + '">' + icon("bell") + "View all notifications</a>" +
+      '<div class="ph-menu ph-hide" id="ph-notifmenu" style="top:52px;right:56px;min-width:280px">' +
+        '<div class="ph-menu__item"><span>' + icon("check-circle") + "</span><span><b>Quiz graded</b><br><span class=\"ph-muted ph-text-sm\">You scored 8/10 on “Who Is Jesus?”</span></span></div>" +
+        '<div class="ph-menu__item"><span>' + icon("award") + '</span><span><b>New badge earned</b><br><span class="ph-muted ph-text-sm">Faithful Five — 5-day streak</span></span></div>' +
+        '<div class="ph-menu__sep"></div>' +
+        '<a class="ph-menu__item" href="' + Waypoint.href(role === "mentor" ? "engagement/mentor/notifications.html" : "engagement/youth/notifications.html") + '">' + icon("bell") + "View all notifications</a>" +
       "</div>";
     var acctMenu =
-      '<div class="w-menu w-hide" id="w-accountmenu" style="top:52px;right:12px">' +
-        '<div class="w-menu__item" style="pointer-events:none"><span class="w-avatar w-avatar--sm" data-name="' + ROLE_USER[role] + '"></span><span><b>' + ROLE_USER[role] + "</b><br><span class=\"w-muted w-text-sm\">" + ROLE_LABEL[role] + "</span></span></div>" +
-        '<div class="w-menu__sep"></div>' +
-        '<a class="w-menu__item" href="' + Waypoint.href("platform-services/shared/settings-profile.html") + '">' + icon("user") + "Profile &amp; settings</a>" +
-        '<a class="w-menu__item" href="' + Waypoint.href("platform-services/shared/help.html") + '">' + icon("help-circle") + "Help</a>" +
-        '<div class="w-menu__sep"></div>' +
-        '<a class="w-menu__item w-menu__item--danger" href="' + Waypoint.href("authentication/auth/signed-out.html") + '">' + icon("log-out") + "Sign out</a>" +
+      '<div class="ph-menu ph-hide" id="ph-accountmenu" style="top:52px;right:12px">' +
+        '<div class="ph-menu__item" style="pointer-events:none"><span class="ph-avatar ph-avatar--sm" data-name="' + ROLE_USER[role] + '"></span><span><b>' + ROLE_USER[role] + "</b><br><span class=\"ph-muted ph-text-sm\">" + ROLE_LABEL[role] + "</span></span></div>" +
+        '<div class="ph-menu__sep"></div>' +
+        '<a class="ph-menu__item" href="' + Waypoint.href("platform-services/shared/settings-profile.html") + '">' + icon("user") + "Profile &amp; settings</a>" +
+        '<a class="ph-menu__item" href="' + Waypoint.href("platform-services/shared/help.html") + '">' + icon("help-circle") + "Help</a>" +
+        '<div class="ph-menu__sep"></div>' +
+        '<a class="ph-menu__item ph-menu__item--danger" href="' + Waypoint.href("authentication/auth/signed-out.html") + '">' + icon("log-out") + "Sign out</a>" +
       "</div>";
 
     document.body.insertAdjacentHTML("afterbegin",
@@ -377,21 +377,21 @@
   }
 
   /* ---------------- Avatars ---------------- */
-  var AV_BG = ["#c6fb50", "#8adfff", "#ffd700", "#ffb300", "#bae386", "#e4e0d8", "#f05228", "#1d8fb9"];
+  /* PromiseHub pastel covers; always paired with --color-fg-on-cover. */
+  var AV_BG = ["sage", "rose", "sky", "sun", "lilac", "mint", "peach"].map(function (c) { return "var(--color-cover-" + c + ")"; });
   function initials(name) {
     var p = (name || "?").trim().split(/\s+/);
     return ((p[0] || "")[0] || "") + ((p[1] || "")[0] || "");
   }
   function hashIdx(s, n) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 100000; return h % n; }
   function paintAvatars(root) {
-    (root || document).querySelectorAll(".w-avatar[data-name]").forEach(function (el) {
+    (root || document).querySelectorAll(".ph-avatar[data-name]").forEach(function (el) {
       if (el.getAttribute("data-painted")) return;
       var name = el.getAttribute("data-name");
       if (!el.textContent.trim()) el.textContent = initials(name).toUpperCase();
       var bg = AV_BG[hashIdx(name || "x", AV_BG.length)];
       el.style.background = bg;
-      // keep ink text for readability on light accents
-      el.style.color = "#16160c";
+      el.style.color = "var(--color-fg-on-cover)";
       el.setAttribute("data-painted", "1");
     });
   }
@@ -403,15 +403,15 @@
     if (m) { m.classList.add("is-open"); document.body.style.overflow = "hidden"; }
   };
   Waypoint.closeModal = function (id) {
-    var m = id ? document.getElementById(id) : document.querySelector(".w-modal.is-open");
+    var m = id ? document.getElementById(id) : document.querySelector(".ph-modal.is-open");
     if (m) m.classList.remove("is-open");
-    if (!document.querySelector(".w-modal.is-open")) document.body.style.overflow = "";
+    if (!document.querySelector(".ph-modal.is-open")) document.body.style.overflow = "";
   };
 
   /* ---------------- Toasts ---------------- */
   function toastHost() {
-    var h = document.querySelector(".w-toasts");
-    if (!h) { h = document.createElement("div"); h.className = "w-toasts"; document.body.appendChild(h); }
+    var h = document.querySelector(".ph-toasts");
+    if (!h) { h = document.createElement("div"); h.className = "ph-toasts"; document.body.appendChild(h); }
     return h;
   }
   Waypoint.toast = function (msg, opts) {
@@ -419,13 +419,13 @@
     var type = opts.type || "default";
     var ic = { success: "check-circle", error: "x-circle", warning: "alert-triangle", info: "info", "default": "info" }[type] || "info";
     var el = document.createElement("div");
-    el.className = "w-toast w-toast--" + type;
-    el.innerHTML = '<span class="w-toast__icon">' + icon(ic) + "</span><div class=\"w-toast__body\">" +
-      (opts.title ? '<div class="w-toast__title">' + opts.title + "</div>" : "") + (msg || "") +
-      '</div><button class="w-toast__close" aria-label="Dismiss">' + icon("x") + "</button>";
+    el.className = "ph-toast ph-toast--" + type;
+    el.innerHTML = '<span class="ph-toast__icon">' + icon(ic) + "</span><div class=\"ph-toast__body\">" +
+      (opts.title ? '<div class="ph-toast__title">' + opts.title + "</div>" : "") + (msg || "") +
+      '</div><button class="ph-toast__close" aria-label="Dismiss">' + icon("x") + "</button>";
     toastHost().appendChild(el);
     var kill = function () { el.style.opacity = "0"; setTimeout(function () { el.remove(); }, 200); };
-    el.querySelector(".w-toast__close").addEventListener("click", kill);
+    el.querySelector(".ph-toast__close").addEventListener("click", kill);
     if (opts.duration !== 0) setTimeout(kill, opts.duration || 3600);
   };
 
@@ -445,19 +445,19 @@
 
   /* ---------------- Menus ---------------- */
   function closeMenus() {
-    document.querySelectorAll(".w-menu").forEach(function (m) { m.classList.add("w-hide"); });
+    document.querySelectorAll(".ph-menu").forEach(function (m) { m.classList.add("ph-hide"); });
   }
   function toggleMenu(id) {
     var m = document.getElementById(id);
     if (!m) return;
-    var wasHidden = m.classList.contains("w-hide");
+    var wasHidden = m.classList.contains("ph-hide");
     closeMenus();
-    if (wasHidden) m.classList.remove("w-hide");
+    if (wasHidden) m.classList.remove("ph-hide");
   }
 
   /* ---------------- Tabs ---------------- */
   function wireTabs(scope) {
-    (scope || document).querySelectorAll(".w-tabs").forEach(function (tabs) {
+    (scope || document).querySelectorAll(".ph-tabs").forEach(function (tabs) {
       if (tabs.getAttribute("data-wired")) return;
       tabs.setAttribute("data-wired", "1");
       tabs.addEventListener("click", function (e) {
@@ -483,7 +483,7 @@
       var st = state || "default";
       document.querySelectorAll("[data-when-state]").forEach(function (el) {
         var list = el.getAttribute("data-when-state").split(/\s+/);
-        el.classList.toggle("w-hide", list.indexOf(st) < 0);
+        el.classList.toggle("ph-hide", list.indexOf(st) < 0);
       });
     }
     if (state === "offline") Waypoint.setOffline(true);
@@ -497,7 +497,7 @@
       var t;
       if ((t = e.target.closest("[data-open-modal]"))) { e.preventDefault(); Waypoint.openModal(t.getAttribute("data-open-modal")); return; }
       if ((t = e.target.closest("[data-close-modal]"))) { e.preventDefault(); Waypoint.closeModal(t.getAttribute("data-close-modal") || null); return; }
-      if ((t = e.target.closest(".w-modal__scrim"))) { Waypoint.closeModal(); return; }
+      if ((t = e.target.closest(".ph-modal__scrim"))) { Waypoint.closeModal(); return; }
       if ((t = e.target.closest("[data-toast]"))) {
         e.preventDefault();
         Waypoint.toast(t.getAttribute("data-toast"), { type: t.getAttribute("data-toast-type") || "success", title: t.getAttribute("data-toast-title") || "" });
@@ -510,7 +510,7 @@
       if ((t = e.target.closest("[data-toggle-offline]"))) { e.preventDefault(); Waypoint.setOffline(!document.body.classList.contains("is-offline")); return; }
       if ((t = e.target.closest("[data-menu-toggle]"))) { e.preventDefault(); e.stopPropagation(); toggleMenu(t.getAttribute("data-menu-toggle")); return; }
       // click outside menus closes them
-      if (!e.target.closest(".w-menu")) closeMenus();
+      if (!e.target.closest(".ph-menu")) closeMenus();
     });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { Waypoint.closeModal(); closeMenus(); document.body.classList.remove("is-nav-open"); }
@@ -523,8 +523,8 @@
     if (didInit) return; didInit = true;
     buildSprite();
     var body = document.body;
-    if (body.classList.contains("w-shell") || body.hasAttribute("data-role")) {
-      body.classList.add("w-shell");
+    if (body.classList.contains("ph-shell") || body.hasAttribute("data-role")) {
+      body.classList.add("ph-shell");
       Waypoint.mountShell({ role: body.getAttribute("data-role"), active: body.getAttribute("data-active"), track: body.getAttribute("data-track") || "bible" });
     }
     paintAvatars();

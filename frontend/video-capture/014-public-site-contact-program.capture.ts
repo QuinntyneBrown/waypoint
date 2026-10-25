@@ -28,5 +28,5 @@ test('capture: contact the program', async ({ page }) => {
   await contact.sendButton.click();
   await expect(contact.acknowledgementHeading).toBeVisible();
   await page.evaluate(() => window.scrollTo(0, 0));
-  await shot(page, FOLDER, 'sent', await clipOf(page.locator('.w-empty'), 40));
+  await shot(page, FOLDER, 'sent', await clipOf(page.locator('.ph-empty'), 40));
 });

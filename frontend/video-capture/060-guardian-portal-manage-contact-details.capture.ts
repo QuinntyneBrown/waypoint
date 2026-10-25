@@ -12,7 +12,7 @@ test('capture: manage contact details', async ({ page, request }) => {
   const consent = new GuardianConsentPage(page);
   await consent.goto();
   await expect(consent.participationStatus).toContainText(/active/i);
-  const contact = page.locator('section.w-card', { hasText: 'Contact details' });
+  const contact = page.locator('section.ph-card', { hasText: 'Contact details' });
   const box = (await contact.boundingBox())!;
   await shotFull(page, FOLDER, 'contact', {
     x: box.x - 12,
@@ -26,12 +26,12 @@ test('capture: manage contact details', async ({ page, request }) => {
   await page.getByLabel(/emergency contact phone/i).fill('+14165550143');
   await consent.saveContactButton.click();
   await expect(consent.status).toContainText(/contact details saved/i);
-  await shotWithMessage(page, FOLDER, 'saved', page.locator('.w-alert--success'));
+  await shotWithMessage(page, FOLDER, 'saved', page.locator('.ph-alert--success'));
 
   await page.reload();
   await expect(consent.phone).toHaveValue('+14165550142');
   const reloaded = (await page
-    .locator('section.w-card', { hasText: 'Contact details' })
+    .locator('section.ph-card', { hasText: 'Contact details' })
     .boundingBox())!;
   await shotFull(page, FOLDER, 'after-reload', {
     x: reloaded.x - 12,

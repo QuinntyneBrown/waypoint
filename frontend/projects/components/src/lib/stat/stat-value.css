@@ -1,5 +1,5 @@
-.w-statcard__value {
-  font-family: var(--w-font-head);
+.ph-statcard__value {
+  font-family: var(--ph-font-head);
   font-weight: 500;
   font-size: 2.1rem;
   line-height: 1.1;

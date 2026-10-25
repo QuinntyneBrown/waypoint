@@ -18,11 +18,11 @@ The frontend loads the design-system token file as [`tokens.css`](../../../../fr
 
 1. **Primitives** (`--palette-*`) hold raw values and never change per theme.
 2. **Semantic tokens** (`--color-*`, `--shadow-*`) name a role, such as canvas, muted text, or border. The `:root` block holds light values. A `[data-theme="dark"]` block, and the same block inside `@media (prefers-color-scheme: dark)` guarded by `:root:not([data-theme="light"])`, hold dark values.
-3. **Component aliases** (`--w-*`) in [`core.css`](../../../../frontend/projects/components/src/styles/core.css) are the names every existing component rule reads. Each colour alias resolves to a semantic token, so components inherit the theme without per-component dark rules.
+3. **Component aliases** (`--ph-*`) in [`core.css`](../../../../frontend/projects/components/src/styles/core.css) are the names every existing component rule reads. Each colour alias resolves to a semantic token, so components inherit the theme without per-component dark rules.
 
-Ink alpha tints (`--w-ink-80` … `--w-ink-04`) are derived with `color-mix()` from `--color-fg-default`, so a tint of dark ink in light becomes a tint of light ink in dark. Text placed on a lime fill reads `--w-on-lime` (`--color-fg-on-brand`), which stays dark ink in both themes. Accent and avatar hues (`--w-green`, `--w-sky`, …) are decorative and identical in both themes.
+Ink alpha tints (`--ph-ink-80` … `--ph-ink-04`) are derived with `color-mix()` from `--color-fg-default`, so a tint of dark ink in light becomes a tint of light ink in dark. Text placed on a lime fill reads `--ph-on-lime` (`--color-fg-on-brand`), which stays dark ink in both themes. Accent and avatar hues (`--ph-green`, `--ph-sky`, …) are decorative and identical in both themes.
 
-The high-contrast class `w-a11y-contrast` in [`a11y.css`](../../../../frontend/projects/components/src/styles/a11y.css) also derives its stronger borders and text from `--color-fg-default`, so it strengthens either theme.
+The high-contrast class `ph-a11y-contrast` in [`a11y.css`](../../../../frontend/projects/components/src/styles/a11y.css) also derives its stronger borders and text from `--color-fg-default`, so it strengthens either theme.
 
 ### Components and types
 

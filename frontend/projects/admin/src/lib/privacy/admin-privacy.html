@@ -1,19 +1,19 @@
-<w-shell
+<ph-shell
   role="admin"
   active="privacy"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <header class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">System</div>
-        <h1 class="w-page__title">Privacy requests</h1>
-        <p class="w-page__sub">Review and fulfil trackable data-subject requests.</p>
+  <div class="ph-container ph-page">
+    <header class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">System</div>
+        <h1 class="ph-page__title">Privacy requests</h1>
+        <p class="ph-page__sub">Review and fulfil trackable data-subject requests.</p>
       </div>
-      <div w-form-field>
-        <label w-label for="privacy-status">Status</label>
-        <select w-select id="privacy-status" [value]="status()" (change)="filterChanged($event)">
+      <div ph-form-field>
+        <label ph-label for="privacy-status">Status</label>
+        <select ph-select id="privacy-status" [value]="status()" (change)="filterChanged($event)">
           <option value="">All requests</option>
           <option value="Pending">Pending</option>
           <option value="Completed">Completed</option>
@@ -22,38 +22,38 @@
     </header>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as message) {
-      <p w-alert variant="success" role="status">{{ message }}</p>
+      <p ph-alert variant="success" role="status">{{ message }}</p>
     }
 
     <div class="privacy-layout">
-      <section w-card>
-        <div w-card-body>
-          <h2 w-card-title>Requests</h2>
+      <section ph-card>
+        <div ph-card-body>
+          <h2 ph-card-title>Requests</h2>
           @if (loading()) {
-            <p class="w-muted" role="status">Loading privacy requests…</p>
+            <p class="ph-muted" role="status">Loading privacy requests…</p>
           } @else {
             @for (item of items(); track item.id) {
               <article class="privacy-row" data-testid="privacy-request">
-                <div class="w-cluster w-cluster--between">
+                <div class="ph-cluster ph-cluster--between">
                   <div>
-                    <h3 w-card-title>{{ item.actionType }}</h3>
-                    <div class="privacy-meta w-muted w-text-sm">
+                    <h3 ph-card-title>{{ item.actionType }}</h3>
+                    <div class="privacy-meta ph-muted ph-text-sm">
                       <span>{{ item.subjectName }} · {{ item.subjectEmail }}</span>
                       <span>{{ item.reference }} · {{ item.requestedAt | date: 'medium' }}</span>
                     </div>
                   </div>
-                  <span w-badge [variant]="item.status === 'Completed' ? 'lime' : ''">{{
+                  <span ph-badge [variant]="item.status === 'Completed' ? 'lime' : ''">{{
                     item.status
                   }}</span>
                 </div>
                 @if (item.details) {
-                  <p class="w-mt-3">{{ item.details }}</p>
+                  <p class="ph-mt-3">{{ item.details }}</p>
                 }
                 @if (item.actionType === 'correction' && item.correction) {
-                  <p class="w-muted">
+                  <p class="ph-muted">
                     Requested values · Name: {{ item.correction.displayName || 'unchanged' }} ·
                     Email: {{ item.correction.email || 'unchanged' }} · Pronouns:
                     {{
@@ -64,13 +64,13 @@
                   </p>
                 }
                 @if (item.resolutionNote) {
-                  <p class="w-muted">Resolution: {{ item.resolutionNote }}</p>
+                  <p class="ph-muted">Resolution: {{ item.resolutionNote }}</p>
                 }
                 @if (item.status !== 'Completed') {
                   <button
-                    w-button
+                    ph-button
                     variant="secondary"
-                    class="w-mt-3"
+                    class="ph-mt-3"
                     type="button"
                     (click)="review(item)"
                   >
@@ -79,15 +79,15 @@
                 }
               </article>
             } @empty {
-              <div w-empty-state>
-                <div w-empty-state-icon><w-icon name="shield" /></div>
-                <h3 w-empty-state-title>No {{ status().toLocaleLowerCase() || '' }} requests</h3>
-                <p w-empty-state-text>Requests will appear here when users submit them.</p>
+              <div ph-empty-state>
+                <div ph-empty-state-icon><ph-icon name="shield" /></div>
+                <h3 ph-empty-state-title>No {{ status().toLocaleLowerCase() || '' }} requests</h3>
+                <p ph-empty-state-text>Requests will appear here when users submit them.</p>
               </div>
             }
-            <div class="w-cluster w-cluster--between w-mt-4">
+            <div class="ph-cluster ph-cluster--between ph-mt-4">
               <button
-                w-button
+                ph-button
                 variant="ghost"
                 type="button"
                 [disabled]="page() <= 1"
@@ -95,9 +95,9 @@
               >
                 Previous
               </button>
-              <span class="w-muted">Page {{ page() }} · {{ total() }} total</span>
+              <span class="ph-muted">Page {{ page() }} · {{ total() }} total</span>
               <button
-                w-button
+                ph-button
                 variant="ghost"
                 type="button"
                 [disabled]="page() * 25 >= total()"
@@ -110,63 +110,63 @@
         </div>
       </section>
 
-      <aside w-card>
-        <div w-card-body>
+      <aside ph-card>
+        <div ph-card-body>
           @if (selected(); as item) {
-            <h2 w-card-title>Fulfil {{ item.reference }}</h2>
-            <p class="w-muted w-mb-4">
+            <h2 ph-card-title>Fulfil {{ item.reference }}</h2>
+            <p class="ph-muted ph-mb-4">
               Apply only verified corrections. Removal and consent workflows are completed by the
               server while preserving required de-identified records.
             </p>
-            <form class="w-stack" [formGroup]="form" (ngSubmit)="fulfill()">
+            <form class="ph-stack" [formGroup]="form" (ngSubmit)="fulfill()">
               @if (item.actionType === 'correction') {
-                <div w-form-field>
-                  <label w-label for="fulfil-name">Corrected name</label
-                  ><input w-text-field id="fulfil-name" formControlName="displayName" />
+                <div ph-form-field>
+                  <label ph-label for="fulfil-name">Corrected name</label
+                  ><input ph-text-field id="fulfil-name" formControlName="displayName" />
                 </div>
-                <div w-form-field>
-                  <label w-label for="fulfil-email">Corrected email</label
-                  ><input w-text-field id="fulfil-email" type="email" formControlName="email" />
+                <div ph-form-field>
+                  <label ph-label for="fulfil-email">Corrected email</label
+                  ><input ph-text-field id="fulfil-email" type="email" formControlName="email" />
                 </div>
-                <div w-form-field>
-                  <label w-label for="fulfil-pronouns">Corrected pronouns</label
+                <div ph-form-field>
+                  <label ph-label for="fulfil-pronouns">Corrected pronouns</label
                   ><input
-                    w-text-field
+                    ph-text-field
                     id="fulfil-pronouns"
                     formControlName="pronouns"
                     [disabled]="form.controls.clearPronouns.value"
                   />
                 </div>
-                <div w-form-field>
-                  <label w-checkbox for="fulfil-clear-pronouns">
+                <div ph-form-field>
+                  <label ph-checkbox for="fulfil-clear-pronouns">
                     <input
                       id="fulfil-clear-pronouns"
                       type="checkbox"
                       formControlName="clearPronouns"
                       (change)="clearPronounsChanged()"
                     />
-                    <span w-checkbox-box><w-icon name="check" /></span>
+                    <span ph-checkbox-box><ph-icon name="check" /></span>
                     <span>Remove saved pronouns</span>
                   </label>
                 </div>
               }
               <fieldset
-                class="verified-records w-stack"
+                class="verified-records ph-stack"
                 aria-describedby="verified-records-intro ownership-warning verified-record-count"
               >
                 <legend>Verified legacy public records (optional)</legend>
-                <p id="verified-records-intro" class="w-muted">
+                <p id="verified-records-intro" class="ph-muted">
                   Add only record IDs whose ownership you verified independently. Separate GUIDs
                   with commas or new lines. Empty categories are not submitted.
                 </p>
                 <div
-                  w-alert
+                  ph-alert
                   variant="warning"
                   icon="alert-triangle"
                   id="ownership-warning"
                   role="note"
                 >
-                  <div w-alert-title>High-risk ownership link</div>
+                  <div ph-alert-title>High-risk ownership link</div>
                   Linking a public submission can expose or remove another person's information.
                   Verify every reference using evidence outside the submitted contact details. An
                   email-address match alone never establishes ownership.
@@ -174,12 +174,12 @@
 
                 <div class="verified-records__grid">
                   <div
-                    w-form-field
+                    ph-form-field
                     [invalid]="referenceInvalid(form.controls.verifiedContactRequestIds)"
                   >
-                    <label w-label for="verified-contact-requests">Contact request IDs</label>
+                    <label ph-label for="verified-contact-requests">Contact request IDs</label>
                     <textarea
-                      w-textarea
+                      ph-textarea
                       id="verified-contact-requests"
                       rows="3"
                       autocomplete="off"
@@ -194,7 +194,7 @@
                           : 'verified-contact-help'
                       "
                     ></textarea>
-                    <p w-help id="verified-contact-help">
+                    <p ph-help id="verified-contact-help">
                       References from the public contact form.
                     </p>
                     @if (referenceInvalid(form.controls.verifiedContactRequestIds)) {
@@ -205,12 +205,12 @@
                   </div>
 
                   <div
-                    w-form-field
+                    ph-form-field
                     [invalid]="referenceInvalid(form.controls.verifiedVolunteerSignupIds)"
                   >
-                    <label w-label for="verified-volunteer-signups">Volunteer signup IDs</label>
+                    <label ph-label for="verified-volunteer-signups">Volunteer signup IDs</label>
                     <textarea
-                      w-textarea
+                      ph-textarea
                       id="verified-volunteer-signups"
                       rows="3"
                       autocomplete="off"
@@ -225,7 +225,7 @@
                           : 'verified-volunteer-help'
                       "
                     ></textarea>
-                    <p w-help id="verified-volunteer-help">
+                    <p ph-help id="verified-volunteer-help">
                       References from the public volunteer form.
                     </p>
                     @if (referenceInvalid(form.controls.verifiedVolunteerSignupIds)) {
@@ -236,12 +236,12 @@
                   </div>
 
                   <div
-                    w-form-field
+                    ph-form-field
                     [invalid]="referenceInvalid(form.controls.verifiedDonationPledgeIds)"
                   >
-                    <label w-label for="verified-donation-pledges">Donation pledge IDs</label>
+                    <label ph-label for="verified-donation-pledges">Donation pledge IDs</label>
                     <textarea
-                      w-textarea
+                      ph-textarea
                       id="verified-donation-pledges"
                       rows="3"
                       autocomplete="off"
@@ -256,7 +256,7 @@
                           : 'verified-donation-help'
                       "
                     ></textarea>
-                    <p w-help id="verified-donation-help">
+                    <p ph-help id="verified-donation-help">
                       References from the public donation pledge form.
                     </p>
                     @if (referenceInvalid(form.controls.verifiedDonationPledgeIds)) {
@@ -267,17 +267,17 @@
                   </div>
 
                   <div
-                    w-form-field
+                    ph-form-field
                     [invalid]="
                       referenceInvalid(form.controls.verifiedApplicantApplicationIds) ||
                       applicationOwnershipConflict()
                     "
                   >
-                    <label w-label for="verified-applicant-applications"
+                    <label ph-label for="verified-applicant-applications"
                       >Application IDs owned as applicant</label
                     >
                     <textarea
-                      w-textarea
+                      ph-textarea
                       id="verified-applicant-applications"
                       rows="3"
                       autocomplete="off"
@@ -295,7 +295,7 @@
                           : 'verified-applicant-help application-ownership-error'
                       "
                     ></textarea>
-                    <p w-help id="verified-applicant-help">
+                    <p ph-help id="verified-applicant-help">
                       Applications submitted by this person as the applicant.
                     </p>
                     @if (referenceInvalid(form.controls.verifiedApplicantApplicationIds)) {
@@ -306,17 +306,17 @@
                   </div>
 
                   <div
-                    w-form-field
+                    ph-form-field
                     [invalid]="
                       referenceInvalid(form.controls.verifiedGuardianApplicationIds) ||
                       applicationOwnershipConflict()
                     "
                   >
-                    <label w-label for="verified-guardian-applications"
+                    <label ph-label for="verified-guardian-applications"
                       >Application IDs owned as guardian</label
                     >
                     <textarea
-                      w-textarea
+                      ph-textarea
                       id="verified-guardian-applications"
                       rows="3"
                       autocomplete="off"
@@ -334,7 +334,7 @@
                           : 'verified-guardian-help application-ownership-error'
                       "
                     ></textarea>
-                    <p w-help id="verified-guardian-help">
+                    <p ph-help id="verified-guardian-help">
                       Applications submitted or managed by this person as guardian.
                     </p>
                     @if (referenceInvalid(form.controls.verifiedGuardianApplicationIds)) {
@@ -355,7 +355,7 @@
                   Choose the verified relationship.
                 </p>
 
-                <p class="w-muted" id="verified-record-count">
+                <p class="ph-muted" id="verified-record-count">
                   {{ verifiedRecordCount() }} of 200 unique record references selected.
                 </p>
                 @if (form.touched && form.hasError('verifiedRecordLimit')) {
@@ -365,7 +365,7 @@
                 }
 
                 <div class="verified-attestation" [class.is-error]="attestationInvalid()">
-                  <label w-checkbox for="verified-ownership-attestation">
+                  <label ph-checkbox for="verified-ownership-attestation">
                     <input
                       id="verified-ownership-attestation"
                       type="checkbox"
@@ -378,14 +378,14 @@
                           : 'ownership-warning ownership-attestation-help'
                       "
                     />
-                    <span w-checkbox-box><w-icon name="check" /></span>
+                    <span ph-checkbox-box><ph-icon name="check" /></span>
                     <span>
                       <strong>I attest that I independently verified ownership.</strong><br />
                       I verified that this person owns every referenced record using evidence beyond
                       an email-address match.
                     </span>
                   </label>
-                  <p w-help id="ownership-attestation-help">
+                  <p ph-help id="ownership-attestation-help">
                     Required whenever any legacy record ID is supplied. This decision is audited.
                   </p>
                   @if (attestationInvalid()) {
@@ -395,33 +395,33 @@
                   }
                 </div>
               </fieldset>
-              <div w-form-field>
-                <label w-label for="resolution-note">Resolution note</label>
+              <div ph-form-field>
+                <label ph-label for="resolution-note">Resolution note</label>
                 <textarea
-                  w-textarea
+                  ph-textarea
                   id="resolution-note"
                   rows="4"
                   formControlName="resolutionNote"
                 ></textarea>
               </div>
-              <div class="w-cluster">
-                <button w-button variant="primary" type="submit" [disabled]="submitting()">
+              <div class="ph-cluster">
+                <button ph-button variant="primary" type="submit" [disabled]="submitting()">
                   {{ submitting() ? 'Completing…' : 'Complete request' }}
                 </button>
-                <button w-button variant="ghost" type="button" (click)="selected.set(null)">
+                <button ph-button variant="ghost" type="button" (click)="selected.set(null)">
                   Cancel
                 </button>
               </div>
             </form>
           } @else {
-            <div w-empty-state>
-              <div w-empty-state-icon><w-icon name="clipboard-check" /></div>
-              <h2 w-empty-state-title>Choose a pending request</h2>
-              <p w-empty-state-text>Its safe fulfilment controls will appear here.</p>
+            <div ph-empty-state>
+              <div ph-empty-state-icon><ph-icon name="clipboard-check" /></div>
+              <h2 ph-empty-state-title>Choose a pending request</h2>
+              <p ph-empty-state-text>Its safe fulfilment controls will appear here.</p>
             </div>
           }
         </div>
       </aside>
     </div>
   </div>
-</w-shell>
+</ph-shell>

@@ -42,7 +42,7 @@ type TargetMode = 'individual' | 'cohort';
 
 // Traces to: L2-MENTOR-008, L2-ENGAGE-008, L2-AUTH-010
 @Component({
-  selector: 'w-mentor-assign-work',
+  selector: 'ph-mentor-assign-work',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

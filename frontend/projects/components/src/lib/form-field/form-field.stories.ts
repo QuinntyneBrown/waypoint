@@ -12,11 +12,11 @@ const meta: Meta<FormField> = {
   render: (args) => ({
     props: args,
     moduleMetadata: { imports: [Label, LabelRequired, Help, ErrorText] },
-    template: `<div w-form-field [invalid]="invalid">
-      <label w-label for="email">Email <span w-label-required>*</span></label>
+    template: `<div ph-form-field [invalid]="invalid">
+      <label ph-label for="email">Email <span ph-label-required>*</span></label>
       <input id="email" type="email" style="width: 100%" />
-      <p w-help>Use your school address.</p>
-      @if (invalid) { <p w-error-text>Enter a valid email address.</p> }
+      <p ph-help>Use your school address.</p>
+      @if (invalid) { <p ph-error-text>Enter a valid email address.</p> }
     </div>`,
   }),
 };

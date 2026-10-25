@@ -3,7 +3,6 @@
    (docs/design-system/tokens/tokens.css); nothing here is a raw colour value.
    Text is large and high contrast on purpose: the audience is program staff
    watching on a meeting-room screen. All text pairs are at least 4.5:1. */
-@import url("../../design-system/assets/fonts.css");
 @import url("../../design-system/tokens/tokens.css");
 
 :root {

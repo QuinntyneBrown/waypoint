@@ -8,10 +8,10 @@ import { ListItemTitle } from './list-item-title';
 @Component({
   imports: [ListItem, ListItemBody, ListItemTitle, ListItemMeta],
   template: `
-    <div w-list-item data-testid="module">
-      <div w-list-item-body>
-        <div w-list-item-title>Module one</div>
-        <div w-list-item-meta>In progress · 40%</div>
+    <div ph-list-item data-testid="module">
+      <div ph-list-item-body>
+        <div ph-list-item-title>Module one</div>
+        <div ph-list-item-meta>In progress · 40%</div>
       </div>
     </div>
   `,
@@ -24,10 +24,10 @@ describe('ListItem', () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const item = (fixture.nativeElement as HTMLElement).firstElementChild!;
-    expect(item.className).toBe('w-listitem');
+    expect(item.className).toBe('ph-listitem');
     expect(item.getAttribute('data-testid')).toBe('module');
-    expect(item.querySelector('.w-listitem__body')).not.toBeNull();
-    expect(item.querySelector('.w-listitem__title')?.textContent).toBe('Module one');
-    expect(item.querySelector('.w-listitem__meta')?.textContent).toBe('In progress · 40%');
+    expect(item.querySelector('.ph-listitem__body')).not.toBeNull();
+    expect(item.querySelector('.ph-listitem__title')?.textContent).toBe('Module one');
+    expect(item.querySelector('.ph-listitem__meta')?.textContent).toBe('In progress · 40%');
   });
 });

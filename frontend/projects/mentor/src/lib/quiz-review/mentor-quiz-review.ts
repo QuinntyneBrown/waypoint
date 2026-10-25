@@ -27,7 +27,7 @@ import {
 
 // Traces to: L2-MENTOR-004, L2-LEARN-005
 @Component({
-  selector: 'w-mentor-quiz-review',
+  selector: 'ph-mentor-quiz-review',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

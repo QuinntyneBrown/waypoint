@@ -5,9 +5,9 @@ import { Skeleton } from './skeleton';
 @Component({
   imports: [Skeleton],
   template: `
-    <span w-skeleton></span>
-    <span w-skeleton variant="title"></span>
-    <span w-skeleton variant="block"></span>
+    <span ph-skeleton></span>
+    <span ph-skeleton variant="title"></span>
+    <span ph-skeleton variant="block"></span>
   `,
 })
 class Host {}
@@ -22,12 +22,12 @@ describe('Skeleton', () => {
 
   it('is a plain placeholder by default', async () => {
     const [plain] = await render();
-    expect(plain.className).toBe('w-skeleton');
+    expect(plain.className).toBe('ph-skeleton');
   });
 
   it('applies the shape variants', async () => {
     const [, title, block] = await render();
-    expect(title.classList.contains('w-skeleton--title')).toBe(true);
-    expect(block.classList.contains('w-skeleton--block')).toBe(true);
+    expect(title.classList.contains('ph-skeleton--title')).toBe(true);
+    expect(block.classList.contains('ph-skeleton--block')).toBe(true);
   });
 });

@@ -1,10 +1,10 @@
-.w-listitem {
+.ph-listitem {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 14px 0;
-  border-bottom: var(--w-bw) solid var(--w-border);
+  border-bottom: var(--ph-bw) solid var(--ph-border);
 }
-.w-listitem:last-child {
+.ph-listitem:last-child {
   border-bottom: 0;
 }

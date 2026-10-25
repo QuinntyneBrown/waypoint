@@ -16,7 +16,7 @@ test('capture: navigate the public site', async ({ page, browser }) => {
 
   await page.getByRole('link', { name: 'Privacy' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await shot(page, FOLDER, 'footer', await clipOf(page.locator('footer'), 0));
+  await shot(page, FOLDER, 'footer', await clipOf(page.locator('footer[ph-footer]'), 0, 200));
 
   await page.goto('/no-such-page', { waitUntil: 'networkidle' });
   await expect(page.getByRole('heading', { name: /couldn.t find that page/i })).toBeVisible();

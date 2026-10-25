@@ -7,7 +7,7 @@ const meta: Meta<Divider> = {
   component: Divider,
   decorators: [moduleMetadata({ imports: [Divider] })],
   render: () => ({
-    template: `<p>Change password</p><div w-divider></div><p>Parent or guardian</p>`,
+    template: `<p>Change password</p><div ph-divider></div><p>Parent or guardian</p>`,
   }),
 };
 

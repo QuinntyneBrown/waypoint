@@ -16,9 +16,9 @@ const meta: Meta<StatePage> = {
   },
   render: (args) => ({
     props: args,
-    template: `<w-state-page [icon]="icon" [tone]="tone" [eyebrow]="eyebrow" [title]="title" [text]="text">
-      <button class="w-btn w-btn--primary" type="button">Go home</button>
-    </w-state-page>`,
+    template: `<ph-state-page [icon]="icon" [tone]="tone" [eyebrow]="eyebrow" [title]="title" [text]="text">
+      <button class="ph-btn ph-btn--primary" type="button">Go home</button>
+    </ph-state-page>`,
   }),
 };
 

@@ -10,10 +10,10 @@ export type StateTone = 'warning' | 'error' | 'info' | 'success';
 /**
  * Full-page system/error state (no app shell): centered card with a toned icon,
  * eyebrow, title, body, and projected action buttons. Mirrors the mock's
- * `.w-authpage > .w-empty` state layout.
+ * `.ph-authpage > .ph-empty` state layout.
  */
 @Component({
-  selector: 'w-state-page',
+  selector: 'ph-state-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Icon, EmptyState, EmptyStateIcon, EmptyStateTitle, EmptyStateText],
   templateUrl: './state-page.html',

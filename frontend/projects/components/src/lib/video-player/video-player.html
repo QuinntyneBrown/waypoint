@@ -1,19 +1,19 @@
 <div
-  class="w-video-player__region"
+  class="ph-video-player__region"
   role="region"
   tabindex="-1"
   #region
   [attr.aria-label]="regionName()"
 >
   <div
-    class="w-video-player__stage"
+    class="ph-video-player__stage"
     [style.aspect-ratio]="aspectRatio()"
     (pointerup)="onStagePointerUp($event)"
     (click)="onStageClick()"
     (contextmenu)="$event.preventDefault()"
   >
     <video
-      class="w-video-player__video"
+      class="ph-video-player__video"
       playsinline
       #video
       [attr.poster]="poster()"
@@ -33,38 +33,38 @@
       }
     </video>
     @if (state() === 'connecting') {
-      <div class="w-video-player__placeholder">
+      <div class="ph-video-player__placeholder">
         @if (title(); as title) {
-          <p class="w-video-player__title">{{ title }}</p>
+          <p class="ph-video-player__title">{{ title }}</p>
         }
-        <p class="w-video-player__status">{{ strings.connectingStatus }}</p>
+        <p class="ph-video-player__status">{{ strings.connectingStatus }}</p>
       </div>
     }
     @if (state() === 'buffering') {
-      <div class="w-video-player__overlay">
-        <div class="w-video-player__card">
-          <div class="w-video-player__spinner" aria-hidden="true"></div>
+      <div class="ph-video-player__overlay">
+        <div class="ph-video-player__card">
+          <div class="ph-video-player__spinner" aria-hidden="true"></div>
           @if (waitingForSource()) {
-            <p class="w-video-player__status">{{ strings.waitingForSource }}</p>
+            <p class="ph-video-player__status">{{ strings.waitingForSource }}</p>
           }
         </div>
       </div>
     }
     @if (state() === 'reconnecting') {
-      <div class="w-video-player__overlay">
-        <div class="w-video-player__card">
-          <div class="w-video-player__spinner" aria-hidden="true"></div>
-          <p class="w-video-player__status">
+      <div class="ph-video-player__overlay">
+        <div class="ph-video-player__card">
+          <div class="ph-video-player__spinner" aria-hidden="true"></div>
+          <p class="ph-video-player__status">
             {{ strings.reconnecting(reconnectAttemptValue(), 5) }}
           </p>
         </div>
       </div>
     }
     @if (renewing()) {
-      <div class="w-video-player__renewing" role="status">
-        <span class="w-video-player__renewing-chip">
+      <div class="ph-video-player__renewing" role="status">
+        <span class="ph-video-player__renewing-chip">
           <span
-            class="w-video-player__spinner w-video-player__spinner--small"
+            class="ph-video-player__spinner ph-video-player__spinner--small"
             aria-hidden="true"
           ></span>
           {{ strings.renewingLink }}
@@ -72,36 +72,36 @@
       </div>
     }
     @if (state() === 'ended' && !isVod()) {
-      <div class="w-video-player__ended">
+      <div class="ph-video-player__ended">
         <h2>{{ strings.streamEnded }}</h2>
         @if (title(); as title) {
-          <p class="w-video-player__title">{{ title }}</p>
+          <p class="ph-video-player__title">{{ title }}</p>
         }
         <p>{{ strings.liveFor(liveDuration()) }}</p>
       </div>
     }
     @if (state() === 'paused') {
-      <div class="w-video-player__central-play" aria-hidden="true">
-        <w-icon name="play" iconClass="w-icon--fill" />
+      <div class="ph-video-player__central-play" aria-hidden="true">
+        <ph-icon name="play" iconClass="ph-icon--fill" />
       </div>
     }
     @if (unmuteChip()) {
-      <div class="w-video-player__chip" (click)="$event.stopPropagation()">
+      <div class="ph-video-player__chip" (click)="$event.stopPropagation()">
         <button type="button" data-control="unmute-chip" (click)="toggleMute()">
           {{ strings.unmuteChip }}
         </button>
         <button type="button" [attr.aria-label]="strings.dismiss" (click)="dismissUnmuteChip()">
-          <w-icon name="x" />
+          <ph-icon name="x" />
         </button>
       </div>
     }
     @if (currentError(); as error) {
-      <div class="w-video-player__error" role="alert">
-        <h2 class="w-video-player__error-heading" tabindex="-1" #errorHeading>
+      <div class="ph-video-player__error" role="alert">
+        <h2 class="ph-video-player__error-heading" tabindex="-1" #errorHeading>
           {{ error.message }}
         </h2>
         @if (error.code !== 'unsupported' && error.code !== 'configuration') {
-          <button type="button" class="w-video-player__retry" (click)="retry()">
+          <button type="button" class="ph-video-player__retry" (click)="retry()">
             {{ strings.retry }}
           </button>
         }
@@ -109,11 +109,11 @@
     }
   </div>
   <div
-    class="w-video-player__bar"
+    class="ph-video-player__bar"
     role="group"
     #bar
     [attr.aria-label]="strings.controlsLabel"
-    [class.w-video-player__bar--hidden]="!visibility.visible()"
+    [class.ph-video-player__bar--hidden]="!visibility.visible()"
     (pointerenter)="$event.pointerType === 'mouse' && visibility.setHovered(true)"
     (pointerleave)="visibility.setHovered(false)"
     (pointerdown)="visibility.show()"
@@ -121,7 +121,7 @@
     @if (isVod()) {
       <input
         type="range"
-        class="w-video-player__seek"
+        class="ph-video-player__seek"
         data-control="seek"
         min="0"
         step="1"
@@ -135,29 +135,29 @@
     }
     <button
       type="button"
-      class="w-video-player__control"
+      class="ph-video-player__control"
       data-control="play-pause"
       #playPause
       [attr.aria-label]="playing() ? strings.pause : strings.play"
       [attr.aria-disabled]="playPauseDisabled() ? 'true' : null"
       (click)="togglePlayback()"
     >
-      <w-icon [name]="playing() ? 'pause' : 'play'" />
+      <ph-icon [name]="playing() ? 'pause' : 'play'" />
     </button>
     <button
       type="button"
-      class="w-video-player__control"
+      class="ph-video-player__control"
       data-control="mute"
       [attr.aria-label]="mutePressed() ? strings.unmute : strings.mute"
       [attr.aria-pressed]="mutePressed()"
       [attr.aria-disabled]="controlsDisabled() ? 'true' : null"
       (click)="toggleMute()"
     >
-      <w-icon [name]="mutePressed() ? 'volume-x' : 'volume-2'" />
+      <ph-icon [name]="mutePressed() ? 'volume-x' : 'volume-2'" />
     </button>
     <input
       type="range"
-      class="w-video-player__volume"
+      class="ph-video-player__volume"
       data-control="volume"
       #slider
       min="0"
@@ -178,53 +178,53 @@
     ) {
       <button
         type="button"
-        class="w-video-player__live"
+        class="ph-video-player__live"
         data-control="live"
         [attr.aria-label]="liveName()"
         [attr.aria-disabled]="behindLive() && !controlsDisabled() ? null : 'true'"
         (click)="goToLive()"
       >
-        <span class="w-video-player__live-dot" aria-hidden="true"></span>
+        <span class="ph-video-player__live-dot" aria-hidden="true"></span>
         <span aria-hidden="true">{{ strings.liveBadge }}</span>
       </button>
     }
     @if (captions()) {
       <button
         type="button"
-        class="w-video-player__control"
+        class="ph-video-player__control"
         data-control="captions"
         [attr.aria-label]="strings.captions"
         [attr.aria-pressed]="captionsShowing()"
         [attr.aria-disabled]="controlsDisabled() ? 'true' : null"
         (click)="toggleCaptions()"
       >
-        <w-icon name="captions" />
+        <ph-icon name="captions" />
       </button>
     }
     @if (isVod()) {
-      <span class="w-video-player__elapsed w-video-player__time" aria-hidden="true">{{
+      <span class="ph-video-player__elapsed ph-video-player__time" aria-hidden="true">{{
         timeText()
       }}</span>
       @if (quality(); as height) {
-        <span class="w-video-player__quality" [attr.aria-label]="strings.quality(height)"
+        <span class="ph-video-player__quality" [attr.aria-label]="strings.quality(height)"
           >{{ height }}p</span
         >
       }
     } @else {
-      <span class="w-video-player__elapsed" aria-hidden="true">{{ elapsed() }}</span>
+      <span class="ph-video-player__elapsed" aria-hidden="true">{{ elapsed() }}</span>
     }
     @if (fullscreenSupported) {
       <button
         type="button"
-        class="w-video-player__control"
+        class="ph-video-player__control"
         data-control="fullscreen"
         [attr.aria-label]="isFullscreen() ? strings.exitFullscreen : strings.fullscreen"
         [attr.aria-pressed]="isFullscreen()"
         (click)="toggleFullscreen()"
       >
-        <w-icon [name]="isFullscreen() ? 'minimize' : 'maximize'" />
+        <ph-icon [name]="isFullscreen() ? 'minimize' : 'maximize'" />
       </button>
     }
   </div>
-  <div class="w-video-player__announcer" aria-live="polite" aria-atomic="true" #liveRegion></div>
+  <div class="ph-video-player__announcer" aria-live="polite" aria-atomic="true" #liveRegion></div>
 </div>

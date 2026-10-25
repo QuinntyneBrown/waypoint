@@ -21,7 +21,7 @@ type DetailTab =
 
 // Traces to: L2-MENTOR-002, L2-AUTH-010
 @Component({
-  selector: 'w-mentor-youth-detail',
+  selector: 'ph-mentor-youth-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

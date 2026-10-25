@@ -23,7 +23,7 @@ import {
 
 // Traces to: L2-LEARN-001..010, L2-ENGAGE-005, L2-MENTOR-008, L2-PLATFORM-011
 @Component({
-  selector: 'w-youth-home',
+  selector: 'ph-youth-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

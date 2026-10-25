@@ -38,11 +38,11 @@ test('capture: unlock minor participation', async ({ page, request }) => {
   await form.relationship.fill('Mother');
   await form.participationOption.click();
   await form.signature.fill('Ruth Clarke');
-  await shotElement(page, FOLDER, 'form', page.locator('section.w-card').first());
+  await shotElement(page, FOLDER, 'form', page.locator('section.ph-card').first());
 
   await form.submitButton.click();
   await expect(page.getByRole('heading', { name: /consent recorded/i })).toBeVisible();
-  await shotOf(page, FOLDER, 'recorded', page.locator('.w-container.w-page'), 0, 1280, 460);
+  await shotOf(page, FOLDER, 'recorded', page.locator('.ph-container.ph-page'), 0, 1280, 460);
 
   await new YouthHomePage(page).goto();
   await expect(page).toHaveURL(/\/youth\/home/);

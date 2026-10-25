@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_LEFT_RIGHT()
+title C4 level 4 — Adopt the PromiseHub design system — code
+Container_Boundary(lib, "@waypoint/components") {
+  Component(button, "Button", "button.ts", "selector button[ph-button]; host classes ph-btn, ph-btn--primary")
+  Component(button_css, "button.css", "Component stylesheet", ".ph-btn--primary { background: var(--color-brand) }")
+  Component(brand, "--color-brand", "Waypoint extension token", "aliases --color-accent")
+  Component(accent, "--color-accent", "PromiseHub semantic token", "violet-600 light, violet-300 dark")
+}
+Rel(button, button_css, "Styled by")
+Rel(button_css, brand, "Reads")
+Rel(brand, accent, "Aliases")
+SHOW_LEGEND()
+@enduml

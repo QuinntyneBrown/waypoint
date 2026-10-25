@@ -21,7 +21,7 @@ import { GuardianContextService } from '../guardian-context.service';
 
 // Traces to: L2-GUARDIAN-001
 @Component({
-  selector: 'w-guardian-home',
+  selector: 'ph-guardian-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

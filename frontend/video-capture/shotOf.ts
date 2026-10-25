@@ -32,6 +32,8 @@ export async function shotFull(
   clip: { x: number; y: number; width: number; height: number },
 ): Promise<void> {
   await page.setViewportSize({ width: 1280, height: 800 });
+  // Document coordinates: from the top, so the sticky top bar stays at the top.
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
     path: join(__dirname, '..', '..', 'docs', 'videos', folder, 'images', `${name}-1280.png`),
     fullPage: true,

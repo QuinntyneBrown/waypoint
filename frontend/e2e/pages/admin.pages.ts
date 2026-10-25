@@ -103,6 +103,10 @@ export class CohortsPage extends BasePage {
   get createDialog() {
     return this.page.getByRole('dialog', { name: 'Create cohort' });
   }
+  /** The dialog's scrim; clicking it outside the panel closes the dialog. */
+  get dialogBackdrop() {
+    return this.page.locator('.ph-modal__scrim');
+  }
   get emptyState() {
     return this.page.getByRole('heading', { name: 'No cohorts yet' });
   }
@@ -347,7 +351,7 @@ export class CurriculumBuilderPage extends BasePage {
     return this.page.getByRole('button', { name: 'New track' });
   }
   get dialogBackdrop() {
-    return this.page.locator('.w-modal__scrim');
+    return this.page.locator('.ph-modal__scrim');
   }
   get trackDialog() {
     return this.page.getByRole('dialog', { name: 'Create track' });
@@ -526,13 +530,13 @@ export class AdminCalendarPage extends BasePage {
     return this.page.getByRole('checkbox', { name: /repeat weekly/i });
   }
   get repeatsWeeklyControl() {
-    return this.page.locator('label.w-check').filter({ hasText: /repeat weekly/i });
+    return this.page.locator('label.ph-check').filter({ hasText: /repeat weekly/i });
   }
   get schedule() {
     return this.page.getByRole('button', { name: 'Schedule session', exact: true });
   }
   get status() {
-    return this.page.locator('p.w-sr-only[role="status"]');
+    return this.page.locator('p.ph-sr-only[role="status"]');
   }
   session(title: string) {
     return this.agenda.getByRole('article').filter({ hasText: title });

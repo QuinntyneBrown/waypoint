@@ -11,11 +11,11 @@ import {
  * marks it selected and sets `aria-pressed`.
  */
 @Component({
-  selector: 'button[w-chip]',
+  selector: 'button[ph-chip]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'w-pill',
+    class: 'ph-pill',
     '[class.is-active]': 'active()',
     '[attr.aria-pressed]': 'active()',
   },

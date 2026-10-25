@@ -5,12 +5,12 @@ import { QuizOption } from './quiz-option';
 @Component({
   imports: [QuizOption],
   template: `
-    <label w-quiz-option [selected]="picked()">
+    <label ph-quiz-option [selected]="picked()">
       <input type="radio" name="q1" />
       <span>Option A</span>
     </label>
     <ul>
-      <li w-quiz-option selected correct>Option B</li>
+      <li ph-quiz-option selected correct>Option B</li>
     </ul>
   `,
 })
@@ -29,9 +29,9 @@ describe('QuizOption', () => {
 
   it('is an answer choice on a label or a list item and keeps its content', async () => {
     const { label, item } = await render();
-    expect(label.classList.contains('w-quiz__opt')).toBe(true);
+    expect(label.classList.contains('ph-quiz__opt')).toBe(true);
     expect(label.querySelector('input[type="radio"]')).not.toBeNull();
-    expect(item.classList.contains('w-quiz__opt')).toBe(true);
+    expect(item.classList.contains('ph-quiz__opt')).toBe(true);
     expect(item.textContent).toBe('Option B');
   });
 

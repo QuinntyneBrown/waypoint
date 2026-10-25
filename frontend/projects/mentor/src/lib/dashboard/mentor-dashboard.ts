@@ -31,7 +31,7 @@ import { forkJoin } from 'rxjs';
 
 // Traces to: L2-MENTOR-001, L2-AUTH-010
 @Component({
-  selector: 'w-mentor-dashboard',
+  selector: 'ph-mentor-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

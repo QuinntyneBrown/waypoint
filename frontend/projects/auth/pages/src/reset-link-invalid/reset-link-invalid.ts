@@ -4,7 +4,7 @@ import { Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-AUTH-005
 @Component({
-  selector: 'w-reset-link-invalid',
+  selector: 'ph-reset-link-invalid',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
   templateUrl: './reset-link-invalid.html',

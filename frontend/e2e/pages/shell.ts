@@ -1,7 +1,7 @@
 import { BrowserContext, Page } from '@playwright/test';
 
 /**
- * The authenticated app shell (`w-shell`) that wraps every signed-in surface:
+ * The authenticated app shell (`ph-shell`) that wraps every signed-in surface:
  * the sign-out control, the connectivity banner, and the mobile bottom nav.
  * A component object rather than a full page — compose it from page objects
  * (e.g. `YouthHomePage.shell`) or construct it directly.
@@ -9,18 +9,23 @@ import { BrowserContext, Page } from '@playwright/test';
 export class AppShell {
   constructor(private readonly page: Page) {}
 
+  /** The library shell element that hosts every signed-in page. */
+  get host() {
+    return this.page.locator('ph-shell');
+  }
+
   get signOutButton() {
     return this.page.getByRole('button', { name: 'Sign out' });
   }
 
   /** The offline indicator; gains `is-visible` while connectivity is down. */
   get offlineBanner() {
-    return this.page.locator('.w-offline');
+    return this.page.locator('.ph-offline');
   }
 
   /** Mobile-first bottom navigation, present on XS youth surfaces. */
   get bottomNav() {
-    return this.page.locator('.w-botnav');
+    return this.page.locator('.ph-botnav');
   }
 
   /** The "Skip to content" link: the first tab stop on every signed-in page. */

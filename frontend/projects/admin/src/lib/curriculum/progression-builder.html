@@ -1,56 +1,56 @@
-<w-shell
+<ph-shell
   role="admin"
   active="progression"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <main class="w-container w-page">
-    <header class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Program administration</div>
-        <h1 class="w-page__title">Progression framework</h1>
-        <p class="w-page__sub">
+  <main class="ph-container ph-page">
+    <header class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Program administration</div>
+        <h1 class="ph-page__title">Progression framework</h1>
+        <p class="ph-page__sub">
           Keep growth stages in order and define the competencies mentors assess.
         </p>
       </div>
-      <button w-button variant="primary" type="button" (click)="openStage()">Add stage</button>
+      <button ph-button variant="primary" type="button" (click)="openStage()">Add stage</button>
     </header>
 
     @if (errorMessage(); as error) {
-      <div w-alert variant="error" role="alert">
+      <div ph-alert variant="error" role="alert">
         <span>{{ error }}</span>
-        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
+        <button ph-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p w-alert variant="success" data-testid="progression-outcome" role="status">
+      <p ph-alert variant="success" data-testid="progression-outcome" role="status">
         {{ message }}
       </p>
     }
 
     @if (loading()) {
-      <p class="w-muted" role="status">Loading progression framework…</p>
+      <p class="ph-muted" role="status">Loading progression framework…</p>
     } @else {
       <section class="stage-list" aria-label="Ordered progression stages">
         @for (stage of stages(); track stage.id; let stageIndex = $index) {
           <article
-            w-card
+            ph-card
             class="admin-card"
             data-testid="progression-stage"
             [attr.data-stage-id]="stage.id"
           >
-            <div w-card-body class="w-stack">
+            <div ph-card-body class="ph-stack">
               <header class="card-head">
                 <div>
-                  <p class="w-eyebrow">Stage {{ stageIndex + 1 }}</p>
+                  <p class="ph-eyebrow">Stage {{ stageIndex + 1 }}</p>
                   <h2>{{ stage.name }}</h2>
                   @if (stage.description) {
                     <p>{{ stage.description }}</p>
                   }
                 </div>
-                <div class="w-actions stage-actions">
+                <div class="ph-actions stage-actions">
                   <button
-                    w-button
+                    ph-button
                     variant="ghost"
                     type="button"
                     [disabled]="stageIndex === 0 || busy()"
@@ -59,7 +59,7 @@
                     Move stage up
                   </button>
                   <button
-                    w-button
+                    ph-button
                     variant="ghost"
                     type="button"
                     [disabled]="stageIndex === stages().length - 1 || busy()"
@@ -67,11 +67,11 @@
                   >
                     Move stage down
                   </button>
-                  <button w-button variant="secondary" type="button" (click)="openStage(stage)">
+                  <button ph-button variant="secondary" type="button" (click)="openStage(stage)">
                     Edit stage
                   </button>
                   <button
-                    w-button
+                    ph-button
                     variant="primary"
                     type="button"
                     (click)="openCompetency(stage.id)"
@@ -86,7 +86,7 @@
                   <li class="competency-row">
                     <span>{{ competency.name }}</span>
                     <button
-                      w-button
+                      ph-button
                       variant="danger"
                       size="sm"
                       type="button"
@@ -97,15 +97,15 @@
                     </button>
                   </li>
                 } @empty {
-                  <li class="w-muted">No competencies in this stage.</li>
+                  <li class="ph-muted">No competencies in this stage.</li>
                 }
               </ul>
             </div>
           </article>
         } @empty {
-          <section w-empty-state>
-            <h2 w-empty-state-title>No progression stages</h2>
-            <p w-empty-state-text>Add the first stage to establish the framework.</p>
+          <section ph-empty-state>
+            <h2 ph-empty-state-title>No progression stages</h2>
+            <p ph-empty-state-text>Add the first stage to establish the framework.</p>
           </section>
         }
       </section>
@@ -114,31 +114,33 @@
 
   @if (stageDialogOpen()) {
     <div
-      w-dialog
+      ph-dialog
       [attr.aria-label]="editingStageId() ? 'Edit stage' : 'Add stage'"
       (dismiss)="closeStage()"
     >
-      <div w-dialog-header>
-        <h2 w-dialog-title>{{ editingStageId() ? 'Edit stage' : 'Add stage' }}</h2>
+      <div ph-dialog-header>
+        <h2 ph-dialog-title>{{ editingStageId() ? 'Edit stage' : 'Add stage' }}</h2>
       </div>
-      <div w-dialog-body>
-        <form class="w-stack" [formGroup]="stageForm" (ngSubmit)="saveStage()">
-          <div w-form-field>
-            <label w-label for="stage-name">Stage name</label>
-            <input w-text-field id="stage-name" formControlName="name" />
+      <div ph-dialog-body>
+        <form class="ph-stack" [formGroup]="stageForm" (ngSubmit)="saveStage()">
+          <div ph-form-field>
+            <label ph-label for="stage-name">Stage name</label>
+            <input ph-text-field id="stage-name" formControlName="name" />
           </div>
-          <div w-form-field>
-            <label w-label for="stage-description">Stage description</label>
+          <div ph-form-field>
+            <label ph-label for="stage-description">Stage description</label>
             <textarea
-              w-textarea
+              ph-textarea
               id="stage-description"
               rows="4"
               formControlName="description"
             ></textarea>
           </div>
-          <div class="w-actions">
-            <button w-button variant="primary" type="submit" [disabled]="busy()">Save stage</button>
-            <button w-button variant="ghost" type="button" (click)="closeStage()">Cancel</button>
+          <div class="ph-actions">
+            <button ph-button variant="primary" type="submit" [disabled]="busy()">
+              Save stage
+            </button>
+            <button ph-button variant="ghost" type="button" (click)="closeStage()">Cancel</button>
           </div>
         </form>
       </div>
@@ -146,19 +148,19 @@
   }
 
   @if (competencyStageId()) {
-    <div w-dialog aria-label="Add competency" (dismiss)="closeCompetency()">
-      <div w-dialog-header><h2 w-dialog-title>Add competency</h2></div>
-      <div w-dialog-body>
-        <form class="w-stack" [formGroup]="competencyForm" (ngSubmit)="addCompetency()">
-          <div w-form-field>
-            <label w-label for="competency-name">Competency name</label>
-            <input w-text-field id="competency-name" formControlName="name" />
+    <div ph-dialog aria-label="Add competency" (dismiss)="closeCompetency()">
+      <div ph-dialog-header><h2 ph-dialog-title>Add competency</h2></div>
+      <div ph-dialog-body>
+        <form class="ph-stack" [formGroup]="competencyForm" (ngSubmit)="addCompetency()">
+          <div ph-form-field>
+            <label ph-label for="competency-name">Competency name</label>
+            <input ph-text-field id="competency-name" formControlName="name" />
           </div>
-          <div class="w-actions">
-            <button w-button variant="primary" type="submit" [disabled]="busy()">
+          <div class="ph-actions">
+            <button ph-button variant="primary" type="submit" [disabled]="busy()">
               Add competency
             </button>
-            <button w-button variant="ghost" type="button" (click)="closeCompetency()">
+            <button ph-button variant="ghost" type="button" (click)="closeCompetency()">
               Cancel
             </button>
           </div>
@@ -166,4 +168,4 @@
       </div>
     </div>
   }
-</w-shell>
+</ph-shell>

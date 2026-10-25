@@ -1,28 +1,28 @@
-<w-shell
+<ph-shell
   role="admin"
   active="people"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <a w-link standalone routerLink="/admin/people">Back to people</a>
+  <div class="ph-container ph-page">
+    <a ph-link standalone routerLink="/admin/people">Back to people</a>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (outcome(); as message) {
-      <p w-alert variant="success" role="status">{{ message }}</p>
+      <p ph-alert variant="success" role="status">{{ message }}</p>
     }
 
     @if (detail(); as person) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">{{ person.cohortName ?? 'No cohort' }} · {{ person.role }}</div>
-          <h1 class="w-page__title">{{ person.displayName }}</h1>
-          <p class="w-page__sub">Program record and account lifecycle</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">{{ person.cohortName ?? 'No cohort' }} · {{ person.role }}</div>
+          <h1 class="ph-page__title">{{ person.displayName }}</h1>
+          <p class="ph-page__sub">Program record and account lifecycle</p>
         </div>
         <span
-          w-badge
+          ph-badge
           [variant]="
             person.status === 'Active'
               ? 'success'
@@ -38,19 +38,19 @@
       </div>
 
       @if (person.status === 'Removed') {
-        <aside w-alert variant="warning">
+        <aside ph-alert variant="warning">
           <div>
-            <div w-alert-title>Historical record</div>
+            <div ph-alert-title>Historical record</div>
             This person was permanently removed from active use. Their progress and attendance
             remain available for reporting, but account access cannot be restored.
           </div>
         </aside>
       }
 
-      <div w-tabs role="tablist" aria-label="Person record sections">
+      <div ph-tabs role="tablist" aria-label="Person record sections">
         @for (tab of tabs; track tab.key) {
           <button
-            w-tab
+            ph-tab
             [active]="activeTab() === tab.key"
             type="button"
             role="tab"
@@ -68,13 +68,13 @@
       @for (tab of tabs; track tab.key) {
         @if (activeTab() === tab.key) {
           <section
-            w-card
-            class="w-mt-4"
+            ph-card
+            class="ph-mt-4"
             role="tabpanel"
             [id]="'person-panel-' + tab.key"
             [attr.aria-labelledby]="'person-tab-' + tab.key"
           >
-            <div w-card-body>
+            <div ph-card-body>
               @switch (tab.key) {
                 @case ('profile') {
                   <h2>Profile</h2>
@@ -114,14 +114,14 @@
                           }
                         </p>
                       } @else {
-                        <p class="w-muted">No guardian contact is linked.</p>
+                        <p class="ph-muted">No guardian contact is linked.</p>
                       }
                     </div>
                     <div>
                       <h2>Consent</h2>
                       <p>
                         <span
-                          w-badge
+                          ph-badge
                           [variant]="
                             person.consent.hasValidParticipationConsent
                               ? 'success'
@@ -167,11 +167,11 @@
                     lessons complete
                   </p>
                   <div
-                    w-progress
+                    ph-progress
                     label="Lesson progress"
                     [value]="percent(person.progress.percent)"
                   ></div>
-                  <p class="w-muted">{{ percent(person.progress.percent) }}% complete</p>
+                  <p class="ph-muted">{{ percent(person.progress.percent) }}% complete</p>
                 }
                 @case ('attendance') {
                   <h2>Attendance</h2>
@@ -180,7 +180,7 @@
                     {{ percent(person.attendance.rate) }}%
                   </p>
                   @if (person.attendance.items.length) {
-                    <dl w-description-list vertical>
+                    <dl ph-description-list vertical>
                       @for (item of person.attendance.items; track item.sessionId) {
                         <dt>{{ item.sessionTitle }}</dt>
                         <dd>
@@ -192,24 +192,24 @@
                       }
                     </dl>
                   } @else {
-                    <p class="w-muted">No attendance recorded.</p>
+                    <p class="ph-muted">No attendance recorded.</p>
                   }
                 }
                 @case ('notes') {
                   <h2>Notes</h2>
-                  <p class="w-muted">
+                  <p class="ph-muted">
                     Operational check-in summaries are shown here. Private prayer requests are never
                     included.
                   </p>
                   @if (person.notes.length) {
-                    <dl w-description-list vertical>
+                    <dl ph-description-list vertical>
                       @for (note of person.notes; track note.id) {
                         <dt>{{ note.type }}</dt>
                         <dd>
                           {{ note.date | date: 'mediumDate' }} · {{ note.mentorName }}
                           <p>{{ note.summary }}</p>
                           @if (note.nextFollowUp) {
-                            <p class="w-muted">
+                            <p class="ph-muted">
                               Follow up {{ note.nextFollowUp | date: 'mediumDate' }}
                             </p>
                           }
@@ -217,12 +217,12 @@
                       }
                     </dl>
                   } @else {
-                    <p class="w-muted">No operational notes recorded.</p>
+                    <p class="ph-muted">No operational notes recorded.</p>
                   }
                 }
                 @case ('account') {
                   <h2>Account</h2>
-                  <div class="record-grid w-mb-5">
+                  <div class="record-grid ph-mb-5">
                     <div>
                       <p><strong>Status:</strong> {{ person.status }}</p>
                       <p><strong>Role:</strong> {{ person.role }}</p>
@@ -241,13 +241,13 @@
                   </div>
 
                   @if (person.status !== 'Removed') {
-                    <section w-card class="w-mb-5" aria-labelledby="account-access-heading">
-                      <div w-card-body class="w-stack">
+                    <section ph-card class="ph-mb-5" aria-labelledby="account-access-heading">
+                      <div ph-card-body class="ph-stack">
                         <h3 id="account-access-heading">Access and role</h3>
-                        <div w-form-field>
-                          <label w-label for="person-role">Account role</label>
+                        <div ph-form-field>
+                          <label ph-label for="person-role">Account role</label>
                           <select
-                            w-select
+                            ph-select
                             id="person-role"
                             [value]="roleSelection()"
                             [disabled]="saving()"
@@ -260,7 +260,7 @@
                         </div>
                         <div class="account-actions">
                           <button
-                            w-button
+                            ph-button
                             variant="secondary"
                             type="button"
                             [disabled]="saving() || roleSelection() === person.role"
@@ -269,7 +269,7 @@
                             Change role
                           </button>
                           <button
-                            w-button
+                            ph-button
                             variant="secondary"
                             type="button"
                             [disabled]="saving()"
@@ -281,8 +281,8 @@
                       </div>
                     </section>
 
-                    <section w-card class="danger-zone" aria-labelledby="lifecycle-heading">
-                      <div w-card-body class="w-stack">
+                    <section ph-card class="danger-zone" aria-labelledby="lifecycle-heading">
+                      <div ph-card-body class="ph-stack">
                         <h3 id="lifecycle-heading">Account lifecycle</h3>
                         @if (person.status === 'Deactivated') {
                           <p>
@@ -290,7 +290,7 @@
                             sessions stay revoked.
                           </p>
                           <button
-                            w-button
+                            ph-button
                             variant="primary"
                             type="button"
                             [disabled]="saving()"
@@ -304,7 +304,7 @@
                             records. It can be reversed.
                           </p>
                           <button
-                            w-button
+                            ph-button
                             variant="secondary"
                             type="button"
                             [disabled]="saving()"
@@ -321,7 +321,7 @@
                             reversed.
                           </p>
                           <button
-                            w-button
+                            ph-button
                             variant="danger"
                             type="button"
                             [disabled]="saving()"
@@ -333,7 +333,7 @@
                       </div>
                     </section>
                   } @else {
-                    <p class="w-muted">
+                    <p class="ph-muted">
                       No account actions are available because permanent removal cannot be reversed.
                     </p>
                   }
@@ -344,35 +344,35 @@
         }
       }
     } @else if (!errorMessage()) {
-      <p class="w-muted" role="status">Loading person record…</p>
+      <p class="ph-muted" role="status">Loading person record…</p>
     }
   </div>
 
   @if (pendingAction(); as action) {
     <div
-      w-dialog
+      ph-dialog
       size="sm"
       [attr.aria-labelledby]="'person-action-' + action.kind"
       (dismiss)="cancelAction()"
     >
-      <div w-dialog-header>
+      <div ph-dialog-header>
         <div>
-          <h2 w-dialog-title [id]="'person-action-' + action.kind">
+          <h2 ph-dialog-title [id]="'person-action-' + action.kind">
             {{ actionTitle(action) }}
           </h2>
-          <p w-dialog-subtitle>{{ detail()?.displayName }}</p>
+          <p ph-dialog-subtitle>{{ detail()?.displayName }}</p>
         </div>
         <button
-          w-icon-button
+          ph-icon-button
           type="button"
           aria-label="Close confirmation"
           [disabled]="saving()"
           (click)="cancelAction()"
         >
-          <w-icon name="x" />
+          <ph-icon name="x" />
         </button>
       </div>
-      <div w-dialog-body class="w-stack confirmation-copy">
+      <div ph-dialog-body class="ph-stack confirmation-copy">
         @switch (action.kind) {
           @case ('role') {
             <p>
@@ -381,12 +381,12 @@
               >?
             </p>
             @if (isStaffRole(action.role)) {
-              <div w-alert variant="warning">
+              <div ph-alert variant="warning">
                 This staff role grants access to young people's records and protected program data.
                 The change takes effect immediately and all current sessions will be revoked.
               </div>
             } @else {
-              <p class="w-muted">
+              <p class="ph-muted">
                 The change takes effect immediately and all current sessions will be revoked.
               </p>
             }
@@ -404,16 +404,16 @@
             </p>
           }
           @case ('remove') {
-            <div w-alert variant="error">
+            <div ph-alert variant="error">
               Permanent removal cannot be undone. Access will be revoked and the person will be
               removed from active use; progress and reporting records will be retained.
             </div>
-            <div w-form-field>
-              <label w-label for="remove-person-confirmation">
+            <div ph-form-field>
+              <label ph-label for="remove-person-confirmation">
                 Type {{ detail()?.displayName }} to confirm
               </label>
               <input
-                w-text-field
+                ph-text-field
                 id="remove-person-confirmation"
                 type="text"
                 autocomplete="off"
@@ -424,9 +424,9 @@
           }
         }
       </div>
-      <div w-dialog-footer>
+      <div ph-dialog-footer>
         <button
-          w-button
+          ph-button
           variant="ghost"
           type="button"
           [disabled]="saving()"
@@ -435,7 +435,7 @@
           Cancel
         </button>
         <button
-          w-button
+          ph-button
           [variant]="
             action.kind === 'remove' || action.kind === 'deactivate'
               ? 'danger'
@@ -454,4 +454,4 @@
       </div>
     </div>
   }
-</w-shell>
+</ph-shell>

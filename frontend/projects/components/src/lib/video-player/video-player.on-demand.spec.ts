@@ -21,7 +21,7 @@ class FakeHls implements HlsLike {
 
 @Component({
   imports: [VideoPlayer],
-  template: `<w-video-player
+  template: `<ph-video-player
     [src]="src()"
     [streamId]="streamId()"
     poster="/poster.jpg"
@@ -57,7 +57,7 @@ async function render(options: { native?: boolean } = {}) {
   });
   const fixture: ComponentFixture<Host> = TestBed.createComponent(Host);
   await fixture.whenStable();
-  const player = fixture.nativeElement.querySelector('w-video-player') as HTMLElement;
+  const player = fixture.nativeElement.querySelector('ph-video-player') as HTMLElement;
   const video = player.querySelector('video') as HTMLVideoElement;
   const fire = async (type: string) => {
     video.dispatchEvent(new Event(type));
@@ -115,7 +115,7 @@ describe('VideoPlayer on demand', () => {
     expect(video.getAttribute('src')).toBe('/media/t1/master.m3u8');
     expect(factory).not.toHaveBeenCalled();
     await setDuration(100);
-    expect(player.querySelector('.w-video-player__quality')).toBeNull();
+    expect(player.querySelector('.ph-video-player__quality')).toBeNull();
   });
 
   it('seeks from the range input and with the arrow keys by 5 seconds', async () => {
@@ -140,7 +140,7 @@ describe('VideoPlayer on demand', () => {
     await setDuration(4328);
     video.currentTime = 1421;
     await fire('timeupdate');
-    expect(player.querySelector('.w-video-player__time')?.textContent?.trim()).toBe(
+    expect(player.querySelector('.ph-video-player__time')?.textContent?.trim()).toBe(
       '23:41 / 1:12:08',
     );
     const seek = player.querySelector('[data-control="seek"]') as HTMLInputElement;
@@ -156,10 +156,10 @@ describe('VideoPlayer on demand', () => {
     await vi.waitFor(() => expect(hls.loadSource).toHaveBeenCalled());
     hls.emit('hlsLevelSwitched', { level: 1 });
     await fixture.whenStable();
-    expect(player.querySelector('.w-video-player__quality')?.textContent?.trim()).toBe('720p');
+    expect(player.querySelector('.ph-video-player__quality')?.textContent?.trim()).toBe('720p');
     hls.emit('hlsLevelSwitched', { level: 0 });
     await fixture.whenStable();
-    expect(player.querySelector('.w-video-player__quality')?.textContent?.trim()).toBe('360p');
+    expect(player.querySelector('.ph-video-player__quality')?.textContent?.trim()).toBe('360p');
   });
 
   it('maps video events onto the state machine', async () => {
@@ -191,7 +191,7 @@ describe('VideoPlayer on demand', () => {
     });
     await fixture.whenStable();
     expect(fixture.componentInstance.expired).toBe(1);
-    expect(player.querySelector('[role="status"].w-video-player__renewing')).not.toBeNull();
+    expect(player.querySelector('[role="status"].ph-video-player__renewing')).not.toBeNull();
     expect(fixture.componentInstance.errors).toEqual([]);
 
     fixture.componentInstance.src.set('/media/t2/master.m3u8');
@@ -201,7 +201,7 @@ describe('VideoPlayer on demand', () => {
     await fire('loadedmetadata');
     expect(video.currentTime).toBe(1421);
     await fire('playing');
-    expect(player.querySelector('.w-video-player__renewing')).toBeNull();
+    expect(player.querySelector('.ph-video-player__renewing')).toBeNull();
   });
 
   it('emits tokenExpired on a 401 as well', async () => {

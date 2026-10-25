@@ -4,10 +4,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
  * Multi-line text input. Applied to a native textarea; pair it with a label in a form field.
  */
 @Component({
-  selector: 'textarea[w-textarea]',
+  selector: 'textarea[ph-textarea]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-textarea' },
+  host: { class: 'ph-textarea' },
   templateUrl: './textarea.html',
   styleUrl: './textarea.css',
 })

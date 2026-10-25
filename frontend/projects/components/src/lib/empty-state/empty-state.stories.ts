@@ -24,11 +24,11 @@ type Story = StoryObj<EmptyState>;
 export const Default: Story = {
   render: () => ({
     template: `
-      <div w-empty-state>
-        <div w-empty-state-icon><w-icon name="layers" /></div>
-        <h2 w-empty-state-title>No cohorts yet</h2>
-        <p w-empty-state-text>Create the first cohort to begin placing young people.</p>
-        <button w-button variant="primary" type="button">New cohort</button>
+      <div ph-empty-state>
+        <div ph-empty-state-icon><ph-icon name="layers" /></div>
+        <h2 ph-empty-state-title>No cohorts yet</h2>
+        <p ph-empty-state-text>Create the first cohort to begin placing young people.</p>
+        <button ph-button variant="primary" type="button">New cohort</button>
       </div>`,
   }),
 };
@@ -36,11 +36,11 @@ export const Default: Story = {
 export const InsideACard: Story = {
   render: () => ({
     template: `
-      <div w-card>
-        <div w-empty-state>
-          <div w-empty-state-icon><w-icon name="users" /></div>
-          <h3 w-empty-state-title>No youth assigned yet</h3>
-          <p w-empty-state-text>Assigned youth will appear here.</p>
+      <div ph-card>
+        <div ph-empty-state>
+          <div ph-empty-state-icon><ph-icon name="users" /></div>
+          <h3 ph-empty-state-title>No youth assigned yet</h3>
+          <p ph-empty-state-text>Assigned youth will appear here.</p>
         </div>
       </div>`,
   }),

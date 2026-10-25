@@ -15,10 +15,10 @@ type Story = StoryObj<ButtonGroup>;
 export const Default: Story = {
   render: () => ({
     template: `
-      <div w-button-group role="group" aria-label="Theme">
-        <button w-button-group-item type="button" active>System</button>
-        <button w-button-group-item type="button">Light</button>
-        <button w-button-group-item type="button">Dark</button>
+      <div ph-button-group role="group" aria-label="Theme">
+        <button ph-button-group-item type="button" active>System</button>
+        <button ph-button-group-item type="button">Light</button>
+        <button ph-button-group-item type="button">Dark</button>
       </div>`,
   }),
 };

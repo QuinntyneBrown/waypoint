@@ -1,50 +1,54 @@
-.w-alert {
+.ph-alert {
   display: flex;
-  gap: 12px;
-  padding: 14px 16px;
-  border-radius: var(--w-r-card);
-  border: var(--w-bw) solid var(--w-border);
-  background: var(--w-white);
-  font-size: 0.9rem;
-  line-height: 1.45;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--border-width-hairline) solid var(--ph-border);
+  border-left-width: var(--space-1);
+  background: var(--ph-white);
+  font: var(--text-body-sm);
 }
-.w-alert__icon {
+.ph-alert__icon {
   flex: none;
   width: 20px;
   height: 20px;
   margin-top: 1px;
 }
-.w-alert--success {
-  background: var(--w-success-bg);
-  border-color: transparent;
+.ph-alert--success {
+  background: var(--color-success-bg);
+  border-color: var(--color-success-border);
+  color: var(--color-success-fg);
 }
-.w-alert--success .w-alert__icon {
-  color: var(--w-success);
+.ph-alert--success .ph-alert__icon {
+  color: var(--ph-success);
 }
-.w-alert--warning {
-  background: var(--w-warning-bg);
-  border-color: transparent;
+.ph-alert--warning {
+  background: var(--color-warning-bg);
+  border-color: var(--color-warning-border);
+  color: var(--color-warning-fg);
 }
-.w-alert--warning .w-alert__icon {
-  color: var(--w-warning);
+.ph-alert--warning .ph-alert__icon {
+  color: var(--ph-warning);
 }
-.w-alert--error,
-.w-alert--danger {
-  background: var(--w-error-bg);
-  border-color: transparent;
+.ph-alert--error,
+.ph-alert--danger {
+  background: var(--color-danger-bg);
+  border-color: var(--color-danger-border);
+  color: var(--color-danger-fg);
 }
-.w-alert--error .w-alert__icon,
-.w-alert--danger .w-alert__icon {
-  color: var(--w-error);
+.ph-alert--error .ph-alert__icon,
+.ph-alert--danger .ph-alert__icon {
+  color: var(--ph-error);
 }
-.w-alert--info {
-  background: var(--w-info-bg);
-  border-color: transparent;
+.ph-alert--info {
+  background: var(--color-info-bg);
+  border-color: var(--color-info-border);
+  color: var(--color-info-fg);
 }
-.w-alert--info .w-alert__icon {
-  color: var(--w-info);
+.ph-alert--info .ph-alert__icon {
+  color: var(--ph-info);
 }
-.w-alert--lime {
-  background: var(--w-lime-soft);
-  border-color: transparent;
+.ph-alert--lime {
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent);
 }

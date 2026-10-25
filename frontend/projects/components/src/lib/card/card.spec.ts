@@ -9,13 +9,13 @@ import { CardTitle } from './card-title';
 @Component({
   imports: [Card, CardHeader, CardTitle, CardBody, CardFooter],
   template: `
-    <section w-card aria-labelledby="t">
-      <div w-card-header><h2 w-card-title id="t">Title</h2></div>
-      <div w-card-body>Body</div>
-      <div w-card-footer>Footer</div>
+    <section ph-card aria-labelledby="t">
+      <div ph-card-header><h2 ph-card-title id="t">Title</h2></div>
+      <div ph-card-body>Body</div>
+      <div ph-card-footer>Footer</div>
     </section>
-    <div w-card [variant]="variant()">Variant</div>
-    <a w-card link variant="greige" href="/x">Link</a>
+    <div ph-card [variant]="variant()">Variant</div>
+    <a ph-card link variant="greige" href="/x">Link</a>
   `,
 })
 class Host {
@@ -33,25 +33,25 @@ describe('Card', () => {
 
   it('is a plain card with header, title, body and footer parts', async () => {
     const [card] = (await render()).cards;
-    expect(card.className).toBe('w-card');
+    expect(card.className).toBe('ph-card');
     expect(card.getAttribute('aria-labelledby')).toBe('t');
-    expect(card.querySelector('.w-card__header .w-card__title')?.textContent).toBe('Title');
-    expect(card.querySelector('.w-card__body')?.textContent).toBe('Body');
-    expect(card.querySelector('.w-card__footer')?.textContent).toBe('Footer');
+    expect(card.querySelector('.ph-card__header .ph-card__title')?.textContent).toBe('Title');
+    expect(card.querySelector('.ph-card__body')?.textContent).toBe('Body');
+    expect(card.querySelector('.ph-card__footer')?.textContent).toBe('Footer');
   });
 
   it('applies and removes a variant', async () => {
     const { fixture, cards } = await render();
-    expect(cards[1].classList.contains('w-card--greige')).toBe(true);
+    expect(cards[1].classList.contains('ph-card--greige')).toBe(true);
     fixture.componentInstance.variant.set('');
     await fixture.whenStable();
-    expect(cards[1].classList.contains('w-card--greige')).toBe(false);
+    expect(cards[1].classList.contains('ph-card--greige')).toBe(false);
   });
 
   it('makes a card a link on an anchor, alongside a variant', async () => {
     const [, , link] = (await render()).cards;
-    expect(link.classList.contains('w-card--link')).toBe(true);
-    expect(link.classList.contains('w-card--greige')).toBe(true);
+    expect(link.classList.contains('ph-card--link')).toBe(true);
+    expect(link.classList.contains('ph-card--greige')).toBe(true);
     expect(link.getAttribute('href')).toBe('/x');
   });
 });

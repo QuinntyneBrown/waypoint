@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 /** Muted "(optional)" marker inside a label. */
 @Component({
-  selector: 'span[w-label-optional]',
+  selector: 'span[ph-label-optional]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-label__opt' },
+  host: { class: 'ph-label__opt' },
   templateUrl: './label-optional.html',
   styleUrl: './label-optional.css',
 })

@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Waypoint — Prototype Map</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../design-system/assets/fonts.css"><link rel="stylesheet" href="../design-system/tokens/tokens.css"><link rel="stylesheet" href="../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../design-system/tokens/tokens.css"><link rel="stylesheet" href="../design-system/assets/components.css">
   <script defer src="assets/js/waypoint.js"></script>
   <style>
     .hub-hero{background:var(--color-bg-inverse);color:#fff;padding:var(--space-12) 0 var(--space-10)}
     .hub-hero h1{color:#fff;font-size:clamp(2rem,1.4rem + 3vw,3.2rem);max-width:18ch}
-    .hub-hero .w-brand__mark{width:44px;height:44px;font-size:1.3rem}
+    .hub-hero .ph-brand__mark{width:44px;height:44px;font-size:1.3rem}
     .hub-controls{position:sticky;top:0;z-index:20;background:var(--color-bg-surface);border-bottom:var(--border-width-hairline) solid var(--color-border-default);padding:14px 0}
     .hub-sec{padding:var(--space-8) 0;border-bottom:var(--border-width-hairline) solid var(--color-border-default)}
     .hub-sec__head{display:flex;align-items:center;gap:12px;margin-bottom:var(--space-5)}
@@ -18,7 +18,7 @@
     .hub-card{display:block;border:var(--border-width-hairline) solid var(--color-border-default);border-radius:var(--radius-lg);padding:14px 16px;background:var(--color-bg-surface);transition:border-color .15s,transform .12s}
     .hub-card:hover{border-color:var(--color-fg-default);text-decoration:none;transform:translateY(-1px)}
     .hub-card__name{font-family:var(--font-family-heading);font-weight:500;display:flex;align-items:center;justify-content:space-between;gap:8px}
-    .hub-card__name .w-icon{opacity:.4}
+    .hub-card__name .ph-icon{opacity:.4}
     .hub-card__path{font-size:.72rem;color:var(--color-fg-muted);font-family:'JetBrains Mono',monospace;margin-top:2px}
     .hub-variants{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
     .hub-chip{font-size:.68rem;font-weight:600;font-family:var(--font-family-heading);padding:3px 8px;border-radius:var(--radius-full);background:var(--color-bg-subtle-hover);color:var(--color-fg-default)}
@@ -27,26 +27,26 @@
 </head>
 <body>
   <section class="hub-hero">
-    <div class="w-container">
-      <div class="w-cluster w-gap-3 w-mb-6"><span class="w-brand__mark">W</span><span style="font-family:var(--font-family-heading);font-weight:700;font-size:1.2rem">Waypoint</span><span class="w-badge w-badge--lime">Prototype</span></div>
+    <div class="ph-container">
+      <div class="ph-cluster ph-gap-3 ph-mb-6"><span class="ph-brand__mark">W</span><span style="font-family:var(--font-family-heading);font-weight:700;font-size:1.2rem">Waypoint</span><span class="ph-badge ph-badge--lime">Prototype</span></div>
       <h1>Every screen in the Waypoint app.</h1>
-      <p class="w-text-lg" style="opacity:.8;max-width:60ch">A clickable prototype for raising up young leaders who love Jesus — styled with FaithTech's design system. Open any screen below. Works offline on any device.</p>
-      <div class="w-cluster w-gap-3 w-mt-6">
-        <a class="w-btn w-btn--primary" href="learning-experience/youth/home.html">Enter as a Youth Leader</a>
-        <a class="w-btn w-btn--ghost" style="border-color:rgba(255,255,255,.4);color:#fff" href="reporting-and-data/admin/dashboard.html">Enter as Director (Shawn)</a>
-        <a class="w-btn w-btn--ghost" style="border-color:rgba(255,255,255,.4);color:#fff" href="../design-system/index.html">Design system</a>
+      <p class="ph-text-lg" style="opacity:.8;max-width:60ch">A clickable prototype for raising up young leaders who love Jesus — styled with FaithTech's design system. Open any screen below. Works offline on any device.</p>
+      <div class="ph-cluster ph-gap-3 ph-mt-6">
+        <a class="ph-btn ph-btn--primary" href="learning-experience/youth/home.html">Enter as a Youth Leader</a>
+        <a class="ph-btn ph-btn--ghost" style="border-color:rgba(255,255,255,.4);color:#fff" href="reporting-and-data/admin/dashboard.html">Enter as Director (Shawn)</a>
+        <a class="ph-btn ph-btn--ghost" style="border-color:rgba(255,255,255,.4);color:#fff" href="../design-system/index.html">Design system</a>
       </div>
     </div>
   </section>
 
   <div class="hub-controls">
-    <div class="w-container">
-      <div class="w-cluster w-gap-2" id="hub-filters"></div>
-      <input class="w-input w-mt-4" id="hub-search" placeholder="Search screens…" style="max-width:360px">
+    <div class="ph-container">
+      <div class="ph-cluster ph-gap-2" id="hub-filters"></div>
+      <input class="ph-input ph-mt-4" id="hub-search" placeholder="Search screens…" style="max-width:360px">
     </div>
   </div>
 
-  <div class="w-container" id="hub-body"></div>
+  <div class="ph-container" id="hub-body"></div>
   <div style="height:60px"></div>
 
   <script>
@@ -196,20 +196,20 @@
           return '<a class="hub-card" href="' + pg.p + '"><div class="hub-card__name">' + pg.n + Waypoint.icon("chevron-right") + '</div><div class="hub-card__path">' + pg.p + '</div>' +
             (variants ? '<div class="hub-variants" onclick="event.stopPropagation()">' + variants + '</div>' : "") + '</a>';
         }).join("");
-        return '<section class="hub-sec"><div class="hub-sec__head"><span class="hub-sec__icon">' + Waypoint.icon("" + g.icon) + '</span><div><h2 style="margin:0">' + g.group + '</h2><div class="w-muted w-text-sm">' + g.pages.length + ' screens</div></div></div>' +
-          '<div class="w-grid w-grid--3">' + cards + '</div></section>';
+        return '<section class="hub-sec"><div class="hub-sec__head"><span class="hub-sec__icon">' + Waypoint.icon("" + g.icon) + '</span><div><h2 style="margin:0">' + g.group + '</h2><div class="ph-muted ph-text-sm">' + g.pages.length + ' screens</div></div></div>' +
+          '<div class="ph-grid ph-grid--3">' + cards + '</div></section>';
       }).join("");
     }
 
     document.addEventListener("DOMContentLoaded", function () {
       var filters = [["all","All"]].concat(MAP.map(function (g) { return [g.key, g.group.split(" ")[0]]; }));
       var host = document.getElementById("hub-filters");
-      host.innerHTML = filters.map(function (f, i) { return '<button class="w-pill' + (i === 0 ? ' is-active' : '') + '" data-f="' + f[0] + '">' + f[1] + '</button>'; }).join("");
+      host.innerHTML = filters.map(function (f, i) { return '<button class="ph-pill' + (i === 0 ? ' is-active' : '') + '" data-f="' + f[0] + '">' + f[1] + '</button>'; }).join("");
       var current = "all";
       host.addEventListener("click", function (e) {
         var b = e.target.closest("[data-f]"); if (!b) return;
         current = b.getAttribute("data-f");
-        host.querySelectorAll(".w-pill").forEach(function (x) { x.classList.toggle("is-active", x === b); });
+        host.querySelectorAll(".ph-pill").forEach(function (x) { x.classList.toggle("is-active", x === b); });
         render(current, document.getElementById("hub-search").value);
       });
       document.getElementById("hub-search").addEventListener("input", function (e) { render(current, e.target.value); });

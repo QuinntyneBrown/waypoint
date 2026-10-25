@@ -37,12 +37,12 @@ test('capture: manage guardian consent', async ({ page, request, browser }) => {
   await form.mediaConsentOption.click();
   await form.groupOnlyOption.click();
   await form.signature.fill('Ruth Clarke');
-  await shotElement(signer, FOLDER, 'form', signer.locator('section.w-card').first());
+  await shotElement(signer, FOLDER, 'form', signer.locator('section.ph-card').first());
 
   await form.submitButton.click();
   await expect(signer.getByRole('heading', { name: /consent recorded/i })).toBeVisible();
   await expect(form.reference).toContainText(/^GC-/);
-  await shotOf(signer, FOLDER, 'recorded', signer.locator('section.w-card').first(), 12);
+  await shotOf(signer, FOLDER, 'recorded', signer.locator('section.ph-card').first(), 12);
 
   // Later, the guardian reviews the record in the portal and withdraws it.
   await page.context().clearCookies();
@@ -57,13 +57,13 @@ test('capture: manage guardian consent', async ({ page, request, browser }) => {
   await expect(consent.participationStatus).toContainText(/active/i);
   await expect(consent.groupMedia).toBeChecked();
   await page.waitForLoadState('networkidle');
-  const record = page.locator('section.w-card', { hasText: 'Participation consent' });
+  const record = page.locator('section.ph-card', { hasText: 'Participation consent' });
   await shotOf(page, FOLDER, 'record', record, 12);
   await shotOf(
     page,
     FOLDER,
     'media',
-    page.locator('section.w-card', { hasText: 'Media consent' }),
+    page.locator('section.ph-card', { hasText: 'Media consent' }),
     12,
   );
 

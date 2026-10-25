@@ -31,7 +31,7 @@ import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-003
 @Component({
-  selector: 'w-cohort-detail',
+  selector: 'ph-cohort-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

@@ -8,11 +8,11 @@ const FOLDER = '021-application-intake-review-application';
 const QUEUE = { x: 0, y: 60, width: 1280, height: 740 };
 
 async function tall(page: Page, name: string): Promise<void> {
-  await page.setViewportSize({ width: 1280, height: 1100 });
+  await page.setViewportSize({ width: 1280, height: 1240 });
   await page.waitForTimeout(800);
   await page.screenshot({
     path: join(__dirname, '..', '..', 'docs', 'videos', FOLDER, 'images', `${name}-1280.png`),
-    clip: { x: 240, y: 0, width: 800, height: 1100 },
+    clip: { x: 240, y: 0, width: 800, height: 1240 },
   });
   await page.setViewportSize({ width: 1280, height: 800 });
 }
@@ -52,6 +52,6 @@ test('capture: review an application', async ({ page, request }) => {
 
   await applications.review(application.lastName).click();
   await expect(applications.reviewDialog).toContainText('I want to grow as a leader and serve.');
-  await expect(applications.approve).toBeDisabled();
+  await expect(applications.approve).toBeEnabled();
   await tall(page, 'detail');
 });

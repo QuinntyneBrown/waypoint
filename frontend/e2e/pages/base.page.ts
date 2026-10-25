@@ -55,6 +55,14 @@ export abstract class BasePage {
     return this.page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   }
 
+  /** The computed body text colour and font stack (design-system check). */
+  bodyText(): Promise<{ color: string; fontFamily: string }> {
+    return this.page.evaluate(() => {
+      const style = getComputedStyle(document.body);
+      return { color: style.color, fontFamily: style.fontFamily };
+    });
+  }
+
   /** The `color-scheme` in effect on the document root (native controls). */
   colorScheme(): Promise<string> {
     return this.page.evaluate(() => getComputedStyle(document.documentElement).colorScheme);

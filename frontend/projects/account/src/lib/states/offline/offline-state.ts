@@ -4,7 +4,7 @@ import { Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-PLATFORM-012
 @Component({
-  selector: 'w-offline-state',
+  selector: 'ph-offline-state',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, Button],
   templateUrl: './offline-state.html',

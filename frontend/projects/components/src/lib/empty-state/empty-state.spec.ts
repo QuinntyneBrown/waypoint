@@ -9,10 +9,10 @@ import { EmptyStateTitle } from './empty-state-title';
 @Component({
   imports: [EmptyState, EmptyStateIcon, EmptyStateTitle, EmptyStateText, Icon],
   template: `
-    <div w-empty-state role="status">
-      <div w-empty-state-icon><w-icon name="users" /></div>
-      <h3 w-empty-state-title>No youth assigned yet</h3>
-      <p w-empty-state-text>Assigned youth will appear here.</p>
+    <div ph-empty-state role="status">
+      <div ph-empty-state-icon><ph-icon name="users" /></div>
+      <h3 ph-empty-state-title>No youth assigned yet</h3>
+      <p ph-empty-state-text>Assigned youth will appear here.</p>
     </div>
   `,
 })
@@ -28,15 +28,15 @@ describe('EmptyState', () => {
 
   it('is a centred empty state and keeps its role', async () => {
     const empty = await render();
-    expect(empty.className).toBe('w-empty');
+    expect(empty.className).toBe('ph-empty');
     expect(empty.getAttribute('role')).toBe('status');
   });
 
   it('renders the icon, title and text parts', async () => {
     const empty = await render();
-    expect(empty.querySelector('.w-empty__icon svg')).not.toBeNull();
-    expect(empty.querySelector('h3.w-empty__title')?.textContent).toBe('No youth assigned yet');
-    expect(empty.querySelector('p.w-empty__text')?.textContent).toBe(
+    expect(empty.querySelector('.ph-empty__icon svg')).not.toBeNull();
+    expect(empty.querySelector('h3.ph-empty__title')?.textContent).toBe('No youth assigned yet');
+    expect(empty.querySelector('p.ph-empty__text')?.textContent).toBe(
       'Assigned youth will appear here.',
     );
   });

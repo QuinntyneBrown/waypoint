@@ -22,12 +22,12 @@ export class DisplaySettingsPage extends BasePage {
   }
 
   /**
-   * Toggle a `w-switch` by its accessible label. The native input is visually
+   * Toggle a `ph-switch` by its accessible label. The native input is visually
    * hidden behind the custom control, so the click targets the label.
    */
   async toggleSwitch(label: string): Promise<void> {
     await this.page
-      .locator('label.w-switch', { has: this.page.locator(`[aria-label="${label}"]`) })
+      .locator('label.ph-switch', { has: this.page.locator(`[aria-label="${label}"]`) })
       .click();
   }
 
@@ -35,10 +35,10 @@ export class DisplaySettingsPage extends BasePage {
     await this.saveButton.click();
   }
 
-  /** The live `--w-text-scale` custom property on the document root. */
+  /** The live `--ph-text-scale` custom property on the document root. */
   textScaleToken(): Promise<string> {
     return this.page.evaluate(() =>
-      document.documentElement.style.getPropertyValue('--w-text-scale'),
+      document.documentElement.style.getPropertyValue('--ph-text-scale'),
     );
   }
 
@@ -60,7 +60,9 @@ export class DisplaySettingsPage extends BasePage {
 
   /** Whether the app-wide high-contrast class is applied to the document root. */
   hasContrastClass(): Promise<boolean> {
-    return this.page.evaluate(() => document.documentElement.classList.contains('w-a11y-contrast'));
+    return this.page.evaluate(() =>
+      document.documentElement.classList.contains('ph-a11y-contrast'),
+    );
   }
 }
 
@@ -81,12 +83,12 @@ export class NotificationsSettingsPage extends BasePage {
   }
 
   /**
-   * Toggle a `w-check` by its accessible label. The native input is visually
+   * Toggle a `ph-check` by its accessible label. The native input is visually
    * hidden behind the custom box, so the click targets the label.
    */
   async toggleCheck(label: string): Promise<void> {
     await this.page
-      .locator('label.w-check', { has: this.page.locator(`[aria-label="${label}"]`) })
+      .locator('label.ph-check', { has: this.page.locator(`[aria-label="${label}"]`) })
       .click();
   }
 }

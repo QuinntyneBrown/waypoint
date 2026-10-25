@@ -25,9 +25,9 @@ export class LandingPage extends BasePage {
   }
   impactStat(label: string) {
     return this.page
-      .locator('.w-statcard')
+      .locator('.ph-statcard')
       .filter({ hasText: label })
-      .locator('.w-statcard__value');
+      .locator('.ph-statcard__value');
   }
 
   /** Returns the navigation response so specs can assert the status code. */
@@ -147,14 +147,14 @@ export class ApplyPage extends BasePage {
 
   /** Toggle the participation-consent acknowledgement via its custom checkbox. */
   async acknowledgeParticipation(): Promise<void> {
-    await this.page.locator('label.w-check', { hasText: 'participation' }).click();
+    await this.page.locator('label.ph-check', { hasText: 'participation' }).click();
   }
 
   /** Toggle the privacy-notice acknowledgement via its custom checkbox box. */
   async acknowledgePrivacy(): Promise<void> {
     await this.page
-      .locator('label.w-check', { hasText: 'privacy notice' })
-      .locator('.w-check__box')
+      .locator('label.ph-check', { hasText: 'privacy notice' })
+      .locator('.ph-check__box')
       .click();
   }
 }
@@ -236,7 +236,7 @@ export class GetInvolvedPage extends BasePage {
 
   /** Toggle the screening-consent acknowledgement via its custom checkbox. */
   async acknowledgeScreening(): Promise<void> {
-    await this.page.locator('label.w-check', { hasText: 'screening' }).click();
+    await this.page.locator('label.ph-check', { hasText: 'screening' }).click();
   }
 }
 

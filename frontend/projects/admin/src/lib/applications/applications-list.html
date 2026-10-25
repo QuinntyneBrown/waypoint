@@ -1,22 +1,22 @@
-<w-shell
+<ph-shell
   role="admin"
   active="applications"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Intake</div>
-        <h1 class="w-page__title">Applications</h1>
-        <p class="w-page__sub">
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Intake</div>
+        <h1 class="ph-page__title">Applications</h1>
+        <p class="ph-page__sub">
           Review consent, place applicants, and keep every decision traceable.
         </p>
       </div>
-      <div class="w-page__actions">
-        <div w-form-field>
-          <label w-label for="application-status">Application status</label>
-          <select w-select id="application-status" [formControl]="statusFilter">
+      <div class="ph-page__actions">
+        <div ph-form-field>
+          <label ph-label for="application-status">Application status</label>
+          <select ph-select id="application-status" [formControl]="statusFilter">
             <option value="">All statuses</option>
             <option value="New">New</option>
             <option value="In review">In review</option>
@@ -29,20 +29,20 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (outcome(); as message) {
-      <p w-alert variant="success" role="status">{{ message }}</p>
+      <p ph-alert variant="success" role="status">{{ message }}</p>
     }
     @if (loadingReview()) {
-      <p class="w-muted" role="status">Loading application…</p>
+      <p class="ph-muted" role="status">Loading application…</p>
     }
 
     @if (loading()) {
-      <p class="w-muted" role="status">Loading applications…</p>
+      <p class="ph-muted" role="status">Loading applications…</p>
     } @else if (applications()!.length > 0) {
-      <div w-table-wrap>
-        <table w-table>
+      <div ph-table-wrap>
+        <table ph-table>
           <thead>
             <tr>
               <th>Applicant</th>
@@ -51,7 +51,7 @@
               <th>Track</th>
               <th>Status</th>
               <th>Submitted</th>
-              <th><span class="w-sr-only">Action</span></th>
+              <th><span class="ph-sr-only">Action</span></th>
             </tr>
           </thead>
           <tbody>
@@ -63,14 +63,14 @@
                 <td data-label="Age">
                   {{ application.age }}
                   @if (application.isMinor) {
-                    <span w-badge>Minor</span>
+                    <span ph-badge>Minor</span>
                   }
                 </td>
                 <td data-label="Neighbourhood">{{ application.neighbourhood }}</td>
                 <td data-label="Track">{{ application.trackInterest ?? '—' }}</td>
                 <td data-label="Status">
                   <span
-                    w-badge
+                    ph-badge
                     [variant]="
                       application.status === 'Needs consent'
                         ? 'warning'
@@ -85,7 +85,7 @@
                 <td data-label="Submitted">{{ application.createdAt | date: 'MMM d, y' }}</td>
                 <td data-label="Action">
                   <button
-                    w-button
+                    ph-button
                     variant="secondary"
                     size="sm"
                     type="button"
@@ -100,41 +100,41 @@
         </table>
       </div>
     } @else {
-      <div w-empty-state>
-        <div w-empty-state-icon><w-icon name="clipboard-check" /></div>
-        <h3 w-empty-state-title>No matching applications</h3>
-        <p w-empty-state-text>New applications and referrals will appear here for review.</p>
+      <div ph-empty-state>
+        <div ph-empty-state-icon><ph-icon name="clipboard-check" /></div>
+        <h3 ph-empty-state-title>No matching applications</h3>
+        <p ph-empty-state-text>New applications and referrals will appear here for review.</p>
       </div>
     }
   </div>
 
   @if (reviewing(); as application) {
-    <div w-dialog size="lg" aria-labelledby="review-application-heading" (dismiss)="closeReview()">
-      <div w-dialog-header>
+    <div ph-dialog size="lg" aria-labelledby="review-application-heading" (dismiss)="closeReview()">
+      <div ph-dialog-header>
         <div>
-          <h2 w-dialog-title id="review-application-heading">Review application</h2>
-          <p w-dialog-subtitle>
+          <h2 ph-dialog-title id="review-application-heading">Review application</h2>
+          <p ph-dialog-subtitle>
             {{ application.firstName }} {{ application.lastName }} · age {{ application.age }} ·
             applied {{ application.createdAt | date: 'mediumDate' }}
           </p>
         </div>
-        <button w-icon-button type="button" aria-label="Close" (click)="closeReview()">
-          <w-icon name="x" />
+        <button ph-icon-button type="button" aria-label="Close" (click)="closeReview()">
+          <ph-icon name="x" />
         </button>
       </div>
-      <div w-dialog-body class="w-stack">
+      <div ph-dialog-body class="ph-stack">
         @if (application.consentState === 'Needs consent') {
-          <div w-alert variant="warning">
+          <div ph-alert variant="warning">
             <div>
-              <div w-alert-title>Guardian participation consent required</div>
+              <div ph-alert-title>Guardian participation consent required</div>
               This minor cannot be approved into active participation until a valid consent record
               is linked.
             </div>
           </div>
         } @else if (application.consentState === 'Recorded') {
-          <div w-alert variant="success">
+          <div ph-alert variant="success">
             <div>
-              <div w-alert-title>Guardian participation consent recorded</div>
+              <div ph-alert-title>Guardian participation consent recorded</div>
               This application is eligible for a placement decision.
             </div>
           </div>
@@ -142,19 +142,19 @@
 
         <section class="review-detail" aria-label="Submitted application">
           <div>
-            <div class="w-eyebrow">Submitted by</div>
+            <div class="ph-eyebrow">Submitted by</div>
             <p>{{ application.whoIsFilling }}</p>
           </div>
           <div>
-            <div class="w-eyebrow">Neighbourhood</div>
+            <div class="ph-eyebrow">Neighbourhood</div>
             <p>{{ application.neighbourhood }}</p>
           </div>
           <div>
-            <div class="w-eyebrow">Cohort interest</div>
+            <div class="ph-eyebrow">Cohort interest</div>
             <p>{{ application.cohortInterest }}</p>
           </div>
           <div>
-            <div class="w-eyebrow">Acknowledgements</div>
+            <div class="ph-eyebrow">Acknowledgements</div>
             <p>
               Participation
               {{ application.participationConsentAck ? 'acknowledged' : 'missing' }} · privacy
@@ -162,12 +162,12 @@
             </p>
           </div>
           <div class="review-detail__wide">
-            <div class="w-eyebrow">Why interested</div>
+            <div class="ph-eyebrow">Why interested</div>
             <p class="detail-copy">{{ application.whyInterested }}</p>
           </div>
           @if (application.guardianName || application.guardianEmail || application.guardianPhone) {
             <div class="review-detail__wide">
-              <div class="w-eyebrow">Guardian / applicant contact</div>
+              <div class="ph-eyebrow">Guardian / applicant contact</div>
               <p>
                 {{ application.guardianName ?? 'Name not provided' }} ·
                 {{ application.guardianEmail ?? 'Email not provided' }} ·
@@ -177,11 +177,11 @@
           }
         </section>
 
-        <form class="w-stack" [formGroup]="form">
-          <div w-form-field>
-            <label w-label for="application-track">Interest track</label>
+        <form class="ph-stack" [formGroup]="form">
+          <div ph-form-field>
+            <label ph-label for="application-track">Interest track</label>
             <input
-              w-text-field
+              ph-text-field
               id="application-track"
               formControlName="trackInterest"
               maxlength="200"
@@ -193,40 +193,40 @@
               }
             </datalist>
           </div>
-          <div class="w-grid w-grid--2">
-            <div w-form-field>
-              <label w-label for="application-cohort">
-                Assign cohort <span w-label-required>*</span>
+          <div class="ph-grid ph-grid--2">
+            <div ph-form-field>
+              <label ph-label for="application-cohort">
+                Assign cohort <span ph-label-required>*</span>
               </label>
-              <select w-select id="application-cohort" formControlName="cohortId">
+              <select ph-select id="application-cohort" formControlName="cohortId">
                 <option value="">Choose a cohort</option>
                 @for (cohort of options()?.cohorts ?? []; track cohort.id) {
                   <option [value]="cohort.id">{{ cohort.name }}</option>
                 }
               </select>
               @if (form.controls.cohortId.touched && form.controls.cohortId.invalid) {
-                <p w-error-text>Choose a cohort before approval.</p>
+                <p ph-error-text>Choose a cohort before approval.</p>
               }
             </div>
-            <div w-form-field>
-              <label w-label for="application-mentor">
-                Assign mentor <span w-label-required>*</span>
+            <div ph-form-field>
+              <label ph-label for="application-mentor">
+                Assign mentor <span ph-label-required>*</span>
               </label>
-              <select w-select id="application-mentor" formControlName="mentorId">
+              <select ph-select id="application-mentor" formControlName="mentorId">
                 <option value="">Choose a mentor</option>
                 @for (mentor of eligibleMentors(); track mentor.id) {
                   <option [value]="mentor.id">{{ mentor.name }}</option>
                 }
               </select>
               @if (form.controls.mentorId.touched && form.controls.mentorId.invalid) {
-                <p w-error-text>Choose a mentor assigned to the cohort.</p>
+                <p ph-error-text>Choose a mentor assigned to the cohort.</p>
               }
             </div>
           </div>
-          <div w-form-field>
-            <label w-label for="application-decision-note">Decision note</label>
+          <div ph-form-field>
+            <label ph-label for="application-decision-note">Decision note</label>
             <textarea
-              w-textarea
+              ph-textarea
               id="application-decision-note"
               formControlName="decisionNote"
               maxlength="2000"
@@ -236,11 +236,13 @@
           </div>
         </form>
       </div>
-      <div w-dialog-footer>
+      <div ph-dialog-footer>
         @if (application.status !== 'Approved' && application.status !== 'Declined') {
-          <button w-button variant="danger" type="button" (click)="reviewDecline()">Decline</button>
+          <button ph-button variant="danger" type="button" (click)="reviewDecline()">
+            Decline
+          </button>
           <button
-            w-button
+            ph-button
             variant="primary"
             type="button"
             [disabled]="!application.canApprove"
@@ -249,8 +251,8 @@
             Approve
           </button>
         } @else {
-          <span w-badge>{{ application.status }}</span>
-          <button w-button variant="primary" type="button" (click)="closeReview()">Done</button>
+          <span ph-badge>{{ application.status }}</span>
+          <button ph-button variant="primary" type="button" (click)="closeReview()">Done</button>
         }
       </div>
     </div>
@@ -258,47 +260,47 @@
 
   @if (decision(); as pendingDecision) {
     <div
-      w-dialog
+      ph-dialog
       size="sm"
       [attr.aria-labelledby]="pendingDecision + '-application-heading'"
       (dismiss)="cancelDecision()"
     >
-      <div w-dialog-header>
+      <div ph-dialog-header>
         <div>
-          <h2 w-dialog-title [id]="pendingDecision + '-application-heading'">
+          <h2 ph-dialog-title [id]="pendingDecision + '-application-heading'">
             {{ pendingDecision === 'approve' ? 'Approve application?' : 'Decline application?' }}
           </h2>
-          <p w-dialog-subtitle>{{ reviewing()?.firstName }} {{ reviewing()?.lastName }}</p>
+          <p ph-dialog-subtitle>{{ reviewing()?.firstName }} {{ reviewing()?.lastName }}</p>
         </div>
         <button
-          w-icon-button
+          ph-icon-button
           type="button"
           aria-label="Close confirmation"
           (click)="cancelDecision()"
         >
-          <w-icon name="x" />
+          <ph-icon name="x" />
         </button>
       </div>
-      <div w-dialog-body class="w-stack">
+      <div ph-dialog-body class="ph-stack">
         @if (pendingDecision === 'approve') {
           <p>
             Enrol this applicant in <strong>{{ selectedCohortName() }}</strong> with
             <strong>{{ selectedMentorName() }}</strong
             >?
           </p>
-          <p class="w-muted">The applicant contact will receive an approval email.</p>
+          <p class="ph-muted">The applicant contact will receive an approval email.</p>
         } @else {
           <p>
             Decline {{ reviewing()?.firstName }} {{ reviewing()?.lastName }} without creating an
             account?
           </p>
-          <p class="w-muted">The optional decision note remains on the application record.</p>
+          <p class="ph-muted">The optional decision note remains on the application record.</p>
         }
       </div>
-      <div w-dialog-footer>
-        <button w-button variant="ghost" type="button" (click)="cancelDecision()">Cancel</button>
+      <div ph-dialog-footer>
+        <button ph-button variant="ghost" type="button" (click)="cancelDecision()">Cancel</button>
         <button
-          w-button
+          ph-button
           [variant]="
             pendingDecision === 'decline'
               ? 'danger'
@@ -323,4 +325,4 @@
       </div>
     </div>
   }
-</w-shell>
+</ph-shell>

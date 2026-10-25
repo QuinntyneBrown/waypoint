@@ -25,6 +25,6 @@ test('capture: start a donation', async ({ page }) => {
   await donate.continueButton.click();
   await expect(donate.thankYou).toBeVisible();
   await expect(donate.providerLink).toBeVisible();
-  const thanks = await clipOf(page.locator('.w-alert--success'), 16, 90);
+  const thanks = await clipOf(page.locator('.ph-alert--success'), 16, 90);
   await shot(page, FOLDER, 'thanks', { ...thanks, height: thanks.height + 90 });
 });

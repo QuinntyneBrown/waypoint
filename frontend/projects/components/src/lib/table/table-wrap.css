@@ -1,8 +1,8 @@
-.w-table-wrap {
+.ph-table-wrap {
   position: relative;
   width: 100%;
   overflow-x: auto;
-  border: var(--w-bw) solid var(--w-border);
-  border-radius: var(--w-r-card);
-  background: var(--w-white);
+  border: var(--ph-bw) solid var(--ph-border);
+  border-radius: var(--ph-r-card);
+  background: var(--ph-white);
 }

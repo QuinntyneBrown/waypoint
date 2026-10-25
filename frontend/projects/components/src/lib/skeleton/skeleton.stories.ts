@@ -15,9 +15,9 @@ export const Loading: Story = {
   render: () => ({
     template: `
       <div aria-busy="true" aria-label="Loading audit activity">
-        <span w-skeleton variant="title"></span>
-        <span w-skeleton variant="block"></span>
-        <span w-skeleton variant="text"></span>
+        <span ph-skeleton variant="title"></span>
+        <span ph-skeleton variant="block"></span>
+        <span ph-skeleton variant="text"></span>
       </div>`,
   }),
 };

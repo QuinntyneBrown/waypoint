@@ -54,7 +54,7 @@ type MessageMode = 'thread' | 'broadcast';
 
 // Traces to: L2-ENGAGE-007, L2-ENGAGE-008, L2-NFR-005, L2-AUTH-010
 @Component({
-  selector: 'w-mentor-messages',
+  selector: 'ph-mentor-messages',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

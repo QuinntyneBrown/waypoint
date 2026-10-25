@@ -1,16 +1,16 @@
-<div class="w-authpage">
-  <div w-empty-state style="max-width: 460px">
-    <div w-empty-state-icon [style.background]="iconBg()" [style.color]="iconColor()">
-      <w-icon [name]="icon()" iconClass="w-state-page__glyph" />
+<div class="ph-authpage">
+  <div ph-empty-state style="max-width: 460px">
+    <div ph-empty-state-icon [style.background]="iconBg()" [style.color]="iconColor()">
+      <ph-icon [name]="icon()" iconClass="ph-state-page__glyph" />
     </div>
     @if (eyebrow()) {
-      <div class="w-eyebrow">{{ eyebrow() }}</div>
+      <div class="ph-eyebrow">{{ eyebrow() }}</div>
     }
-    <h1 w-empty-state-title style="font-size: 1.6rem">{{ title() }}</h1>
+    <h1 ph-empty-state-title style="font-size: 1.6rem">{{ title() }}</h1>
     @if (text()) {
-      <p w-empty-state-text>{{ text() }}</p>
+      <p ph-empty-state-text>{{ text() }}</p>
     }
-    <div class="w-cluster" style="justify-content: center">
+    <div class="ph-cluster" style="justify-content: center">
       <ng-content />
     </div>
   </div>

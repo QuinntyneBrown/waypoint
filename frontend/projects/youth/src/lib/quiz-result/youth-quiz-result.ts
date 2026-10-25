@@ -6,7 +6,7 @@ import { Button, Shell, Alert, Card, CardBody, CardTitle, Badge } from '@waypoin
 
 // Traces to: L2-LEARN-005
 @Component({
-  selector: 'w-youth-quiz-result',
+  selector: 'ph-youth-quiz-result',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Shell, RouterLink, Button, Alert, Card, CardBody, CardTitle, Badge],
   templateUrl: './youth-quiz-result.html',

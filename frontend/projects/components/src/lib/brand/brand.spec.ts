@@ -5,8 +5,8 @@ import { Brand } from './brand';
 @Component({
   imports: [Brand],
   template: `
-    <a w-brand href="/">Waypoint</a>
-    <div w-brand size="lg">Waypoint</div>
+    <a ph-brand href="/">Waypoint</a>
+    <div ph-brand size="lg">Waypoint</div>
   `,
 })
 class Host {}
@@ -23,15 +23,15 @@ describe('Brand', () => {
     const [link, block] = await render();
     expect(link.tagName).toBe('A');
     expect(link.getAttribute('href')).toBe('/');
-    expect(link.classList.contains('w-brand')).toBe(true);
-    expect(link.querySelector('.w-brand__mark')?.textContent).toBe('W');
-    expect(link.querySelector('.w-brand__name')?.textContent).toBe('Waypoint');
-    expect(block.querySelector('.w-brand__mark')).not.toBeNull();
+    expect(link.classList.contains('ph-brand')).toBe(true);
+    expect(link.querySelector('.ph-brand__mark')?.textContent).toBe('W');
+    expect(link.querySelector('.ph-brand__name')?.textContent).toBe('Waypoint');
+    expect(block.querySelector('.ph-brand__mark')).not.toBeNull();
   });
 
   it('has a large size for sign-in cards', async () => {
     const [link, block] = await render();
-    expect(link.classList.contains('w-brand--lg')).toBe(false);
-    expect(block.classList.contains('w-brand--lg')).toBe(true);
+    expect(link.classList.contains('ph-brand--lg')).toBe(false);
+    expect(block.classList.contains('ph-brand--lg')).toBe(true);
   });
 });

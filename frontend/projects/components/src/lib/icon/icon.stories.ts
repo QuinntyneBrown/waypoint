@@ -22,7 +22,7 @@ export const AllIcons: Story = {
     template: `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px">
       @for (n of names; track n) {
         <div style="display: flex; gap: 8px; align-items: center">
-          <w-icon [name]="n" /><small>{{ n }}</small>
+          <ph-icon [name]="n" /><small>{{ n }}</small>
         </div>
       }
     </div>`,

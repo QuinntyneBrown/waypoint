@@ -23,7 +23,7 @@ test('capture: view child progress', async ({ page, request }) => {
   await expect(page.getByText(family.privateSecret)).toHaveCount(0);
   await page.waitForLoadState('networkidle');
 
-  const card = (title: string) => page.locator('section.w-card', { hasText: title });
+  const card = (title: string) => page.locator('section.ph-card', { hasText: title });
   // Crop in document coordinates; the locked-badge list is long (it holds badges from other runs), so
   // each picture stops after the first lines of it.
   const docTop = async (target: Locator) =>

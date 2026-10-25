@@ -4,42 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>People · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="people" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Waypoint · Toronto</div>
-          <h1 class="w-page__title">People</h1>
-          <p class="w-page__sub">Everyone in the program — youth, staff and guardians.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Waypoint · Toronto</div>
+          <h1 class="ph-page__title">People</h1>
+          <p class="ph-page__sub">Everyone in the program — youth, staff and guardians.</p>
         </div>
-        <div class="w-page__actions">
-          <button class="w-btn w-btn--ghost"><svg class="w-icon"><use href="#i-download"></use></svg>Export</button>
-          <button class="w-btn w-btn--primary" data-open-modal="m-invite"><svg class="w-icon"><use href="#i-user-plus"></use></svg>Invite</button>
+        <div class="ph-page__actions">
+          <button class="ph-btn ph-btn--ghost"><svg class="ph-icon"><use href="#i-download"></use></svg>Export</button>
+          <button class="ph-btn ph-btn--primary" data-open-modal="m-invite"><svg class="ph-icon"><use href="#i-user-plus"></use></svg>Invite</button>
         </div>
       </div>
 
       <!-- ===== Filters ===== -->
-      <div class="w-cluster w-justify-between w-mb-6" style="flex-wrap:wrap;gap:12px">
-        <div class="w-pillrow">
-          <span class="w-pill is-active">All <span class="w-badge w-badge--ink">18</span></span>
-          <span class="w-pill">Youth <span class="w-badge">12</span></span>
-          <span class="w-pill">Staff <span class="w-badge">4</span></span>
-          <span class="w-pill">Guardians <span class="w-badge">2</span></span>
+      <div class="ph-cluster ph-justify-between ph-mb-6" style="flex-wrap:wrap;gap:12px">
+        <div class="ph-pillrow">
+          <span class="ph-pill is-active">All <span class="ph-badge ph-badge--ink">18</span></span>
+          <span class="ph-pill">Youth <span class="ph-badge">12</span></span>
+          <span class="ph-pill">Staff <span class="ph-badge">4</span></span>
+          <span class="ph-pill">Guardians <span class="ph-badge">2</span></span>
         </div>
-        <div class="w-cluster w-gap-3" style="flex-wrap:wrap">
-          <div class="w-field w-mb-0" style="min-width:220px">
-            <label class="w-label w-hide" for="p-search">Search people</label>
-            <input id="p-search" class="w-input" placeholder="Search by name or email…">
+        <div class="ph-cluster ph-gap-3" style="flex-wrap:wrap">
+          <div class="ph-field ph-mb-0" style="min-width:220px">
+            <label class="ph-label ph-hide" for="p-search">Search people</label>
+            <input id="p-search" class="ph-input" placeholder="Search by name or email…">
           </div>
-          <div class="w-field w-mb-0" style="min-width:180px">
-            <label class="w-label w-hide" for="p-cohort">Filter by cohort</label>
-            <select id="p-cohort" class="w-select">
+          <div class="ph-field ph-mb-0" style="min-width:180px">
+            <label class="ph-label ph-hide" for="p-cohort">Filter by cohort</label>
+            <select id="p-cohort" class="ph-select">
               <option>All cohorts</option>
               <option>Rexdale Fall '25</option>
               <option>Warden Winter '26</option>
@@ -51,8 +51,8 @@
 
       <!-- ===== DEFAULT: populated roster ===== -->
       <div data-when-state="default">
-        <div class="w-table-wrap">
-          <table class="w-table w-table--cards">
+        <div class="ph-table-wrap">
+          <table class="ph-table ph-table--cards">
             <thead>
               <tr>
                 <th>Person</th><th>Role</th><th>Cohort</th><th>Mentor</th><th>Status</th><th>Last active</th><th>Actions</th>
@@ -60,124 +60,124 @@
             </thead>
             <tbody>
               <tr>
-                <td data-label="Person"><a class="w-table__cellmain" href="person-detail.html"><span class="w-avatar w-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</a></td>
-                <td data-label="Role"><span class="w-badge w-badge--lime">Youth</span></td>
+                <td data-label="Person"><a class="ph-table__cellmain" href="person-detail.html"><span class="ph-avatar ph-avatar--sm" data-name="Priya Sharma"></span>Priya Sharma</a></td>
+                <td data-label="Role"><span class="ph-badge ph-badge--lime">Youth</span></td>
                 <td data-label="Cohort">Rexdale Fall '25</td>
                 <td data-label="Mentor">Marcus Bello</td>
-                <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Active</span></td>
+                <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Active</span></td>
                 <td data-label="Last active">2 hrs ago</td>
-                <td data-label="Actions"><a class="w-iconbtn" href="person-detail.html" aria-label="Open Priya Sharma"><svg class="w-icon"><use href="#i-chevron-right"></use></svg></a></td>
+                <td data-label="Actions"><a class="ph-iconbtn" href="person-detail.html" aria-label="Open Priya Sharma"><svg class="ph-icon"><use href="#i-chevron-right"></use></svg></a></td>
               </tr>
               <tr>
-                <td data-label="Person"><a class="w-table__cellmain" href="person-detail.html"><span class="w-avatar w-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</a></td>
-                <td data-label="Role"><span class="w-badge w-badge--lime">Youth</span></td>
+                <td data-label="Person"><a class="ph-table__cellmain" href="person-detail.html"><span class="ph-avatar ph-avatar--sm" data-name="Jayden Alcantara"></span>Jayden Alcantara</a></td>
+                <td data-label="Role"><span class="ph-badge ph-badge--lime">Youth</span></td>
                 <td data-label="Cohort">Rexdale Fall '25</td>
                 <td data-label="Mentor">Marcus Bello</td>
-                <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Active</span></td>
+                <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Active</span></td>
                 <td data-label="Last active">Today</td>
-                <td data-label="Actions"><a class="w-iconbtn" href="person-detail.html" aria-label="Open Jayden Alcantara"><svg class="w-icon"><use href="#i-chevron-right"></use></svg></a></td>
+                <td data-label="Actions"><a class="ph-iconbtn" href="person-detail.html" aria-label="Open Jayden Alcantara"><svg class="ph-icon"><use href="#i-chevron-right"></use></svg></a></td>
               </tr>
               <tr>
-                <td data-label="Person"><a class="w-table__cellmain" href="person-detail.html"><span class="w-avatar w-avatar--sm" data-name="Devon Grant"></span>Devon Grant</a></td>
-                <td data-label="Role"><span class="w-badge w-badge--lime">Youth</span></td>
+                <td data-label="Person"><a class="ph-table__cellmain" href="person-detail.html"><span class="ph-avatar ph-avatar--sm" data-name="Devon Grant"></span>Devon Grant</a></td>
+                <td data-label="Role"><span class="ph-badge ph-badge--lime">Youth</span></td>
                 <td data-label="Cohort">Rexdale Fall '25</td>
                 <td data-label="Mentor">Marcus Bello</td>
-                <td data-label="Status"><span class="w-badge w-badge--error w-badge--dot">At risk</span></td>
+                <td data-label="Status"><span class="ph-badge ph-badge--error ph-badge--dot">At risk</span></td>
                 <td data-label="Last active">6 days ago</td>
-                <td data-label="Actions"><a class="w-iconbtn" href="person-detail.html" aria-label="Open Devon Grant"><svg class="w-icon"><use href="#i-chevron-right"></use></svg></a></td>
+                <td data-label="Actions"><a class="ph-iconbtn" href="person-detail.html" aria-label="Open Devon Grant"><svg class="ph-icon"><use href="#i-chevron-right"></use></svg></a></td>
               </tr>
               <tr>
-                <td data-label="Person"><a class="w-table__cellmain" href="person-detail.html"><span class="w-avatar w-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</a></td>
-                <td data-label="Role"><span class="w-badge w-badge--lime">Youth</span></td>
+                <td data-label="Person"><a class="ph-table__cellmain" href="person-detail.html"><span class="ph-avatar ph-avatar--sm" data-name="Amara Okafor"></span>Amara Okafor</a></td>
+                <td data-label="Role"><span class="ph-badge ph-badge--lime">Youth</span></td>
                 <td data-label="Cohort">Warden Winter '26</td>
                 <td data-label="Mentor">Danielle Osei</td>
-                <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Active</span></td>
+                <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Active</span></td>
                 <td data-label="Last active">Yesterday</td>
-                <td data-label="Actions"><a class="w-iconbtn" href="person-detail.html" aria-label="Open Amara Okafor"><svg class="w-icon"><use href="#i-chevron-right"></use></svg></a></td>
+                <td data-label="Actions"><a class="ph-iconbtn" href="person-detail.html" aria-label="Open Amara Okafor"><svg class="ph-icon"><use href="#i-chevron-right"></use></svg></a></td>
               </tr>
               <tr>
-                <td data-label="Person"><a class="w-table__cellmain" href="person-detail.html"><span class="w-avatar w-avatar--sm" data-name="Noah Williams"></span>Noah Williams</a></td>
-                <td data-label="Role"><span class="w-badge w-badge--lime">Youth</span></td>
+                <td data-label="Person"><a class="ph-table__cellmain" href="person-detail.html"><span class="ph-avatar ph-avatar--sm" data-name="Noah Williams"></span>Noah Williams</a></td>
+                <td data-label="Role"><span class="ph-badge ph-badge--lime">Youth</span></td>
                 <td data-label="Cohort">Warden Winter '26</td>
                 <td data-label="Mentor">Danielle Osei</td>
-                <td data-label="Status"><span class="w-badge w-badge--error w-badge--dot">At risk</span></td>
+                <td data-label="Status"><span class="ph-badge ph-badge--error ph-badge--dot">At risk</span></td>
                 <td data-label="Last active">13 days ago</td>
-                <td data-label="Actions"><a class="w-iconbtn" href="person-detail.html" aria-label="Open Noah Williams"><svg class="w-icon"><use href="#i-chevron-right"></use></svg></a></td>
+                <td data-label="Actions"><a class="ph-iconbtn" href="person-detail.html" aria-label="Open Noah Williams"><svg class="ph-icon"><use href="#i-chevron-right"></use></svg></a></td>
               </tr>
               <tr>
-                <td data-label="Person"><a class="w-table__cellmain" href="person-detail.html"><span class="w-avatar w-avatar--sm" data-name="Sofia Nguyen"></span>Sofia Nguyen</a></td>
-                <td data-label="Role"><span class="w-badge w-badge--lime">Youth</span></td>
+                <td data-label="Person"><a class="ph-table__cellmain" href="person-detail.html"><span class="ph-avatar ph-avatar--sm" data-name="Sofia Nguyen"></span>Sofia Nguyen</a></td>
+                <td data-label="Role"><span class="ph-badge ph-badge--lime">Youth</span></td>
                 <td data-label="Cohort">St. Clair Spring '26</td>
                 <td data-label="Mentor">Grace Adeyemi</td>
-                <td data-label="Status"><span class="w-badge w-badge--info w-badge--dot">New</span></td>
+                <td data-label="Status"><span class="ph-badge ph-badge--info ph-badge--dot">New</span></td>
                 <td data-label="Last active">3 days ago</td>
-                <td data-label="Actions"><a class="w-iconbtn" href="person-detail.html" aria-label="Open Sofia Nguyen"><svg class="w-icon"><use href="#i-chevron-right"></use></svg></a></td>
+                <td data-label="Actions"><a class="ph-iconbtn" href="person-detail.html" aria-label="Open Sofia Nguyen"><svg class="ph-icon"><use href="#i-chevron-right"></use></svg></a></td>
               </tr>
               <tr>
-                <td data-label="Person"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
-                <td data-label="Role"><span class="w-badge w-badge--ink">Lead Mentor</span></td>
+                <td data-label="Person"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Marcus Bello"></span>Marcus Bello</div></td>
+                <td data-label="Role"><span class="ph-badge ph-badge--ink">Lead Mentor</span></td>
                 <td data-label="Cohort">Rexdale Fall '25</td>
                 <td data-label="Mentor">—</td>
-                <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Active</span></td>
+                <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Active</span></td>
                 <td data-label="Last active">Today</td>
-                <td data-label="Actions"><a class="w-iconbtn" href="person-detail.html" aria-label="Open Marcus Bello"><svg class="w-icon"><use href="#i-chevron-right"></use></svg></a></td>
+                <td data-label="Actions"><a class="ph-iconbtn" href="person-detail.html" aria-label="Open Marcus Bello"><svg class="ph-icon"><use href="#i-chevron-right"></use></svg></a></td>
               </tr>
               <tr>
-                <td data-label="Person"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Danielle Osei"></span>Danielle Osei</div></td>
-                <td data-label="Role"><span class="w-badge w-badge--ink">Mentor</span></td>
+                <td data-label="Person"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Danielle Osei"></span>Danielle Osei</div></td>
+                <td data-label="Role"><span class="ph-badge ph-badge--ink">Mentor</span></td>
                 <td data-label="Cohort">Warden Winter '26</td>
                 <td data-label="Mentor">—</td>
-                <td data-label="Status"><span class="w-badge w-badge--success w-badge--dot">Active</span></td>
+                <td data-label="Status"><span class="ph-badge ph-badge--success ph-badge--dot">Active</span></td>
                 <td data-label="Last active">Yesterday</td>
-                <td data-label="Actions"><a class="w-iconbtn" href="person-detail.html" aria-label="Open Danielle Osei"><svg class="w-icon"><use href="#i-chevron-right"></use></svg></a></td>
+                <td data-label="Actions"><a class="ph-iconbtn" href="person-detail.html" aria-label="Open Danielle Osei"><svg class="ph-icon"><use href="#i-chevron-right"></use></svg></a></td>
               </tr>
               <tr>
-                <td data-label="Person"><div class="w-table__cellmain"><span class="w-avatar w-avatar--sm" data-name="Nadia Sharma"></span>Nadia Sharma</div></td>
-                <td data-label="Role"><span class="w-badge w-badge--outline">Guardian</span></td>
+                <td data-label="Person"><div class="ph-table__cellmain"><span class="ph-avatar ph-avatar--sm" data-name="Nadia Sharma"></span>Nadia Sharma</div></td>
+                <td data-label="Role"><span class="ph-badge ph-badge--outline">Guardian</span></td>
                 <td data-label="Cohort">Rexdale Fall '25</td>
                 <td data-label="Mentor">— (Priya Sharma)</td>
-                <td data-label="Status"><span class="w-badge w-badge--warning w-badge--dot">Consent pending</span></td>
+                <td data-label="Status"><span class="ph-badge ph-badge--warning ph-badge--dot">Consent pending</span></td>
                 <td data-label="Last active">5 days ago</td>
-                <td data-label="Actions"><a class="w-iconbtn" href="person-detail.html" aria-label="Open Nadia Sharma"><svg class="w-icon"><use href="#i-chevron-right"></use></svg></a></td>
+                <td data-label="Actions"><a class="ph-iconbtn" href="person-detail.html" aria-label="Open Nadia Sharma"><svg class="ph-icon"><use href="#i-chevron-right"></use></svg></a></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="w-muted w-text-sm w-mt-4">Showing 9 of 18 people.</p>
+        <p class="ph-muted ph-text-sm ph-mt-4">Showing 9 of 18 people.</p>
       </div>
 
       <!-- ===== LOADING: skeletons ===== -->
-      <div data-when-state="loading" class="w-hide">
-        <div class="w-table-wrap">
-          <table class="w-table w-table--cards">
+      <div data-when-state="loading" class="ph-hide">
+        <div class="ph-table-wrap">
+          <table class="ph-table ph-table--cards">
             <thead><tr><th>Person</th><th>Role</th><th>Cohort</th><th>Mentor</th><th>Status</th><th>Last active</th><th>Actions</th></tr></thead>
             <tbody>
               <tr>
-                <td data-label="Person"><div class="w-cluster w-gap-3"><span class="w-skeleton w-skeleton--circle"></span><span class="w-skeleton w-skeleton--text" style="width:120px"></span></div></td>
-                <td data-label="Role"><span class="w-skeleton w-skeleton--btn"></span></td>
-                <td data-label="Cohort"><span class="w-skeleton w-skeleton--text"></span></td>
-                <td data-label="Mentor"><span class="w-skeleton w-skeleton--text"></span></td>
-                <td data-label="Status"><span class="w-skeleton w-skeleton--btn"></span></td>
-                <td data-label="Last active"><span class="w-skeleton w-skeleton--text"></span></td>
-                <td data-label="Actions"><span class="w-skeleton w-skeleton--circle"></span></td>
+                <td data-label="Person"><div class="ph-cluster ph-gap-3"><span class="ph-skeleton ph-skeleton--circle"></span><span class="ph-skeleton ph-skeleton--text" style="width:120px"></span></div></td>
+                <td data-label="Role"><span class="ph-skeleton ph-skeleton--btn"></span></td>
+                <td data-label="Cohort"><span class="ph-skeleton ph-skeleton--text"></span></td>
+                <td data-label="Mentor"><span class="ph-skeleton ph-skeleton--text"></span></td>
+                <td data-label="Status"><span class="ph-skeleton ph-skeleton--btn"></span></td>
+                <td data-label="Last active"><span class="ph-skeleton ph-skeleton--text"></span></td>
+                <td data-label="Actions"><span class="ph-skeleton ph-skeleton--circle"></span></td>
               </tr>
               <tr>
-                <td data-label="Person"><div class="w-cluster w-gap-3"><span class="w-skeleton w-skeleton--circle"></span><span class="w-skeleton w-skeleton--text" style="width:120px"></span></div></td>
-                <td data-label="Role"><span class="w-skeleton w-skeleton--btn"></span></td>
-                <td data-label="Cohort"><span class="w-skeleton w-skeleton--text"></span></td>
-                <td data-label="Mentor"><span class="w-skeleton w-skeleton--text"></span></td>
-                <td data-label="Status"><span class="w-skeleton w-skeleton--btn"></span></td>
-                <td data-label="Last active"><span class="w-skeleton w-skeleton--text"></span></td>
-                <td data-label="Actions"><span class="w-skeleton w-skeleton--circle"></span></td>
+                <td data-label="Person"><div class="ph-cluster ph-gap-3"><span class="ph-skeleton ph-skeleton--circle"></span><span class="ph-skeleton ph-skeleton--text" style="width:120px"></span></div></td>
+                <td data-label="Role"><span class="ph-skeleton ph-skeleton--btn"></span></td>
+                <td data-label="Cohort"><span class="ph-skeleton ph-skeleton--text"></span></td>
+                <td data-label="Mentor"><span class="ph-skeleton ph-skeleton--text"></span></td>
+                <td data-label="Status"><span class="ph-skeleton ph-skeleton--btn"></span></td>
+                <td data-label="Last active"><span class="ph-skeleton ph-skeleton--text"></span></td>
+                <td data-label="Actions"><span class="ph-skeleton ph-skeleton--circle"></span></td>
               </tr>
               <tr>
-                <td data-label="Person"><div class="w-cluster w-gap-3"><span class="w-skeleton w-skeleton--circle"></span><span class="w-skeleton w-skeleton--text" style="width:120px"></span></div></td>
-                <td data-label="Role"><span class="w-skeleton w-skeleton--btn"></span></td>
-                <td data-label="Cohort"><span class="w-skeleton w-skeleton--text"></span></td>
-                <td data-label="Mentor"><span class="w-skeleton w-skeleton--text"></span></td>
-                <td data-label="Status"><span class="w-skeleton w-skeleton--btn"></span></td>
-                <td data-label="Last active"><span class="w-skeleton w-skeleton--text"></span></td>
-                <td data-label="Actions"><span class="w-skeleton w-skeleton--circle"></span></td>
+                <td data-label="Person"><div class="ph-cluster ph-gap-3"><span class="ph-skeleton ph-skeleton--circle"></span><span class="ph-skeleton ph-skeleton--text" style="width:120px"></span></div></td>
+                <td data-label="Role"><span class="ph-skeleton ph-skeleton--btn"></span></td>
+                <td data-label="Cohort"><span class="ph-skeleton ph-skeleton--text"></span></td>
+                <td data-label="Mentor"><span class="ph-skeleton ph-skeleton--text"></span></td>
+                <td data-label="Status"><span class="ph-skeleton ph-skeleton--btn"></span></td>
+                <td data-label="Last active"><span class="ph-skeleton ph-skeleton--text"></span></td>
+                <td data-label="Actions"><span class="ph-skeleton ph-skeleton--circle"></span></td>
               </tr>
             </tbody>
           </table>
@@ -185,13 +185,13 @@
       </div>
 
       <!-- ===== EMPTY ===== -->
-      <div data-when-state="empty" class="w-hide">
-        <div class="w-card">
-          <div class="w-empty">
-            <div class="w-empty__icon"><svg class="w-icon"><use href="#i-users"></use></svg></div>
-            <h3 class="w-empty__title">No people match those filters</h3>
-            <p class="w-empty__text">Try clearing the search or cohort filter, or invite someone new.</p>
-            <button class="w-btn w-btn--primary" data-open-modal="m-invite"><svg class="w-icon"><use href="#i-user-plus"></use></svg>Invite someone</button>
+      <div data-when-state="empty" class="ph-hide">
+        <div class="ph-card">
+          <div class="ph-empty">
+            <div class="ph-empty__icon"><svg class="ph-icon"><use href="#i-users"></use></svg></div>
+            <h3 class="ph-empty__title">No people match those filters</h3>
+            <p class="ph-empty__text">Try clearing the search or cohort filter, or invite someone new.</p>
+            <button class="ph-btn ph-btn--primary" data-open-modal="m-invite"><svg class="ph-icon"><use href="#i-user-plus"></use></svg>Invite someone</button>
           </div>
         </div>
       </div>
@@ -200,22 +200,22 @@
   </main>
 
   <!-- ===== Invite modal ===== -->
-  <div class="w-modal" id="m-invite" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div><h2 class="w-modal__title">Invite someone</h2><p class="w-modal__sub">They'll get an email to set up their Waypoint account.</p></div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+  <div class="ph-modal" id="m-invite" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div><h2 class="ph-modal__title">Invite someone</h2><p class="ph-modal__sub">They'll get an email to set up their Waypoint account.</p></div>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-field">
-          <label class="w-label" for="inv-email">Email <span class="w-label__req">*</span></label>
-          <input id="inv-email" class="w-input" type="email" placeholder="name@example.com">
-          <div class="w-help">We'll send a secure invite link.</div>
+      <div class="ph-modal__body">
+        <div class="ph-field">
+          <label class="ph-label" for="inv-email">Email <span class="ph-label__req">*</span></label>
+          <input id="inv-email" class="ph-input" type="email" placeholder="name@example.com">
+          <div class="ph-help">We'll send a secure invite link.</div>
         </div>
-        <div class="w-field">
-          <label class="w-label" for="inv-role">Role <span class="w-label__req">*</span></label>
-          <select id="inv-role" class="w-select">
+        <div class="ph-field">
+          <label class="ph-label" for="inv-role">Role <span class="ph-label__req">*</span></label>
+          <select id="inv-role" class="ph-select">
             <option>Youth</option>
             <option>Mentor</option>
             <option>Lead Mentor</option>
@@ -223,18 +223,18 @@
             <option>Volunteer</option>
           </select>
         </div>
-        <div class="w-field">
-          <label class="w-label" for="inv-cohort">Cohort</label>
-          <select id="inv-cohort" class="w-select">
+        <div class="ph-field">
+          <label class="ph-label" for="inv-cohort">Cohort</label>
+          <select id="inv-cohort" class="ph-select">
             <option>Rexdale Fall '25</option>
             <option>Warden Winter '26</option>
             <option>St. Clair Spring '26</option>
             <option>No cohort yet</option>
           </select>
         </div>
-        <div class="w-field">
-          <label class="w-label" for="inv-mentor">Mentor</label>
-          <select id="inv-mentor" class="w-select">
+        <div class="ph-field">
+          <label class="ph-label" for="inv-mentor">Mentor</label>
+          <select id="inv-mentor" class="ph-select">
             <option>Marcus Bello</option>
             <option>Danielle Osei</option>
             <option>Grace Adeyemi</option>
@@ -242,31 +242,31 @@
           </select>
         </div>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="Invitation sent" data-toast-type="success" data-toast-title="Invite on its way">Send invite</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="Invitation sent" data-toast-type="success" data-toast-title="Invite on its way">Send invite</button>
       </div>
     </div>
   </div>
 
   <!-- ===== Delete / remove modal (danger) ===== -->
-  <div class="w-modal w-modal--sm" id="m-delete" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
+  <div class="ph-modal ph-modal--sm" id="m-delete" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
         <div>
-          <div class="w-modal__icon w-modal__icon--danger"><svg class="w-icon"><use href="#i-trash"></use></svg></div>
-          <h2 class="w-modal__title">Remove this person?</h2>
-          <p class="w-modal__sub">This removes them from Waypoint and revokes access. Progress records are kept for reporting.</p>
+          <div class="ph-modal__icon ph-modal__icon--danger"><svg class="ph-icon"><use href="#i-trash"></use></svg></div>
+          <h2 class="ph-modal__title">Remove this person?</h2>
+          <p class="ph-modal__sub">This removes them from Waypoint and revokes access. Progress records are kept for reporting.</p>
         </div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-alert w-alert--warning"><svg class="w-alert__icon w-icon"><use href="#i-alert-triangle"></use></svg><div>This action can't be undone.</div></div>
+      <div class="ph-modal__body">
+        <div class="ph-alert ph-alert--warning"><svg class="ph-alert__icon ph-icon"><use href="#i-alert-triangle"></use></svg><div>This action can't be undone.</div></div>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--danger" data-close-modal data-toast="Person removed" data-toast-type="error">Remove person</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--danger" data-close-modal data-toast="Person removed" data-toast-type="error">Remove person</button>
       </div>
     </div>
   </div>

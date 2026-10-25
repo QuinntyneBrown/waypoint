@@ -1,7 +1,7 @@
 .announcement-layout {
   display: grid;
   grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.35fr);
-  gap: var(--w-s5);
+  gap: var(--ph-s5);
   align-items: start;
 }
 .announcement-layout > * {
@@ -10,23 +10,23 @@
 .announcement-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   padding: 0;
   border: 0;
 }
 .announcement-option {
   display: flex;
   align-items: center;
-  gap: var(--w-s2);
+  gap: var(--ph-s2);
   min-height: 2.75rem;
-  padding: var(--w-s2) var(--w-s3);
-  border: 1px solid var(--w-border);
-  border-radius: var(--w-r-card);
+  padding: var(--ph-s2) var(--ph-s3);
+  border: 1px solid var(--ph-border);
+  border-radius: var(--ph-r-card);
   cursor: pointer;
 }
 .announcement-option:has(input:checked) {
-  border-color: var(--w-ink);
-  background: var(--w-g100);
+  border-color: var(--ph-ink);
+  background: var(--ph-g100);
 }
 .announcement-option input {
   width: 1.25rem;
@@ -44,15 +44,15 @@
 .announcement-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--w-s2);
+  gap: var(--ph-s2);
   align-items: center;
 }
 .announcement-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s3);
-  padding-top: var(--w-s3);
-  border-top: 1px solid var(--w-border);
+  gap: var(--ph-s3);
+  padding-top: var(--ph-s3);
+  border-top: 1px solid var(--ph-border);
 }
 @media (max-width: 58rem) {
   .announcement-layout {

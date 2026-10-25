@@ -1,41 +1,41 @@
-<w-shell
+<ph-shell
   role="admin"
   active="cohorts"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Program</div>
-        <h1 class="w-page__title">Cohorts</h1>
-        <p class="w-page__sub">Create cohorts and manage their membership and lead mentor.</p>
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Program</div>
+        <h1 class="ph-page__title">Cohorts</h1>
+        <p class="ph-page__sub">Create cohorts and manage their membership and lead mentor.</p>
       </div>
-      <button w-button variant="primary" type="button" (click)="openCreate()">New cohort</button>
+      <button ph-button variant="primary" type="button" (click)="openCreate()">New cohort</button>
     </div>
 
     @if (errorMessage(); as error) {
-      <div w-alert variant="error" role="alert">
+      <div ph-alert variant="error" role="alert">
         <div>
-          <div w-alert-title>{{ error }}</div>
+          <div ph-alert-title>{{ error }}</div>
           Cohort data could not be loaded or saved.
         </div>
-        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
+        <button ph-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p w-alert variant="success" role="status">{{ message }}</p>
+      <p ph-alert variant="success" role="status">{{ message }}</p>
     }
 
     @if (loading()) {
-      <p class="w-muted" role="status">Loading cohorts…</p>
+      <p class="ph-muted" role="status">Loading cohorts…</p>
     } @else if (cohorts()!.length > 0) {
       <div class="cohort-grid">
         @for (cohort of cohorts(); track cohort.id) {
-          <article w-card class="cohort-card" data-testid="cohort-card">
-            <div w-card-body class="w-stack">
+          <article ph-card class="cohort-card" data-testid="cohort-card">
+            <div ph-card-body class="ph-stack">
               <div>
-                <div class="w-eyebrow">{{ cohort.trackName ?? 'Track not assigned' }}</div>
+                <div class="ph-eyebrow">{{ cohort.trackName ?? 'Track not assigned' }}</div>
                 <h2>
                   <a [routerLink]="[cohort.id]">{{ cohort.name }}</a>
                 </h2>
@@ -60,93 +60,95 @@
         }
       </div>
     } @else if (!errorMessage()) {
-      <div w-empty-state>
-        <div w-empty-state-icon><w-icon name="layers" /></div>
-        <h2 w-empty-state-title>No cohorts yet</h2>
-        <p w-empty-state-text>Create the first cohort to begin placing young people.</p>
-        <button w-button variant="primary" type="button" (click)="openCreate()">New cohort</button>
+      <div ph-empty-state>
+        <div ph-empty-state-icon><ph-icon name="layers" /></div>
+        <h2 ph-empty-state-title>No cohorts yet</h2>
+        <p ph-empty-state-text>Create the first cohort to begin placing young people.</p>
+        <button ph-button variant="primary" type="button" (click)="openCreate()">New cohort</button>
       </div>
     }
   </div>
 
   @if (createOpen()) {
-    <div w-dialog size="lg" aria-labelledby="create-cohort-heading" (dismiss)="closeCreate()">
-      <div w-dialog-header>
+    <div ph-dialog size="lg" aria-labelledby="create-cohort-heading" (dismiss)="closeCreate()">
+      <div ph-dialog-header>
         <div>
-          <h2 w-dialog-title id="create-cohort-heading">Create cohort</h2>
-          <p w-dialog-subtitle>Choose the learning track and accountable lead mentor.</p>
+          <h2 ph-dialog-title id="create-cohort-heading">Create cohort</h2>
+          <p ph-dialog-subtitle>Choose the learning track and accountable lead mentor.</p>
         </div>
         <button
-          w-icon-button
+          ph-icon-button
           type="button"
           aria-label="Close"
           [disabled]="saving()"
           (click)="closeCreate()"
         >
-          <w-icon name="x" />
+          <ph-icon name="x" />
         </button>
       </div>
-      <div w-dialog-body>
+      <div ph-dialog-body>
         @if ((options()?.tracks?.length ?? 0) === 0 || (options()?.mentors?.length ?? 0) === 0) {
-          <div w-alert variant="warning">
+          <div ph-alert variant="warning">
             An enabled published track and an active mentor are required before a cohort can be
             created.
           </div>
         }
         <form class="form-grid" [formGroup]="form" (ngSubmit)="create()">
-          <div w-form-field class="form-grid__wide">
-            <label w-label for="cohort-name"> Cohort name <span w-label-required>*</span> </label>
-            <input w-text-field id="cohort-name" formControlName="name" maxlength="128" />
+          <div ph-form-field class="form-grid__wide">
+            <label ph-label for="cohort-name"> Cohort name <span ph-label-required>*</span> </label>
+            <input ph-text-field id="cohort-name" formControlName="name" maxlength="128" />
             @if (form.controls.name.touched && form.controls.name.invalid) {
-              <p w-error-text>Enter a cohort name.</p>
+              <p ph-error-text>Enter a cohort name.</p>
             }
           </div>
-          <div w-form-field>
-            <label w-label for="cohort-track">
-              Curriculum track <span w-label-required>*</span>
+          <div ph-form-field>
+            <label ph-label for="cohort-track">
+              Curriculum track <span ph-label-required>*</span>
             </label>
-            <select w-select id="cohort-track" formControlName="trackId">
+            <select ph-select id="cohort-track" formControlName="trackId">
               <option value="">Choose a track</option>
               @for (track of options()?.tracks ?? []; track track.id) {
                 <option [value]="track.id">{{ track.name }}</option>
               }
             </select>
             @if (form.controls.trackId.touched && form.controls.trackId.invalid) {
-              <p w-error-text>Choose a curriculum track.</p>
+              <p ph-error-text>Choose a curriculum track.</p>
             }
           </div>
-          <div w-form-field>
-            <label w-label for="cohort-mentor"> Lead mentor <span w-label-required>*</span> </label>
-            <select w-select id="cohort-mentor" formControlName="leadMentorId">
+          <div ph-form-field>
+            <label ph-label for="cohort-mentor">
+              Lead mentor <span ph-label-required>*</span>
+            </label>
+            <select ph-select id="cohort-mentor" formControlName="leadMentorId">
               <option value="">Choose a mentor</option>
               @for (mentor of options()?.mentors ?? []; track mentor.id) {
                 <option [value]="mentor.id">{{ mentor.name }}</option>
               }
             </select>
             @if (form.controls.leadMentorId.touched && form.controls.leadMentorId.invalid) {
-              <p w-error-text>Choose an active lead mentor.</p>
+              <p ph-error-text>Choose an active lead mentor.</p>
             }
           </div>
-          <div w-form-field>
-            <label w-label for="cohort-start">Start date</label>
-            <input w-text-field id="cohort-start" type="date" formControlName="startDate" />
+          <div ph-form-field>
+            <label ph-label for="cohort-start">Start date</label>
+            <input ph-text-field id="cohort-start" type="date" formControlName="startDate" />
           </div>
-          <div w-form-field>
-            <label w-label for="cohort-end">End date</label>
-            <input w-text-field id="cohort-end" type="date" formControlName="endDate" />
+          <div ph-form-field>
+            <label ph-label for="cohort-end">End date</label>
+            <input ph-text-field id="cohort-end" type="date" formControlName="endDate" />
             @if (dateError()) {
-              <p w-error-text>End date must be after start date.</p>
+              <p ph-error-text>End date must be after start date.</p>
             }
           </div>
-          <div w-form-field class="form-grid__wide">
-            <label w-label for="cohort-location">Meeting location</label>
-            <input w-text-field id="cohort-location" formControlName="location" maxlength="256" />
+          <div ph-form-field class="form-grid__wide">
+            <label ph-label for="cohort-location">Meeting location</label>
+            <input ph-text-field id="cohort-location" formControlName="location" maxlength="256" />
           </div>
         </form>
       </div>
-      <div w-dialog-footer>
+      <div ph-dialog-footer>
         <button
-          w-button
+          ph-button
           variant="ghost"
           type="button"
           [disabled]="saving()"
@@ -154,10 +156,10 @@
         >
           Cancel
         </button>
-        <button w-button variant="primary" type="button" [disabled]="saving()" (click)="create()">
+        <button ph-button variant="primary" type="button" [disabled]="saving()" (click)="create()">
           {{ saving() ? 'Creating…' : 'Create cohort' }}
         </button>
       </div>
     </div>
   }
-</w-shell>
+</ph-shell>

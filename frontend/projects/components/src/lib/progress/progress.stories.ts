@@ -11,7 +11,7 @@ const meta: Meta<Progress> = {
   decorators: [moduleMetadata({ imports: [Progress, ProgressRing, ProgressRingLabel] })],
   render: (args) => ({
     props: args,
-    template: `<div w-progress [value]="value" [label]="label"></div>`,
+    template: `<div ph-progress [value]="value" [label]="label"></div>`,
   }),
 };
 
@@ -22,6 +22,6 @@ export const Bar: Story = {};
 
 export const Ring: Story = {
   render: () => ({
-    template: `<div w-progress-ring size="lg" [value]="72"><span w-progress-ring-label>72%</span></div>`,
+    template: `<div ph-progress-ring size="lg" [value]="72"><span ph-progress-ring-label>72%</span></div>`,
   }),
 };

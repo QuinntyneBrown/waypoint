@@ -5,14 +5,14 @@ import { Shell } from './shell';
 
 @Component({
   imports: [Shell],
-  template: `<w-shell
+  template: `<ph-shell
     role="youth"
     active="home"
     userName="Jayden Alcantara"
     (signOut)="onSignOut()"
   >
     <p class="content">home</p>
-  </w-shell>`,
+  </ph-shell>`,
 })
 class Host {
   signedOut = signal(0);
@@ -35,34 +35,34 @@ describe('Shell', () => {
   it('renders the role sidenav with the active item marked', async () => {
     const fixture = await render();
     const el = fixture.nativeElement as HTMLElement;
-    const items = el.querySelectorAll('.w-sidenav__item');
+    const items = el.querySelectorAll('.ph-sidenav__item');
     // 8 youth nav items + the sign-out foot button
     expect(items.length).toBeGreaterThanOrEqual(8);
-    const active = el.querySelector('.w-sidenav__item.is-active');
+    const active = el.querySelector('.ph-sidenav__item.is-active');
     expect(active?.textContent).toContain('Home');
     expect(active?.getAttribute('aria-current')).toBe('page');
   });
 
-  it('projects page content into w-main', async () => {
+  it('projects page content into ph-main', async () => {
     const fixture = await render();
-    const main = fixture.nativeElement.querySelector('main.w-main .content');
+    const main = fixture.nativeElement.querySelector('main.ph-main .content');
     expect(main?.textContent).toBe('home');
   });
 
   it('does not expose the product role as an invalid ARIA role', async () => {
     const fixture = await render();
-    const shell = fixture.nativeElement.querySelector('w-shell') as HTMLElement;
+    const shell = fixture.nativeElement.querySelector('ph-shell') as HTMLElement;
     expect(shell.getAttribute('role')).toBeNull();
   });
 
   it('shows the mobile bottom nav for youth', async () => {
     const fixture = await render();
-    expect(fixture.nativeElement.querySelectorAll('.w-botnav__item').length).toBe(5);
+    expect(fixture.nativeElement.querySelectorAll('.ph-botnav__item').length).toBe(5);
   });
 
   it('emits signOut from the sidenav foot', async () => {
     const fixture = await render();
-    const footBtn = [...fixture.nativeElement.querySelectorAll('.w-sidenav__foot button')][0];
+    const footBtn = [...fixture.nativeElement.querySelectorAll('.ph-sidenav__foot button')][0];
     footBtn.click();
     await fixture.whenStable();
     expect(fixture.componentInstance.signedOut()).toBe(1);
@@ -71,10 +71,10 @@ describe('Shell', () => {
   it('opens the account menu and emits signOut from it', async () => {
     const fixture = await render();
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('.w-menu')).toBeNull();
+    expect(el.querySelector('.ph-menu')).toBeNull();
     [...el.querySelectorAll('button')].find((b) => b.textContent?.includes('Account'))!.click();
     await fixture.whenStable();
-    const danger = el.querySelector('.w-menu__item--danger') as HTMLButtonElement;
+    const danger = el.querySelector('.ph-menu__item--danger') as HTMLButtonElement;
     expect(danger).toBeTruthy();
     danger.click();
     await fixture.whenStable();

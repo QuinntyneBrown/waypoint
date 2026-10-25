@@ -1,20 +1,20 @@
-.w-switch {
+.ph-switch {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
 }
-.w-switch input {
+.ph-switch input {
   position: absolute;
   opacity: 0;
 }
-.w-switch input:checked + .w-switch__track {
-  background: var(--w-ink);
+.ph-switch input:checked + .ph-switch__track {
+  background: var(--ph-ink);
 }
-.w-switch input:checked + .w-switch__track::after {
+.ph-switch input:checked + .ph-switch__track::after {
   transform: translateX(18px);
 }
-.w-switch input:focus-visible + .w-switch__track {
-  outline: 2px solid var(--w-ink);
+.ph-switch input:focus-visible + .ph-switch__track {
+  outline: 2px solid var(--ph-ink);
   outline-offset: 2px;
 }

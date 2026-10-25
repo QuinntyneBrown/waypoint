@@ -6,7 +6,7 @@
 .admin-form {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
   align-items: end;
 }
 
@@ -22,12 +22,12 @@
 .card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 
 .stage-list {
   display: grid;
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 
 .admin-card {
@@ -40,7 +40,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 
 .badge-icon {
@@ -49,7 +49,7 @@
   min-width: 3rem;
   min-height: 3rem;
   border-radius: 999px;
-  background: var(--w-g100);
+  background: var(--ph-g100);
   font-weight: 700;
 }
 
@@ -60,7 +60,7 @@
 
 .competency-list {
   display: grid;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -68,8 +68,8 @@
 
 .competency-row {
   align-items: center;
-  border-top: 1px solid var(--w-border);
-  padding-top: var(--w-s3);
+  border-top: 1px solid var(--ph-border);
+  padding-top: var(--ph-s3);
 }
 
 @media (max-width: 64rem) {
@@ -94,7 +94,7 @@
     flex-direction: column;
   }
 
-  .w-actions,
+  .ph-actions,
   .card-actions,
   .stage-actions {
     width: 100%;
@@ -102,7 +102,7 @@
     flex-direction: column;
   }
 
-  .w-btn {
+  .ph-btn {
     width: 100%;
     min-height: 45px;
   }

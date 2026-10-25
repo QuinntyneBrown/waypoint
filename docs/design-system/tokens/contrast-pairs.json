@@ -1,5 +1,5 @@
 {
-  "$comment": "Foreground/background token pairs checked by scripts/check_contrast.py. 4.5:1 is WCAG 2.2 AA for normal text (1.4.3); 3:1 is AA for large text, UI component edges and focus indicators (1.4.11).",
+  "$comment": "PromiseHub inherited and extracted foreground/background pairs. Text uses 4.5:1; meaningful graphics, controls and focus use 3:1. Decorative edges and disabled controls are exempt.",
   "pairs": [
     {
       "fg": "--color-fg-default",
@@ -362,22 +362,388 @@
       ]
     },
     {
+      "fg": "--color-fg-on-cover",
+      "bg": "--color-cover-sage",
+      "min": 4.5,
+      "note": "sticker / initials on sage cover and avatar"
+    },
+    {
+      "fg": "--color-fg-on-cover",
+      "bg": "--color-cover-rose",
+      "min": 4.5,
+      "note": "sticker / initials on rose cover and avatar"
+    },
+    {
+      "fg": "--color-fg-on-cover",
+      "bg": "--color-cover-sky",
+      "min": 4.5,
+      "note": "sticker / initials on sky cover and avatar"
+    },
+    {
+      "fg": "--color-fg-on-cover",
+      "bg": "--color-cover-sun",
+      "min": 4.5,
+      "note": "sticker / initials on sun cover and avatar"
+    },
+    {
+      "fg": "--color-fg-on-cover",
+      "bg": "--color-cover-lilac",
+      "min": 4.5,
+      "note": "sticker / initials on lilac cover and avatar"
+    },
+    {
+      "fg": "--color-fg-on-cover",
+      "bg": "--color-cover-mint",
+      "min": 4.5,
+      "note": "sticker / initials on mint cover and avatar"
+    },
+    {
+      "fg": "--color-fg-on-cover",
+      "bg": "--color-cover-peach",
+      "min": 4.5,
+      "note": "sticker / initials on peach cover and avatar"
+    },
+    {
+      "fg": "--color-fg-muted",
+      "bg": "--color-accent-subtle",
+      "min": 4.5,
+      "note": "chapter meta on the next-chapter row"
+    },
+    {
+      "fg": "--color-fg-on-accent",
+      "bg": "--color-accent",
+      "min": 4.5,
+      "note": "number bubble on the next-chapter row"
+    },
+    {
+      "fg": "--color-success-fg",
+      "bg": "--color-success-bg",
+      "min": 4.5,
+      "note": "done chapter number bubble"
+    },
+    {
+      "fg": "--color-warning-fg",
+      "bg": "--color-warning-bg",
+      "min": 4.5,
+      "note": "streak pill"
+    },
+    {
+      "fg": "--color-fg-on-danger",
+      "bg": "--color-danger-solid",
+      "min": 4.5,
+      "note": "count badge"
+    },
+    {
+      "fg": "--color-border-strong",
+      "bg": "--color-bg-surface-raised",
+      "min": 3,
+      "note": "input borders inside dialogs"
+    },
+    {
+      "fg": "--color-focus-ring",
+      "bg": "--color-bg-surface-raised",
+      "min": 3,
+      "note": "focus ring inside dialogs and menus"
+    },
+    {
+      "fg": "--color-focus-ring",
+      "bg": "--color-accent-subtle",
+      "min": 3,
+      "note": "focus ring on selected sticker / next-chapter row"
+    },
+    {
+      "fg": "--color-accent",
+      "bg": "--color-bg-subtle-hover",
+      "min": 3,
+      "note": "progress bar fill vs track"
+    },
+    {
+      "fg": "--color-success-solid",
+      "bg": "--color-bg-subtle-hover",
+      "min": 3,
+      "note": "finished-book progress fill vs track"
+    },
+    {
+      "fg": "--color-accent",
+      "bg": "--color-accent-subtle",
+      "min": 3,
+      "note": "selected sticker / emoji edge"
+    },
+    {
+      "fg": "--color-danger-fg",
+      "bg": "--color-bg-surface-raised",
+      "min": 4.5,
+      "note": "field error inside dialogs"
+    },
+    {
+      "fg": "--color-danger-fg",
+      "bg": "--color-danger-bg",
+      "min": 4.5,
+      "note": "error empty-state icon"
+    },
+    {
+      "fg": "--color-fg-accent",
+      "bg": "--color-bg-canvas",
+      "min": 4.5,
+      "note": "hero eyebrow / streak label on page"
+    },
+    {
+      "fg": "--color-info-icon-on-inverse",
+      "bg": "--color-bg-inverse",
+      "min": 3,
+      "note": "info icon in toast"
+    },
+    {
+      "fg": "--color-success-icon-on-inverse",
+      "bg": "--color-bg-inverse",
+      "min": 3,
+      "note": "success icon in toast"
+    },
+    {
+      "fg": "--color-warning-icon-on-inverse",
+      "bg": "--color-bg-inverse",
+      "min": 3,
+      "note": "warning icon in toast"
+    },
+    {
+      "fg": "--color-danger-icon-on-inverse",
+      "bg": "--color-bg-inverse",
+      "min": 3,
+      "note": "danger icon in toast"
+    },
+    {
+      "fg": "--color-fg-muted",
+      "bg": "--color-tint-sage",
+      "min": 4.5,
+      "note": "author / progress label on a sage-tinted card"
+    },
+    {
+      "fg": "--color-fg-accent",
+      "bg": "--color-tint-sage",
+      "min": 4.5,
+      "note": "hero eyebrow on a sage-tinted hero"
+    },
+    {
+      "fg": "--color-accent",
+      "bg": "--color-tint-sage",
+      "min": 3,
+      "note": "primary button / progress fill edge on a sage-tinted card"
+    },
+    {
+      "fg": "--color-fg-muted",
+      "bg": "--color-tint-rose",
+      "min": 4.5,
+      "note": "author / progress label on a rose-tinted card"
+    },
+    {
+      "fg": "--color-fg-accent",
+      "bg": "--color-tint-rose",
+      "min": 4.5,
+      "note": "hero eyebrow on a rose-tinted hero"
+    },
+    {
+      "fg": "--color-accent",
+      "bg": "--color-tint-rose",
+      "min": 3,
+      "note": "primary button / progress fill edge on a rose-tinted card"
+    },
+    {
+      "fg": "--color-fg-muted",
+      "bg": "--color-tint-sky",
+      "min": 4.5,
+      "note": "author / progress label on a sky-tinted card"
+    },
+    {
+      "fg": "--color-fg-accent",
+      "bg": "--color-tint-sky",
+      "min": 4.5,
+      "note": "hero eyebrow on a sky-tinted hero"
+    },
+    {
+      "fg": "--color-accent",
+      "bg": "--color-tint-sky",
+      "min": 3,
+      "note": "primary button / progress fill edge on a sky-tinted card"
+    },
+    {
+      "fg": "--color-fg-muted",
+      "bg": "--color-tint-sun",
+      "min": 4.5,
+      "note": "author / progress label on a sun-tinted card"
+    },
+    {
+      "fg": "--color-fg-accent",
+      "bg": "--color-tint-sun",
+      "min": 4.5,
+      "note": "hero eyebrow on a sun-tinted hero"
+    },
+    {
+      "fg": "--color-accent",
+      "bg": "--color-tint-sun",
+      "min": 3,
+      "note": "primary button / progress fill edge on a sun-tinted card"
+    },
+    {
+      "fg": "--color-fg-muted",
+      "bg": "--color-tint-lilac",
+      "min": 4.5,
+      "note": "author / progress label on a lilac-tinted card"
+    },
+    {
+      "fg": "--color-fg-accent",
+      "bg": "--color-tint-lilac",
+      "min": 4.5,
+      "note": "hero eyebrow on a lilac-tinted hero"
+    },
+    {
+      "fg": "--color-accent",
+      "bg": "--color-tint-lilac",
+      "min": 3,
+      "note": "primary button / progress fill edge on a lilac-tinted card"
+    },
+    {
+      "fg": "--color-fg-muted",
+      "bg": "--color-tint-mint",
+      "min": 4.5,
+      "note": "author / progress label on a mint-tinted card"
+    },
+    {
+      "fg": "--color-fg-accent",
+      "bg": "--color-tint-mint",
+      "min": 4.5,
+      "note": "hero eyebrow on a mint-tinted hero"
+    },
+    {
+      "fg": "--color-accent",
+      "bg": "--color-tint-mint",
+      "min": 3,
+      "note": "primary button / progress fill edge on a mint-tinted card"
+    },
+    {
+      "fg": "--color-fg-muted",
+      "bg": "--color-tint-peach",
+      "min": 4.5,
+      "note": "author / progress label on a peach-tinted card"
+    },
+    {
+      "fg": "--color-fg-accent",
+      "bg": "--color-tint-peach",
+      "min": 4.5,
+      "note": "hero eyebrow on a peach-tinted hero"
+    },
+    {
+      "fg": "--color-accent",
+      "bg": "--color-tint-peach",
+      "min": 3,
+      "note": "primary button / progress fill edge on a peach-tinted card"
+    },
+    {
+      "fg": "--color-fg-default",
+      "bg": "--color-warning-bg",
+      "min": 4.5,
+      "note": "search match highlight (mark)"
+    },
+    {
+      "fg": "--color-accent",
+      "bg": "--color-bg-subtle",
+      "min": 3,
+      "note": "note accent bar"
+    },
+    {
+      "fg": "--color-focus-ring",
+      "bg": "--color-bg-subtle",
+      "min": 3,
+      "note": "focus ring on a dragged Kanban card inside a column"
+    },
+    {
+      "fg": "--color-social-google-fg",
+      "bg": "--color-social-google-bg",
+      "min": 4.5,
+      "note": "Google sign-in button label"
+    },
+    {
+      "fg": "--color-social-google-border",
+      "bg": "--color-bg-surface",
+      "min": 3,
+      "note": "Google sign-in button outline on a card"
+    },
+    {
+      "fg": "--color-social-github-fg",
+      "bg": "--color-social-github-bg",
+      "min": 4.5,
+      "note": "GitHub sign-in button label"
+    },
+    {
+      "fg": "--color-social-github-border",
+      "bg": "--color-bg-surface",
+      "min": 3,
+      "note": "GitHub sign-in button outline on a card"
+    },
+    {
+      "fg": "--color-fg-accent",
+      "bg": "--color-accent-subtle-hover",
+      "min": 4.5,
+      "note": "page link text on hover (notes)"
+    },
+    {
+      "fg": "--color-success-icon",
+      "bg": "--color-bg-surface",
+      "min": 3,
+      "note": "Saved check in the notes save status"
+    },
+    {
+      "fg": "--color-danger-icon",
+      "bg": "--color-bg-surface",
+      "min": 3,
+      "note": "Couldnâ€™t save icon in the notes save status"
+    },
+    {
+      "fg": "--color-focus-ring",
+      "bg": "--color-bg-surface-sunken",
+      "min": 3,
+      "note": "focus ring on a notes code block"
+    },
+    {
+      "fg": "--color-fg-subtle",
+      "bg": "--color-bg-subtle",
+      "min": 3,
+      "note": "notes block handle icon on a hovered row"
+    },
+    {
+      "fg": "--color-org-accent-foreground",
+      "bg": "--color-org-accent",
+      "min": 4.5,
+      "note": "org accent pair: switcher mark initials, public event band (default values; an org's own pair is refused below 4.5:1 by the server, L2-149)"
+    },
+    {
+      "fg": "--color-fg-muted",
+      "bg": "--color-bg-subtle",
+      "min": 4.5,
+      "note": "org label text on its pill"
+    },
+    {
+      "fg": "--color-fg-default",
+      "bg": "--color-info-bg",
+      "min": 4.5,
+      "note": "Agent badge text"
+    },
+    {
+      "fg": "--color-fg-default",
+      "bg": "--color-warning-bg",
+      "min": 4.5,
+      "note": "token reveal panel text"
+    },
+    {
       "fg": "--color-fg-on-brand",
       "bg": "--color-brand",
       "min": 4.5,
-      "note": "primary (lime) button label"
+      "note": "primary button label (Waypoint --color-brand aliases the accent)"
     },
     {
       "fg": "--color-fg-on-brand",
       "bg": "--color-brand-hover",
       "min": 4.5,
       "note": "primary button label (hover)"
-    },
-    {
-      "fg": "--color-brand",
-      "bg": "--color-bg-surface",
-      "min": 1,
-      "note": "lime button fill vs card: decorative; the ink label identifies the control (1.4.11 exempts it)"
     },
     {
       "fg": "--color-fg-inverse-muted",
@@ -404,12 +770,6 @@
       "note": "wrong quiz option text"
     },
     {
-      "fg": "--color-fg-default",
-      "bg": "--color-warning-bg",
-      "min": 4.5,
-      "note": "in-progress matrix cell"
-    },
-    {
       "fg": "--color-success-solid",
       "bg": "--color-success-bg",
       "min": 3,
@@ -420,39 +780,6 @@
       "bg": "--color-danger-bg",
       "min": 3,
       "note": "wrong option / invalid field border"
-    },
-    {
-      "fg": "--color-fg-muted",
-      "bg": "--color-bg-subtle-hover",
-      "min": 4.5,
-      "note": "segmented control unselected label"
-    },
-    {
-      "fg": "--color-fg-default",
-      "bg": "--color-brand",
-      "min": 4.5,
-      "note": "text on lime cards and badges",
-      "themes": [
-        "light"
-      ]
-    },
-    {
-      "fg": "--color-fg-on-accent",
-      "bg": "--color-accent",
-      "min": 4.5,
-      "note": "active nav item, active chip"
-    },
-    {
-      "fg": "--color-fg-subtle",
-      "bg": "--color-bg-subtle",
-      "min": 4.5,
-      "note": "placeholder in filled field"
-    },
-    {
-      "fg": "--color-fg-inverse",
-      "bg": "--color-bg-inverse",
-      "min": 4.5,
-      "note": "secondary (inverse) button label"
     },
     {
       "fg": "--color-fg-inverse",

@@ -1,0 +1,22 @@
+@startuml
+!include <C4/C4_Container>
+LAYOUT_LEFT_RIGHT()
+title C4 level 2 — Adopt the PromiseHub design system — containers
+Person(participant, "Waypoint participant")
+System_Boundary(waypoint, "Waypoint software system") {
+  Container_Boundary(frontend, "Frontend") {
+    Container(portal, "Portal application", "Angular", "Account, admin, guardian, mentor, volunteer and youth screens")
+    Container(publicsite, "Public Site application", "Angular SSR", "Marketing pages and intake")
+    Container(components, "@waypoint/components", "Angular library", "ph components, tokens.css, core.css, a11y.css")
+  }
+  Container(docs, "Design system and mocks", "Static HTML and CSS", "docs/design-system and docs/mocks, the specification")
+  Container(api, "Waypoint API application", "ASP.NET Core", "Unchanged by this feature")
+}
+Rel(participant, portal, "Uses", "HTTPS")
+Rel(participant, publicsite, "Uses", "HTTPS")
+Rel(portal, components, "Composes screens from")
+Rel(publicsite, components, "Composes pages from")
+Rel(components, docs, "Copies tokens from, styled to")
+Rel(portal, api, "Calls", "HTTPS JSON")
+SHOW_LEGEND()
+@enduml

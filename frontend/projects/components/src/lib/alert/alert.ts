@@ -11,18 +11,18 @@ export type AlertVariant = 'info' | 'success' | 'warning' | 'error' | 'danger' |
  * text is wrapped in a body next to the icon; without it the text is the content.
  */
 @Component({
-  selector: 'div[w-alert], p[w-alert], section[w-alert], aside[w-alert]',
+  selector: 'div[ph-alert], p[ph-alert], section[ph-alert], aside[ph-alert]',
   imports: [NgTemplateOutlet, Icon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'w-alert',
-    '[class.w-alert--info]': "variant() === 'info'",
-    '[class.w-alert--success]': "variant() === 'success'",
-    '[class.w-alert--warning]': "variant() === 'warning'",
-    '[class.w-alert--error]': "variant() === 'error'",
-    '[class.w-alert--danger]': "variant() === 'danger'",
-    '[class.w-alert--lime]': "variant() === 'lime'",
+    class: 'ph-alert',
+    '[class.ph-alert--info]': "variant() === 'info'",
+    '[class.ph-alert--success]': "variant() === 'success'",
+    '[class.ph-alert--warning]': "variant() === 'warning'",
+    '[class.ph-alert--error]': "variant() === 'error'",
+    '[class.ph-alert--danger]': "variant() === 'danger'",
+    '[class.ph-alert--lime]': "variant() === 'lime'",
   },
   templateUrl: './alert.html',
   styleUrl: './alert.css',

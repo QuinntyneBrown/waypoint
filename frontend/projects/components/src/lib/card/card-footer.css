@@ -1,8 +1,8 @@
-.w-card__footer {
-  padding: var(--w-s4) var(--w-s5);
-  border-top: var(--w-bw) solid var(--w-border);
+.ph-card__footer {
+  padding: var(--ph-s4) var(--ph-s5);
+  border-top: var(--ph-bw) solid var(--ph-border);
   display: flex;
   align-items: center;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   flex-wrap: wrap;
 }

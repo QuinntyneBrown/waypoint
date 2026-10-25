@@ -6,11 +6,11 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@a
  * when the number is already printed next to it and add `aria-hidden="true"`.
  */
 @Component({
-  selector: 'div[w-progress]',
+  selector: 'div[ph-progress]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'w-progress',
+    class: 'ph-progress',
     '[attr.role]': "label() ? 'progressbar' : null",
     '[attr.aria-label]': 'label() || null',
     '[attr.aria-valuemin]': 'label() ? 0 : null',

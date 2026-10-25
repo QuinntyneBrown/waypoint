@@ -6,9 +6,9 @@ import { CheckboxBox } from './checkbox-box';
 @Component({
   imports: [Checkbox, CheckboxBox],
   template: `
-    <label w-checkbox>
+    <label ph-checkbox>
       <input type="checkbox" />
-      <span w-checkbox-box></span>
+      <span ph-checkbox-box></span>
       <span>Keep me signed in</span>
     </label>
   `,
@@ -25,13 +25,13 @@ describe('Checkbox', () => {
 
   it('wraps a native checkbox and keeps its label text', async () => {
     const label = (await render()).querySelector('label')!;
-    expect(label.classList.contains('w-check')).toBe(true);
+    expect(label.classList.contains('ph-check')).toBe(true);
     expect(label.querySelector('input[type="checkbox"]')).not.toBeNull();
     expect(label.textContent).toContain('Keep me signed in');
   });
 
   it('renders the box next to the input', async () => {
     const box = (await render()).querySelector('input + span')!;
-    expect(box.classList.contains('w-check__box')).toBe(true);
+    expect(box.classList.contains('ph-check__box')).toBe(true);
   });
 });

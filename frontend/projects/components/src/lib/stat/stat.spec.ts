@@ -8,14 +8,14 @@ import { StatValue } from './stat-value';
 @Component({
   imports: [Stat, StatLabel, StatValue, StatDelta],
   template: `
-    <div w-stat>
-      <div w-stat-label>Pending reviews</div>
-      <div w-stat-value>4</div>
-      <div w-stat-delta [trend]="trend()">2 overdue</div>
+    <div ph-stat>
+      <div ph-stat-label>Pending reviews</div>
+      <div ph-stat-value>4</div>
+      <div ph-stat-delta [trend]="trend()">2 overdue</div>
     </div>
-    <div class="w-kpi">
-      <span w-stat-label>check-ins</span>
-      <strong w-stat-value>9</strong>
+    <div class="ph-kpi">
+      <span ph-stat-label>check-ins</span>
+      <strong ph-stat-value>9</strong>
     </div>
   `,
 })
@@ -33,15 +33,15 @@ describe('Stat', () => {
 
   it('shows a labelled value with an optional delta', async () => {
     const { root } = await render();
-    const stat = root.querySelector('.w-statcard')!;
-    expect(stat.querySelector('.w-statcard__label')?.textContent).toBe('Pending reviews');
-    expect(stat.querySelector('.w-statcard__value')?.textContent).toBe('4');
-    expect(stat.querySelector('.w-statcard__delta')?.textContent).toBe('2 overdue');
+    const stat = root.querySelector('.ph-statcard')!;
+    expect(stat.querySelector('.ph-statcard__label')?.textContent).toBe('Pending reviews');
+    expect(stat.querySelector('.ph-statcard__value')?.textContent).toBe('4');
+    expect(stat.querySelector('.ph-statcard__delta')?.textContent).toBe('2 overdue');
   });
 
   it('marks the delta direction', async () => {
     const { fixture, root } = await render();
-    const delta = root.querySelector('.w-statcard__delta')!;
+    const delta = root.querySelector('.ph-statcard__delta')!;
     expect(delta.classList.contains('is-down')).toBe(true);
     fixture.componentInstance.trend.set('up');
     await fixture.whenStable();
@@ -51,8 +51,8 @@ describe('Stat', () => {
 
   it('lets the label and value stand alone inside other layouts', async () => {
     const { root } = await render();
-    const kpi = root.querySelector('.w-kpi')!;
-    expect(kpi.querySelector('span.w-statcard__label')?.textContent).toBe('check-ins');
-    expect(kpi.querySelector('strong.w-statcard__value')?.textContent).toBe('9');
+    const kpi = root.querySelector('.ph-kpi')!;
+    expect(kpi.querySelector('span.ph-statcard__label')?.textContent).toBe('check-ins');
+    expect(kpi.querySelector('strong.ph-statcard__value')?.textContent).toBe('9');
   });
 });

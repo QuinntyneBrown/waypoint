@@ -1,47 +1,47 @@
-<w-shell
+<ph-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
-    <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+  <div class="ph-container ph-container--narrow ph-page">
+    <a ph-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (result(); as view) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Attempt {{ view.attemptNumber }}</div>
-          <h1 class="w-page__title">Quiz result</h1>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Attempt {{ view.attemptNumber }}</div>
+          <h1 class="ph-page__title">Quiz result</h1>
         </div>
       </div>
 
       @if (view.status === 'PendingApproval') {
-        <section w-card variant="greige">
-          <div w-card-body class="w-stack">
-            <h2 w-card-title>Waiting for mentor approval</h2>
+        <section ph-card variant="greige">
+          <div ph-card-body class="ph-stack">
+            <h2 ph-card-title>Waiting for mentor approval</h2>
             <p>Your answers are submitted and locked. Your score will appear after review.</p>
           </div>
         </section>
       } @else if (view.status === 'Approved') {
-        <section w-card [variant]="!view.passed ? 'greige' : ''">
-          <div w-card-body class="w-stack">
-            <div class="w-eyebrow">Approved score</div>
-            <p class="w-page__title">{{ view.score }}%</p>
+        <section ph-card [variant]="!view.passed ? 'greige' : ''">
+          <div ph-card-body class="ph-stack">
+            <div class="ph-eyebrow">Approved score</div>
+            <p class="ph-page__title">{{ view.score }}%</p>
             <p>
               <strong>{{ view.passed ? 'Passed' : 'Not passed yet' }}</strong>
             </p>
-            <p class="w-muted">Pass mark: {{ view.passMark }}%</p>
+            <p class="ph-muted">Pass mark: {{ view.passMark }}%</p>
           </div>
         </section>
 
         @if (view.earnedBadge; as badge) {
-          <section w-card variant="greige">
-            <div w-card-body class="w-stack">
-              <div class="w-eyebrow">Badge earned</div>
-              <h2 w-card-title>{{ badge.name }}</h2>
+          <section ph-card variant="greige">
+            <div ph-card-body class="ph-stack">
+              <div class="ph-eyebrow">Badge earned</div>
+              <h2 ph-card-title>{{ badge.name }}</h2>
               @if (badge.description) {
                 <p>{{ badge.description }}</p>
               }
@@ -50,16 +50,16 @@
         }
 
         @if (view.review.length > 0) {
-          <section class="w-stack">
+          <section class="ph-stack">
             <h2>Question review</h2>
             @for (question of view.review; track question.questionId) {
-              <article w-card>
-                <div w-card-body class="w-stack">
-                  <h3 w-card-title>{{ question.text }}</h3>
-                  <p w-badge [variant]="question.correct ? 'success' : ''">
+              <article ph-card>
+                <div ph-card-body class="ph-stack">
+                  <h3 ph-card-title>{{ question.text }}</h3>
+                  <p ph-badge [variant]="question.correct ? 'success' : ''">
                     {{ question.correct ? 'Correct' : 'Needs review' }}
                   </p>
-                  <ul class="w-stack">
+                  <ul class="ph-stack">
                     @for (option of question.options; track $index) {
                       @if (
                         selected(question.selectedIndexes, $index) ||
@@ -82,17 +82,17 @@
             }
           </section>
         } @else {
-          <p class="w-muted">Question-level feedback is not available for this quiz.</p>
+          <p class="ph-muted">Question-level feedback is not available for this quiz.</p>
         }
 
         @if (view.canRetake) {
-          <button w-button variant="primary" block type="button" (click)="retake(view.quizId)">
+          <button ph-button variant="primary" block type="button" (click)="retake(view.quizId)">
             Retake quiz
           </button>
         }
       }
     } @else {
-      <p class="w-muted">Loading result…</p>
+      <p class="ph-muted">Loading result…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

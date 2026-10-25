@@ -1,4 +1,4 @@
-<w-state-page
+<ph-state-page
   icon="clock"
   tone="warning"
   eyebrow="Session expired"
@@ -6,10 +6,10 @@
   text="For your security we signed you out after a period of inactivity. Any work in progress has been saved — sign in to pick up where you left off."
 >
   <a
-    w-button
+    ph-button
     variant="primary"
     routerLink="/auth/sign-in"
     [queryParams]="returnUrl ? { returnUrl } : null"
     >Sign in again</a
   >
-</w-state-page>
+</ph-state-page>

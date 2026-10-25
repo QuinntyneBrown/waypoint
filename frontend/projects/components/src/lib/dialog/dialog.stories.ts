@@ -34,18 +34,18 @@ const meta: Meta<Dialog> = {
   render: (args) => ({
     props: args,
     template: `
-      <div w-dialog [size]="size" aria-labelledby="dlg-title">
-        <div w-dialog-header>
+      <div ph-dialog [size]="size" aria-labelledby="dlg-title">
+        <div ph-dialog-header>
           <div>
-            <h2 w-dialog-title id="dlg-title">Decline application</h2>
-            <p w-dialog-subtitle>Maya Chen</p>
+            <h2 ph-dialog-title id="dlg-title">Decline application</h2>
+            <p ph-dialog-subtitle>Maya Chen</p>
           </div>
-          <button w-icon-button type="button" aria-label="Close"><w-icon name="x" /></button>
+          <button ph-icon-button type="button" aria-label="Close"><ph-icon name="x" /></button>
         </div>
-        <div w-dialog-body>The applicant is told softly. You can reopen this later.</div>
-        <div w-dialog-footer>
-          <button w-button variant="ghost" type="button">Cancel</button>
-          <button w-button variant="primary" type="button">Decline</button>
+        <div ph-dialog-body>The applicant is told softly. You can reopen this later.</div>
+        <div ph-dialog-footer>
+          <button ph-button variant="ghost" type="button">Cancel</button>
+          <button ph-button variant="primary" type="button">Decline</button>
         </div>
       </div>`,
   }),

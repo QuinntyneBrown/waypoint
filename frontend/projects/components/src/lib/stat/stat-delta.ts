@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@a
 
 /** A smaller line under the figure; `trend` colours it for a rise or a fall. */
 @Component({
-  selector: 'div[w-stat-delta]',
+  selector: 'div[ph-stat-delta]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'w-statcard__delta',
+    class: 'ph-statcard__delta',
     '[class.is-up]': "trend() === 'up'",
     '[class.is-down]': "trend() === 'down'",
   },

@@ -26,6 +26,36 @@ export class SignInPage extends BasePage {
     await this.page.goto(SignInPage.path);
   }
 
+  /** The sign-in action as a library primary button (`button[ph-button]` host classes). */
+  get primaryAction() {
+    return this.page.locator('button.ph-btn.ph-btn--primary', { hasText: /sign in/i });
+  }
+
+  /** Outline of a focused field (design-system check). */
+  async focusedFieldOutline(): Promise<{ width: string; style: string; color: string }> {
+    await this.email.focus();
+    return this.email.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return { width: style.outlineWidth, style: style.outlineStyle, color: style.outlineColor };
+    });
+  }
+
+  /** Edge of the error alert: its left rule and corner radius (design-system check). */
+  errorAlertFrame(): Promise<{ leftRule: string; radius: string }> {
+    return this.errorAlert.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return { leftRule: style.borderLeftWidth, radius: style.borderTopLeftRadius };
+    });
+  }
+
+  /** Fill and label colours of the primary action (design-system check). */
+  primaryActionColors(): Promise<{ background: string; color: string }> {
+    return this.submitButton.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return { background: style.backgroundColor, color: style.color };
+    });
+  }
+
   /** Fill both fields and submit (assumes the form is already on screen). */
   async submitCredentials(email: string, password: string): Promise<void> {
     await this.email.fill(email);
@@ -197,7 +227,7 @@ export class InviteAcceptPage extends BasePage {
     return this.page.getByRole('button', { name: /join waypoint/i });
   }
   async agreeToGuidelines(): Promise<void> {
-    await this.page.locator('label.w-check', { hasText: 'community guidelines' }).click();
+    await this.page.locator('label.ph-check', { hasText: 'community guidelines' }).click();
   }
   async goto(token: string): Promise<void> {
     await this.page.goto(`/auth/invite?token=${encodeURIComponent(token)}`);

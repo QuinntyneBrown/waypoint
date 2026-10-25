@@ -1,7 +1,7 @@
 .review-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.75fr);
-  gap: var(--w-s6);
+  gap: var(--ph-s6);
   align-items: start;
 }
 .submitted-body {
@@ -17,14 +17,14 @@
 .rubric-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 7rem;
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
   align-items: center;
-  padding: var(--w-s4) 0;
-  border-bottom: 1px solid var(--w-border);
+  padding: var(--ph-s4) 0;
+  border-bottom: 1px solid var(--ph-border);
 }
 .review-actions {
   display: grid;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
 }
 @media (max-width: 52rem) {
   .review-layout {

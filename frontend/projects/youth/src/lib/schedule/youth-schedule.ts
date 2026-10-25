@@ -31,7 +31,7 @@ interface RsvpDraft {
 
 // Traces to: L2-ENGAGE-005, L2-ENGAGE-008
 @Component({
-  selector: 'w-youth-schedule',
+  selector: 'ph-youth-schedule',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

@@ -1,4 +1,4 @@
-<w-state-page
+<ph-state-page
   icon="shield"
   tone="warning"
   eyebrow="Consent needed"
@@ -6,7 +6,7 @@
   text="Before you can start lessons, a parent or guardian needs to give participation consent. It only takes a minute — send them a secure link, or have them sign now."
 >
   <button
-    w-button
+    ph-button
     variant="primary"
     type="button"
     [class.is-loading]="notifying()"
@@ -15,14 +15,14 @@
   >
     Notify my guardian
   </button>
-  <button w-button variant="ghost" type="button" (click)="guardianSignNow()">
+  <button ph-button variant="ghost" type="button" (click)="guardianSignNow()">
     My guardian can sign now
   </button>
-  <button w-button variant="subtle" type="button" (click)="signOut()">Sign out</button>
+  <button ph-button variant="subtle" type="button" (click)="signOut()">Sign out</button>
   @if (deliveryMessage(); as message) {
-    <p w-alert variant="success" role="status" aria-live="polite">{{ message }}</p>
+    <p ph-alert variant="success" role="status" aria-live="polite">{{ message }}</p>
   }
   @if (errorMessage(); as error) {
-    <p w-alert variant="error" role="alert">{{ error }}</p>
+    <p ph-alert variant="error" role="alert">{{ error }}</p>
   }
-</w-state-page>
+</ph-state-page>

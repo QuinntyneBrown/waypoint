@@ -14,7 +14,7 @@ import {
 
 // Traces to: L2-PUB-002
 @Component({
-  selector: 'w-programs',
+  selector: 'ph-programs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, Button, Alert, Card, CardHeader, CardTitle, CardBody, Badge, EmptyState],
   templateUrl: './programs.html',

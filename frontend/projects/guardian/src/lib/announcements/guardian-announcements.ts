@@ -19,7 +19,7 @@ import {
 
 // Traces to: L2-GUARDIAN-002
 @Component({
-  selector: 'w-guardian-announcements',
+  selector: 'ph-guardian-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

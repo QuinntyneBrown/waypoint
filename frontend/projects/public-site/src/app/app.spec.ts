@@ -14,7 +14,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('.w-marketing-nav')).toBeTruthy();
-    expect(el.querySelector('footer.w-footer')).toBeTruthy();
+    expect(el.querySelector('.ph-marketing-nav')).toBeTruthy();
+    expect(el.querySelector('footer.ph-footer')).toBeTruthy();
   });
 });

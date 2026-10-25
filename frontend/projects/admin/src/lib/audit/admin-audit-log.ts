@@ -27,7 +27,7 @@ import { finalize } from 'rxjs/operators';
 
 // Traces to: L2-CONSENT-003, L2-REPORT-003, L2-AUTH-009, L2-NFR-009/010
 @Component({
-  selector: 'w-admin-audit-log',
+  selector: 'ph-admin-audit-log',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

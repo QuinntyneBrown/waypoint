@@ -4,32 +4,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contact support · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
   <style>
     .up-drop{border:2px dashed var(--color-border-default);border-radius:var(--radius-lg);padding:24px;text-align:center;color:var(--color-fg-muted)}
-    .up-drop .w-icon{width:26px;height:26px;margin-bottom:6px}
+    .up-drop .ph-icon{width:26px;height:26px;margin-bottom:6px}
   </style>
 </head>
 <body data-role="youth" data-active="profile" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-container--narrow w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-container--narrow ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow"><a href="help.html">Help center</a> · Contact</div>
-          <h1 class="w-page__title">Report a problem</h1>
-          <p class="w-page__sub">Tell us what happened and we'll get back to you within a day.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow"><a href="help.html">Help center</a> · Contact</div>
+          <h1 class="ph-page__title">Report a problem</h1>
+          <p class="ph-page__sub">Tell us what happened and we'll get back to you within a day.</p>
         </div>
       </div>
 
-      <form class="w-card" onsubmit="return false">
-        <div class="w-card__body w-stack">
+      <form class="ph-card" onsubmit="return false">
+        <div class="ph-card__body ph-stack">
 
-          <div class="w-field">
-            <label class="w-label" for="s-cat">What's this about? <span class="w-label__req">*</span></label>
-            <select class="w-select" id="s-cat">
+          <div class="ph-field">
+            <label class="ph-label" for="s-cat">What's this about? <span class="ph-label__req">*</span></label>
+            <select class="ph-select" id="s-cat">
               <option>A lesson or quiz isn't working</option>
               <option>I can't sign in</option>
               <option>Something looks broken</option>
@@ -39,42 +39,42 @@
             </select>
           </div>
 
-          <div class="w-field">
-            <label class="w-label" for="s-page">Where did it happen?</label>
-            <input class="w-input" id="s-page" placeholder="e.g. Servant Leadership quiz" value="">
-            <div class="w-help">The lesson, page, or screen where you saw the issue.</div>
+          <div class="ph-field">
+            <label class="ph-label" for="s-page">Where did it happen?</label>
+            <input class="ph-input" id="s-page" placeholder="e.g. Servant Leadership quiz" value="">
+            <div class="ph-help">The lesson, page, or screen where you saw the issue.</div>
           </div>
 
-          <div class="w-field">
-            <label class="w-label" for="s-desc">Describe the problem <span class="w-label__req">*</span></label>
-            <textarea class="w-textarea" id="s-desc" rows="5" placeholder="What were you trying to do? What went wrong?"></textarea>
-            <div class="w-help">The more detail, the faster we can help.</div>
+          <div class="ph-field">
+            <label class="ph-label" for="s-desc">Describe the problem <span class="ph-label__req">*</span></label>
+            <textarea class="ph-textarea" id="s-desc" rows="5" placeholder="What were you trying to do? What went wrong?"></textarea>
+            <div class="ph-help">The more detail, the faster we can help.</div>
           </div>
 
-          <div class="w-field">
-            <label class="w-label" for="s-file">Add a screenshot (optional)</label>
+          <div class="ph-field">
+            <label class="ph-label" for="s-file">Add a screenshot (optional)</label>
             <label class="up-drop" for="s-file">
-              <svg class="w-icon"><use href="#i-upload"></use></svg>
+              <svg class="ph-icon"><use href="#i-upload"></use></svg>
               <div>Tap to upload a screenshot — PNG or JPG, up to 10 MB</div>
             </label>
-            <input id="s-file" type="file" accept="image/png,image/jpeg" class="w-hide">
+            <input id="s-file" type="file" accept="image/png,image/jpeg" class="ph-hide">
           </div>
 
-          <div class="w-field">
-            <label class="w-label" for="s-email">Reply to</label>
-            <input class="w-input" id="s-email" type="email" value="jayden.alcantara@waypoint.to">
-            <div class="w-help">We'll email you here when we've looked into it.</div>
+          <div class="ph-field">
+            <label class="ph-label" for="s-email">Reply to</label>
+            <input class="ph-input" id="s-email" type="email" value="jayden.alcantara@waypoint.to">
+            <div class="ph-help">We'll email you here when we've looked into it.</div>
           </div>
 
-          <div class="w-alert w-alert--info">
-            <svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg>
+          <div class="ph-alert ph-alert--info">
+            <svg class="ph-alert__icon ph-icon"><use href="#i-info"></use></svg>
             <div>For anything urgent, message your mentor Marcus Bello directly from <a href="../../engagement/youth/messages.html">Messages</a>.</div>
           </div>
 
         </div>
-        <div class="w-card__footer w-cluster w-justify-between">
-          <a class="w-btn w-btn--ghost" href="help.html">Cancel</a>
-          <button type="submit" class="w-btn w-btn--primary" data-toast="Report sent" data-toast-type="success" data-toast-title="Thank you"><svg class="w-icon"><use href="#i-send"></use></svg>Send report</button>
+        <div class="ph-card__footer ph-cluster ph-justify-between">
+          <a class="ph-btn ph-btn--ghost" href="help.html">Cancel</a>
+          <button type="submit" class="ph-btn ph-btn--primary" data-toast="Report sent" data-toast-type="success" data-toast-title="Thank you"><svg class="ph-icon"><use href="#i-send"></use></svg>Send report</button>
         </div>
       </form>
 

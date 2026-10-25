@@ -28,7 +28,7 @@ const OPTIONAL_PROMPT = 'One action I will take';
 
 // Traces to: L2-LEARN-003, L2-NFR-007
 @Component({
-  selector: 'w-youth-reflection',
+  selector: 'ph-youth-reflection',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

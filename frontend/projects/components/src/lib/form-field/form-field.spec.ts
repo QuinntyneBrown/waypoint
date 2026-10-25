@@ -10,13 +10,13 @@ import { LabelRequired } from './label-required';
 @Component({
   imports: [FormField, Label, LabelRequired, LabelOptional, Help, ErrorText],
   template: `
-    <div w-form-field [invalid]="invalid()">
-      <label w-label for="email">Email <span w-label-required>*</span></label>
+    <div ph-form-field [invalid]="invalid()">
+      <label ph-label for="email">Email <span ph-label-required>*</span></label>
       <input id="email" />
-      <p w-help>Use your school address.</p>
-      <p w-error-text>Enter a valid email address.</p>
+      <p ph-help>Use your school address.</p>
+      <p ph-error-text>Enter a valid email address.</p>
     </div>
-    <label w-label for="church">Church <span w-label-optional>(optional)</span></label>
+    <label ph-label for="church">Church <span ph-label-optional>(optional)</span></label>
   `,
 })
 class Host {
@@ -33,12 +33,12 @@ describe('form field parts', () => {
 
   it('applies the design-system classes to each part', async () => {
     const { root } = await setup();
-    expect(root.querySelector('div')!.classList.contains('w-field')).toBe(true);
-    expect(root.querySelector('label')!.classList.contains('w-label')).toBe(true);
-    expect(root.querySelector('span')!.classList.contains('w-label__req')).toBe(true);
-    expect(root.querySelectorAll('span')[1].classList.contains('w-label__opt')).toBe(true);
-    expect(root.querySelector('p')!.classList.contains('w-help')).toBe(true);
-    expect(root.querySelectorAll('p')[1].classList.contains('w-error-text')).toBe(true);
+    expect(root.querySelector('div')!.classList.contains('ph-field')).toBe(true);
+    expect(root.querySelector('label')!.classList.contains('ph-label')).toBe(true);
+    expect(root.querySelector('span')!.classList.contains('ph-label__req')).toBe(true);
+    expect(root.querySelectorAll('span')[1].classList.contains('ph-label__opt')).toBe(true);
+    expect(root.querySelector('p')!.classList.contains('ph-help')).toBe(true);
+    expect(root.querySelectorAll('p')[1].classList.contains('ph-error-text')).toBe(true);
   });
 
   it('marks the field in error when invalid', async () => {

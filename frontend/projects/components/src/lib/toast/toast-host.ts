@@ -3,11 +3,11 @@ import { Icon } from '../icon/icon';
 import { ToastService, W_TOAST_ICON } from './toast.service';
 
 /**
- * Renders the active toast queue in the fixed `.w-toasts` region. Mount once
+ * Renders the active toast queue in the fixed `.ph-toasts` region. Mount once
  * near the app root. `aria-live="polite"` announces toasts to assistive tech.
  */
 @Component({
-  selector: 'w-toast-host',
+  selector: 'ph-toast-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Icon],
   templateUrl: './toast-host.html',

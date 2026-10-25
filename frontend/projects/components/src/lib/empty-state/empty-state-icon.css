@@ -1,14 +1,14 @@
-.w-empty__icon {
+.ph-empty__icon {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: var(--w-g100);
+  background: var(--ph-g100);
   display: grid;
   place-items: center;
-  margin: 0 auto var(--w-s4);
+  margin: 0 auto var(--ph-s4);
 }
-.w-empty__icon .w-icon {
+.ph-empty__icon .ph-icon {
   width: 30px;
   height: 30px;
-  color: var(--w-ink-45);
+  color: var(--ph-ink-45);
 }

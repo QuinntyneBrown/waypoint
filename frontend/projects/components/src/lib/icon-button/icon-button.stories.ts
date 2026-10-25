@@ -7,7 +7,7 @@ const meta: Meta<IconButton> = {
   component: IconButton,
   render: () => ({
     moduleMetadata: { imports: [Icon] },
-    template: `<button w-icon-button type="button" aria-label="Close"><w-icon name="x" /></button>`,
+    template: `<button ph-icon-button type="button" aria-label="Close"><ph-icon name="x" /></button>`,
   }),
 };
 

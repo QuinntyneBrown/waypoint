@@ -1,29 +1,29 @@
-.w-skeleton {
-  background: linear-gradient(90deg, var(--w-g200) 25%, var(--w-g100) 37%, var(--w-g200) 63%);
+.ph-skeleton {
+  background: linear-gradient(90deg, var(--ph-g200) 25%, var(--ph-g100) 37%, var(--ph-g200) 63%);
   background-size: 400% 100%;
-  animation: w-shimmer 1.4s ease infinite;
+  animation: ph-shimmer 1.4s ease infinite;
   border-radius: 6px;
   display: block;
 }
-.w-skeleton--text {
+.ph-skeleton--text {
   height: 0.8em;
   margin: 0.35em 0;
   border-radius: 4px;
 }
-.w-skeleton--title {
+.ph-skeleton--title {
   height: 1.4em;
   width: 50%;
   margin-bottom: 0.6em;
 }
-.w-skeleton--circle {
+.ph-skeleton--circle {
   border-radius: 50%;
 }
-.w-skeleton--block {
+.ph-skeleton--block {
   height: 120px;
-  border-radius: var(--w-r-card);
+  border-radius: var(--ph-r-card);
 }
-.w-skeleton--btn {
+.ph-skeleton--btn {
   height: 44px;
   width: 120px;
-  border-radius: var(--w-r-pill);
+  border-radius: var(--ph-r-pill);
 }

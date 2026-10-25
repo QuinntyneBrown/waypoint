@@ -1,35 +1,33 @@
-.w-avatar {
+.ph-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   flex: none;
   display: inline-grid;
   place-items: center;
-  font-family: var(--w-font-head);
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: var(--w-ink);
-  background: var(--w-g300);
+  font: var(--text-label);
+  color: var(--ph-ink);
+  background: var(--ph-g300);
   overflow: hidden;
   letter-spacing: 0;
   text-transform: uppercase;
 }
-.w-avatar--xs {
+.ph-avatar--xs {
   width: 26px;
   height: 26px;
   font-size: 0.66rem;
 }
-.w-avatar--sm {
+.ph-avatar--sm {
   width: 32px;
   height: 32px;
   font-size: 0.75rem;
 }
-.w-avatar--lg {
+.ph-avatar--lg {
   width: 56px;
   height: 56px;
   font-size: 1.2rem;
 }
-.w-avatar--xl {
+.ph-avatar--xl {
   width: 88px;
   height: 88px;
   font-size: 1.9rem;

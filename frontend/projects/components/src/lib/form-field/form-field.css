@@ -1,10 +1,10 @@
-.w-field {
+.ph-field {
   display: block;
-  margin-bottom: var(--w-s5);
+  margin-bottom: var(--ph-s5);
 }
-.w-field.is-error .w-input,
-.w-field.is-error .w-select,
-.w-field.is-error .w-textarea {
-  border-color: var(--w-error);
-  box-shadow: 0 0 0 3px var(--w-error-bg);
+.ph-field.is-error .ph-input,
+.ph-field.is-error .ph-select,
+.ph-field.is-error .ph-textarea {
+  border-color: var(--ph-error);
+  box-shadow: 0 0 0 3px var(--ph-error-bg);
 }

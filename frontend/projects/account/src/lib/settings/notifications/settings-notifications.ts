@@ -15,7 +15,7 @@ interface PrefRow {
 
 // Traces to: L2-PLATFORM-003
 @Component({
-  selector: 'w-settings-notifications',
+  selector: 'ph-settings-notifications',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [SettingsShell, Checkbox, CheckboxBox],
   templateUrl: './settings-notifications.html',

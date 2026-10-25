@@ -1,75 +1,75 @@
-<w-shell [role]="role()" active="" [userName]="userName()" (signOut)="signOut()">
-  <div class="w-container w-container--narrow w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Activity</div>
-        <h1 class="w-page__title">Notifications</h1>
-        <span w-badge data-testid="notification-realtime-status">
+<ph-shell [role]="role()" active="" [userName]="userName()" (signOut)="signOut()">
+  <div class="ph-container ph-container--narrow ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Activity</div>
+        <h1 class="ph-page__title">Notifications</h1>
+        <span ph-badge data-testid="notification-realtime-status">
           {{ realtime.state() === 'connected' ? 'Live updates on' : 'Reconnecting live updates' }}
         </span>
       </div>
       @if (hasUnread()) {
-        <div class="w-page__actions">
-          <button w-button variant="ghost" type="button" (click)="markAllRead()">
+        <div class="ph-page__actions">
+          <button ph-button variant="ghost" type="button" (click)="markAllRead()">
             Mark all read
           </button>
         </div>
       }
     </div>
 
-    <p class="w-sr-only" role="status">{{ liveStatus() }}</p>
+    <p class="ph-sr-only" role="status">{{ liveStatus() }}</p>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (loading()) {
-      <p class="w-muted" role="status">Loading notifications…</p>
+      <p class="ph-muted" role="status">Loading notifications…</p>
     } @else if (items().length === 0) {
-      <div w-empty-state>
-        <div w-empty-state-icon><w-icon name="bell" /></div>
-        <h3 w-empty-state-title>You’re all caught up</h3>
-        <p w-empty-state-text>
+      <div ph-empty-state>
+        <div ph-empty-state-icon><ph-icon name="bell" /></div>
+        <h3 ph-empty-state-title>You’re all caught up</h3>
+        <p ph-empty-state-text>
           Messages, reminders, and other activity that needs your attention will appear here.
         </p>
       </div>
     } @else {
-      <div class="w-stack">
+      <div class="ph-stack">
         @for (item of items(); track item.id) {
           @if (item.linkPath) {
             <a
-              w-card
+              ph-card
               link
               class="notification-card"
               [variant]="item.read ? '' : 'greige'"
               [routerLink]="item.linkPath"
               data-testid="notification-item"
             >
-              <div w-card-body>
-                <div class="w-cluster w-cluster--between">
-                  <h3 w-card-title>{{ item.title }}</h3>
+              <div ph-card-body>
+                <div class="ph-cluster ph-cluster--between">
+                  <h3 ph-card-title>{{ item.title }}</h3>
                   @if (!item.read) {
-                    <span w-badge variant="info" dot>New</span>
+                    <span ph-badge variant="info" dot>New</span>
                   }
                 </div>
-                <p class="w-muted">{{ item.body }}</p>
+                <p class="ph-muted">{{ item.body }}</p>
                 <span>Open notification</span>
               </div>
             </a>
           } @else {
             <article
-              w-card
+              ph-card
               [variant]="!item.read ? 'greige' : ''"
               class="notification-card"
               data-testid="notification-item"
             >
-              <div w-card-body>
-                <div class="w-cluster w-cluster--between">
-                  <h3 w-card-title>{{ item.title }}</h3>
+              <div ph-card-body>
+                <div class="ph-cluster ph-cluster--between">
+                  <h3 ph-card-title>{{ item.title }}</h3>
                   @if (!item.read) {
-                    <span w-badge variant="info" dot>New</span>
+                    <span ph-badge variant="info" dot>New</span>
                   }
                 </div>
-                <p class="w-muted">{{ item.body }}</p>
+                <p class="ph-muted">{{ item.body }}</p>
               </div>
             </article>
           }
@@ -77,4 +77,4 @@
       </div>
     }
   </div>
-</w-shell>
+</ph-shell>

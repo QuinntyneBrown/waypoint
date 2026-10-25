@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 /**
  * Lets people pick one option from a set. Applied to a native `label` that wraps
- * a native `input[type=radio]` followed by a `w-radio-box`, so the group, arrow-key
+ * a native `input[type=radio]` followed by a `ph-radio-box`, so the group, arrow-key
  * movement and the accessible name stay native.
  */
 @Component({
-  selector: 'label[w-radio]',
+  selector: 'label[ph-radio]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-radio' },
+  host: { class: 'ph-radio' },
   templateUrl: './radio.html',
   styleUrl: './radio.css',
 })

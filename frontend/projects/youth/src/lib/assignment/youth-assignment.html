@@ -1,39 +1,39 @@
-<w-shell
+<ph-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
-    <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+  <div class="ph-container ph-container--narrow ph-page">
+    <a ph-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (fileError(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as status) {
-      <p w-alert variant="success" role="status">{{ status }}</p>
+      <p ph-alert variant="success" role="status">{{ status }}</p>
     }
 
     @if (brief(); as view) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Assignment brief</div>
-          <h1 class="w-page__title">{{ view.title }}</h1>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Assignment brief</div>
+          <h1 class="ph-page__title">{{ view.title }}</h1>
           @if (view.dueDate) {
-            <p class="w-page__sub">Due {{ view.dueDate | date: 'medium' }}</p>
+            <p class="ph-page__sub">Due {{ view.dueDate | date: 'medium' }}</p>
           }
         </div>
       </div>
-      <section w-card>
-        <div w-card-body class="w-stack">
+      <section ph-card>
+        <div ph-card-body class="ph-stack">
           <h2>Task</h2>
           <p>{{ view.taskDescription }}</p>
         </div>
       </section>
-      <section w-card variant="greige">
-        <div w-card-body class="w-stack">
+      <section ph-card variant="greige">
+        <div ph-card-body class="ph-stack">
           <h2>What you can submit</h2>
           <ul>
             @for (type of view.allowedSubmissionTypes; track type) {
@@ -52,11 +52,11 @@
           </ul>
         </div>
       </section>
-      <section w-card>
-        <div w-card-body class="w-stack">
+      <section ph-card>
+        <div ph-card-body class="ph-stack">
           <h2>Rubric preview</h2>
           @for (criterion of view.rubric; track criterion.id) {
-            <div class="w-cluster w-cluster--between">
+            <div class="ph-cluster ph-cluster--between">
               <span>{{ criterion.description }}</span
               ><strong>{{ criterion.points }} points</strong>
             </div>
@@ -66,19 +66,19 @@
 
       @if (view.existingSubmissionId) {
         <a
-          w-button
+          ph-button
           variant="primary"
           block
           [routerLink]="['/youth/submissions', view.existingSubmissionId]"
           >View submitted work</a
         >
       } @else {
-        <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
+        <form class="ph-stack" [formGroup]="form" (ngSubmit)="submit()">
           @if (view.allowedSubmissionTypes.includes('text')) {
-            <div w-form-field>
-              <label w-label for="assignment-text">Written response</label
+            <div ph-form-field>
+              <label ph-label for="assignment-text">Written response</label
               ><textarea
-                w-textarea
+                ph-textarea
                 id="assignment-text"
                 formControlName="bodyText"
                 rows="7"
@@ -86,49 +86,49 @@
             </div>
           }
           @if (view.allowedSubmissionTypes.includes('photo')) {
-            <div w-form-field>
-              <label w-label for="assignment-photo">Evidence photo</label>
+            <div ph-form-field>
+              <label ph-label for="assignment-photo">Evidence photo</label>
               <input
-                w-text-field
+                ph-text-field
                 id="assignment-photo"
                 type="file"
                 accept="image/jpeg,image/png,.jpg,.jpeg,.png"
                 (change)="photoSelected($event)"
               />
-              <p w-help>JPG or PNG, up to 10 MB.</p>
+              <p ph-help>JPG or PNG, up to 10 MB.</p>
             </div>
           }
           @if (view.allowedSubmissionTypes.includes('file')) {
-            <div w-form-field>
-              <label w-label for="assignment-file">Evidence file</label>
+            <div ph-form-field>
+              <label ph-label for="assignment-file">Evidence file</label>
               <input
-                w-text-field
+                ph-text-field
                 id="assignment-file"
                 type="file"
                 accept="application/pdf,.pdf"
                 (change)="fileSelected($event)"
               />
-              <p w-help>PDF, up to 10 MB.</p>
+              <p ph-help>PDF, up to 10 MB.</p>
             </div>
           }
           @if (view.allowedSubmissionTypes.includes('link')) {
-            <div w-form-field>
-              <label w-label for="assignment-link">Evidence link</label
-              ><input w-text-field id="assignment-link" type="url" formControlName="linkUrl" />
+            <div ph-form-field>
+              <label ph-label for="assignment-link">Evidence link</label
+              ><input ph-text-field id="assignment-link" type="url" formControlName="linkUrl" />
             </div>
           }
-          <label w-card variant="greige"
-            ><span w-card-body class="w-cluster"
+          <label ph-card variant="greige"
+            ><span ph-card-body class="ph-cluster"
               ><input type="checkbox" formControlName="attest" /><strong
                 >This is my own work and the evidence is truthful.</strong
               ></span
             ></label
           >
           @if (form.controls.attest.touched && form.controls.attest.hasError('required')) {
-            <p w-error-text>Confirm this is your own work before submitting.</p>
+            <p ph-error-text>Confirm this is your own work before submitting.</p>
           }
           <button
-            w-button
+            ph-button
             variant="primary"
             block
             type="submit"
@@ -139,7 +139,7 @@
         </form>
       }
     } @else {
-      <p class="w-muted">Loading assignment…</p>
+      <p class="ph-muted">Loading assignment…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

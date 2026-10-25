@@ -33,14 +33,13 @@ The root also contains the product map and reusable page templates, bringing the
 
 The mocks are styled by the Waypoint design system in [`../design-system/`](../design-system/README.md); open [`../design-system/index.html`](../design-system/index.html) for tokens, components and patterns in light and dark. Every page links:
 
-- `../design-system/assets/fonts.css` — embedded font resources
 - `../design-system/tokens/tokens.css` — design tokens (colour, type, spacing, layout, shape, elevation, motion), light and dark
-- `../design-system/assets/components.css` — the `w-*` component, shell and utility classes
+- `../design-system/assets/components.css` — the `ph-*` component, shell and utility classes
 - `assets/js/waypoint.js` — shared shell, icons, dialogs, toasts, state helpers, and fictional data (the only mock-local asset)
 
 Page-local styles reference design-system tokens (`var(--color-*)`, `var(--space-*)` …), never raw values.
 
-The mocks use FaithTech's visual language, including the signature lime brand colour, Space Grotesk headings, Inter body text, and Fraunces accents. Fonts are embedded, icons are inline SVG, and avatars are generated from initials so the screens work offline.
+The mocks use the PromiseHub visual language (DECISIONS #25): a violet accent for the primary action, selection and focus, system rounded fonts (with Georgia for scripture), hairline-edged pill buttons and softly elevated cards, in light and dark. Component markup uses the `ph` prefix (`ph-btn`, `ph-card`). No font files are needed, icons are inline SVG, and avatars are generated from initials so the screens work offline.
 
 ## Shared page contract
 

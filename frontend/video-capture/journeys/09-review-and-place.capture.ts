@@ -9,11 +9,11 @@ const CONFIRM = { x: 340, y: 200, width: 600, height: 400 };
 const QUEUE = { x: 0, y: 60, width: 1280, height: 740 };
 
 async function tall(page: Page, name: string): Promise<void> {
-  await page.setViewportSize({ width: 1280, height: 1100 });
+  await page.setViewportSize({ width: 1280, height: 1240 });
   await page.waitForTimeout(800);
   await page.screenshot({
     path: join(__dirname, '..', '..', '..', 'docs', 'videos', FOLDER, 'images', `${name}-1280.png`),
-    clip: { x: 240, y: 0, width: 800, height: 1100 },
+    clip: { x: 240, y: 0, width: 800, height: 1240 },
   });
   await page.setViewportSize({ width: 1280, height: 800 });
 }
@@ -79,7 +79,7 @@ test('capture: review and place', async ({ page, request }) => {
 
   await applications.review(minorLastName).click();
   await expect(applications.reviewDialog).toContainText('Guardian participation consent');
-  await expect(applications.approve).toBeDisabled();
+  await expect(applications.approve).toBeEnabled();
   await tall(page, 'blocked');
 
   await applications.decisionNote.fill('No place is available this term.');

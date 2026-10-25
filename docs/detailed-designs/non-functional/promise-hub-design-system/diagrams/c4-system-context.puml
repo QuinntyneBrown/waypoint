@@ -1,0 +1,13 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_LEFT_RIGHT()
+title C4 level 1 — Adopt the PromiseHub design system — system context
+Person(participant, "Waypoint participant", "Youth, guardian, mentor, volunteer, administrator or visitor")
+Person(developer, "Waypoint developer", "Copies tokens and styles, builds screens from the library")
+System(waypoint, "Waypoint software system", "Renders every page from the PromiseHub tokens with ph components")
+System_Ext(promisehub, "PromiseHub design system", "Tokens, foundations and component pages (copied, never loaded at run time)")
+Rel(participant, waypoint, "Uses in light or dark theme", "HTTPS")
+Rel(developer, promisehub, "Copies tokens, contrast pairs and foundations from")
+Rel(developer, waypoint, "Builds screens with @waypoint/components")
+SHOW_LEGEND()
+@enduml

@@ -15,11 +15,11 @@ type Story = StoryObj<Chip>;
 export const Filters: Story = {
   render: () => ({
     template: `
-      <div w-chip-row aria-label="Roster status filter">
-        <button w-chip type="button" active>All</button>
-        <button w-chip type="button">On track</button>
-        <button w-chip type="button">At risk</button>
-        <button w-chip type="button">New</button>
+      <div ph-chip-row aria-label="Roster status filter">
+        <button ph-chip type="button" active>All</button>
+        <button ph-chip type="button">On track</button>
+        <button ph-chip type="button">At risk</button>
+        <button ph-chip type="button">New</button>
       </div>`,
   }),
 };

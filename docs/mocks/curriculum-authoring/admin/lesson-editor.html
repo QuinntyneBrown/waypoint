@@ -4,213 +4,213 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lesson editor · Waypoint</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c6fb50'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%2316160c'>W</text></svg>">
-  <link rel="stylesheet" href="../../../design-system/assets/fonts.css"><link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c3aed'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23ffffff'>W</text></svg>">
+  <link rel="stylesheet" href="../../../design-system/tokens/tokens.css"><link rel="stylesheet" href="../../../design-system/assets/components.css">
   <script defer src="../../assets/js/waypoint.js"></script>
 </head>
 <body data-role="admin" data-active="tracks" data-track="bible">
-  <main class="w-main">
-    <div class="w-container w-page">
+  <main class="ph-main">
+    <div class="ph-container ph-page">
 
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <a class="w-btn w-btn--ghost w-btn--sm w-mb-4" href="module-editor.html"><svg class="w-icon"><use href="#i-arrow-left"></use></svg>Back to Servant Leadership</a>
-          <div class="w-eyebrow">Servant Leadership · Lesson 1</div>
-          <h1 class="w-page__title">The Towel and the Basin</h1>
-          <p class="w-page__sub">Edit the teaching content, media and reflection prompts youth will see.</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <a class="ph-btn ph-btn--ghost ph-btn--sm ph-mb-4" href="module-editor.html"><svg class="ph-icon"><use href="#i-arrow-left"></use></svg>Back to Servant Leadership</a>
+          <div class="ph-eyebrow">Servant Leadership · Lesson 1</div>
+          <h1 class="ph-page__title">The Towel and the Basin</h1>
+          <p class="ph-page__sub">Edit the teaching content, media and reflection prompts youth will see.</p>
         </div>
-        <div class="w-page__actions">
-          <span class="w-badge w-badge--success w-badge--dot">Published</span>
-          <a class="w-btn w-btn--ghost" href="../../learning-experience/youth/lesson.html"><svg class="w-icon"><use href="#i-eye"></use></svg>Preview</a>
-          <button class="w-btn w-btn--primary" data-toast="Lesson saved" data-toast-type="success" data-toast-title="Saved"><svg class="w-icon"><use href="#i-check"></use></svg>Save</button>
+        <div class="ph-page__actions">
+          <span class="ph-badge ph-badge--success ph-badge--dot">Published</span>
+          <a class="ph-btn ph-btn--ghost" href="../../learning-experience/youth/lesson.html"><svg class="ph-icon"><use href="#i-eye"></use></svg>Preview</a>
+          <button class="ph-btn ph-btn--primary" data-toast="Lesson saved" data-toast-type="success" data-toast-title="Saved"><svg class="ph-icon"><use href="#i-check"></use></svg>Save</button>
         </div>
       </div>
 
-      <div class="w-grid w-grid--3">
+      <div class="ph-grid ph-grid--3">
         <!-- ===== Main ===== -->
         <div style="grid-column:span 2;min-width:0">
 
-          <div class="w-card w-mb-6">
-            <div class="w-card__body">
-              <div class="w-field">
-                <label class="w-label">Lesson title <span class="w-label__req">*</span></label>
-                <input class="w-input" value="The Towel and the Basin">
+          <div class="ph-card ph-mb-6">
+            <div class="ph-card__body">
+              <div class="ph-field">
+                <label class="ph-label">Lesson title <span class="ph-label__req">*</span></label>
+                <input class="ph-input" value="The Towel and the Basin">
               </div>
-              <div class="w-grid w-grid--2">
-                <div class="w-field">
-                  <label class="w-label">Scripture reference <span class="w-label__req">*</span></label>
-                  <input class="w-input" value="John 13:1–17">
-                  <div class="w-help">Anchor passage for this lesson.</div>
+              <div class="ph-grid ph-grid--2">
+                <div class="ph-field">
+                  <label class="ph-label">Scripture reference <span class="ph-label__req">*</span></label>
+                  <input class="ph-input" value="John 13:1–17">
+                  <div class="ph-help">Anchor passage for this lesson.</div>
                 </div>
-                <div class="w-field">
-                  <label class="w-label">Estimated time</label>
-                  <input class="w-input" value="12 min">
+                <div class="ph-field">
+                  <label class="ph-label">Estimated time</label>
+                  <input class="ph-input" value="12 min">
                 </div>
               </div>
-              <div class="w-scripture">“Now that I, your Lord and Teacher, have washed your feet, you also should wash one another's feet.”<span class="w-scripture__ref">John 13:14</span></div>
+              <div class="ph-scripture">“Now that I, your Lord and Teacher, have washed your feet, you also should wash one another's feet.”<span class="ph-scripture__ref">John 13:14</span></div>
             </div>
           </div>
 
           <!-- Rich-text teaching area -->
-          <div class="w-card w-mb-6">
-            <div class="w-card__header"><h3 class="w-card__title">Teaching content</h3></div>
-            <div class="w-card__body">
-              <div class="w-cluster w-gap-1 w-mb-4" role="toolbar" aria-label="Formatting">
-                <button class="w-iconbtn" aria-label="Bold"><strong>B</strong></button>
-                <button class="w-iconbtn" aria-label="Italic"><em>I</em></button>
-                <button class="w-iconbtn" aria-label="Heading"><svg class="w-icon"><use href="#i-book-open"></use></svg></button>
-                <button class="w-iconbtn" aria-label="Bulleted list"><svg class="w-icon"><use href="#i-list"></use></svg></button>
-                <button class="w-iconbtn" aria-label="Insert scripture"><svg class="w-icon"><use href="#i-church"></use></svg></button>
-                <button class="w-iconbtn" aria-label="Insert link"><svg class="w-icon"><use href="#i-link"></use></svg></button>
-                <button class="w-iconbtn" aria-label="Insert image"><svg class="w-icon"><use href="#i-camera"></use></svg></button>
+          <div class="ph-card ph-mb-6">
+            <div class="ph-card__header"><h3 class="ph-card__title">Teaching content</h3></div>
+            <div class="ph-card__body">
+              <div class="ph-cluster ph-gap-1 ph-mb-4" role="toolbar" aria-label="Formatting">
+                <button class="ph-iconbtn" aria-label="Bold"><strong>B</strong></button>
+                <button class="ph-iconbtn" aria-label="Italic"><em>I</em></button>
+                <button class="ph-iconbtn" aria-label="Heading"><svg class="ph-icon"><use href="#i-book-open"></use></svg></button>
+                <button class="ph-iconbtn" aria-label="Bulleted list"><svg class="ph-icon"><use href="#i-list"></use></svg></button>
+                <button class="ph-iconbtn" aria-label="Insert scripture"><svg class="ph-icon"><use href="#i-church"></use></svg></button>
+                <button class="ph-iconbtn" aria-label="Insert link"><svg class="ph-icon"><use href="#i-link"></use></svg></button>
+                <button class="ph-iconbtn" aria-label="Insert image"><svg class="ph-icon"><use href="#i-camera"></use></svg></button>
               </div>
-              <div class="w-field">
-                <label class="w-label" for="teach">Body</label>
-                <textarea class="w-textarea" id="teach" style="min-height:220px">On the night before he died, Jesus did something a servant would do — he knelt and washed his disciples' feet. Peter was uncomfortable. The teacher shouldn't be doing the servant's job.
+              <div class="ph-field">
+                <label class="ph-label" for="teach">Body</label>
+                <textarea class="ph-textarea" id="teach" style="min-height:220px">On the night before he died, Jesus did something a servant would do — he knelt and washed his disciples' feet. Peter was uncomfortable. The teacher shouldn't be doing the servant's job.
 
 But that was the point. Real leadership in God's kingdom looks like a towel and a basin, not a title.
 
 Talk it through: Where in your week could you "pick up the towel" for someone — at home, at school, in your cohort?</textarea>
-                <div class="w-help">Plain formatting. Youth see this as the main lesson reading.</div>
+                <div class="ph-help">Plain formatting. Youth see this as the main lesson reading.</div>
               </div>
             </div>
           </div>
 
           <!-- Media attach -->
-          <div class="w-card w-mb-6">
-            <div class="w-card__header">
-              <h3 class="w-card__title">Media</h3>
-              <div class="w-cluster w-gap-2">
-                <button class="w-btn w-btn--subtle w-btn--sm" data-toast="The file picker opens here." data-toast-type="info"><svg class="w-icon"><use href="#i-video"></use></svg>Attach video</button>
-                <button class="w-btn w-btn--subtle w-btn--sm"><svg class="w-icon"><use href="#i-upload"></use></svg>Attach media</button>
+          <div class="ph-card ph-mb-6">
+            <div class="ph-card__header">
+              <h3 class="ph-card__title">Media</h3>
+              <div class="ph-cluster ph-gap-2">
+                <button class="ph-btn ph-btn--subtle ph-btn--sm" data-toast="The file picker opens here." data-toast-type="info"><svg class="ph-icon"><use href="#i-video"></use></svg>Attach video</button>
+                <button class="ph-btn ph-btn--subtle ph-btn--sm"><svg class="ph-icon"><use href="#i-upload"></use></svg>Attach media</button>
               </div>
             </div>
-            <div class="w-card__body">
+            <div class="ph-card__body">
               <!-- ===== video states: ?state=upload-progress | upload-interrupted | upload-rejected | video-queued | video-processing | video-ready | video-failed ===== -->
-              <div data-when-state="upload-rejected" class="w-hide w-alert w-alert--error w-mb-4" role="alert">
-                <svg class="w-alert__icon w-icon"><use href="#i-alert-circle"></use></svg>
+              <div data-when-state="upload-rejected" class="ph-hide ph-alert ph-alert--error ph-mb-4" role="alert">
+                <svg class="ph-alert__icon ph-icon"><use href="#i-alert-circle"></use></svg>
                 <div>
-                  <div class="w-alert__title">This file is not a video we can read.</div>
+                  <div class="ph-alert__title">This file is not a video we can read.</div>
                   “weekly-schedule.pdf” was not attached. Choose a video recording between 2 minutes and 3 hours long, up to 20 GB.
-                  <div class="w-mt-3"><button class="w-btn w-btn--secondary w-btn--sm" data-toast="The file picker opens here." data-toast-type="info"><svg class="w-icon"><use href="#i-video"></use></svg>Choose another video</button></div>
+                  <div class="ph-mt-3"><button class="ph-btn ph-btn--secondary ph-btn--sm" data-toast="The file picker opens here." data-toast-type="info"><svg class="ph-icon"><use href="#i-video"></use></svg>Choose another video</button></div>
                 </div>
               </div>
 
-              <div data-when-state="upload-progress" class="w-hide w-lessonstep" style="flex-wrap:wrap">
-                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-upload"></use></svg></span>
-                <div class="w-listitem__body" style="flex:1 1 14rem">
-                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
-                  <div class="w-listitem__meta" role="status">Uploading · 63% · 903 MB of 1.4 GB</div>
-                  <div class="w-progress w-progress--thin w-mt-2" role="progressbar" aria-label="Upload progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63"><div class="w-progress__fill" style="--val:63%"></div></div>
+              <div data-when-state="upload-progress" class="ph-hide ph-lessonstep" style="flex-wrap:wrap">
+                <span class="ph-lessonstep__num"><svg class="ph-icon"><use href="#i-upload"></use></svg></span>
+                <div class="ph-listitem__body" style="flex:1 1 14rem">
+                  <div class="ph-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="ph-listitem__meta" role="status">Uploading · 63% · 903 MB of 1.4 GB</div>
+                  <div class="ph-progress ph-progress--thin ph-mt-2" role="progressbar" aria-label="Upload progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63"><div class="ph-progress__fill" style="--val:63%"></div></div>
                 </div>
-                <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Upload cancelled. Nothing was attached." data-toast-type="info">Cancel</button>
+                <button class="ph-btn ph-btn--ghost ph-btn--sm" data-toast="Upload cancelled. Nothing was attached." data-toast-type="info">Cancel</button>
               </div>
 
-              <div data-when-state="upload-interrupted" class="w-hide w-lessonstep is-error" style="flex-wrap:wrap">
-                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-wifi-off"></use></svg></span>
-                <div class="w-listitem__body" style="flex:1 1 14rem">
-                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
-                  <div class="w-listitem__meta" role="status">Upload interrupted at 63% · 903 MB of 1.4 GB sent</div>
-                  <div class="w-progress w-progress--thin w-mt-2" role="progressbar" aria-label="Upload progress, paused" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63"><div class="w-progress__fill" style="--val:63%"></div></div>
-                  <div class="w-help w-mt-2">Your connection dropped. Resuming picks up from the last chunk Waypoint received, so nothing is sent twice.</div>
+              <div data-when-state="upload-interrupted" class="ph-hide ph-lessonstep is-error" style="flex-wrap:wrap">
+                <span class="ph-lessonstep__num"><svg class="ph-icon"><use href="#i-wifi-off"></use></svg></span>
+                <div class="ph-listitem__body" style="flex:1 1 14rem">
+                  <div class="ph-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="ph-listitem__meta" role="status">Upload interrupted at 63% · 903 MB of 1.4 GB sent</div>
+                  <div class="ph-progress ph-progress--thin ph-mt-2" role="progressbar" aria-label="Upload progress, paused" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63"><div class="ph-progress__fill" style="--val:63%"></div></div>
+                  <div class="ph-help ph-mt-2">Your connection dropped. Resuming picks up from the last chunk Waypoint received, so nothing is sent twice.</div>
                 </div>
-                <div class="w-cluster w-gap-2">
-                  <button class="w-btn w-btn--primary w-btn--sm" data-toast="Resuming from 903 MB." data-toast-type="info"><svg class="w-icon"><use href="#i-refresh"></use></svg>Resume upload</button>
-                  <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Upload cancelled. Nothing was attached." data-toast-type="info">Cancel</button>
-                </div>
-              </div>
-
-              <div data-when-state="video-queued" class="w-hide w-lessonstep" style="flex-wrap:wrap">
-                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-play-circle"></use></svg></span>
-                <div class="w-listitem__body" style="flex:1 1 14rem">
-                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
-                  <div class="w-listitem__meta" role="status"><span class="w-badge w-badge--info w-badge--dot">Queued</span> Upload complete. Waiting for its turn to be prepared.</div>
-                </div>
-                <button class="w-iconbtn" aria-label="Remove video" data-toast="Video removed" data-toast-type="info"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
-              </div>
-
-              <div data-when-state="video-processing" class="w-hide w-lessonstep" style="flex-wrap:wrap">
-                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-play-circle"></use></svg></span>
-                <div class="w-listitem__body" style="flex:1 1 14rem">
-                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
-                  <div class="w-listitem__meta" role="status"><span class="w-badge w-badge--warning w-badge--dot">Processing</span> 42% · youth cannot watch it yet</div>
-                  <div class="w-progress w-progress--thin w-mt-2" role="progressbar" aria-label="Processing progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"><div class="w-progress__fill" style="--val:42%"></div></div>
-                </div>
-                <button class="w-iconbtn" aria-label="Remove video" data-toast="Video removed" data-toast-type="info"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
-              </div>
-
-              <div data-when-state="video-ready" class="w-hide w-lessonstep is-done" style="flex-wrap:wrap">
-                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-play-circle"></use></svg></span>
-                <div class="w-listitem__body" style="flex:1 1 14rem">
-                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
-                  <div class="w-listitem__meta"><span class="w-badge w-badge--success w-badge--dot">Ready</span> Video · 1:12:08 · plays at up to 1080p</div>
-                </div>
-                <button class="w-btn w-btn--ghost w-btn--sm" data-toast="Video removed" data-toast-type="info"><svg class="w-icon"><use href="#i-trash"></use></svg>Remove</button>
-              </div>
-
-              <div data-when-state="video-failed" class="w-hide w-lessonstep is-error" style="flex-wrap:wrap">
-                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-alert-triangle"></use></svg></span>
-                <div class="w-listitem__body" style="flex:1 1 14rem">
-                  <div class="w-listitem__title">towel-and-basin-teaching.mp4</div>
-                  <div class="w-listitem__meta" role="alert"><span class="w-badge w-badge--error w-badge--dot">Failed</span> Preparing the video stopped: the audio track could not be read.</div>
-                  <div class="w-help w-mt-2">Try again. If it keeps failing, remove this video and upload a fresh export.</div>
-                </div>
-                <div class="w-cluster w-gap-2">
-                  <button class="w-btn w-btn--primary w-btn--sm" data-toast="Back in the queue." data-toast-type="info"><svg class="w-icon"><use href="#i-refresh"></use></svg>Retry</button>
-                  <button class="w-iconbtn" aria-label="Remove video" data-toast="Video removed" data-toast-type="info"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
+                <div class="ph-cluster ph-gap-2">
+                  <button class="ph-btn ph-btn--primary ph-btn--sm" data-toast="Resuming from 903 MB." data-toast-type="info"><svg class="ph-icon"><use href="#i-refresh"></use></svg>Resume upload</button>
+                  <button class="ph-btn ph-btn--ghost ph-btn--sm" data-toast="Upload cancelled. Nothing was attached." data-toast-type="info">Cancel</button>
                 </div>
               </div>
 
-              <div class="w-lessonstep">
-                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-play-circle"></use></svg></span>
-                <div class="w-listitem__body">
-                  <div class="w-listitem__title">Foot-washing — short teaching clip</div>
-                  <div class="w-listitem__meta">Video · 4:12</div>
+              <div data-when-state="video-queued" class="ph-hide ph-lessonstep" style="flex-wrap:wrap">
+                <span class="ph-lessonstep__num"><svg class="ph-icon"><use href="#i-play-circle"></use></svg></span>
+                <div class="ph-listitem__body" style="flex:1 1 14rem">
+                  <div class="ph-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="ph-listitem__meta" role="status"><span class="ph-badge ph-badge--info ph-badge--dot">Queued</span> Upload complete. Waiting for its turn to be prepared.</div>
                 </div>
-                <button class="w-iconbtn" aria-label="Remove media"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
+                <button class="ph-iconbtn" aria-label="Remove video" data-toast="Video removed" data-toast-type="info"><svg class="ph-icon"><use href="#i-trash"></use></svg></button>
               </div>
-              <div class="w-lessonstep">
-                <span class="w-lessonstep__num"><svg class="w-icon"><use href="#i-file-text"></use></svg></span>
-                <div class="w-listitem__body">
-                  <div class="w-listitem__title">Servant Leadership — handout.pdf</div>
-                  <div class="w-listitem__meta">Document · 320 KB</div>
+
+              <div data-when-state="video-processing" class="ph-hide ph-lessonstep" style="flex-wrap:wrap">
+                <span class="ph-lessonstep__num"><svg class="ph-icon"><use href="#i-play-circle"></use></svg></span>
+                <div class="ph-listitem__body" style="flex:1 1 14rem">
+                  <div class="ph-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="ph-listitem__meta" role="status"><span class="ph-badge ph-badge--warning ph-badge--dot">Processing</span> 42% · youth cannot watch it yet</div>
+                  <div class="ph-progress ph-progress--thin ph-mt-2" role="progressbar" aria-label="Processing progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"><div class="ph-progress__fill" style="--val:42%"></div></div>
                 </div>
-                <button class="w-iconbtn" aria-label="Remove media"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
+                <button class="ph-iconbtn" aria-label="Remove video" data-toast="Video removed" data-toast-type="info"><svg class="ph-icon"><use href="#i-trash"></use></svg></button>
+              </div>
+
+              <div data-when-state="video-ready" class="ph-hide ph-lessonstep is-done" style="flex-wrap:wrap">
+                <span class="ph-lessonstep__num"><svg class="ph-icon"><use href="#i-play-circle"></use></svg></span>
+                <div class="ph-listitem__body" style="flex:1 1 14rem">
+                  <div class="ph-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="ph-listitem__meta"><span class="ph-badge ph-badge--success ph-badge--dot">Ready</span> Video · 1:12:08 · plays at up to 1080p</div>
+                </div>
+                <button class="ph-btn ph-btn--ghost ph-btn--sm" data-toast="Video removed" data-toast-type="info"><svg class="ph-icon"><use href="#i-trash"></use></svg>Remove</button>
+              </div>
+
+              <div data-when-state="video-failed" class="ph-hide ph-lessonstep is-error" style="flex-wrap:wrap">
+                <span class="ph-lessonstep__num"><svg class="ph-icon"><use href="#i-alert-triangle"></use></svg></span>
+                <div class="ph-listitem__body" style="flex:1 1 14rem">
+                  <div class="ph-listitem__title">towel-and-basin-teaching.mp4</div>
+                  <div class="ph-listitem__meta" role="alert"><span class="ph-badge ph-badge--error ph-badge--dot">Failed</span> Preparing the video stopped: the audio track could not be read.</div>
+                  <div class="ph-help ph-mt-2">Try again. If it keeps failing, remove this video and upload a fresh export.</div>
+                </div>
+                <div class="ph-cluster ph-gap-2">
+                  <button class="ph-btn ph-btn--primary ph-btn--sm" data-toast="Back in the queue." data-toast-type="info"><svg class="ph-icon"><use href="#i-refresh"></use></svg>Retry</button>
+                  <button class="ph-iconbtn" aria-label="Remove video" data-toast="Video removed" data-toast-type="info"><svg class="ph-icon"><use href="#i-trash"></use></svg></button>
+                </div>
+              </div>
+
+              <div class="ph-lessonstep">
+                <span class="ph-lessonstep__num"><svg class="ph-icon"><use href="#i-play-circle"></use></svg></span>
+                <div class="ph-listitem__body">
+                  <div class="ph-listitem__title">Foot-washing — short teaching clip</div>
+                  <div class="ph-listitem__meta">Video · 4:12</div>
+                </div>
+                <button class="ph-iconbtn" aria-label="Remove media"><svg class="ph-icon"><use href="#i-trash"></use></svg></button>
+              </div>
+              <div class="ph-lessonstep">
+                <span class="ph-lessonstep__num"><svg class="ph-icon"><use href="#i-file-text"></use></svg></span>
+                <div class="ph-listitem__body">
+                  <div class="ph-listitem__title">Servant Leadership — handout.pdf</div>
+                  <div class="ph-listitem__meta">Document · 320 KB</div>
+                </div>
+                <button class="ph-iconbtn" aria-label="Remove media"><svg class="ph-icon"><use href="#i-trash"></use></svg></button>
               </div>
             </div>
           </div>
 
           <!-- Reflection prompts -->
-          <div class="w-card w-mb-6">
-            <div class="w-card__header">
-              <h3 class="w-card__title">Reflection prompts</h3>
-              <button class="w-btn w-btn--subtle w-btn--sm" data-toast="Prompt row added" data-toast-type="info"><svg class="w-icon"><use href="#i-plus"></use></svg>Add prompt</button>
+          <div class="ph-card ph-mb-6">
+            <div class="ph-card__header">
+              <h3 class="ph-card__title">Reflection prompts</h3>
+              <button class="ph-btn ph-btn--subtle ph-btn--sm" data-toast="Prompt row added" data-toast-type="info"><svg class="ph-icon"><use href="#i-plus"></use></svg>Add prompt</button>
             </div>
-            <div class="w-card__body">
-              <div class="w-stack w-stack--sm">
-                <div class="w-cluster w-gap-2">
-                  <input class="w-input" value="Who has served you recently in a way you noticed?">
-                  <button class="w-iconbtn" aria-label="Remove prompt"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
+            <div class="ph-card__body">
+              <div class="ph-stack ph-stack--sm">
+                <div class="ph-cluster ph-gap-2">
+                  <input class="ph-input" value="Who has served you recently in a way you noticed?">
+                  <button class="ph-iconbtn" aria-label="Remove prompt"><svg class="ph-icon"><use href="#i-trash"></use></svg></button>
                 </div>
-                <div class="w-cluster w-gap-2">
-                  <input class="w-input" value="What makes it hard to serve when no one is watching?">
-                  <button class="w-iconbtn" aria-label="Remove prompt"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
+                <div class="ph-cluster ph-gap-2">
+                  <input class="ph-input" value="What makes it hard to serve when no one is watching?">
+                  <button class="ph-iconbtn" aria-label="Remove prompt"><svg class="ph-icon"><use href="#i-trash"></use></svg></button>
                 </div>
-                <div class="w-cluster w-gap-2">
-                  <input class="w-input" value="Name one person you'll serve this week and how.">
-                  <button class="w-iconbtn" aria-label="Remove prompt"><svg class="w-icon"><use href="#i-trash"></use></svg></button>
+                <div class="ph-cluster ph-gap-2">
+                  <input class="ph-input" value="Name one person you'll serve this week and how.">
+                  <button class="ph-iconbtn" aria-label="Remove prompt"><svg class="ph-icon"><use href="#i-trash"></use></svg></button>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Leader guide -->
-          <div class="w-card">
-            <div class="w-card__header"><h3 class="w-card__title">Leader guide notes</h3></div>
-            <div class="w-card__body">
-              <div class="w-field">
-                <label class="w-label" for="guide">Notes for mentors (not shown to youth)</label>
-                <textarea class="w-textarea" id="guide" style="min-height:120px">Open with the video, then read John 13 together. Watch for youth who struggle to receive help (Peter's reaction). Close by having each person commit to one act of service before next week — Marcus follows up in check-ins.</textarea>
+          <div class="ph-card">
+            <div class="ph-card__header"><h3 class="ph-card__title">Leader guide notes</h3></div>
+            <div class="ph-card__body">
+              <div class="ph-field">
+                <label class="ph-label" for="guide">Notes for mentors (not shown to youth)</label>
+                <textarea class="ph-textarea" id="guide" style="min-height:120px">Open with the video, then read John 13 together. Watch for youth who struggle to receive help (Peter's reaction). Close by having each person commit to one act of service before next week — Marcus follows up in check-ins.</textarea>
               </div>
             </div>
           </div>
@@ -219,28 +219,28 @@ Talk it through: Where in your week could you "pick up the towel" for someone �
 
         <!-- ===== Sidebar ===== -->
         <div style="min-width:0">
-          <div class="w-card w-mb-6">
-            <div class="w-card__header"><h3 class="w-card__title">Status</h3></div>
-            <div class="w-card__body">
-              <div class="w-field">
-                <label class="w-label">Visibility</label>
-                <div class="w-segment">
-                  <button class="w-segment__item is-active">Published</button>
-                  <button class="w-segment__item">Draft</button>
+          <div class="ph-card ph-mb-6">
+            <div class="ph-card__header"><h3 class="ph-card__title">Status</h3></div>
+            <div class="ph-card__body">
+              <div class="ph-field">
+                <label class="ph-label">Visibility</label>
+                <div class="ph-segment">
+                  <button class="ph-segment__item is-active">Published</button>
+                  <button class="ph-segment__item">Draft</button>
                 </div>
               </div>
-              <div class="w-help">Publishing makes this lesson live for assigned cohorts.</div>
-              <div class="w-divider"></div>
-              <button class="w-btn w-btn--primary w-btn--block" data-open-modal="m-publish"><svg class="w-icon"><use href="#i-upload"></use></svg>Publish changes</button>
+              <div class="ph-help">Publishing makes this lesson live for assigned cohorts.</div>
+              <div class="ph-divider"></div>
+              <button class="ph-btn ph-btn--primary ph-btn--block" data-open-modal="m-publish"><svg class="ph-icon"><use href="#i-upload"></use></svg>Publish changes</button>
             </div>
           </div>
 
-          <div class="w-card">
-            <div class="w-card__body">
-              <div class="w-eyebrow w-mb-4">Belongs to</div>
-              <div class="w-person">
-                <span class="w-avatar" data-name="Servant Leadership"></span>
-                <div><div class="w-person__name">Servant Leadership</div><div class="w-person__meta">Bible &amp; Leadership · Lesson 1 of 3</div></div>
+          <div class="ph-card">
+            <div class="ph-card__body">
+              <div class="ph-eyebrow ph-mb-4">Belongs to</div>
+              <div class="ph-person">
+                <span class="ph-avatar" data-name="Servant Leadership"></span>
+                <div><div class="ph-person__name">Servant Leadership</div><div class="ph-person__meta">Bible &amp; Leadership · Lesson 1 of 3</div></div>
               </div>
             </div>
           </div>
@@ -251,22 +251,22 @@ Talk it through: Where in your week could you "pick up the towel" for someone �
   </main>
 
   <!-- ===================== MODALS ===================== -->
-  <div class="w-modal w-modal--sm" id="m-publish" role="dialog" aria-modal="true">
-    <div class="w-modal__scrim"></div>
-    <div class="w-modal__panel">
-      <div class="w-modal__header">
-        <div class="w-cluster w-gap-2">
-          <span class="w-modal__icon w-modal__icon--success"><svg class="w-icon"><use href="#i-upload"></use></svg></span>
-          <div><h2 class="w-modal__title">Publish this lesson?</h2><p class="w-modal__sub">It will become visible to all youth in assigned cohorts.</p></div>
+  <div class="ph-modal ph-modal--sm" id="m-publish" role="dialog" aria-modal="true">
+    <div class="ph-modal__scrim"></div>
+    <div class="ph-modal__panel">
+      <div class="ph-modal__header">
+        <div class="ph-cluster ph-gap-2">
+          <span class="ph-modal__icon ph-modal__icon--success"><svg class="ph-icon"><use href="#i-upload"></use></svg></span>
+          <div><h2 class="ph-modal__title">Publish this lesson?</h2><p class="ph-modal__sub">It will become visible to all youth in assigned cohorts.</p></div>
         </div>
-        <button class="w-iconbtn w-modal__close" data-close-modal aria-label="Close"><svg class="w-icon"><use href="#i-x"></use></svg></button>
+        <button class="ph-iconbtn ph-modal__close" data-close-modal aria-label="Close"><svg class="ph-icon"><use href="#i-x"></use></svg></button>
       </div>
-      <div class="w-modal__body">
-        <div class="w-alert w-alert--info"><svg class="w-alert__icon w-icon"><use href="#i-info"></use></svg><div>Rexdale Fall '25 and Warden Winter '26 are assigned to this module.</div></div>
+      <div class="ph-modal__body">
+        <div class="ph-alert ph-alert--info"><svg class="ph-alert__icon ph-icon"><use href="#i-info"></use></svg><div>Rexdale Fall '25 and Warden Winter '26 are assigned to this module.</div></div>
       </div>
-      <div class="w-modal__footer">
-        <button class="w-btn w-btn--ghost" data-close-modal>Cancel</button>
-        <button class="w-btn w-btn--primary" data-close-modal data-toast="Lesson published" data-toast-type="success" data-toast-title="Live">Publish</button>
+      <div class="ph-modal__footer">
+        <button class="ph-btn ph-btn--ghost" data-close-modal>Cancel</button>
+        <button class="ph-btn ph-btn--primary" data-close-modal data-toast="Lesson published" data-toast-type="success" data-toast-title="Live">Publish</button>
       </div>
     </div>
   </div>

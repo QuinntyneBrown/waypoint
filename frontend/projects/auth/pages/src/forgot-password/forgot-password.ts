@@ -6,7 +6,7 @@ import { PasswordResetService } from '@waypoint/api';
 
 // Traces to: L2-AUTH-005
 @Component({
-  selector: 'w-forgot-password',
+  selector: 'ph-forgot-password',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,

@@ -23,7 +23,7 @@ import {
 
 // Traces to: L2-AUTH-004, L2-AUTH-008, L2-PLATFORM-011
 @Component({
-  selector: 'w-invite-accept',
+  selector: 'ph-invite-accept',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,

@@ -71,5 +71,5 @@ test('capture: author curriculum', async ({ page, request }) => {
   await page.getByRole('button', { name: 'Publish track' }).click();
   await expect(builder.outcome).toContainText('Track published.');
   await page.evaluate(() => window.scrollTo(0, 0));
-  await shotOf(page.locator('section.w-card').first(), FOLDER, 'track-published', 8);
+  await shotOf(page.locator('section.ph-card').first(), FOLDER, 'track-published', 8);
 });

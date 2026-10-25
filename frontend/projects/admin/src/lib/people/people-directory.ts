@@ -34,7 +34,7 @@ interface DirectoryQuery {
 
 // Traces to: L2-ADMIN-001
 @Component({
-  selector: 'w-people-directory',
+  selector: 'ph-people-directory',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

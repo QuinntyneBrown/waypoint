@@ -1,19 +1,8 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shape — Waypoint design system</title>
-<meta name="description" content="Pills for controls, soft 8px cards, 14px dialogs and a 1.5px hairline stroke.">
-<link rel="stylesheet" href="../assets/fonts.css">
-<link rel="stylesheet" href="../tokens/tokens.css">
-<link rel="stylesheet" href="../assets/components.css">
-<link rel="stylesheet" href="../assets/ds.css">
-</head>
-<body id="top">
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="ds-shell">
-<nav class="ds-nav" aria-label="Design system">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shape — Waypoint design system</title><meta name="description" content="Five ordinary radii and one full pill radius establish a consistent rounded language.">
+<link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../assets/components.css"><link rel="stylesheet" href="../assets/ds.css"></head>
+<body><a class="skip-link" href="#main">Skip to content</a><div class="ds-shell"><nav class="ds-nav" aria-label="Design system">
 <div class="ds-nav__brand"><a href="../index.html">Waypoint DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
 <details open><summary>Foundations</summary><ul>
 <li><a href="../foundations/color.html">Color</a></li>
@@ -89,22 +78,5 @@
 <li><a href="../patterns/notifications.html">Notifications</a></li>
 <li><a href="../patterns/content-and-tone.html">Content and tone</a></li>
 </ul></details></nav>
-<main id="main" class="ds-main">
-<header class="ds-header">
-<p class="ds-kicker">Foundation</p>
-<h1>Shape</h1>
-<p class="ds-lead">Pills for controls, soft 8px cards, 14px dialogs and a 1.5px hairline stroke.</p>
-<div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Light + dark</span></div>
-<ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#radii">Radii</a></li><li><a href="#usage">Usage</a></li><li><a href="#tokens">Tokens</a></li></ul>
-</header>
-<section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2><p>Buttons, badges, chips and avatars are full pills (the most recognisable trait of the brand). Inputs use 6px, cards 8px, dialogs 14px. The mocks' 1.5px border width is kept as the default stroke.</p></section>
-<section class="ds-section" id="radii"><h2><a href="#radii">Radii</a></h2><div class="ds-scale"><div class="ds-scale__row"><code>--radius-xs</code><span class="ds-scale__box" style="border-radius: var(--radius-xs)"></span><span data-token="--radius-xs"></span></div><div class="ds-scale__row"><code>--radius-sm</code><span class="ds-scale__box" style="border-radius: var(--radius-sm)"></span><span data-token="--radius-sm"></span></div><div class="ds-scale__row"><code>--radius-md</code><span class="ds-scale__box" style="border-radius: var(--radius-md)"></span><span data-token="--radius-md"></span></div><div class="ds-scale__row"><code>--radius-lg</code><span class="ds-scale__box" style="border-radius: var(--radius-lg)"></span><span data-token="--radius-lg"></span></div><div class="ds-scale__row"><code>--radius-xl</code><span class="ds-scale__box" style="border-radius: var(--radius-xl)"></span><span data-token="--radius-xl"></span></div><div class="ds-scale__row"><code>--radius-full</code><span class="ds-scale__box" style="border-radius: var(--radius-full)"></span><span data-token="--radius-full"></span></div></div></section>
-<section class="ds-section" id="usage"><h2><a href="#usage">Usage</a></h2><ul><li>Radius grows with element size: input md, card lg, dialog xl.</li><li>Never mix pill and square buttons on one view.</li><li>Twenty distinct radii in the mocks (5px, 7px, 10px…) collapsed to five.</li></ul></section>
-<section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2><div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">Sample</th></tr></thead><tbody><tr><td><code>--radius-xs</code></td><td><span data-token="--radius-xs"></span></td><td></td></tr><tr><td><code>--radius-sm</code></td><td><span data-token="--radius-sm"></span></td><td></td></tr><tr><td><code>--radius-md</code></td><td><span data-token="--radius-md"></span></td><td></td></tr><tr><td><code>--radius-lg</code></td><td><span data-token="--radius-lg"></span></td><td></td></tr><tr><td><code>--radius-xl</code></td><td><span data-token="--radius-xl"></span></td><td></td></tr><tr><td><code>--radius-full</code></td><td><span data-token="--radius-full"></span></td><td></td></tr><tr><td><code>--border-width-hairline</code></td><td><span data-token="--border-width-hairline"></span></td><td></td></tr><tr><td><code>--border-width-thick</code></td><td><span data-token="--border-width-thick"></span></td><td></td></tr><tr><td><code>--border-width-accent</code></td><td><span data-token="--border-width-accent"></span></td><td></td></tr></tbody></table></div></section>
-
-<footer class="ds-footer"><span>Waypoint design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-15</span><a href="#top">Back to top</a></footer>
-</main>
-</div>
-<script src="../assets/ds.js"></script>
-</body>
-</html>
+<main class="ds-main" id="main"><header class="ds-header"><p class="ds-kicker">PromiseHub · Foundation</p><h1>Shape</h1><p class="ds-lead">Five ordinary radii and one full pill radius establish a consistent rounded language.</p><div class="ds-meta"><span class="ds-pill">Extracted 25 October 2026</span><span class="ds-pill ds-pill--ok">Light + dark contrast verified</span></div></header>
+<section class="ds-section" id="principles"><h2><a href="#principles">Principles</a></h2><p>Use extra-small for tiny indicators, small for compact labels, medium for controls, large for cards and dialogs, and extra-large for sheets. Full radius is reserved for circles and pills. Hairline borders separate content; thick borders emphasize controls and emergency notices.</p></section><section class="ds-section" id="radii"><h2><a href="#radii">Radii</a></h2><div class="ds-shadow-grid"><div style="border-radius:var(--radius-xs)">--radius-xs</div><div style="border-radius:var(--radius-sm)">--radius-sm</div><div style="border-radius:var(--radius-md)">--radius-md</div><div style="border-radius:var(--radius-lg)">--radius-lg</div><div style="border-radius:var(--radius-xl)">--radius-xl</div><div style="border-radius:var(--radius-full)">--radius-full</div></div></section><section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2><p>Each token is assigned to exactly one foundation page. Values below resolve independently in light and dark scopes.</p><div class="ds-table-wrap" tabindex="0" role="region" aria-label="Scrollable reference table"><table class="ds-table"><thead><tr><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead><tbody><tr><td><code>--radius-xs</code></td><td><span data-theme="light" data-token="--radius-xs"></span></td><td><span data-theme="dark" data-token="--radius-xs"></span></td></tr><tr><td><code>--radius-sm</code></td><td><span data-theme="light" data-token="--radius-sm"></span></td><td><span data-theme="dark" data-token="--radius-sm"></span></td></tr><tr><td><code>--radius-md</code></td><td><span data-theme="light" data-token="--radius-md"></span></td><td><span data-theme="dark" data-token="--radius-md"></span></td></tr><tr><td><code>--radius-lg</code></td><td><span data-theme="light" data-token="--radius-lg"></span></td><td><span data-theme="dark" data-token="--radius-lg"></span></td></tr><tr><td><code>--radius-xl</code></td><td><span data-theme="light" data-token="--radius-xl"></span></td><td><span data-theme="dark" data-token="--radius-xl"></span></td></tr><tr><td><code>--radius-full</code></td><td><span data-theme="light" data-token="--radius-full"></span></td><td><span data-theme="dark" data-token="--radius-full"></span></td></tr><tr><td><code>--border-width-hairline</code></td><td><span data-theme="light" data-token="--border-width-hairline"></span></td><td><span data-theme="dark" data-token="--border-width-hairline"></span></td></tr><tr><td><code>--border-width-thick</code></td><td><span data-theme="light" data-token="--border-width-thick"></span></td><td><span data-theme="dark" data-token="--border-width-thick"></span></td></tr></tbody></table></div></section><section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2><p>Extracted from <a href="../../mocks/index.html">the PromiseHub mocks</a>, the original shared token file and the promoted component stylesheet. See the <a href="../README.md">drift and verification record</a>.</p></section><footer class="ds-footer"><span>Waypoint design system · <a href="../../mocks/index.html">Source mocks</a></span><a href="#main">Back to content</a></footer></main></div><script src="../assets/ds.js"></script></body></html>

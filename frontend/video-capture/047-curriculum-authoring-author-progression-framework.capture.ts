@@ -46,7 +46,7 @@ test('capture: author the progression framework', async ({ page, request }) => {
   await addCompetency(stageOne, 'Prays with a partner');
   await addCompetency(stageTwo, 'Leads a small group');
   // Stage numbers depend on other stages in the shared demo data, so leave them out.
-  await stageOne.locator('.w-eyebrow').evaluate((el) => (el.style.visibility = 'hidden'));
+  await stageOne.locator('.ph-eyebrow').evaluate((el) => (el.style.visibility = 'hidden'));
   await shotAround(
     [
       stageOne.getByRole('button', { name: 'Move stage up' }),

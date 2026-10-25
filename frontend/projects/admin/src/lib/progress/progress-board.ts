@@ -38,7 +38,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
 
 // Traces to: L2-ADMIN-004, L2-REPORT-003, L2-NFR-005
 @Component({
-  selector: 'w-progress-board',
+  selector: 'ph-progress-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

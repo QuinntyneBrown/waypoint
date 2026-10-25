@@ -45,7 +45,7 @@ const ROLES: readonly WRoleName[] = [
 
 // Traces to: L2-AUTH-003, L2-AUTH-004
 @Component({
-  selector: 'w-invitations',
+  selector: 'ph-invitations',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,

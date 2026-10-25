@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 /** Names a control. Bind it with `for`/`id`. */
 @Component({
-  selector: 'label[w-label], span[w-label], legend[w-label]',
+  selector: 'label[ph-label], span[ph-label], legend[ph-label]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-label' },
+  host: { class: 'ph-label' },
   templateUrl: './label.html',
   styleUrl: './label.css',
 })

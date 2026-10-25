@@ -25,7 +25,7 @@ type ProgressTab = 'overview' | 'quizzes' | 'attendance';
 
 // Traces to: L2-LEARN-010
 @Component({
-  selector: 'w-youth-progress',
+  selector: 'ph-youth-progress',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

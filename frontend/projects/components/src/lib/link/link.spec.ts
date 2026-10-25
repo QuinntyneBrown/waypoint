@@ -5,8 +5,8 @@ import { Link } from './link';
 @Component({
   imports: [Link],
   template: `
-    <a w-link href="/help">help centre</a>
-    <a w-link standalone href="/admin/cohorts">Back to cohorts</a>
+    <a ph-link href="/help">help centre</a>
+    <a ph-link standalone href="/admin/cohorts">Back to cohorts</a>
   `,
 })
 class Host {}
@@ -21,13 +21,13 @@ describe('Link', () => {
 
   it('is an inline link by default and keeps its text', async () => {
     const [inline] = Array.from(await render());
-    expect(inline.classList.contains('w-link')).toBe(true);
-    expect(inline.classList.contains('w-link--standalone')).toBe(false);
+    expect(inline.classList.contains('ph-link')).toBe(true);
+    expect(inline.classList.contains('ph-link--standalone')).toBe(false);
     expect(inline.textContent?.trim()).toBe('help centre');
   });
 
   it('marks a standalone link', async () => {
     const links = Array.from(await render());
-    expect(links[1].classList.contains('w-link--standalone')).toBe(true);
+    expect(links[1].classList.contains('ph-link--standalone')).toBe(true);
   });
 });

@@ -16,9 +16,9 @@ type Story = StoryObj<Checkbox>;
 export const Default: Story = {
   render: () => ({
     template: `
-      <label w-checkbox>
+      <label ph-checkbox>
         <input type="checkbox" />
-        <span w-checkbox-box><w-icon name="check" /></span>
+        <span ph-checkbox-box><ph-icon name="check" /></span>
         <span>Keep me signed in</span>
       </label>`,
   }),
@@ -27,9 +27,9 @@ export const Default: Story = {
 export const Checked: Story = {
   render: () => ({
     template: `
-      <label w-checkbox>
+      <label ph-checkbox>
         <input type="checkbox" checked />
-        <span w-checkbox-box><w-icon name="check" /></span>
+        <span ph-checkbox-box><ph-icon name="check" /></span>
         <span>Keep me signed in</span>
       </label>`,
   }),
@@ -38,9 +38,9 @@ export const Checked: Story = {
 export const Disabled: Story = {
   render: () => ({
     template: `
-      <label w-checkbox>
+      <label ph-checkbox>
         <input type="checkbox" disabled />
-        <span w-checkbox-box><w-icon name="check" /></span>
+        <span ph-checkbox-box><ph-icon name="check" /></span>
         <span>Keep me signed in</span>
       </label>`,
   }),

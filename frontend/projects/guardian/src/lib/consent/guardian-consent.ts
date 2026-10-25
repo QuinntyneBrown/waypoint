@@ -25,7 +25,7 @@ import { GuardianContextService } from '../guardian-context.service';
 
 // Traces to: L2-GUARDIAN-003, L2-CONSENT-001
 @Component({
-  selector: 'w-guardian-consent',
+  selector: 'ph-guardian-consent',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

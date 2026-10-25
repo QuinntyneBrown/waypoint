@@ -1,7 +1,7 @@
 /* Public-site app-level styles. Design tokens/components come from w-ui
-   (fonts.css + core.css, wired via angular.json). Only marketing-page helpers
+   (tokens.css + core.css, wired via angular.json). Only marketing-page helpers
    not present in the core design system live here. */
 
-.w-section {
-  padding-block: var(--w-s9);
+.ph-section {
+  padding-block: var(--ph-s9);
 }

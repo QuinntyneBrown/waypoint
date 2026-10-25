@@ -4,7 +4,7 @@ import { Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-PLATFORM-009
 @Component({
-  selector: 'w-maintenance',
+  selector: 'ph-maintenance',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, Button],
   templateUrl: './maintenance.html',

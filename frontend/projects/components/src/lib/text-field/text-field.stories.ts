@@ -5,7 +5,7 @@ const meta: Meta<TextField> = {
   title: 'Components/Text field',
   component: TextField,
   render: () => ({
-    template: `<input w-text-field type="text" placeholder="name@school.org" />`,
+    template: `<input ph-text-field type="text" placeholder="name@school.org" />`,
   }),
 };
 

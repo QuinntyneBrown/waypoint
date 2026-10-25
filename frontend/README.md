@@ -10,7 +10,7 @@ This Angular 21 workspace is layered into application, feature, API, and compone
 | Components library | `@waypoint/components` (`projects/components`)                                                                                                                                                                           | nothing in the workspace                                                                                              |
 
 - `@waypoint/api`: services that talk to the backend, plus the DTO and enum models.
-- `@waypoint/components`: presentation components, the shell, icons, design-system styles, and UI-only services such as toasts and offline status.
+- `@waypoint/components`: presentation components with the `ph` prefix (`<ph-shell>`, `button[ph-button]`), the shell, icons, the PromiseHub design-system styles (DECISIONS #25), and UI-only services such as toasts and offline status.
 - `@waypoint/auth`: session state, guards, the auth interceptor, and (in the `pages` entry point) the sign-in, invitation, and password-reset pages.
 - `@waypoint/core`: portal-wide feature services: drafts, unsaved-changes guard, consent guard, idle session, interceptors, display preferences, and shell role. The SignalR `realtime` and offline `attendance` queue services are secondary entry points so the portal can lazy-load them.
 - `@waypoint/account`: settings, onboarding, help, support, invitations, and the error/state pages.
