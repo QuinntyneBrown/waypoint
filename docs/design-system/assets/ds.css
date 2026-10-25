@@ -168,3 +168,43 @@ pre code { background: none; padding: 0; }
 .ds-card span { color: var(--color-fg-muted); font: var(--text-body-sm); }
 .ds-card__preview { height: 4.5rem; display: grid; place-items: center; background: var(--color-bg-canvas); border-radius: var(--radius-md); margin-bottom: var(--space-3); overflow: hidden; }
 @media print { .ds-nav, .ds-theme-toggle, .ds-copy { display: none !important; } .ds-shell { display: block; } }
+
+/* PromiseHub documentation layout: specimens remain independent of product positioning. */
+.ds-shell, .ds-main, .ds-nav, .ds-themes > *, .ds-example__canvas { min-width: 0; }
+.ds-main { overflow-wrap: anywhere; }
+.ds-main figure { margin-inline: 0; }
+.ds-example__canvas > * { max-width: 100%; min-width: 0; }
+.ds-example__canvas--stack > .btn { align-self: flex-start; }
+.ds-anatomy__figure > * { max-width: 100%; min-width: 0; }
+.ds-anatomy__list code { white-space: nowrap; flex-shrink: 0; }
+.ds-main .tabs { max-width: 100%; width: 100%; }
+.ds-main .wizard-card, .ds-main .onboarding { min-width: 0; max-width: 100%; width: 100%; }
+.ds-main .wizard-card__footer { flex-wrap: wrap; }
+.ds-in-flow { position: static !important; inset: auto !important; width: 100% !important; height: auto !important; max-height: none !important; display: flex !important; margin: 0 !important; translate: none !important; }
+.ds-example__canvas .dialog { width: 100%; }
+.ds-matrix td { min-width: var(--layout-control-width); max-width: var(--layout-sheet-width); }
+.ds-matrix[data-theme] { background: var(--color-bg-surface); color: var(--color-fg-default); }
+.ds-matrix details, .ds-main details { min-width: 0; }
+.ds-main > .ds-section > details { margin-block: var(--space-4); }
+.ds-main > .ds-section > details > summary { cursor: pointer; min-height: var(--target-comfortable); padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); }
+.ds-themes .ds-in-flow { flex-wrap: wrap; }
+.ds-themes .ds-in-flow .topbar__nav, .ds-themes .topbar__search { display: none; }
+.ds-table-wrap, .ds-matrix { max-width: 100%; }
+.ds-table code { overflow-wrap: anywhere; }
+.ds-grid-demo { display: grid; grid-template-columns: repeat(var(--layout-columns), minmax(0,1fr)); gap: var(--layout-gutter); margin-block: var(--space-4); }
+.ds-grid-demo span { min-width: 0; background: var(--color-accent-subtle); color: var(--color-fg-accent); text-align: center; padding-block: var(--space-3); }
+.ds-motion-demo[data-run="true"] .dot { translate: var(--space-24) 0; }
+.ds-main .tooltip-anchor { margin-block-start: var(--space-12); }
+.ds-main .skip-link { position: static; transform: none; translate: none; }
+.ds-main .quick-card { width: 100%; }
+.ds-main .roster { width: 100%; }
+.ds-main .roster__item { flex-wrap: wrap; }
+.ds-main .roster__action { margin-inline-start: auto; }
+.ds-main pre { max-width: 100%; overflow-x: auto; }
+.ds-pair { flex-wrap: wrap; }
+.ds-nav__brand { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+@media (max-width: 39.99rem) {
+  .ds-themes > [data-theme], .ds-example__canvas, .ds-anatomy__figure { padding: var(--space-3); }
+  .ds-scale__row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .ds-scale__bar { grid-column: 1 / -1; }
+}

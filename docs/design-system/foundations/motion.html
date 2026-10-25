@@ -1,19 +1,8 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Motion — Waypoint design system</title>
-<meta name="description" content="Short, functional transitions. Nothing moves that does not explain a change.">
-<link rel="stylesheet" href="../assets/fonts.css">
-<link rel="stylesheet" href="../tokens/tokens.css">
-<link rel="stylesheet" href="../assets/components.css">
-<link rel="stylesheet" href="../assets/ds.css">
-</head>
-<body id="top">
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="ds-shell">
-<nav class="ds-nav" aria-label="Design system">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion — Waypoint design system</title><meta name="description" content="Movement explains change and remains optional.">
+<link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../assets/components.css"><link rel="stylesheet" href="../assets/ds.css"></head>
+<body><a class="skip-link" href="#main">Skip to content</a><div class="ds-shell"><nav class="ds-nav" aria-label="Design system">
 <div class="ds-nav__brand"><a href="../index.html">Waypoint DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
 <details open><summary>Foundations</summary><ul>
 <li><a href="../foundations/color.html">Color</a></li>
@@ -89,23 +78,5 @@
 <li><a href="../patterns/notifications.html">Notifications</a></li>
 <li><a href="../patterns/content-and-tone.html">Content and tone</a></li>
 </ul></details></nav>
-<main id="main" class="ds-main">
-<header class="ds-header">
-<p class="ds-kicker">Foundation</p>
-<h1>Motion</h1>
-<p class="ds-lead">Short, functional transitions. Nothing moves that does not explain a change.</p>
-<div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Light + dark</span></div>
-<ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#durations">Durations</a></li><li><a href="#usage">Usage</a></li><li><a href="#accessibility">Reduced motion</a></li><li><a href="#tokens">Tokens</a></li></ul>
-</header>
-<section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2><p>The mocks used nine durations (.12s–.4s) and the CSS <code>ease</code> keyword; these became four steps and a standard curve equal to <code>ease</code>.</p></section>
-<section class="ds-section" id="durations"><h2><a href="#durations">Durations</a></h2><div class="ds-motion-demo"><button class="w-btn w-btn--ghost w-btn--sm" type="button" data-duration="--duration-instant">Replay instant</button><span data-token="--duration-instant"></span></div><div class="ds-motion-demo"><button class="w-btn w-btn--ghost w-btn--sm" type="button" data-duration="--duration-fast">Replay fast</button><span data-token="--duration-fast"></span></div><div class="ds-motion-demo"><button class="w-btn w-btn--ghost w-btn--sm" type="button" data-duration="--duration-base">Replay base</button><span data-token="--duration-base"></span></div><div class="ds-motion-demo"><button class="w-btn w-btn--ghost w-btn--sm" type="button" data-duration="--duration-slow">Replay slow</button><span data-token="--duration-slow"></span></div><div class="ds-motion-demo"><button class="w-btn w-btn--ghost w-btn--sm" type="button" data-duration="--duration-deliberate">Replay deliberate</button><span data-token="--duration-deliberate"></span></div></section>
-<section class="ds-section" id="usage"><h2><a href="#usage">Usage</a></h2><ul><li>Hover and colour: fast (150ms).</li><li>Fades, dialog pop, tab panel: base (200ms).</li><li>Sidebar drawer, toast slide-in: slow (250ms).</li><li>Progress fill: deliberate (400ms).</li><li>Enter with <code>--ease-enter</code>, leave with <code>--ease-exit</code>, faster than entering.</li></ul></section>
-<section class="ds-section" id="accessibility"><h2><a href="#accessibility">Reduced motion</a></h2><p>Under <code>prefers-reduced-motion: reduce</code> the duration tokens drop to 0.01ms, and <code>components.css</code> removes shimmer and slide keyframes. Spinners keep turning because they communicate status.</p></section>
-<section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2><div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">Sample</th></tr></thead><tbody><tr><td><code>--duration-instant</code></td><td><span data-token="--duration-instant"></span></td><td></td></tr><tr><td><code>--duration-fast</code></td><td><span data-token="--duration-fast"></span></td><td></td></tr><tr><td><code>--duration-base</code></td><td><span data-token="--duration-base"></span></td><td></td></tr><tr><td><code>--duration-slow</code></td><td><span data-token="--duration-slow"></span></td><td></td></tr><tr><td><code>--duration-deliberate</code></td><td><span data-token="--duration-deliberate"></span></td><td></td></tr><tr><td><code>--ease-standard</code></td><td><span data-token="--ease-standard"></span></td><td></td></tr><tr><td><code>--ease-enter</code></td><td><span data-token="--ease-enter"></span></td><td></td></tr><tr><td><code>--ease-exit</code></td><td><span data-token="--ease-exit"></span></td><td></td></tr><tr><td><code>--ease-spring</code></td><td><span data-token="--ease-spring"></span></td><td></td></tr></tbody></table></div></section>
-
-<footer class="ds-footer"><span>Waypoint design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-15</span><a href="#top">Back to top</a></footer>
-</main>
-</div>
-<script src="../assets/ds.js"></script>
-</body>
-</html>
+<main class="ds-main" id="main"><header class="ds-header"><p class="ds-kicker">PromiseHub · Foundation</p><h1>Motion</h1><p class="ds-lead">Movement explains change and remains optional.</p><div class="ds-meta"><span class="ds-pill">Extracted 25 October 2026</span><span class="ds-pill ds-pill--ok">Light + dark contrast verified</span></div></header>
+<section class="ds-section" id="principles"><h2><a href="#principles">Principles</a></h2><p>Use 120ms for hover, 200ms for reveals, 320ms for sheets and 500ms only for deliberate completion. Tooltips wait 300ms before showing and close immediately. Reduced-motion tokens reduce transitions to near-zero; decorative loops stop. Never flash or animate critical medical information.</p><div class="ds-motion-demo" data-run="false"><button class="ph-btn" type="button" data-motion-run>Replay reveal</button><span class="ph-dot" aria-hidden="true"></span></div></section><section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2><p>Each token is assigned to exactly one foundation page. Values below resolve independently in light and dark scopes.</p><div class="ds-table-wrap" tabindex="0" role="region" aria-label="Scrollable reference table"><table class="ds-table"><thead><tr><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead><tbody><tr><td><code>--duration-instant</code></td><td><span data-theme="light" data-token="--duration-instant"></span></td><td><span data-theme="dark" data-token="--duration-instant"></span></td></tr><tr><td><code>--duration-fast</code></td><td><span data-theme="light" data-token="--duration-fast"></span></td><td><span data-theme="dark" data-token="--duration-fast"></span></td></tr><tr><td><code>--duration-base</code></td><td><span data-theme="light" data-token="--duration-base"></span></td><td><span data-theme="dark" data-token="--duration-base"></span></td></tr><tr><td><code>--duration-slow</code></td><td><span data-theme="light" data-token="--duration-slow"></span></td><td><span data-theme="dark" data-token="--duration-slow"></span></td></tr><tr><td><code>--duration-deliberate</code></td><td><span data-theme="light" data-token="--duration-deliberate"></span></td><td><span data-theme="dark" data-token="--duration-deliberate"></span></td></tr><tr><td><code>--duration-loop</code></td><td><span data-theme="light" data-token="--duration-loop"></span></td><td><span data-theme="dark" data-token="--duration-loop"></span></td></tr><tr><td><code>--ease-standard</code></td><td><span data-theme="light" data-token="--ease-standard"></span></td><td><span data-theme="dark" data-token="--ease-standard"></span></td></tr><tr><td><code>--ease-enter</code></td><td><span data-theme="light" data-token="--ease-enter"></span></td><td><span data-theme="dark" data-token="--ease-enter"></span></td></tr><tr><td><code>--ease-exit</code></td><td><span data-theme="light" data-token="--ease-exit"></span></td><td><span data-theme="dark" data-token="--ease-exit"></span></td></tr><tr><td><code>--ease-spring</code></td><td><span data-theme="light" data-token="--ease-spring"></span></td><td><span data-theme="dark" data-token="--ease-spring"></span></td></tr><tr><td><code>--duration-tooltip-delay</code></td><td><span data-theme="light" data-token="--duration-tooltip-delay"></span></td><td><span data-theme="dark" data-token="--duration-tooltip-delay"></span></td></tr></tbody></table></div></section><section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2><p>Extracted from <a href="../../mocks/index.html">the PromiseHub mocks</a>, the original shared token file and the promoted component stylesheet. See the <a href="../README.md">drift and verification record</a>.</p></section><footer class="ds-footer"><span>Waypoint design system · <a href="../../mocks/index.html">Source mocks</a></span><a href="#main">Back to content</a></footer></main></div><script src="../assets/ds.js"></script></body></html>

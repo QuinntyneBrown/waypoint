@@ -1,19 +1,8 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Content — Waypoint design system</title>
-<meta name="description" content="Warm, plain, encouraging. Written for 10–18 year olds and the adults around them.">
-<link rel="stylesheet" href="../assets/fonts.css">
-<link rel="stylesheet" href="../tokens/tokens.css">
-<link rel="stylesheet" href="../assets/components.css">
-<link rel="stylesheet" href="../assets/ds.css">
-</head>
-<body id="top">
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="ds-shell">
-<nav class="ds-nav" aria-label="Design system">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Content — Waypoint design system</title><meta name="description" content="Speak calmly and directly to staff and families, in their language.">
+<link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../assets/components.css"><link rel="stylesheet" href="../assets/ds.css"></head>
+<body><a class="skip-link" href="#main">Skip to content</a><div class="ds-shell"><nav class="ds-nav" aria-label="Design system">
 <div class="ds-nav__brand"><a href="../index.html">Waypoint DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
 <details open><summary>Foundations</summary><ul>
 <li><a href="../foundations/color.html">Color</a></li>
@@ -89,24 +78,5 @@
 <li><a href="../patterns/notifications.html">Notifications</a></li>
 <li><a href="../patterns/content-and-tone.html">Content and tone</a></li>
 </ul></details></nav>
-<main id="main" class="ds-main">
-<header class="ds-header">
-<p class="ds-kicker">Foundation</p>
-<h1>Content</h1>
-<p class="ds-lead">Warm, plain, encouraging. Written for 10–18 year olds and the adults around them.</p>
-<div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Light + dark</span></div>
-<ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#voice">Voice and tone</a></li><li><a href="#mechanics">Mechanics</a></li><li><a href="#errors">Error formula</a></li><li><a href="#empty">Empty-state formula</a></li><li><a href="#microcopy">Microcopy library</a></li></ul>
-</header>
-<section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2><p>Waypoint speaks like a good mentor: clear, kind, specific. Faith language is welcome where it belongs (lessons, scripture), never in system messages.</p></section>
-<section class="ds-section" id="voice"><h2><a href="#voice">Voice and tone</a></h2><ul><li>Youth screens: encouraging and brief ("Nice work — 3 lessons this week").</li><li>Guardian screens: reassuring and factual.</li><li>Admin screens: neutral and precise.</li></ul></section>
-<section class="ds-section" id="mechanics"><h2><a href="#mechanics">Mechanics</a></h2><ul><li>Sentence case everywhere, including buttons and headings.</li><li>Buttons are verbs: "Send invite", "Start lesson".</li><li>Dates: 12 Mar 2026; times: 6:30 pm; relative only under a week, with the absolute date on hover/title.</li><li>Numbers: numerals; ranges with an en dash (1–25).</li><li>Names: first name for youth, full name in admin tables.</li></ul></section>
-<section class="ds-section" id="errors"><h2><a href="#errors">Error formula</a></h2><p><b>What happened + how to fix it.</b> "We couldn't send the invite. Check the email address and try again." No blame, no codes in the main text.</p></section>
-<section class="ds-section" id="empty"><h2><a href="#empty">Empty-state formula</a></h2><p><b>What is empty + why + next step.</b> "No applications yet. When young people apply, they appear here." + one action.</p></section>
-<section class="ds-section" id="microcopy"><h2><a href="#microcopy">Microcopy library</a></h2><div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Use</th><th scope="col">Avoid</th></tr></thead><tbody><tr><td>Sign in</td><td>Log in, Login</td></tr><tr><td>Save changes</td><td>Submit, OK</td></tr><tr><td>Cancel</td><td>Close (in forms)</td></tr><tr><td>Remove from cohort</td><td>Delete (when data is kept)</td></tr><tr><td>Try again</td><td>Retry operation</td></tr><tr><td>Pending / Approved / Declined</td><td>Waiting / OK / Rejected</td></tr><tr><td>Mentor</td><td>Leader, Coach (inconsistent in mocks)</td></tr></tbody></table></div></section>
-
-<footer class="ds-footer"><span>Waypoint design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-15</span><a href="#top">Back to top</a></footer>
-</main>
-</div>
-<script src="../assets/ds.js"></script>
-</body>
-</html>
+<main class="ds-main" id="main"><header class="ds-header"><p class="ds-kicker">PromiseHub · Foundation</p><h1>Content</h1><p class="ds-lead">Speak calmly and directly to staff and families, in their language.</p><div class="ds-meta"><span class="ds-pill">Extracted 25 October 2026</span><span class="ds-pill ds-pill--ok">Light + dark contrast verified</span></div></header>
+<section class="ds-section" id="principles"><h2><a href="#principles">Principles</a></h2><p>Use sentence case and specific verbs. Say “Send permission slip”, not “Submit”; “Add a child”, not “Create entity”. An error states what happened and how to recover. An empty state names what is missing and offers one action. Avoid blame and jargon. Keep medical details out of shared previews.</p></section><section class="ds-section" id="microcopy"><h2><a href="#microcopy">Microcopy</a></h2><div class="ds-table-wrap" tabindex="0" role="region" aria-label="Scrollable reference table"><table class="ds-table"><thead><tr><th scope="col">Situation</th><th scope="col">Recommended copy</th><th scope="col">Rule</th></tr></thead><tbody><tr><td>Success</td><td>Mateo is checked in.</td><td>Name the completed action.</td></tr><tr><td>Error</td><td>We could not send the slip. Check your connection and try again.</td><td>Cause plus recovery; no blame.</td></tr><tr><td>No results</td><td>No households match “Rivera”. Clear the filters to see everyone.</td><td>Echo the search and explain recovery.</td></tr><tr><td>First run</td><td>No children enrolled yet. Add a child to get started.</td><td>One next action.</td></tr><tr><td>Pending sync</td><td>Check-in saved on this device. Waiting to sync.</td><td>Do not claim a server save.</td></tr><tr><td>Count</td><td>3 of 24 children checked in</td><td>Keep denominator and subject.</td></tr><tr><td>Date</td><td>Thursday 5 November, 3:30 pm</td><td>Spell the month; honor locale and timezone.</td></tr><tr><td>Confirmation</td><td>Send this permission slip to 24 guardians?</td><td>Review audience and consequence.</td></tr></tbody></table></div></section><section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2><p>Extracted from <a href="../../mocks/index.html">the PromiseHub mocks</a>, the original shared token file and the promoted component stylesheet. See the <a href="../README.md">drift and verification record</a>.</p></section><footer class="ds-footer"><span>Waypoint design system · <a href="../../mocks/index.html">Source mocks</a></span><a href="#main">Back to content</a></footer></main></div><script src="../assets/ds.js"></script></body></html>

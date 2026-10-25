@@ -1,19 +1,8 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Theming — Waypoint design system</title>
-<meta name="description" content="Light and dark from one token file; brand themes by overriding semantic tokens only.">
-<link rel="stylesheet" href="../assets/fonts.css">
-<link rel="stylesheet" href="../tokens/tokens.css">
-<link rel="stylesheet" href="../assets/components.css">
-<link rel="stylesheet" href="../assets/ds.css">
-</head>
-<body id="top">
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="ds-shell">
-<nav class="ds-nav" aria-label="Design system">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Theming — Waypoint design system</title><meta name="description" content="Change semantic roles once to update every component and mock.">
+<link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../assets/components.css"><link rel="stylesheet" href="../assets/ds.css"></head>
+<body><a class="skip-link" href="#main">Skip to content</a><div class="ds-shell"><nav class="ds-nav" aria-label="Design system">
 <div class="ds-nav__brand"><a href="../index.html">Waypoint DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
 <details open><summary>Foundations</summary><ul>
 <li><a href="../foundations/color.html">Color</a></li>
@@ -89,26 +78,5 @@
 <li><a href="../patterns/notifications.html">Notifications</a></li>
 <li><a href="../patterns/content-and-tone.html">Content and tone</a></li>
 </ul></details></nav>
-<main id="main" class="ds-main">
-<header class="ds-header">
-<p class="ds-kicker">Foundation</p>
-<h1>Theming</h1>
-<p class="ds-lead">Light and dark from one token file; brand themes by overriding semantic tokens only.</p>
-<div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Light + dark</span></div>
-<ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#tiers">Token tiers</a></li><li><a href="#adding">Adding a theme</a></li><li><a href="#json">tokens.json</a></li><li><a href="#preferences">User preferences</a></li></ul>
-</header>
-<section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2><p>Light is <code>:root</code>. Dark applies with <code>[data-theme="dark"]</code> on any element, or automatically when the OS prefers dark and the page has not forced <code>data-theme="light"</code>. Each theme sets <code>color-scheme</code> so native controls follow.</p><p>The mocks are light-only; the dark theme is built from roles: warm ink surfaces that lighten as they rise, lime as the accent, deep status tints with light text.</p></section>
-<section class="ds-section" id="tiers"><h2><a href="#tiers">Token tiers</a></h2><ul><li><b>Primitives</b> (<code>--palette-*</code>, <code>--font-*</code>): raw values.</li><li><b>Semantic</b> (<code>--color-*</code>, <code>--space-*</code> …): what components read; themes override only these.</li><li><b>Component</b> (<code>--btn-*</code>, <code>--field-border</code>, <code>--badge-*</code>, <code>--alert-*</code>): scoped aliases in <code>components.css</code>.</li></ul></section>
-<section class="ds-section" id="adding"><h2><a href="#adding">Adding a theme</a></h2><pre><code>[data-theme="partner"] {
-  --color-brand: var(--palette-teal-300);
-  --color-fg-on-brand: var(--palette-ink-900);
-}</code></pre><ul><li>Override semantic tokens only.</li><li>Add the theme to <code>contrast-pairs.json</code> and run <code>check_contrast.py</code>.</li><li>Never fork <code>components.css</code> for a theme.</li></ul></section>
-<section class="ds-section" id="json"><h2><a href="#json">tokens.json</a></h2><p><code>tokens/tokens.json</code> is the DTCG export (<code>$type</code>, <code>$value</code>, aliases as <code>{group.token}</code>, dark values under <code>$extensions</code>). Regenerate it with <code>tokens_to_json.py</code> after editing <code>tokens.css</code>; generate platform constants from it.</p></section>
-<section class="ds-section" id="preferences"><h2><a href="#preferences">User preferences</a></h2><ul><li><code>prefers-contrast: more</code> raises borders and muted text to stronger tokens.</li><li><code>forced-colors: active</code> hands focus ring and borders to system colours.</li><li><code>prefers-reduced-motion</code> zeroes durations.</li></ul></section>
-
-<footer class="ds-footer"><span>Waypoint design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-15</span><a href="#top">Back to top</a></footer>
-</main>
-</div>
-<script src="../assets/ds.js"></script>
-</body>
-</html>
+<main class="ds-main" id="main"><header class="ds-header"><p class="ds-kicker">PromiseHub · Foundation</p><h1>Theming</h1><p class="ds-lead">Change semantic roles once to update every component and mock.</p><div class="ds-meta"><span class="ds-pill">Extracted 25 October 2026</span><span class="ds-pill ds-pill--ok">Light + dark contrast verified</span></div></header>
+<section class="ds-section" id="principles"><h2><a href="#principles">Principles</a></h2><p>Light is the root default. Dark follows the operating-system preference unless data-theme forces light or dark. The explicit dark block and OS dark block use the same values. Native controls follow color-scheme. Forced-colours defers borders and focus to system colours; increased contrast strengthens muted text and dividers.</p><p>The DTCG <a href="../tokens/tokens.json">tokens.json export</a> is generated from tokens.css. Add a theme by overriding semantic roles, then run every contrast pair before publishing. Side-by-side examples explicitly scope both themes.</p></section><section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2><p>Extracted from <a href="../../mocks/index.html">the PromiseHub mocks</a>, the original shared token file and the promoted component stylesheet. See the <a href="../README.md">drift and verification record</a>.</p></section><footer class="ds-footer"><span>Waypoint design system · <a href="../../mocks/index.html">Source mocks</a></span><a href="#main">Back to content</a></footer></main></div><script src="../assets/ds.js"></script></body></html>

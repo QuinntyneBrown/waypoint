@@ -1,10 +1,13 @@
 # Waypoint design system
 
-Extracted from [docs/mocks](../mocks/README.md) on 2026-10-15. Open [index.html](index.html) locally.
+Waypoint's look comes from the **PromiseHub design system** (DECISIONS #25). Open [index.html](index.html) locally.
 
-The system keeps the mocks' `w-*` class vocabulary, so mocks and product share one language, and replaces the mocks' `--w-*` draft tokens with a three-tier token set that passes WCAG 2.2 AA in light and dark.
+- **Tokens** (`tokens/tokens.css`, `tokens/tokens.json`, `tokens/contrast-pairs.json`) are PromiseHub's, copied verbatim on 2026-10-25, plus a short *Waypoint extensions* block for the few tokens Waypoint components need that PromiseHub lacks (`--color-brand*` alias the accent, `--font-family-heading`, `--font-family-serif`, `--text-scripture`, `--layout-container-wide|narrow`, `--layout-botnav-height`, `--border-width-accent`, `--color-fg-inverse-muted`).
+- **Foundations** are PromiseHub's foundation pages.
+- **Components and patterns** keep Waypoint's page set and markup, with the `ph` prefix (`.ph-btn`, `<ph-alert>`), restyled to the PromiseHub component pages: violet accent, rounded system fonts, hairline-edged pill buttons, elevated cards, left-ruled alerts. PromiseHub's own unprefixed class vocabulary (`.btn`, `.field__label`) is not adopted; see DECISIONS #25.
+- Waypoint-only components (video player, scripture, quiz option, achievement badge, message thread, footer, deployment) are restyled with PromiseHub tokens.
 
-**Status (v1):** this system is the design reference for the mocks. The Angular frontend still styles itself with its own `--w-*` tokens in `frontend/projects/components/src/styles`; migrating it to these tokens is not planned for v1 (DECISIONS #21).
+The Angular library `@waypoint/components` uses these tokens (`frontend/projects/components/src/styles/tokens.css` is a copy) and the same `ph-*` names (DECISIONS #23, #25).
 
 ## Foundations
 
@@ -97,16 +100,16 @@ The system keeps the mocks' `w-*` class vocabulary, so mocks and product share o
 - `tokens/tokens.json` — DTCG export generated from tokens.css.
 - `tokens/contrast-pairs.json` — every fg/bg pair the components rely on; checked in both themes.
 - `assets/components.css` — the component stylesheet (token-only).
-- `assets/fonts.css` — the embedded Inter, Space Grotesk and Fraunces faces, copied from the mocks.
+- No font file: PromiseHub uses the system rounded face (`ui-rounded`, SF Pro Rounded, Nunito, Segoe UI) and Georgia for scripture.
 
 ## Drift found in the mocks
 
 | Mock | Issue | Resolution |
 |---|---|---|
-| assets/css/_core.css (inputs, check, radio) | `--w-border-strong` (28% ink) was 1.9:1 on white; fails 1.4.11. | `--color-border-strong` = ink-500, 3.6:1. |
-| assets/css/_core.css (placeholders, empty icon) | `--w-ink-45` text 2.6:1. | `--color-fg-subtle` / `--color-fg-muted` (5.9:1). |
-| assets/css/_core.css (muted text) | `--w-muted` 60% ink alpha: 4.7:1 on white but 4.2:1 on greige. | Opaque `--color-fg-muted` (ink-600), ≥ 5.4:1 on all light surfaces. |
-| assets/css/_core.css (input focus) | 3px lime halo (`--w-lime-soft`) was 1.2:1; fails 2.4.11. | Solid 2px ring in `--color-focus-ring`. |
+| assets/css/_core.css (inputs, check, radio) | `--ph-border-strong` (28% ink) was 1.9:1 on white; fails 1.4.11. | `--color-border-strong` = ink-500, 3.6:1. |
+| assets/css/_core.css (placeholders, empty icon) | `--ph-ink-45` text 2.6:1. | `--color-fg-subtle` / `--color-fg-muted` (5.9:1). |
+| assets/css/_core.css (muted text) | `--ph-muted` 60% ink alpha: 4.7:1 on white but 4.2:1 on greige. | Opaque `--color-fg-muted` (ink-600), ≥ 5.4:1 on all light surfaces. |
+| assets/css/_core.css (input focus) | 3px lime halo (`--ph-lime-soft`) was 1.2:1; fails 2.4.11. | Solid 2px ring in `--color-focus-ring`. |
 | assets/css/_core.css (checkbox, progress) | Lime fills on white/greige 1.1–1.2:1. | Checked boxes and progress fills use `--color-accent` (ink/lime). |
 | assets/css/_core.css (switch) | Off track #cdcdcd 1.6:1. | `--color-border-strong`. |
 | assets/css/_core.css (danger button, error text) | White on #d5421b 4.2:1; error text 4.2:1. | Danger solid tomato-600; error text tomato-700 (6.3:1). |
@@ -118,7 +121,7 @@ The system keeps the mocks' `w-*` class vocabulary, so mocks and product share o
 | assets/css/_core.css (sizes) | Icon button 38px, sidebar 244px, avatar xs 26px. | 44px, 240px, 24px. |
 | assets/css/_core.css (breakpoints) | 560/600/620/760/820/900/960px. | 640/768/960/1280/1440px. |
 | assets/css/_core.css (motion) | Nine durations .12–.4s. | Four duration tokens. |
-| assets/css/_core.css (links) | Links not underlined (`color:inherit`); fails 1.4.1. | `.w-link` underlined at rest. |
+| assets/css/_core.css (links) | Links not underlined (`color:inherit`); fails 1.4.1. | `.ph-link` underlined at rest. |
 | assets/js/waypoint.js (menus) | Menu items are divs with click handlers; inline positioning. | APG menu button with buttons. |
 | assets/js/waypoint.js (shell) | Burger lacks `aria-expanded`; no skip link. | Added both. |
 | Several pages (tabs, segmented, chips) | Selection by `.is-active` class only. | Styles keyed to `aria-selected`/`aria-pressed`/`aria-current`. |
@@ -129,14 +132,21 @@ The system keeps the mocks' `w-*` class vocabulary, so mocks and product share o
 ## Changelog
 
 - 2026-10-15: initial extraction.
+- 2026-10-25: adopted the PromiseHub tokens and foundations, renamed the `w` prefix to `ph`, restyled the components to PromiseHub, removed the embedded webfonts (DECISIONS #25).
 
 ## Verification
 
-Run on 2026-10-15 with the extracting-design-systems scripts:
+Run on 2026-10-25 after the PromiseHub adoption:
+
+- `check_contrast.py tokens/tokens.css`: 250 pairs passed, 0 failed (light and dark).
+- `check_design_system.py docs/design-system`: 71 pages (12 foundations, 50 components, 8 patterns), 0 errors, 0 warnings.
+- `tokens_to_json.py`: 403 tokens exported to `tokens/tokens.json`.
+
+Initial extraction, run on 2026-10-15 with the extracting-design-systems scripts:
 
 - `check_contrast.py tokens/tokens.css`: 139 pairs passed, 0 failed (light and dark).
 - `check_design_system.py docs/design-system`: 71 pages (12 foundations, 50 components, 8 patterns), 0 errors, 0 warnings.
 - `tokens_to_json.py`: 268 tokens exported to `tokens/tokens.json`.
 - Screenshots: index, button, table, dialog, text field, checkbox and color pages at 360px and 1280px in both themes. Every page was checked for horizontal overflow at 360px: none.
 - Loop back to the mocks: all 118 mocks were rendered in Chromium with their stylesheets swapped for `assets/fonts.css` + `tokens/tokens.css` + `assets/components.css` (injected at runtime, mock files unchanged). Result at 360px and 1280px: no horizontal overflow, no script errors. Remaining visual differences are the corrections in the drift table above (darker borders and muted text, solid focus rings, ink checkboxes and progress fills, 44px icon buttons, 12px minimum type).
-- Mocks re-pointed: all 118 mocks now link `../design-system/assets/fonts.css`, `tokens/tokens.css` and `assets/components.css` instead of `assets/css/waypoint.css`; page-local `var(--w-*)` references in 54 mocks were rewritten to system tokens. Re-check: no horizontal overflow at 360/1280px, no script errors, tokens resolve on every mock (the `_template-*` files keep their two-level-deep relative paths by design).
+- Mocks re-pointed: all 118 mocks now link `../design-system/assets/fonts.css`, `tokens/tokens.css` and `assets/components.css` instead of `assets/css/waypoint.css`; page-local `var(--ph-*)` references in 54 mocks were rewritten to system tokens. Re-check: no horizontal overflow at 360/1280px, no script errors, tokens resolve on every mock (the `_template-*` files keep their two-level-deep relative paths by design).

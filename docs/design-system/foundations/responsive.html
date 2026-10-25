@@ -1,19 +1,8 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Responsive — Waypoint design system</title>
-<meta name="description" content="Mobile first, with one decisive breakpoint at 960px for the app shell.">
-<link rel="stylesheet" href="../assets/fonts.css">
-<link rel="stylesheet" href="../tokens/tokens.css">
-<link rel="stylesheet" href="../assets/components.css">
-<link rel="stylesheet" href="../assets/ds.css">
-</head>
-<body id="top">
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="ds-shell">
-<nav class="ds-nav" aria-label="Design system">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Responsive — Waypoint design system</title><meta name="description" content="Let content wrap and controls stay reachable from a 360px phone to an office laptop.">
+<link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../assets/components.css"><link rel="stylesheet" href="../assets/ds.css"></head>
+<body><a class="skip-link" href="#main">Skip to content</a><div class="ds-shell"><nav class="ds-nav" aria-label="Design system">
 <div class="ds-nav__brand"><a href="../index.html">Waypoint DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
 <details open><summary>Foundations</summary><ul>
 <li><a href="../foundations/color.html">Color</a></li>
@@ -89,22 +78,5 @@
 <li><a href="../patterns/notifications.html">Notifications</a></li>
 <li><a href="../patterns/content-and-tone.html">Content and tone</a></li>
 </ul></details></nav>
-<main id="main" class="ds-main">
-<header class="ds-header">
-<p class="ds-kicker">Foundation</p>
-<h1>Responsive</h1>
-<p class="ds-lead">Mobile first, with one decisive breakpoint at 960px for the app shell.</p>
-<div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Light + dark</span></div>
-<ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#behaviours">Component behaviours</a></li><li><a href="#touch">Touch</a></li><li><a href="#testing">Testing matrix</a></li></ul>
-</header>
-<section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2><p>Most Waypoint youth use phones; admins use laptops. Every screen is designed at 360px first.</p></section>
-<section class="ds-section" id="behaviours"><h2><a href="#behaviours">Component behaviours</a></h2><div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Component</th><th scope="col">&lt; 640px</th><th scope="col">640–959px</th><th scope="col">≥ 960px</th></tr></thead><tbody><tr><td>Shell</td><td>Top bar + bottom nav (youth, guardian) or drawer</td><td>Top bar + drawer</td><td>Top bar + sidebar</td></tr><tr><td>Grid 3/4</td><td>1 col</td><td>2 cols</td><td>3/4 cols</td></tr><tr><td>Table</td><td>Cards (<code>--cards</code>) below 768px</td><td>Table, scrolls</td><td>Table</td></tr><tr><td>Dialog</td><td>Bottom sheet, stacked footer</td><td>Centred</td><td>Centred</td></tr><tr><td>Page actions</td><td>Full width, stacked</td><td>Inline</td><td>Inline</td></tr><tr><td>Toasts</td><td>Full width above bottom nav</td><td>Bottom right</td><td>Bottom right</td></tr></tbody></table></div></section>
-<section class="ds-section" id="touch"><h2><a href="#touch">Touch</a></h2><ul><li>Comfortable target 44px (<code>--target-comfortable</code>); minimum 24px with spacing.</li><li>No hover-only affordances.</li><li>Inputs stay 16px to avoid iOS zoom.</li></ul></section>
-<section class="ds-section" id="testing"><h2><a href="#testing">Testing matrix</a></h2><ul><li>360, 768, 1280px.</li><li>Both themes.</li><li>200% zoom and 320px reflow.</li></ul></section>
-
-<footer class="ds-footer"><span>Waypoint design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-15</span><a href="#top">Back to top</a></footer>
-</main>
-</div>
-<script src="../assets/ds.js"></script>
-</body>
-</html>
+<main class="ds-main" id="main"><header class="ds-header"><p class="ds-kicker">PromiseHub · Foundation</p><h1>Responsive</h1><p class="ds-lead">Let content wrap and controls stay reachable from a 360px phone to an office laptop.</p><div class="ds-meta"><span class="ds-pill">Extracted 25 October 2026</span><span class="ds-pill ds-pill--ok">Light + dark contrast verified</span></div></header>
+<section class="ds-section" id="principles"><h2><a href="#principles">Principles</a></h2><p>At 640px related short fields can share a row and sheets can center. At 768px primary top-bar navigation replaces the phone tab bar. At 1024px secondary staff navigation appears. Search waits until 1280px; content does not widen beyond 80rem. Long names and Spanish copy wrap. Tables scroll inside named regions. Dialog footers stay reachable and fixed navigation includes safe-area padding.</p><p>Test 200% text zoom and a 320 CSS-pixel effective viewport. Never hide required labels or medical details to make a layout fit.</p></section><section class="ds-section" id="breakpoints"><h2><a href="#breakpoints">Breakpoints</a></h2><div class="ds-table-wrap" tabindex="0" role="region" aria-label="Scrollable reference table"><table class="ds-table"><thead><tr><th scope="col">Minimum width</th><th scope="col">Columns</th><th scope="col">Gutter</th><th scope="col">Margin</th><th scope="col">Behavior</th></tr></thead><tbody><tr><td>0 / 640px</td><td>4</td><td>16px</td><td>16px</td><td>Phone; 640px allows related fields</td></tr><tr><td>768px</td><td>8</td><td>24px</td><td>32px</td><td>Top-bar navigation</td></tr><tr><td>1024px</td><td>12</td><td>32px</td><td>48px</td><td>More staff sections</td></tr><tr><td>1280px</td><td>12</td><td>32px</td><td>48px</td><td>Search; 80rem cap</td></tr><tr><td>1536px</td><td>12</td><td>32px</td><td>auto</td><td>Cap content; preserve measure</td></tr></tbody></table></div><div class="ds-grid-demo"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div></section><section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2><p>Extracted from <a href="../../mocks/index.html">the PromiseHub mocks</a>, the original shared token file and the promoted component stylesheet. See the <a href="../README.md">drift and verification record</a>.</p></section><footer class="ds-footer"><span>Waypoint design system · <a href="../../mocks/index.html">Source mocks</a></span><a href="#main">Back to content</a></footer></main></div><script src="../assets/ds.js"></script></body></html>

@@ -1,19 +1,8 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Accessibility — Waypoint design system</title>
-<meta name="description" content="WCAG 2.2 AA is the floor for every component and page.">
-<link rel="stylesheet" href="../assets/fonts.css">
-<link rel="stylesheet" href="../tokens/tokens.css">
-<link rel="stylesheet" href="../assets/components.css">
-<link rel="stylesheet" href="../assets/ds.css">
-</head>
-<body id="top">
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="ds-shell">
-<nav class="ds-nav" aria-label="Design system">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accessibility — Waypoint design system</title><meta name="description" content="WCAG 2.2 AA is a component contract and a screen-level responsibility.">
+<link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../assets/components.css"><link rel="stylesheet" href="../assets/ds.css"></head>
+<body><a class="skip-link" href="#main">Skip to content</a><div class="ds-shell"><nav class="ds-nav" aria-label="Design system">
 <div class="ds-nav__brand"><a href="../index.html">Waypoint DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
 <details open><summary>Foundations</summary><ul>
 <li><a href="../foundations/color.html">Color</a></li>
@@ -89,23 +78,5 @@
 <li><a href="../patterns/notifications.html">Notifications</a></li>
 <li><a href="../patterns/content-and-tone.html">Content and tone</a></li>
 </ul></details></nav>
-<main id="main" class="ds-main">
-<header class="ds-header">
-<p class="ds-kicker">Foundation</p>
-<h1>Accessibility</h1>
-<p class="ds-lead">WCAG 2.2 AA is the floor for every component and page.</p>
-<div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Light + dark</span></div>
-<ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#checklist">Commitments</a></li><li><a href="#contract">Component contract</a></li><li><a href="#testing">Testing procedure</a></li><li><a href="#tokens">Tokens</a></li></ul>
-</header>
-<section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2><p>The commitments below are what every component page's Accessibility section proves.</p></section>
-<section class="ds-section" id="checklist"><h2><a href="#checklist">Commitments</a></h2><ul><li>1.4.3 / 1.4.11: text 4.5:1, UI edges and icons 3:1, in both themes (checked by <code>check_contrast.py</code>).</li><li>1.4.1: colour is never the only signal; status has text or icons.</li><li>2.4.7 / 2.4.11: visible focus ring, 2px, 3:1 against adjacent colours, never hidden by sticky bars.</li><li>2.5.8: targets ≥ 24px; comfortable 44px.</li><li>1.4.10 / 1.4.4: reflow at 320px, resize to 200%.</li><li>1.4.12: text spacing overrides do not break layouts.</li><li>2.1.1: everything works by keyboard; no keyboard traps except modal focus containment.</li><li>4.1.2: native elements first; ARIA only per APG patterns.</li><li>2.3.3: reduced motion respected.</li><li>3.3.1 / 3.3.3: errors identified in text with a suggestion.</li></ul></section>
-<section class="ds-section" id="contract"><h2><a href="#contract">Component contract</a></h2><ul><li>Name, role and state exposed (labels; <code>aria-pressed</code>, <code>aria-selected</code>, <code>aria-current</code>, <code>aria-expanded</code>, <code>aria-invalid</code>, <code>aria-busy</code>).</li><li>Keyboard map documented.</li><li>Contrast pairs listed in <code>contrast-pairs.json</code>.</li><li>Works in forced-colors mode.</li></ul></section>
-<section class="ds-section" id="testing"><h2><a href="#testing">Testing procedure</a></h2><ul><li>Keyboard-only pass on every flow.</li><li>Screen reader smoke test (NVDA + Firefox, VoiceOver + Safari).</li><li>axe in CI for every mock.</li><li>Zoom to 200% and 400%.</li></ul></section>
-<section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2><div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">Sample</th></tr></thead><tbody><tr><td><code>--target-min</code></td><td><span data-token="--target-min"></span></td><td></td></tr><tr><td><code>--target-comfortable</code></td><td><span data-token="--target-comfortable"></span></td><td></td></tr><tr><td><code>--focus-ring-width</code></td><td><span data-token="--focus-ring-width"></span></td><td></td></tr><tr><td><code>--focus-ring-offset</code></td><td><span data-token="--focus-ring-offset"></span></td><td></td></tr><tr><td><code>--control-height-sm</code></td><td><span data-token="--control-height-sm"></span></td><td></td></tr><tr><td><code>--control-height-md</code></td><td><span data-token="--control-height-md"></span></td><td></td></tr><tr><td><code>--control-height-lg</code></td><td><span data-token="--control-height-lg"></span></td><td></td></tr></tbody></table></div></section>
-
-<footer class="ds-footer"><span>Waypoint design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-15</span><a href="#top">Back to top</a></footer>
-</main>
-</div>
-<script src="../assets/ds.js"></script>
-</body>
-</html>
+<main class="ds-main" id="main"><header class="ds-header"><p class="ds-kicker">PromiseHub · Foundation</p><h1>Accessibility</h1><p class="ds-lead">WCAG 2.2 AA is a component contract and a screen-level responsibility.</p><div class="ds-meta"><span class="ds-pill">Extracted 25 October 2026</span><span class="ds-pill ds-pill--ok">Light + dark contrast verified</span></div></header>
+<section class="ds-section" id="principles"><h2><a href="#principles">Principles</a></h2><p>Use native controls, visible labels, logical headings, landmarks and a first-focus skip link. Normal text needs 4.5:1; large text and meaningful graphic edges need 3:1. The 2px focus ring must remain visible and unobscured. Keyboard and touch can complete the same tasks; do not require dragging. Respect reduced motion and forced colours. Language is declared on the document and changed phrases.</p><p>Group choices with fieldset and legend. Identify errors in text and suggest a correction. Focus a linked error summary after failed submission; do not erase input. Important errors persist. Modal focus is contained and restored. Do not block paste, password managers or accessible authentication. Reuse previously entered data, keep Help in the same place, and require review for financial or destructive actions.</p><p>Static checks validate structure and declared contrast; they do not certify screen-reader behavior. Future Angular components and screens need keyboard, screen-reader and axe checks, including status announcements and focus restoration.</p></section><section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2><p>Each token is assigned to exactly one foundation page. Values below resolve independently in light and dark scopes.</p><div class="ds-table-wrap" tabindex="0" role="region" aria-label="Scrollable reference table"><table class="ds-table"><thead><tr><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead><tbody><tr><td><code>--target-min</code></td><td><span data-theme="light" data-token="--target-min"></span></td><td><span data-theme="dark" data-token="--target-min"></span></td></tr><tr><td><code>--target-comfortable</code></td><td><span data-theme="light" data-token="--target-comfortable"></span></td><td><span data-theme="dark" data-token="--target-comfortable"></span></td></tr><tr><td><code>--focus-ring-width</code></td><td><span data-theme="light" data-token="--focus-ring-width"></span></td><td><span data-theme="dark" data-token="--focus-ring-width"></span></td></tr><tr><td><code>--focus-ring-offset</code></td><td><span data-theme="light" data-token="--focus-ring-offset"></span></td><td><span data-theme="dark" data-token="--focus-ring-offset"></span></td></tr><tr><td><code>--control-height-sm</code></td><td><span data-theme="light" data-token="--control-height-sm"></span></td><td><span data-theme="dark" data-token="--control-height-sm"></span></td></tr><tr><td><code>--control-height-md</code></td><td><span data-theme="light" data-token="--control-height-md"></span></td><td><span data-theme="dark" data-token="--control-height-md"></span></td></tr><tr><td><code>--control-height-lg</code></td><td><span data-theme="light" data-token="--control-height-lg"></span></td><td><span data-theme="dark" data-token="--control-height-lg"></span></td></tr></tbody></table></div></section><section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2><p>Extracted from <a href="../../mocks/index.html">the PromiseHub mocks</a>, the original shared token file and the promoted component stylesheet. See the <a href="../README.md">drift and verification record</a>.</p></section><footer class="ds-footer"><span>Waypoint design system · <a href="../../mocks/index.html">Source mocks</a></span><a href="#main">Back to content</a></footer></main></div><script src="../assets/ds.js"></script></body></html>
