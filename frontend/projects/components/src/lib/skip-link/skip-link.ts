@@ -6,10 +6,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
  * so make it the first focusable element on the page.
  */
 @Component({
-  selector: 'a[w-skip-link]',
+  selector: 'a[ph-skip-link]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-skip-link' },
+  host: { class: 'ph-skip-link' },
   templateUrl: './skip-link.html',
   styleUrl: './skip-link.css',
 })

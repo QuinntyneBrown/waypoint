@@ -1,4 +1,4 @@
-// Captures the w-video-player Storybook stories in light and dark for video 114.
+// Captures the ph-video-player Storybook stories in light and dark for video 114.
 // Run from frontend/ after `npm run build-storybook`:
 //   node video-capture/114-components-video-player.capture.mjs
 // Needs Microsoft Edge (H.264 and AAC); Playwright's bundled Chromium cannot play them.
@@ -52,8 +52,8 @@ async function open(page, story, theme) {
     `http://localhost:6007/iframe.html?id=components-video-player--${story}&viewMode=story`,
   );
   await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
-  await page.waitForSelector('w-video-player');
-  return page.locator('w-video-player');
+  await page.waitForSelector('ph-video-player');
+  return page.locator('ph-video-player');
 }
 const state = (player) => player.getAttribute('data-state');
 async function waitState(player, expected, timeout = 20000) {
@@ -61,7 +61,7 @@ async function waitState(player, expected, timeout = 20000) {
 }
 async function snap(page, name, theme, locator) {
   await page.waitForTimeout(400);
-  await (locator ?? page.locator('w-video-player')).screenshot({
+  await (locator ?? page.locator('ph-video-player')).screenshot({
     path: join(OUT, `${name}-${theme}.png`),
   });
 }
@@ -85,7 +85,7 @@ for (const theme of ['light', 'dark']) {
   player = await open(page, 'live', theme);
   await waitState(player, 'live');
   await page.waitForTimeout(1500);
-  await page.locator('w-video-player').hover();
+  await page.locator('ph-video-player').hover();
   await snap(page, 'live', theme);
 
   await page.locator('[data-control="play-pause"]').click();

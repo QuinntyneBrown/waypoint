@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test';
 import { GuardianAnnouncementsPage, SignInPage } from '../e2e/pages';
 import { signInApi } from '../e2e/support/api';
 import { seedGuardianCast } from './guardian-cast';
-import { shotOf } from './shotOf';
 import { shot } from './shots';
 
 const LIST = { x: 400, y: 85, width: 760, height: 510 };
@@ -74,7 +73,7 @@ test('capture: read announcements', async ({ page, request, browser }) => {
   await new SignInPage(other).signIn({ email: emptyEmail, password: 'Password123' });
   await new GuardianAnnouncementsPage(other).goto();
   await expect(other.getByRole('heading', { name: /no announcements yet/i })).toBeVisible();
-  const title = (await other.locator('.w-empty__title').boundingBox())!;
+  const title = (await other.locator('.ph-empty__title').boundingBox())!;
   await shot(other, FOLDER, 'empty', {
     x: title.x + title.width / 2 - 250,
     y: title.y - 120,

@@ -6,12 +6,12 @@ import { Tabs } from './tabs';
 @Component({
   imports: [Tabs, Tab],
   template: `
-    <div w-tabs role="tablist" aria-label="Report views">
-      <button w-tab type="button" role="tab" [active]="view() === 'overview'">Overview</button>
-      <button w-tab type="button" role="tab" [active]="view() === 'youth'">Youth</button>
+    <div ph-tabs role="tablist" aria-label="Report views">
+      <button ph-tab type="button" role="tab" [active]="view() === 'overview'">Overview</button>
+      <button ph-tab type="button" role="tab" [active]="view() === 'youth'">Youth</button>
     </div>
-    <nav w-tabs aria-label="Settings">
-      <a w-tab href="/settings/profile" [active]="true">Profile</a>
+    <nav ph-tabs aria-label="Settings">
+      <a ph-tab href="/settings/profile" [active]="true">Profile</a>
     </nav>
   `,
 })
@@ -31,9 +31,9 @@ describe('Tabs', () => {
   it('lays tabs out in a row and keeps the tablist semantics', async () => {
     const { root } = await render();
     const list = root.querySelector('div')!;
-    expect(list.classList.contains('w-tabs')).toBe(true);
+    expect(list.classList.contains('ph-tabs')).toBe(true);
     expect(list.getAttribute('role')).toBe('tablist');
-    expect(root.querySelector('nav')?.classList.contains('w-tabs')).toBe(true);
+    expect(root.querySelector('nav')?.classList.contains('ph-tabs')).toBe(true);
   });
 
   it('marks only the active tab and follows changes', async () => {
@@ -42,13 +42,13 @@ describe('Tabs', () => {
     fixture.componentInstance.view.set('youth');
     await fixture.whenStable();
     expect(tabs.map((t) => t.classList.contains('is-active'))).toEqual([false, true]);
-    expect(tabs[0].classList.contains('w-tab')).toBe(true);
+    expect(tabs[0].classList.contains('ph-tab')).toBe(true);
   });
 
   it('works on links for navigation tabs', async () => {
     const { root } = await render();
     const link = root.querySelector('a')!;
-    expect(link.classList.contains('w-tab')).toBe(true);
+    expect(link.classList.contains('ph-tab')).toBe(true);
     expect(link.classList.contains('is-active')).toBe(true);
   });
 });

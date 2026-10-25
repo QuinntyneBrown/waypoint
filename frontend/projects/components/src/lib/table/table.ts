@@ -13,10 +13,10 @@ import {
  * `data-label` as a caption.
  */
 @Component({
-  selector: 'table[w-table]',
+  selector: 'table[ph-table]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-table', '[class.w-table--cards]': 'cards()' },
+  host: { class: 'ph-table', '[class.ph-table--cards]': 'cards()' },
   templateUrl: './table.html',
   styleUrl: './table.css',
 })

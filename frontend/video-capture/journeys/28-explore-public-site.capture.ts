@@ -19,11 +19,11 @@ test('capture: explore the public site', async ({ page }) => {
 
   await nav.getByRole('link', { name: 'Programs', exact: true }).click();
   await expect(new ProgramsPage(page).track('Bible & Leadership')).toBeVisible();
-  await shot(page, FOLDER, 'tracks', await clipOf(page.locator('.w-grid--2'), 12));
+  await shot(page, FOLDER, 'tracks', await clipOf(page.locator('.ph-grid--2'), 12));
 
   await nav.getByRole('link', { name: 'About', exact: true }).click();
   await expect(new AboutPage(page).cohort('Regent Park Fall Cohort')).toBeVisible();
-  await shot(page, FOLDER, 'cohorts', await clipOf(page.locator('.w-grid--2'), 12));
+  await shot(page, FOLDER, 'cohorts', await clipOf(page.locator('.ph-grid--2'), 12));
 
   await nav.getByRole('link', { name: 'Get involved', exact: true }).click();
   await expect(page.getByRole('button', { name: /sign up to volunteer/i })).toBeVisible();

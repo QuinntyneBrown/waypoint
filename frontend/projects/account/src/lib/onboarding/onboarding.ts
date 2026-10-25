@@ -29,7 +29,7 @@ import { forkJoin, of, switchMap } from 'rxjs';
 
 // Traces to: L2-AUTH-011
 @Component({
-  selector: 'w-onboarding',
+  selector: 'ph-onboarding',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,

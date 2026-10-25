@@ -7,7 +7,7 @@ const meta: Meta<Link> = {
   args: { standalone: false },
   render: (args) => ({
     props: args,
-    template: `<p>Questions? Read the <a w-link href="#" [standalone]="standalone">help centre</a>.</p>`,
+    template: `<p>Questions? Read the <a ph-link href="#" [standalone]="standalone">help centre</a>.</p>`,
   }),
 };
 

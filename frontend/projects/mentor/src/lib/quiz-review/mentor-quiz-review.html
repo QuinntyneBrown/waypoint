@@ -1,68 +1,68 @@
-<w-shell
+<ph-shell
   role="mentor"
   active="reviews"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <a w-link standalone routerLink="/mentor/reviews">Back to reviews</a>
+  <div class="ph-container ph-page">
+    <a ph-link standalone routerLink="/mentor/reviews">Back to reviews</a>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
-    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="ph-sr-only" role="status">{{ statusMessage() }}</p>
     @if (review(); as item) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Quiz assessment · {{ item.youthName }}</div>
-          <h1 class="w-page__title">{{ item.quizTitle }}</h1>
-          <p class="w-page__sub">
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Quiz assessment · {{ item.youthName }}</div>
+          <h1 class="ph-page__title">{{ item.quizTitle }}</h1>
+          <p class="ph-page__sub">
             Attempt {{ item.attemptNumber }} · Submitted {{ item.submittedAt | date: 'medium' }}
           </p>
         </div>
-        <span w-badge [variant]="item.status === 'Approved' ? 'success' : ''">
+        <span ph-badge [variant]="item.status === 'Approved' ? 'success' : ''">
           {{ item.status }}
         </span>
       </div>
 
       <div class="assessment-layout">
-        <section class="w-stack" aria-labelledby="answers-heading">
+        <section class="ph-stack" aria-labelledby="answers-heading">
           <h2 id="answers-heading">Submitted answers</h2>
           @if (item.questions.length === 0) {
-            <div w-card>
-              <div w-empty-state>
-                <h3 w-empty-state-title>No question detail available</h3>
-                <p w-empty-state-text>The auto-scored result can still be reviewed.</p>
+            <div ph-card>
+              <div ph-empty-state>
+                <h3 ph-empty-state-title>No question detail available</h3>
+                <p ph-empty-state-text>The auto-scored result can still be reviewed.</p>
               </div>
             </div>
           }
           @for (question of item.questions; track question.questionId; let number = $index) {
-            <article w-card>
-              <div w-card-header>
+            <article ph-card>
+              <div ph-card-header>
                 <div>
-                  <p class="w-eyebrow">Question {{ number + 1 }}</p>
-                  <h3 w-card-title>{{ question.text }}</h3>
+                  <p class="ph-eyebrow">Question {{ number + 1 }}</p>
+                  <h3 ph-card-title>{{ question.text }}</h3>
                 </div>
                 <span
-                  w-badge
+                  ph-badge
                   [variant]="question.isCorrect ? 'success' : !question.isCorrect ? 'error' : ''"
                 >
                   {{ question.isCorrect ? 'Correct' : 'Incorrect' }}
                 </span>
               </div>
-              <div w-card-body>
+              <div ph-card-body>
                 <ul class="answer-list">
                   @for (option of question.options; track $index; let optionIndex = $index) {
                     <li
-                      w-quiz-option
+                      ph-quiz-option
                       [selected]="optionSelected(question, optionIndex)"
                       [correct]="optionCorrect(question, optionIndex)"
                     >
                       <span class="answer-copy">{{ option }}</span>
                       @if (optionSelected(question, optionIndex)) {
-                        <span w-badge>Youth answer</span>
+                        <span ph-badge>Youth answer</span>
                       }
                       @if (optionCorrect(question, optionIndex)) {
-                        <span w-badge variant="success">Correct answer</span>
+                        <span ph-badge variant="success">Correct answer</span>
                       }
                     </li>
                   }
@@ -72,31 +72,32 @@
           }
         </section>
 
-        <aside w-card>
-          <div w-card-header><h2 w-card-title>Score approval</h2></div>
-          <div w-card-body class="w-stack">
+        <aside ph-card>
+          <div ph-card-header><h2 ph-card-title>Score approval</h2></div>
+          <div ph-card-body class="ph-stack">
             <div class="score-grid">
               <div>
-                <div class="w-kpi">
-                  <span w-stat-label>Auto-scored</span
-                  ><span w-stat-value data-testid="quiz-auto-score">{{ item.autoScore }}%</span>
+                <div class="ph-kpi">
+                  <span ph-stat-label>Auto-scored</span
+                  ><span ph-stat-value data-testid="quiz-auto-score">{{ item.autoScore }}%</span>
                 </div>
-                <span w-badge [variant]="item.autoPassed ? 'success' : ''">
+                <span ph-badge [variant]="item.autoPassed ? 'success' : ''">
                   {{ item.autoPassed ? 'Pass' : 'Below pass mark' }}
                 </span>
               </div>
               <div>
-                <div class="w-kpi">
-                  <span w-stat-label>Pass mark</span><span w-stat-value>{{ item.passMark }}%</span>
+                <div class="ph-kpi">
+                  <span ph-stat-label>Pass mark</span
+                  ><span ph-stat-value>{{ item.passMark }}%</span>
                 </div>
               </div>
             </div>
 
             @if (item.approvedScore === null || item.approvedScore === undefined) {
-              <div w-form-field>
-                <label w-label for="override-score">Override score (optional)</label>
+              <div ph-form-field>
+                <label ph-label for="override-score">Override score (optional)</label>
                 <input
-                  w-text-field
+                  ph-text-field
                   id="override-score"
                   type="number"
                   inputmode="numeric"
@@ -106,10 +107,10 @@
                   [value]="overrideScore()"
                   (input)="setOverrideScore($any($event.target).value)"
                 />
-                <p w-help>Leave blank to approve the {{ item.autoScore }}% auto-score.</p>
+                <p ph-help>Leave blank to approve the {{ item.autoScore }}% auto-score.</p>
               </div>
               <button
-                w-button
+                ph-button
                 variant="primary"
                 class="approve-button"
                 type="button"
@@ -119,11 +120,11 @@
                 Approve score
               </button>
             } @else {
-              <div class="w-stack" data-testid="quiz-approval-record">
-                <h3 w-card-title>Approval record</h3>
+              <div class="ph-stack" data-testid="quiz-approval-record">
+                <h3 ph-card-title>Approval record</h3>
                 <p>Auto-scored {{ item.autoScore }}%</p>
                 <p>Approved {{ item.approvedScore }}%</p>
-                <p class="w-muted">
+                <p class="ph-muted">
                   {{ item.approvedByName ?? 'Staff member' }} ·
                   {{ item.approvedAt | date: 'medium' }}
                 </p>
@@ -133,7 +134,7 @@
         </aside>
       </div>
     } @else if (!errorMessage()) {
-      <p class="w-muted" role="status">Loading assessment…</p>
+      <p class="ph-muted" role="status">Loading assessment…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

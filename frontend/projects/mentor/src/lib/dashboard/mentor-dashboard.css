@@ -1,20 +1,20 @@
 .mentor-preview-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 .youth-preview {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 .progress-number {
   display: grid;
   place-items: center;
   width: 3.5rem;
   height: 3.5rem;
-  border: 0.35rem solid var(--w-lime);
+  border: 0.35rem solid var(--ph-lime);
   border-radius: 50%;
   font-weight: 700;
 }
@@ -22,9 +22,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--w-s4);
-  padding: var(--w-s4) 0;
-  border-bottom: 1px solid var(--w-border);
+  gap: var(--ph-s4);
+  padding: var(--ph-s4) 0;
+  border-bottom: 1px solid var(--ph-border);
 }
 .review-row:last-child {
   border-bottom: 0;

@@ -52,7 +52,7 @@ test('capture: author badges and progression', async ({ page, request }) => {
     await expect(stage).toContainText(name);
   }
   // Stage numbers depend on other stages in the shared demo data, so leave them out.
-  await stageOne.locator('.w-eyebrow').evaluate((el) => (el.style.visibility = 'hidden'));
+  await stageOne.locator('.ph-eyebrow').evaluate((el) => (el.style.visibility = 'hidden'));
   await shotAround(
     [
       stageOne.getByRole('button', { name: 'Move stage up' }),

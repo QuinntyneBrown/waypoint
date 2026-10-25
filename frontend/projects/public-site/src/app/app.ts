@@ -12,7 +12,7 @@ import {
 } from '@waypoint/components';
 
 @Component({
-  selector: 'w-root',
+  selector: 'ph-root',
   imports: [
     RouterLink,
     RouterOutlet,

@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test';
 import { GuardianConsentPage, SignInPage } from '../e2e/pages';
 import { latestTestEmail } from '../e2e/support/api';
 import { seedGuardianCast, shotElement, shotWithMessage } from './guardian-cast';
-import { shotOf } from './shotOf';
 
 const FOLDER = '063-guardian-portal-view-consent-record';
 
@@ -14,12 +13,12 @@ test('capture: view consent record', async ({ page, request, browser }) => {
   const consent = new GuardianConsentPage(page);
   await consent.goto();
   await expect(consent.referenceId).toContainText(/CONSENT-/);
-  const record = page.locator('section.w-card', { hasText: 'Participation consent' });
+  const record = page.locator('section.ph-card', { hasText: 'Participation consent' });
   await shotElement(page, FOLDER, 'record', record);
 
   await consent.emailCopyButton.click();
   await expect(consent.status).toContainText(/consent record.*emailed/i);
-  await shotWithMessage(page, FOLDER, 'emailed', page.locator('.w-alert--success'));
+  await shotWithMessage(page, FOLDER, 'emailed', page.locator('.ph-alert--success'));
   const email = await latestTestEmail(request, guardian.email);
   console.log('EMAIL SUBJECT:', email.subject, '|', email.body.slice(0, 400));
 
@@ -36,7 +35,7 @@ test('capture: view consent record', async ({ page, request, browser }) => {
   await new SignInPage(other).signIn({ email: emptyEmail, password: 'Password123' });
   await new GuardianConsentPage(other).goto();
   await expect(other.getByRole('heading', { name: /no consent record yet/i })).toBeVisible();
-  const title = (await other.locator('.w-empty__title').boundingBox())!;
+  const title = (await other.locator('.ph-empty__title').boundingBox())!;
   await other.setViewportSize({ width: 1280, height: 800 });
   await other.screenshot({
     path: `../docs/videos/${FOLDER}/images/empty-1280.png`,

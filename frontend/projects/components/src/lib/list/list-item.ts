@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 /** One row of a list: a title with supporting detail, separated from its neighbours by a rule. */
 @Component({
-  selector: 'div[w-list-item], li[w-list-item]',
+  selector: 'div[ph-list-item], li[ph-list-item]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-listitem' },
+  host: { class: 'ph-listitem' },
   templateUrl: './list-item.html',
   styleUrl: './list-item.css',
 })

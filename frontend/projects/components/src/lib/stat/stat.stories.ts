@@ -18,10 +18,10 @@ type Story = StoryObj<Stat>;
 export const Default: Story = {
   render: () => ({
     template: `
-      <div w-card style="max-width: 16rem">
-        <div w-stat>
-          <div w-stat-label>Active youth</div>
-          <div w-stat-value>42</div>
+      <div ph-card style="max-width: 16rem">
+        <div ph-stat>
+          <div ph-stat-label>Active youth</div>
+          <div ph-stat-value>42</div>
         </div>
       </div>`,
   }),
@@ -30,11 +30,11 @@ export const Default: Story = {
 export const WithDelta: Story = {
   render: () => ({
     template: `
-      <div w-card style="max-width: 16rem">
-        <div w-stat>
-          <div w-stat-label>Pending reviews</div>
-          <div w-stat-value>4</div>
-          <div w-stat-delta trend="down">2 overdue</div>
+      <div ph-card style="max-width: 16rem">
+        <div ph-stat>
+          <div ph-stat-label>Pending reviews</div>
+          <div ph-stat-value>4</div>
+          <div ph-stat-delta trend="down">2 overdue</div>
         </div>
       </div>`,
   }),

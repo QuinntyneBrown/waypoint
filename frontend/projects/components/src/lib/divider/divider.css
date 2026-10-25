@@ -1,4 +1,4 @@
-.w-divider {
-  border-top: var(--w-bw) solid var(--w-border);
-  margin-block: var(--w-s5);
+.ph-divider {
+  border-top: var(--ph-bw) solid var(--ph-border);
+  margin-block: var(--ph-s5);
 }

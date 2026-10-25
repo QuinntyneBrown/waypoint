@@ -18,7 +18,7 @@ async function zoomOut(page: Page): Promise<void> {
 async function contentClip(page: Page) {
   await page.setViewportSize({ width: 1280, height: 800 });
   const layout = await page.locator('.invite-layout').boundingBox();
-  const head = await page.locator('.w-page__head').boundingBox();
+  const head = await page.locator('.ph-page__head').boundingBox();
   expect(layout && head).toBeTruthy();
   const x = 300;
   const y = head!.y - 8;
@@ -91,7 +91,7 @@ test('capture: manage pending invitations', async ({ page, request, browser }) =
   await new InviteAcceptPage(stale).goto(secondToken!);
   await expect(stale.getByRole('heading', { name: /no longer active/i })).toBeVisible();
   await stale.setViewportSize({ width: 1280, height: 800 });
-  const box = await stale.locator('.w-authcard').boundingBox();
+  const box = await stale.locator('.ph-authcard').boundingBox();
   await shot(stale, FOLDER, 'dead-link', {
     x: box!.x - 24,
     y: Math.max(0, box!.y - 24),

@@ -1,27 +1,27 @@
-<a w-skip-link href="#main">Skip to content</a>
+<a ph-skip-link href="#main">Skip to content</a>
 
-<header w-marketing-nav>
-  <a w-brand routerLink="/">Waypoint</a>
-  <nav w-marketing-nav-links aria-label="Primary">
+<header ph-marketing-nav>
+  <a ph-brand routerLink="/">Waypoint</a>
+  <nav ph-marketing-nav-links aria-label="Primary">
     <a routerLink="/programs">Programs</a>
     <a routerLink="/about">About</a>
     <a routerLink="/get-involved">Get involved</a>
     <a routerLink="/contact">Contact</a>
   </nav>
-  <div class="w-spacer"></div>
-  <a w-button variant="ghost" size="sm" [href]="signInUrl">Sign in</a>
-  <a w-button variant="primary" size="sm" routerLink="/apply">Apply</a>
+  <div class="ph-spacer"></div>
+  <a ph-button variant="ghost" size="sm" [href]="signInUrl">Sign in</a>
+  <a ph-button variant="primary" size="sm" routerLink="/apply">Apply</a>
 </header>
 
 <main id="main">
   <router-outlet />
 </main>
 
-<footer w-footer>
-  <div class="w-container">
-    <div class="w-cluster w-justify-between">
-      <div w-brand style="color: #fff">Waypoint</div>
-      <nav class="w-cluster w-gap-4" aria-label="Footer">
+<footer ph-footer>
+  <div class="ph-container">
+    <div class="ph-cluster ph-justify-between">
+      <div ph-brand style="color: #fff">Waypoint</div>
+      <nav class="ph-cluster ph-gap-4" aria-label="Footer">
         <a routerLink="/programs">Programs</a>
         <a routerLink="/about">About</a>
         <a routerLink="/get-involved">Get involved</a>
@@ -29,6 +29,6 @@
         <a routerLink="/privacy">Privacy</a>
       </nav>
     </div>
-    <p class="w-text-sm w-mt-6">© 2026 Waypoint · Toronto</p>
+    <p class="ph-text-sm ph-mt-6">© 2026 Waypoint · Toronto</p>
   </div>
 </footer>

@@ -13,7 +13,7 @@ const FOLDER = 'journeys/27-first-run-onboarding';
 
 async function cardClip(page: Page) {
   await page.setViewportSize({ width: 1280, height: 800 });
-  const box = await page.locator('.w-authcard').boundingBox();
+  const box = await page.locator('.ph-authcard').boundingBox();
   expect(box).not.toBeNull();
   const pad = 24;
   const y = Math.max(0, box!.y - pad);

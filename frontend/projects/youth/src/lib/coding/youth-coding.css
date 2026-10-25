@@ -1,7 +1,7 @@
 .coding-layout {
   display: grid;
   grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.6fr);
-  gap: var(--w-s5);
+  gap: var(--ph-s5);
   align-items: start;
 }
 .coding-step-button {
@@ -18,10 +18,10 @@
 .coding-sample {
   overflow-x: auto;
   white-space: pre-wrap;
-  padding: var(--w-s4);
+  padding: var(--ph-s4);
   background: #17202a;
   color: #f8f9f9;
-  border-radius: var(--w-r-input);
+  border-radius: var(--ph-r-input);
 }
 .coding-editor {
   width: 100%;
@@ -32,8 +32,8 @@
   display: block;
   width: 100%;
   min-height: 18rem;
-  border: 1px solid var(--w-border);
-  border-radius: var(--w-r-input);
+  border: 1px solid var(--ph-border);
+  border-radius: var(--ph-r-input);
   background: white;
 }
 @media (max-width: 50rem) {

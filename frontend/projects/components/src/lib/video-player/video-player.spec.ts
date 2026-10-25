@@ -8,7 +8,7 @@ import { VideoPlayer } from './video-player';
 
 @Component({
   imports: [VideoPlayer],
-  template: `<w-video-player streamId="hall-a" (error)="errors.push($event)" />`,
+  template: `<ph-video-player streamId="hall-a" (error)="errors.push($event)" />`,
 })
 class Host {
   errors: VideoPlayerError[] = [];
@@ -25,7 +25,7 @@ async function render(describe: VideoStreamTransport['describe']) {
   });
   const fixture = TestBed.createComponent(Host);
   await fixture.whenStable();
-  const player = fixture.nativeElement.querySelector('w-video-player') as HTMLElement;
+  const player = fixture.nativeElement.querySelector('ph-video-player') as HTMLElement;
   return { fixture, player };
 }
 
@@ -56,7 +56,7 @@ describe('VideoPlayer', () => {
     await fixture.whenStable();
     expect(player.getAttribute('data-state')).toBe('error');
     expect(player.querySelector('[role="alert"]')).not.toBeNull();
-    expect(player.querySelector('.w-video-player__retry')).not.toBeNull();
+    expect(player.querySelector('.ph-video-player__retry')).not.toBeNull();
     expect(player.querySelector('[data-control="live"]')).toBeNull();
     expect(fixture.componentInstance.errors.map((e) => e.code)).toEqual(['unauthorized']);
   });

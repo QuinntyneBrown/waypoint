@@ -2,9 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--w-s4);
-  padding: var(--w-s4) 0;
-  border-bottom: 1px solid var(--w-border);
+  gap: var(--ph-s4);
+  padding: var(--ph-s4) 0;
+  border-bottom: 1px solid var(--ph-border);
 }
 .queue-row:last-child {
   border-bottom: 0;

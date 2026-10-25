@@ -6,7 +6,7 @@ import { FormDraftService } from '@waypoint/core';
 
 // Traces to: L2-PLATFORM-008
 @Component({
-  selector: 'w-server-error',
+  selector: 'ph-server-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
   templateUrl: './server-error.html',

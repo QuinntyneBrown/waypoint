@@ -6,9 +6,9 @@ import { MarketingNavLinks } from './marketing-nav-links';
 @Component({
   imports: [MarketingNav, MarketingNavLinks],
   template: `
-    <header w-marketing-nav>
+    <header ph-marketing-nav>
       <span id="brand">Waypoint</span>
-      <nav w-marketing-nav-links aria-label="Primary"><a href="/about">About</a></nav>
+      <nav ph-marketing-nav-links aria-label="Primary"><a href="/about">About</a></nav>
       <button type="button">Apply</button>
     </header>
   `,
@@ -21,13 +21,13 @@ describe('MarketingNav', () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const header = (fixture.nativeElement as HTMLElement).querySelector('header')!;
-    expect(header.classList.contains('w-marketing-nav')).toBe(true);
-    const inner = header.querySelector('.w-marketing-nav__inner')!;
-    expect(inner.classList.contains('w-container')).toBe(true);
+    expect(header.classList.contains('ph-marketing-nav')).toBe(true);
+    const inner = header.querySelector('.ph-marketing-nav__inner')!;
+    expect(inner.classList.contains('ph-container')).toBe(true);
     expect(inner.querySelector('#brand')).not.toBeNull();
     expect(inner.querySelector('button')?.textContent).toBe('Apply');
     const links = inner.querySelector('nav')!;
-    expect(links.classList.contains('w-marketing-nav__links')).toBe(true);
+    expect(links.classList.contains('ph-marketing-nav__links')).toBe(true);
     expect(links.getAttribute('aria-label')).toBe('Primary');
   });
 });

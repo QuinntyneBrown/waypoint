@@ -1,40 +1,42 @@
-<w-shell
+<ph-shell
   role="admin"
   active="cohorts"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <a w-link standalone routerLink="/admin/cohorts">Back to cohorts</a>
+  <div class="ph-container ph-page">
+    <a ph-link standalone routerLink="/admin/cohorts">Back to cohorts</a>
 
     @if (errorMessage(); as error) {
-      <div w-alert variant="error" role="alert">
+      <div ph-alert variant="error" role="alert">
         <div>
-          <div w-alert-title>{{ error }}</div>
+          <div ph-alert-title>{{ error }}</div>
           Cohort details could not be loaded or saved.
         </div>
-        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
+        <button ph-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p w-alert variant="success" role="status">{{ message }}</p>
+      <p ph-alert variant="success" role="status">{{ message }}</p>
     }
 
     @if (detail(); as cohort) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">{{ cohort.trackName ?? 'Track not assigned' }}</div>
-          <h1 class="w-page__title">{{ cohort.name }}</h1>
-          <p class="w-page__sub" data-testid="cohort-member-count">
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">{{ cohort.trackName ?? 'Track not assigned' }}</div>
+          <h1 class="ph-page__title">{{ cohort.name }}</h1>
+          <p class="ph-page__sub" data-testid="cohort-member-count">
             {{ memberLabel(cohort.memberCount) }} · lead
             {{ cohort.leadMentorName ?? 'not assigned' }}
           </p>
         </div>
-        <button w-button variant="secondary" type="button" (click)="openEdit()">Edit cohort</button>
+        <button ph-button variant="secondary" type="button" (click)="openEdit()">
+          Edit cohort
+        </button>
       </div>
 
-      <section w-card class="w-mb-5" aria-labelledby="cohort-overview-heading">
-        <div w-card-body>
+      <section ph-card class="ph-mb-5" aria-labelledby="cohort-overview-heading">
+        <div ph-card-body>
           <h2 id="cohort-overview-heading">Cohort details</h2>
           <div class="cohort-summary">
             <div>
@@ -59,22 +61,22 @@
       </section>
 
       <div class="member-layout">
-        <section w-card aria-labelledby="cohort-members-heading">
-          <div w-card-body>
+        <section ph-card aria-labelledby="cohort-members-heading">
+          <div ph-card-body>
             <h2 id="cohort-members-heading">Members</h2>
             <ul class="member-list">
               @for (member of cohort.members; track member.id) {
                 <li class="member-row" data-testid="cohort-member">
                   <div>
                     <strong>{{ member.name }}</strong>
-                    <div class="w-muted">{{ member.email }}</div>
+                    <div class="ph-muted">{{ member.email }}</div>
                   </div>
-                  <div class="w-actions">
+                  <div class="ph-actions">
                     @if (member.status !== 'Active') {
-                      <span w-badge variant="warning">{{ member.status }}</span>
+                      <span ph-badge variant="warning">{{ member.status }}</span>
                     }
                     <a
-                      w-button
+                      ph-button
                       variant="ghost"
                       size="sm"
                       [routerLink]="['/admin/people', member.id]"
@@ -84,20 +86,20 @@
                   </div>
                 </li>
               } @empty {
-                <li class="w-muted">No youth are in this cohort yet.</li>
+                <li class="ph-muted">No youth are in this cohort yet.</li>
               }
             </ul>
           </div>
         </section>
 
-        <aside w-card aria-labelledby="add-member-heading">
-          <div w-card-body class="member-actions">
+        <aside ph-card aria-labelledby="add-member-heading">
+          <div ph-card-body class="member-actions">
             <h2 id="add-member-heading">Add members</h2>
             @if (cohort.availableYouth.length > 0) {
-              <div w-form-field>
-                <label w-label for="available-youth">Add existing youth</label>
+              <div ph-form-field>
+                <label ph-label for="available-youth">Add existing youth</label>
                 <select
-                  w-select
+                  ph-select
                   id="available-youth"
                   [value]="selectedYouthId()"
                   [disabled]="saving()"
@@ -110,7 +112,7 @@
                 </select>
               </div>
               <button
-                w-button
+                ph-button
                 variant="primary"
                 type="button"
                 [disabled]="!selectedYouthId() || saving()"
@@ -119,59 +121,59 @@
                 {{ saving() ? 'Adding…' : 'Add youth' }}
               </button>
             } @else {
-              <p class="w-muted">No unassigned active youth are available.</p>
+              <p class="ph-muted">No unassigned active youth are available.</p>
             }
-            <a w-button variant="secondary" routerLink="/admin/invitations">Invite a youth</a>
+            <a ph-button variant="secondary" routerLink="/admin/invitations">Invite a youth</a>
           </div>
         </aside>
       </div>
     } @else if (!errorMessage()) {
-      <p class="w-muted" role="status">Loading cohort…</p>
+      <p class="ph-muted" role="status">Loading cohort…</p>
     }
   </div>
 
   @if (editOpen()) {
-    <div w-dialog size="sm" aria-labelledby="edit-cohort-heading" (dismiss)="closeEdit()">
-      <div w-dialog-header>
+    <div ph-dialog size="sm" aria-labelledby="edit-cohort-heading" (dismiss)="closeEdit()">
+      <div ph-dialog-header>
         <div>
-          <h2 w-dialog-title id="edit-cohort-heading">Edit cohort</h2>
-          <p w-dialog-subtitle>Changes are recorded in the audit log.</p>
+          <h2 ph-dialog-title id="edit-cohort-heading">Edit cohort</h2>
+          <p ph-dialog-subtitle>Changes are recorded in the audit log.</p>
         </div>
         <button
-          w-icon-button
+          ph-icon-button
           type="button"
           aria-label="Close"
           [disabled]="saving()"
           (click)="closeEdit()"
         >
-          <w-icon name="x" />
+          <ph-icon name="x" />
         </button>
       </div>
-      <div w-dialog-body>
-        <form class="w-stack" [formGroup]="editForm" (ngSubmit)="saveEdit()">
-          <div w-form-field>
-            <label w-label for="edit-cohort-name">Cohort name</label>
-            <input w-text-field id="edit-cohort-name" formControlName="name" maxlength="128" />
+      <div ph-dialog-body>
+        <form class="ph-stack" [formGroup]="editForm" (ngSubmit)="saveEdit()">
+          <div ph-form-field>
+            <label ph-label for="edit-cohort-name">Cohort name</label>
+            <input ph-text-field id="edit-cohort-name" formControlName="name" maxlength="128" />
             @if (editForm.controls.name.touched && editForm.controls.name.invalid) {
-              <p w-error-text>Enter a cohort name.</p>
+              <p ph-error-text>Enter a cohort name.</p>
             }
           </div>
-          <div w-form-field>
-            <label w-label for="edit-cohort-mentor">Lead mentor</label>
-            <select w-select id="edit-cohort-mentor" formControlName="leadMentorId">
+          <div ph-form-field>
+            <label ph-label for="edit-cohort-mentor">Lead mentor</label>
+            <select ph-select id="edit-cohort-mentor" formControlName="leadMentorId">
               <option value="">Choose a mentor</option>
               @for (mentor of options()?.mentors ?? []; track mentor.id) {
                 <option [value]="mentor.id">{{ mentor.name }}</option>
               }
             </select>
             @if (editForm.controls.leadMentorId.touched && editForm.controls.leadMentorId.invalid) {
-              <p w-error-text>Choose an active lead mentor.</p>
+              <p ph-error-text>Choose an active lead mentor.</p>
             }
           </div>
-          <div w-form-field>
-            <label w-label for="edit-cohort-location">Meeting location</label>
+          <div ph-form-field>
+            <label ph-label for="edit-cohort-location">Meeting location</label>
             <input
-              w-text-field
+              ph-text-field
               id="edit-cohort-location"
               formControlName="location"
               maxlength="256"
@@ -179,14 +181,20 @@
           </div>
         </form>
       </div>
-      <div w-dialog-footer>
-        <button w-button variant="ghost" type="button" [disabled]="saving()" (click)="closeEdit()">
+      <div ph-dialog-footer>
+        <button ph-button variant="ghost" type="button" [disabled]="saving()" (click)="closeEdit()">
           Cancel
         </button>
-        <button w-button variant="primary" type="button" [disabled]="saving()" (click)="saveEdit()">
+        <button
+          ph-button
+          variant="primary"
+          type="button"
+          [disabled]="saving()"
+          (click)="saveEdit()"
+        >
           {{ saving() ? 'Saving…' : 'Save changes' }}
         </button>
       </div>
     </div>
   }
-</w-shell>
+</ph-shell>

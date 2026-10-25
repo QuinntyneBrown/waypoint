@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 /** A horizontal rule that separates groups of content within a page or a card. */
 @Component({
-  selector: 'div[w-divider]',
+  selector: 'div[ph-divider]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-divider' },
+  host: { class: 'ph-divider' },
   templateUrl: './divider.html',
   styleUrl: './divider.css',
 })

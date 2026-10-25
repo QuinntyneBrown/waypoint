@@ -28,7 +28,7 @@ test('capture: guardian portal', async ({ page, request }) => {
   await expect(progress.sharedCheckIns).toContainText(family.sharedActionItems);
   await page.waitForLoadState('networkidle');
 
-  const card = (title: string) => page.locator('section.w-card', { hasText: title });
+  const card = (title: string) => page.locator('section.ph-card', { hasText: title });
   const docTop = async (target: Locator) =>
     (await target.boundingBox())!.y + (await page.evaluate(() => window.scrollY));
   const left = 244 + 20;

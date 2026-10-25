@@ -5,7 +5,7 @@ import { Button, StatePage } from '@waypoint/components';
 
 // Traces to: L2-PLATFORM-006
 @Component({
-  selector: 'w-forbidden',
+  selector: 'ph-forbidden',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
   templateUrl: './forbidden.html',

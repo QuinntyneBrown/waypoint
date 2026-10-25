@@ -22,7 +22,7 @@ test('capture: author tracks and modules', async ({ page, request }) => {
   await builder.trackDialog.getByRole('button', { name: 'Create track' }).click();
   await expect(builder.trackSelect.locator('option:checked')).toHaveText(trackName);
   await expect(page.getByText('No modules yet')).toBeVisible();
-  await shotOf(page.locator('section.w-card').first(), FOLDER, 'track-picker', 8);
+  await shotOf(page.locator('section.ph-card').first(), FOLDER, 'track-picker', 8);
 
   const one = 'Foundations ' + tag;
   const two = 'Serving others ' + tag;
@@ -67,5 +67,5 @@ test('capture: author tracks and modules', async ({ page, request }) => {
 
   await page.getByRole('button', { name: 'Publish track' }).click();
   await expect(builder.outcome).toContainText('Track published.');
-  await shotOf(page.locator('section.w-card').first(), FOLDER, 'track-published', 8);
+  await shotOf(page.locator('section.ph-card').first(), FOLDER, 'track-published', 8);
 });

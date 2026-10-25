@@ -19,7 +19,7 @@ import {
 
 // Traces to: L2-LEARN-009
 @Component({
-  selector: 'w-youth-journey',
+  selector: 'ph-youth-journey',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

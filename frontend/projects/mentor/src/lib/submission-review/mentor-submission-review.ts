@@ -41,7 +41,7 @@ interface GradingDraft {
 
 // Traces to: L2-MENTOR-003, L2-LEARN-007, L2-ENGAGE-008
 @Component({
-  selector: 'w-mentor-submission-review',
+  selector: 'ph-mentor-submission-review',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

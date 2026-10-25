@@ -177,7 +177,7 @@ scripts/                   Requirements traceability and performance tooling
 | [Requirements specification](docs/specs/README.md)     | Stable requirement IDs, acceptance criteria, and traceability     |
 | [Architecture](docs/ARCHITECTURE.md)                   | System layers, request flow, persistence, and security boundaries |
 | [Architecture decisions](docs/DECISIONS.md)            | Durable technical and product decisions                           |
-| [Design system](docs/design-system/README.md)          | Tokens, foundations, components, and patterns used by the mocks   |
+| [Design system](docs/design-system/README.md)          | PromiseHub tokens, foundations, components, and patterns (`ph`)   |
 | [Design references](docs/mocks/README.md)              | Static product map and role-based interaction references          |
 | [Screen composition](docs/screen-composition.md)       | Component library parts that make up each screen                  |
 | [Narrated videos](docs/videos/README.md)               | Walkthrough videos of designs and journeys                        |

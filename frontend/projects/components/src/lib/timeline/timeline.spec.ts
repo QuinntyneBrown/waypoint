@@ -6,10 +6,10 @@ import { TimelineItem } from './timeline-item';
 @Component({
   imports: [Timeline, TimelineItem],
   template: `
-    <div w-timeline>
-      <article w-timeline-item done>First</article>
-      <article w-timeline-item [current]="current()" data-testid="current-module">Second</article>
-      <article w-timeline-item>Third</article>
+    <div ph-timeline>
+      <article ph-timeline-item done>First</article>
+      <article ph-timeline-item [current]="current()" data-testid="current-module">Second</article>
+      <article ph-timeline-item>Third</article>
     </div>
   `,
 })
@@ -30,9 +30,9 @@ describe('Timeline', () => {
 
   it('lists steps along a vertical line and keeps their content', async () => {
     const { root, items } = await render();
-    expect(root.querySelector('div')?.classList.contains('w-timeline')).toBe(true);
+    expect(root.querySelector('div')?.classList.contains('ph-timeline')).toBe(true);
     expect(items.map((i) => i.textContent)).toEqual(['First', 'Second', 'Third']);
-    expect(items[0].classList.contains('w-timeline__item')).toBe(true);
+    expect(items[0].classList.contains('ph-timeline__item')).toBe(true);
     expect(items[1].getAttribute('data-testid')).toBe('current-module');
   });
 

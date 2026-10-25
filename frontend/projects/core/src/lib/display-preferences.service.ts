@@ -13,11 +13,11 @@ export class DisplayPreferencesService {
 
   apply(prefs: DisplayPreferences): void {
     const root = this.doc.documentElement;
-    root.style.setProperty('--w-text-scale', String((prefs.textScalePercent || 100) / 100));
-    root.classList.toggle('w-a11y-contrast', prefs.highContrast);
-    root.classList.toggle('w-a11y-reduce-motion', prefs.reduceMotion);
-    root.classList.toggle('w-a11y-underline', prefs.underlineLinks);
-    root.classList.toggle('w-a11y-reading-font', prefs.readingFont === 'serif');
+    root.style.setProperty('--ph-text-scale', String((prefs.textScalePercent || 100) / 100));
+    root.classList.toggle('ph-a11y-contrast', prefs.highContrast);
+    root.classList.toggle('ph-a11y-reduce-motion', prefs.reduceMotion);
+    root.classList.toggle('ph-a11y-underline', prefs.underlineLinks);
+    root.classList.toggle('ph-a11y-reading-font', prefs.readingFont === 'serif');
     // No data-theme means the tokens follow the device colour scheme.
     if (prefs.theme === 'light' || prefs.theme === 'dark') {
       root.setAttribute('data-theme', prefs.theme);

@@ -15,7 +15,7 @@ const meta: Meta<Badge> = {
   decorators: [moduleMetadata({ imports: [Badge] })],
   render: (args) => ({
     props: args,
-    template: `<span w-badge [variant]="variant" [dot]="dot">Approved</span>`,
+    template: `<span ph-badge [variant]="variant" [dot]="dot">Approved</span>`,
   }),
 };
 

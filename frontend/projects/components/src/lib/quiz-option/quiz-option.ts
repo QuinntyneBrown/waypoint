@@ -13,11 +13,11 @@ import {
  * alone.
  */
 @Component({
-  selector: 'label[w-quiz-option], li[w-quiz-option]',
+  selector: 'label[ph-quiz-option], li[ph-quiz-option]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'w-quiz__opt',
+    class: 'ph-quiz__opt',
     '[class.is-selected]': 'selected()',
     '[class.is-correct]': 'correct()',
   },

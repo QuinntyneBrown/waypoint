@@ -1,37 +1,37 @@
-<w-shell
+<ph-shell
   role="mentor"
   active="flags"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Safeguarding follow-up</div>
-        <h1 class="w-page__title">At-risk youth</h1>
-        <p class="w-page__sub">
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Safeguarding follow-up</div>
+        <h1 class="ph-page__title">At-risk youth</h1>
+        <p class="ph-page__sub">
           Review inactivity, missed-session, and cohort-progress signals, then record your action.
         </p>
       </div>
     </div>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
-    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="ph-sr-only" role="status">{{ statusMessage() }}</p>
 
-    <section w-card class="w-mb-6" aria-labelledby="raise-flag-heading">
-      <div w-card-header>
+    <section ph-card class="ph-mb-6" aria-labelledby="raise-flag-heading">
+      <div ph-card-header>
         <div>
-          <h2 w-card-title id="raise-flag-heading">Raise a manual flag</h2>
-          <p class="w-muted">Use this when a concern is not captured by an automatic signal.</p>
+          <h2 ph-card-title id="raise-flag-heading">Raise a manual flag</h2>
+          <p class="ph-muted">Use this when a concern is not captured by an automatic signal.</p>
         </div>
       </div>
-      <div w-card-body class="raise-grid">
-        <div w-form-field class="w-mb-0">
-          <label w-label for="flag-youth">Youth</label>
+      <div ph-card-body class="raise-grid">
+        <div ph-form-field class="ph-mb-0">
+          <label ph-label for="flag-youth">Youth</label>
           <select
-            w-select
+            ph-select
             id="flag-youth"
             [value]="selectedYouthId()"
             (change)="selectedYouthId.set($any($event.target).value)"
@@ -44,10 +44,10 @@
             }
           </select>
         </div>
-        <div w-form-field class="w-mb-0">
-          <label w-label for="manual-flag-reason">Reason</label>
+        <div ph-form-field class="ph-mb-0">
+          <label ph-label for="manual-flag-reason">Reason</label>
           <input
-            w-text-field
+            ph-text-field
             id="manual-flag-reason"
             maxlength="1000"
             [value]="manualReason()"
@@ -55,7 +55,7 @@
           />
         </div>
         <button
-          w-button
+          ph-button
           variant="primary"
           class="raise-button"
           type="button"
@@ -68,64 +68,64 @@
     </section>
 
     <section aria-labelledby="active-flags-heading">
-      <div class="w-cluster w-cluster--between w-mb-4">
-        <h2 class="w-mb-0" id="active-flags-heading">Active flags</h2>
+      <div class="ph-cluster ph-cluster--between ph-mb-4">
+        <h2 class="ph-mb-0" id="active-flags-heading">Active flags</h2>
         @if (flags(); as activeFlags) {
-          <span w-badge>{{ activeFlags.length }} active</span>
+          <span ph-badge>{{ activeFlags.length }} active</span>
         }
       </div>
 
       @if (flags(); as activeFlags) {
         <div class="flag-list">
           @for (flag of activeFlags; track flag.flagId) {
-            <article w-card class="flag-card" data-testid="at-risk-flag">
-              <div w-card-header>
+            <article ph-card class="flag-card" data-testid="at-risk-flag">
+              <div ph-card-header>
                 <div>
-                  <p class="w-eyebrow">
+                  <p class="ph-eyebrow">
                     {{ flag.automatic ? 'Automatic signal' : 'Mentor-raised concern' }}
                   </p>
-                  <h3 w-card-title>{{ flag.displayName }}</h3>
-                  <p class="w-muted">
+                  <h3 ph-card-title>{{ flag.displayName }}</h3>
+                  <p class="ph-muted">
                     Flagged by {{ flag.flaggedByName }} · {{ flag.flaggedAt | date: 'medium' }}
                   </p>
                 </div>
-                <span w-badge variant="error">At risk</span>
+                <span ph-badge variant="error">At risk</span>
               </div>
-              <div w-card-body class="w-stack">
+              <div ph-card-body class="ph-stack">
                 <ul class="reason-list" aria-label="Reasons">
                   @for (reason of flag.reasons; track reason) {
                     <li>{{ reason }}</li>
                   }
                 </ul>
-                <div class="w-actions flag-actions">
-                  <a w-button variant="ghost" [routerLink]="['/mentor/youth', flag.youthId]">
+                <div class="ph-actions flag-actions">
+                  <a ph-button variant="ghost" [routerLink]="['/mentor/youth', flag.youthId]">
                     View youth
                   </a>
                   <a
-                    w-button
+                    ph-button
                     variant="ghost"
                     [routerLink]="['/mentor/check-ins']"
                     [queryParams]="{ youthId: flag.youthId }"
                   >
                     Log check-in
                   </a>
-                  <button w-button variant="ghost" type="button" (click)="toggleMessage(flag)">
+                  <button ph-button variant="ghost" type="button" (click)="toggleMessage(flag)">
                     Message
                   </button>
-                  <button w-button variant="danger" type="button" (click)="startResolve(flag)">
+                  <button ph-button variant="danger" type="button" (click)="startResolve(flag)">
                     Unflag
                   </button>
                 </div>
               </div>
 
               @if (messageFlagId() === flag.flagId) {
-                <div class="inline-action w-stack" data-testid="flag-message-composer">
-                  <div w-form-field class="action-field w-mb-0">
-                    <label w-label [for]="'flag-message-' + flag.flagId">
+                <div class="inline-action ph-stack" data-testid="flag-message-composer">
+                  <div ph-form-field class="action-field ph-mb-0">
+                    <label ph-label [for]="'flag-message-' + flag.flagId">
                       Message {{ flag.displayName }}
                     </label>
                     <textarea
-                      w-textarea
+                      ph-textarea
                       [id]="'flag-message-' + flag.flagId"
                       rows="3"
                       maxlength="4000"
@@ -133,9 +133,9 @@
                       (input)="messageBody.set($any($event.target).value)"
                     ></textarea>
                   </div>
-                  <div class="w-actions flag-actions">
+                  <div class="ph-actions flag-actions">
                     <button
-                      w-button
+                      ph-button
                       variant="primary"
                       type="button"
                       [disabled]="busy()"
@@ -143,7 +143,7 @@
                     >
                       Send message
                     </button>
-                    <button w-button variant="ghost" type="button" (click)="toggleMessage(flag)">
+                    <button ph-button variant="ghost" type="button" (click)="toggleMessage(flag)">
                       Cancel
                     </button>
                   </div>
@@ -151,12 +151,12 @@
               }
 
               @if (resolvingFlagId() === flag.flagId) {
-                <div class="inline-action w-stack" data-testid="flag-resolution">
+                <div class="inline-action ph-stack" data-testid="flag-resolution">
                   <p><strong>Confirm this flag can be removed.</strong></p>
-                  <div w-form-field class="action-field w-mb-0">
-                    <label w-label [for]="'resolution-' + flag.flagId"> Resolution reason </label>
+                  <div ph-form-field class="action-field ph-mb-0">
+                    <label ph-label [for]="'resolution-' + flag.flagId"> Resolution reason </label>
                     <select
-                      w-select
+                      ph-select
                       [id]="'resolution-' + flag.flagId"
                       [value]="resolutionReason()"
                       (change)="setResolution($any($event.target).value)"
@@ -167,9 +167,9 @@
                       <option value="FlaggedInError">Flagged in error</option>
                     </select>
                   </div>
-                  <div class="w-actions flag-actions">
+                  <div class="ph-actions flag-actions">
                     <button
-                      w-button
+                      ph-button
                       variant="danger"
                       type="button"
                       [disabled]="busy()"
@@ -177,7 +177,7 @@
                     >
                       Confirm unflag
                     </button>
-                    <button w-button variant="ghost" type="button" (click)="cancelResolve()">
+                    <button ph-button variant="ghost" type="button" (click)="cancelResolve()">
                       Keep flag
                     </button>
                   </div>
@@ -185,18 +185,18 @@
               }
             </article>
           } @empty {
-            <div w-card>
-              <div w-empty-state>
-                <div w-empty-state-icon><w-icon name="flag" /></div>
-                <h3 w-empty-state-title>No active flags</h3>
-                <p w-empty-state-text>No assigned youth currently need at-risk follow-up.</p>
+            <div ph-card>
+              <div ph-empty-state>
+                <div ph-empty-state-icon><ph-icon name="flag" /></div>
+                <h3 ph-empty-state-title>No active flags</h3>
+                <p ph-empty-state-text>No assigned youth currently need at-risk follow-up.</p>
               </div>
             </div>
           }
         </div>
       } @else {
-        <p class="w-muted" role="status">Evaluating at-risk signals…</p>
+        <p class="ph-muted" role="status">Evaluating at-risk signals…</p>
       }
     </section>
   </div>
-</w-shell>
+</ph-shell>

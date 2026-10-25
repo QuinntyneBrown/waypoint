@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
-/** The top row of a `w-card`: usually its title and an optional action. */
+/** The top row of a `ph-card`: usually its title and an optional action. */
 @Component({
-  selector: 'div[w-card-header]',
+  selector: 'div[ph-card-header]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-card__header' },
+  host: { class: 'ph-card__header' },
   templateUrl: './card-header.html',
   styleUrl: './card-header.css',
 })

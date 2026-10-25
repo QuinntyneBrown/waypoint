@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { Button } from '@waypoint/components';
 
 @Component({
-  selector: 'w-public-not-found',
+  selector: 'ph-public-not-found',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, Button],
   templateUrl: './not-found.html',

@@ -19,7 +19,7 @@ actor "Youth participant" as actor
 box "Frontend — Portal application" #E0F2FE
   participant "YouthLesson" as page
   participant "LearningService" as client
-  participant "w-video-player / HlsVodSession" as player
+  participant "ph-video-player / HlsVodSession" as player
 end box
 box "Backend — Waypoint API application" #D1FADF
   participant "YouthCurriculumController" as controller

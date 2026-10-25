@@ -1,52 +1,52 @@
-<w-shell
+<ph-shell
   role="youth"
   active="messages"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Your support</div>
-        <h1 class="w-page__title">Messages</h1>
+  <div class="ph-container ph-container--narrow ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Your support</div>
+        <h1 class="ph-page__title">Messages</h1>
         @if (thread()?.mentorName; as mentorName) {
-          <p class="w-page__sub">Your private conversation with {{ mentorName }}.</p>
+          <p class="ph-page__sub">Your private conversation with {{ mentorName }}.</p>
         }
       </div>
-      <span w-badge data-testid="realtime-status">
+      <span ph-badge data-testid="realtime-status">
         {{ realtime.state() === 'connected' ? 'Live updates on' : 'Reconnecting live updates' }}
       </span>
     </div>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
-    <p class="w-sr-only" role="status">{{ liveStatus() }}</p>
+    <p class="ph-sr-only" role="status">{{ liveStatus() }}</p>
 
     @if (thread(); as view) {
       @if (!view.mentorId) {
-        <section w-card>
-          <div w-empty-state>
-            <div w-card-body>
-              <h2 w-empty-state-title>Your mentor hasn’t been assigned yet</h2>
-              <p w-empty-state-text>This conversation will open when your placement is ready.</p>
+        <section ph-card>
+          <div ph-empty-state>
+            <div ph-card-body>
+              <h2 ph-empty-state-title>Your mentor hasn’t been assigned yet</h2>
+              <p ph-empty-state-text>This conversation will open when your placement is ready.</p>
             </div>
           </div>
         </section>
       } @else {
         @if (view.unreadCount > 0) {
-          <p w-alert variant="info" role="status">
+          <p ph-alert variant="info" role="status">
             {{ view.unreadCount }} new {{ view.unreadCount === 1 ? 'message' : 'messages' }} from
             your mentor.
           </p>
         }
         <section
-          w-card
+          ph-card
           class="thread-card"
           [attr.aria-label]="'Conversation with ' + view.mentorName"
         >
           <div
-            w-message-thread
+            ph-message-thread
             class="thread-log"
             role="log"
             aria-live="polite"
@@ -54,33 +54,33 @@
             data-testid="message-thread"
           >
             @if (view.messages.length === 0) {
-              <div w-empty-state>
-                <h2 w-empty-state-title>Start the conversation</h2>
-                <p w-empty-state-text>Ask a question or share how your week is going.</p>
+              <div ph-empty-state>
+                <h2 ph-empty-state-title>Start the conversation</h2>
+                <p ph-empty-state-text>Ask a question or share how your week is going.</p>
               </div>
             }
             @for (message of view.messages; track message.id) {
               <article
-                w-message-bubble
+                ph-message-bubble
                 [direction]="message.senderId === auth.user()?.userId ? 'out' : 'in'"
                 [attr.data-message-id]="message.id"
               >
-                <span class="w-sr-only"
+                <span class="ph-sr-only"
                   >{{ message.senderId === auth.user()?.userId ? 'You' : view.mentorName }}:</span
                 >
                 <span class="message-body">{{ message.body }}</span>
-                <time w-message-bubble-time [attr.datetime]="message.sentAt">{{
+                <time ph-message-bubble-time [attr.datetime]="message.sentAt">{{
                   message.sentAt | date: 'medium'
                 }}</time>
               </article>
             }
           </div>
 
-          <form class="composer w-stack" [formGroup]="form" (ngSubmit)="send()">
-            <div w-form-field>
-              <label w-label for="message-body">Message your mentor</label>
+          <form class="composer ph-stack" [formGroup]="form" (ngSubmit)="send()">
+            <div ph-form-field>
+              <label ph-label for="message-body">Message your mentor</label>
               <textarea
-                w-textarea
+                ph-textarea
                 id="message-body"
                 formControlName="body"
                 maxlength="4000"
@@ -88,14 +88,14 @@
                 aria-describedby="message-help"
                 (keydown.control.enter)="send()"
               ></textarea>
-              <p w-help id="message-help">Ctrl + Enter also sends your message.</p>
+              <p ph-help id="message-help">Ctrl + Enter also sends your message.</p>
               @if (form.controls.body.touched && form.controls.body.invalid) {
-                <p w-error-text>Write a message before sending.</p>
+                <p ph-error-text>Write a message before sending.</p>
               }
             </div>
-            <div class="w-actions w-actions--between">
-              <span class="w-muted">{{ form.controls.body.value.length }}/4000</span>
-              <button w-button variant="primary" type="submit" [disabled]="sending()">
+            <div class="ph-actions ph-actions--between">
+              <span class="ph-muted">{{ form.controls.body.value.length }}/4000</span>
+              <button ph-button variant="primary" type="submit" [disabled]="sending()">
                 {{ sending() ? 'Sending…' : 'Send message' }}
               </button>
             </div>
@@ -103,7 +103,7 @@
         </section>
       }
     } @else {
-      <p class="w-muted" role="status">Loading messages…</p>
+      <p class="ph-muted" role="status">Loading messages…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

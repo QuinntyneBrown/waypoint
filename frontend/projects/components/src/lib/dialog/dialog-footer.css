@@ -1,7 +1,7 @@
-.w-modal__footer {
-  padding: var(--w-s4) var(--w-s6) var(--w-s6);
+.ph-modal__footer {
+  padding: var(--ph-s4) var(--ph-s6) var(--ph-s6);
   display: flex;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   justify-content: flex-end;
   flex-wrap: wrap;
 }

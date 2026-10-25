@@ -32,7 +32,7 @@ import { shellRole } from '@waypoint/core';
 
 // Traces to: L2-PLATFORM-005
 @Component({
-  selector: 'w-support',
+  selector: 'ph-support',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

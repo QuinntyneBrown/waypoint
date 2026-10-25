@@ -1,55 +1,55 @@
-<w-shell
+<ph-shell
   role="admin"
   active="settings"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Program administration</div>
-        <h1 class="w-page__title">Organization settings</h1>
-        <p class="w-page__sub">
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Program administration</div>
+        <h1 class="ph-page__title">Organization settings</h1>
+        <p class="ph-page__sub">
           Manage identity, guardian consent policy, program terms, and available tracks.
         </p>
       </div>
     </div>
 
     @if (errorMessage(); as error) {
-      <div w-alert variant="error" role="alert">
+      <div ph-alert variant="error" role="alert">
         <div>
-          <div w-alert-title>{{ error }}</div>
+          <div ph-alert-title>{{ error }}</div>
           Settings could not be loaded or saved.
         </div>
-        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
+        <button ph-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p w-alert variant="success" data-testid="settings-outcome" role="status">
+      <p ph-alert variant="success" data-testid="settings-outcome" role="status">
         {{ message }}
       </p>
     }
 
     @if (loaded()) {
       <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
-        <div class="settings-grid w-mb-5">
-          <section w-card class="settings-card" aria-labelledby="identity-heading">
-            <div w-card-body class="w-stack">
+        <div class="settings-grid ph-mb-5">
+          <section ph-card class="settings-card" aria-labelledby="identity-heading">
+            <div ph-card-body class="ph-stack">
               <div>
                 <h2 id="identity-heading">Organization identity</h2>
-                <p class="w-muted">The platform colour palette remains fixed for accessibility.</p>
+                <p class="ph-muted">The platform colour palette remains fixed for accessibility.</p>
               </div>
-              <div w-form-field>
-                <label w-label for="organization-name">Organization name</label>
-                <input w-text-field id="organization-name" formControlName="name" />
+              <div ph-form-field>
+                <label ph-label for="organization-name">Organization name</label>
+                <input ph-text-field id="organization-name" formControlName="name" />
               </div>
-              <div w-form-field>
-                <label w-label for="organization-display-name">Display name</label>
-                <input w-text-field id="organization-display-name" formControlName="displayName" />
+              <div ph-form-field>
+                <label ph-label for="organization-display-name">Display name</label>
+                <input ph-text-field id="organization-display-name" formControlName="displayName" />
               </div>
-              <div w-form-field>
-                <label w-label for="organization-logo">Logo URL</label>
-                <input w-text-field id="organization-logo" formControlName="logoUrl" />
+              <div ph-form-field>
+                <label ph-label for="organization-logo">Logo URL</label>
+                <input ph-text-field id="organization-logo" formControlName="logoUrl" />
               </div>
               @if (settingsForm.controls.logoUrl.value) {
                 <div class="logo-preview" aria-label="Logo preview">
@@ -59,33 +59,33 @@
                   />
                 </div>
               }
-              <div w-form-field>
-                <label w-label for="organization-city">City</label>
-                <input w-text-field id="organization-city" formControlName="city" />
+              <div ph-form-field>
+                <label ph-label for="organization-city">City</label>
+                <input ph-text-field id="organization-city" formControlName="city" />
               </div>
-              <div w-form-field>
-                <label w-label for="organization-contact">Contact email</label>
+              <div ph-form-field>
+                <label ph-label for="organization-contact">Contact email</label>
                 <input
-                  w-text-field
+                  ph-text-field
                   id="organization-contact"
                   type="email"
                   formControlName="contactEmail"
                 />
-                <p w-help>Shown to guardians on consent forms and emailed records.</p>
+                <p ph-help>Shown to guardians on consent forms and emailed records.</p>
               </div>
             </div>
           </section>
 
-          <section w-card class="settings-card" aria-labelledby="consent-policy-heading">
-            <div w-card-body class="w-stack">
+          <section ph-card class="settings-card" aria-labelledby="consent-policy-heading">
+            <div ph-card-body class="ph-stack">
               <div>
                 <h2 id="consent-policy-heading">Guardian consent policy</h2>
-                <p class="w-muted">These settings drive term access and youth-media safeguards.</p>
+                <p class="ph-muted">These settings drive term access and youth-media safeguards.</p>
               </div>
-              <div w-form-field>
-                <label w-label for="consent-statement">Consent statement</label>
+              <div ph-form-field>
+                <label ph-label for="consent-statement">Consent statement</label>
                 <textarea
-                  w-textarea
+                  ph-textarea
                   id="consent-statement"
                   rows="7"
                   formControlName="consentStatement"
@@ -95,7 +95,7 @@
                 <input type="checkbox" formControlName="requireReConsentEachTerm" />
                 <span>
                   <strong>Require re-consent each term</strong><br />
-                  <span class="w-muted">
+                  <span class="ph-muted">
                     A prior-term record will not unlock participation once a new active term begins.
                   </span>
                 </span>
@@ -104,7 +104,7 @@
                 <input type="checkbox" formControlName="requireMediaConsent" />
                 <span>
                   <strong>Require media consent for youth media</strong><br />
-                  <span class="w-muted">
+                  <span class="ph-muted">
                     Photos and video require a current applicable guardian permission.
                   </span>
                 </span>
@@ -113,9 +113,9 @@
           </section>
         </div>
         <button
-          w-button
+          ph-button
           variant="primary"
-          class="w-mb-6"
+          class="ph-mb-6"
           type="submit"
           [disabled]="savingSettings()"
         >
@@ -123,34 +123,36 @@
         </button>
       </form>
 
-      <section w-card class="w-mb-5" aria-labelledby="terms-heading">
-        <div w-card-body class="w-stack">
+      <section ph-card class="ph-mb-5" aria-labelledby="terms-heading">
+        <div ph-card-body class="ph-stack">
           <div>
             <h2 id="terms-heading">Terms and cohort cycles</h2>
-            <p class="w-muted">Maintain date ranges and advance each term through its lifecycle.</p>
+            <p class="ph-muted">
+              Maintain date ranges and advance each term through its lifecycle.
+            </p>
           </div>
           <form class="term-form" [formGroup]="termForm" (ngSubmit)="saveTerm()">
-            <div w-form-field>
-              <label w-label for="term-name">Term name</label>
-              <input w-text-field id="term-name" formControlName="name" />
+            <div ph-form-field>
+              <label ph-label for="term-name">Term name</label>
+              <input ph-text-field id="term-name" formControlName="name" />
             </div>
-            <div w-form-field>
-              <label w-label for="term-start">Start date</label>
-              <input w-text-field id="term-start" type="date" formControlName="startDate" />
+            <div ph-form-field>
+              <label ph-label for="term-start">Start date</label>
+              <input ph-text-field id="term-start" type="date" formControlName="startDate" />
             </div>
-            <div w-form-field>
-              <label w-label for="term-end">End date</label>
-              <input w-text-field id="term-end" type="date" formControlName="endDate" />
+            <div ph-form-field>
+              <label ph-label for="term-end">End date</label>
+              <input ph-text-field id="term-end" type="date" formControlName="endDate" />
             </div>
-            <div w-form-field>
-              <label w-label for="term-status">Term status</label>
-              <select w-select id="term-status" formControlName="status">
+            <div ph-form-field>
+              <label ph-label for="term-status">Term status</label>
+              <select ph-select id="term-status" formControlName="status">
                 <option value="Upcoming">Upcoming</option>
                 <option value="Active">Active</option>
                 <option value="Completed">Completed</option>
               </select>
             </div>
-            <button w-button variant="primary" type="submit" [disabled]="savingTerm()">
+            <button ph-button variant="primary" type="submit" [disabled]="savingTerm()">
               @if (savingTerm()) {
                 Saving…
               } @else if (editingTermId()) {
@@ -161,7 +163,7 @@
             </button>
           </form>
           @if (editingTermId()) {
-            <button w-button variant="ghost" type="button" (click)="cancelTermEdit()">
+            <button ph-button variant="ghost" type="button" (click)="cancelTermEdit()">
               Cancel term edit
             </button>
           }
@@ -170,15 +172,15 @@
               <li class="term-row" data-testid="term-row">
                 <div class="term-row__details">
                   <strong>{{ term.name }}</strong>
-                  <div class="w-muted">
+                  <div class="ph-muted">
                     {{ term.startDate | date: 'mediumDate' }}–{{
                       term.endDate | date: 'mediumDate'
                     }}
                   </div>
                 </div>
-                <div class="w-actions">
+                <div class="ph-actions">
                   <span
-                    w-badge
+                    ph-badge
                     [variant]="
                       term.status === 'Active'
                         ? 'success'
@@ -192,7 +194,7 @@
                     {{ term.status }}
                   </span>
                   <button
-                    w-button
+                    ph-button
                     variant="secondary"
                     size="sm"
                     type="button"
@@ -203,20 +205,20 @@
                 </div>
               </li>
             } @empty {
-              <li w-empty-state>
-                <div w-empty-state-icon><w-icon name="calendar" /></div>
-                <h3 w-empty-state-title>No terms yet</h3>
-                <p w-empty-state-text>Create the first program term above.</p>
+              <li ph-empty-state>
+                <div ph-empty-state-icon><ph-icon name="calendar" /></div>
+                <h3 ph-empty-state-title>No terms yet</h3>
+                <p ph-empty-state-text>Create the first program term above.</p>
               </li>
             }
           </ul>
         </div>
       </section>
 
-      <section w-card aria-labelledby="tracks-heading">
-        <div w-card-body>
+      <section ph-card aria-labelledby="tracks-heading">
+        <div ph-card-body>
           <h2 id="tracks-heading">Track availability</h2>
-          <p class="w-muted">
+          <p class="ph-muted">
             Pausing a track preserves existing progress but blocks new enrolment and work
             assignment.
           </p>
@@ -225,17 +227,17 @@
               <li class="track-row" data-testid="track-row" [attr.data-track-id]="track.id">
                 <div class="track-row__details">
                   <strong>{{ track.name }}</strong>
-                  <div class="w-muted">{{ track.key }} · {{ track.status }}</div>
+                  <div class="ph-muted">{{ track.key }} · {{ track.status }}</div>
                 </div>
-                <div class="w-actions">
+                <div class="ph-actions">
                   <span
-                    w-badge
+                    ph-badge
                     [variant]="track.enabled ? 'success' : !track.enabled ? 'warning' : ''"
                   >
                     {{ track.enabled ? 'Enabled' : 'Paused' }}
                   </span>
                   <button
-                    w-button
+                    ph-button
                     variant="secondary"
                     size="sm"
                     type="button"
@@ -247,17 +249,17 @@
                 </div>
               </li>
             } @empty {
-              <li w-empty-state>
-                <div w-empty-state-icon><w-icon name="book-open" /></div>
-                <h3 w-empty-state-title>No tracks available</h3>
-                <p w-empty-state-text>Published curriculum tracks will appear here.</p>
+              <li ph-empty-state>
+                <div ph-empty-state-icon><ph-icon name="book-open" /></div>
+                <h3 ph-empty-state-title>No tracks available</h3>
+                <p ph-empty-state-text>Published curriculum tracks will appear here.</p>
               </li>
             }
           </ul>
         </div>
       </section>
     } @else if (!errorMessage()) {
-      <p class="w-muted" role="status">Loading organization settings…</p>
+      <p class="ph-muted" role="status">Loading organization settings…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

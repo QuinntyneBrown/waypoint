@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 /** The dark page footer of the public site. Applied to a native `footer`. */
 @Component({
-  selector: 'footer[w-footer]',
+  selector: 'footer[ph-footer]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-footer' },
+  host: { class: 'ph-footer' },
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })

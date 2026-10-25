@@ -1,10 +1,10 @@
-.w-scripture__ref {
+.ph-scripture__ref {
   display: block;
-  font-family: var(--w-font-head);
+  font-family: var(--ph-font-head);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--w-muted);
+  color: var(--ph-muted);
   margin-top: 12px;
   font-weight: 600;
 }

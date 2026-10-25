@@ -1,76 +1,76 @@
-<section class="w-container w-section" style="max-width: 720px">
+<section class="ph-container ph-section" style="max-width: 720px">
   @if (done()) {
-    <div w-empty-state>
-      <div w-empty-state-icon>
-        <w-icon name="check-circle" />
+    <div ph-empty-state>
+      <div ph-empty-state-icon>
+        <ph-icon name="check-circle" />
       </div>
-      <h1 w-empty-state-title>Application received</h1>
-      <p w-empty-state-text>
+      <h1 ph-empty-state-title>Application received</h1>
+      <p ph-empty-state-text>
         Thanks for applying to Waypoint! We’ll review your application and reach out with next
         steps. You don’t have an account yet — we’ll set one up once you’re accepted into a cohort.
       </p>
-      <a w-button variant="primary" routerLink="/">Back to home</a>
+      <a ph-button variant="primary" routerLink="/">Back to home</a>
     </div>
   } @else {
-    <div class="w-eyebrow">Apply</div>
+    <div class="ph-eyebrow">Apply</div>
     <h1>Join a cohort</h1>
-    <p class="w-muted">
+    <p class="ph-muted">
       Open to young people aged {{ minAge }}–{{ maxAge }}. It only takes a few minutes.
     </p>
 
     @if (serverError()) {
-      <div w-alert variant="error" icon="alert-circle" class="w-mt-4" role="alert">
+      <div ph-alert variant="error" icon="alert-circle" class="ph-mt-4" role="alert">
         {{ serverError() }}
       </div>
     }
 
-    <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="w-stack w-mt-6">
-      <div w-form-field>
-        <label w-label for="whoIsFilling">Who’s filling this out?</label>
-        <select w-select id="whoIsFilling" formControlName="whoIsFilling">
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="ph-stack ph-mt-6">
+      <div ph-form-field>
+        <label ph-label for="whoIsFilling">Who’s filling this out?</label>
+        <select ph-select id="whoIsFilling" formControlName="whoIsFilling">
           <option value="self">I’m applying for myself</option>
           <option value="guardian">I’m a parent or guardian</option>
           <option value="referrer">I’m referring someone</option>
         </select>
       </div>
 
-      <div w-form-field [invalid]="error('cohortInterest')">
-        <label w-label for="cohortInterest"
-          >Cohort you’re interested in <span w-label-required>*</span></label
+      <div ph-form-field [invalid]="error('cohortInterest')">
+        <label ph-label for="cohortInterest"
+          >Cohort you’re interested in <span ph-label-required>*</span></label
         >
         <input
-          w-text-field
+          ph-text-field
           id="cohortInterest"
           formControlName="cohortInterest"
           placeholder="For example, Regent Park autumn cohort"
         />
         @if (error('cohortInterest')) {
-          <div w-error-text>{{ error('cohortInterest') }}</div>
+          <div ph-error-text>{{ error('cohortInterest') }}</div>
         }
       </div>
 
-      <div class="w-grid w-grid--2">
-        <div w-form-field [invalid]="error('firstName')">
-          <label w-label for="firstName">First name <span w-label-required>*</span></label>
-          <input w-text-field id="firstName" formControlName="firstName" />
+      <div class="ph-grid ph-grid--2">
+        <div ph-form-field [invalid]="error('firstName')">
+          <label ph-label for="firstName">First name <span ph-label-required>*</span></label>
+          <input ph-text-field id="firstName" formControlName="firstName" />
           @if (error('firstName')) {
-            <div w-error-text>{{ error('firstName') }}</div>
+            <div ph-error-text>{{ error('firstName') }}</div>
           }
         </div>
-        <div w-form-field [invalid]="error('lastName')">
-          <label w-label for="lastName">Last name <span w-label-required>*</span></label>
-          <input w-text-field id="lastName" formControlName="lastName" />
+        <div ph-form-field [invalid]="error('lastName')">
+          <label ph-label for="lastName">Last name <span ph-label-required>*</span></label>
+          <input ph-text-field id="lastName" formControlName="lastName" />
           @if (error('lastName')) {
-            <div w-error-text>{{ error('lastName') }}</div>
+            <div ph-error-text>{{ error('lastName') }}</div>
           }
         </div>
       </div>
 
-      <div class="w-grid w-grid--2">
-        <div w-form-field [invalid]="ageGateError() || error('age')">
-          <label w-label for="age">Age <span w-label-required>*</span></label>
+      <div class="ph-grid ph-grid--2">
+        <div ph-form-field [invalid]="ageGateError() || error('age')">
+          <label ph-label for="age">Age <span ph-label-required>*</span></label>
           <input
-            w-text-field
+            ph-text-field
             id="age"
             type="number"
             formControlName="age"
@@ -78,96 +78,101 @@
             [max]="maxAge"
           />
           @if (ageGateError() || error('age')) {
-            <div w-error-text>{{ ageGateError() || error('age') }}</div>
+            <div ph-error-text>{{ ageGateError() || error('age') }}</div>
           }
         </div>
-        <div w-form-field [invalid]="error('neighbourhood')">
-          <label w-label for="neighbourhood">Neighbourhood <span w-label-required>*</span></label>
-          <input w-text-field id="neighbourhood" formControlName="neighbourhood" />
+        <div ph-form-field [invalid]="error('neighbourhood')">
+          <label ph-label for="neighbourhood">Neighbourhood <span ph-label-required>*</span></label>
+          <input ph-text-field id="neighbourhood" formControlName="neighbourhood" />
           @if (error('neighbourhood')) {
-            <div w-error-text>{{ error('neighbourhood') }}</div>
+            <div ph-error-text>{{ error('neighbourhood') }}</div>
           }
         </div>
       </div>
 
-      <div w-form-field>
-        <label w-label for="trackInterest">Track you’re most interested in</label>
-        <select w-select id="trackInterest" formControlName="trackInterest">
+      <div ph-form-field>
+        <label ph-label for="trackInterest">Track you’re most interested in</label>
+        <select ph-select id="trackInterest" formControlName="trackInterest">
           <option value="">No preference yet</option>
           <option value="Bible &amp; Leadership">Bible &amp; Leadership</option>
           <option value="Coding for Kingdom">Coding for Kingdom</option>
         </select>
       </div>
 
-      <div w-form-field [invalid]="error('whyInterested')">
-        <label w-label for="whyInterested"
-          >Why are you interested? <span w-label-required>*</span></label
+      <div ph-form-field [invalid]="error('whyInterested')">
+        <label ph-label for="whyInterested"
+          >Why are you interested? <span ph-label-required>*</span></label
         >
-        <textarea w-textarea id="whyInterested" rows="4" formControlName="whyInterested"></textarea>
+        <textarea
+          ph-textarea
+          id="whyInterested"
+          rows="4"
+          formControlName="whyInterested"
+        ></textarea>
         @if (error('whyInterested')) {
-          <div w-error-text>{{ error('whyInterested') }}</div>
+          <div ph-error-text>{{ error('whyInterested') }}</div>
         }
       </div>
 
       @if (needsGuardian()) {
-        <div w-divider></div>
+        <div ph-divider></div>
         <h3>Parent or guardian</h3>
-        <p class="w-muted w-text-sm">Required for applicants under 18.</p>
-        <div w-form-field [invalid]="error('guardianName')">
-          <label w-label for="guardianName">Guardian name <span w-label-required>*</span></label>
-          <input w-text-field id="guardianName" formControlName="guardianName" />
+        <p class="ph-muted ph-text-sm">Required for applicants under 18.</p>
+        <div ph-form-field [invalid]="error('guardianName')">
+          <label ph-label for="guardianName">Guardian name <span ph-label-required>*</span></label>
+          <input ph-text-field id="guardianName" formControlName="guardianName" />
           @if (error('guardianName')) {
-            <div w-error-text>{{ error('guardianName') }}</div>
+            <div ph-error-text>{{ error('guardianName') }}</div>
           }
         </div>
-        <div class="w-grid w-grid--2">
-          <div w-form-field [invalid]="error('guardianEmail')">
-            <label w-label for="guardianEmail"
-              >Guardian email <span w-label-required>*</span></label
+        <div class="ph-grid ph-grid--2">
+          <div ph-form-field [invalid]="error('guardianEmail')">
+            <label ph-label for="guardianEmail"
+              >Guardian email <span ph-label-required>*</span></label
             >
-            <input w-text-field id="guardianEmail" type="email" formControlName="guardianEmail" />
+            <input ph-text-field id="guardianEmail" type="email" formControlName="guardianEmail" />
             @if (error('guardianEmail')) {
-              <div w-error-text>{{ error('guardianEmail') }}</div>
+              <div ph-error-text>{{ error('guardianEmail') }}</div>
             }
           </div>
-          <div w-form-field [invalid]="error('guardianPhone')">
-            <label w-label for="guardianPhone"
-              >Guardian phone <span w-label-required>*</span></label
+          <div ph-form-field [invalid]="error('guardianPhone')">
+            <label ph-label for="guardianPhone"
+              >Guardian phone <span ph-label-required>*</span></label
             >
-            <input w-text-field id="guardianPhone" formControlName="guardianPhone" />
+            <input ph-text-field id="guardianPhone" formControlName="guardianPhone" />
             @if (error('guardianPhone')) {
-              <div w-error-text>{{ error('guardianPhone') }}</div>
+              <div ph-error-text>{{ error('guardianPhone') }}</div>
             }
           </div>
         </div>
       }
 
-      <div w-divider></div>
+      <div ph-divider></div>
 
-      <div w-form-field [invalid]="error('participationConsentAck')">
-        <label w-checkbox>
+      <div ph-form-field [invalid]="error('participationConsentAck')">
+        <label ph-checkbox>
           <input type="checkbox" formControlName="participationConsentAck" />
-          <span w-checkbox-box><w-icon name="check" /></span>
+          <span ph-checkbox-box><ph-icon name="check" /></span>
           <span>I confirm a parent or guardian consents to participation.</span>
         </label>
         @if (error('participationConsentAck')) {
-          <div w-error-text>{{ error('participationConsentAck') }}</div>
+          <div ph-error-text>{{ error('participationConsentAck') }}</div>
         }
       </div>
 
-      <div w-form-field [invalid]="error('privacyAck')">
-        <label w-checkbox>
+      <div ph-form-field [invalid]="error('privacyAck')">
+        <label ph-checkbox>
           <input type="checkbox" formControlName="privacyAck" />
-          <span w-checkbox-box><w-icon name="check" /></span>
+          <span ph-checkbox-box><ph-icon name="check" /></span>
           <span>I’ve read the <a routerLink="/privacy">privacy notice</a>.</span>
         </label>
         @if (error('privacyAck')) {
-          <div w-error-text>{{ error('privacyAck') }}</div>
+          <div ph-error-text>{{ error('privacyAck') }}</div>
         }
       </div>
 
       <button
-        w-button
+        ph-button
         variant="primary"
         size="lg"
         type="submit"

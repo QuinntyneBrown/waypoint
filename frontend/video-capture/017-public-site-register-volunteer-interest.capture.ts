@@ -27,5 +27,5 @@ test('capture: register volunteer interest', async ({ page }) => {
   await volunteer.submitButton.click();
   await expect(volunteer.acknowledgementHeading).toBeVisible();
   await page.evaluate(() => window.scrollTo(0, 0));
-  await shot(page, FOLDER, 'thanks', await clipOf(page.locator('.w-empty'), 40));
+  await shot(page, FOLDER, 'thanks', await clipOf(page.locator('.ph-empty'), 40));
 });

@@ -1,19 +1,19 @@
-<w-shell
+<ph-shell
   role="guardian"
   active="announcements"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Guardian news</div>
-        <h1 class="w-page__title">News and announcements</h1>
-        <p class="w-page__sub">Program and cohort updates relevant to your family.</p>
+  <div class="ph-container ph-container--narrow ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Guardian news</div>
+        <h1 class="ph-page__title">News and announcements</h1>
+        <p class="ph-page__sub">Program and cohort updates relevant to your family.</p>
       </div>
       @if (unreadCount() > 0) {
         <button
-          w-button
+          ph-button
           variant="secondary"
           type="button"
           [disabled]="saving()"
@@ -25,20 +25,20 @@
     </div>
 
     @if (announcements() === undefined) {
-      <p class="w-muted">Loading announcements…</p>
+      <p class="ph-muted">Loading announcements…</p>
     } @else if (announcements()!.length > 0) {
-      <div class="w-stack">
+      <div class="ph-stack">
         @for (announcement of announcements(); track announcement.id) {
-          <article w-card data-testid="guardian-announcement">
-            <div w-card-body class="w-stack w-stack--sm">
-              <div class="w-cluster w-cluster--between">
-                <h2 w-card-title>{{ announcement.title }}</h2>
+          <article ph-card data-testid="guardian-announcement">
+            <div ph-card-body class="ph-stack ph-stack--sm">
+              <div class="ph-cluster ph-cluster--between">
+                <h2 ph-card-title>{{ announcement.title }}</h2>
                 @if (!announcement.read) {
-                  <span w-badge variant="lime">Unread</span>
+                  <span ph-badge variant="lime">Unread</span>
                 }
               </div>
               @if (announcement.sentAt) {
-                <p class="w-muted">{{ announcement.sentAt | date: 'MMM d, y' }}</p>
+                <p class="ph-muted">{{ announcement.sentAt | date: 'MMM d, y' }}</p>
               }
               <p>{{ announcement.message }}</p>
             </div>
@@ -46,17 +46,17 @@
         }
       </div>
     } @else {
-      <div w-empty-state>
-        <div w-empty-state-icon>
-          <w-icon name="bell" />
+      <div ph-empty-state>
+        <div ph-empty-state-icon>
+          <ph-icon name="bell" />
         </div>
-        <h2 w-empty-state-title>No announcements yet</h2>
-        <p w-empty-state-text>Program and cohort news will appear here.</p>
+        <h2 ph-empty-state-title>No announcements yet</h2>
+        <p ph-empty-state-text>Program and cohort news will appear here.</p>
       </div>
     }
 
     @if (error(); as message) {
-      <p w-alert variant="error" role="alert">{{ message }}</p>
+      <p ph-alert variant="error" role="alert">{{ message }}</p>
     }
   </div>
-</w-shell>
+</ph-shell>

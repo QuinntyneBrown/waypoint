@@ -1,13 +1,13 @@
-.w-marketing-nav {
+.ph-marketing-nav {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--w-white);
-  border-bottom: var(--w-bw) solid var(--w-border);
+  background: var(--ph-white);
+  border-bottom: var(--ph-bw) solid var(--ph-border);
 }
-.w-marketing-nav__inner {
+.ph-marketing-nav__inner {
   display: flex;
   align-items: center;
-  gap: var(--w-s5);
+  gap: var(--ph-s5);
   height: 64px;
 }

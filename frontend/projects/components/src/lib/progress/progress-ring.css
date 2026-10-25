@@ -1,4 +1,4 @@
-.w-ring {
+.ph-ring {
   --val: 0;
   --size: 72px;
   --tw: 9px;
@@ -6,22 +6,22 @@
   height: var(--size);
   border-radius: 50%;
   flex: none;
-  background: conic-gradient(var(--w-lime) calc(var(--val) * 1%), var(--w-g300) 0);
+  background: conic-gradient(var(--ph-lime) calc(var(--val) * 1%), var(--ph-g300) 0);
   display: grid;
   place-items: center;
   position: relative;
 }
-.w-ring::before {
+.ph-ring::before {
   content: '';
   position: absolute;
   inset: var(--tw);
   border-radius: 50%;
-  background: var(--w-white);
+  background: var(--ph-white);
 }
-.w-ring--lg {
+.ph-ring--lg {
   --size: 112px;
   --tw: 12px;
 }
-.w-ring--lg .w-ring__label {
+.ph-ring--lg .ph-ring__label {
   font-size: 1.4rem;
 }

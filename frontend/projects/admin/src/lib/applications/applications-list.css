@@ -4,7 +4,7 @@
 .review-detail {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 .review-detail__wide {
   grid-column: 1 / -1;
@@ -13,7 +13,7 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
-.w-modal__footer .w-btn {
+.ph-modal__footer .ph-btn {
   min-height: 45px;
 }
 @media (max-width: 42rem) {
@@ -23,7 +23,7 @@
   .review-detail__wide {
     grid-column: auto;
   }
-  .w-modal__footer .w-btn {
+  .ph-modal__footer .ph-btn {
     flex: 1 1 100%;
   }
 }

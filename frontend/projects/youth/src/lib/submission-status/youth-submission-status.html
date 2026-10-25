@@ -1,24 +1,24 @@
-<w-shell
+<ph-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
-    <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+  <div class="ph-container ph-container--narrow ph-page">
+    <a ph-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (submission(); as view) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Submission status</div>
-          <h1 class="w-page__title">{{ view.assignmentTitle }}</h1>
-          <p w-badge data-testid="submission-status">{{ displayStatus(view.status) }}</p>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Submission status</div>
+          <h1 class="ph-page__title">{{ view.assignmentTitle }}</h1>
+          <p ph-badge data-testid="submission-status">{{ displayStatus(view.status) }}</p>
         </div>
       </div>
-      <section w-card>
-        <div w-card-body class="w-stack">
+      <section ph-card>
+        <div ph-card-body class="ph-stack">
           <h2>Your submitted copy</h2>
           @if (view.bodyText) {
             @if (view.isCodingProject) {
@@ -28,8 +28,8 @@
             }
           }
           @if (view.youthNote) {
-            <div w-card variant="greige">
-              <div w-card-body>
+            <div ph-card variant="greige">
+              <div ph-card-body>
                 <strong>Your note to the mentor</strong>
                 <p>{{ view.youthNote }}</p>
               </div>
@@ -47,22 +47,22 @@
           }
           @if (view.file; as file) {
             @if (fileUrl(); as url) {
-              <a w-link [href]="url" [download]="file.fileName">Download {{ file.fileName }}</a>
+              <a ph-link [href]="url" [download]="file.fileName">Download {{ file.fileName }}</a>
             } @else {
-              <p class="w-muted" role="status">Preparing {{ file.fileName }}…</p>
+              <p class="ph-muted" role="status">Preparing {{ file.fileName }}…</p>
             }
           }
         </div>
       </section>
-      <section w-card variant="greige">
-        <div w-card-body class="w-stack">
+      <section ph-card variant="greige">
+        <div ph-card-body class="ph-stack">
           <h2>Timeline</h2>
-          <ol class="w-stack">
+          <ol class="ph-stack">
             @for (item of view.timeline; track $index) {
               <li>
                 <strong>{{ item.label }}</strong>
                 @if (item.current) {
-                  <span w-badge>Current</span>
+                  <span ph-badge>Current</span>
                 }
               </li>
             }
@@ -70,20 +70,20 @@
         </div>
       </section>
       @if (view.mentorComment) {
-        <section w-alert variant="info">
+        <section ph-alert variant="info">
           <h2>Mentor feedback</h2>
           <p>{{ view.mentorComment }}</p>
         </section>
       }
       @if (view.totalAwarded !== null) {
-        <section w-card>
-          <div w-card-body class="w-stack">
+        <section ph-card>
+          <div ph-card-body class="ph-stack">
             <h2>Rubric result</h2>
             <p>
               <strong>{{ view.totalAwarded }} of {{ view.totalPossible }} points</strong>
             </p>
             @for (criterion of view.rubric; track criterion.criterionId) {
-              <div class="w-cluster w-cluster--between">
+              <div class="ph-cluster ph-cluster--between">
                 <span>{{ criterion.description }}</span
                 ><span>{{ criterion.awardedPoints }} / {{ criterion.possiblePoints }}</span>
               </div>
@@ -92,9 +92,9 @@
         </section>
       }
       @if (view.earnedBadge; as badge) {
-        <section w-card variant="greige">
-          <div w-card-body>
-            <div class="w-eyebrow">Badge unlocked</div>
+        <section ph-card variant="greige">
+          <div ph-card-body>
+            <div class="ph-eyebrow">Badge unlocked</div>
             <h2>{{ badge.name }}</h2>
             @if (badge.description) {
               <p>{{ badge.description }}</p>
@@ -104,7 +104,7 @@
       }
       @if (view.status === 'NeedsRevision') {
         <a
-          w-button
+          ph-button
           variant="primary"
           block
           [routerLink]="['/youth/submissions', view.id, 'resubmit']"
@@ -112,7 +112,7 @@
         >
       }
     } @else {
-      <p class="w-muted">Loading submission…</p>
+      <p class="ph-muted">Loading submission…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

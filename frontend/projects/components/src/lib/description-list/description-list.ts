@@ -12,10 +12,10 @@ import {
  * (or a narrow screen) stacks them.
  */
 @Component({
-  selector: 'dl[w-description-list]',
+  selector: 'dl[ph-description-list]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-dl', '[class.w-dl--vertical]': 'vertical()' },
+  host: { class: 'ph-dl', '[class.ph-dl--vertical]': 'vertical()' },
   templateUrl: './description-list.html',
   styleUrl: './description-list.css',
 })

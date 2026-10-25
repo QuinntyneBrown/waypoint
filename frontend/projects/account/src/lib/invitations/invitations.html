@@ -1,15 +1,15 @@
-<w-shell
+<ph-shell
   [role]="shellRole()"
   active="invitations"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <header class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">People</div>
-        <h1 class="w-page__title">Invitations</h1>
-        <p class="w-page__sub">
+  <div class="ph-container ph-page">
+    <header class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">People</div>
+        <h1 class="ph-page__title">Invitations</h1>
+        <p class="ph-page__sub">
           {{
             isAdmin()
               ? 'Invite people by role and track every link.'
@@ -20,39 +20,39 @@
     </header>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as message) {
-      <p w-alert variant="success" role="status">{{ message }}</p>
+      <p ph-alert variant="success" role="status">{{ message }}</p>
     }
 
     <div class="invite-layout">
-      <section w-card>
-        <div w-card-body>
-          <h2 w-card-title>Send invitations</h2>
-          <p class="w-muted w-mb-4">Enter one email per line. Links expire after 14 days.</p>
-          <form class="w-stack" [formGroup]="form" (ngSubmit)="send()">
+      <section ph-card>
+        <div ph-card-body>
+          <h2 ph-card-title>Send invitations</h2>
+          <p class="ph-muted ph-mb-4">Enter one email per line. Links expire after 14 days.</p>
+          <form class="ph-stack" [formGroup]="form" (ngSubmit)="send()">
             @if (isAdmin()) {
-              <div w-form-field>
-                <label w-label for="invite-role">Role</label>
-                <select w-select id="invite-role" formControlName="role">
+              <div ph-form-field>
+                <label ph-label for="invite-role">Role</label>
+                <select ph-select id="invite-role" formControlName="role">
                   @for (role of roles; track role) {
                     <option [value]="role">{{ role }}</option>
                   }
                 </select>
               </div>
-              <div w-form-field>
-                <label w-label for="invite-cohort">Cohort (optional)</label>
-                <select w-select id="invite-cohort" formControlName="cohortId">
+              <div ph-form-field>
+                <label ph-label for="invite-cohort">Cohort (optional)</label>
+                <select ph-select id="invite-cohort" formControlName="cohortId">
                   <option value="">No cohort yet</option>
                   @for (cohort of cohorts(); track cohort.id) {
                     <option [value]="cohort.id">{{ cohort.name }}</option>
                   }
                 </select>
               </div>
-              <div w-form-field>
-                <label w-label for="invite-mentor">Mentor (optional)</label>
-                <select w-select id="invite-mentor" formControlName="mentorId">
+              <div ph-form-field>
+                <label ph-label for="invite-mentor">Mentor (optional)</label>
+                <select ph-select id="invite-mentor" formControlName="mentorId">
                   <option value="">Assign later</option>
                   @for (mentor of mentors(); track mentor.id) {
                     <option [value]="mentor.id">{{ mentor.displayName }}</option>
@@ -60,12 +60,12 @@
                 </select>
               </div>
             } @else {
-              <div w-alert variant="info">
+              <div ph-alert variant="info">
                 Invitations you send create Youth accounts assigned to you.
               </div>
-              <div w-form-field>
-                <label w-label for="mentor-invite-cohort">Cohort (optional)</label>
-                <select w-select id="mentor-invite-cohort" formControlName="cohortId">
+              <div ph-form-field>
+                <label ph-label for="mentor-invite-cohort">Cohort (optional)</label>
+                <select ph-select id="mentor-invite-cohort" formControlName="cohortId">
                   <option value="">Assign later</option>
                   @for (cohort of cohorts(); track cohort.id) {
                     <option [value]="cohort.id">{{ cohort.name }}</option>
@@ -74,35 +74,35 @@
               </div>
             }
             <div
-              w-form-field
+              ph-form-field
               [invalid]="form.controls.emails.touched && form.controls.emails.invalid"
             >
-              <label w-label for="invite-emails">Email addresses</label>
+              <label ph-label for="invite-emails">Email addresses</label>
               <textarea
-                w-textarea
+                ph-textarea
                 id="invite-emails"
                 rows="6"
                 formControlName="emails"
                 placeholder="name@example.com"
               ></textarea>
               @if (form.controls.emails.touched && form.controls.emails.invalid) {
-                <p w-error-text>Enter at least one email address.</p>
+                <p ph-error-text>Enter at least one email address.</p>
               }
             </div>
-            <button w-button variant="primary" type="submit" [disabled]="submitting()">
-              <w-icon name="send" />{{ submitting() ? 'Sending…' : 'Send invitation' }}
+            <button ph-button variant="primary" type="submit" [disabled]="submitting()">
+              <ph-icon name="send" />{{ submitting() ? 'Sending…' : 'Send invitation' }}
             </button>
           </form>
         </div>
       </section>
 
-      <section w-card>
-        <div w-card-body>
-          <div class="invite-filters w-mb-4">
-            <div w-form-field>
-              <label w-label for="invite-search">Search invitations</label>
+      <section ph-card>
+        <div ph-card-body>
+          <div class="invite-filters ph-mb-4">
+            <div ph-form-field>
+              <label ph-label for="invite-search">Search invitations</label>
               <input
-                w-text-field
+                ph-text-field
                 id="invite-search"
                 type="search"
                 [value]="search()"
@@ -110,10 +110,10 @@
                 (keyup.enter)="applyFilters()"
               />
             </div>
-            <div w-form-field>
-              <label w-label for="invite-status">Status</label>
+            <div ph-form-field>
+              <label ph-label for="invite-status">Status</label>
               <select
-                w-select
+                ph-select
                 id="invite-status"
                 [value]="status()"
                 (change)="statusChanged($event)"
@@ -126,10 +126,10 @@
               </select>
             </div>
             @if (isAdmin()) {
-              <div w-form-field>
-                <label w-label for="invite-role-filter">Role</label>
+              <div ph-form-field>
+                <label ph-label for="invite-role-filter">Role</label>
                 <select
-                  w-select
+                  ph-select
                   id="invite-role-filter"
                   [value]="roleFilter()"
                   (change)="roleFilterChanged($event)"
@@ -142,15 +142,15 @@
               </div>
             }
           </div>
-          <button w-button variant="ghost" class="w-mb-4" type="button" (click)="applyFilters()">
+          <button ph-button variant="ghost" class="ph-mb-4" type="button" (click)="applyFilters()">
             Apply search
           </button>
 
           @if (loading()) {
-            <p class="w-muted" role="status">Loading invitations…</p>
+            <p class="ph-muted" role="status">Loading invitations…</p>
           } @else {
-            <div w-table-wrap>
-              <table w-table cards>
+            <div ph-table-wrap>
+              <table ph-table cards>
                 <thead>
                   <tr>
                     <th>Email</th>
@@ -165,16 +165,16 @@
                     <tr data-testid="invitation-row">
                       <td data-label="Email" class="invite-email">
                         <strong>{{ item.email }}</strong
-                        ><br /><span class="w-muted w-text-sm">by {{ item.createdByName }}</span>
+                        ><br /><span class="ph-muted ph-text-sm">by {{ item.createdByName }}</span>
                       </td>
                       <td data-label="Role & context">
-                        {{ item.role }}<br /><span class="w-muted w-text-sm"
+                        {{ item.role }}<br /><span class="ph-muted ph-text-sm"
                           >{{ item.cohortName || 'No cohort' }} ·
                           {{ item.mentorName || 'No mentor' }}</span
                         >
                       </td>
                       <td data-label="Status">
-                        <span w-badge [variant]="item.status === 'Accepted' ? 'lime' : ''">{{
+                        <span ph-badge [variant]="item.status === 'Accepted' ? 'lime' : ''">{{
                           item.status
                         }}</span>
                       </td>
@@ -183,7 +183,7 @@
                         @if (item.status === 'Pending' || item.status === 'Expired') {
                           <div class="invite-actions">
                             <button
-                              w-button
+                              ph-button
                               variant="ghost"
                               size="sm"
                               type="button"
@@ -194,7 +194,7 @@
                             @if (revokeCandidate() === item.id) {
                               <span>Revoke now?</span>
                               <button
-                                w-button
+                                ph-button
                                 variant="danger"
                                 size="sm"
                                 type="button"
@@ -203,7 +203,7 @@
                                 Confirm
                               </button>
                               <button
-                                w-button
+                                ph-button
                                 variant="ghost"
                                 size="sm"
                                 type="button"
@@ -213,7 +213,7 @@
                               </button>
                             } @else {
                               <button
-                                w-button
+                                ph-button
                                 variant="ghost"
                                 size="sm"
                                 type="button"
@@ -224,17 +224,17 @@
                             }
                           </div>
                         } @else {
-                          <span class="w-muted">No actions</span>
+                          <span class="ph-muted">No actions</span>
                         }
                       </td>
                     </tr>
                   } @empty {
                     <tr>
                       <td colspan="5">
-                        <div w-empty-state>
-                          <div w-empty-state-icon><w-icon name="mail" /></div>
-                          <h3 w-empty-state-title>No invitations found</h3>
-                          <p w-empty-state-text>Send an invitation or change the filters.</p>
+                        <div ph-empty-state>
+                          <div ph-empty-state-icon><ph-icon name="mail" /></div>
+                          <h3 ph-empty-state-title>No invitations found</h3>
+                          <p ph-empty-state-text>Send an invitation or change the filters.</p>
                         </div>
                       </td>
                     </tr>
@@ -242,9 +242,9 @@
                 </tbody>
               </table>
             </div>
-            <div class="w-cluster w-cluster--between w-mt-4">
+            <div class="ph-cluster ph-cluster--between ph-mt-4">
               <button
-                w-button
+                ph-button
                 variant="ghost"
                 type="button"
                 [disabled]="page() <= 1"
@@ -252,9 +252,9 @@
               >
                 Previous
               </button>
-              <span class="w-muted">Page {{ page() }} · {{ total() }} total</span>
+              <span class="ph-muted">Page {{ page() }} · {{ total() }} total</span>
               <button
-                w-button
+                ph-button
                 variant="ghost"
                 type="button"
                 [disabled]="page() * 25 >= total()"
@@ -268,4 +268,4 @@
       </section>
     </div>
   </div>
-</w-shell>
+</ph-shell>

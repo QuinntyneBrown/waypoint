@@ -16,16 +16,16 @@ type Story = StoryObj<MessageThread>;
 export const Conversation: Story = {
   render: () => ({
     template: `
-      <div w-message-thread role="log" aria-live="polite" style="max-width: 28rem">
-        <article w-message-bubble direction="in">
-          <span class="w-sr-only">Maya:</span>
+      <div ph-message-thread role="log" aria-live="polite" style="max-width: 28rem">
+        <article ph-message-bubble direction="in">
+          <span class="ph-sr-only">Maya:</span>
           <span>Can we move Thursday's check-in?</span>
-          <time w-message-bubble-time datetime="2026-10-15T14:00:00Z">Oct 15, 2:00 PM</time>
+          <time ph-message-bubble-time datetime="2026-10-15T14:00:00Z">Oct 15, 2:00 PM</time>
         </article>
-        <article w-message-bubble direction="out">
-          <span class="w-sr-only">You:</span>
+        <article ph-message-bubble direction="out">
+          <span class="ph-sr-only">You:</span>
           <span>Yes. How about Friday?</span>
-          <time w-message-bubble-time datetime="2026-10-15T14:05:00Z">Oct 15, 2:05 PM</time>
+          <time ph-message-bubble-time datetime="2026-10-15T14:05:00Z">Oct 15, 2:05 PM</time>
         </article>
       </div>`,
   }),

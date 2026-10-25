@@ -29,7 +29,7 @@ import {
 
 // Traces to: L2-CONSENT-001, L2-CONSENT-002, L2-PLATFORM-011
 @Component({
-  selector: 'w-requested-guardian-consent',
+  selector: 'ph-requested-guardian-consent',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,

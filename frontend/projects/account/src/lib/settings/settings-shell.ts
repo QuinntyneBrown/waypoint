@@ -6,7 +6,7 @@ import { shellRole } from '@waypoint/core';
 
 /** Shared layout for the settings pages: app shell + settings tab nav + content. */
 @Component({
-  selector: 'w-settings-shell',
+  selector: 'ph-settings-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Shell, RouterLink, RouterLinkActive, Tabs, Tab],
   templateUrl: './settings-shell.html',

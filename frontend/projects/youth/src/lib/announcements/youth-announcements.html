@@ -1,13 +1,13 @@
-<w-shell role="youth" active="announcements" [userName]="userName()" (signOut)="signOut()">
-  <div class="w-container w-container--narrow w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">News</div>
-        <h1 class="w-page__title">Announcements</h1>
+<ph-shell role="youth" active="announcements" [userName]="userName()" (signOut)="signOut()">
+  <div class="ph-container ph-container--narrow ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">News</div>
+        <h1 class="ph-page__title">Announcements</h1>
       </div>
       @if (hasUnread()) {
-        <div class="w-page__actions">
-          <button w-button variant="ghost" type="button" (click)="markAllRead()">
+        <div class="ph-page__actions">
+          <button ph-button variant="ghost" type="button" (click)="markAllRead()">
             Mark all read
           </button>
         </div>
@@ -15,29 +15,29 @@
     </div>
 
     @if (!loading() && items().length === 0) {
-      <div w-empty-state>
-        <div w-empty-state-icon><w-icon name="bell" /></div>
-        <h3 w-empty-state-title>No announcements yet</h3>
-        <p w-empty-state-text>
+      <div ph-empty-state>
+        <div ph-empty-state-icon><ph-icon name="bell" /></div>
+        <h3 ph-empty-state-title>No announcements yet</h3>
+        <p ph-empty-state-text>
           Program-wide news will show up here. Check back soon — you’re all caught up.
         </p>
       </div>
     } @else {
-      <div class="w-stack">
+      <div class="ph-stack">
         @for (item of items(); track item.id) {
-          <div w-card [variant]="!item.read ? 'greige' : ''">
-            <div w-card-body>
-              <div class="w-cluster w-cluster--between">
-                <h3 w-card-title>{{ item.title }}</h3>
+          <div ph-card [variant]="!item.read ? 'greige' : ''">
+            <div ph-card-body>
+              <div class="ph-cluster ph-cluster--between">
+                <h3 ph-card-title>{{ item.title }}</h3>
                 @if (!item.read) {
-                  <span w-badge variant="info" dot>New</span>
+                  <span ph-badge variant="info" dot>New</span>
                 }
               </div>
-              <p class="w-muted">{{ item.message }}</p>
+              <p class="ph-muted">{{ item.message }}</p>
             </div>
           </div>
         }
       </div>
     }
   </div>
-</w-shell>
+</ph-shell>

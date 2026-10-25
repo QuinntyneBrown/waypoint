@@ -1,19 +1,19 @@
 .assign-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.6fr);
-  gap: var(--w-s6);
+  gap: var(--ph-s6);
   align-items: start;
 }
 .summary-card {
   position: sticky;
-  top: var(--w-s4);
+  top: var(--ph-s4);
 }
 .recipient-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s2) var(--w-s4);
+  gap: var(--ph-s2) var(--ph-s4);
 }
-.recipient-list .w-check {
+.recipient-list .ph-check {
   margin-bottom: 0;
 }
 .review-button,
@@ -38,7 +38,7 @@
   .review-button {
     width: 100%;
   }
-  .w-modal__footer .w-btn {
+  .ph-modal__footer .ph-btn {
     flex: 1 1 100%;
   }
 }

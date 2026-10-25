@@ -1,8 +1,8 @@
-.w-statcard__label {
-  font-family: var(--w-font-head);
+.ph-statcard__label {
+  font-family: var(--ph-font-head);
   text-transform: uppercase;
   letter-spacing: 0.07em;
   font-size: 0.7rem;
   font-weight: 600;
-  color: var(--w-muted);
+  color: var(--ph-muted);
 }

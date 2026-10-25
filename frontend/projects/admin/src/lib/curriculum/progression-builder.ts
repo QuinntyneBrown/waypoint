@@ -47,7 +47,7 @@ type ProgressionAuthoringDraft =
 
 // Traces to: L2-CURRIC-006, L2-NFR-001, L2-NFR-009, L2-NFR-010
 @Component({
-  selector: 'w-progression-builder',
+  selector: 'ph-progression-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

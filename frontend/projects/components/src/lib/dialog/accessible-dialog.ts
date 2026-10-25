@@ -18,12 +18,12 @@ const TABBABLE_SELECTOR = [
 /**
  * Adds modal semantics and complete keyboard focus management to an overlay.
  *
- * Place `wuDialogInitialFocus` on a descendant when the first tabbable control
+ * Place `phDialogInitialFocus` on a descendant when the first tabbable control
  * is not the most useful initial target. Consumers close the overlay in
- * response to `wuDialogEscape`; destruction restores focus to its opener.
+ * response to `phDialogEscape`; destruction restores focus to its opener.
  */
 @Directive({
-  selector: '[wuAccessibleDialog]',
+  selector: '[phAccessibleDialog]',
   standalone: true,
   host: {
     role: 'dialog',
@@ -33,7 +33,7 @@ const TABBABLE_SELECTOR = [
   },
 })
 export class AccessibleDialog implements AfterViewInit, OnDestroy {
-  readonly escape = output<void>({ alias: 'wuDialogEscape' });
+  readonly escape = output<void>({ alias: 'phDialogEscape' });
 
   private readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   private readonly document = inject(DOCUMENT);
@@ -86,7 +86,7 @@ export class AccessibleDialog implements AfterViewInit, OnDestroy {
 
   private focusInitialTarget(): void {
     const requested = this.element.querySelector<HTMLElement>(
-      '[wuDialogInitialFocus], [autofocus]',
+      '[phDialogInitialFocus], [autofocus]',
     );
     const target = requested && this.isTabbable(requested) ? requested : this.tabbableElements()[0];
     (target ?? this.element).focus({ preventScroll: true });

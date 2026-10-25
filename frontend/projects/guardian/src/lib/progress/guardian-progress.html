@@ -1,139 +1,139 @@
-<w-shell
+<ph-shell
   role="guardian"
   active="progress"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Read-only family view</div>
-        <h1 class="w-page__title">Child progress</h1>
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Read-only family view</div>
+        <h1 class="ph-page__title">Child progress</h1>
         @if (context.progress(); as progress) {
-          <p class="w-page__sub">{{ progress.childName }}</p>
+          <p class="ph-page__sub">{{ progress.childName }}</p>
         }
       </div>
     </div>
 
     @if (context.loading()) {
-      <p class="w-muted">Loading progress…</p>
+      <p class="ph-muted">Loading progress…</p>
     } @else if (context.progress(); as progress) {
-      <div class="w-stack w-stack--lg">
-        <section w-card>
-          <div w-card-body class="w-stack">
-            <h2 w-card-title>Modules</h2>
+      <div class="ph-stack ph-stack--lg">
+        <section ph-card>
+          <div ph-card-body class="ph-stack">
+            <h2 ph-card-title>Modules</h2>
             @for (module of progress.modules; track module.moduleId) {
-              <div w-list-item data-testid="guardian-module">
-                <div w-list-item-body>
-                  <div w-list-item-title>{{ module.name }}</div>
-                  <div w-list-item-meta>
+              <div ph-list-item data-testid="guardian-module">
+                <div ph-list-item-body>
+                  <div ph-list-item-title>{{ module.name }}</div>
+                  <div ph-list-item-meta>
                     {{ module.status }} · {{ module.completionPercent.toFixed(0) }}%
                   </div>
                 </div>
               </div>
             } @empty {
-              <p class="w-muted">No modules assigned yet.</p>
+              <p class="ph-muted">No modules assigned yet.</p>
             }
           </div>
         </section>
 
-        <section w-card>
-          <div w-card-body class="w-stack">
-            <h2 w-card-title>Attendance history</h2>
+        <section ph-card>
+          <div ph-card-body class="ph-stack">
+            <h2 ph-card-title>Attendance history</h2>
             @for (item of progress.attendanceHistory; track item.sessionId) {
-              <div w-list-item data-testid="guardian-attendance">
-                <div w-list-item-body>
-                  <div w-list-item-title>{{ item.title }}</div>
-                  <div w-list-item-meta>
+              <div ph-list-item data-testid="guardian-attendance">
+                <div ph-list-item-body>
+                  <div ph-list-item-title>{{ item.title }}</div>
+                  <div ph-list-item-meta>
                     {{ item.startsAt | date: 'MMM d, y' }} · {{ item.status }}
                   </div>
                 </div>
               </div>
             } @empty {
-              <p class="w-muted">No attendance recorded yet.</p>
+              <p class="ph-muted">No attendance recorded yet.</p>
             }
           </div>
         </section>
 
-        <div class="w-grid w-grid--2">
-          <section w-card data-testid="guardian-quiz-outcomes">
-            <div w-card-body class="w-stack">
-              <h2 w-card-title>Approved quiz outcomes</h2>
+        <div class="ph-grid ph-grid--2">
+          <section ph-card data-testid="guardian-quiz-outcomes">
+            <div ph-card-body class="ph-stack">
+              <h2 ph-card-title>Approved quiz outcomes</h2>
               @for (quiz of progress.quizHistory; track quiz.attemptId) {
-                <div w-list-item>
-                  <div w-list-item-body>
-                    <div w-list-item-title>{{ quiz.quizTitle }}</div>
-                    <div w-list-item-meta>
+                <div ph-list-item>
+                  <div ph-list-item-body>
+                    <div ph-list-item-title>{{ quiz.quizTitle }}</div>
+                    <div ph-list-item-meta>
                       {{ quiz.score }}% · {{ quiz.passed ? 'Passed' : 'Keep going' }} ·
                       {{ quiz.approvedAt | date: 'MMM d, y' }}
                     </div>
                   </div>
                 </div>
               } @empty {
-                <p class="w-muted">No approved quiz outcomes yet.</p>
+                <p class="ph-muted">No approved quiz outcomes yet.</p>
               }
             </div>
           </section>
 
-          <section w-card data-testid="guardian-competencies">
-            <div w-card-body class="w-stack">
-              <h2 w-card-title>Leadership competencies</h2>
+          <section ph-card data-testid="guardian-competencies">
+            <div ph-card-body class="ph-stack">
+              <h2 ph-card-title>Leadership competencies</h2>
               @for (competency of progress.competencies; track competency.competencyId) {
-                <div w-list-item>
-                  <div w-list-item-body>
-                    <div w-list-item-title>{{ competency.name }}</div>
-                    <div w-list-item-meta>{{ competency.level }} · {{ competency.percent }}%</div>
+                <div ph-list-item>
+                  <div ph-list-item-body>
+                    <div ph-list-item-title>{{ competency.name }}</div>
+                    <div ph-list-item-meta>{{ competency.level }} · {{ competency.percent }}%</div>
                   </div>
                 </div>
               } @empty {
-                <p class="w-muted">No competency assessments yet.</p>
+                <p class="ph-muted">No competency assessments yet.</p>
               }
             </div>
           </section>
         </div>
 
-        <div class="w-grid w-grid--2">
-          <section w-card data-testid="guardian-earned-badges">
-            <div w-card-body class="w-stack">
-              <h2 w-card-title>Earned badges</h2>
+        <div class="ph-grid ph-grid--2">
+          <section ph-card data-testid="guardian-earned-badges">
+            <div ph-card-body class="ph-stack">
+              <h2 ph-card-title>Earned badges</h2>
               @for (badge of progress.earnedBadges; track badge.badgeId) {
                 <p><span aria-hidden="true">★</span> {{ badge.name }}</p>
               } @empty {
-                <p class="w-muted">No badges earned yet.</p>
+                <p class="ph-muted">No badges earned yet.</p>
               }
             </div>
           </section>
-          <section w-card data-testid="guardian-locked-badges">
-            <div w-card-body class="w-stack">
-              <h2 w-card-title>Still to unlock</h2>
+          <section ph-card data-testid="guardian-locked-badges">
+            <div ph-card-body class="ph-stack">
+              <h2 ph-card-title>Still to unlock</h2>
               @for (badge of progress.lockedBadges; track badge.badgeId) {
                 <p><span aria-hidden="true">○</span> {{ badge.name }}</p>
               } @empty {
-                <p class="w-muted">Everything is unlocked.</p>
+                <p class="ph-muted">Everything is unlocked.</p>
               }
             </div>
           </section>
         </div>
 
-        <section w-card data-testid="guardian-upcoming-sessions">
-          <div w-card-body class="w-stack">
-            <h2 w-card-title>Upcoming schedule</h2>
+        <section ph-card data-testid="guardian-upcoming-sessions">
+          <div ph-card-body class="ph-stack">
+            <h2 ph-card-title>Upcoming schedule</h2>
             @for (session of progress.upcomingSessions; track session.sessionId) {
               <p>
                 <strong>{{ session.title }}</strong> ·
                 {{ session.startsAt | date: 'MMM d, h:mm a' }}
               </p>
             } @empty {
-              <p class="w-muted">No upcoming sessions.</p>
+              <p class="ph-muted">No upcoming sessions.</p>
             }
           </div>
         </section>
 
-        <section w-card data-testid="guardian-shared-checkins">
-          <div w-card-body class="w-stack">
-            <h2 w-card-title>Shared mentor updates</h2>
+        <section ph-card data-testid="guardian-shared-checkins">
+          <div ph-card-body class="ph-stack">
+            <h2 ph-card-title>Shared mentor updates</h2>
             @for (checkIn of progress.sharedCheckIns; track checkIn.checkInId) {
-              <article class="w-stack w-stack--sm">
+              <article class="ph-stack ph-stack--sm">
                 <strong>{{ checkIn.date | date: 'MMM d, y' }} · {{ checkIn.type }}</strong>
                 @if (checkIn.engagement) {
                   <p>{{ checkIn.engagement }}</p>
@@ -149,16 +149,16 @@
                 }
               </article>
             } @empty {
-              <p class="w-muted">No mentor updates have been shared.</p>
+              <p class="ph-muted">No mentor updates have been shared.</p>
             }
           </div>
         </section>
       </div>
     } @else {
-      <div w-empty-state>
-        <h2 w-empty-state-title>No progress to show yet</h2>
-        <p w-empty-state-text>A linked youth’s aggregate progress will appear here.</p>
+      <div ph-empty-state>
+        <h2 ph-empty-state-title>No progress to show yet</h2>
+        <p ph-empty-state-text>A linked youth’s aggregate progress will appear here.</p>
       </div>
     }
   </div>
-</w-shell>
+</ph-shell>

@@ -40,7 +40,7 @@ type LifecycleAction =
 
 // Traces to: L2-ADMIN-002, L2-CONSENT-003
 @Component({
-  selector: 'w-person-detail',
+  selector: 'ph-person-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

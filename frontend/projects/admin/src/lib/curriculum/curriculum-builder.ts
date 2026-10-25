@@ -136,7 +136,7 @@ const VIDEO_POLL_MS = 5000;
 
 // Traces to: L2-CURRIC-001..004, L2-NFR-001, L2-NFR-009, L2-NFR-010
 @Component({
-  selector: 'w-curriculum-builder',
+  selector: 'ph-curriculum-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

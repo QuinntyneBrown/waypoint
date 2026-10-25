@@ -34,7 +34,7 @@ import { SettingsShell } from '../settings-shell';
 
 // Traces to: L2-PLATFORM-002
 @Component({
-  selector: 'w-settings-profile',
+  selector: 'ph-settings-profile',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SettingsShell,

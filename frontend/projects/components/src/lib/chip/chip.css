@@ -1,17 +1,17 @@
-.w-pill {
+.ph-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 6px 14px;
-  border-radius: var(--w-r-pill);
-  border: var(--w-bw) solid var(--w-border-strong);
+  border-radius: var(--ph-r-pill);
+  border: var(--ph-bw) solid var(--ph-border-strong);
   font-size: 0.85rem;
   font-weight: 500;
-  background: var(--w-white);
+  background: var(--ph-white);
   cursor: pointer;
 }
-.w-pill.is-active {
-  background: var(--w-ink);
-  color: var(--w-white);
-  border-color: var(--w-ink);
+.ph-pill.is-active {
+  background: var(--ph-ink);
+  color: var(--ph-white);
+  border-color: var(--ph-ink);
 }

@@ -60,24 +60,24 @@ test('capture: inspect and export the audit log', async ({ page, request }) => {
   await expect(page.getByTestId('audit-integrity-warning')).toHaveCount(0);
   await page.waitForLoadState('networkidle');
   await settle(page);
-  await shotOf(page, FOLDER, 'overview', page.locator('.w-container.w-page'), 0, 1280, 400);
+  await shotOf(page, FOLDER, 'overview', page.locator('.ph-container.ph-page'), 0, 1280, 400);
 
   await audit.actionFilter.selectOption('CheckInLogged');
   await audit.userFilter.selectOption(mentorAuth.userId);
   await audit.applyFilters.click();
   await expect(audit.row('CheckInLogged').first()).toContainText('[redacted]');
   await settle(page);
-  await shotOf(page, FOLDER, 'redacted', page.locator('.w-container.w-page'), 0, 1280, 620);
+  await shotOf(page, FOLDER, 'redacted', page.locator('.ph-container.ph-page'), 0, 1280, 620);
 
   await audit.userFilter.selectOption(userId);
   await audit.actionFilter.selectOption('DataExported');
   await audit.applyFilters.click();
   await expect(audit.summary).toContainText('3 events');
   await settle(page);
-  await shotOf(page, FOLDER, 'filtered', page.locator('.w-container.w-page'), 0);
+  await shotOf(page, FOLDER, 'filtered', page.locator('.ph-container.ph-page'), 0);
 
   await audit.exportCsv.click();
-  await expect(page.locator('.w-alert--success')).toBeVisible();
+  await expect(page.locator('.ph-alert--success')).toBeVisible();
   await page.evaluate(() => window.scrollTo(0, 0));
   await settle(page);
   await shot(page, FOLDER, 'exported', { x: 244, y: 56, width: 1036, height: 330 });

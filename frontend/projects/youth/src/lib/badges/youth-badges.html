@@ -1,51 +1,51 @@
-<w-shell
+<ph-shell
   role="youth"
   active="badges"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <a w-button variant="ghost" routerLink="/youth/journey">Back to journey</a>
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Achievements</div>
-        <h1 class="w-page__title">Badges</h1>
-        <p class="w-page__sub">Every badge marks progress you have made.</p>
+  <div class="ph-container ph-page">
+    <a ph-button variant="ghost" routerLink="/youth/journey">Back to journey</a>
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Achievements</div>
+        <h1 class="ph-page__title">Badges</h1>
+        <p class="ph-page__sub">Every badge marks progress you have made.</p>
       </div>
     </div>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (journey(); as view) {
-      <section w-card variant="greige">
-        <div w-card-body>
-          <div class="w-cluster w-cluster--between">
+      <section ph-card variant="greige">
+        <div ph-card-body>
+          <div class="ph-cluster ph-cluster--between">
             <div>
-              <div class="w-eyebrow">Collection</div>
+              <div class="ph-eyebrow">Collection</div>
               <h2>{{ view.earned.length }} earned · {{ view.locked.length }} to unlock</h2>
             </div>
-            <span w-badge variant="success">{{ view.earned.length }} earned</span>
+            <span ph-badge variant="success">{{ view.earned.length }} earned</span>
           </div>
         </div>
       </section>
 
-      <section class="w-stack" aria-labelledby="earned-badges">
+      <section class="ph-stack" aria-labelledby="earned-badges">
         <h2 id="earned-badges">Earned</h2>
         @if (view.earned.length === 0) {
-          <div w-empty-state>
-            <h3 w-empty-state-title>No badges yet</h3>
-            <p w-empty-state-text>Complete your next learning step to begin your collection.</p>
+          <div ph-empty-state>
+            <h3 ph-empty-state-title>No badges yet</h3>
+            <p ph-empty-state-text>Complete your next learning step to begin your collection.</p>
           </div>
         }
-        <div class="w-grid w-grid--3">
+        <div class="ph-grid ph-grid--3">
           @for (badge of view.earned; track badge.badgeId) {
-            <article w-card>
-              <div w-card-body class="w-stack">
-                <div class="w-eyebrow">Badge earned</div>
+            <article ph-card>
+              <div ph-card-body class="ph-stack">
+                <div class="ph-eyebrow">Badge earned</div>
                 <h3>{{ badge.name }}</h3>
                 <p>{{ badge.criteria }}</p>
-                <span w-badge variant="success"
+                <span ph-badge variant="success"
                   >Earned {{ badge.awardedAt | date: 'mediumDate' }}</span
                 >
               </div>
@@ -54,37 +54,37 @@
         </div>
       </section>
 
-      <section class="w-stack" aria-labelledby="locked-badges">
+      <section class="ph-stack" aria-labelledby="locked-badges">
         <h2 id="locked-badges">Still to unlock</h2>
-        <div class="w-grid w-grid--3">
+        <div class="ph-grid ph-grid--3">
           @for (badge of view.locked; track badge.badgeId) {
-            <article w-card variant="greige">
-              <div w-card-body class="w-stack">
-                <div class="w-eyebrow">Locked badge</div>
+            <article ph-card variant="greige">
+              <div ph-card-body class="ph-stack">
+                <div class="ph-eyebrow">Locked badge</div>
                 <h3>{{ badge.name }}</h3>
                 <p>{{ badge.criteria }}</p>
                 <div
-                  w-progress
+                  ph-progress
                   label="Badge criteria progress"
                   [value]="
                     badge.totalCriteria ? (badge.completedCriteria / badge.totalCriteria) * 100 : 0
                   "
                 ></div>
-                <span w-badge data-testid="badge-progress">{{ badge.progressLabel }}</span>
+                <span ph-badge data-testid="badge-progress">{{ badge.progressLabel }}</span>
               </div>
             </article>
           }
         </div>
       </section>
 
-      <section class="w-stack" aria-labelledby="milestones">
+      <section class="ph-stack" aria-labelledby="milestones">
         <h2 id="milestones">Your milestones</h2>
-        <div w-card>
-          <div w-card-body>
-            <ol class="w-stack">
+        <div ph-card>
+          <div ph-card-body>
+            <ol class="ph-stack">
               @for (milestone of view.milestones; track $index) {
                 @if (milestone.current) {
-                  <li w-card variant="greige">
+                  <li ph-card variant="greige">
                     <ng-container
                       [ngTemplateOutlet]="milestoneContent"
                       [ngTemplateOutletContext]="{ $implicit: milestone }"
@@ -109,14 +109,14 @@
                 }
               </p>
               @if (milestone.current) {
-                <span w-badge variant="warning">Current goal</span>
+                <span ph-badge variant="warning">Current goal</span>
               }
             </ng-template>
           </div>
         </div>
       </section>
     } @else {
-      <p class="w-muted">Loading badges…</p>
+      <p class="ph-muted">Loading badges…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

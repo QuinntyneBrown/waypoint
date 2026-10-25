@@ -4,7 +4,7 @@ import { Icon } from './icon';
 
 @Component({
   imports: [Icon],
-  template: `<w-icon [name]="n" [iconClass]="c" />`,
+  template: `<ph-icon [name]="n" [iconClass]="c" />`,
 })
 class Host {
   n = 'home';
@@ -19,11 +19,11 @@ describe('Icon', () => {
     return fixture;
   }
 
-  it('renders an inline svg with the w-icon class', async () => {
+  it('renders an inline svg with the ph-icon class', async () => {
     const fixture = await render();
     const svg = fixture.nativeElement.querySelector('svg');
     expect(svg).toBeTruthy();
-    expect(svg.classList.contains('w-icon')).toBe(true);
+    expect(svg.classList.contains('ph-icon')).toBe(true);
     expect(svg.getAttribute('aria-hidden')).toBe('true');
   });
 
@@ -38,10 +38,10 @@ describe('Icon', () => {
   it('merges an extra iconClass onto the svg', async () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
     const fixture = TestBed.createComponent(Host);
-    fixture.componentInstance.c = 'w-alert__icon';
+    fixture.componentInstance.c = 'ph-alert__icon';
     await fixture.whenStable();
     const svg = fixture.nativeElement.querySelector('svg');
-    expect(svg.classList.contains('w-icon')).toBe(true);
-    expect(svg.classList.contains('w-alert__icon')).toBe(true);
+    expect(svg.classList.contains('ph-icon')).toBe(true);
+    expect(svg.classList.contains('ph-alert__icon')).toBe(true);
   });
 });

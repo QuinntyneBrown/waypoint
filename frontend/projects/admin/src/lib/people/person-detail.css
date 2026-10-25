@@ -1,19 +1,19 @@
 .record-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s5);
+  gap: var(--ph-s5);
 }
 .account-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
-.account-actions .w-btn {
+.account-actions .ph-btn {
   justify-content: center;
   min-height: 45px;
 }
 .danger-zone {
-  border-color: var(--w-error);
+  border-color: var(--ph-error);
 }
 .confirmation-copy {
   overflow-wrap: anywhere;
@@ -23,7 +23,7 @@
   .account-actions {
     grid-template-columns: 1fr;
   }
-  .w-modal__footer .w-btn {
+  .ph-modal__footer .ph-btn {
     flex: 1 1 100%;
     min-height: 45px;
   }

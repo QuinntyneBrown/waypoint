@@ -49,6 +49,6 @@ test('capture: record audit events', async ({ page, request }) => {
   await audit.applyFilters.click();
   await expect(audit.rows.first()).toBeVisible();
   await page.waitForLoadState('networkidle');
-  await shotOf(page, FOLDER, 'mentor-events', page.locator('table.w-table'), 12);
+  await shotOf(page, FOLDER, 'mentor-events', page.locator('table.ph-table'), 12);
   console.log('ROWS', JSON.stringify(await audit.rows.allInnerTexts()));
 });

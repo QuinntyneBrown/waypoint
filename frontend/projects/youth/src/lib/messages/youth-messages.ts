@@ -27,7 +27,7 @@ import { RealtimeService } from '@waypoint/core/realtime';
 
 // Traces to: L2-ENGAGE-007, L2-NFR-005
 @Component({
-  selector: 'w-youth-messages',
+  selector: 'ph-youth-messages',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

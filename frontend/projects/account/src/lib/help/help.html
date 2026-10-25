@@ -1,23 +1,23 @@
-<w-shell
+<ph-shell
   [role]="role()"
   active=""
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <header class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Help center</div>
-        <h1 class="w-page__title">How can we help?</h1>
-        <p class="w-page__sub">Search answers written for your Waypoint role.</p>
+  <div class="ph-container ph-page">
+    <header class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Help center</div>
+        <h1 class="ph-page__title">How can we help?</h1>
+        <p class="ph-page__sub">Search answers written for your Waypoint role.</p>
       </div>
     </header>
 
-    <div class="help-search w-mb-6">
-      <span class="help-search__icon"><w-icon name="search" /></span>
-      <label class="w-sr-only" for="help-search">Search help</label>
+    <div class="help-search ph-mb-6">
+      <span class="help-search__icon"><ph-icon name="search" /></span>
+      <label class="ph-sr-only" for="help-search">Search help</label>
       <input
-        w-text-field
+        ph-text-field
         id="help-search"
         type="search"
         placeholder="Search lessons, attendance, privacy…"
@@ -27,18 +27,18 @@
     </div>
 
     @if (topics().length === 0) {
-      <div w-empty-state role="status">
-        <div w-empty-state-icon><w-icon name="search" /></div>
-        <h2 w-empty-state-title>No help articles found</h2>
-        <p w-empty-state-text>Try a different word, or contact the support team.</p>
+      <div ph-empty-state role="status">
+        <div ph-empty-state-icon><ph-icon name="search" /></div>
+        <h2 ph-empty-state-title>No help articles found</h2>
+        <p ph-empty-state-text>Try a different word, or contact the support team.</p>
       </div>
     } @else {
       <div class="help-grid">
         @for (topic of topics(); track topic.title) {
-          <section w-card>
-            <div w-card-body>
-              <h2 w-card-title class="help-topic__title">
-                <w-icon [name]="topic.icon" />{{ topic.title }}
+          <section ph-card>
+            <div ph-card-body>
+              <h2 ph-card-title class="help-topic__title">
+                <ph-icon [name]="topic.icon" />{{ topic.title }}
               </h2>
               @for (article of topic.articles; track article.question) {
                 <details class="help-answer">
@@ -52,14 +52,14 @@
       </div>
     }
 
-    <aside w-card class="w-mt-6">
-      <div w-card-body class="w-cluster w-cluster--between">
+    <aside ph-card class="ph-mt-6">
+      <div ph-card-body class="ph-cluster ph-cluster--between">
         <div>
-          <h2 w-card-title>Still need a hand?</h2>
-          <p class="w-muted">Send a private request and the program team will follow up.</p>
+          <h2 ph-card-title>Still need a hand?</h2>
+          <p class="ph-muted">Send a private request and the program team will follow up.</p>
         </div>
-        <a w-button variant="primary" routerLink="/support">Contact support</a>
+        <a ph-button variant="primary" routerLink="/support">Contact support</a>
       </div>
     </aside>
   </div>
-</w-shell>
+</ph-shell>

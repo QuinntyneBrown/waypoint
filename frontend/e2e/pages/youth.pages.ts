@@ -54,7 +54,7 @@ export class YouthAnnouncementsPage extends BasePage {
   }
   /** The card of one announcement in the feed. */
   announcement(title: string) {
-    return this.page.locator('.w-card').filter({ hasText: title });
+    return this.page.locator('.ph-card').filter({ hasText: title });
   }
 
   async goto(): Promise<void> {
@@ -190,7 +190,9 @@ export class YouthSchedulePage extends BasePage {
     return this.page.getByRole('checkbox', { name: /remind me before this session/i });
   }
   get reminderOption() {
-    return this.page.locator('label.w-check').filter({ hasText: /remind me before this session/i });
+    return this.page
+      .locator('label.ph-check')
+      .filter({ hasText: /remind me before this session/i });
   }
   get saveButton() {
     return this.page.getByRole('button', { name: /save rsvp/i });
@@ -247,7 +249,7 @@ export class YouthLessonPage extends BasePage {
   }
   /** The on-demand player shown for a lesson video that is ready. */
   get videoPlayer() {
-    return this.page.locator('w-video-player');
+    return this.page.locator('ph-video-player');
   }
   /**
    * Forces the hls.js path, which plays through a MediaSource `blob:` object URL, and records each
@@ -281,7 +283,7 @@ export class YouthLessonPage extends BasePage {
       const state = window as unknown as { __playerRendered?: boolean };
       state.__playerRendered = false;
       new MutationObserver(() => {
-        if (document.querySelector('w-video-player')) state.__playerRendered = true;
+        if (document.querySelector('ph-video-player')) state.__playerRendered = true;
       }).observe(document, { childList: true, subtree: true });
     });
   }

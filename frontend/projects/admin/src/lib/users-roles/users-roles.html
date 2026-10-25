@@ -1,39 +1,39 @@
-<w-shell
+<ph-shell
   role="admin"
   active="users-roles"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <header class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">People</div>
-        <h1 class="w-page__title">Users &amp; roles</h1>
-        <p class="w-page__sub">Review active accounts and change access deliberately.</p>
+  <div class="ph-container ph-page">
+    <header class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">People</div>
+        <h1 class="ph-page__title">Users &amp; roles</h1>
+        <p class="ph-page__sub">Review active accounts and change access deliberately.</p>
       </div>
-      <a w-button variant="primary" routerLink="/admin/invitations"
-        ><w-icon name="user-plus" />Invitations</a
+      <a ph-button variant="primary" routerLink="/admin/invitations"
+        ><ph-icon name="user-plus" />Invitations</a
       >
     </header>
 
-    <div w-alert variant="info">
+    <div ph-alert variant="info">
       Staff roles can access other people’s records. Every role change takes effect immediately and
       is audit logged.
     </div>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (statusMessage(); as message) {
-      <p w-alert variant="success" role="status">{{ message }}</p>
+      <p ph-alert variant="success" role="status">{{ message }}</p>
     }
 
-    <section w-card>
-      <div w-card-body>
-        <div class="users-filters w-mb-5">
-          <div w-form-field>
-            <label w-label for="users-search">Search users</label>
+    <section ph-card>
+      <div ph-card-body>
+        <div class="users-filters ph-mb-5">
+          <div ph-form-field>
+            <label ph-label for="users-search">Search users</label>
             <input
-              w-text-field
+              ph-text-field
               id="users-search"
               type="search"
               [value]="search()"
@@ -41,10 +41,10 @@
               (keyup.enter)="applySearch()"
             />
           </div>
-          <div w-form-field>
-            <label w-label for="users-role-filter">Current role</label>
+          <div ph-form-field>
+            <label ph-label for="users-role-filter">Current role</label>
             <select
-              w-select
+              ph-select
               id="users-role-filter"
               [value]="roleFilter()"
               (change)="roleFilterChanged($event)"
@@ -55,14 +55,16 @@
               }
             </select>
           </div>
-          <button w-button variant="secondary" type="button" (click)="applySearch()">Search</button>
+          <button ph-button variant="secondary" type="button" (click)="applySearch()">
+            Search
+          </button>
         </div>
 
         @if (loading()) {
-          <p class="w-muted" role="status">Loading users and roles…</p>
+          <p class="ph-muted" role="status">Loading users and roles…</p>
         } @else {
-          <div w-table-wrap>
-            <table w-table cards>
+          <div ph-table-wrap>
+            <table ph-table cards>
               <thead>
                 <tr>
                   <th>User</th>
@@ -77,15 +79,15 @@
                   <tr data-testid="user-role-row">
                     <td data-label="User">
                       <div class="user-cell">
-                        <w-avatar [name]="person.displayName" size="sm" /><span
+                        <ph-avatar [name]="person.displayName" size="sm" /><span
                           ><a [routerLink]="['/admin/people', person.id]"
                             ><strong>{{ person.displayName }}</strong></a
-                          ><br /><span class="w-muted w-text-sm">{{ person.email }}</span></span
+                          ><br /><span class="ph-muted ph-text-sm">{{ person.email }}</span></span
                         >
                       </div>
                     </td>
                     <td data-label="Status">
-                      <span w-badge [variant]="person.status === 'Active' ? 'lime' : ''">{{
+                      <span ph-badge [variant]="person.status === 'Active' ? 'lime' : ''">{{
                         person.status
                       }}</span>
                     </td>
@@ -97,11 +99,11 @@
                     </td>
                     <td data-label="Role">
                       <div class="role-action">
-                        <label class="w-sr-only" [for]="'role-' + person.id"
+                        <label class="ph-sr-only" [for]="'role-' + person.id"
                           >Role for {{ person.displayName }}</label
                         >
                         <select
-                          w-select
+                          ph-select
                           [id]="'role-' + person.id"
                           [value]="selectedRoles()[person.id]"
                           (change)="selectedRoleChanged(person, $event)"
@@ -113,7 +115,7 @@
                         @if (confirmId() === person.id) {
                           <span>Apply now?</span>
                           <button
-                            w-button
+                            ph-button
                             variant="danger"
                             size="sm"
                             type="button"
@@ -123,7 +125,7 @@
                             Confirm
                           </button>
                           <button
-                            w-button
+                            ph-button
                             variant="ghost"
                             size="sm"
                             type="button"
@@ -133,7 +135,7 @@
                           </button>
                         } @else {
                           <button
-                            w-button
+                            ph-button
                             variant="ghost"
                             size="sm"
                             type="button"
@@ -149,10 +151,10 @@
                 } @empty {
                   <tr>
                     <td colspan="5">
-                      <div w-empty-state>
-                        <div w-empty-state-icon><w-icon name="users" /></div>
-                        <h2 w-empty-state-title>No users found</h2>
-                        <p w-empty-state-text>Change the filters or invite someone new.</p>
+                      <div ph-empty-state>
+                        <div ph-empty-state-icon><ph-icon name="users" /></div>
+                        <h2 ph-empty-state-title>No users found</h2>
+                        <p ph-empty-state-text>Change the filters or invite someone new.</p>
                       </div>
                     </td>
                   </tr>
@@ -160,9 +162,9 @@
               </tbody>
             </table>
           </div>
-          <div class="w-cluster w-cluster--between w-mt-4">
+          <div class="ph-cluster ph-cluster--between ph-mt-4">
             <button
-              w-button
+              ph-button
               variant="ghost"
               type="button"
               [disabled]="page() <= 1"
@@ -170,9 +172,9 @@
             >
               Previous
             </button>
-            <span class="w-muted">Page {{ page() }} · {{ total() }} total</span>
+            <span class="ph-muted">Page {{ page() }} · {{ total() }} total</span>
             <button
-              w-button
+              ph-button
               variant="ghost"
               type="button"
               [disabled]="page() * 25 >= total()"
@@ -185,4 +187,4 @@
       </div>
     </section>
   </div>
-</w-shell>
+</ph-shell>

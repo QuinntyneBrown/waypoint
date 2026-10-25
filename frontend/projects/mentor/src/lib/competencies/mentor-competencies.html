@@ -1,80 +1,80 @@
-<w-shell
+<ph-shell
   role="mentor"
   active="my-youth"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <a w-link standalone [routerLink]="['/mentor/youth', youthId]">Back to youth record</a>
+  <div class="ph-container ph-page">
+    <a ph-link standalone [routerLink]="['/mentor/youth', youthId]">Back to youth record</a>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
-    <p class="w-sr-only" role="status">{{ statusMessage() }}</p>
+    <p class="ph-sr-only" role="status">{{ statusMessage() }}</p>
     @if (summary(); as view) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Mentor assessment</div>
-          <h1 class="w-page__title">{{ view.youthName }} competencies</h1>
-          <p class="w-page__sub">
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Mentor assessment</div>
+          <h1 class="ph-page__title">{{ view.youthName }} competencies</h1>
+          <p class="ph-page__sub">
             Record the latest observed level and supporting notes for each competency.
           </p>
         </div>
       </div>
 
-      <section w-card data-testid="competency-summary" aria-label="Competency summary">
-        <div w-card-body class="summary-grid">
+      <section ph-card data-testid="competency-summary" aria-label="Competency summary">
+        <div ph-card-body class="summary-grid">
           <div>
-            <div class="w-kpi">
-              <span w-stat-label>Proficient or mastered</span
-              ><span w-stat-value>{{ view.masteredOrProficient }} of {{ view.total }}</span>
+            <div class="ph-kpi">
+              <span ph-stat-label>Proficient or mastered</span
+              ><span ph-stat-value>{{ view.masteredOrProficient }} of {{ view.total }}</span>
             </div>
           </div>
           <div>
-            <div class="w-kpi">
-              <span w-stat-label>Framework coverage</span
-              ><span w-stat-value>{{ view.total }} competencies</span>
+            <div class="ph-kpi">
+              <span ph-stat-label>Framework coverage</span
+              ><span ph-stat-value>{{ view.total }} competencies</span>
             </div>
           </div>
           <div>
-            <div class="w-kpi">
-              <span w-stat-label>Current stage</span
-              ><span w-stat-value>{{ view.currentStageName ?? 'Not configured' }}</span>
+            <div class="ph-kpi">
+              <span ph-stat-label>Current stage</span
+              ><span ph-stat-value>{{ view.currentStageName ?? 'Not configured' }}</span>
             </div>
-            <p class="w-muted">{{ view.currentStageProgress }}% complete</p>
+            <p class="ph-muted">{{ view.currentStageProgress }}% complete</p>
           </div>
         </div>
       </section>
 
       @if (view.items.length === 0) {
-        <div w-card>
-          <div w-empty-state>
-            <div w-empty-state-icon><w-icon name="award" /></div>
-            <h2 w-empty-state-title>No competencies configured</h2>
-            <p w-empty-state-text>A program administrator can add the progression framework.</p>
+        <div ph-card>
+          <div ph-empty-state>
+            <div ph-empty-state-icon><ph-icon name="award" /></div>
+            <h2 ph-empty-state-title>No competencies configured</h2>
+            <p ph-empty-state-text>A program administrator can add the progression framework.</p>
           </div>
         </div>
       } @else {
         <div class="competency-grid">
           @for (item of view.items; track item.competencyId) {
             <article
-              w-card
+              ph-card
               data-testid="competency-card"
               [attr.data-competency-id]="item.competencyId"
             >
-              <div w-card-header>
+              <div ph-card-header>
                 <div>
-                  <p class="w-eyebrow">{{ item.stageName }}</p>
-                  <h2 w-card-title>{{ item.name }}</h2>
+                  <p class="ph-eyebrow">{{ item.stageName }}</p>
+                  <h2 ph-card-title>{{ item.name }}</h2>
                 </div>
-                <span w-badge>{{ levelLabel(draft(item).level) }}</span>
+                <span ph-badge>{{ levelLabel(draft(item).level) }}</span>
               </div>
-              <div w-card-body class="w-stack">
-                <div w-form-field>
-                  <label w-label [for]="'level-' + item.competencyId">
+              <div ph-card-body class="ph-stack">
+                <div ph-form-field>
+                  <label ph-label [for]="'level-' + item.competencyId">
                     {{ item.name }} level
                   </label>
                   <select
-                    w-select
+                    ph-select
                     [id]="'level-' + item.competencyId"
                     (change)="setLevel(item, $any($event.target).value)"
                   >
@@ -85,12 +85,12 @@
                     }
                   </select>
                 </div>
-                <div w-form-field>
-                  <label w-label [for]="'notes-' + item.competencyId">
+                <div ph-form-field>
+                  <label ph-label [for]="'notes-' + item.competencyId">
                     {{ item.name }} notes
                   </label>
                   <textarea
-                    w-textarea
+                    ph-textarea
                     [id]="'notes-' + item.competencyId"
                     rows="4"
                     maxlength="2000"
@@ -100,16 +100,16 @@
                 </div>
                 <div class="assessment-record">
                   @if (item.assessedAt) {
-                    <p class="w-muted">
+                    <p class="ph-muted">
                       Latest: {{ item.assessedByName ?? 'Staff member' }} ·
                       {{ item.assessedAt | date: 'medium' }}
                     </p>
                   } @else {
-                    <p class="w-muted">Not assessed yet.</p>
+                    <p class="ph-muted">Not assessed yet.</p>
                   }
                 </div>
                 <button
-                  w-button
+                  ph-button
                   variant="primary"
                   class="save-button"
                   type="button"
@@ -124,7 +124,7 @@
         </div>
       }
     } @else if (!errorMessage()) {
-      <p class="w-muted" role="status">Loading competency framework…</p>
+      <p class="ph-muted" role="status">Loading competency framework…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

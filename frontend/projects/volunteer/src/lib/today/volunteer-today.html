@@ -1,50 +1,54 @@
-<w-shell
+<ph-shell
   role="volunteer"
   active="home"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Today</div>
-        <h1 class="w-page__title">Today’s session</h1>
-        <p class="w-page__sub">Your assignment for today, at a glance.</p>
+  <div class="ph-container ph-container--narrow ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Today</div>
+        <h1 class="ph-page__title">Today’s session</h1>
+        <p class="ph-page__sub">Your assignment for today, at a glance.</p>
       </div>
     </div>
 
     @if (loading()) {
-      <p class="w-muted">Loading…</p>
+      <p class="ph-muted">Loading…</p>
     } @else if (today(); as session) {
-      <div w-card>
-        <div w-card-body class="w-stack">
-          <h2 w-card-title>{{ session.title }}</h2>
-          <p class="w-muted">
+      <div ph-card>
+        <div ph-card-body class="ph-stack">
+          <h2 ph-card-title>{{ session.title }}</h2>
+          <p class="ph-muted">
             {{ session.startsAt | date: 'EEEE, MMM d · h:mm a' }}
             @if (session.durationMinutes) {
               · {{ session.durationMinutes }} min
             }
           </p>
           @if (session.location) {
-            <p><w-icon name="map-pin" /> {{ session.location }}</p>
+            <p><ph-icon name="map-pin" /> {{ session.location }}</p>
           }
           <p>{{ session.rosterCount }} on the roster</p>
-          <a w-button variant="primary" [routerLink]="['/volunteer/attendance', session.sessionId]">
+          <a
+            ph-button
+            variant="primary"
+            [routerLink]="['/volunteer/attendance', session.sessionId]"
+          >
             Take attendance
           </a>
         </div>
       </div>
     } @else {
-      <div w-empty-state>
-        <div w-empty-state-icon>
-          <w-icon name="calendar" />
+      <div ph-empty-state>
+        <div ph-empty-state-icon>
+          <ph-icon name="calendar" />
         </div>
-        <h3 w-empty-state-title>No session today</h3>
-        <p w-empty-state-text>
+        <h3 ph-empty-state-title>No session today</h3>
+        <p ph-empty-state-text>
           You have no assigned session today. Check your schedule for what’s coming up.
         </p>
-        <a w-button variant="secondary" routerLink="/volunteer/schedule">View schedule</a>
+        <a ph-button variant="secondary" routerLink="/volunteer/schedule">View schedule</a>
       </div>
     }
   </div>
-</w-shell>
+</ph-shell>

@@ -5,10 +5,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
  * (`role="log"`, `aria-live="polite"`) so new messages are announced.
  */
 @Component({
-  selector: 'div[w-message-thread]',
+  selector: 'div[ph-message-thread]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-thread' },
+  host: { class: 'ph-thread' },
   templateUrl: './message-thread.html',
   styleUrl: './message-thread.css',
 })

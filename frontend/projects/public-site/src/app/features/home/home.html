@@ -1,36 +1,36 @@
-<section class="w-hero">
-  <div class="w-container">
-    <div class="w-eyebrow">Waypoint · Toronto</div>
+<section class="ph-hero">
+  <div class="ph-container">
+    <div class="ph-eyebrow">Waypoint · Toronto</div>
     <h1 style="max-width: 16ch">Raising up young leaders who love Jesus.</h1>
-    <p class="w-text-lg w-muted" style="max-width: 54ch">
+    <p class="ph-text-lg ph-muted" style="max-width: 54ch">
       A youth leadership program pairing mentorship with real skills — in faith and in code — so
       young people in our neighbourhoods can grow, belong, and lead.
     </p>
-    <div class="w-cluster w-mt-6">
-      <a w-button variant="primary" size="lg" routerLink="/apply">Apply now</a>
-      <a w-button variant="ghost" size="lg" routerLink="/programs">Explore the programs</a>
+    <div class="ph-cluster ph-mt-6">
+      <a ph-button variant="primary" size="lg" routerLink="/apply">Apply now</a>
+      <a ph-button variant="ghost" size="lg" routerLink="/programs">Explore the programs</a>
     </div>
   </div>
 </section>
 
-<section class="w-container w-section">
-  <div class="w-eyebrow">How it works</div>
+<section class="ph-container ph-section">
+  <div class="ph-eyebrow">How it works</div>
   <h2>Your journey in four steps</h2>
   @if (loading()) {
-    <p class="w-muted" role="status">Loading program information…</p>
+    <p class="ph-muted" role="status">Loading program information…</p>
   } @else if (error()) {
-    <div w-alert variant="danger" role="alert">
+    <div ph-alert variant="danger" role="alert">
       <p>{{ error() }}</p>
-      <button w-button variant="ghost" size="sm" type="button" (click)="load()">Try again</button>
+      <button ph-button variant="ghost" size="sm" type="button" (click)="load()">Try again</button>
     </div>
   } @else if (content(); as publicContent) {
-    <div class="w-grid w-grid--4 w-mt-6">
+    <div class="ph-grid ph-grid--4 ph-mt-6">
       @for (step of publicContent.journey; track step.step) {
-        <div w-card>
-          <div w-card-body>
-            <div class="w-eyebrow">Step {{ step.step }}</div>
-            <h3 w-card-title>{{ step.title }}</h3>
-            <p class="w-muted">{{ step.description }}</p>
+        <div ph-card>
+          <div ph-card-body>
+            <div class="ph-eyebrow">Step {{ step.step }}</div>
+            <h3 ph-card-title>{{ step.title }}</h3>
+            <p class="ph-muted">{{ step.description }}</p>
           </div>
         </div>
       }
@@ -38,39 +38,39 @@
   }
 </section>
 
-<section class="w-container w-section">
-  <div class="w-eyebrow">Our impact</div>
+<section class="ph-container ph-section">
+  <div class="ph-eyebrow">Our impact</div>
   <h2>Growing leaders across the city</h2>
   @if (content(); as publicContent) {
-    <div class="w-grid w-grid--4 w-mt-6">
-      <div w-card>
-        <div w-stat>
-          <div w-stat-value>{{ publicContent.impact.tracks }}</div>
-          <div w-stat-label>Learning tracks</div>
+    <div class="ph-grid ph-grid--4 ph-mt-6">
+      <div ph-card>
+        <div ph-stat>
+          <div ph-stat-value>{{ publicContent.impact.tracks }}</div>
+          <div ph-stat-label>Learning tracks</div>
         </div>
       </div>
-      <div w-card>
-        <div w-stat>
-          <div w-stat-value>{{ publicContent.impact.cohorts }}</div>
-          <div w-stat-label>Cohorts</div>
+      <div ph-card>
+        <div ph-stat>
+          <div ph-stat-value>{{ publicContent.impact.cohorts }}</div>
+          <div ph-stat-label>Cohorts</div>
         </div>
       </div>
-      <div w-card>
-        <div w-stat>
-          <div w-stat-value>{{ publicContent.impact.modules }}</div>
-          <div w-stat-label>Published modules</div>
+      <div ph-card>
+        <div ph-stat>
+          <div ph-stat-value>{{ publicContent.impact.modules }}</div>
+          <div ph-stat-label>Published modules</div>
         </div>
       </div>
-      <div w-card>
-        <div w-stat>
-          <div w-stat-value>{{ publicContent.impact.neighbourhoods }}</div>
-          <div w-stat-label>Neighbourhoods</div>
+      <div ph-card>
+        <div ph-stat>
+          <div ph-stat-value>{{ publicContent.impact.neighbourhoods }}</div>
+          <div ph-stat-label>Neighbourhoods</div>
         </div>
       </div>
     </div>
   }
-  <div class="w-cluster w-mt-6">
-    <a w-button variant="primary" routerLink="/apply">Start your application</a>
-    <a w-button variant="ghost" routerLink="/get-involved">Get involved</a>
+  <div class="ph-cluster ph-mt-6">
+    <a ph-button variant="primary" routerLink="/apply">Start your application</a>
+    <a ph-button variant="ghost" routerLink="/get-involved">Get involved</a>
   </div>
 </section>

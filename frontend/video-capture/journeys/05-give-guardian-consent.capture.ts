@@ -41,11 +41,11 @@ test('capture: give guardian consent', async ({ page, request, browser }) => {
   await form.mediaConsentOption.click();
   await form.groupOnlyOption.click();
   await form.signature.fill('Ruth Clarke');
-  await shotElement(ruth, FOLDER, 'form', ruth.locator('section.w-card').first());
+  await shotElement(ruth, FOLDER, 'form', ruth.locator('section.ph-card').first());
 
   await form.submitButton.click();
   await expect(ruth.getByRole('heading', { name: /consent recorded/i })).toBeVisible();
-  await shotOf(ruth, FOLDER, 'recorded', ruth.locator('.w-container.w-page'), 0, 1280, 460);
+  await shotOf(ruth, FOLDER, 'recorded', ruth.locator('.ph-container.ph-page'), 0, 1280, 460);
 
   await new SignInPage(ruth).goto();
   await new SignInPage(ruth).signIn(guardian);
@@ -53,7 +53,7 @@ test('capture: give guardian consent', async ({ page, request, browser }) => {
   await consent.goto();
   await expect(consent.participationStatus).toContainText(/active/i);
   await ruth.waitForLoadState('networkidle');
-  const record = ruth.locator('section.w-card', { hasText: 'Participation consent' });
+  const record = ruth.locator('section.ph-card', { hasText: 'Participation consent' });
   await shotElement(ruth, FOLDER, 'record', record);
 
   ruth.once('dialog', (dialog) => dialog.accept());

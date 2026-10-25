@@ -15,7 +15,7 @@ test('capture: browse current cohorts', async ({ page }) => {
   await shot(page, FOLDER, 'about', { x: 0, y: 70, width: 1280, height: 640 });
 
   const cards = page.getByRole('article');
-  await shot(page, FOLDER, 'cohorts', await clipOf(page.locator('.w-grid--2'), 12));
+  await shot(page, FOLDER, 'cohorts', await clipOf(page.locator('.ph-grid--2'), 12));
   await expect(cards).toHaveCount(2);
 
   // The empty state, shown with the same page when no cohort is listed.
@@ -38,5 +38,5 @@ test('capture: browse current cohorts', async ({ page }) => {
     page.getByRole('heading', { name: 'No cohorts are currently listed' }),
   ).toBeVisible();
   await page.evaluate(() => window.scrollTo(0, 0));
-  await shot(page, FOLDER, 'empty', await clipOf(page.locator('.w-empty'), 40));
+  await shot(page, FOLDER, 'empty', await clipOf(page.locator('.ph-empty'), 40));
 });

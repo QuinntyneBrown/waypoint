@@ -26,9 +26,9 @@ export class SignInPage extends BasePage {
     await this.page.goto(SignInPage.path);
   }
 
-  /** The sign-in action as a library primary button (`button[w-button]` host classes). */
+  /** The sign-in action as a library primary button (`button[ph-button]` host classes). */
   get primaryAction() {
-    return this.page.locator('button.w-btn.w-btn--primary', { hasText: /sign in/i });
+    return this.page.locator('button.ph-btn.ph-btn--primary', { hasText: /sign in/i });
   }
 
   /** Fill and label colours of the primary action (design-system check). */
@@ -210,7 +210,7 @@ export class InviteAcceptPage extends BasePage {
     return this.page.getByRole('button', { name: /join waypoint/i });
   }
   async agreeToGuidelines(): Promise<void> {
-    await this.page.locator('label.w-check', { hasText: 'community guidelines' }).click();
+    await this.page.locator('label.ph-check', { hasText: 'community guidelines' }).click();
   }
   async goto(token: string): Promise<void> {
     await this.page.goto(`/auth/invite?token=${encodeURIComponent(token)}`);

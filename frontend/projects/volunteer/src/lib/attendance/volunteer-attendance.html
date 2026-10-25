@@ -1,51 +1,51 @@
-<w-shell
+<ph-shell
   role="volunteer"
   active="home"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Today’s session</div>
-        <h1 class="w-page__title">Take attendance</h1>
-        <p class="w-page__sub">Only names and Present/Absent attendance are shown.</p>
+  <div class="ph-container ph-container--narrow ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Today’s session</div>
+        <h1 class="ph-page__title">Take attendance</h1>
+        <p class="ph-page__sub">Only names and Present/Absent attendance are shown.</p>
       </div>
-      <a w-button variant="ghost" routerLink="/volunteer/home">Back to today</a>
+      <a ph-button variant="ghost" routerLink="/volunteer/home">Back to today</a>
     </div>
 
     @if (rows() === undefined) {
-      <p class="w-muted">Loading roster…</p>
+      <p class="ph-muted">Loading roster…</p>
     } @else {
       <div class="attendance-summary" aria-label="Attendance tallies">
-        <div w-card data-testid="marked-tally">
+        <div ph-card data-testid="marked-tally">
           <strong>{{ marked() }} of {{ total() }}</strong>
           <span>marked</span>
         </div>
-        <div w-card data-testid="present-tally">
+        <div ph-card data-testid="present-tally">
           <strong>{{ present() }}</strong>
           <span>present</span>
         </div>
-        <div w-card data-testid="absent-tally">
+        <div ph-card data-testid="absent-tally">
           <strong>{{ absent() }}</strong>
           <span>absent</span>
         </div>
       </div>
 
-      <div class="w-cluster w-cluster--between">
-        <div class="w-cluster">
-          <button w-button variant="secondary" type="button" (click)="markAll('Present')">
+      <div class="ph-cluster ph-cluster--between">
+        <div class="ph-cluster">
+          <button ph-button variant="secondary" type="button" (click)="markAll('Present')">
             All present
           </button>
-          <button w-button variant="ghost" type="button" (click)="markAll(null)">Clear</button>
+          <button ph-button variant="ghost" type="button" (click)="markAll(null)">Clear</button>
         </div>
         @if (queue.pendingCount() > 0) {
-          <span w-badge variant="warning"> {{ queue.pendingCount() }} pending sync </span>
+          <span ph-badge variant="warning"> {{ queue.pendingCount() }} pending sync </span>
         }
       </div>
 
-      <div w-card>
-        <div w-card-body>
+      <div ph-card>
+        <div ph-card-body>
           @for (row of rows(); track row.youthUserId) {
             <div class="attendance-row" data-testid="attendance-row">
               <span class="attendance-name">{{ row.name }}</span>
@@ -55,7 +55,7 @@
                 [attr.aria-label]="'Attendance for ' + row.name"
               >
                 <button
-                  w-button
+                  ph-button
                   variant="secondary"
                   [class.is-selected]="row.mark === 'Present'"
                   [attr.aria-pressed]="row.mark === 'Present'"
@@ -65,7 +65,7 @@
                   Present
                 </button>
                 <button
-                  w-button
+                  ph-button
                   variant="secondary"
                   [class.is-selected]="row.mark === 'Absent'"
                   [attr.aria-pressed]="row.mark === 'Absent'"
@@ -81,23 +81,23 @@
       </div>
 
       @if (queue.message(); as message) {
-        <p w-alert variant="info" role="status" aria-live="polite">{{ message }}</p>
+        <p ph-alert variant="info" role="status" aria-live="polite">{{ message }}</p>
       } @else {
-        <p class="w-muted" role="status" aria-live="polite"></p>
+        <p class="ph-muted" role="status" aria-live="polite"></p>
       }
       @if (queue.hasConflictForSession(sessionId)) {
-        <div w-alert variant="warning">
-          <div class="w-stack w-stack--sm">
+        <div ph-alert variant="warning">
+          <div class="ph-stack ph-stack--sm">
             <strong>Choose which attendance to keep</strong>
             <p>
               Someone saved this session after you went offline. Review the current roster, then
               apply your queued selections or keep the newer server attendance.
             </p>
-            <div class="w-cluster">
-              <button w-button variant="primary" type="button" (click)="applyQueuedConflict()">
+            <div class="ph-cluster">
+              <button ph-button variant="primary" type="button" (click)="applyQueuedConflict()">
                 Apply my changes
               </button>
-              <button w-button variant="secondary" type="button" (click)="keepServerAttendance()">
+              <button ph-button variant="secondary" type="button" (click)="keepServerAttendance()">
                 Keep server attendance
               </button>
             </div>
@@ -105,11 +105,11 @@
         </div>
       }
       @if (errorMessage(); as error) {
-        <p w-alert variant="error" role="alert">{{ error }}</p>
+        <p ph-alert variant="error" role="alert">{{ error }}</p>
       }
 
-      <div class="w-cluster w-cluster--between">
-        <span class="w-muted">
+      <div class="ph-cluster ph-cluster--between">
+        <span class="ph-muted">
           @if (dirty()) {
             Unsaved changes
           } @else {
@@ -117,7 +117,7 @@
           }
         </span>
         <button
-          w-button
+          ph-button
           variant="primary"
           type="button"
           [disabled]="marked() !== total() || total() === 0 || saving()"
@@ -128,4 +128,4 @@
       </div>
     }
   </div>
-</w-shell>
+</ph-shell>

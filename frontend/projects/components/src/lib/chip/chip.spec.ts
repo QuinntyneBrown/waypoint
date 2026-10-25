@@ -6,9 +6,9 @@ import { ChipRow } from './chip-row';
 @Component({
   imports: [Chip, ChipRow],
   template: `
-    <div w-chip-row aria-label="Roster status filter">
-      <button w-chip type="button" [active]="filter() === 'all'">All</button>
-      <button w-chip type="button" [active]="filter() === 'at-risk'">At risk</button>
+    <div ph-chip-row aria-label="Roster status filter">
+      <button ph-chip type="button" [active]="filter() === 'all'">All</button>
+      <button ph-chip type="button" [active]="filter() === 'at-risk'">At risk</button>
     </div>
   `,
 })
@@ -29,9 +29,9 @@ describe('Chip', () => {
 
   it('lays chips out in a row of native buttons', async () => {
     const { fixture, chips } = await render();
-    expect(fixture.nativeElement.querySelector('div')?.classList.contains('w-pillrow')).toBe(true);
+    expect(fixture.nativeElement.querySelector('div')?.classList.contains('ph-pillrow')).toBe(true);
     expect(chips.map((c) => c.textContent?.trim())).toEqual(['All', 'At risk']);
-    expect(chips[0].classList.contains('w-pill')).toBe(true);
+    expect(chips[0].classList.contains('ph-pill')).toBe(true);
   });
 
   it('marks only the active chip and reports it as pressed', async () => {

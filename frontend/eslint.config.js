@@ -21,7 +21,7 @@ module.exports = defineConfig([
         'warn',
         {
           type: 'attribute',
-          prefix: 'w',
+          prefix: 'ph',
           style: 'camelCase',
         },
       ],
@@ -29,7 +29,7 @@ module.exports = defineConfig([
         'error',
         {
           type: 'element',
-          prefix: 'w',
+          prefix: 'ph',
           style: 'kebab-case',
         },
       ],

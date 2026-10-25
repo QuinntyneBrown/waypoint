@@ -1,22 +1,22 @@
-<w-shell
+<ph-shell
   role="admin"
   active="import"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">People</div>
-        <h1 class="w-page__title">Import roster</h1>
-        <p class="w-page__sub">
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">People</div>
+        <h1 class="ph-page__title">Import roster</h1>
+        <p class="ph-page__sub">
           Bring an existing roster into Waypoint in three reviewed steps: upload, map, and import.
         </p>
       </div>
     </div>
 
-    <div w-alert variant="info">
-      <w-icon name="info" />
+    <div ph-alert variant="info">
+      <ph-icon name="info" />
       <div>
         Export a Google Sheet as CSV first. The source sheet stays untouched, and only rows marked
         Ready will create youth accounts.
@@ -24,34 +24,34 @@
     </div>
 
     @if (errorMessage(); as error) {
-      <div w-alert variant="error" role="alert">
-        <w-icon name="alert-triangle" />
+      <div ph-alert variant="error" role="alert">
+        <ph-icon name="alert-triangle" />
         <div>{{ error }}</div>
       </div>
     }
 
-    <section w-card aria-labelledby="import-upload-heading">
-      <div w-card-header>
-        <h2 w-card-title id="import-upload-heading">1 · Upload CSV</h2>
+    <section ph-card aria-labelledby="import-upload-heading">
+      <div ph-card-header>
+        <h2 ph-card-title id="import-upload-heading">1 · Upload CSV</h2>
       </div>
-      <div w-card-body class="w-stack">
-        <div w-form-field>
-          <label w-label for="roster-file">Roster CSV</label>
+      <div ph-card-body class="ph-stack">
+        <div ph-form-field>
+          <label ph-label for="roster-file">Roster CSV</label>
           <input
-            w-text-field
+            ph-text-field
             #fileInput
             id="roster-file"
             type="file"
             accept=".csv,text/csv,application/vnd.ms-excel"
             (change)="chooseFile($event)"
           />
-          <p w-help>CSV only, up to 2 MB. The file is validated before it is sent.</p>
+          <p ph-help>CSV only, up to 2 MB. The file is validated before it is sent.</p>
         </div>
         @if (fileName(); as name) {
           <div class="import-file" data-testid="import-file-summary">
             <div>
               <strong>{{ name }}</strong>
-              <div class="w-muted">
+              <div class="ph-muted">
                 {{ rowCount() }} row{{ rowCount() === 1 ? '' : 's' }} ·
                 {{ columns().length }} column{{ columns().length === 1 ? '' : 's' }} ·
                 {{
@@ -59,7 +59,7 @@
                 }}
               </div>
             </div>
-            <button w-button variant="secondary" type="button" (click)="removeFile()">
+            <button ph-button variant="secondary" type="button" (click)="removeFile()">
               Remove file
             </button>
           </div>
@@ -68,14 +68,14 @@
     </section>
 
     @if (columns().length > 0) {
-      <section w-card aria-labelledby="import-map-heading">
-        <div w-card-header>
+      <section ph-card aria-labelledby="import-map-heading">
+        <div ph-card-header>
           <div>
-            <h2 w-card-title id="import-map-heading">2 · Map columns</h2>
-            <p class="w-muted">CSV column → Waypoint field. Leave unneeded columns as Skip.</p>
+            <h2 ph-card-title id="import-map-heading">2 · Map columns</h2>
+            <p class="ph-muted">CSV column → Waypoint field. Leave unneeded columns as Skip.</p>
           </div>
         </div>
-        <div w-table-wrap>
+        <div ph-table-wrap>
           <table class="import-columns">
             <thead>
               <tr>
@@ -90,10 +90,10 @@
                   <td data-label="CSV column">
                     <strong>{{ column.header }}</strong>
                   </td>
-                  <td data-label="Sample value" class="w-muted">{{ column.sample }}</td>
+                  <td data-label="Sample value" class="ph-muted">{{ column.sample }}</td>
                   <td data-label="Waypoint field">
                     <select
-                      w-select
+                      ph-select
                       [attr.aria-label]="'Map ' + column.header"
                       [ngModel]="column.field"
                       (ngModelChange)="updateMapping(column.header, $event)"
@@ -108,12 +108,12 @@
             </tbody>
           </table>
         </div>
-        <div w-card-footer class="w-stack">
+        <div ph-card-footer class="ph-stack">
           @if (mappingError(); as mappingMessage) {
-            <p w-error-text>{{ mappingMessage }}</p>
+            <p ph-error-text>{{ mappingMessage }}</p>
           }
           <button
-            w-button
+            ph-button
             variant="primary"
             type="button"
             [disabled]="mappingError() !== null || loading()"
@@ -126,39 +126,39 @@
     }
 
     @if (preview(); as roster) {
-      <section w-card aria-labelledby="import-preview-heading">
-        <div w-card-header>
+      <section ph-card aria-labelledby="import-preview-heading">
+        <div ph-card-header>
           <div>
-            <h2 w-card-title id="import-preview-heading">3 · Preview</h2>
-            <p class="w-muted">Review every row before confirming the import.</p>
+            <h2 ph-card-title id="import-preview-heading">3 · Preview</h2>
+            <p class="ph-muted">Review every row before confirming the import.</p>
           </div>
         </div>
-        <div w-card-body class="w-stack">
+        <div ph-card-body class="ph-stack">
           <div class="import-counts" data-testid="import-preview-summary">
-            <div w-card class="import-count">
-              <div w-card-body>
+            <div ph-card class="import-count">
+              <div ph-card-body>
                 <strong>{{ roster.ready }}</strong> ready
               </div>
             </div>
-            <div w-card class="import-count">
-              <div w-card-body>
+            <div ph-card class="import-count">
+              <div ph-card-body>
                 <strong>{{ roster.needsConsent }}</strong> needs consent
               </div>
             </div>
-            <div w-card class="import-count">
-              <div w-card-body>
+            <div ph-card class="import-count">
+              <div ph-card-body>
                 <strong>{{ roster.duplicates }}</strong> duplicate{{
                   roster.duplicates === 1 ? '' : 's'
                 }}
               </div>
             </div>
-            <div w-card class="import-count">
-              <div w-card-body>
+            <div ph-card class="import-count">
+              <div ph-card-body>
                 <strong>{{ roster.invalid }}</strong> invalid
               </div>
             </div>
           </div>
-          <div w-table-wrap>
+          <div ph-table-wrap>
             <table class="import-preview">
               <thead>
                 <tr>
@@ -179,11 +179,11 @@
                     <td data-label="Mentor">{{ row.mentor || '—' }}</td>
                     <td data-label="Track">{{ row.track || '—' }}</td>
                     <td data-label="Import">
-                      <span w-badge [variant]="statusBadge(row.status)">
+                      <span ph-badge [variant]="statusBadge(row.status)">
                         {{ statusLabel(row.status) }}
                       </span>
                       @if (row.message) {
-                        <div class="w-muted">{{ row.message }}</div>
+                        <div class="ph-muted">{{ row.message }}</div>
                       }
                     </td>
                   </tr>
@@ -192,9 +192,9 @@
             </table>
           </div>
         </div>
-        <div w-card-footer class="import-actions">
+        <div ph-card-footer class="import-actions">
           <button
-            w-button
+            ph-button
             variant="primary"
             type="button"
             [disabled]="roster.ready === 0 || loading()"
@@ -207,10 +207,10 @@
     }
 
     @if (result(); as imported) {
-      <section w-card data-testid="import-result" aria-labelledby="import-result-heading">
-        <div w-card-body class="w-stack">
+      <section ph-card data-testid="import-result" aria-labelledby="import-result-heading">
+        <div ph-card-body class="ph-stack">
           <div>
-            <div class="w-eyebrow">Roster saved</div>
+            <div class="ph-eyebrow">Roster saved</div>
             <h2 id="import-result-heading">Import complete</h2>
           </div>
           <div class="import-counts">
@@ -227,32 +227,37 @@
               <strong>{{ imported.invalid }}</strong> invalid
             </div>
           </div>
-          <a w-button variant="secondary" href="/admin/people">View people</a>
+          <a ph-button variant="secondary" href="/admin/people">View people</a>
         </div>
       </section>
     }
   </div>
 
   @if (confirming() && preview(); as roster) {
-    <div w-dialog size="sm" aria-labelledby="confirm-import-title" (dismiss)="cancelConfirmation()">
-      <div w-dialog-header>
-        <h2 w-dialog-title id="confirm-import-title">Confirm roster import</h2>
+    <div
+      ph-dialog
+      size="sm"
+      aria-labelledby="confirm-import-title"
+      (dismiss)="cancelConfirmation()"
+    >
+      <div ph-dialog-header>
+        <h2 ph-dialog-title id="confirm-import-title">Confirm roster import</h2>
       </div>
-      <div w-dialog-body>
+      <div ph-dialog-body>
         <p>
           Only {{ roster.ready }} ready {{ roster.ready === 1 ? 'row' : 'rows' }} will create an
           account. Duplicates, missing-consent rows, and invalid rows will remain unchanged.
         </p>
       </div>
-      <div w-dialog-footer>
-        <button w-button variant="ghost" type="button" (click)="cancelConfirmation()">
+      <div ph-dialog-footer>
+        <button ph-button variant="ghost" type="button" (click)="cancelConfirmation()">
           Cancel
         </button>
         <button
-          w-button
+          ph-button
           variant="primary"
           type="button"
-          wuDialogInitialFocus
+          phDialogInitialFocus
           [disabled]="loading()"
           (click)="confirmImport()"
         >
@@ -261,4 +266,4 @@
       </div>
     </div>
   }
-</w-shell>
+</ph-shell>

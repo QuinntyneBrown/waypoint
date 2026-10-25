@@ -23,7 +23,7 @@ const meta: Meta<VideoPlayer> = {
   args: { streamId: 'lecture-hall-a', autoplay: true, muted: false, volume: 100, captions: null },
   render: (args) => ({
     props: args,
-    template: `<div style="max-width: 800px"><w-video-player [streamId]="streamId" [captions]="captions" [autoplay]="autoplay" [muted]="muted" [volume]="volume" /></div>`,
+    template: `<div style="max-width: 800px"><ph-video-player [streamId]="streamId" [captions]="captions" [autoplay]="autoplay" [muted]="muted" [volume]="volume" /></div>`,
   }),
 };
 
@@ -82,7 +82,7 @@ export const Themed: Story = {
   args: { muted: true },
   render: (args) => ({
     props: args,
-    template: `<div style="max-width: 800px; --w-video-player-accent: #0b6b57; --w-video-player-accent-fg: #fff; --w-video-player-radius: 0"><w-video-player [streamId]="streamId" [muted]="muted" /></div>`,
+    template: `<div style="max-width: 800px; --ph-video-player-accent: #0b6b57; --ph-video-player-accent-fg: #fff; --ph-video-player-radius: 0"><ph-video-player [streamId]="streamId" [muted]="muted" /></div>`,
   }),
 };
 

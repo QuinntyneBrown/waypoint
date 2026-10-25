@@ -38,7 +38,7 @@ import { finalize, forkJoin } from 'rxjs';
 
 // Traces to: L2-ENGAGE-006, L2-AUTH-010, L2-NFR-001/009/010
 @Component({
-  selector: 'w-admin-announcements',
+  selector: 'ph-admin-announcements',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

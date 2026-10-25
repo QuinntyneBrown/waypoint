@@ -37,7 +37,7 @@ import {
 
 // Traces to: L2-NFR-003
 @Component({
-  selector: 'w-admin-privacy',
+  selector: 'ph-admin-privacy',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,

@@ -54,7 +54,7 @@ interface BadgeTarget {
 
 // Traces to: L2-CURRIC-005, L2-NFR-001, L2-NFR-009, L2-NFR-010
 @Component({
-  selector: 'w-badge-builder',
+  selector: 'ph-badge-builder',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

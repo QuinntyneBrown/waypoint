@@ -43,7 +43,7 @@ test('capture: announce and message journey', async ({ page, browser, request })
   await announcements.recipients.selectOption('Youth');
   await announcements.sendNow.check();
   const form = page
-    .locator('section.w-card')
+    .locator('section.ph-card')
     .filter({ has: page.locator('#compose-announcement-heading') });
   await form.scrollIntoViewIfNeeded();
   await page.evaluate(() => window.scrollTo(0, 0));
@@ -63,7 +63,7 @@ test('capture: announce and message journey', async ({ page, browser, request })
   const youthPage = await youthContext.newPage();
   await new SignInPage(youthPage).signIn({ email: cast.youthEmail, password: cast.youthPassword });
   await youthPage.goto('/youth/announcements');
-  const card = youthPage.locator('.w-card').filter({ hasText: sentTitle });
+  const card = youthPage.locator('.ph-card').filter({ hasText: sentTitle });
   await expect(card).toContainText('New');
   await shot(youthPage, FOLDER, 'youth-new', YOUTH);
 

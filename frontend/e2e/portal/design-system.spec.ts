@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { SignInPage } from '../pages';
+import { AppShell, PortalAppPage, SignInPage } from '../pages';
+import { registerYouth } from '../support/api';
 import { contrastRatio } from '../support/contrast';
 
 const THEMES = [
@@ -37,3 +38,14 @@ for (const theme of THEMES) {
     expect(contrastRatio(primary.color, primary.background)).toBeGreaterThanOrEqual(4.5);
   });
 }
+
+// Traces to: L2-NFR-012 AC3/AC4
+test('the app root, shell and library components use the ph prefix', async ({ page, request }) => {
+  const signIn = new SignInPage(page);
+  await signIn.goto();
+  await expect(signIn.primaryAction).toBeVisible();
+
+  await signIn.signIn(await registerYouth(request, 'ph-prefix'));
+  await expect(new PortalAppPage(page).root).toBeAttached();
+  await expect(new AppShell(page).host).toBeAttached();
+});

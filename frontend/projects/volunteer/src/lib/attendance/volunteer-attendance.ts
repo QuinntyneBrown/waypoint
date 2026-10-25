@@ -26,7 +26,7 @@ interface AttendanceRow extends VolunteerRosterEntry {
 
 // Traces to: L2-VOLUNTEER-001, L2-ENGAGE-002/003, L2-NFR-004/007
 @Component({
-  selector: 'w-volunteer-attendance',
+  selector: 'ph-volunteer-attendance',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Shell, RouterLink, Button, Alert, Card, CardBody, Badge],
   templateUrl: './volunteer-attendance.html',

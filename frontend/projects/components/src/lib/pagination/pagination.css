@@ -1,9 +1,9 @@
-.w-pagination {
+.ph-pagination {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   flex-wrap: wrap;
-  padding-top: var(--w-s4);
+  padding-top: var(--ph-s4);
   font-size: 0.875rem;
 }

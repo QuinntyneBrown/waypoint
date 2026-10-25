@@ -9,7 +9,7 @@ import { DisplayPreferencesService, IdleSessionService } from '@waypoint/core';
 const NON_CRITICAL_RUNTIME_DELAY_MS = 1_500;
 
 @Component({
-  selector: 'w-root',
+  selector: 'ph-root',
   imports: [RouterOutlet, ToastHost],
   templateUrl: './app.html',
   styleUrl: './app.css',

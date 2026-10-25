@@ -21,7 +21,7 @@ import { switchMap } from 'rxjs';
 import { EntryResolver } from '../entry';
 
 @Component({
-  selector: 'w-sign-in',
+  selector: 'ph-sign-in',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,

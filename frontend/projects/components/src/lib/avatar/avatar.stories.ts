@@ -19,11 +19,11 @@ export const Sizes: Story = {
   render: (args) => ({
     props: args,
     template: `<div style="display: flex; gap: 12px; align-items: center">
-      <w-avatar [name]="name" size="xs" />
-      <w-avatar [name]="name" size="sm" />
-      <w-avatar [name]="name" />
-      <w-avatar [name]="name" size="lg" />
-      <w-avatar [name]="name" size="xl" />
+      <ph-avatar [name]="name" size="xs" />
+      <ph-avatar [name]="name" size="sm" />
+      <ph-avatar [name]="name" />
+      <ph-avatar [name]="name" size="lg" />
+      <ph-avatar [name]="name" size="xl" />
     </div>`,
   }),
 };

@@ -1,12 +1,12 @@
 .raise-grid {
   display: grid;
   grid-template-columns: minmax(12rem, 0.75fr) minmax(16rem, 1.5fr) auto;
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
   align-items: end;
 }
 .flag-list {
   display: grid;
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 .flag-card {
   overflow: hidden;
@@ -19,14 +19,14 @@
   overflow-wrap: anywhere;
 }
 .inline-action {
-  padding: var(--w-s4);
-  border-top: 1px solid var(--w-border);
-  background: var(--w-g100);
+  padding: var(--ph-s4);
+  border-top: 1px solid var(--ph-border);
+  background: var(--ph-g100);
 }
 .action-field {
   max-width: 38rem;
 }
-.flag-actions .w-btn,
+.flag-actions .ph-btn,
 .raise-button {
   min-height: 44px;
 }

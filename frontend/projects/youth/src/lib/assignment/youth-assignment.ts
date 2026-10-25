@@ -20,7 +20,7 @@ import {
 
 // Traces to: L2-LEARN-006, L2-NFR-001
 @Component({
-  selector: 'w-youth-assignment',
+  selector: 'ph-youth-assignment',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

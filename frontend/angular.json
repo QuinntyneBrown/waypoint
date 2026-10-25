@@ -11,7 +11,7 @@
       "schematics": {},
       "root": "projects/portal",
       "sourceRoot": "projects/portal/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -96,7 +96,7 @@
       "schematics": {},
       "root": "projects/public-site",
       "sourceRoot": "projects/public-site/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -179,7 +179,7 @@
       "projectType": "library",
       "root": "projects/api",
       "sourceRoot": "projects/api/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -212,7 +212,7 @@
       "projectType": "library",
       "root": "projects/components",
       "sourceRoot": "projects/components/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -273,7 +273,7 @@
       "projectType": "library",
       "root": "projects/auth",
       "sourceRoot": "projects/auth/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -306,7 +306,7 @@
       "projectType": "library",
       "root": "projects/core",
       "sourceRoot": "projects/core/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -339,7 +339,7 @@
       "projectType": "library",
       "root": "projects/account",
       "sourceRoot": "projects/account/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -372,7 +372,7 @@
       "projectType": "library",
       "root": "projects/youth",
       "sourceRoot": "projects/youth/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -399,7 +399,7 @@
       "projectType": "library",
       "root": "projects/mentor",
       "sourceRoot": "projects/mentor/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -426,7 +426,7 @@
       "projectType": "library",
       "root": "projects/admin",
       "sourceRoot": "projects/admin/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -459,7 +459,7 @@
       "projectType": "library",
       "root": "projects/guardian",
       "sourceRoot": "projects/guardian/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -486,7 +486,7 @@
       "projectType": "library",
       "root": "projects/volunteer",
       "sourceRoot": "projects/volunteer/src",
-      "prefix": "w",
+      "prefix": "ph",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",

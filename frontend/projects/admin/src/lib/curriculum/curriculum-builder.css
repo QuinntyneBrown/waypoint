@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 
 .track-picker {
@@ -24,13 +24,13 @@
   align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
 }
 
 .module-form {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
   align-items: end;
 }
 
@@ -50,7 +50,7 @@
 .media-list,
 .question-list {
   display: grid;
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 
 .curriculum-module,
@@ -61,29 +61,29 @@
 }
 
 .nested-section {
-  border-top: 1px solid var(--w-border);
-  padding-top: var(--w-s4);
+  border-top: 1px solid var(--ph-border);
+  padding-top: var(--ph-s4);
 }
 
 .nested-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s4);
-  margin-top: var(--w-s3);
+  gap: var(--ph-s4);
+  margin-top: var(--ph-s3);
 }
 
 .nested-card,
 .assessment-row,
 .question-row {
-  border: 1px solid var(--w-border);
-  border-radius: var(--w-r-card);
-  background: var(--w-g100);
-  padding: var(--w-s4);
+  border: 1px solid var(--ph-border);
+  border-radius: var(--ph-r-card);
+  background: var(--ph-g100);
+  padding: var(--ph-s4);
 }
 
 .nested-card {
   display: grid;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
 }
 
 .assessment-row {
@@ -100,18 +100,18 @@
 }
 
 .quiz-editor {
-  margin-top: var(--w-s5);
+  margin-top: var(--ph-s5);
 }
 
 .settings-grid,
 .question-form {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
   align-items: start;
 }
 
-.question-form .w-field {
+.question-form .ph-field {
   margin-bottom: 0;
 }
 
@@ -119,7 +119,7 @@
   grid-column: span 2;
 }
 
-.question-form > .w-btn {
+.question-form > .ph-btn {
   grid-column: 1 / -1;
   justify-self: end;
 }
@@ -133,7 +133,7 @@
 .check-row {
   display: flex;
   align-items: center;
-  gap: var(--w-s2);
+  gap: var(--ph-s2);
   min-height: 2.75rem;
 }
 
@@ -147,7 +147,7 @@
 .dialog-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 
 .dialog-grid__wide {
@@ -161,7 +161,7 @@
 .submission-types {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s2) var(--w-s4);
+  gap: var(--ph-s2) var(--ph-s4);
   margin: 0;
   border: 0;
   padding: 0;
@@ -169,32 +169,32 @@
 
 .rubric-editor {
   display: grid;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   margin: 0;
-  border: 1px solid var(--w-border);
-  border-radius: var(--w-r-card);
-  padding: var(--w-s4);
+  border: 1px solid var(--ph-border);
+  border-radius: var(--ph-r-card);
+  padding: var(--ph-s4);
 }
 
 .rubric-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.25fr) auto;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   align-items: end;
 }
 
-.dialog-grid .w-field {
+.dialog-grid .ph-field {
   margin-bottom: 0;
 }
 
-.rubric-editor > .w-btn {
+.rubric-editor > .ph-btn {
   justify-self: start;
 }
 
-.w-actions {
+.ph-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
 }
 
 @media (max-width: 64rem) {
@@ -240,13 +240,13 @@
 
   .track-meta,
   .item-actions,
-  .w-actions {
+  .ph-actions {
     width: 100%;
     align-items: stretch;
     flex-direction: column;
   }
 
-  .w-btn,
+  .ph-btn,
   input[type='file'] {
     width: 100%;
     min-height: 45px;

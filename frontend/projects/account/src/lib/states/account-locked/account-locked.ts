@@ -5,7 +5,7 @@ import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, Button, StatePage } from '@way
 
 // Traces to: L2-AUTH-006
 @Component({
-  selector: 'w-account-locked',
+  selector: 'ph-account-locked',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
   templateUrl: './account-locked.html',

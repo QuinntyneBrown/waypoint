@@ -1,26 +1,26 @@
-.w-matrix {
+.ph-matrix {
   border-collapse: collapse;
   font-size: 0.82rem;
   min-width: 640px;
 }
-.w-matrix th,
-.w-matrix td {
-  border: var(--w-bw) solid var(--w-border);
+.ph-matrix th,
+.ph-matrix td {
+  border: var(--ph-bw) solid var(--ph-border);
   padding: 8px 10px;
   text-align: center;
 }
-.w-matrix th:first-child,
-.w-matrix td:first-child {
+.ph-matrix th:first-child,
+.ph-matrix td:first-child {
   text-align: left;
   position: sticky;
   left: 0;
-  background: var(--w-white);
+  background: var(--ph-white);
   z-index: 1;
   font-weight: 600;
 }
-.w-matrix thead th {
-  background: var(--w-g100);
-  font-family: var(--w-font-head);
+.ph-matrix thead th {
+  background: var(--ph-g100);
+  font-family: var(--ph-font-head);
   text-transform: uppercase;
   font-size: 0.64rem;
   letter-spacing: 0.05em;

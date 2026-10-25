@@ -1,7 +1,7 @@
 .settings-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s5);
+  gap: var(--ph-s5);
   align-items: start;
 }
 .settings-card {
@@ -12,10 +12,10 @@
   align-items: center;
   justify-content: center;
   min-height: 6rem;
-  padding: var(--w-s3);
-  border: 1px dashed var(--w-border);
-  border-radius: var(--w-r-card);
-  background: var(--w-g100);
+  padding: var(--ph-s3);
+  border: 1px dashed var(--ph-border);
+  border-radius: var(--ph-r-card);
+  background: var(--ph-g100);
 }
 .logo-preview img {
   max-width: 12rem;
@@ -25,7 +25,7 @@
 .term-form {
   display: grid;
   grid-template-columns: minmax(12rem, 2fr) repeat(3, minmax(9rem, 1fr)) auto;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   align-items: end;
 }
 .term-list,
@@ -39,9 +39,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: var(--w-s4);
-  padding: var(--w-s4) 0;
-  border-bottom: 1px solid var(--w-border);
+  gap: var(--ph-s4);
+  padding: var(--ph-s4) 0;
+  border-bottom: 1px solid var(--ph-border);
   overflow-wrap: anywhere;
 }
 .term-row:last-child,
@@ -55,7 +55,7 @@
 .policy-check {
   display: flex;
   align-items: flex-start;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
   min-height: 2.75rem;
 }
 .policy-check input {
@@ -79,10 +79,10 @@
     flex-direction: column;
     align-items: flex-start;
   }
-  .settings-card .w-btn,
-  .term-form .w-btn,
-  .term-row .w-btn,
-  .track-row .w-btn {
+  .settings-card .ph-btn,
+  .term-form .ph-btn,
+  .term-row .ph-btn,
+  .track-row .ph-btn {
     width: 100%;
     min-height: 45px;
   }

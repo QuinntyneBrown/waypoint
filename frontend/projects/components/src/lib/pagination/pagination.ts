@@ -6,10 +6,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
  * line and previous and next buttons inside.
  */
 @Component({
-  selector: 'nav[w-pagination]',
+  selector: 'nav[ph-pagination]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-pagination' },
+  host: { class: 'ph-pagination' },
   templateUrl: './pagination.html',
   styleUrl: './pagination.css',
 })

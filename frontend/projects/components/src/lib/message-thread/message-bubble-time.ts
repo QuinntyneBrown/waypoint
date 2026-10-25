@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 /** The send time under a message. */
 @Component({
-  selector: 'time[w-message-bubble-time]',
+  selector: 'time[ph-message-bubble-time]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-bubble__time' },
+  host: { class: 'ph-bubble__time' },
   templateUrl: './message-bubble-time.html',
   styleUrl: './message-bubble-time.css',
 })

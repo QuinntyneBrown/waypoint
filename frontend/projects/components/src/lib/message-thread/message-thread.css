@@ -1,5 +1,5 @@
-.w-thread {
+.ph-thread {
   display: flex;
   flex-direction: column;
-  gap: var(--w-s2);
+  gap: var(--ph-s2);
 }

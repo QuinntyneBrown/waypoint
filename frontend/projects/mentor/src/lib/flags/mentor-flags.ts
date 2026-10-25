@@ -33,7 +33,7 @@ import {
 
 // Traces to: L2-MENTOR-007, L2-ENGAGE-007, L2-AUTH-010
 @Component({
-  selector: 'w-mentor-flags',
+  selector: 'ph-mentor-flags',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

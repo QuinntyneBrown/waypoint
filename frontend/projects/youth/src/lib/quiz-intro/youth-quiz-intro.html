@@ -1,54 +1,54 @@
-<w-shell
+<ph-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
-    <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+  <div class="ph-container ph-container--narrow ph-page">
+    <a ph-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (intro(); as view) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Knowledge check</div>
-          <h1 class="w-page__title">{{ view.title }}</h1>
-          <p class="w-page__sub">
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Knowledge check</div>
+          <h1 class="ph-page__title">{{ view.title }}</h1>
+          <p class="ph-page__sub">
             Attempt {{ view.currentAttemptNumber }} of {{ view.attemptsAllowed }}
           </p>
         </div>
       </div>
 
       <div class="quiz-facts">
-        <div w-card>
-          <div w-card-body>
+        <div ph-card>
+          <div ph-card-body>
             <strong>{{ view.questionCount }} questions</strong>
           </div>
         </div>
-        <div w-card>
-          <div w-card-body>
+        <div ph-card>
+          <div ph-card-body>
             <strong>{{ view.estimatedMinutes }} minutes</strong>
           </div>
         </div>
-        <div w-card>
-          <div w-card-body>
+        <div ph-card>
+          <div ph-card-body>
             <strong>{{ view.passMark }}% pass mark</strong>
           </div>
         </div>
-        <div w-card>
-          <div w-card-body>
+        <div ph-card>
+          <div ph-card-body>
             <strong>{{ view.attemptsRemaining }} attempts remaining</strong>
           </div>
         </div>
       </div>
 
       @if (view.badgeReward; as badge) {
-        <section w-card variant="greige">
-          <div w-card-body class="w-stack">
-            <div class="w-eyebrow">Badge reward</div>
-            <h2 w-card-title>{{ badge.name }}</h2>
+        <section ph-card variant="greige">
+          <div ph-card-body class="ph-stack">
+            <div class="ph-eyebrow">Badge reward</div>
+            <h2 ph-card-title>{{ badge.name }}</h2>
             @if (badge.description) {
               <p>{{ badge.description }}</p>
             }
@@ -57,14 +57,14 @@
       }
 
       @if (view.attemptsExhausted) {
-        <p w-alert variant="warning">You have used all attempts for this quiz.</p>
+        <p ph-alert variant="warning">You have used all attempts for this quiz.</p>
       } @else {
-        <button w-button variant="primary" block type="button" (click)="begin()">
+        <button ph-button variant="primary" block type="button" (click)="begin()">
           {{ view.hasInProgressAttempt ? 'Resume attempt' : 'Start attempt' }}
         </button>
       }
     } @else {
-      <p class="w-muted">Loading quiz…</p>
+      <p class="ph-muted">Loading quiz…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

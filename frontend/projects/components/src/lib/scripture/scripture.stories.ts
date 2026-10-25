@@ -14,10 +14,10 @@ type Story = StoryObj<Scripture>;
 
 export const WithReference: Story = {
   render: () => ({
-    template: `<div w-scripture>“The Son of Man did not come to be served, but to serve.” <span w-scripture-ref>Mark 10:45</span></div>`,
+    template: `<div ph-scripture>“The Son of Man did not come to be served, but to serve.” <span ph-scripture-ref>Mark 10:45</span></div>`,
   }),
 };
 
 export const Prompt: Story = {
-  render: () => ({ template: `<p w-scripture>Where did you serve someone this week?</p>` }),
+  render: () => ({ template: `<p ph-scripture>Where did you serve someone this week?</p>` }),
 };

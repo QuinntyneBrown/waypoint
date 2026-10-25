@@ -4,10 +4,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
  * Single-line text input: text, email, password, date and number. Applied to a native input; pair it with a label in a form field.
  */
 @Component({
-  selector: 'input[w-text-field]',
+  selector: 'input[ph-text-field]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-input' },
+  host: { class: 'ph-input' },
   templateUrl: './text-field.html',
   styleUrl: './text-field.css',
 })

@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 /** Sets a passage or a reflection prompt apart in a serif quote block. */
 @Component({
-  selector: 'div[w-scripture], p[w-scripture]',
+  selector: 'div[ph-scripture], p[ph-scripture]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-scripture' },
+  host: { class: 'ph-scripture' },
   templateUrl: './scripture.html',
   styleUrl: './scripture.css',
 })

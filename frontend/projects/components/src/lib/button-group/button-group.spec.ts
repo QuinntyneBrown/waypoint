@@ -6,9 +6,9 @@ import { ButtonGroupItem } from './button-group-item';
 @Component({
   imports: [ButtonGroup, ButtonGroupItem],
   template: `
-    <div w-button-group role="group" aria-label="Theme">
-      <button w-button-group-item type="button" [active]="theme() === 'light'">Light</button>
-      <button w-button-group-item type="button" [active]="theme() === 'dark'">Dark</button>
+    <div ph-button-group role="group" aria-label="Theme">
+      <button ph-button-group-item type="button" [active]="theme() === 'light'">Light</button>
+      <button ph-button-group-item type="button" [active]="theme() === 'dark'">Dark</button>
     </div>
   `,
 })
@@ -29,9 +29,9 @@ describe('ButtonGroup', () => {
 
   it('is a segmented group of native buttons', async () => {
     const { fixture, items } = await render();
-    expect(fixture.nativeElement.querySelector('div')?.classList.contains('w-segment')).toBe(true);
+    expect(fixture.nativeElement.querySelector('div')?.classList.contains('ph-segment')).toBe(true);
     expect(items.map((i) => i.textContent?.trim())).toEqual(['Light', 'Dark']);
-    expect(items[0].classList.contains('w-segment__item')).toBe(true);
+    expect(items[0].classList.contains('ph-segment__item')).toBe(true);
   });
 
   it('marks only the active item and reports it as pressed', async () => {

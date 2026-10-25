@@ -4,7 +4,7 @@ import { Footer } from './footer';
 
 @Component({
   imports: [Footer],
-  template: `<footer w-footer><p>© 2026 Waypoint</p></footer>`,
+  template: `<footer ph-footer><p>© 2026 Waypoint</p></footer>`,
 })
 class Host {}
 
@@ -14,7 +14,7 @@ describe('Footer', () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const footer = (fixture.nativeElement as HTMLElement).querySelector('footer')!;
-    expect(footer.classList.contains('w-footer')).toBe(true);
+    expect(footer.classList.contains('ph-footer')).toBe(true);
     expect(footer.textContent).toBe('© 2026 Waypoint');
   });
 });

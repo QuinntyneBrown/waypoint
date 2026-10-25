@@ -18,7 +18,7 @@ import {
 
 // Traces to: L2-LEARN-009
 @Component({
-  selector: 'w-youth-badges',
+  selector: 'ph-youth-badges',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

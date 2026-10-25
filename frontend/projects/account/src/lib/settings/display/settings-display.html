@@ -1,10 +1,10 @@
-<w-settings-shell heading="Display & accessibility">
-  <div class="w-stack w-stack--lg">
-    <div w-form-field>
-      <span w-label>Text size</span>
-      <div class="w-cluster">
+<ph-settings-shell heading="Display & accessibility">
+  <div class="ph-stack ph-stack--lg">
+    <div ph-form-field>
+      <span ph-label>Text size</span>
+      <div class="ph-cluster">
         <button
-          w-button
+          ph-button
           variant="secondary"
           type="button"
           aria-label="Decrease text size"
@@ -14,7 +14,7 @@
         </button>
         <span aria-live="polite" data-testid="text-scale">{{ prefs().textScalePercent }}%</span>
         <button
-          w-button
+          ph-button
           variant="secondary"
           type="button"
           aria-label="Increase text size"
@@ -23,15 +23,15 @@
           A+
         </button>
       </div>
-      <div w-help>Changes preview instantly across the app.</div>
+      <div ph-help>Changes preview instantly across the app.</div>
     </div>
 
-    <div w-form-field>
-      <span w-label id="theme-label">Theme</span>
-      <div w-button-group role="group" aria-labelledby="theme-label">
+    <div ph-form-field>
+      <span ph-label id="theme-label">Theme</span>
+      <div ph-button-group role="group" aria-labelledby="theme-label">
         @for (option of themes; track option.value) {
           <button
-            w-button-group-item
+            ph-button-group-item
             type="button"
             [active]="prefs().theme === option.value"
             (click)="setTheme(option.value)"
@@ -40,76 +40,76 @@
           </button>
         }
       </div>
-      <div w-help>System matches your device. Save to keep your choice.</div>
+      <div ph-help>System matches your device. Save to keep your choice.</div>
     </div>
 
-    <div class="w-cluster w-cluster--between">
+    <div class="ph-cluster ph-cluster--between">
       <div>
         <div>High contrast</div>
-        <div class="w-muted w-text-sm">Stronger borders and text.</div>
+        <div class="ph-muted ph-text-sm">Stronger borders and text.</div>
       </div>
-      <label w-switch>
+      <label ph-switch>
         <input
           type="checkbox"
           aria-label="High contrast"
           [checked]="prefs().highContrast"
           (change)="toggleContrast()"
         />
-        <span w-switch-track></span>
+        <span ph-switch-track></span>
       </label>
     </div>
 
-    <div class="w-cluster w-cluster--between">
+    <div class="ph-cluster ph-cluster--between">
       <div>
         <div>Reduce motion</div>
-        <div class="w-muted w-text-sm">Minimise animations and transitions.</div>
+        <div class="ph-muted ph-text-sm">Minimise animations and transitions.</div>
       </div>
-      <label w-switch>
+      <label ph-switch>
         <input
           type="checkbox"
           aria-label="Reduce motion"
           [checked]="prefs().reduceMotion"
           (change)="toggleMotion()"
         />
-        <span w-switch-track></span>
+        <span ph-switch-track></span>
       </label>
     </div>
 
-    <div class="w-cluster w-cluster--between">
+    <div class="ph-cluster ph-cluster--between">
       <div>
         <div>Underline links</div>
-        <div class="w-muted w-text-sm">Always underline links for clarity.</div>
+        <div class="ph-muted ph-text-sm">Always underline links for clarity.</div>
       </div>
-      <label w-switch>
+      <label ph-switch>
         <input
           type="checkbox"
           aria-label="Underline links"
           [checked]="prefs().underlineLinks"
           (change)="toggleUnderline()"
         />
-        <span w-switch-track></span>
+        <span ph-switch-track></span>
       </label>
     </div>
 
-    <div class="w-cluster w-cluster--between">
+    <div class="ph-cluster ph-cluster--between">
       <div>
         <div>Reading font</div>
-        <div class="w-muted w-text-sm">Use a serif font for body text.</div>
+        <div class="ph-muted ph-text-sm">Use a serif font for body text.</div>
       </div>
-      <label w-switch>
+      <label ph-switch>
         <input
           type="checkbox"
           aria-label="Reading font"
           [checked]="prefs().readingFont === 'serif'"
           (change)="toggleReadingFont()"
         />
-        <span w-switch-track></span>
+        <span ph-switch-track></span>
       </label>
     </div>
 
     <div>
       <button
-        w-button
+        ph-button
         variant="primary"
         type="button"
         [class.is-loading]="saving()"
@@ -120,4 +120,4 @@
       </button>
     </div>
   </div>
-</w-settings-shell>
+</ph-settings-shell>

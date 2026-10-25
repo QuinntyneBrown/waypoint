@@ -6,7 +6,7 @@ System_Boundary(waypoint, "Waypoint software system") {
   Container_Boundary(frontend, "Frontend") {
     Container_Boundary(frontend_app, "Portal application") {
       Component(page, "YouthLesson", "Angular page component", "Chooses player, preparing card, or legacy video per media item")
-      Component(player, "w-video-player", "Angular component", "Controls, captions, keyboard, theming; mode from src or streamId")
+      Component(player, "ph-video-player", "Angular component", "Controls, captions, keyboard, theming; mode from src or streamId")
       Component(vod, "HlsVodSession", "On-demand session", "Native HLS or hls.js via HLS_FACTORY; seek, quality, token renewal")
       Component(client, "LearningService", "Typed API client", "lesson() and lessonVideoPlayback()")
     }

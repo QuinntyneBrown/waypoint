@@ -1,78 +1,80 @@
-<w-shell
+<ph-shell
   role="mentor"
   active="dashboard"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Mentor dashboard</div>
-        <h1 class="w-page__title">Welcome back, {{ auth.user()?.displayName }}.</h1>
-        <p class="w-page__sub">See how your assigned youth are doing and what needs review.</p>
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Mentor dashboard</div>
+        <h1 class="ph-page__title">Welcome back, {{ auth.user()?.displayName }}.</h1>
+        <p class="ph-page__sub">See how your assigned youth are doing and what needs review.</p>
       </div>
     </div>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (loading()) {
-      <p class="w-muted" role="status">Loading your dashboard…</p>
+      <p class="ph-muted" role="status">Loading your dashboard…</p>
     } @else if (summary(); as view) {
-      <div class="w-grid w-grid--4" aria-label="Mentor summary">
-        <div w-card>
-          <div w-stat>
-            <div w-stat-label>My youth</div>
-            <div w-stat-value data-testid="mentor-youth-count">
+      <div class="ph-grid ph-grid--4" aria-label="Mentor summary">
+        <div ph-card>
+          <div ph-stat>
+            <div ph-stat-label>My youth</div>
+            <div ph-stat-value data-testid="mentor-youth-count">
               {{ view.youthCount }}
             </div>
           </div>
         </div>
-        <div w-card data-testid="mentor-pending-reviews">
-          <div w-stat>
-            <div w-stat-label>Pending reviews</div>
-            <div w-stat-value>{{ view.pendingReviews }}</div>
-            <div w-stat-delta [trend]="view.overdueReviews > 0 ? 'down' : ''">
+        <div ph-card data-testid="mentor-pending-reviews">
+          <div ph-stat>
+            <div ph-stat-label>Pending reviews</div>
+            <div ph-stat-value>{{ view.pendingReviews }}</div>
+            <div ph-stat-delta [trend]="view.overdueReviews > 0 ? 'down' : ''">
               {{ view.overdueReviews }} overdue
             </div>
           </div>
         </div>
-        <div w-card>
-          <div w-stat>
-            <div w-stat-label>Average progress</div>
-            <div w-stat-value data-testid="mentor-average-progress">
+        <div ph-card>
+          <div ph-stat>
+            <div ph-stat-label>Average progress</div>
+            <div ph-stat-value data-testid="mentor-average-progress">
               {{ percent(view.averageProgress) }}%
             </div>
           </div>
         </div>
-        <div w-card>
-          <div w-stat>
-            <div w-stat-label>At risk</div>
-            <div w-stat-value data-testid="mentor-at-risk-count">
+        <div ph-card>
+          <div ph-stat>
+            <div ph-stat-label>At risk</div>
+            <div ph-stat-value data-testid="mentor-at-risk-count">
               {{ view.atRiskCount }}
             </div>
           </div>
         </div>
       </div>
 
-      <section class="w-mt-6" data-testid="mentor-roster-preview">
-        <div class="w-cluster w-cluster--between w-mb-4">
-          <h2 class="w-mb-0">My youth</h2>
-          <a w-button variant="ghost" routerLink="/mentor/my-youth">View all youth</a>
+      <section class="ph-mt-6" data-testid="mentor-roster-preview">
+        <div class="ph-cluster ph-cluster--between ph-mb-4">
+          <h2 class="ph-mb-0">My youth</h2>
+          <a ph-button variant="ghost" routerLink="/mentor/my-youth">View all youth</a>
         </div>
         @if (youth().length === 0) {
-          <div w-card>
-            <div w-empty-state>
-              <div w-empty-state-icon><w-icon name="users" /></div>
-              <h3 w-empty-state-title>No youth assigned yet</h3>
-              <p w-empty-state-text>Assigned youth will appear here when your caseload is ready.</p>
+          <div ph-card>
+            <div ph-empty-state>
+              <div ph-empty-state-icon><ph-icon name="users" /></div>
+              <h3 ph-empty-state-title>No youth assigned yet</h3>
+              <p ph-empty-state-text>
+                Assigned youth will appear here when your caseload is ready.
+              </p>
             </div>
           </div>
         } @else {
           <div class="mentor-preview-grid">
             @for (person of youth().slice(0, 4); track person.id) {
-              <article w-card>
-                <div w-card-body class="youth-preview">
+              <article ph-card>
+                <div ph-card-body class="youth-preview">
                   <div
                     class="progress-number"
                     role="img"
@@ -81,11 +83,11 @@
                     {{ percent(person.progress) }}%
                   </div>
                   <div>
-                    <a w-card-title [routerLink]="['/mentor/youth', person.id]">
+                    <a ph-card-title [routerLink]="['/mentor/youth', person.id]">
                       {{ person.displayName }}
                     </a>
-                    <p class="w-muted">{{ person.cohortName ?? 'Cohort not assigned' }}</p>
-                    <span w-badge [variant]="person.atRisk ? 'error' : ''">
+                    <p class="ph-muted">{{ person.cohortName ?? 'Cohort not assigned' }}</p>
+                    <span ph-badge [variant]="person.atRisk ? 'error' : ''">
                       {{ person.status }}
                     </span>
                   </div>
@@ -96,38 +98,38 @@
         }
       </section>
 
-      <section class="w-mt-6">
-        <div class="w-cluster w-cluster--between w-mb-4">
-          <h2 class="w-mb-0">Reviews queue</h2>
-          <a w-button variant="ghost" routerLink="/mentor/reviews">Open queue</a>
+      <section class="ph-mt-6">
+        <div class="ph-cluster ph-cluster--between ph-mb-4">
+          <h2 class="ph-mb-0">Reviews queue</h2>
+          <a ph-button variant="ghost" routerLink="/mentor/reviews">Open queue</a>
         </div>
         @if (reviews().length === 0) {
-          <div w-card>
-            <div w-empty-state>
-              <div w-empty-state-icon><w-icon name="file-text" /></div>
-              <h3 w-empty-state-title>No reviews waiting</h3>
-              <p w-empty-state-text>New submissions and quiz assessments will appear here.</p>
+          <div ph-card>
+            <div ph-empty-state>
+              <div ph-empty-state-icon><ph-icon name="file-text" /></div>
+              <h3 ph-empty-state-title>No reviews waiting</h3>
+              <p ph-empty-state-text>New submissions and quiz assessments will appear here.</p>
             </div>
           </div>
         } @else {
-          <div w-card>
-            <div w-card-body>
+          <div ph-card>
+            <div ph-card-body>
               @for (review of reviews(); track review.reviewId) {
                 <article class="review-row" data-testid="mentor-review-item">
                   <div>
-                    <h3 w-card-title>{{ review.youthName }}</h3>
+                    <h3 ph-card-title>{{ review.youthName }}</h3>
                     <p>{{ review.itemType }} · {{ review.itemTitle }}</p>
                   </div>
-                  <div class="w-cluster">
+                  <div class="ph-cluster">
                     @if (review.overdue) {
-                      <span w-badge variant="error">Overdue</span>
+                      <span ph-badge variant="error">Overdue</span>
                     } @else if (review.dueDate) {
-                      <span w-badge>Due {{ review.dueDate | date: 'mediumDate' }}</span>
+                      <span ph-badge>Due {{ review.dueDate | date: 'mediumDate' }}</span>
                     } @else {
-                      <span w-badge>No due date</span>
+                      <span ph-badge>No due date</span>
                     }
                     <a
-                      w-button
+                      ph-button
                       variant="primary"
                       class="review-link"
                       [routerLink]="review.reviewPath"
@@ -143,4 +145,4 @@
       </section>
     }
   </div>
-</w-shell>
+</ph-shell>

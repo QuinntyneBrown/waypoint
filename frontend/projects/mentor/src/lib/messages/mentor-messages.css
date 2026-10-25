@@ -5,28 +5,28 @@
   overflow: hidden;
 }
 .inbox-panel {
-  border-right: 1px solid var(--w-border);
-  background: var(--w-white);
+  border-right: 1px solid var(--ph-border);
+  background: var(--ph-white);
 }
 .inbox-head,
 .conversation-head,
 .composer,
 .broadcast-panel {
-  padding: var(--w-s4);
+  padding: var(--ph-s4);
 }
 .conversation-list {
   margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid var(--w-border);
+  border-top: 1px solid var(--ph-border);
 }
 .conversation-button {
   display: block;
   width: 100%;
   min-height: 62px;
-  padding: var(--w-s3) var(--w-s4);
+  padding: var(--ph-s3) var(--ph-s4);
   border: 0;
-  border-bottom: 1px solid var(--w-border);
+  border-bottom: 1px solid var(--ph-border);
   background: transparent;
   color: inherit;
   text-align: left;
@@ -34,10 +34,10 @@
 }
 .conversation-button:hover,
 .conversation-button.is-active {
-  background: var(--w-lime-soft);
+  background: var(--ph-lime-soft);
 }
 .conversation-button:focus-visible {
-  outline: 3px solid var(--w-ink);
+  outline: 3px solid var(--ph-ink);
   outline-offset: -3px;
 }
 .conversation-preview {
@@ -50,25 +50,25 @@
   display: flex;
   min-width: 0;
   flex-direction: column;
-  background: var(--w-g100);
+  background: var(--ph-g100);
 }
 .conversation-head {
-  border-bottom: 1px solid var(--w-border);
-  background: var(--w-white);
+  border-bottom: 1px solid var(--ph-border);
+  background: var(--ph-white);
 }
 .thread-log {
   flex: 1 1 auto;
   min-height: 18rem;
   max-height: 32rem;
-  padding: var(--w-s5);
+  padding: var(--ph-s5);
   overflow-y: auto;
 }
 .message-body {
   white-space: pre-wrap;
 }
 .composer {
-  border-top: 1px solid var(--w-border);
-  background: var(--w-white);
+  border-top: 1px solid var(--ph-border);
+  background: var(--ph-white);
 }
 .mobile-back {
   display: none;

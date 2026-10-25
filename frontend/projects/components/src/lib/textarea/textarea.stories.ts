@@ -5,7 +5,7 @@ const meta: Meta<Textarea> = {
   title: 'Components/Textarea',
   component: Textarea,
   render: () => ({
-    template: `<textarea w-textarea rows="4" placeholder="Share how your week is going"></textarea>`,
+    template: `<textarea ph-textarea rows="4" placeholder="Share how your week is going"></textarea>`,
   }),
 };
 

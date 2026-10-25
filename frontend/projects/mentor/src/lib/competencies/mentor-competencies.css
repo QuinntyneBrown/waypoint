@@ -1,12 +1,12 @@
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--w-s4);
+  gap: var(--ph-s4);
 }
 .competency-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--w-s5);
+  gap: var(--ph-s5);
 }
 .assessment-record {
   min-height: 2.75rem;

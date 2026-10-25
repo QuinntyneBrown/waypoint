@@ -39,7 +39,7 @@ interface CompetencyDraft {
 
 // Traces to: L2-MENTOR-005, L2-LEARN-010
 @Component({
-  selector: 'w-mentor-competencies',
+  selector: 'ph-mentor-competencies',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

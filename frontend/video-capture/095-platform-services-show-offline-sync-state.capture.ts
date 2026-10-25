@@ -19,7 +19,7 @@ test('capture: offline and queued sync', async ({ page, request, context }) => {
   await page.mouse.move(0, 0);
   await shot(page, FOLDER, 'online', TOP);
 
-  const banner = page.locator('.w-offline');
+  const banner = page.locator('.ph-offline');
   await context.setOffline(true);
   await page.evaluate(() => window.dispatchEvent(new Event('offline')));
   await expect(banner).toHaveClass(/is-visible/);

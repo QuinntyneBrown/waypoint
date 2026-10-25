@@ -15,11 +15,11 @@ type Story = StoryObj<Pagination>;
 export const Default: Story = {
   render: () => ({
     template: `
-      <nav w-pagination aria-label="People pages">
+      <nav ph-pagination aria-label="People pages">
         <p>Page 2 of 5 · Showing 26–50 of 112 people</p>
         <div style="display: flex; gap: 0.5rem">
-          <button w-button variant="ghost" type="button">Previous</button>
-          <button w-button variant="ghost" type="button">Next</button>
+          <button ph-button variant="ghost" type="button">Previous</button>
+          <button ph-button variant="ghost" type="button">Next</button>
         </div>
       </nav>`,
   }),

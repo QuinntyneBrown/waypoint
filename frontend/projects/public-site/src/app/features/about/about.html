@@ -1,44 +1,46 @@
-<section class="w-container w-section">
-  <div class="w-eyebrow">About Waypoint</div>
+<section class="ph-container ph-section">
+  <div class="ph-eyebrow">About Waypoint</div>
   <h1>Mentorship and practical learning, close to home</h1>
-  <p class="w-text-lg w-muted" style="max-width: 60ch">
+  <p class="ph-text-lg ph-muted" style="max-width: 60ch">
     Waypoint helps young people grow in faith, skills, and leadership alongside a dedicated mentor
     and neighbourhood cohort.
   </p>
 
-  <div class="w-mt-6">
-    <div class="w-eyebrow">Current cohorts</div>
+  <div class="ph-mt-6">
+    <div class="ph-eyebrow">Current cohorts</div>
     <h2>Find your community</h2>
 
     @if (loading()) {
-      <p class="w-muted" role="status">Loading cohorts…</p>
+      <p class="ph-muted" role="status">Loading cohorts…</p>
     } @else if (error()) {
-      <div w-alert variant="danger" role="alert">
+      <div ph-alert variant="danger" role="alert">
         <p>{{ error() }}</p>
-        <button w-button variant="ghost" size="sm" type="button" (click)="load()">Try again</button>
+        <button ph-button variant="ghost" size="sm" type="button" (click)="load()">
+          Try again
+        </button>
       </div>
     } @else if (content(); as publicContent) {
       @if (publicContent.cohorts.length === 0) {
-        <div w-empty-state>
+        <div ph-empty-state>
           <h3>No cohorts are currently listed</h3>
-          <p class="w-muted">You can still apply and our team will share upcoming options.</p>
+          <p class="ph-muted">You can still apply and our team will share upcoming options.</p>
         </div>
       } @else {
-        <div class="w-grid w-grid--2 w-mt-6">
+        <div class="ph-grid ph-grid--2 ph-mt-6">
           @for (cohort of publicContent.cohorts; track cohort.id) {
-            <article w-card>
-              <div w-card-header class="w-cluster w-justify-between">
-                <h3 w-card-title>{{ cohort.name }}</h3>
-                <span w-badge>{{ cohort.status }}</span>
+            <article ph-card>
+              <div ph-card-header class="ph-cluster ph-justify-between">
+                <h3 ph-card-title>{{ cohort.name }}</h3>
+                <span ph-badge>{{ cohort.status }}</span>
               </div>
-              <div w-card-body>
-                <dl class="w-stack w-gap-3">
+              <div ph-card-body>
+                <dl class="ph-stack ph-gap-3">
                   <div>
-                    <dt class="w-text-sm w-muted">Neighbourhood</dt>
+                    <dt class="ph-text-sm ph-muted">Neighbourhood</dt>
                     <dd>{{ cohort.neighbourhood || 'To be confirmed' }}</dd>
                   </div>
                   <div>
-                    <dt class="w-text-sm w-muted">Dates</dt>
+                    <dt class="ph-text-sm ph-muted">Dates</dt>
                     <dd>
                       {{ cohort.termStart | date: 'MMM d, y' : 'UTC' }}–{{
                         cohort.termEnd | date: 'MMM d, y' : 'UTC'
@@ -46,7 +48,7 @@
                     </dd>
                   </div>
                   <div>
-                    <dt class="w-text-sm w-muted">Lead mentor</dt>
+                    <dt class="ph-text-sm ph-muted">Lead mentor</dt>
                     <dd>{{ cohort.leadMentor || 'To be confirmed' }}</dd>
                   </div>
                 </dl>
@@ -58,8 +60,8 @@
     }
   </div>
 
-  <div class="w-cluster w-mt-6">
-    <a w-button variant="primary" routerLink="/apply">Apply now</a>
-    <a w-button variant="ghost" routerLink="/programs">Explore the programs</a>
+  <div class="ph-cluster ph-mt-6">
+    <a ph-button variant="primary" routerLink="/apply">Apply now</a>
+    <a ph-button variant="ghost" routerLink="/programs">Explore the programs</a>
   </div>
 </section>

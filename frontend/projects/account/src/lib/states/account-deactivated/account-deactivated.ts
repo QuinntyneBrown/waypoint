@@ -4,7 +4,7 @@ import { deploymentUrl, WAYPOINT_DEPLOYMENT_URLS, Button, StatePage } from '@way
 
 // Traces to: L2-PLATFORM-010
 @Component({
-  selector: 'w-account-deactivated',
+  selector: 'ph-account-deactivated',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
   templateUrl: './account-deactivated.html',

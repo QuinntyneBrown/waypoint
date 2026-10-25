@@ -12,8 +12,8 @@ const meta: Meta<Table> = {
   render: (args) => ({
     props: args,
     template: `
-      <div w-table-wrap>
-        <table w-table [cards]="cards" aria-label="People">
+      <div ph-table-wrap>
+        <table ph-table [cards]="cards" aria-label="People">
           <thead><tr><th>Name</th><th>Role</th><th>Status</th></tr></thead>
           <tbody>
             <tr><td data-label="Name">Ana Reyes</td><td data-label="Role">Mentor</td><td data-label="Status">Active</td></tr>
@@ -33,8 +33,8 @@ export const Cards: Story = { args: { cards: true } };
 export const MatrixTable: Story = {
   render: () => ({
     template: `
-      <div w-table-wrap>
-        <table w-matrix aria-label="Progress board">
+      <div ph-table-wrap>
+        <table ph-matrix aria-label="Progress board">
           <thead><tr><th>Youth</th><th>Lesson 1</th><th>Lesson 2</th></tr></thead>
           <tbody><tr><td>Maya Chen</td><td>Done</td><td>In progress</td></tr></tbody>
         </table>

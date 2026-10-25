@@ -43,8 +43,9 @@ Run from the repository root unless noted.
 ## Naming Conventions
 
 - Frontend API services are named `<Name>Service` in `<name>.service.ts` (for example `AuditService` in `audit.service.ts`), never `<Name>Api` or `<name>-api.ts`.
-- Components are named `<Name>` in `<name>.ts` (for example `Alert` in `alert.ts`), never with a `W`
-  class prefix or a `w-` file prefix. Selectors and `.w-*` CSS classes keep the `w` prefix.
+- Components are named `<Name>` in `<name>.ts` (for example `Alert` in `alert.ts`), never with a `Ph`
+  class prefix or a `ph-` file prefix. Selectors (`<ph-alert>`, `button[ph-button]`, `[phAccessibleDialog]`),
+  `.ph-*` CSS classes and `--ph-*` custom properties use the `ph` prefix (DECISIONS #25); ESLint enforces it.
 
 ## Component Files (mandatory)
 
@@ -71,10 +72,12 @@ Run from the repository root unless noted.
 
 - Every application and feature library MUST be built from `@waypoint/components`
   (DECISIONS #23). Never hand-write markup or CSS for a design-system component
-  the library provides; use the library component. Component `.w-*` classes are
-  not public API. Layout, spacing and typography utilities (`w-stack`,
-  `w-cluster`, `w-grid`, `w-container`, `w-page*`, `w-mb-*`, `w-mt-*`, `w-muted`,
-  `w-eyebrow`, `w-text-*`) remain shared CSS.
+  the library provides; use the library component. Component `.ph-*` classes are
+  not public API. Layout, spacing and typography utilities (`ph-stack`,
+  `ph-cluster`, `ph-grid`, `ph-container`, `ph-page*`, `ph-mb-*`, `ph-mt-*`, `ph-muted`,
+  `ph-eyebrow`, `ph-text-*`) remain shared CSS.
+- The look comes from the PromiseHub design system copied into `docs/design-system/`
+  (DECISIONS #25); never load anything from the promise-hub folder at build or run time.
 - `docs/screen-composition.md` is binding. Before implementing or changing any
   screen, read its entry and use the components it lists. Build locally only the
   UI it marks as local.

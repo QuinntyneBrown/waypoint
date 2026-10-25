@@ -5,7 +5,7 @@ import { FormDraftService } from '@waypoint/core';
 
 // Traces to: L2-PLATFORM-010
 @Component({
-  selector: 'w-session-expired',
+  selector: 'ph-session-expired',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, RouterLink, Button],
   templateUrl: './session-expired.html',

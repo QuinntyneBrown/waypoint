@@ -31,7 +31,7 @@ type CheckInType = '1:1' | 'call' | 'session';
 
 // Traces to: L2-MENTOR-006, L2-LEARN-010, L2-GUARDIAN-001
 @Component({
-  selector: 'w-mentor-check-ins',
+  selector: 'ph-mentor-check-ins',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

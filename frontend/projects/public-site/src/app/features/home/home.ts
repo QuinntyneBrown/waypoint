@@ -14,7 +14,7 @@ import {
 
 // Traces to: L2-PUB-002
 @Component({
-  selector: 'w-home',
+  selector: 'ph-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, Button, Alert, Card, CardBody, CardTitle, Stat, StatValue, StatLabel],
   templateUrl: './home.html',

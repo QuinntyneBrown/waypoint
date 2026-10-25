@@ -21,7 +21,7 @@ type QuizAnswers = Record<string, number[] | string>;
 
 // Traces to: L2-LEARN-004
 @Component({
-  selector: 'w-youth-quiz-attempt',
+  selector: 'ph-youth-quiz-attempt',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

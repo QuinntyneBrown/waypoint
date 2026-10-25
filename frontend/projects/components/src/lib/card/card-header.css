@@ -1,7 +1,7 @@
-.w-card__header {
-  padding: var(--w-s5) var(--w-s5) 0;
+.ph-card__header {
+  padding: var(--ph-s5) var(--ph-s5) 0;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--w-s3);
+  gap: var(--ph-s3);
 }

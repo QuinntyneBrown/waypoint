@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 /** Lays chips out in a wrapping row. */
 @Component({
-  selector: 'div[w-chip-row]',
+  selector: 'div[ph-chip-row]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-pillrow' },
+  host: { class: 'ph-pillrow' },
   templateUrl: './chip-row.html',
   styleUrl: './chip-row.css',
 })

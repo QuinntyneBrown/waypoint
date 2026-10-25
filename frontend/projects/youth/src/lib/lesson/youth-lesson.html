@@ -1,22 +1,22 @@
-<w-shell
+<ph-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
-    <a w-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
+  <div class="ph-container ph-container--narrow ph-page">
+    <a ph-button variant="ghost" routerLink="/youth/curriculum">Back to curriculum</a>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (lesson(); as view) {
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">{{ view.moduleName }}</div>
-          <h1 class="w-page__title">{{ view.title }}</h1>
-          <p class="w-page__sub" data-testid="lesson-step-progress">
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">{{ view.moduleName }}</div>
+          <h1 class="ph-page__title">{{ view.title }}</h1>
+          <p class="ph-page__sub" data-testid="lesson-step-progress">
             Step {{ view.stepNumber }} of {{ view.totalSteps }}
             @if (view.estimatedMinutes) {
               · {{ view.estimatedMinutes }} minutes
@@ -25,11 +25,11 @@
         </div>
       </div>
 
-      <div w-card>
-        <div w-card-body class="w-cluster w-cluster--between">
-          <div class="w-cluster" aria-label="Reading text size">
+      <div ph-card>
+        <div ph-card-body class="ph-cluster ph-cluster--between">
+          <div class="ph-cluster" aria-label="Reading text size">
             <button
-              w-button
+              ph-button
               size="sm"
               class="reading-size-button"
               type="button"
@@ -40,7 +40,7 @@
               A
             </button>
             <button
-              w-button
+              ph-button
               size="sm"
               class="reading-size-button"
               type="button"
@@ -51,7 +51,7 @@
               A
             </button>
             <button
-              w-button
+              ph-button
               size="sm"
               class="reading-size-button"
               type="button"
@@ -63,7 +63,7 @@
             </button>
           </div>
           <button
-            w-button
+            ph-button
             variant="ghost"
             type="button"
             aria-label="Bookmark lesson"
@@ -74,21 +74,21 @@
           </button>
         </div>
         @if (readingStateStatus(); as status) {
-          <p class="w-muted" role="status">{{ status }}</p>
+          <p class="ph-muted" role="status">{{ status }}</p>
         }
       </div>
 
       <article
-        class="w-stack lesson-copy"
+        class="ph-stack lesson-copy"
         [class.lesson-copy--small]="textSize() === 'small'"
         [class.lesson-copy--medium]="textSize() === 'medium'"
         [class.lesson-copy--large]="textSize() === 'large'"
       >
         @if (view.scriptureReference) {
-          <section w-card variant="greige">
-            <div w-card-body>
-              <div class="w-eyebrow">Scripture</div>
-              <p w-scripture>{{ view.scriptureReference }}</p>
+          <section ph-card variant="greige">
+            <div ph-card-body>
+              <div class="ph-eyebrow">Scripture</div>
+              <p ph-scripture>{{ view.scriptureReference }}</p>
             </div>
           </section>
         }
@@ -107,22 +107,22 @@
 
         @for (media of view.media; track media.mediaId) {
           @if (media.videoStatus !== 'Failed') {
-            <section w-card>
-              <div w-card-body class="w-stack">
+            <section ph-card>
+              <div ph-card-body class="ph-stack">
                 <h2>Optional media</h2>
                 @if (media.videoStatus === 'Queued' || media.videoStatus === 'Processing') {
                   <div role="status">
                     <h3>Your video is being prepared</h3>
-                    <p class="w-muted">
+                    <p class="ph-muted">
                       A teaching video was added to this lesson and is getting ready to play. Check
                       back in a few minutes. Everything else in this lesson is ready now.
                     </p>
                   </div>
                 } @else if (mediaFailures().has(media.mediaId)) {
-                  <div w-alert variant="warning">
+                  <div ph-alert variant="warning">
                     <p>The media could not be loaded. The full lesson text remains available.</p>
                     <button
-                      w-button
+                      ph-button
                       variant="ghost"
                       type="button"
                       (click)="retryMedia(media.mediaId)"
@@ -132,7 +132,7 @@
                   </div>
                 } @else if (media.videoStatus === 'Ready') {
                   @if (playbacks()[media.mediaId]; as playback) {
-                    <w-video-player
+                    <ph-video-player
                       [src]="playback.url"
                       [poster]="playback.posterUrl"
                       [autoplay]="false"
@@ -151,7 +151,13 @@
                     (error)="mediaFailed(media.mediaId)"
                   ></video>
                 } @else {
-                  <a w-button variant="secondary" [href]="media.url" target="_blank" rel="noopener">
+                  <a
+                    ph-button
+                    variant="secondary"
+                    [href]="media.url"
+                    target="_blank"
+                    rel="noopener"
+                  >
                     Open optional resource
                   </a>
                 }
@@ -161,8 +167,8 @@
         }
 
         @if (view.reflectionPrompts) {
-          <section w-card variant="greige">
-            <div w-card-body>
+          <section ph-card variant="greige">
+            <div ph-card-body>
               <h2>Think about it</h2>
               <p>{{ view.reflectionPrompts }}</p>
             </div>
@@ -172,7 +178,7 @@
 
       @if (view.status !== 'done') {
         <button
-          w-button
+          ph-button
           variant="primary"
           block
           type="button"
@@ -182,12 +188,12 @@
           Mark lesson complete
         </button>
       } @else {
-        <a w-button variant="primary" block [routerLink]="['reflection']">
+        <a ph-button variant="primary" block [routerLink]="['reflection']">
           Continue to reflection
         </a>
       }
     } @else {
-      <p class="w-muted">Loading lesson…</p>
+      <p class="ph-muted">Loading lesson…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

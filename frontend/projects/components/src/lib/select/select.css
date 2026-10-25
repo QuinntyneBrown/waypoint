@@ -1,11 +1,11 @@
-.w-select {
+.ph-select {
   width: 100%;
-  font-family: var(--w-font-body);
+  font-family: var(--ph-font-body);
   font-size: 1rem;
-  color: var(--w-ink);
-  background: var(--w-white);
-  border: var(--w-bw) solid var(--w-border-strong);
-  border-radius: var(--w-r-input);
+  color: var(--ph-ink);
+  background: var(--ph-white);
+  border: var(--ph-bw) solid var(--ph-border-strong);
+  border-radius: var(--ph-r-input);
   padding: 11px 13px;
   line-height: 1.4;
   transition:
@@ -18,8 +18,8 @@
   background-position: right 12px center;
   padding-right: 38px;
 }
-.w-select:focus {
+.ph-select:focus {
   outline: none;
-  border-color: var(--w-ink);
-  box-shadow: 0 0 0 3px var(--w-lime-soft);
+  border-color: var(--ph-ink);
+  box-shadow: 0 0 0 3px var(--ph-lime-soft);
 }

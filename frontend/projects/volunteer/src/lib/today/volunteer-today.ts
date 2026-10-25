@@ -18,7 +18,7 @@ import {
 
 // Traces to: L2-VOLUNTEER-001
 @Component({
-  selector: 'w-volunteer-today',
+  selector: 'ph-volunteer-today',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

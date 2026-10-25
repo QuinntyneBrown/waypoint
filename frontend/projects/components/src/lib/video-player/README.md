@@ -1,4 +1,4 @@
-# w-video-player
+# ph-video-player
 
 Browser-only, standalone video player with two modes, chosen by its inputs.
 
@@ -14,7 +14,7 @@ Setting both `src` and `streamId` is a mistake: the player enters `error` with c
 and does nothing else. Setting neither leaves it `idle`.
 
 ```html
-<w-video-player
+<ph-video-player
   hubUrl="https://example.org/hubs/video"
   streamId="lecture-hall-a"
   [accessTokenFactory]="token"
@@ -25,7 +25,7 @@ and does nothing else. Setting neither leaves it `idle`.
 ```
 
 ```html
-<w-video-player
+<ph-video-player
   [src]="playback.url"
   [poster]="playback.posterUrl"
   [autoplay]="false"
@@ -104,7 +104,7 @@ volume by 5, Escape exits fullscreen. On demand, Arrow Left and Right seek by 5 
 Provide `VIDEO_PLAYER_I18N` with any subset of `VideoPlayerStrings`; the rest stay English
 (`DEFAULT_VIDEO_PLAYER_STRINGS`).
 
-Each colour, radius and duration resolves from a `--w-video-player-*` override, then the design-system
+Each colour, radius and duration resolves from a `--ph-video-player-*` override, then the design-system
 token: `scrim` (`--color-bg-surface`), `control-fg` (`--color-fg-default`), `control-bg-hover`
 (`--color-bg-subtle-hover`), `accent` / `accent-fg` (`--color-brand` / `--color-fg-on-brand`), `live` and
 `error` (`--color-danger-solid`), `error-fg`, `focus-ring` (`--color-focus-ring`), `skeleton`

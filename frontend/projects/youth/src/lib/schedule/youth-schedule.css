@@ -1,11 +1,11 @@
 .schedule-list {
   display: grid;
-  gap: var(--w-s5);
+  gap: var(--ph-s5);
 }
 .session-card__layout {
   display: grid;
   grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 1fr);
-  gap: var(--w-s6);
+  gap: var(--ph-s6);
   align-items: start;
 }
 .session-meta {
@@ -16,14 +16,14 @@
 .rsvp-options {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--w-s2);
+  gap: var(--ph-s2);
 }
 .rsvp-option {
   min-width: 0;
   margin: 0;
-  padding: var(--w-s2);
-  border: 1px solid var(--w-border);
-  border-radius: var(--w-r-input);
+  padding: var(--ph-s2);
+  border: 1px solid var(--ph-border);
+  border-radius: var(--ph-r-input);
 }
 .rsvp-note {
   min-height: 7rem;

@@ -37,7 +37,7 @@ export class MediaSourcePipeline {
     } else if (!this.initReceived) {
       if (isDevMode())
         console.warn(
-          'w-video-player: discarded a media chunk received before the initialisation segment.',
+          'ph-video-player: discarded a media chunk received before the initialisation segment.',
         );
       return;
     }

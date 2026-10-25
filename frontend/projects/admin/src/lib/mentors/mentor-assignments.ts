@@ -29,7 +29,7 @@ import { finalize } from 'rxjs';
 
 // Traces to: L2-ADMIN-005, L2-REPORT-001, L2-NFR-009, L2-NFR-010
 @Component({
-  selector: 'w-mentor-assignments',
+  selector: 'ph-mentor-assignments',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

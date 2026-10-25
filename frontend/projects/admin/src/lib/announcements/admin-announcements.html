@@ -1,83 +1,90 @@
-<w-shell
+<ph-shell
   role="admin"
   active="announcements"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Program administration</div>
-        <h1 class="w-page__title">Announcement administration</h1>
-        <p class="w-page__sub">Send program or cohort updates and follow recipient read-through.</p>
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Program administration</div>
+        <h1 class="ph-page__title">Announcement administration</h1>
+        <p class="ph-page__sub">
+          Send program or cohort updates and follow recipient read-through.
+        </p>
       </div>
     </div>
 
     @if (errorMessage(); as error) {
-      <div w-alert variant="error" role="alert">
+      <div ph-alert variant="error" role="alert">
         <div>
-          <div w-alert-title>{{ error }}</div>
+          <div ph-alert-title>{{ error }}</div>
           Announcement information could not be loaded or saved.
         </div>
-        <button w-button variant="secondary" type="button" (click)="retry()">Retry</button>
+        <button ph-button variant="secondary" type="button" (click)="retry()">Retry</button>
       </div>
     }
     @if (outcome(); as message) {
-      <p w-alert variant="success" role="status">{{ message }}</p>
+      <p ph-alert variant="success" role="status">{{ message }}</p>
     }
 
     <div class="announcement-layout">
-      <section w-card aria-labelledby="compose-announcement-heading">
-        <div w-card-body class="w-stack">
+      <section ph-card aria-labelledby="compose-announcement-heading">
+        <div ph-card-body class="ph-stack">
           <div>
             <h2 id="compose-announcement-heading">Compose announcement</h2>
-            <p class="w-muted">Choose exactly who should receive this update.</p>
+            <p class="ph-muted">Choose exactly who should receive this update.</p>
           </div>
-          <form class="w-stack" [formGroup]="form" (ngSubmit)="compose()">
-            <div w-form-field>
-              <label w-label for="announcement-title">Title</label>
-              <input w-text-field id="announcement-title" maxlength="200" formControlName="title" />
+          <form class="ph-stack" [formGroup]="form" (ngSubmit)="compose()">
+            <div ph-form-field>
+              <label ph-label for="announcement-title">Title</label>
+              <input
+                ph-text-field
+                id="announcement-title"
+                maxlength="200"
+                formControlName="title"
+              />
               @if (form.controls.title.touched && form.controls.title.invalid) {
-                <p w-error-text>Enter a title up to 200 characters.</p>
+                <p ph-error-text>Enter a title up to 200 characters.</p>
               }
             </div>
-            <div w-form-field>
-              <label w-label for="announcement-message">Message</label>
+            <div ph-form-field>
+              <label ph-label for="announcement-message">Message</label>
               <textarea
-                w-textarea
+                ph-textarea
                 id="announcement-message"
                 rows="6"
                 maxlength="4000"
                 formControlName="message"
               ></textarea>
               @if (form.controls.message.touched && form.controls.message.invalid) {
-                <p w-error-text>Enter an announcement message.</p>
+                <p ph-error-text>Enter an announcement message.</p>
               }
             </div>
-            <div w-form-field>
-              <label w-label for="announcement-audience">Audience</label>
-              <select w-select id="announcement-audience" formControlName="audienceScope">
+            <div ph-form-field>
+              <label ph-label for="announcement-audience">Audience</label>
+              <select ph-select id="announcement-audience" formControlName="audienceScope">
                 <option value="org">Organization</option>
                 <option value="cohort">Cohort</option>
               </select>
             </div>
             @if (isCohort()) {
-              <div w-form-field>
-                <label w-label for="announcement-cohort">Cohort</label>
-                <select w-select id="announcement-cohort" formControlName="cohortId">
+              <div ph-form-field>
+                <label ph-label for="announcement-cohort">Cohort</label>
+                <select ph-select id="announcement-cohort" formControlName="cohortId">
                   <option value="">Choose a cohort</option>
                   @for (cohort of cohorts(); track cohort.id) {
                     <option [value]="cohort.id">{{ cohort.name }}</option>
                   }
                 </select>
                 @if (targetError(); as message) {
-                  <p w-error-text>{{ message }}</p>
+                  <p ph-error-text>{{ message }}</p>
                 }
               </div>
             }
-            <div w-form-field>
-              <label w-label for="announcement-recipients">Recipients</label>
-              <select w-select id="announcement-recipients" formControlName="roleTargeting">
+            <div ph-form-field>
+              <label ph-label for="announcement-recipients">Recipients</label>
+              <select ph-select id="announcement-recipients" formControlName="roleTargeting">
                 <option value="Youth">Youth</option>
                 <option value="YouthGuardians">Youth + guardians</option>
                 <option value="Guardians">Guardians</option>
@@ -86,7 +93,7 @@
               </select>
             </div>
             <fieldset class="announcement-options">
-              <legend w-label>Delivery</legend>
+              <legend ph-label>Delivery</legend>
               <label class="announcement-option">
                 <input type="radio" value="now" formControlName="delivery" />
                 <span>Send now</span>
@@ -97,21 +104,21 @@
               </label>
             </fieldset>
             @if (schedulesLater()) {
-              <div w-form-field>
-                <label w-label for="announcement-scheduled-at">Send date and time</label>
+              <div ph-form-field>
+                <label ph-label for="announcement-scheduled-at">Send date and time</label>
                 <input
-                  w-text-field
+                  ph-text-field
                   id="announcement-scheduled-at"
                   type="datetime-local"
                   formControlName="scheduledAt"
                 />
                 @if (scheduleError(); as message) {
-                  <p w-error-text>{{ message }}</p>
+                  <p ph-error-text>{{ message }}</p>
                 }
               </div>
             }
             <button
-              w-button
+              ph-button
               variant="primary"
               class="announcement-submit"
               type="submit"
@@ -130,30 +137,30 @@
       </section>
 
       <section aria-labelledby="announcement-history-heading">
-        <div class="w-page__head">
-          <div class="w-page__titles">
+        <div class="ph-page__head">
+          <div class="ph-page__titles">
             <h2 id="announcement-history-heading">Sent and scheduled</h2>
-            <p class="w-muted">Read statistics refresh from authoritative recipient records.</p>
+            <p class="ph-muted">Read statistics refresh from authoritative recipient records.</p>
           </div>
         </div>
 
         @if (announcements() === undefined) {
-          <p class="w-muted">Loading announcements…</p>
+          <p class="ph-muted">Loading announcements…</p>
         } @else if (announcements()!.length === 0) {
-          <div w-empty-state>
-            <div w-empty-state-icon><w-icon name="bell" /></div>
-            <h3 w-empty-state-title>No announcements yet</h3>
-            <p w-empty-state-text>Sent and scheduled updates will appear here.</p>
+          <div ph-empty-state>
+            <div ph-empty-state-icon><ph-icon name="bell" /></div>
+            <h3 ph-empty-state-title>No announcements yet</h3>
+            <p ph-empty-state-text>Sent and scheduled updates will appear here.</p>
           </div>
         } @else {
-          <ol class="announcement-list w-stack">
+          <ol class="announcement-list ph-stack">
             @for (announcement of announcements(); track announcement.id) {
-              <li w-card class="announcement-item" data-testid="admin-announcement">
-                <div w-card-body class="w-stack w-stack--sm">
-                  <div class="w-cluster w-cluster--between">
-                    <h3 w-card-title>{{ announcement.title }}</h3>
+              <li ph-card class="announcement-item" data-testid="admin-announcement">
+                <div ph-card-body class="ph-stack ph-stack--sm">
+                  <div class="ph-cluster ph-cluster--between">
+                    <h3 ph-card-title>{{ announcement.title }}</h3>
                     <span
-                      w-badge
+                      ph-badge
                       [variant]="announcement.sentAt ? 'lime' : !announcement.sentAt ? 'info' : ''"
                     >
                       {{ announcement.sentAt ? 'Sent' : 'Scheduled' }}
@@ -161,13 +168,13 @@
                   </div>
                   <p>{{ announcement.message }}</p>
                   <div class="announcement-meta">
-                    <span w-badge>
+                    <span ph-badge>
                       {{ announcement.cohortName ?? 'Organization' }}
                     </span>
-                    <span w-badge>
+                    <span ph-badge>
                       {{ roleLabel(announcement.roleTargeting) }}
                     </span>
-                    <span class="w-muted">
+                    <span class="ph-muted">
                       @if (announcement.sentAt) {
                         Sent {{ announcement.sentAt | date: 'MMM d, y, h:mm a' }}
                       } @else {
@@ -176,15 +183,15 @@
                     </span>
                   </div>
                   <div class="announcement-stats">
-                    <div class="w-kpi">
-                      <span w-stat-label>Recipient opens</span
-                      ><strong w-stat-value
+                    <div class="ph-kpi">
+                      <span ph-stat-label>Recipient opens</span
+                      ><strong ph-stat-value
                         >{{ announcement.reads }} of {{ announcement.recipients }} read</strong
                       >
                     </div>
-                    <div class="w-kpi">
-                      <span w-stat-label>Aggregate read rate</span
-                      ><strong w-stat-value
+                    <div class="ph-kpi">
+                      <span ph-stat-label>Aggregate read rate</span
+                      ><strong ph-stat-value
                         >{{ announcement.readRate | percent: '1.0-0' }} read</strong
                       >
                     </div>
@@ -197,4 +204,4 @@
       </section>
     </div>
   </div>
-</w-shell>
+</ph-shell>

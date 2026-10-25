@@ -39,7 +39,7 @@ import { AttendanceQueueService } from '@waypoint/core/attendance';
 
 // Traces to: L2-ENGAGE-002/003, L2-NFR-004/006/007/009/010
 @Component({
-  selector: 'w-mentor-attendance-capture',
+  selector: 'ph-mentor-attendance-capture',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

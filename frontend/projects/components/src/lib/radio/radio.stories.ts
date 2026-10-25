@@ -17,9 +17,9 @@ export const Group: Story = {
     template: `
       <fieldset>
         <legend>Your RSVP</legend>
-        <label w-radio><input type="radio" name="rsvp" value="going" checked /><span w-radio-box></span><span>Going</span></label>
-        <label w-radio><input type="radio" name="rsvp" value="maybe" /><span w-radio-box></span><span>Maybe</span></label>
-        <label w-radio><input type="radio" name="rsvp" value="no" /><span w-radio-box></span><span>Can’t make it</span></label>
+        <label ph-radio><input type="radio" name="rsvp" value="going" checked /><span ph-radio-box></span><span>Going</span></label>
+        <label ph-radio><input type="radio" name="rsvp" value="maybe" /><span ph-radio-box></span><span>Maybe</span></label>
+        <label ph-radio><input type="radio" name="rsvp" value="no" /><span ph-radio-box></span><span>Can’t make it</span></label>
       </fieldset>`,
   }),
 };

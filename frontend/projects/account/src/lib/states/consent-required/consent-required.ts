@@ -5,7 +5,7 @@ import { Button, StatePage, Alert } from '@waypoint/components';
 
 // Traces to: L2-CONSENT-002
 @Component({
-  selector: 'w-consent-required',
+  selector: 'ph-consent-required',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [StatePage, Button, Alert],
   templateUrl: './consent-required.html',

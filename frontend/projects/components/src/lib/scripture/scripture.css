@@ -1,9 +1,9 @@
-.w-scripture {
-  border-left: 3px solid var(--w-lime);
-  background: var(--w-g100);
-  padding: var(--w-s5) var(--w-s6);
-  border-radius: 0 var(--w-r-card) var(--w-r-card) 0;
-  font-family: var(--w-font-serif);
+.ph-scripture {
+  border-left: 3px solid var(--ph-lime);
+  background: var(--ph-g100);
+  padding: var(--ph-s5) var(--ph-s6);
+  border-radius: 0 var(--ph-r-card) var(--ph-r-card) 0;
+  font-family: var(--ph-font-serif);
   font-size: 1.15rem;
   line-height: 1.6;
 }

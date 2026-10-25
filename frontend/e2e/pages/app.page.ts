@@ -8,7 +8,7 @@ export class PortalAppPage extends BasePage {
   static readonly path = '/';
 
   get root() {
-    return this.page.locator('w-root');
+    return this.page.locator('ph-root');
   }
 
   async goto(): Promise<void> {

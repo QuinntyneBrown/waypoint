@@ -33,7 +33,7 @@ type CalendarView = 'month' | 'week' | 'agenda';
 
 // Traces to: L2-ENGAGE-001, L2-AUTH-010, L2-NFR-009/010
 @Component({
-  selector: 'w-mentor-calendar',
+  selector: 'ph-mentor-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

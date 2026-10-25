@@ -1,6 +1,6 @@
-.w-error-text {
+.ph-error-text {
   font-size: 0.8rem;
-  color: var(--w-error);
+  color: var(--ph-error);
   margin-top: 5px;
   font-weight: 500;
 }

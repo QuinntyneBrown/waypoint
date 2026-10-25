@@ -2,15 +2,15 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@a
 
 /**
  * Shows a percentage as a ring with its figure in the middle. Applied to a `div`
- * that holds a `w-progress-ring-label`.
+ * that holds a `ph-progress-ring-label`.
  */
 @Component({
-  selector: 'div[w-progress-ring]',
+  selector: 'div[ph-progress-ring]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'w-ring',
-    '[class.w-ring--lg]': "size() === 'lg'",
+    class: 'ph-ring',
+    '[class.ph-ring--lg]': "size() === 'lg'",
     '[style.--val]': 'value()',
   },
   templateUrl: './progress-ring.html',

@@ -1,14 +1,14 @@
-<w-shell [role]="role()" active="profile" [userName]="userName()" (signOut)="signOut()">
-  <div class="w-container w-container--narrow w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Settings</div>
-        <h1 class="w-page__title">{{ heading() }}</h1>
+<ph-shell [role]="role()" active="profile" [userName]="userName()" (signOut)="signOut()">
+  <div class="ph-container ph-container--narrow ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Settings</div>
+        <h1 class="ph-page__title">{{ heading() }}</h1>
       </div>
     </div>
-    <nav w-tabs class="w-mb-6" aria-label="Settings">
+    <nav ph-tabs class="ph-mb-6" aria-label="Settings">
       <a
-        w-tab
+        ph-tab
         routerLink="/settings/profile"
         routerLinkActive
         #profile="routerLinkActive"
@@ -16,7 +16,7 @@
         >Profile</a
       >
       <a
-        w-tab
+        ph-tab
         routerLink="/settings/notifications"
         routerLinkActive
         #notifications="routerLinkActive"
@@ -25,7 +25,7 @@
         Notifications
       </a>
       <a
-        w-tab
+        ph-tab
         routerLink="/settings/display"
         routerLinkActive
         #display="routerLinkActive"
@@ -33,7 +33,7 @@
         >Display</a
       >
       <a
-        w-tab
+        ph-tab
         routerLink="/settings/privacy"
         routerLinkActive
         #privacy="routerLinkActive"
@@ -43,4 +43,4 @@
     </nav>
     <ng-content />
   </div>
-</w-shell>
+</ph-shell>

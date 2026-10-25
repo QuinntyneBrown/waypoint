@@ -1,36 +1,36 @@
-<w-settings-shell heading="Notifications">
-  <p class="w-muted w-mb-6">
+<ph-settings-shell heading="Notifications">
+  <p class="ph-muted ph-mb-6">
     Choose how you’d like to hear from Waypoint. Changes save automatically.
   </p>
 
-  <div class="w-stack w-stack--lg">
+  <div class="ph-stack ph-stack--lg">
     @for (cat of categories; track cat.eventKey) {
       <div>
         <div>{{ cat.label }}</div>
-        <div class="w-muted w-text-sm w-mb-2">{{ cat.description }}</div>
-        <div class="w-cluster">
-          <label w-checkbox>
+        <div class="ph-muted ph-text-sm ph-mb-2">{{ cat.description }}</div>
+        <div class="ph-cluster">
+          <label ph-checkbox>
             <input
               type="checkbox"
               [attr.aria-label]="cat.label + ' in-app'"
               [checked]="prefs()[cat.eventKey].inApp"
               (change)="toggle(cat.eventKey, 'inApp')"
             />
-            <span w-checkbox-box></span>
+            <span ph-checkbox-box></span>
             <span>In-app</span>
           </label>
-          <label w-checkbox>
+          <label ph-checkbox>
             <input
               type="checkbox"
               [attr.aria-label]="cat.label + ' email'"
               [checked]="prefs()[cat.eventKey].email"
               (change)="toggle(cat.eventKey, 'email')"
             />
-            <span w-checkbox-box></span>
+            <span ph-checkbox-box></span>
             <span>Email</span>
           </label>
         </div>
       </div>
     }
   </div>
-</w-settings-shell>
+</ph-settings-shell>

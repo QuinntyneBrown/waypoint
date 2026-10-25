@@ -39,15 +39,15 @@ export function wuAvatarColor(name: string): string {
  * context supplies the accessible name, so the glyph is aria-hidden.
  */
 @Component({
-  selector: 'w-avatar',
+  selector: 'ph-avatar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'w-avatar',
-    '[class.w-avatar--xs]': "size() === 'xs'",
-    '[class.w-avatar--sm]': "size() === 'sm'",
-    '[class.w-avatar--lg]': "size() === 'lg'",
-    '[class.w-avatar--xl]': "size() === 'xl'",
+    class: 'ph-avatar',
+    '[class.ph-avatar--xs]': "size() === 'xs'",
+    '[class.ph-avatar--sm]': "size() === 'sm'",
+    '[class.ph-avatar--lg]': "size() === 'lg'",
+    '[class.ph-avatar--xl]': "size() === 'xl'",
     '[style.background]': 'bg()',
     '[style.color]': "'#16160c'",
     '[attr.aria-hidden]': "'true'",

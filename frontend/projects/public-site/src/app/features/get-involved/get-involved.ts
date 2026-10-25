@@ -30,7 +30,7 @@ function isEmail(value: string): boolean {
 
 // Traces to: L2-PUB-003
 @Component({
-  selector: 'w-get-involved',
+  selector: 'ph-get-involved',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,

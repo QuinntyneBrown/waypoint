@@ -1,15 +1,15 @@
-<div class="w-authpage">
-  <div class="w-authcard">
-    <div class="w-authcard__brand">
-      <div w-brand size="lg">Waypoint</div>
+<div class="ph-authpage">
+  <div class="ph-authcard">
+    <div class="ph-authcard__brand">
+      <div ph-brand size="lg">Waypoint</div>
     </div>
 
     @if (loading()) {
-      <p class="w-muted w-text-c" role="status">Checking your invitation…</p>
+      <p class="ph-muted ph-text-c" role="status">Checking your invitation…</p>
     } @else if (context(); as invite) {
       @if (invite.state === 'valid') {
         <h1 style="font-size: 1.5rem; text-align: center">Join Waypoint as {{ invite.role }}</h1>
-        <p class="w-muted w-text-c w-mb-4">
+        <p class="ph-muted ph-text-c ph-mb-4">
           Invitation for {{ invite.maskedEmail }}
           @if (invite.cohortName) {
             · {{ invite.cohortName }}
@@ -19,76 +19,76 @@
           }
         </p>
         @if (errorMessage(); as error) {
-          <p w-alert variant="error" role="alert">{{ error }}</p>
+          <p ph-alert variant="error" role="alert">{{ error }}</p>
         }
         <form [formGroup]="form" (ngSubmit)="accept()" novalidate>
           <div
-            w-form-field
+            ph-form-field
             [invalid]="form.controls.displayName.touched && form.controls.displayName.invalid"
           >
-            <label w-label for="invite-name">Display name</label>
+            <label ph-label for="invite-name">Display name</label>
             <input
-              w-text-field
+              ph-text-field
               id="invite-name"
               autocomplete="name"
               formControlName="displayName"
             />
             @if (form.controls.displayName.touched && form.controls.displayName.invalid) {
-              <p w-error-text>Enter the name you want people to see.</p>
+              <p ph-error-text>Enter the name you want people to see.</p>
             }
           </div>
           <div
-            w-form-field
+            ph-form-field
             [invalid]="form.controls.password.touched && form.controls.password.invalid"
           >
-            <label w-label for="invite-password">Create password</label>
+            <label ph-label for="invite-password">Create password</label>
             <div style="position: relative">
               <input
-                w-text-field
+                ph-text-field
                 id="invite-password"
                 [type]="showPassword() ? 'text' : 'password'"
                 autocomplete="new-password"
                 formControlName="password"
               />
               <button
-                w-icon-button
+                ph-icon-button
                 type="button"
                 style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%)"
                 [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
                 [attr.aria-pressed]="showPassword()"
                 (click)="togglePassword()"
               >
-                <w-icon [name]="showPassword() ? 'eye-off' : 'eye'" />
+                <ph-icon [name]="showPassword() ? 'eye-off' : 'eye'" />
               </button>
             </div>
             @if (form.controls.password.touched && form.controls.password.invalid) {
-              <p w-error-text>Use at least 8 characters with a letter and a number.</p>
+              <p ph-error-text>Use at least 8 characters with a letter and a number.</p>
             }
           </div>
-          <div w-form-field>
-            <label w-label for="invite-confirm">Confirm password</label>
+          <div ph-form-field>
+            <label ph-label for="invite-confirm">Confirm password</label>
             <input
-              w-text-field
+              ph-text-field
               id="invite-confirm"
               [type]="showPassword() ? 'text' : 'password'"
               autocomplete="new-password"
               formControlName="confirmPassword"
             />
           </div>
-          <label w-checkbox class="w-mt-4">
+          <label ph-checkbox class="ph-mt-4">
             <input type="checkbox" formControlName="agreeToGuidelines" />
-            <span w-checkbox-box><w-icon name="check" /></span>
+            <span ph-checkbox-box><ph-icon name="check" /></span>
             <span>I agree to follow the Waypoint community guidelines.</span>
           </label>
           @if (form.controls.agreeToGuidelines.touched && form.controls.agreeToGuidelines.invalid) {
-            <p w-error-text>Agreement is required to join.</p>
+            <p ph-error-text>Agreement is required to join.</p>
           }
           <button
-            w-button
+            ph-button
             variant="primary"
             block
             size="lg"
-            class="w-mt-5"
+            class="ph-mt-5"
             type="submit"
             [disabled]="submitting()"
           >
@@ -96,25 +96,25 @@
           </button>
         </form>
       } @else {
-        <div w-empty-state>
-          <div w-empty-state-icon><w-icon name="clock" /></div>
-          <h1 w-empty-state-title style="font-size: 1.5rem">
+        <div ph-empty-state>
+          <div ph-empty-state-icon><ph-icon name="clock" /></div>
+          <h1 ph-empty-state-title style="font-size: 1.5rem">
             {{ stateHeading(invite.state) }}
           </h1>
-          <p w-empty-state-text>
+          <p ph-empty-state-text>
             For your security, invite links are single-use and expire after 14 days.
           </p>
           @if (invite.state === 'accepted') {
-            <p w-empty-state-text>
+            <p ph-empty-state-text>
               Your account already exists. Sign in with the password you created.
             </p>
           } @else if (replacementRequested()) {
-            <p w-alert variant="success" role="status">
+            <p ph-alert variant="success" role="status">
               If a replacement can be sent, the person who invited you has been notified.
             </p>
           } @else {
             <button
-              w-button
+              ph-button
               variant="primary"
               type="button"
               [disabled]="requesting() || !token"
@@ -123,7 +123,9 @@
               {{ requesting() ? 'Requesting…' : 'Request a new invite' }}
             </button>
           }
-          <a w-button variant="ghost" class="w-mt-3" routerLink="/auth/sign-in">Back to sign in</a>
+          <a ph-button variant="ghost" class="ph-mt-3" routerLink="/auth/sign-in"
+            >Back to sign in</a
+          >
         </div>
       }
     }

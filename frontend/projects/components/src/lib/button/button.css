@@ -1,6 +1,6 @@
 /* PromiseHub button (docs/design-system/components/button.html): a pill with a
    hairline edge, label type and a 44px target; the primary action is the accent. */
-.w-btn {
+.ph-btn {
   --btn-bg: var(--color-bg-surface);
   --btn-fg: var(--color-fg-default);
   --btn-border: var(--color-border-strong);
@@ -29,49 +29,49 @@
 }
 /* Transitions run only while the person interacts, so a button that gains its
    variant class after first paint does not animate from the neutral colours. */
-.w-btn:is(:hover, :focus-visible, :active) {
+.ph-btn:is(:hover, :focus-visible, :active) {
   transition:
     background-color var(--duration-fast) var(--ease-standard),
     border-color var(--duration-fast) var(--ease-standard),
     box-shadow var(--duration-fast) var(--ease-standard);
 }
-.w-btn:hover {
+.ph-btn:hover {
   background: var(--btn-bg-hover);
   text-decoration: none;
 }
-.w-btn:active {
+.ph-btn:active {
   transform: translateY(var(--border-width-hairline));
 }
-.w-btn .w-icon {
+.ph-btn .ph-icon {
   width: 1.25em;
   height: 1.25em;
 }
-.w-btn--primary {
+.ph-btn--primary {
   --btn-bg: var(--color-brand);
   --btn-fg: var(--color-fg-on-brand);
   --btn-border: var(--color-brand);
   --btn-bg-hover: var(--color-brand-hover);
 }
-.w-btn--primary:hover {
+.ph-btn--primary:hover {
   border-color: var(--color-brand-hover);
   box-shadow: var(--shadow-1);
 }
-.w-btn--secondary {
+.ph-btn--secondary {
   --btn-bg: var(--color-accent-subtle);
   --btn-fg: var(--color-fg-accent);
   --btn-border: transparent;
   --btn-bg-hover: var(--color-accent-subtle-hover);
 }
-.w-btn--ghost {
+.ph-btn--ghost {
   --btn-bg: transparent;
   --btn-border: transparent;
 }
-.w-btn--subtle {
+.ph-btn--subtle {
   --btn-bg: var(--color-bg-subtle);
   --btn-border: transparent;
   --btn-bg-hover: var(--color-bg-subtle-hover);
 }
-.w-btn--danger {
+.ph-btn--danger {
   --btn-bg: var(--color-danger-solid);
   --btn-fg: var(--color-fg-on-danger);
   --btn-border: var(--color-danger-solid);
@@ -79,35 +79,35 @@
 }
 /* Small keeps the 44px target Waypoint requires (L2-NFR-010 AC1); only the
    padding and type shrink. */
-.w-btn--sm {
+.ph-btn--sm {
   --btn-padding: var(--space-3);
   font-size: var(--font-size-sm);
 }
-.w-btn--lg {
+.ph-btn--lg {
   --btn-height: var(--control-height-lg);
   --btn-padding: var(--space-6);
   font-size: var(--font-size-lg);
 }
-.w-btn--block {
+.ph-btn--block {
   display: flex;
   width: 100%;
 }
-.w-btn--icon {
+.ph-btn--icon {
   --btn-padding: 0;
   width: var(--btn-height);
 }
-.w-btn:disabled,
-.w-btn.is-disabled {
+.ph-btn:disabled,
+.ph-btn.is-disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
-.w-btn.is-loading {
+.ph-btn.is-loading {
   color: transparent;
   position: relative;
   pointer-events: none;
 }
-.w-btn.is-loading::after {
+.ph-btn.is-loading::after {
   content: '';
   position: absolute;
   width: 16px;
@@ -115,9 +115,9 @@
   border-radius: 50%;
   border: 2px solid var(--btn-fg);
   border-top-color: transparent;
-  animation: w-spin 0.7s linear infinite;
+  animation: ph-spin 0.7s linear infinite;
 }
-.w-btn--link {
+.ph-btn--link {
   --btn-bg: transparent;
   --btn-border: transparent;
   --btn-bg-hover: transparent;
@@ -127,6 +127,6 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.w-btn--link:hover {
+.ph-btn--link:hover {
   text-decoration: underline;
 }

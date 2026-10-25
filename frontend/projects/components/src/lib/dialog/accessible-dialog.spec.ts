@@ -7,9 +7,9 @@ import { AccessibleDialog } from './accessible-dialog';
   template: `
     <button id="opener" type="button" (click)="open.set(true)">Open dialog</button>
     @if (open()) {
-      <section wuAccessibleDialog aria-labelledby="dialog-title" (wuDialogEscape)="open.set(false)">
+      <section phAccessibleDialog aria-labelledby="dialog-title" (phDialogEscape)="open.set(false)">
         <h2 id="dialog-title">Keyboard dialog</h2>
-        <button id="first" type="button" wuDialogInitialFocus>First</button>
+        <button id="first" type="button" phDialogInitialFocus>First</button>
         <button id="disabled" type="button" disabled>Disabled</button>
         <a id="last" href="/last">Last</a>
       </section>
@@ -34,7 +34,7 @@ async function openDialog(fixture: ComponentFixture<Host>): Promise<HTMLElement>
   fixture.detectChanges();
   await fixture.whenStable();
   await Promise.resolve();
-  return fixture.nativeElement.querySelector('[wuAccessibleDialog]') as HTMLElement;
+  return fixture.nativeElement.querySelector('[phAccessibleDialog]') as HTMLElement;
 }
 
 function press(target: HTMLElement, key: string, shiftKey = false): KeyboardEvent {
@@ -79,7 +79,7 @@ describe('AccessibleDialog', () => {
     await fixture.whenStable();
     await Promise.resolve();
 
-    expect(fixture.nativeElement.querySelector('[wuAccessibleDialog]')).toBeNull();
+    expect(fixture.nativeElement.querySelector('[phAccessibleDialog]')).toBeNull();
     expect(document.activeElement?.id).toBe('opener');
   });
 });

@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
-/** The bottom row of a `w-card`, separated by a rule; usually actions. */
+/** The bottom row of a `ph-card`, separated by a rule; usually actions. */
 @Component({
-  selector: 'div[w-card-footer]',
+  selector: 'div[ph-card-footer]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-card__footer' },
+  host: { class: 'ph-card__footer' },
   templateUrl: './card-footer.html',
   styleUrl: './card-footer.css',
 })

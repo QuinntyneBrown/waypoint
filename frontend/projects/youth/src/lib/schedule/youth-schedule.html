@@ -1,43 +1,43 @@
-<w-shell
+<ph-shell
   role="youth"
   active="schedule"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-page">
-    <div class="w-page__head">
-      <div class="w-page__titles">
-        <div class="w-eyebrow">Your cohort</div>
-        <h1 class="w-page__title">My schedule</h1>
-        <p class="w-page__sub">See what’s coming up and let your mentor know your plans.</p>
+  <div class="ph-container ph-page">
+    <div class="ph-page__head">
+      <div class="ph-page__titles">
+        <div class="ph-eyebrow">Your cohort</div>
+        <h1 class="ph-page__title">My schedule</h1>
+        <p class="ph-page__sub">See what’s coming up and let your mentor know your plans.</p>
       </div>
     </div>
 
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
 
     @if (sessions(); as upcoming) {
       @if (upcoming.length === 0) {
-        <section w-card>
-          <div w-empty-state>
-            <div w-card-body>
-              <h2 w-empty-state-title>No upcoming sessions yet</h2>
-              <p w-empty-state-text>New cohort sessions will appear here when they are planned.</p>
+        <section ph-card>
+          <div ph-empty-state>
+            <div ph-card-body>
+              <h2 ph-empty-state-title>No upcoming sessions yet</h2>
+              <p ph-empty-state-text>New cohort sessions will appear here when they are planned.</p>
             </div>
           </div>
         </section>
       } @else {
         <div class="schedule-list">
           @for (session of upcoming; track session.sessionId) {
-            <article w-card data-testid="youth-session">
-              <div w-card-body class="session-card__layout">
-                <div class="w-stack">
+            <article ph-card data-testid="youth-session">
+              <div ph-card-body class="session-card__layout">
+                <div class="ph-stack">
                   <div>
-                    <div class="w-eyebrow">Upcoming session</div>
-                    <h2 w-card-title>{{ session.title }}</h2>
+                    <div class="ph-eyebrow">Upcoming session</div>
+                    <h2 ph-card-title>{{ session.title }}</h2>
                   </div>
-                  <ul class="session-meta w-stack">
+                  <ul class="session-meta ph-stack">
                     <li>
                       <strong>Date</strong><br />
                       <time [attr.datetime]="session.startsAt">{{
@@ -55,18 +55,18 @@
                     }
                   </ul>
                   @if (session.response) {
-                    <span w-badge variant="success" data-testid="current-rsvp">
+                    <span ph-badge variant="success" data-testid="current-rsvp">
                       Current response:
                       {{ session.response === 'CantAttend' ? 'Can’t make it' : session.response }}
                     </span>
                   }
                 </div>
 
-                <div class="w-stack">
-                  <fieldset class="w-stack">
+                <div class="ph-stack">
+                  <fieldset class="ph-stack">
                     <legend><strong>Your RSVP</strong></legend>
                     <div class="rsvp-options">
-                      <label w-radio class="rsvp-option">
+                      <label ph-radio class="rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -74,9 +74,9 @@
                           [checked]="draft(session.sessionId).response === 'going'"
                           (change)="setResponse(session.sessionId, 'going')"
                         />
-                        <span w-radio-box></span><span>Going</span>
+                        <span ph-radio-box></span><span>Going</span>
                       </label>
-                      <label w-radio class="rsvp-option">
+                      <label ph-radio class="rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -84,9 +84,9 @@
                           [checked]="draft(session.sessionId).response === 'maybe'"
                           (change)="setResponse(session.sessionId, 'maybe')"
                         />
-                        <span w-radio-box></span><span>Maybe</span>
+                        <span ph-radio-box></span><span>Maybe</span>
                       </label>
-                      <label w-radio class="rsvp-option">
+                      <label ph-radio class="rsvp-option">
                         <input
                           type="radio"
                           [name]="'rsvp-' + session.sessionId"
@@ -94,17 +94,17 @@
                           [checked]="draft(session.sessionId).response === 'can\'t make it'"
                           (change)="setResponse(session.sessionId, 'can\'t make it')"
                         />
-                        <span w-radio-box></span><span>Can’t make it</span>
+                        <span ph-radio-box></span><span>Can’t make it</span>
                       </label>
                     </div>
                   </fieldset>
 
-                  <div w-form-field>
-                    <label w-label [for]="'rsvp-note-' + session.sessionId">
-                      Note to your mentor <span w-label-optional>(optional)</span>
+                  <div ph-form-field>
+                    <label ph-label [for]="'rsvp-note-' + session.sessionId">
+                      Note to your mentor <span ph-label-optional>(optional)</span>
                     </label>
                     <textarea
-                      w-textarea
+                      ph-textarea
                       class="rsvp-note"
                       [id]="'rsvp-note-' + session.sessionId"
                       maxlength="1000"
@@ -113,20 +113,20 @@
                     ></textarea>
                   </div>
 
-                  <label w-checkbox>
+                  <label ph-checkbox>
                     <input
                       type="checkbox"
                       [checked]="draft(session.sessionId).reminderSet"
                       [disabled]="draft(session.sessionId).response === 'can\'t make it'"
                       (change)="setReminder(session.sessionId, $any($event.target).checked)"
                     />
-                    <span w-checkbox-box></span>
+                    <span ph-checkbox-box></span>
                     <span>Remind me before this session</span>
                   </label>
 
-                  <div class="w-actions">
+                  <div class="ph-actions">
                     <button
-                      w-button
+                      ph-button
                       variant="primary"
                       type="button"
                       [disabled]="saving().has(session.sessionId)"
@@ -139,7 +139,7 @@
                     </span>
                   </div>
                   @if (session.reminderSet && session.reminderAt) {
-                    <p class="w-muted" data-testid="reminder-time">
+                    <p class="ph-muted" data-testid="reminder-time">
                       Reminder scheduled for {{ session.reminderAt | date: 'medium' }}.
                     </p>
                   }
@@ -150,7 +150,7 @@
         </div>
       }
     } @else {
-      <p class="w-muted" role="status">Loading schedule…</p>
+      <p class="ph-muted" role="status">Loading schedule…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

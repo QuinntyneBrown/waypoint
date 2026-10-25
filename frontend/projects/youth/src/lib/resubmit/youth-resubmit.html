@@ -1,52 +1,58 @@
-<w-shell
+<ph-shell
   role="youth"
   active="curriculum"
   [userName]="auth.user()?.displayName ?? ''"
   (signOut)="auth.signOut()"
 >
-  <div class="w-container w-container--narrow w-page">
+  <div class="ph-container ph-container--narrow ph-page">
     @if (errorMessage(); as error) {
-      <p w-alert variant="error" role="alert">{{ error }}</p>
+      <p ph-alert variant="error" role="alert">{{ error }}</p>
     }
     @if (conflictMessage(); as conflict) {
-      <div w-alert variant="warning" class="w-stack" role="alert" data-testid="submission-conflict">
+      <div
+        ph-alert
+        variant="warning"
+        class="ph-stack"
+        role="alert"
+        data-testid="submission-conflict"
+      >
         <p>{{ conflict }}</p>
         <div>
-          <button w-button variant="secondary" type="button" (click)="reviewLatest()">
+          <button ph-button variant="secondary" type="button" (click)="reviewLatest()">
             Review latest feedback
           </button>
         </div>
       </div>
     }
     @if (submission(); as view) {
-      <a w-button variant="ghost" [routerLink]="['/youth/submissions', view.id]">Back to status</a>
-      <div class="w-page__head">
-        <div class="w-page__titles">
-          <div class="w-eyebrow">Needs revision</div>
-          <h1 class="w-page__title">Revise {{ view.assignmentTitle }}</h1>
+      <a ph-button variant="ghost" [routerLink]="['/youth/submissions', view.id]">Back to status</a>
+      <div class="ph-page__head">
+        <div class="ph-page__titles">
+          <div class="ph-eyebrow">Needs revision</div>
+          <h1 class="ph-page__title">Revise {{ view.assignmentTitle }}</h1>
         </div>
       </div>
       @if (view.mentorComment) {
-        <div w-alert variant="info">
+        <div ph-alert variant="info">
           <strong>Mentor feedback</strong>
           <p>{{ view.mentorComment }}</p>
         </div>
       }
-      <form class="w-stack" [formGroup]="form" (ngSubmit)="submit()">
-        <div w-form-field>
-          <label w-label for="revised-text">Revised response</label
-          ><textarea w-textarea id="revised-text" rows="8" formControlName="bodyText"></textarea>
+      <form class="ph-stack" [formGroup]="form" (ngSubmit)="submit()">
+        <div ph-form-field>
+          <label ph-label for="revised-text">Revised response</label
+          ><textarea ph-textarea id="revised-text" rows="8" formControlName="bodyText"></textarea>
         </div>
-        <div w-form-field>
-          <label w-label for="revised-link">Evidence link</label
-          ><input w-text-field id="revised-link" type="url" formControlName="linkUrl" />
+        <div ph-form-field>
+          <label ph-label for="revised-link">Evidence link</label
+          ><input ph-text-field id="revised-link" type="url" formControlName="linkUrl" />
         </div>
-        <button w-button variant="primary" block type="submit" [disabled]="saving()">
+        <button ph-button variant="primary" block type="submit" [disabled]="saving()">
           Resubmit assignment
         </button>
       </form>
     } @else {
-      <p class="w-muted">Loading revision…</p>
+      <p class="ph-muted">Loading revision…</p>
     }
   </div>
-</w-shell>
+</ph-shell>

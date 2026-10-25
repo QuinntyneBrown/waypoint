@@ -12,10 +12,10 @@ import {
  * are underlined; `standalone` links are underlined only on hover.
  */
 @Component({
-  selector: 'a[w-link]',
+  selector: 'a[ph-link]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'w-link', '[class.w-link--standalone]': 'standalone()' },
+  host: { class: 'ph-link', '[class.ph-link--standalone]': 'standalone()' },
   templateUrl: './link.html',
   styleUrl: './link.css',
 })

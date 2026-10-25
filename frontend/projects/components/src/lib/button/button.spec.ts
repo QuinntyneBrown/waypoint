@@ -6,7 +6,7 @@ import { Button, ButtonVariant } from './button';
   imports: [Button],
   template: `
     <button
-      w-button
+      ph-button
       [variant]="variant()"
       [size]="size()"
       [block]="block()"
@@ -15,8 +15,8 @@ import { Button, ButtonVariant } from './button';
     >
       Save changes
     </button>
-    <a w-button variant="ghost" size="sm" href="/mentor/youth">Back to my youth</a>
-    <button w-button variant="ghost" iconOnly aria-label="Exit quiz" type="button">x</button>
+    <a ph-button variant="ghost" size="sm" href="/mentor/youth">Back to my youth</a>
+    <button ph-button variant="ghost" iconOnly aria-label="Exit quiz" type="button">x</button>
   `,
 })
 class Host {
@@ -44,8 +44,8 @@ async function setup() {
 describe('Button', () => {
   it('renders the base class and variant class and keeps its content', async () => {
     const { button } = await setup();
-    expect(button.classList.contains('w-btn')).toBe(true);
-    expect(button.classList.contains('w-btn--primary')).toBe(true);
+    expect(button.classList.contains('ph-btn')).toBe(true);
+    expect(button.classList.contains('ph-btn--primary')).toBe(true);
     expect(button.textContent?.trim()).toBe('Save changes');
   });
 
@@ -54,14 +54,14 @@ describe('Button', () => {
     for (const variant of ['secondary', 'ghost', 'subtle', 'danger', 'link'] as const) {
       host.variant.set(variant);
       await fixture.whenStable();
-      expect(button.className).toContain(`w-btn--${variant}`);
+      expect(button.className).toContain(`ph-btn--${variant}`);
       expect(
-        button.className.match(/w-btn--(primary|secondary|ghost|subtle|danger|link)/g),
-      ).toEqual([`w-btn--${variant}`]);
+        button.className.match(/ph-btn--(primary|secondary|ghost|subtle|danger|link)/g),
+      ).toEqual([`ph-btn--${variant}`]);
     }
     host.variant.set('neutral');
     await fixture.whenStable();
-    expect(button.className).toBe('w-btn');
+    expect(button.className).toBe('ph-btn');
   });
 
   it('applies size and block classes', async () => {
@@ -69,24 +69,24 @@ describe('Button', () => {
     host.size.set('sm');
     host.block.set(true);
     await fixture.whenStable();
-    expect(button.classList.contains('w-btn--sm')).toBe(true);
-    expect(button.classList.contains('w-btn--block')).toBe(true);
+    expect(button.classList.contains('ph-btn--sm')).toBe(true);
+    expect(button.classList.contains('ph-btn--block')).toBe(true);
     host.size.set('lg');
     await fixture.whenStable();
-    expect(button.classList.contains('w-btn--lg')).toBe(true);
-    expect(button.classList.contains('w-btn--sm')).toBe(false);
+    expect(button.classList.contains('ph-btn--lg')).toBe(true);
+    expect(button.classList.contains('ph-btn--sm')).toBe(false);
   });
 
   it('styles an anchor like a button', async () => {
     const { link } = await setup();
-    expect(link.classList.contains('w-btn')).toBe(true);
-    expect(link.classList.contains('w-btn--ghost')).toBe(true);
-    expect(link.classList.contains('w-btn--sm')).toBe(true);
+    expect(link.classList.contains('ph-btn')).toBe(true);
+    expect(link.classList.contains('ph-btn--ghost')).toBe(true);
+    expect(link.classList.contains('ph-btn--sm')).toBe(true);
   });
 
   it('marks an icon-only button', async () => {
     const { icon } = await setup();
-    expect(icon.classList.contains('w-btn--icon')).toBe(true);
+    expect(icon.classList.contains('ph-btn--icon')).toBe(true);
     expect(icon.getAttribute('aria-label')).toBe('Exit quiz');
   });
 

@@ -6,13 +6,13 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@a
  * readers inside the bubble, since colour and side are not enough.
  */
 @Component({
-  selector: 'article[w-message-bubble]',
+  selector: 'article[ph-message-bubble]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'w-bubble',
-    '[class.w-bubble--in]': "direction() === 'in'",
-    '[class.w-bubble--out]': "direction() === 'out'",
+    class: 'ph-bubble',
+    '[class.ph-bubble--in]': "direction() === 'in'",
+    '[class.ph-bubble--out]': "direction() === 'out'",
   },
   templateUrl: './message-bubble.html',
   styleUrl: './message-bubble.css',

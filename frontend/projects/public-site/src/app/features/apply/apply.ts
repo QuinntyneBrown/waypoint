@@ -29,7 +29,7 @@ function isEmail(value: string): boolean {
 
 // Traces to: L2-INTAKE-001
 @Component({
-  selector: 'w-apply',
+  selector: 'ph-apply',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,

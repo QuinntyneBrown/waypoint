@@ -1,20 +1,20 @@
-<div class="w-toasts" role="region" aria-live="polite" aria-label="Notifications">
+<div class="ph-toasts" role="region" aria-live="polite" aria-label="Notifications">
   @for (t of toasts.toasts(); track t.id) {
-    <div class="w-toast w-toast--{{ t.type }}">
-      <span class="w-toast__icon"><w-icon [name]="iconFor(t.type)" /></span>
-      <div class="w-toast__body">
+    <div class="ph-toast ph-toast--{{ t.type }}">
+      <span class="ph-toast__icon"><ph-icon [name]="iconFor(t.type)" /></span>
+      <div class="ph-toast__body">
         @if (t.title) {
-          <div class="w-toast__title">{{ t.title }}</div>
+          <div class="ph-toast__title">{{ t.title }}</div>
         }
         {{ t.message }}
       </div>
       <button
-        class="w-toast__close"
+        class="ph-toast__close"
         type="button"
         aria-label="Dismiss"
         (click)="toasts.dismiss(t.id)"
       >
-        <w-icon name="x" />
+        <ph-icon name="x" />
       </button>
     </div>
   }

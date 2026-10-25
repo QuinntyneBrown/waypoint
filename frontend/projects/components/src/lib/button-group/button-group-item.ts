@@ -6,13 +6,13 @@ import {
   input,
 } from '@angular/core';
 
-/** One choice in a `w-button-group`. `active` marks the chosen one and sets `aria-pressed`. */
+/** One choice in a `ph-button-group`. `active` marks the chosen one and sets `aria-pressed`. */
 @Component({
-  selector: 'button[w-button-group-item]',
+  selector: 'button[ph-button-group-item]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'w-segment__item',
+    class: 'ph-segment__item',
     '[class.is-active]': 'active()',
     '[attr.aria-pressed]': 'active()',
   },

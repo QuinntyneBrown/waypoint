@@ -45,7 +45,7 @@ type ReportView = 'overview' | 'youth' | 'cohort' | 'staff';
 
 // Traces to: L2-REPORT-001, L2-AUTH-010, L2-NFR-009/010
 @Component({
-  selector: 'w-admin-reports',
+  selector: 'ph-admin-reports',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Shell,

@@ -15,7 +15,7 @@ async function zoomOut(page: Page): Promise<void> {
 
 async function firstCardClip(page: Page) {
   await page.setViewportSize({ width: 1280, height: 800 });
-  const box = await page.locator('.w-card').first().boundingBox();
+  const box = await page.locator('.ph-card').first().boundingBox();
   expect(box).not.toBeNull();
   return { x: box!.x - 12, y: box!.y - 12, width: box!.width + 24, height: box!.height + 24 };
 }

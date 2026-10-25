@@ -1,4 +1,4 @@
-.w-statcard__delta {
+.ph-statcard__delta {
   font-size: 0.8rem;
   font-weight: 600;
   margin-top: 4px;
@@ -6,9 +6,9 @@
   align-items: center;
   gap: 4px;
 }
-.w-statcard__delta.is-up {
-  color: var(--w-success);
+.ph-statcard__delta.is-up {
+  color: var(--ph-success);
 }
-.w-statcard__delta.is-down {
-  color: var(--w-error);
+.ph-statcard__delta.is-down {
+  color: var(--ph-error);
 }

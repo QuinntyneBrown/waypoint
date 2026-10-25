@@ -15,10 +15,10 @@ type Story = StoryObj<Tabs>;
 export const Buttons: Story = {
   render: () => ({
     template: `
-      <div w-tabs role="tablist" aria-label="Report views">
-        <button w-tab type="button" role="tab" active aria-selected="true">Overview</button>
-        <button w-tab type="button" role="tab" aria-selected="false">Youth report</button>
-        <button w-tab type="button" role="tab" aria-selected="false">Cohort report</button>
+      <div ph-tabs role="tablist" aria-label="Report views">
+        <button ph-tab type="button" role="tab" active aria-selected="true">Overview</button>
+        <button ph-tab type="button" role="tab" aria-selected="false">Youth report</button>
+        <button ph-tab type="button" role="tab" aria-selected="false">Cohort report</button>
       </div>`,
   }),
 };
@@ -26,10 +26,10 @@ export const Buttons: Story = {
 export const Links: Story = {
   render: () => ({
     template: `
-      <nav w-tabs aria-label="Settings">
-        <a w-tab href="#" active>Profile</a>
-        <a w-tab href="#">Notifications</a>
-        <a w-tab href="#">Privacy</a>
+      <nav ph-tabs aria-label="Settings">
+        <a ph-tab href="#" active>Profile</a>
+        <a ph-tab href="#">Notifications</a>
+        <a ph-tab href="#">Privacy</a>
       </nav>`,
   }),
 };
