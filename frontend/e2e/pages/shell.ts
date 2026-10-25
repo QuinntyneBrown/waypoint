@@ -9,6 +9,11 @@ import { BrowserContext, Page } from '@playwright/test';
 export class AppShell {
   constructor(private readonly page: Page) {}
 
+  /** The library shell element that hosts every signed-in page. */
+  get host() {
+    return this.page.locator('w-shell');
+  }
+
   get signOutButton() {
     return this.page.getByRole('button', { name: 'Sign out' });
   }

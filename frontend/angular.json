@@ -25,7 +25,6 @@
               }
             ],
             "styles": [
-              "projects/components/src/styles/fonts.css",
               "projects/components/src/styles/tokens.css",
               "projects/components/src/styles/core.css",
               "projects/components/src/styles/a11y.css",
@@ -111,7 +110,6 @@
               }
             ],
             "styles": [
-              "projects/components/src/styles/fonts.css",
               "projects/components/src/styles/tokens.css",
               "projects/components/src/styles/core.css",
               "projects/public-site/src/styles.css"
@@ -248,7 +246,6 @@
             "browserTarget": "components:build",
             "compodoc": false,
             "styles": [
-              "projects/components/src/styles/fonts.css",
               "projects/components/src/styles/tokens.css",
               "projects/components/src/styles/core.css",
               "projects/components/src/styles/a11y.css"
@@ -263,7 +260,6 @@
             "browserTarget": "components:build",
             "compodoc": false,
             "styles": [
-              "projects/components/src/styles/fonts.css",
               "projects/components/src/styles/tokens.css",
               "projects/components/src/styles/core.css",
               "projects/components/src/styles/a11y.css"

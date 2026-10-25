@@ -26,6 +26,19 @@ export class SignInPage extends BasePage {
     await this.page.goto(SignInPage.path);
   }
 
+  /** The sign-in action as a library primary button (`button[w-button]` host classes). */
+  get primaryAction() {
+    return this.page.locator('button.w-btn.w-btn--primary', { hasText: /sign in/i });
+  }
+
+  /** Fill and label colours of the primary action (design-system check). */
+  primaryActionColors(): Promise<{ background: string; color: string }> {
+    return this.submitButton.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return { background: style.backgroundColor, color: style.color };
+    });
+  }
+
   /** Fill both fields and submit (assumes the form is already on screen). */
   async submitCredentials(email: string, password: string): Promise<void> {
     await this.email.fill(email);

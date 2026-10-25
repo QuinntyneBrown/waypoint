@@ -16,7 +16,7 @@ body {
   --w-border: color-mix(in srgb, var(--color-fg-default) 55%, transparent);
   --w-border-strong: color-mix(in srgb, var(--color-fg-default) 75%, transparent);
   --w-muted: color-mix(in srgb, var(--color-fg-default) 82%, transparent);
-  --w-ink-60: color-mix(in srgb, var(--color-fg-default) 82%, transparent);
+  --w-ink-60: var(--color-fg-default);
 }
 
 /* Respect reduced-motion by neutralising animations/transitions. */

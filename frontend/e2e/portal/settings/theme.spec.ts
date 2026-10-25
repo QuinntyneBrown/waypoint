@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { registerYouth } from '../../support/api';
 import { DisplaySettingsPage, SignInPage } from '../../pages';
 
-const DARK_CANVAS = 'rgb(14, 14, 8)';
-const LIGHT_CANVAS = 'rgb(255, 255, 255)';
+const DARK_CANVAS = 'rgb(15, 18, 22)';
+const LIGHT_CANVAS = 'rgb(246, 247, 249)';
 
 // Traces to: L2-PLATFORM-013 AC1/AC5
 test('signed-out pages follow a dark device colour scheme', async ({ page }) => {

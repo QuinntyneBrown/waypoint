@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { AdminAnnouncementsPage, SignInPage } from '../../pages';
+import { AdminAnnouncementsPage, SignInPage, YouthAnnouncementsPage } from '../../pages';
 import { registerUser, seedYouthCurriculum } from '../../support/api';
 
 // Traces to: L2-ENGAGE-006, L2-AUTH-010, L2-NFR-001
@@ -47,11 +47,12 @@ test('an admin sends and schedules targeted announcements and tracks recipient r
   await page.getByRole('button', { name: 'Sign out', exact: true }).click();
   await expect(page).toHaveURL(/\/auth\/sign-in/);
   await signIn.signIn({ email: seeded.youthEmail, password: seeded.youthPassword });
-  await page.goto('/youth/announcements');
-  const recipientCard = page.locator('.w-card').filter({ hasText: sentTitle });
+  const youthAnnouncements = new YouthAnnouncementsPage(page);
+  await youthAnnouncements.goto();
+  const recipientCard = youthAnnouncements.announcement(sentTitle);
   await expect(recipientCard).toBeVisible();
   await expect(recipientCard).toContainText('New');
-  await page.getByRole('button', { name: 'Mark all read', exact: true }).click();
+  await youthAnnouncements.markAllRead.click();
   await expect(recipientCard).not.toContainText('New');
 
   await page.getByRole('button', { name: 'Sign out', exact: true }).click();

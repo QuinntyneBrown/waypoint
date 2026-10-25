@@ -1,7 +1,7 @@
 /* ============================================================
-   Waypoint — FaithTech design system (core)
-   Hand-authored. Concatenated with _fonts.css -> waypoint.css
-   Tokens + 20 core components. No external requests.
+   Waypoint — PromiseHub design system (core), DECISIONS #25
+   Hand-authored. Load tokens.css first. No external requests:
+   PromiseHub uses the system rounded font stack.
    ============================================================ */
 
 /* ---------- Tokens ---------- */
@@ -15,10 +15,11 @@
   --w-lime-soft: var(--color-accent-subtle);
   --w-on-lime: var(--color-fg-on-brand); /* text on lime fills, dark in both themes */
   --w-ink: var(--color-fg-default);
-  --w-ink-80: color-mix(in srgb, var(--color-fg-default) 80%, transparent);
-  --w-ink-60: color-mix(in srgb, var(--color-fg-default) 60%, transparent);
-  --w-ink-45: color-mix(in srgb, var(--color-fg-default) 45%, transparent);
-  --w-ink-24: color-mix(in srgb, var(--color-fg-default) 24%, transparent);
+  /* Text steps resolve to solid PromiseHub text tokens so they keep 4.5:1. */
+  --w-ink-80: var(--color-fg-default);
+  --w-ink-60: var(--color-fg-muted);
+  --w-ink-45: var(--color-fg-subtle);
+  --w-ink-24: var(--color-fg-disabled);
   --w-ink-14: color-mix(in srgb, var(--color-fg-default) 14%, transparent);
   --w-ink-08: color-mix(in srgb, var(--color-fg-default) 8%, transparent);
   --w-ink-04: color-mix(in srgb, var(--color-fg-default) 4%, transparent);
@@ -29,14 +30,14 @@
   --w-g300: var(--color-border-default);
   --w-g400: var(--color-fg-disabled);
   --w-g500: var(--color-border-strong);
-  /* accents (decorative; same in both themes) */
-  --w-green: #32a432;
-  --w-yellow: #fff737;
-  --w-gold: #ffd700;
-  --w-amber: #ffb300;
-  --w-tomato: #f05228;
-  --w-sky: #8adfff;
-  --w-teal: #1d8fb9;
+  /* accents (decorative; PromiseHub status and cover hues) */
+  --w-green: var(--color-success-icon);
+  --w-yellow: var(--color-cover-sun);
+  --w-gold: var(--color-warning-icon);
+  --w-amber: var(--color-warning-icon);
+  --w-tomato: var(--color-danger-icon);
+  --w-sky: var(--color-cover-sky);
+  --w-teal: var(--color-info-icon);
   /* semantic */
   --w-success: var(--color-success-icon);
   --w-warning: var(--color-warning-icon);
@@ -55,15 +56,15 @@
   --w-text: var(--color-fg-default);
   --w-muted: var(--color-fg-muted);
   /* type */
-  --w-font-head: 'Space Grotesk', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --w-font-body: 'Inter', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --w-font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --w-font-head: var(--font-family-display);
+  --w-font-body: var(--font-family-sans);
+  --w-font-serif: var(--font-family-serif);
   /* radius */
-  --w-r-sm: 4px;
-  --w-r-input: 6px;
-  --w-r-card: 8px;
-  --w-r-lg: 14px;
-  --w-r-pill: 100vw;
+  --w-r-sm: var(--radius-sm);
+  --w-r-input: var(--radius-md);
+  --w-r-card: var(--radius-lg);
+  --w-r-lg: var(--radius-lg);
+  --w-r-pill: var(--radius-full);
   /* spacing (4/8 rhythm) */
   --w-s1: 4px;
   --w-s2: 8px;
@@ -81,7 +82,7 @@
   --w-sidenav-w: 244px;
   --w-container: 1200px;
   --w-container-wide: 1440px;
-  --w-bw: 1.5px;
+  --w-bw: var(--border-width-hairline);
   /* elevation (flat aesthetic — used sparingly) */
   --w-shadow-sm: var(--shadow-1);
   --w-shadow-pop: var(--shadow-3);
@@ -105,7 +106,7 @@ body {
   line-height: 1.5;
   color: var(--w-text);
   background: var(--w-bg);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--letter-spacing-normal);
   overflow-x: clip;
   max-width: 100%;
   -webkit-font-smoothing: antialiased;
@@ -119,9 +120,9 @@ h5,
 h6 {
   margin: 0 0 0.4em;
   font-family: var(--w-font-head);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--w-ink);
 }
 h1 {

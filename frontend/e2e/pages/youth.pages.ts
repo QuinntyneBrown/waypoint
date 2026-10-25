@@ -49,6 +49,13 @@ export class YouthAnnouncementsPage extends BasePage {
   get emptyStateHeading() {
     return this.page.getByRole('heading', { name: /no announcements yet/i });
   }
+  get markAllRead() {
+    return this.page.getByRole('button', { name: 'Mark all read', exact: true });
+  }
+  /** The card of one announcement in the feed. */
+  announcement(title: string) {
+    return this.page.locator('.w-card').filter({ hasText: title });
+  }
 
   async goto(): Promise<void> {
     await this.page.goto(YouthAnnouncementsPage.path);

@@ -1,92 +1,106 @@
+/* PromiseHub button (docs/design-system/components/button.html): a pill with a
+   hairline edge, label type and a 44px target; the primary action is the accent. */
 .w-btn {
+  --btn-bg: var(--color-bg-surface);
+  --btn-fg: var(--color-fg-default);
+  --btn-border: var(--color-border-strong);
+  --btn-bg-hover: var(--color-bg-subtle);
+  --btn-height: var(--control-height-md);
+  --btn-padding: var(--space-4);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--space-2);
   cursor: pointer;
-  font-family: var(--w-font-head);
-  font-weight: 500;
-  font-size: 0.95rem;
+  font: var(--text-label);
+  font-size: var(--font-size-md);
   line-height: 1;
   text-align: center;
-  padding: 13px 22px;
-  border-radius: var(--w-r-pill);
-  border: var(--w-bw) solid transparent;
-  background: var(--w-g200);
-  color: var(--w-ink);
-  transition:
-    background 0.18s,
-    color 0.18s,
-    border-color 0.18s;
+  min-height: var(--btn-height);
+  padding: 0 var(--btn-padding);
+  border-radius: var(--radius-full);
+  border: var(--border-width-hairline) solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
   white-space: nowrap;
   text-decoration: none;
   -webkit-appearance: none;
   appearance: none;
-  min-height: 44px;
+}
+/* Transitions run only while the person interacts, so a button that gains its
+   variant class after first paint does not animate from the neutral colours. */
+.w-btn:is(:hover, :focus-visible, :active) {
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
 }
 .w-btn:hover {
+  background: var(--btn-bg-hover);
   text-decoration: none;
 }
+.w-btn:active {
+  transform: translateY(var(--border-width-hairline));
+}
 .w-btn .w-icon {
-  width: 18px;
-  height: 18px;
+  width: 1.25em;
+  height: 1.25em;
 }
 .w-btn--primary {
-  background: var(--w-lime);
-  color: var(--w-on-lime);
+  --btn-bg: var(--color-brand);
+  --btn-fg: var(--color-fg-on-brand);
+  --btn-border: var(--color-brand);
+  --btn-bg-hover: var(--color-brand-hover);
 }
 .w-btn--primary:hover {
-  background: var(--w-lime-600);
+  border-color: var(--color-brand-hover);
+  box-shadow: var(--shadow-1);
 }
 .w-btn--secondary {
-  background: var(--w-ink);
-  color: var(--w-white);
-}
-.w-btn--secondary:hover {
-  background: var(--color-accent-active);
+  --btn-bg: var(--color-accent-subtle);
+  --btn-fg: var(--color-fg-accent);
+  --btn-border: transparent;
+  --btn-bg-hover: var(--color-accent-subtle-hover);
 }
 .w-btn--ghost {
-  background: transparent;
-  border-color: var(--w-border-strong);
-  color: var(--w-ink);
-}
-.w-btn--ghost:hover {
-  background: var(--w-g100);
+  --btn-bg: transparent;
+  --btn-border: transparent;
 }
 .w-btn--subtle {
-  background: var(--w-g100);
-  color: var(--w-ink);
-}
-.w-btn--subtle:hover {
-  background: var(--w-g200);
+  --btn-bg: var(--color-bg-subtle);
+  --btn-border: transparent;
+  --btn-bg-hover: var(--color-bg-subtle-hover);
 }
 .w-btn--danger {
-  background: var(--color-danger-solid);
-  color: var(--color-fg-on-danger);
+  --btn-bg: var(--color-danger-solid);
+  --btn-fg: var(--color-fg-on-danger);
+  --btn-border: var(--color-danger-solid);
+  --btn-bg-hover: var(--color-danger-solid-hover);
 }
-.w-btn--danger:hover {
-  background: var(--color-danger-solid-hover);
-}
+/* Small keeps the 44px target Waypoint requires (L2-NFR-010 AC1); only the
+   padding and type shrink. */
 .w-btn--sm {
-  padding: 8px 14px;
-  font-size: 0.85rem;
+  --btn-padding: var(--space-3);
+  font-size: var(--font-size-sm);
 }
 .w-btn--lg {
-  padding: 16px 28px;
-  font-size: 1.05rem;
+  --btn-height: var(--control-height-lg);
+  --btn-padding: var(--space-6);
+  font-size: var(--font-size-lg);
 }
 .w-btn--block {
   display: flex;
   width: 100%;
 }
 .w-btn--icon {
-  padding: 11px;
-  width: auto;
+  --btn-padding: 0;
+  width: var(--btn-height);
 }
 .w-btn:disabled,
 .w-btn.is-disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 .w-btn.is-loading {
   color: transparent;
@@ -99,18 +113,20 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 2px solid currentColor;
+  border: 2px solid var(--btn-fg);
   border-top-color: transparent;
   animation: w-spin 0.7s linear infinite;
-  color: var(--w-ink);
 }
 .w-btn--link {
-  background: transparent;
-  padding: 0;
+  --btn-bg: transparent;
+  --btn-border: transparent;
+  --btn-bg-hover: transparent;
+  --btn-fg: var(--color-fg-link);
+  --btn-padding: 0;
+  min-height: var(--target-min);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 .w-btn--link:hover {
-  background: transparent;
   text-decoration: underline;
 }

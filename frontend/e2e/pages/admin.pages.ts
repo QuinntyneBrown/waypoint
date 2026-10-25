@@ -103,6 +103,10 @@ export class CohortsPage extends BasePage {
   get createDialog() {
     return this.page.getByRole('dialog', { name: 'Create cohort' });
   }
+  /** The dialog's scrim; clicking it outside the panel closes the dialog. */
+  get dialogBackdrop() {
+    return this.page.locator('.w-modal__scrim');
+  }
   get emptyState() {
     return this.page.getByRole('heading', { name: 'No cohorts yet' });
   }

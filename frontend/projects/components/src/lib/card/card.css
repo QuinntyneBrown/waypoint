@@ -24,7 +24,7 @@
   color: var(--w-white);
 }
 .w-card--lime .w-btn--primary:hover {
-  background: var(--w-ink-80);
+  background: var(--color-accent-active);
 }
 /* Headings default to ink; on an ink card they must follow the card colour. */
 .w-card--ink :is(h1, h2, h3, h4, h5, h6) {
